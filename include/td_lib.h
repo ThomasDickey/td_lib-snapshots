@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 12.10 1994/08/21 19:25:03 tom Exp $ */
+/* $Id: td_lib.h,v 12.11 1994/11/12 22:35:21 tom Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for TD_LIB common
@@ -242,6 +242,15 @@
 			_dcl(int,		links)
 			_ret
 
+	/* egress.c --------------------------------------------------- */
+	int	egress(
+			_arx(char *,	path)
+			_ar1(int,	mode)
+			)
+			_dcl(char *,	path)
+			_dcl(int,	mode)
+			_ret
+
 	/* execute.c -------------------------------------------------- */
 	int	execute(
 			_arx(char *,	verb)
@@ -389,6 +398,15 @@
 			)
 			_dcl(int,	gid)
 			_ret
+
+	/* in_group.c ------------------------------------------------- */
+#ifdef unix
+	int	in_group(
+			_ar1(int,	gid)
+			)
+			_dcl(int,	gid)
+			_ret
+#endif
 
 	/* interact.c ------------------------------------------------- */
 	int	interactive(_ar0)

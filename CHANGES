@@ -1,3 +1,26 @@
+1994-11-12  dickey@clark.net
+
+	* src/process/Makefile, src/process/descrip.mms: added:egress
+
+	* include/td_lib.h: added 'egress()', 'in_group()'
+
+	* src/process/egress.c: RCS_BASE
+
+	* src/process/egress.c: use MODULE_ID
+
+	* src/process/in_group.c:
+	added include to pick up definition of NGROUPS_MAX
+
+	* src/process/descrip.mms: added module in_group
+
+	* src/process/Makefile: added in_group.c
+
+	* src/process/in_group.c: RCS_BASE
+
+	* configure.in: added AC_GETGROUPS_T
+
+	* include/td_ext.h: added 'getgroups()'
+
 1994-11-06  dickey@clark.net
 
 	* td_make.in: added defs for SHELL, COPY

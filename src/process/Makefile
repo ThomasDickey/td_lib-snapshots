@@ -1,4 +1,4 @@
-# $Id: Makefile,v 12.2 1994/08/21 21:42:33 tom Exp $
+# $Id: Makefile,v 12.4 1994/11/12 22:38:14 tom Exp $
 # MAKE-file for process-management library routines
 
 ####### (Environment) ##########################################################
@@ -9,6 +9,7 @@ CSRC	=\
 	bldarg.c \
 	catarg.c \
 	catchall.c \
+	egress.c \
 	execute.c \
 	failed.c \
 	for_admn.c \
@@ -16,6 +17,7 @@ CSRC	=\
 	gethome.c \
 	getopt.c \
 	getuser.c \
+	in_group.c \
 	interact.c \
 	makeargv.c \
 	revert.c \
@@ -32,6 +34,7 @@ OBJS	=\
 	$Z(bldarg.o) \
 	$Z(catarg.o) \
 	$Z(catchall.o) \
+	$Z(egress.o) \
 	$Z(execute.o) \
 	$Z(failed.o) \
 	$Z(for_admn.o) \
@@ -39,6 +42,7 @@ OBJS	=\
 	$Z(gethome.o) \
 	$Z(getopt.o) \
 	$Z(getuser.o) \
+	$Z(in_group.o) \
 	$Z(interact.o) \
 	$Z(makeargv.o) \
 	$Z(revert.o) \
