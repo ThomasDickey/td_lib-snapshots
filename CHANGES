@@ -1,3 +1,7 @@
+2002-12-04  dickey@invisible-island.net
+
+	* config.sub, config.guess: resync with my-autoconf
+
 2002-07-05  dickey@invisible-island.net
 
 	* include/td_curse.h, include/ptypes.h, src/curses/cmdch.c:
