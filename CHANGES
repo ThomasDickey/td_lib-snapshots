@@ -1,3 +1,14 @@
+1988-06-09  dickey@software.org
+
+	* src/cm_funcs/newzone.c: oops: was storing wrong value for 'old_TZ'!
+
+	* include/llib-ltd: added 'newzone.c' module.
+
+	* src/cm_funcs/newzone.c: New file.
+
+	* src/Makefile:
+	added 'newzone.c' module; 'destroy', 'install' productions.
+
 1988-06-07  dickey@software.org
 
 	* src/curses/win2file.c, src/process/gethome.c: New file.
