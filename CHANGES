@@ -1,3 +1,19 @@
+1995-04-22  dickey@clark.net
+
+	* src/process/userprot.c: interface change of 'setmtime()'
+
+	* src/process/userprot.c: use MODULE_ID
+
+	* src/pathname/filecopy.c: interface change of 'setmtime()'
+
+	* src/pathname/filecopy.c: use MODULE_ID
+
+	* src/unix/setmtime.c: added 'atime' arg
+
+	* src/unix/setmtime.c: use MODULE_ID
+
+	* include/td_lib.h: interface change of 'setmtime()'
+
 1995-04-19  dickey@clark.net
 
 	* include/td_curse.h: correction for CURSES_LIKE_SYSV
