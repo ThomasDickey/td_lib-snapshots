@@ -3,6 +3,7 @@
  * Title:	resizewin.c (change size of curses window)
  * Created:	21 Apr 1988
  * Modified:
+ *		15 Feb 1998, cannot use savewin on OSF1 4.0; chtype is struct
  *		03 Sep 1995, mods for bsd4.4 curses
  *		04 Jul 1995, integration with ncurses 1.9.3
  *		23 Jul 1994, adaptations for ncurses and HP/UX curses.
@@ -35,7 +36,7 @@
 
 #include	"td_curse.h"
 
-MODULE_ID("$Id: resizwin.c,v 12.15 1997/02/11 11:42:09 tom Exp $")
+MODULE_ID("$Id: resizwin.c,v 12.16 1998/02/15 19:40:27 tom Exp $")
 
 #if HAVE_RESIZETERM
 extern	WINDOW	*newscr;
@@ -55,7 +56,7 @@ int	resizewin(_AR0)
 		my_LINES = lc[0];
 		my_COLS  = lc[1];
 		if (my_LINES != LINES || my_COLS != COLS) {
-#if CURSES_LIKE_BSD
+#if CURSES_LIKE_BSD && TYPE_CHTYPE_IS_SCALAR
 			wresize(stdscr, my_LINES, my_COLS);
 			wresize(curscr, my_LINES, my_COLS);
 			LINES = my_LINES;

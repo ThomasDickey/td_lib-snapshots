@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	07 Jun 1988
  * Modified:
+ *		15 Feb 1998, workaround for non-scalar chtype.
  *		03 Sep 1995, make this work with bsd4.4 curses
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
@@ -34,7 +35,7 @@
 #include	<ctype.h>
 #include	<time.h>
 
-MODULE_ID("$Id: win2file.c,v 12.10 1995/11/03 01:07:49 tom Exp $")
+MODULE_ID("$Id: win2file.c,v 12.11 1998/02/15 18:54:47 tom Exp $")
 
 #define	OUT	FPRINTF(fp,
 
@@ -50,10 +51,39 @@ MODULE_ID("$Id: win2file.c,v 12.10 1995/11/03 01:07:49 tom Exp $")
 #define A_STANDOUT   0200
 #endif
 
-#if CURSES_LIKE_BSD44
-#define CursesBold(win,y,x) CursesLine(win,y)[x].attr
+#if TYPE_CHTYPE_IS_SCALAR
+#  if CURSES_LIKE_BSD44
+#    define CursesBold(win,y,x) CursesLine(win,y)[x].attr
+#  else
+#    define CursesBold(win,y,x) CursesData(win,y,x) & A_STANDOUT
+#  endif
 #else
-#define CursesBold(win,y,x) CursesData(win,y,x) & A_STANDOUT
+#  define CursesBold(win,y,x) FALSE
+#  undef CursesData
+#  undef CursesLine
+#endif
+
+#ifndef CursesLine
+static char *
+CursesLine(WINDOW *win, int row)
+{
+	static char *result;
+
+	if (result != 0)
+		free(result);
+
+	if ((result = malloc(COLS)) != 0) {
+		int y, x;
+
+		getyx(win, y, x);
+		wmove(win, row, 0);
+		winnstr(win, result, COLS);
+		wmove(win, y, x);
+	}
+	return result;
+}
+
+#define CursesData(win,y,x)  CursesLine(win,y)[x]
 #endif
 
 static
@@ -134,12 +164,7 @@ void	win2fp(
 				   ||	 khr == ACS_TTEE
 				   ||	 khr == ACS_PLUS)
 				   	khr = '+';
-#if 1
 					else khr = toascii(khr);
-#else
-				else if (!isascii(khr))
-					khr = '*';
-#endif /**/
 #else
 				khr = toascii(khr);
 #endif

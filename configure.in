@@ -1,8 +1,9 @@
 dnl Process this file with 'autoconf' to produce a 'configure' script
-dnl $Id: configure.in,v 12.85 1997/09/13 15:04:29 tom Exp $
-AC_REVISION($Revision: 12.85 $)
-AC_PREREQ(2.12)
+dnl $Id: configure.in,v 12.86 1998/02/15 17:46:31 tom Exp $
+AC_REVISION($Revision: 12.86 $)
+AC_PREREQ(2.12.971230)
 AC_INIT(include/td_lib.h)
+AC_CONFIG_HEADER(include/td_config.h:include/config.hin)
 CF_CHECK_CACHE
 
 cf_CFLAGS="$CFLAGS"
@@ -44,7 +45,6 @@ fi
 
 ###	extra things that we'll substitute in the makefile
 CF_TOP_SRCDIR
-CF_TD_CONFIG(support/td_config.c)
 AC_SUBST(INCLUDES)
 CF_MAKEFLAGS
 CF_MAKE_AR_RULES
@@ -80,7 +80,23 @@ AC_HAVE_HEADERS(sys/file.h sys/fcntl.h sys/ioctl.h sys/param.h)
 AC_HAVE_HEADERS(termcap.h termios.h termio.h sgtty.h utime.h)
 
 AC_CHECK_LIB(bsd, bcopy)
-CF_TD_CURSES_LIBS
+
+# Check for curses libraries, but after getting them, split off the pieces so
+# we don't pick up bogus dependencies on shared libraries in the programs that
+# don't need curses.
+td_save_LIBS="$LIBS"
+CURSES_LIBS=""
+if test $WithNcurses = no ; then
+	CF_CURSES_LIBS
+else
+	CF_NCURSES_LIBS
+	CF_NCURSES_CPPFLAGS
+fi
+if test "$LIBS" != "$td_save_LIBS" ; then
+	CURSES_LIBS=`echo ".$LIBS" | sed -e "s%.%%" -e "s%$td_save_LIBS\$%%"`
+fi
+AC_SUBST(CURSES_LIBS)
+
 CF_CHECK_REGEX
 CF_VARARGS
 
@@ -164,6 +180,8 @@ cbreak \
 erasechar \
 killchar \
 ungetch \
+winnstr \
+winchstr \
 wresize \
 wscrl \
 wsetscrreg \
@@ -231,25 +249,28 @@ CF_PROGRAM_FULLPATH(DEFAULT_PAGER, $PAGER more less most)
 CF_TD_SRC_MODULES
 CF_TD_TEST_MODULES
 
+### Chop the curses libraries out of the list.  (We may get into trouble with
+### the -L option, or order dependencies on some obscure systems).
+if test -n "$CURSES_LIBS" ; then
+	LIBS=`echo ".$LIBS" | sed -e "s%.$CURSES_LIBS%%"`
+fi
+
 AC_OUTPUT( \
 	td_make \
-	config_h \
 	makefile \
 	src/makefile \
 	$cf_cv_src_makefiles \
 	$cf_cv_test_makefiles \
 	test/makefile,[
 CF_OUTPUT_IF_CHANGED(td_make, support/td_lib.mk)
-CF_SED_CONFIG_H(config_h,include/td_config.h)
 CF_TD_SRC_MAKEFILES
 CF_TD_TEST_MAKEFILES
 ],[
 	AWK="$AWK"
 	verbose="$verbose"
-	ac_cv_path_TD_CONFIG="$ac_cv_path_TD_CONFIG"
 	cf_cv_ar_rules="$cf_cv_ar_rules"
 	cf_cv_src_modules="$cf_cv_src_modules"
 	cf_cv_test_modules="$cf_cv_test_modules"
 	make_include_left="$make_include_left"
 	make_include_right="$make_include_right"
-])
+],sort)

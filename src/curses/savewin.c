@@ -3,6 +3,7 @@
  * Title:	savewin.c (save/unsave curses window)
  * Created:	25 Mar 1988
  * Modified:
+ *		15 Feb 1998, cannot use this when chtype isn't scalar.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, conversion to ANSI
@@ -26,9 +27,9 @@
 #include	"td_curse.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: savewin.c,v 12.7 1995/09/04 20:07:46 tom Exp $")
+MODULE_ID("$Id: savewin.c,v 12.8 1998/02/15 19:42:20 tom Exp $")
 
-#if CURSES_LIKE_BSD
+#if CURSES_LIKE_BSD && TYPE_CHTYPE_IS_SCALAR
 
 typedef	struct	_save {
 	struct	_save	*link;

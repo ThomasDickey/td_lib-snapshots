@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	03 Aug 1994, from 'dedscan.c'
  * Modified:
+ *		15 Feb 1998, guard against use of non-configured modules.
  *
  * Function:	Combines calls to rcslast, sccslast, cmv_last.
  */
@@ -13,7 +14,11 @@
 #include	"rcsdefs.h"
 #include	"sccsdefs.h"
 
-MODULE_ID("$Id: lastrev.c,v 12.5 1994/10/06 00:02:27 tom Exp $")
+MODULE_ID("$Id: lastrev.c,v 12.6 1998/02/15 20:25:43 tom Exp $")
+
+#if defined(CMV_PATH) && !(defined(RCS_PATH) || defined(SCCS_PATH))
+#undef CMV_PATH
+#endif
 
 /*
  * This is driven by an environment variable, but ultimately should be done
@@ -22,12 +27,14 @@ MODULE_ID("$Id: lastrev.c,v 12.5 1994/10/06 00:02:27 tom Exp $")
 #if	defined(RCS_PATH) || defined(SCCS_PATH)
 typedef	enum TrySCCS { DontTry, TrySccs, TryRcs, TryCmVision } TRY;
 
+#define MAX_ORDER 10
+
 static	TRY	try_order(
 	_AR1(int,	try))
 	_DCL(int,	try)
 {
 	static	int	 num_order;
-	static	TRY vec_order[10];
+	static	TRY vec_order[MAX_ORDER];
 
 	auto	char	temp[BUFSIZ];
 	auto	char	*s;
@@ -51,6 +58,8 @@ static	TRY	try_order(
 				vec_order[num_order++] = TryCmVision;
 			}
 			env = 0;
+			if (num_order + 1 >= MAX_ORDER)
+				break;
 		}
 
 		vec_order[num_order++] = DontTry; /* end-marker */
@@ -88,14 +97,14 @@ void	lastrev(
 			LAST(sccslast);
 		}
 #endif
-#if defined(CMV_PATH) && (defined(RCS_PATH) || defined(SCCS_PATH))
+#ifdef	CMV_PATH
 		if (try == TryCmVision) {
 			LAST(cmv_last);
 		}
 #endif
 		if (*time_ptr != 0
-		 || *vers_ptr[0] != '?'
-		 || *lock_ptr[0] != '?')
+		 || (*vers_ptr != 0 && *vers_ptr[0] != '?')
+		 || (*lock_ptr != 0 && *lock_ptr[0] != '?'))
 		 break;
 	}
 }

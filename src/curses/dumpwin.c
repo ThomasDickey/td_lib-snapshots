@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	20 Apr 1988 (from code written 13 Nov 1987)
  * Modified:
+ *		15 Feb 1998, make this work with non-scalar chtype, use winnstr.
  *		04 Sep 1995, make this work with bsd4.4 curses
  *		15 May 1995, removed _orig/_nextp -- too obscure to bother with
  *		29 Oct 1993, ifdef-ident
@@ -25,9 +26,41 @@
 #include	"td_curse.h"
 #include	<time.h>
 
-MODULE_ID("$Id: dumpwin.c,v 12.15 1995/10/14 20:51:45 tom Exp $")
+MODULE_ID("$Id: dumpwin.c,v 12.16 1998/02/15 19:59:40 tom Exp $")
 
 #define	OUT	FPRINTF
+
+static char *
+line_data(
+	_ARX(WINDOW *,	win)
+	_AR1(int,	row)
+		)
+	_DCL(WINDOW *,	win)
+	_DCL(int,	row)
+{
+	static char *result;
+	int len = wMaxX(win);
+
+	if (result != 0)
+		free(result);
+
+	if ((result = malloc(len)) != 0) {
+#if HAVE_WINNSTR
+		int y, x;
+
+		getyx(win, y, x);
+		wmove(win, row, 0);
+		winnstr(win, result, len);
+		wmove(win, y, x);
+#else /* assume: TYPE_CHTYPE_IS_SCALAR */
+		int x;
+		for (x = 0; x < len; x++) {
+			result[x] = CursesData(win,row,x);
+		}
+#endif
+	}
+	return result;
+}
 
 void	dumpwin(
 	_ARX(WINDOW *,	w)
@@ -37,8 +70,8 @@ void	dumpwin(
 	_DCL(char *,	tag)
 {
 	char	fname[MAXPATHLEN],
-		*s = pathcat(fname, gethome(), "dumpwin.out");
-	FILE	*fp = fopen(s, "a+");
+		*output = pathcat(fname, gethome(), "dumpwin.out");
+	FILE	*fp = fopen(output, "a+");
 	int	j,k;
 
 	if (fp) {
@@ -78,13 +111,14 @@ void	dumpwin(
 
 		OUT(fp, "   _y @ %p\n", &(CursesLine(w,0)));
 		for (j = 0; j < wMaxY(w); j++) {
+			char *data;
 			OUT(fp, "%8d) [%3d,%3d] %p: \"",
 				j,
 				CursesFirstCh(w,j),
 				CursesLastCh(w,j), CursesLine(w,j));
-			if (CursesLine(w,j) != 0) {
+			if ((data = line_data(w,j)) != 0) {
 				for (k = 0; k < wMaxX(w); k++)
-					dumpchr(fp, CursesData(w,j,k));
+					dumpchr(fp, data[k]);
 			}
 			OUT(fp, "\"\n");
 			FFLUSH(fp);

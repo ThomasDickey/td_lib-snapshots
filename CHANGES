@@ -1,3 +1,42 @@
+1998-02-15  dickey@clark.net
+
+	* src/curses/logch.c, src/curses/cmdch.c: add home/end/ppage/npage keys
+
+	* include/td_curse.h: add codes for home/end/ppage/npage keys
+
+	* aclocal.m4: Unixware has an xcurses library
+
+	* src/cm_funcs/lastrev.c: fixes for null-pointer reference
+
+	* src/curses/dumpwin.c:
+	workaround for OSF1 4.0, which uses a struct for chtype
+
+	* src/curses/savewin.c: workaround for non-scalar chtype on OSF1 4.0
+
+	* src/curses/resizwin.c: workaround for OSF1 4.0 (chtype is struct)
+
+	* src/curses/win2file.c:
+	make this work when chtype is a struct, assuming SVr4 curses
+
+	* td_make.in: use more-standard symbol @CPPFLAGS@
+	add $(CURSES_LIBS) symbol, for ded vs the other tools
+
+	* aclocal.m4:
+	first cut of restructuring: make td_config obsolete, use newer/better
+	macros for finding curses/ncurses libraries and headers.
+
+	* configure.in: make td_config obsolete.
+	add logic for generating $(CURSES_LIBS) symbol in makefiles
+
+	* src/cm_funcs/cvs_last.c, src/cm_funcs/prcslast.c: RCS_BASE
+
+	* certify/Makefile: remove 'reusable.txt'
+
+	* include/config.hin: RCS_BASE
+
+	* makefile.in:
+	remove td_config program, because my autoconf patch makes it obsolete
+
 1998-02-02  dickey@clark.net
 
 	* mkdirs.sh: from autoconf
