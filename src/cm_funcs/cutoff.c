@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	20 May 1988 (from 'sccsdate.c')
  * Modified:
+ *		18 Jul 2000, Y2K fix
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		16 Jul 1992, 'optind' should always be index past most recent
@@ -23,7 +24,7 @@
 #include	<ctype.h>
 #include	<time.h>
 
-MODULE_ID("$Id: cutoff.c,v 12.3 1993/10/29 17:35:27 tom Exp $")
+MODULE_ID("$Id: cutoff.c,v 12.4 2000/07/18 15:17:06 tom Exp $")
 
 #define	Z(n)	twod(&bfr[n+n])
 
@@ -65,6 +66,8 @@ time_t	cutoff (
 				else if (!strncmp(bfr, "20", 2)) {
 					year = 2000;
 					d = bfr;
+				} else if (Z(0) < 38) {
+					year = 100;
 				}
 			}
 

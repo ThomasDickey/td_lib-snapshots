@@ -1,3 +1,10 @@
+2000-07-18  dickey@clark.net
+
+	* src/cm_funcs/cutoff.c:
+	a Y2K fix: SunOS and Solaris both don't use an extra 2 digits for century,
+	so we need the leading 2-digit 'yy' field which is less than (20)38 for
+	adding an offset of 100.
+
 2000-06-30  dickey@clark.net
 
 	* src/memory/txtalloc.c: gcc warnings (missing initializer)
