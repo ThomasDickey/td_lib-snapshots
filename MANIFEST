@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19920205
+MANIFEST for td_lib, version t19920206
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 Makefile                        top-level makefile for TD_LIB
@@ -11,6 +11,7 @@ include/Makefile                make-file for CM_TOOLS common interface director
 include/acl.h                   defines ACL bits for apollo SR10.1
 include/cmdch.h                 
 include/deltree.h               delta-tree function interface
+include/dyn_str.h               dynamic-strings interface
 include/llib-ltd                template for lint-library
 include/port2vms.h              interface for vms-porting functions
 include/ptypes.h                principal include-file for TD_LIB
@@ -96,6 +97,8 @@ src/pathname/pathhead.c         obtain parent directory-name from path
 src/pathname/pathleaf.c         obtain basename (leaf) from pathname
 src/pathname/relpath.c          converts absolute-pathname to relative
 src/pathname/sameleaf.c         compare ends of pathnames
+src/pathname/stat_dir.c         stat, ensure path is directory
+src/pathname/stat_fil.c         stat, ensure path is file
 src/pathname/track_wd.c         tracks working directory for baseline, rcsput, rcsget utilities
 src/pathname/trimpath.c         trim excess punctuation from a standard unix-style pathname (cf: abspath)
 src/pathname/trnstree.c         translate (producing new output-files) tree-of-files

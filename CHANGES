@@ -1,3 +1,125 @@
+1992-02-06  dickey@software.org
+
+	* src/cm_funcs/rcsargpr.c:
+	corrected logic that sets 'errs_???' variables
+	(note that 'errno' is not altered if a system-call returns 0)
+
+1992-02-06  ste_cm@software.org
+
+	* src/cm_funcs/rcsargpr.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+	* src/cm_funcs/rcsargpr.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1992-02-06  dickey@software.org
+
+	* include/dyn_str.h: RCS_BASE
+
+	* Makefile, include/Makefile: added 'dyn_string.h'
+
+	* include/llib-ltd: added "dyn_string.h"
+
+1992-02-06  ste_cm@software.org
+
+	* include/llib-ltd: BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1992-02-06  dickey@software.org
+
+	* src/cm_funcs/rcstemp.c: use 'stat_dir()'
+
+1992-02-06  ste_cm@software.org
+
+	* src/cm_funcs/rcstemp.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1992-02-06  dickey@software.org
+
+	* src/cm_funcs/rcsedit.c: use 'stat_dir()' and 'stat_file()'
+
+1992-02-06  ste_cm@software.org
+
+	* src/cm_funcs/rcsedit.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1992-02-06  dickey@software.org
+
+	* src/pathname/pathhead.c: use 'stat_dir()'
+
+1992-02-06  ste_cm@software.org
+
+	* src/pathname/pathhead.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1992-02-06  dickey@software.org
+
+	* src/pathname/which.c: use 'stat_file()'
+
+1992-02-06  ste_cm@software.org
+
+	* src/pathname/which.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1992-02-06  dickey@software.org
+
+	* src/pathname/filesize.c: use 'stat_file()'
+
+1992-02-06  ste_cm@software.org
+
+	* src/pathname/filesize.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+	* src/pathname/filesize.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1992-02-06  dickey@software.org
+
+	* test/Makefile: added 'rcsargpair'
+
+	* src/cm_funcs/rcsargpr.c:
+	modified so I can do combination of stat on demand, and
+	retain old errs.
+
+	* src/descrip.mms: added 'stat_dir' and 'stat_file'
+
+	* src/pathname/stat_fil.c: RCS_BASE
+
+1992-02-06  ste_cm@software.org
+
+	* src/pathname/stat_fil.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+	* src/pathname/stat_fil.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1992-02-06  dickey@software.org
+
+	* src/pathname/stat_dir.c: RCS_BASE
+
+1992-02-06  ste_cm@software.org
+
+	* src/pathname/stat_dir.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+	* src/pathname/stat_dir.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1992-02-06  dickey@software.org
+
+	* include/td_lib.h: added 'stat_dir' and 'stat_file'
+
+	* src/Makefile: added 'stat_dir()' and 'stat_file()'
+
+	* include/ptypes.h: added macros isDIR, isFILE and isLINK
+
+	* src/Makefile, src/descrip.mms:
+	renamed 'rcsfilepair' to 'rcsargpair' to keep names < 14 chars
+
+	* include/rcsdefs.h: renamed 'rcsfilepair' to 'rcsargpair'
+
+	* src/cm_funcs/rcsargpr.c:
+	renamed from 'rcsfilepair' to 'rcsargpair' for name-lengths
+
 1992-02-05  dickey@software.org
 
 	* src/pathname/walktree.c:

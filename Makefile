@@ -1,4 +1,4 @@
-# $Id: Makefile,v 10.3 1992/02/04 10:41:22 dickey Exp $
+# $Id: Makefile,v 10.4 1992/02/06 15:50:21 dickey Exp $
 # Top-level makefile for CM_TOOLS common library
 
 ####### (Development) ##########################################################
@@ -24,6 +24,7 @@ ALL	=\
 	$I/cmdch.h\
 	$I/common.h\
 	$I/deltree.h\
+	$I/dyn_string.h\
 	$I/ptypes.h\
 	$I/rcsdefs.h\
 	$I/sccsdefs.h\
@@ -75,6 +76,7 @@ i=interface
 $I/cmdch.h:		$i/cmdch.h	; $(PUT)
 $I/common.h:		$i/common.h	; $(PUT)
 $I/deltree.h:		$i/deltree.h	; $(PUT)
+$I/dyn_string.h:	$i/dyn_string.h	; $(PUT)
 $I/ptypes.h:		$i/ptypes.h	; $(PUT)
 $I/rcsdefs.h:		$i/rcsdefs.h	; $(PUT)
 $I/sccsdefs.h:		$i/sccsdefs.h	; $(PUT)
