@@ -1,65 +1,23 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcstemp.c,v 9.0 1991/05/15 09:46:39 ste_cm Rel $";
+static	char	Id[] = "$Id: rcstemp.c,v 9.1 1991/07/11 14:05:58 dickey Exp $";
 #endif
 
 /*
  * Title:	rcstemp.c (rcs to temp-name)
  * Author:	T.E.Dickey
  * Created:	25 Aug 1988
- * $Log: rcstemp.c,v $
- * Revision 9.0  1991/05/15 09:46:39  ste_cm
- * BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
- *
- *		Revision 8.1  91/05/15  09:46:39  dickey
- *		apollo sr10.3 cpp complains about tag in #endif
- *		
- *		Revision 8.0  89/12/07  15:21:19  ste_cm
- *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
- *		
- *		Revision 7.0  89/12/07  15:21:19  ste_cm
- *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
- *		
- *		Revision 6.0  89/12/07  15:21:19  ste_cm
- *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
- *		
- *		Revision 5.2  89/12/07  15:21:19  dickey
- *		lint (SunOs 3.4, Apollo SR10.1)
- *		
- *		Revision 5.1  89/10/31  13:32:06  dickey
- *		account for present setting of 'umask'; use chown to force
- *		the group of the created-directory
- *		
- *		Revision 5.0  89/10/04  13:09:32  ste_cm
- *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
- *		
- *		Revision 4.2  89/10/04  13:09:32  dickey
- *		lint (apollo SR10.1)
- *		
- *		Revision 4.1  89/08/24  16:06:36  dickey
- *		recoded to ensure that if the directory's group-id is not
- *		consistent with the process's group-id, then we must relax
- *		the directory protection.
- *		
- *		Revision 4.0  89/04/07  16:26:34  ste_cm
- *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
- *		
- *		Revision 3.0  89/04/07  16:26:34  ste_cm
- *		BASELINE Mon Jun 19 13:27:01 EDT 1989
- *		
- *		Revision 2.0  89/04/07  16:26:34  ste_cm
- *		BASELINE Fri Apr  7 16:41:37 EDT 1989
- *		
- *		Revision 1.6  89/04/07  16:26:34  dickey
- *		if attempt to make tmp-directory more restrictive fails, don't
- *		give up (after all, if we have world-access, it still works).
- *		
- *		Revision 1.5  89/04/07  16:12:49  dickey
- *		bypassed bug in apollo SR9 (mkdir ignores mode) by explicitly
- *		setting protection after doing 'mkdir()'.
- *		
- *		Revision 1.4  89/03/20  09:31:04  dickey
- *		sccs2rcs keywords
- *		
+ * Modified:
+ *		11 Jul 1991, don't need temp-name if suid-root
+ *		31 Oct 1989, account for present setting of 'umask'; use chown
+ *			     to force the group of the created-directory
+ *		24 Aug 1989, recoded to ensure that if the directory's group-id
+ *			     is not consistent with the process's group-id, then
+ *			     we must relax the directory protection.
+ *		07 Apr 1989, if attempt to make tmp-directory more restrictive
+ *			     fails, don't give up (after all, if we have world-
+ *			     access, it still works).  Bypassed bug in apollo
+ *			     SR9 (mkdir ignores mode) by explicitly setting
+ *			     protection after doing 'mkdir()'.
  *		20 Mar 1989, create user-level directory under /tmp to avoid
  *			     conflicts between users.
  *		30 Aug 1988, invoke 'filecopy()' to make temp-file look more
@@ -87,7 +45,8 @@ char	*working;
 {
 	static	char	tmp[BUFSIZ];
 
-	if (getuid() != geteuid()) {
+	if (geteuid() != getuid()
+	 && geteuid() != 0) {
 		char	*tf = pathcat(tmp, "/tmp", uid2s((int)getuid()));
 		int	mode = ((getgid() == getegid()) ? 0775 : 0777);
 		struct	stat	sb;
