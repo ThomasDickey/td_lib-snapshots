@@ -4,6 +4,9 @@
  * Created:	15 Feb 1988
  *
  * Modified:
+ *		08 Mar 2004, fix a couple of logic errors that made this
+ *			     read the cache an extra time and omit data for
+ *			     the first two items requested per directory.
  *		07 Mar 2004, remove K&R support, indent'd.
  *		26 Apr 2003, finally got around to finishing...
  */
@@ -14,7 +17,7 @@
 #include	<time.h>
 #include	"rcsdefs.h"
 
-MODULE_ID("$Id: cvslast.c,v 12.3 2004/03/07 16:31:58 tom Exp $")
+MODULE_ID("$Id: cvslast.c,v 12.5 2004/03/09 00:09:22 tom Exp $")
 
 #define NAME_LIST "Entries"
 #define NAME_ARCH "Repository"
@@ -121,6 +124,43 @@ string2time(char *string)
 }
 
 /*
+ * Would use strtok(), but must work around empty fields.
+ */
+static char *
+parse_field(char **s)
+{
+    int skip = strcspn(*s, "/");
+    char *result = 0;
+
+    if (skip != 0) {
+	result = *s;
+    }
+    *s += skip;
+    if (**s == '/')
+	*s += 1;
+    return result;
+}
+
+static char *
+copy_field(char *src)
+{
+    char *result = 0;
+
+    if (src != 0 && *src != '/' && *src != EOS) {
+	char *save = strchr(src, '/');
+
+	if (save != 0)
+	    *save = '\0';
+	result = txtalloc(src);
+	if (save != 0)
+	    *save = '/';
+    } else {
+	result = txtalloc("?");
+    }
+    return result;
+}
+
+/*
  * Read the list of file-entries
  */
 static void
@@ -142,20 +182,39 @@ read_entries(CVS_WORK * cache)
 	    cache->Entries[j].timestamp = 0;
 
 	    if (s[0] == '/' && s[1] != '/') {
-		if ((t = strtok(s, "/")) != 0)
-		    cache->Entries[k].filename = txtalloc(t);
-		if ((t = strtok(0, "/")) != 0)
-		    cache->Entries[k].version = txtalloc(t);
-		if ((t = strtok(0, "/")) != 0)
+		++s;
+		cache->Entries[k].filename = copy_field(parse_field(&s));
+		cache->Entries[k].version = copy_field(parse_field(&s));
+		if ((t = parse_field(&s)) != 0)
 		    cache->Entries[k].timestamp = string2time(t);
-		if ((t = strtok(0, "/")) != 0)
-		    cache->Entries[k].status = txtalloc(t);
+		cache->Entries[k].status = copy_field(parse_field(&s));
 		++k;
 	    }
 	}
 	cache->num_entries = k;
 	vecfree(list);
     }
+}
+
+static int
+read_from_cache(CVS_WORK * cache,
+		char *leaf,
+		char **vers_,
+		time_t * date_,
+		char **lock_)
+{
+    int n;
+    CVS_ENTRY *my_list = cache->Entries;
+
+    for (n = 0; n < cache->num_entries; ++n) {
+	if (!strcmp(my_list[n].filename, leaf)) {
+	    *vers_ = txtalloc(my_list[n].version);
+	    *lock_ = txtalloc(my_list[n].status);
+	    *date_ = my_list[n].timestamp;
+	    return TRUE;
+	}
+    }
+    return FALSE;
 }
 
 static void
@@ -167,10 +226,7 @@ tryCVS(char *path,
     char working[MAXPATHLEN];
     char *leaf = fleaf(path);
     char *s;
-    CVS_ENTRY *my_list;
     CVS_WORK *cache;
-    int cached = FALSE;
-    int n;
 
     strcpy(working, path);
     if ((s = fleaf_delim(working)) != 0)
@@ -180,18 +236,11 @@ tryCVS(char *path,
      */
     for (cache = my_work; cache != 0; cache = cache->next) {
 	if (!strcmp(cache->working, working)) {
-	    if (check_timestamp(cache))
+	    if (check_timestamp(cache)) {
 		break;
-	    my_list = cache->Entries;
-	    cached = TRUE;
-	    for (n = 0; n < cache->num_entries; ++n) {
-		if (!strcmp(my_list[n].filename, leaf)) {
-		    *vers_ = txtalloc(my_list[n].version);
-		    *lock_ = txtalloc(my_list[n].status);
-		    *date_ = my_list[n].timestamp;
-		    return;
-		}
 	    }
+	    if (read_from_cache(cache, leaf, vers_, date_, lock_))
+		return;
 	}
     }
 
@@ -210,8 +259,12 @@ tryCVS(char *path,
 	cache->Entries = 0;
 	cache->Repository = 0;
 	cache->Root = 0;
+	read_entries(cache);
+	(void) check_timestamp(cache);
+    } else {
+	read_entries(cache);
     }
-    read_entries(cache);
+    (void) read_from_cache(cache, leaf, vers_, date_, lock_);
 }
 
 void
@@ -222,6 +275,7 @@ cvslast(char *working,		/* working directory (absolute) */
 	char **lock_)
 {
     char temp[MAXPATHLEN];
+
     abspath(pathcat(temp, working, path));
     tryCVS(temp, vers_, date_, lock_);
 }
