@@ -1,5 +1,5 @@
 #ifndef lint
-static  char    Id[] = "$Id: name2s.c,v 9.3 1991/10/04 13:12:39 dickey Exp $";
+static  char    Id[] = "$Id: name2s.c,v 11.0 1991/10/17 07:53:27 ste_cm Rel $";
 #endif 
 
 /*
@@ -111,10 +111,9 @@ _DCL(int,	opt)
 }
 
 #ifdef	TEST
+/*ARGSUSED*/
 _MAIN
 {
-	extern	int	optind;
-
 	register int j;
 	int	opt	= 0;
 	char	bfr[BUFSIZ];

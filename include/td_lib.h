@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 9.13 1991/10/11 16:26:04 dickey Exp $ */
+/* $Id: td_lib.h,v 10.0 1991/10/17 10:44:46 ste_cm Rel $ */
 
 /*
  * Combined lint-library/function prototype definitions for CM_TOOLS COMMON
@@ -842,6 +842,19 @@
 
 	/* walktree.c ------------------------------------------------- */
 #ifdef	unix
+
+#define	WALK_FUNC(f)	f(\
+			_ARX(char *,	path)\
+			_ARX(char *,	name)\
+			_ARX(struct stat *,sp)\
+			_ARX(int,	readable)\
+			_AR1(int,	level)	)\
+			_DCL(char *,	path)\
+			_DCL(char *,	name)\
+			_DCL(struct stat *,sp)\
+			_DCL(int,	readable)\
+			_DCL(int,	level)
+
 	int	walktree(
 			_arx(char *,	p)
 			_arx(char *,	n)

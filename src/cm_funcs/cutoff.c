@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: cutoff.c,v 9.1 1991/10/03 16:15:04 dickey Exp $";
+static	char	Id[] = "$Id: cutoff.c,v 10.0 1991/10/17 07:56:03 ste_cm Rel $";
 #endif
 
 /*
@@ -18,12 +18,9 @@ static	char	Id[] = "$Id: cutoff.c,v 9.1 1991/10/03 16:15:04 dickey Exp $";
  */
 
 #define	STR_PTYPES
-#include	"ptypes.h"
+#include	<ptypes.h>
 #include	<ctype.h>
 #include	<time.h>
-
-extern	char	*optarg;	/* points to beginning of argument */
-extern	int	optind;
 
 #define	Z(n)	twod(&bfr[n+n])
 

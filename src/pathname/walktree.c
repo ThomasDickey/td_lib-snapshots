@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: walktree.c,v 9.1 1991/10/03 16:30:52 dickey Exp $";
+static	char	Id[] = "$Id: walktree.c,v 10.0 1991/10/17 07:53:58 ste_cm Rel $";
 #endif
 
 /*
@@ -160,9 +160,6 @@ int	level;
  ************************************************************************/
 
 #ifdef	TEST
-extern	int	optind;		/* 'getopt()' index to argv */
-extern	char	*optarg;	/* 'getopt()' argument in argv */
-
 static	int	lines;
 
 static
@@ -193,6 +190,7 @@ char	*type;
 	PRINTF("** total= %d\n", walktree((PTR)0, name,display,type,0));
 }
 
+/*ARGSUSED*/
 _MAIN
 {
 	register int j;
@@ -223,12 +221,5 @@ _MAIN
 
 	(void)exit(SUCCESS);
 	/*NOTREACHED*/
-}
-
-failed(s)
-char	*s;
-{
-	perror(s);
-	(void)exit(FAIL);
 }
 #endif

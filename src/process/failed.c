@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: failed.c,v 9.1 1991/10/04 07:58:36 dickey Exp $";
+static	char	Id[] = "$Id: failed.c,v 12.0 1991/10/17 16:30:03 ste_cm Rel $";
 #endif
 
 /*
@@ -24,6 +24,7 @@ failed(
 _AR1(char *,	s))
 _DCL(char *,	s)
 {
+	FFLUSH(stdout);
 	perror(s);
 	exit(FAIL);
 	/*NOTREACHED*/

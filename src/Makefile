@@ -1,19 +1,21 @@
-# $Id: Makefile,v 9.10 1991/10/11 07:45:59 dickey Exp $
+# $Id: Makefile,v 10.0 1991/10/17 08:01:45 ste_cm Rel $
 # MAKE-file for miscellaneous library routines
 #
 ####### (Development) ##########################################################
 GET	= checkout
-#
+
 ####### (Command-line Options) #################################################
 I	= ../interface
 J	= ../../../interface
+
 INCLUDES= -I$I
 CPP_OPTS= $(DEFINES) $(INCLUDES)
-CFLAGS  =
+#CFLAGS  =
+
 DATE	= echo '****'`date` >> $@
 LINTOPT	= $(CPP_OPTS) -I$J -ltd -lcurses -lapollo
 LIBS	= -lcurses -ltermcap
-#
+
 ####### (Standard Lists) #######################################################
 A	= ../lib/lib.a
 CSRC	=\
@@ -256,16 +258,18 @@ rcslocks.o:	$(RCSDEFS_H)
 rcsname.o:	$(RCSDEFS_H)
 rcspath.o:	$J/rcspath.h	; $(CC) $(CPP_OPTS) -I$J $(CFLAGS) -c $*.c
 rcspermit.o:	$(RCSDEFS_H)
+sccslast.o:	$I/sccsdefs.h
 sccsname.o:	$I/sccsdefs.h
 vcs_file.o:	$(RCSDEFS_H)
 #
 ####### (Development) ##########################################################
 $(SOURCES):			; $(GET) $@
-lint.out:	$(CSRC)		; $(DATE); tdlint $(LINTOPT) $? >>$@
-lint2.out:	$(CSRC)
+
+lint.out:	$(CSRC)
 	$(DATE)
 	sh -c 'for i in $?;do echo $$i: | tee -a $@;\
 		tdlint $(LINTOPT) $$i >>$@;done'
+
 lincnt.out:	$(CSRC)		; $(DATE); lincnt $(CSRC) >>$@
 #
 .SUFFIXES: .lint .tst .i
