@@ -1,3 +1,30 @@
+1988-09-09  dickey@software.org
+
+	* include/rcsdefs.h:
+	added 'extern' definitions here to simplify applications.
+	obsoleted CI_PATH and CO_PATH with 'rcspath.c' module.
+
+	* include/llib-ltd: added 'rcspath.c' module.
+
+	* src/Makefile: added 'rcspath.c' module
+
+	* src/cm_funcs/rcspath.c: New file.
+
+	* src/pathname/abspath.c:
+	corrected handling of "//" and "/" for current-directory (was adding
+	an extra '/').
+
+	* src/pathname/abspath.c: sccs2rcs keywords
+
+1988-09-09  ste_cm@software.org
+
+	* src/pathname/abspath.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+	* src/pathname/abspath.c: BASELINE Thu Apr  6 09:45:13 EDT 1989
+
+	* src/pathname/abspath.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
 1988-09-02  dickey@software.org
 
 	* src/cm_funcs/rcsname.c: 'rcs_dir()' encapsulates RCS-directory name.
