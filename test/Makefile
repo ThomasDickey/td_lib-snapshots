@@ -1,9 +1,9 @@
-# $Id: Makefile,v 11.1 1992/08/03 14:22:23 dickey Exp $
+# $Id: Makefile,v 11.2 1992/08/07 14:46:15 dickey Exp $
 # make-file for CM_TOOLS common/test library
-#
 
 ####### (Development) ##########################################################
-GET	= checkout
+include ../../common.mk
+
 I	= ../interface
 S	= ../src
 
@@ -75,11 +75,10 @@ PROGS	=\
 ALL	= $(PROGS)
 
 ####### (Standard Productions) #################################################
-all:	sources		; @echo 'type "make run_tests"'
-clean:			; rm -f *.[oai] *.bak *.lint *.log *.out
-clobber:	clean	; rm -f $(ALL)
-destroy:
-	sh -c 'for i in *;do case $$i in RCS);; *) rm -f $$i;;esac;done'
+all:		$(SOURCES)	; @echo 'type "make run_tests"'
+clean:				; rm -f $(CLEAN)
+clobber:	clean		; rm -f $(ALL)
+destroy:			; $(DESTROY)
 sources:	$(SOURCES)
 run_tests:	$(PROGS)	; echo 'no module-level tests available'
 lint.out:

@@ -1,16 +1,12 @@
-# $Id: Makefile,v 11.0 1992/02/27 09:56:43 ste_cm Rel $
+# $Id: Makefile,v 11.1 1992/08/07 14:32:21 dickey Exp $
 # Top-level makefile for CM_TOOLS common library
 
 ####### (Development) ##########################################################
-TOP	= ../..
+include ../common.mk
+
 B	= $(TOP)/bin
 I	= $(TOP)/interface
 L	= $(TOP)/lib
-
-GET	= checkout
-COPY	= cp -p
-PUT	= rm -f $@; $(COPY) $? $@
-MAKE	= make $(MFLAGS) -k$(MAKEFLAGS)	CFLAGS="$(CFLAGS)" COPY="$(COPY)"
 
 ####### (Standard Lists) #######################################################
 SOURCES	= Makefile descrip.mms README
@@ -29,7 +25,7 @@ ALL	=\
 	$I/rcsdefs.h\
 	$I/sccsdefs.h\
 	$I/spreadsheet.h\
-	$L/lib.a
+	$L/$(THAT).a
 
 ####### (Standard Productions) #################################################
 all\
@@ -53,19 +49,16 @@ lintlib::	$(MFILES)
 sources::	$(SOURCES)
 
 clean\
-clobber::
-	rm -f *.bak *.log *.out core
+clobber::			; rm -f $(CLEAN)
 clobber\
-destroy::
-	rm -rf lib
-destroy::
-	sh -c 'for i in *;do case $$i in RCS);; *) rm -f $$i;;esac;done;exit 0'
+destroy::			; rm -rf lib
+destroy::			; $(DESTROY)
 
 run_tests::
 	@echo '** no test suite available for this module'
 
 install::	all $(ALL)
-deinstall::		; rm -f $(ALL)
+deinstall::			; rm -f $(ALL)
 
 ####### (Details of Productions) ###############################################
 $(MFILES)\
@@ -82,4 +75,4 @@ $I/rcsdefs.h:		$i/rcsdefs.h	; $(PUT)
 $I/sccsdefs.h:		$i/sccsdefs.h	; $(PUT)
 $I/spreadsheet.h:	$i/spreadsheet.h; $(PUT)
 
-$L/lib.a:	lib/lib.a		; $(PUT); ranlib $@
+$L/$(THAT).a:	lib/$(THAT).a		; $(PUT); ranlib $@
