@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)rcsedit.c	1.1 88/05/27 11:14:41";
+static	char	sccs_id[] = "@(#)rcsedit.c	1.2 88/08/05 14:38:36";
 #endif	lint
 
 /*
@@ -7,6 +7,8 @@ static	char	sccs_id[] = "@(#)rcsedit.c	1.1 88/05/27 11:14:41";
  * Author:	T.E.Dickey
  * Created:	26 May 1988
  * Modified:
+ *		05 Aug 1988, removed 'rcsname()' call (done in callers).
+ *			     changed interpretation of 'show' arg of 'rcsopen()'
  *
  * Function:	Open an RCS file, parse it, optionally modifying fields.
  */
@@ -16,7 +18,7 @@ static	char	sccs_id[] = "@(#)rcsedit.c	1.1 88/05/27 11:14:41";
 #include	<stdio.h>
 #include	<ctype.h>
 extern	FILE	*tmpfile();
-extern	char	*rcsname();
+extern	char	*name2rcs();
 extern	char	*strcat();
 extern	char	*strcpy();
 extern	char	*strchr();
@@ -83,11 +85,11 @@ writeit()
 rcsopen(name, show)
 char	*name;
 {
-	(void)strcpy(fname, rcsname(name));
+	(void)strcpy(fname, name);
 	changed	= FALSE;
 	lines	= 0;
 	verbose	= show;
-	VERBOSE("rcs-edit(%s) -> (%s)\n", name, fname);
+	VERBOSE("++ rcs-%s(%s)\n", (show > 0) ? "edit" : "scan", fname);
 	if (!(fpS = fopen(fname, "r"))) {
 		PRINTF("?? Cannot open \"%s\"\n", fname);
 		return (FALSE);
@@ -159,7 +161,7 @@ rcsclose()
 		while (readit())
 			writeit();
 		(void)fclose(fpS);
-		VERBOSE("rcs-copyback %d lines\n", lines);
+		VERBOSE("++ rcs-copyback %d lines\n", lines);
 		if (!copyback(fpT, fname, 0444, lines))
 			perror(fname);
 	} else

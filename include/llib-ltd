@@ -1,4 +1,4 @@
-/* @(#)llib-ltd	1.28 88/07/27 15:26:59 */
+/* @(#)llib-ltd	1.29 88/08/05 13:31:49 */
 /*LINTLIBRARY*/
 
 #include	<curses.h>
@@ -124,7 +124,8 @@ int	rcskeys(s) char *s; { return(0); }
 	rcslast(wd,n,v_,t_,l_) char *wd,*n; char **v_, **l_; time_t *t_; { }
 
 /* rcsname.c ---------------------------------------------------------- */
-char *	rcsname(name) char *name; { return(0); }
+char *	rcs2name(name) char *name; { return(0); }
+char *	name2rcs(name) char *name; { return(0); }
 
 /* resizewin.c -------------------------------------------------------- */
 int	resizewin() { return(0); }
