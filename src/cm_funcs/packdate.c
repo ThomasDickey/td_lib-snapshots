@@ -38,9 +38,13 @@
 #define TIM_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: packdate.c,v 12.14 2000/01/01 01:28:49 tom Exp $")
+MODULE_ID("$Id: packdate.c,v 12.15 2001/07/11 20:21:22 tom Exp $")
 
 #define	LEAP(y)	(!(y&3))
+
+#ifdef timezone
+#undef timezone		/* workaround for U/Win bug */
+#endif
 
 long	gmt_offset(
 	_AR1(time_t,	t))
