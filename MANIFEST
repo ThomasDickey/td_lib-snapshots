@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19890313
+MANIFEST for td_lib, version t19890314
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 include                         subdirectory
@@ -76,6 +76,7 @@ src/port2vms/path2dir.c         convert VMS pathname to directory
 src/port2vms/path2vms.c         convert unix pathname (directory!) to VMS format
 src/port2vms/rmsio.c            VMS equivalent to system-level (open, close, read, write) unix I/O
 src/port2vms/time2vms.c         convert unix time to VMS format
+src/port2vms/uid2s.c            convert VMS uid/gid to string (cf: code in CM_TOOLS)
 src/port2vms/utimes.c           VMS hack to provide unix-compatible 'utimes()' function.
 src/port2vms/vms_dirs.c         VMS hack to provide unix-style directory access
 src/port2vms/zone2vms.c         compute timezone adjustment for VMS/unix time conversion
