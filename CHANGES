@@ -1,3 +1,93 @@
+1990-03-12  dickey@software.org
+
+	* src/pathname/abspath.c: lint (apollo sr10.1)
+
+1990-03-12  ste_cm@software.org
+
+	* src/pathname/abspath.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1990-03-12  dickey@software.org
+
+	* src/pathname/name2s.c: lint (apollo sr10.1)
+
+1990-03-12  ste_cm@software.org
+
+	* src/pathname/name2s.c: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/pathname/name2s.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/pathname/name2s.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1990-03-12  dickey@software.org
+
+	* src/pathname/which.c: lint (apollo sr10.1)
+
+1990-03-12  ste_cm@software.org
+
+	* src/pathname/which.c: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/pathname/which.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/pathname/which.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1990-03-12  dickey@software.org
+
+	* src/pathname/relpath.c: lint (apollo sr10.1)
+
+1990-03-12  ste_cm@software.org
+
+	* src/pathname/relpath.c: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/pathname/relpath.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/pathname/relpath.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1990-03-12  dickey@software.org
+
+	* src/cm_funcs/rcsedit.c: lint (apollo sr10.1)
+
+1990-03-12  ste_cm@software.org
+
+	* src/cm_funcs/rcsedit.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1990-03-12  dickey@software.org
+
+	* include/ptypes.h:
+	made def of 'apollo_sr10' independent of '__STDC__' so we can
+	run lint with '__STDC__' disabled, bypassing bug in sr10.1
+	sys5-lint.
+
+	* src/curses/scr_size.c: lint (apollo sr10.1)
+
+1990-03-12  ste_cm@software.org
+
+	* src/curses/scr_size.c: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/curses/scr_size.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1990-03-12  dickey@software.org
+
+	* src/curses/cmdch.c: lint (apollo sr10.1)
+
+1990-03-12  ste_cm@software.org
+
+	* src/curses/cmdch.c: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/curses/cmdch.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/curses/cmdch.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
 1990-03-05  dickey@software.org
 
 	* include/ptypes.h: added defs of P_tmpdir, L_tmpnam for apollo compat.

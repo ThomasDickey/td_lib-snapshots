@@ -1,14 +1,20 @@
 #ifndef	lint
-static	char	Id[] = "$Id: abspath.c,v 5.2 1989/12/08 08:58:48 dickey Exp $";
+static	char	Id[] = "$Id: abspath.c,v 6.0 1990/03/12 09:07:33 ste_cm Rel $";
 #endif	lint
 
 /*
  * Author:	T.E.Dickey
  * Created:	17 Sep 1987
  * $Log: abspath.c,v $
- * Revision 5.2  1989/12/08 08:58:48  dickey
- * apollo sr10.1 provides get-name call with correct char-case
+ * Revision 6.0  1990/03/12 09:07:33  ste_cm
+ * BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
  *
+ *		Revision 5.3  90/03/12  09:07:33  dickey
+ *		lint (apollo sr10.1)
+ *		
+ *		Revision 5.2  89/12/08  09:02:46  dickey
+ *		apollo sr10.1 provides get-name call with correct char-case
+ *		
  *		Revision 5.1  89/12/08  08:45:32  dickey
  *		added a set of default-cases for test-driver
  *		
@@ -45,14 +51,16 @@ static	char	Id[] = "$Id: abspath.c,v 5.2 1989/12/08 08:58:48 dickey Exp $";
 #define	STR_PTYPES
 #include	"ptypes.h"
 #ifdef	apollo
-#ifdef	__STDC__
+#ifdef	apollo_sr10
+#define	index	Index
 #include	<apollo/base.h>
 #include	<apollo/name.h>
-#else	/* !__STDC__ */
+#undef	index	/* fix for sys5-lint */
+#else	/* !apollo_sr10 */
 #include	</sys/ins/base.ins.c>
 #include	</sys/ins/name.ins.c>
 #include	<ctype.h>
-#endif	/* __STDC__ */
+#endif	/* apollo_sr10 */
 #endif	/* apollo */
 
 #include	<pwd.h>
@@ -76,11 +84,13 @@ static
 apollo_name(path)
 char	*path;
 {
-#ifdef	__STDC__			/* sr10.x */
+#ifdef	apollo_sr10			/* sr10.x */
 	auto	status_$t	st;
 	auto	unsigned short	out_len;
 
-	name_$get_path_lc(path, strlen(path), BUFSIZ, path, &out_len, &st);
+	name_$get_path_lc(
+		path, (unsigned short)strlen(path),
+		BUFSIZ, path, &out_len, &st);
 	if (st.all != status_$ok)
 		out_len = 0;
 	path[out_len] = EOS;
