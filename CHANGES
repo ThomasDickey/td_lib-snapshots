@@ -1,3 +1,7 @@
+1992-10-29  dickey@software.org
+
+	* src/cm_funcs/rcslast.c: recoded to use 'rcsedit.c' module
+
 1992-10-28  dickey@software.org
 
 	* src/cm_funcs/rcsperm.c: allow debug-trace of this module
