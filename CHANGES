@@ -1,3 +1,8 @@
+2004-02-20  dickey@invisible-island.net
+
+	* aclocal.m4:
+	resync (mostly CF_XOPEN_SOURCE) with macros from lynx/ncurses/tin
+
 2004-02-17  dickey@invisible-island.net
 
 	* config.guess: 2004-02-16
