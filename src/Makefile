@@ -1,4 +1,4 @@
-# $Id: Makefile,v 12.3 1993/11/30 14:24:12 dickey Exp $
+# $Id: Makefile,v 12.5 1994/05/30 18:35:32 tom Exp $
 # MAKE-file for miscellaneous library routines
 
 ####### (Environment) ##########################################################
@@ -101,6 +101,7 @@ CSRC	=\
 	savewin.c\
 	scomp.c\
 	sccs_dir.c\
+	sccsdbug.c\
 	sccslast.c\
 	sccsname.c\
 	scr_size.c\
@@ -229,6 +230,7 @@ OBJS	=\
 	$Z(savesuid.o)\
 	$Z(savewin.o)\
 	$Z(sccs_dir.o)\
+	$Z(sccsdbug.o)\
 	$Z(sccslast.o)\
 	$Z(sccsname.o)\
 	$Z(scomp.o)\
@@ -267,7 +269,7 @@ OBJS	=\
 	$Z(win2file.o)\
 	$Z(wrepaint.o)
 
-ALL	= $Z rcspath.h
+ALL	= $Z
 
 ####### (Standard Productions) #################################################
 all\
@@ -323,33 +325,20 @@ $Z(rcslast.o)\
 $Z(rcsload.o)\
 $Z(rcslocks.o)\
 $Z(rcsname.o)\
+$Z(rcspath.o)\
 $Z(rcsperm.o)\
 $Z(rcssymbs.o)\
 $Z(rcstime.o)\
 $Z(samebr.o)\
 $Z(vcs_file.o):	$(RCSDEFS_H)
 #
-$Z(rcspath.o):	rcspath.h
-	$(CC) $(CPP_OPTS) -I. $(CFLAGS) -c $*.c
-	@ar r $Z $*.o
-	@rm   -f $*.o
-#
+$Z(sccsdbug.o)\
 $Z(sccslast.o)\
 $Z(sccsname.o):	$(SCCSDEFS_H)
 #
 $Z(count_ss.o)\
 $Z(field_of.o)\
 $Z(ss_field.o):	$I/td_sheet.h $I/dyn_str.h
-#
-# If the rcs tool is not found in our path, assume that it lies in the same
-# directory as that in which we will install; but the install-directory has
-# been removed from our path as part of a clean-build.
-rcspath.h:		Makefile
-	rm -f $@
-	echo "#define RCS_PATH \"$(RCS_PATH)\"" >$@
-	@sh -c 'if ( grep "\"no\ rcs\ in" $@ )\
-		then echo "#define RCS_PATH \"`cd $(INSTALL_BIN);pwd`/\"" >$@;\
-		else echo ...found rcs-path; fi'
 #
 ####### (Development) ##########################################################
 $(SOURCES):			; $(GET) $@

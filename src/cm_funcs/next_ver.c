@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: next_ver.c,v 12.3 1993/11/27 14:27:06 dickey Exp $";
-#endif
-
 /*
  * Title:	next_version.c (RCS/SCCS next-version computation)
  * Author:	T.E.Dickey
@@ -15,6 +11,8 @@ static	char	Id[] = "$Id: next_ver.c,v 12.3 1993/11/27 14:27:06 dickey Exp $";
 
 #define		STR_PTYPES
 #include	"ptypes.h"
+
+MODULE_ID("$Id: next_ver.c,v 12.5 1994/05/30 21:18:46 tom Exp $")
 
 void	next_version(
 	_ARX(char *,	dst)
@@ -32,5 +30,5 @@ void	next_version(
 		dst += len;
 		src = ++t;
 	}
-	FORMAT(dst, "%d", strtol(src, &t, 0) + 1);
+	FORMAT(dst, "%ld", strtol(src, &t, 0) + 1);
 }

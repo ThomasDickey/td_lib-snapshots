@@ -1,12 +1,9 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: rcspath.c,v 12.2 1993/10/29 17:35:24 dickey Exp $";
-#endif
-
 /*
  * Title:	rcspath.c (rcs-utility to path-name)
  * Author:	T.E.Dickey
  * Created:	09 Sep 1988
  * Modified:
+ *		30 May 1994, RCS_PATH is obtained via autoconf.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		04 Oct 1991, conversion to ANSI
@@ -20,7 +17,8 @@ static	char	Id[] = "$Id: rcspath.c,v 12.2 1993/10/29 17:35:24 dickey Exp $";
 
 #include	"ptypes.h"
 #include	"rcsdefs.h"
-#include	"rcspath.h"
+
+MODULE_ID("$Id: rcspath.c,v 12.4 1994/05/30 11:19:50 tom Exp $")
 
 char *	rcspath(
 	_AR1(char *,	utility))

@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: cmdch.c,v 12.8 1994/05/23 22:47:38 tom Exp $";
+static	char	Id[] = "$Id: cmdch.c,v 12.9 1994/05/30 21:24:26 tom Exp $";
 #endif
 
 /*
@@ -33,10 +33,9 @@ static	char	Id[] = "$Id: cmdch.c,v 12.8 1994/05/23 22:47:38 tom Exp $";
  *		HAS_CURSOR is true iff the curses library defines KD, KU, etc.,
  *			which are attributes with arrow keys.
  *
- *		HAS_CURSES_KEYPAD is true iff the curses library supports
- *			'keypad()', so that we can assume 'getch()' will
- *			translate arrow keys, rather than requiring us to do
- *			so.
+ *		HAVE_KEYPAD is true iff the curses library supports 'keypad()',
+ *			so that we can assume 'getch()' will translate arrow
+ *			keys, rather than requiring us to do so.
  *
  *		NO_XTERM_MOUSE is true to suppress the xterm mouse logic, which
  *			requires a special escape sequence.
@@ -105,7 +104,7 @@ int	cmdch(
 	static	char	*KU, *KD, *KR, *KL;
 #endif
 
-#if !HAS_CURSES_KEYPAD
+#if !HAVE_KEYPAD
 	if (!init) {
 		init = TRUE;
 #ifndef	HAS_CURSOR
@@ -127,7 +126,7 @@ int	cmdch(
 					&& END(KL) == 'D';
 		}
 	}
-#endif	/* HAS_CURSES_KEYPAD */
+#endif	/* HAVE_KEYPAD */
 
 	while (!done) {
 		register j = 0;
@@ -135,14 +134,14 @@ int	cmdch(
 		c = getch();
 		if (iscntrl(c))
 			i_blk[j++] = c;
-#if HAS_CURSES_KEYPAD
+#if HAVE_KEYPAD
 		switch (c) {
 		case KEY_UP:	c = ARO_UP;	done = TRUE;	break;
 		case KEY_DOWN:	c = ARO_DOWN;	done = TRUE;	break;
 		case KEY_LEFT:	c = ARO_LEFT;	done = TRUE;	break;
 		case KEY_RIGHT:	c = ARO_RIGHT;	done = TRUE;	break;
 		}
-#endif /* HAS_CURSES_KEYPAD */
+#endif /* HAVE_KEYPAD */
 
 		if (ESC(c)) {	/* assume "standard" escapes */
 			do {
@@ -152,13 +151,13 @@ int	cmdch(
 		if (j) {
 			i_blk[j] = EOS;
 			done	= TRUE;
-#if !HAS_CURSES_KEYPAD
+#if !HAVE_KEYPAD
 			if	(EQL(KU))	c = ARO_UP;
 			else if	(EQL(KD))	c = ARO_DOWN;
 			else if	(EQL(KL))	c = ARO_LEFT;
 			else if	(EQL(KR))	c = ARO_RIGHT;
 			else
-#endif /* !HAS_CURSES_KEYPAD */
+#endif /* !HAVE_KEYPAD */
 			if (j > 1) {	/* extended escapes */
 #ifndef	NO_XTERM_MOUSE
 				/* patch: should test for xterm_mouse */
@@ -185,7 +184,7 @@ int	cmdch(
 					}
 				} else
 #endif	/* NO_XTERM_MOUSE */
-#if !HAS_CURSES_KEYPAD
+#if !HAVE_KEYPAD
 				if (ansi) {
 					j--;
 					if_C('A')	c = ARO_UP;
@@ -197,7 +196,7 @@ int	cmdch(
 						done = FALSE;
 					}
 				} else
-#endif	/* !HAS_CURSES_KEYPAD */
+#endif	/* !HAVE_KEYPAD */
 				{
 					beep();
 					done = FALSE;
