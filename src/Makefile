@@ -1,4 +1,4 @@
-# @(#)Makefile	1.57 89/03/08 13:20:30
+# @(#)Makefile	1.58 89/03/13 13:11:30
 # MAKE-file for miscellaneous library routines
 #
 ####### (Development) ##########################################################
@@ -78,6 +78,7 @@ CSRC	=\
 	uid2s.c\
 	usercopy.c\
 	userprot.c\
+	vcs_file.c\
 	vecalloc.c\
 	vercmp.c\
 	walktree.c\
@@ -153,6 +154,7 @@ OBJS	=\
 	uid2s.o\
 	usercopy.o\
 	userprot.o\
+	vcs_file.o\
 	vecalloc.o\
 	vercmp.o\
 	walktree.o\
@@ -216,6 +218,7 @@ savewin.o:	ptypes.h
 uid2s.o:	ptypes.h
 usercopy.o:	ptypes.h
 userprot.o:	ptypes.h
+vcs_file.o:	ptypes.h	rcsdefs.h
 walktree.o:	ptypes.h
 win2file.o:	ptypes.h
 #

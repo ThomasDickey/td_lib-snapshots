@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19890308
+MANIFEST for td_lib, version t19890313
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 include                         subdirectory
@@ -26,6 +26,7 @@ src/cm_funcs/rcsperm.c          directory-level RCS permissions
 src/cm_funcs/rcstemp.c          create temp-file for setuid operations
 src/cm_funcs/sccs_dir.c         returns name of SCCS directory
 src/cm_funcs/sccslast.c         scan for last SCCS date & version
+src/cm_funcs/vcs_file.c         encapsulates name of directory-level RCS permissions file
 src/cm_funcs/vercmp.c           compare version-strings
 src/curses                      subdirectory
 src/curses/beep.c               sound audible alarm

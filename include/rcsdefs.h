@@ -1,4 +1,4 @@
-/* @(#)rcsdefs.h	1.8 89/03/08 13:02:47 */
+/* @(#)rcsdefs.h	1.9 89/03/13 13:13:44 */
 
 /*
  * State information for scanning RCS-file header
@@ -25,9 +25,6 @@
 
 #define	RCS_DIR		"RCS"
 #define	RCS_SUFFIX	",v"
-
-#define	VCS_FILE	"RCS,v"	/* whole-directory permissions and baseline */
-#define	VCS_LOCK	"RCS,,"
 
 #define	FMT_DATE	"%02d.%02d.%02d.%02d.%02d.%02d"
 
