@@ -1,5 +1,5 @@
 /*
- * $Header: /users/source/archives/td_lib.vcs/include/RCS/port2vms.h,v 2.1 1989/07/31 09:24:16 dickey Exp $
+ * $Id: port2vms.h,v 3.0 1989/09/18 07:56:50 ste_cm Rel $
  *
  * VMS-definitions for supporting unix/vms port
  */
@@ -23,6 +23,11 @@ typedef	struct	timeval {
 	long	tv_sec;
 	long	tv_usec;
 	};
+
+#ifndef	getwd
+#define	getwd(p)	getcwd(p,sizeof(p)-2)	/* patch: ptypes.h (5.0) */
+extern	char		*getcwd();
+#endif	getwd
 
 #define	bzero(p,len)	memset(p,0,len)
 #define	bcopy(s,d,n)	memcpy(d,s,n)
