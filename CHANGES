@@ -1,3 +1,7 @@
+2001-02-13  dickey@clark.net
+
+	* config.sub, config.guess: resync with my-autoconf
+
 2001-01-29  dickey@clark.net
 
 	* configure.in: add CF_MIXEDCASE_FILENAMES
