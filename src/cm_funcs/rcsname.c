@@ -43,7 +43,7 @@
 
 #include	<ctype.h>
 
-MODULE_ID("$Id: rcsname.c,v 12.7 1998/05/30 11:05:28 tom Exp $")
+MODULE_ID("$Id: rcsname.c,v 12.8 2001/12/11 13:57:11 tom Exp $")
 
 #define	LEN_SUFFIX	(sizeof(suffix)-1)
 
@@ -116,7 +116,7 @@ static	char	fname[BUFSIZ];
 			if (full) {
 				s[-1] = EOS;
 				if (((t = leaf(d)) > d)
-				&&  sameleaf(t, rcs_dir()))
+				&&  sameleaf(t, rcs_dir(NULL,NULL)))
 					d = t;
 			}
 			while ((*d++ = *s++) != EOS)
@@ -144,12 +144,12 @@ char *	name2rcs(
 
 	if (rcs_suffix(name)) {
 		(void)strcpy(fname, name);
-	} else if (*rcs_dir() == PATH_SLASH) {
-		(void)strcat(pathcat(fname, rcs_dir(), leaf(name)), suffix);
+	} else if (*rcs_dir(NULL,NULL) == PATH_SLASH) {
+		(void)strcat(pathcat(fname, rcs_dir(NULL,NULL), leaf(name)), suffix);
 	} else {
 		if (full) {
 			trim_leaf(strcpy(fname, name));
-			if (sameleaf(fname, rcs_dir()))
+			if (sameleaf(fname, rcs_dir(NULL,NULL)))
 				trim_leaf(fname);
 			if (*fname)
 				(void)strcat(fname, slash);
@@ -158,7 +158,7 @@ char *	name2rcs(
 		(void)strcat(
 			strcat(
 				strcat(
-					strcat(fname, rcs_dir()),
+					strcat(fname, rcs_dir(NULL,NULL)),
 					slash),
 				leaf(name)),
 			suffix);

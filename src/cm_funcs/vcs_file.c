@@ -18,7 +18,7 @@
 #include	"ptypes.h"
 #include	"rcsdefs.h"
 
-MODULE_ID("$Id: vcs_file.c,v 12.3 1993/11/27 17:23:32 tom Exp $")
+MODULE_ID("$Id: vcs_file.c,v 12.4 2001/12/11 13:57:21 tom Exp $")
 
 char *
 vcs_file(
@@ -30,7 +30,7 @@ _DCL(char *,	path)
 _DCL(char *,	name)
 _DCL(int,	temp)
 {
-	register char	*s = pathleaf(rcs_dir());
+	register char	*s = pathleaf(rcs_dir(NULL,NULL));
 
 	if (!strcmp(s, ".")
 	||  isSlash(*s))

@@ -1,4 +1,4 @@
-/* $Id: rcsdefs.h,v 12.5 2000/01/01 01:27:48 tom Exp $ */
+/* $Id: rcsdefs.h,v 12.6 2001/12/11 13:52:31 tom Exp $ */
 
 #ifndef	RCSDEFS_H
 #define	RCSDEFS_H
@@ -61,7 +61,12 @@ typedef	void	(*RcsparseStr)(
 			_ret
 
 	/* rcs_dir.c ------------------------------------------------- */
-	char *	rcs_dir(_ar0)
+	char *	rcs_dir(
+			_arx(char *,	working_dir)
+			_ar1(char *,	pathname)
+			)
+			_dcl(char *,	working_dir)
+			_dcl(char *,	pathname)
 			_ret
 
 	/* rcsargpair.c ---------------------------------------------- */

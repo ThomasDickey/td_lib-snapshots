@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	18 May 1988, from 'sccslast.c'
  * Modified:
+ *		11 Dec 2001, modify rcs_dir() interface to implement $RCS_VAULT
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		01 Feb 1993, last change did not properly parse user:id from
@@ -33,7 +34,7 @@
 #include	<time.h>
 #include	"rcsdefs.h"
 
-MODULE_ID("$Id: rcslast.c,v 12.6 1994/05/21 20:18:44 tom Exp $")
+MODULE_ID("$Id: rcslast.c,v 12.8 2001/12/11 14:14:22 tom Exp $")
 
 /*
  * Returns the modification date of the given file, or 0 if not found
@@ -171,7 +172,7 @@ void	rcslast (
 	static	char	dotdot[] = { '.', '.', PATH_SLASH, EOS };
 	static	char	slash[] = {PATH_SLASH, EOS};		/* "/"   */
 	auto	 char	name[BUFSIZ+1],
-			*dname	= rcs_dir();
+			*dname	= rcs_dir(working,path);
 	auto	 int	len_s	= strlen(RCS_SUFFIX),
 			is_RCS,
 			len;

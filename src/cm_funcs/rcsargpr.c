@@ -77,7 +77,7 @@
 #include "rcsdefs.h"
 #include <errno.h>
 
-MODULE_ID("$Id: rcsargpr.c,v 12.5 1998/05/30 11:30:17 tom Exp $")
+MODULE_ID("$Id: rcsargpr.c,v 12.6 2001/12/11 13:56:38 tom Exp $")
 
 /************************************************************************
  *	local data							*
@@ -188,7 +188,7 @@ ok_name(
 _AR1(char *,	name))
 _DCL(char *,	name)
 {
-	auto	size_t	len = strlen(name) + strlen(rcs_dir()) + LEN_SUFFIX + 2;
+	auto	size_t	len = strlen(name) + strlen(rcs_dir(NULL,NULL)) + LEN_SUFFIX + 2;
 	static	char	delim	= '$';
 
 	if (len > MAXPATHLEN) {
@@ -354,7 +354,7 @@ _DCL(char **,	Argv)
 
 	/* supply missing directory on archive, for consistency */
 	if (archive != 0 && !fleaf_delim(archive))
-		archive = pathcat(temp_archive, rcs_dir(), archive);
+		archive = pathcat(temp_archive, rcs_dir(NULL,NULL), archive);
 
 	if (archive == 0) {
 
@@ -363,7 +363,7 @@ _DCL(char **,	Argv)
 
 		(void)strcpy(name_archive, working);	/* copy path */
 		FORMAT(leaf_of(name_archive), "%s/%s%s",
-			rcs_dir(), leaf_of(working), RCS_SUFFIX);
+			rcs_dir(NULL,NULL), leaf_of(working), RCS_SUFFIX);
 
 	} else if (working == 0) {
 

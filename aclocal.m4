@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Id: aclocal.m4,v 12.134 2001/08/28 23:06:41 tom Exp $
+dnl $Id: aclocal.m4,v 12.136 2001/12/11 13:49:56 tom Exp $
 dnl vi:set ts=4:
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "CF_" to "AC_"
@@ -933,6 +933,10 @@ dnl Construct a search-list for a nonstandard header-file
 AC_DEFUN([CF_HEADER_PATH],
 [$1=""
 
+test "$prefix" != /usr/local && \
+test -d /usr/local && \
+$1="[$]$1 /usr/local/include /usr/local/include/$2 /usr/local/$2/include"
+
 test "$includedir" != NONE && \
 test -d "$includedir" && \
 $1="[$]$1 $includedir $includedir/$2"
@@ -944,10 +948,6 @@ $1="[$]$1 $oldincludedir $oldincludedir/$2"
 test "$prefix" != NONE && \
 test -d "$prefix" && \
 $1="[$]$1 $prefix/include $prefix/include/$2 $prefix/$2/include"
-
-test "$prefix" != /usr/local && \
-test -d /usr/local && \
-$1="[$]$1 /usr/local/include /usr/local/include/$2 /usr/local/$2/include"
 
 test "$prefix" != /usr && \
 $1="[$]$1 /usr/include /usr/include/$2 /usr/$2/include"
@@ -963,6 +963,10 @@ dnl Construct a search-list for a nonstandard library-file
 AC_DEFUN([CF_LIBRARY_PATH],
 [$1=""
 
+test "$prefix" != /usr/local && \
+test -d /usr/local && \
+$1="[$]$1 /usr/local/lib /usr/local/lib/$2 /usr/local/$2/lib"
+
 test "$libdir" != NONE && \
 test -d $libdir && \
 $1="[$]$1 $libdir $libdir/$2"
@@ -975,10 +979,6 @@ test "$prefix" != NONE && \
 test "$prefix" != "$exec_prefix" && \
 test -d $prefix && \
 $1="[$]$1 $prefix/lib $prefix/lib/$2 $prefix/$2/lib"
-
-test "$prefix" != /usr/local && \
-test -d /usr/local && \
-$1="[$]$1 /usr/local/lib /usr/local/lib/$2 /usr/local/$2/lib"
 
 test "$prefix" != /usr && \
 $1="[$]$1 /usr/lib /usr/lib/$2 /usr/$2/lib"
@@ -1199,14 +1199,16 @@ dnl If the installer has set $CFLAGS or $CPPFLAGS so that the ncurses header
 dnl is already in the include-path, don't even bother with this, since we cannot
 dnl easily determine which file it is.  In this case, it has to be <curses.h>.
 dnl
+dnl The optional parameter gives the root name of the library, in case it is
+dnl not installed as the default curses library.  That is how the
+dnl wide-character version of ncurses is installed.
 AC_DEFUN([CF_NCURSES_CPPFLAGS],
 [
-AC_CACHE_CHECK(for ncurses header in include-path, cf_cv_ncurses_h,[
-	for cf_header in \
-		curses.h \
-		ncurses.h \
-		ncurses/curses.h \
-		ncurses/ncurses.h
+cf_ncuhdr_root=ifelse($1,,ncurses,$1)
+AC_CACHE_CHECK(for $cf_ncuhdr_root header in include-path, cf_cv_ncurses_h,[
+	cf_header_list="$cf_ncuhdr_root/curses.h $cf_ncuhdr_root/ncurses.h"
+	test "$cf_ncuhdr_root" = ncurses && cf_header_list="curses.h ncurses.h $cf_header_list"
+	for cf_header in $cf_header_list
 	do
 	AC_TRY_COMPILE([#include <$cf_header>],[
 #ifdef NCURSES_VERSION
@@ -1227,8 +1229,8 @@ make an error
 if test "$cf_cv_ncurses_h" != no ; then
 	cf_cv_ncurses_header=$cf_cv_ncurses_h
 else
-AC_CACHE_CHECK(for ncurses include-path, cf_cv_ncurses_h2,[
-	CF_HEADER_PATH(cf_search,ncurses)
+AC_CACHE_CHECK(for $cf_ncuhdr_root include-path, cf_cv_ncurses_h2,[
+	CF_HEADER_PATH(cf_search,$cf_ncuhdr_root)
 	test -n "$verbose" && echo
 	for cf_incdir in $cf_search
 	do
@@ -1253,8 +1255,8 @@ AC_CACHE_CHECK(for ncurses include-path, cf_cv_ncurses_h2,[
 	cf_cv_ncurses_header=`basename $cf_cv_ncurses_h2`
 	echo cf_1st_include=$cf_1st_incdir
 	echo cf_2nd_include=$cf_2nd_incdir
-	if test `basename $cf_1st_incdir` = ncurses ; then
-		cf_cv_ncurses_header=ncurses/$cf_cv_ncurses_header
+	if test `basename $cf_1st_incdir` = $cf_ncuhdr_root ; then
+		cf_cv_ncurses_header=$cf_ncuhdr_root/$cf_cv_ncurses_header
 		CF_ADD_INCDIR($cf_2nd_incdir)
 	fi
 	CF_ADD_INCDIR($cf_1st_incdir)
@@ -1274,6 +1276,9 @@ case $cf_cv_ncurses_header in # (vi
 ncurses/curses.h|ncurses/ncurses.h)
 	AC_DEFINE(HAVE_NCURSES_NCURSES_H)
 	;;
+ncursesw/curses.h|ncursesw/ncurses.h)
+	AC_DEFINE(HAVE_NCURSESW_NCURSES_H)
+	;;
 esac
 
 CF_NCURSES_VERSION
@@ -1285,9 +1290,14 @@ dnl Some distributions have gpm linked with (bsd) curses, which makes it
 dnl unusable with ncurses.  However, we don't want to link with gpm unless
 dnl ncurses has a dependency, since gpm is normally set up as a shared library,
 dnl and the linker will record a dependency.
+dnl
+dnl The optional parameter gives the root name of the library, in case it is
+dnl not installed as the default curses library.  That is how the
+dnl wide-character version of ncurses is installed.
 AC_DEFUN([CF_NCURSES_LIBS],
 [AC_REQUIRE([CF_NCURSES_CPPFLAGS])
 
+cf_nculib_root=ifelse($1,,ncurses,$1)
 	# This works, except for the special case where we find gpm, but
 	# ncurses is in a nonstandard location via $LIBS, and we really want
 	# to link gpm.
@@ -1307,13 +1317,13 @@ freebsd*)
 esac
 
 LIBS="$cf_ncurses_LIBS $LIBS"
-CF_FIND_LIBRARY(ncurses,ncurses,
+CF_FIND_LIBRARY($cf_nculib_root,$cf_nculib_root,
 	[#include <${cf_cv_ncurses_header-curses.h}>],
 	[initscr()],
 	initscr)
 
 if test -n "$cf_ncurses_LIBS" ; then
-	AC_MSG_CHECKING(if we can link ncurses without $cf_ncurses_LIBS)
+	AC_MSG_CHECKING(if we can link $cf_nculib_root without $cf_ncurses_LIBS)
 	cf_ncurses_SAVE="$LIBS"
 	for p in $cf_ncurses_LIBS ; do
 		q=`echo $LIBS | sed -e 's/'$p' //' -e 's/'$p'$//'`
@@ -1601,26 +1611,24 @@ AC_DEFUN([CF_REGEXPR_H_FUNCS],
 [
 cf_save_libs="$LIBS"
 AC_CHECK_LIB(gen, compile)
-AC_MSG_CHECKING(compile/step functions)
-AC_CACHE_VAL(cf_cv_REGEXPR_H,[
+AC_CACHE_CHECK(compile/step functions, cf_cv_REGEXPR_H,[
 	AC_TRY_RUN([
 #include <sys/types.h>
 #include <regexpr.h>
-		int main() {
-			char *e;
-			char *p = "foo";
-			char *s = "foobar";
-			if ((e = (char *)compile(p, (char *)0, (char *)0)) == 0
-			 || step(s, e) == 0)
-		 		exit(1);
-			free(e);
-			exit(0);
-		} ],
-		[cf_cv_REGEXPR_H=yes],
-		[cf_cv_REGEXPR_H=no],
-		[cf_cv_REGEXPR_H=unknown])
-	])
-AC_MSG_RESULT($cf_cv_REGEXPR_H)
+	int main() {
+		char *e;
+		char *p = "foo";
+		char *s = "foobar";
+		if ((e = (char *)compile(p, (char *)0, (char *)0)) == 0
+		 || step(s, e) == 0)
+			exit(1);
+		free(e);
+		exit(0);
+	} ],
+	[cf_cv_REGEXPR_H=yes],
+	[cf_cv_REGEXPR_H=no],
+	[cf_cv_REGEXPR_H=unknown])
+])
 if test $cf_cv_REGEXPR_H = yes; then
 	AC_DEFINE(HAVE_REGEXPR_H_FUNCS)
 else
@@ -1631,26 +1639,25 @@ dnl ---------------------------------------------------------------------------
 dnl Tests for the <regex.h> include-file, and the functions associated with it.
 AC_DEFUN([CF_REGEX_H_FUNCS],
 [
-AC_MSG_CHECKING(regcomp/regexec functions)
-AC_CACHE_VAL(cf_cv_REGEX_H,[
+AC_CHECK_LIB(regex,regcomp,[LIBS="-lregex $LIBS"])
+AC_CACHE_CHECK(regcomp/regexec functions, cf_cv_REGEX_H,[
 	AC_TRY_RUN([
 #include <sys/types.h>
 #include <regex.h>
-		int main() {
-			regex_t e;
-			char *p = "foo";
-			char *s = "foobar";
-			if (regcomp(&e, p, 0) != 0
-			 || regexec(&e, s, 0, (regmatch_t*)0, 0) < 0)
-		 		exit(1);
-			regfree(&e);
-			exit(0);
-		} ],
-		[cf_cv_REGEX_H=yes],
-		[cf_cv_REGEX_H=no],
-		[cf_cv_REGEX_H=unknown])
-	])
-AC_MSG_RESULT($cf_cv_REGEX_H)
+	int main() {
+		regex_t e;
+		char *p = "foo";
+		char *s = "foobar";
+		if (regcomp(&e, p, 0) != 0
+		 || regexec(&e, s, 0, (regmatch_t*)0, 0) < 0)
+			exit(1);
+		regfree(&e);
+		exit(0);
+	} ],
+	[cf_cv_REGEX_H=yes],
+	[cf_cv_REGEX_H=no],
+	[cf_cv_REGEX_H=unknown])
+])
 test $cf_cv_REGEX_H = yes && AC_DEFINE(HAVE_REGEX_H_FUNCS)
 ])dnl
 dnl ---------------------------------------------------------------------------
