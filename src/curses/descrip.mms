@@ -1,4 +1,4 @@
-# $Id: descrip.mms,v 12.3 1995/01/28 12:43:57 tom Exp $
+# $Id: descrip.mms,v 12.4 2002/01/13 16:27:30 tom Exp $
 # MMS-file for curses library routines	
 
 ####### (Command-line Options) #################################################
@@ -8,7 +8,6 @@ include [-]td_defns.mms
 LIBRARYMODULES = \
 	ADDCHNST, \
 	BEEP, \
-	BINDKEYS, \
 	BLIP, \
 	CMDCH, \
 	DUMPCHR, \
@@ -30,7 +29,6 @@ LIBRARYMODULES = \
 C_SRC	= \
 	addchnst.c \
 	beep.c \
-	bindkeys.c \
 	blip.c \
 	cmdch.c \
 	dumpchr.c \

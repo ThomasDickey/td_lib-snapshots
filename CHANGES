@@ -1,3 +1,17 @@
+2002-01-13  dickey@invisible-island.net
+
+	* include/td_curse.h: fix for ncurses termcap.h
+
+	* configure.in: make AC_HAVE_HEADERS simple to read
+
+	* src/process/for_user.c: gcc warning
+
+	* src/curses/descrip.mms: remove bindkeys
+
+	* src/curses/modules: remove bindkeys, keycode
+
+	* aclocal.m4: resync with my-autoconf
+
 2002-01-02  dickey@invisible-island.net
 
 	* config.sub: resync with my-autoconf

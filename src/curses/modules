@@ -1,6 +1,5 @@
 addchnst
 beep
-bindkeys
 blip
 cmdch
 dumpchr
@@ -8,7 +7,6 @@ dumptty
 dumpwin
 erasechr
 is_xterm
-keycode
 killchar
 lnextchr
 logch
