@@ -1,12 +1,21 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)rcsedit.c	1.7 89/03/08 15:51:39";
+static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs/RCS/rcsedit.c,v 3.0 1989/03/15 13:00:22 ste_cm Rel $";
 #endif	lint
 
 /*
  * Title:	rcsedit.c (edit RCS file)
  * Author:	T.E.Dickey
  * Created:	26 May 1988
- * Modified:
+ * $Log: rcsedit.c,v $
+ * Revision 3.0  1989/03/15 13:00:22  ste_cm
+ * BASELINE Mon Jun 19 13:27:01 EDT 1989
+ *
+ *		Revision 2.0  89/03/15  13:00:22  ste_cm
+ *		BASELINE Thu Apr  6 09:45:13 EDT 1989
+ *		
+ *		Revision 1.9  89/03/15  13:00:22  dickey
+ *		sccs2rcs keywords
+ *		
  *		08 Mar 1988, use temp-file for copying RCS archive back (safer)
  *		19 Aug 1988, modified 'rcsopen()' to properly check that we
  *			     are opening a file.  Corrected 'rcsparse_str()',
@@ -104,7 +113,7 @@ char	*name;
 		rewind(fpT);
 		return (TRUE);
 	}
-	PRINTF("?? Cannot open \"%s\"\n", fname);
+	VERBOSE("?? Cannot open \"%s\"\n", fname);
 	return (FALSE);
 }
 

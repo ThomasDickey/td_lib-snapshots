@@ -1,4 +1,4 @@
-# @(#)Makefile	1.58 89/03/13 13:11:30
+# @(#)Makefile	1.59 89/03/15 13:42:32
 # MAKE-file for miscellaneous library routines
 #
 ####### (Development) ##########################################################
@@ -51,6 +51,7 @@ CSRC	=\
 	pathleaf.c\
 	rawgets.c\
 	rawterm.c\
+	rcs_debug.c\
 	rcs_dir.c\
 	rcsedit.c\
 	rcskeys.c\
@@ -127,6 +128,7 @@ OBJS	=\
 	pathleaf.o\
 	rawgets.o\
 	rawterm.o\
+	rcs_debug.o\
 	rcs_dir.o\
 	rcsedit.o\
 	rcskeys.o\
