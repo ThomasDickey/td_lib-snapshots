@@ -1,3 +1,24 @@
+1992-02-11  dickey@software.org
+
+	* src/cm_funcs/rcssymbs.c: allow underscores in symbols
+
+1992-02-11  ste_cm@software.org
+
+	* src/cm_funcs/rcssymbs.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+	* src/cm_funcs/rcssymbs.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1992-02-11  dickey@software.org
+
+	* src/string/dyn_cata.c: make EMPTY check for null-pointer too
+
+1992-02-11  ste_cm@software.org
+
+	* src/string/dyn_cata.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
 1992-02-10  dickey@software.org
 
 	* src/string/dyn_cata.c: suppress calls if argument is empty

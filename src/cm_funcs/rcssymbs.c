@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcssymbs.c,v 10.2 1992/02/07 13:27:34 dickey Exp $";
+static	char	Id[] = "$Id: rcssymbs.c,v 12.0 1992/02/11 10:37:26 ste_cm Rel $";
 #endif
 
 /*
@@ -25,6 +25,8 @@ static	char	Id[] = "$Id: rcssymbs.c,v 10.2 1992/02/07 13:27:34 dickey Exp $";
 #include	"ptypes.h"
 #include	"rcsdefs.h"
 
+#define	isname(c)	(isalnum(c) || (c == '_'))
+
 static
 void
 compress(
@@ -33,7 +35,7 @@ _DCL(char *,	in_out)
 {
 	register char	*s, *d;
 
-	for (s = in_out; (*s == '0') && isalnum(s[1]); s++);
+	for (s = in_out; (*s == '0') && isname(s[1]); s++);
 	if (s != in_out)
 		for (d = in_out; *d++ = *s++;);
 
