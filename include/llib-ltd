@@ -1,4 +1,4 @@
-/* @(#)llib-ltd	1.31 88/08/11 09:35:34 */
+/* @(#)llib-ltd	1.33 88/08/18 14:16:41 */
 /*LINTLIBRARY*/
 
 #define	CUR_PTYPES
@@ -91,6 +91,9 @@ char	*ltostr(bfr, value, base) char *bfr; long value; { return(0); }
 /* modechar.c --------------------------------------------------------- */
 int	modechar(mode) unsigned mode; { return(0); }
 
+/* name2s.c ----------------------------------------------------------- */
+int	name2s(bfr, maxbfr, name, opt) char *bfr, *name; { return(0); }
+
 /* newzone.c ---------------------------------------------------------- */
 int	localzone;
 	newzone(hours, minutes, apres) { }
@@ -104,6 +107,9 @@ long	packdate (year, mon, day, hour, min, s) { return (0); }
 
 /* padedit.c ---------------------------------------------------------- */
 int	padedit(name, readonly, editor) char *name, *editor; { return(0); }
+
+/* pathleaf.c --------------------------------------------------------- */
+char *	pathleaf(path) char *path; { return(0); }
 
 /* rawgets.c ---------------------------------------------------------- */
 	rawgets (bfr,size,newline) char	*bfr; { }

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)execute.c	1.6 88/08/10 12:27:02";
+static	char	sccs_id[] = "@(#)execute.c	1.7 88/08/18 07:02:18";
 #endif	lint
 
 /*
@@ -7,6 +7,7 @@ static	char	sccs_id[] = "@(#)execute.c	1.6 88/08/10 12:27:02";
  * Author:	T.E.Dickey
  * Created:	21 May 1988
  * Modified:
+ *		18 Aug 1988, made wait-loop more explicit
  *		27 Jul 1988, on bsd4.x systems, use 'vfork()' and 'execvp()'.
  *			     This is much faster (one the order of a second on
  *			     Apollo DN3000).
@@ -86,7 +87,10 @@ union	wait	status;
 #endif	SYSTEM5
 
 	if ((pid = fork()) > 0) {
-		while (wait(&status) >= 0);
+		while ((count = wait(&status)) != pid) {
+			if ((count < 0) || (errno == ECHILD))
+				break;
+		}
 		if (errno = W_RETCODE)
 			return (-1);
 		return (0);

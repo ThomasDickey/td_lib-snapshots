@@ -1,4 +1,4 @@
-# @(#)Makefile	1.38 88/08/11 09:35:16
+# @(#)Makefile	1.40 88/08/18 13:49:01
 # MAKE-file for miscellaneous library routines
 #
 ####### (Development) ##########################################################
@@ -40,10 +40,12 @@ CSRC	=\
 	killchar.c\
 	ltostr.c\
 	modechar.c\
+	name2s.c\
 	newzone.c\
 	okpnum.c\
 	packdate.c\
 	padedit.c\
+	pathleaf.c\
 	rawgets.c\
 	rawterm.c\
 	rcsedit.c\
@@ -95,10 +97,12 @@ OBJS	=\
 	killchar.o\
 	ltostr.o\
 	modechar.o\
+	name2s.o\
 	newzone.o\
 	okpnum.o\
 	packdate.o\
 	padedit.o\
+	pathleaf.o\
 	rawgets.o\
 	rawterm.o\
 	rcsedit.o\
@@ -149,6 +153,7 @@ execute.o:	ptypes.h
 fp2argv.o:	ptypes.h
 gid2s.o:	ptypes.h
 killchar.o:	ptypes.h
+name2s.o:	ptypes.h
 newzone.o:	ptypes.h
 packdate.o:	ptypes.h
 padedit.o:	ptypes.h

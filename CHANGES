@@ -1,3 +1,36 @@
+1988-08-18  dickey@software.org
+
+	* src/pathname/name2s.c:
+	corrections to escape handling on apollo (still not exhaustive, but
+	documented the exceptions).
+
+	* include/llib-ltd: added 'name2s.c' module.
+
+	* src/pathname/name2s.c: New file.
+
+	* src/Makefile: added 'name2s.c' module.
+
+	* include/llib-ltd, src/Makefile: added 'pathleaf.c' module.
+
+	* src/pathname/pathleaf.c: New file.
+
+	* src/pathname/pathleaf.c: sccs2rcs keywords
+
+1988-08-18  ste_cm@software.org
+
+	* src/pathname/pathleaf.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+	* src/pathname/pathleaf.c: BASELINE Thu Apr  6 09:45:13 EDT 1989
+
+	* src/pathname/pathleaf.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
+1988-08-18  dickey@software.org
+
+	* src/process/execute.c:
+	made the wait-loop look explicitly for the child's pid, or break when
+	no subprocesses are available.
+
 1988-08-17  dickey@software.org
 
 	* src/curses/erasechr.c: ifdef-out if 'erasechar()' is a curses-macro.
