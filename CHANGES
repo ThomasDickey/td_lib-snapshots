@@ -1,3 +1,16 @@
+1988-10-28  dickey@software.org
+
+	* src/port2vms/path2vms.c: New file.
+
+1988-10-28  ste_cm@software.org
+
+	* src/port2vms/path2vms.c: BASELINE Mon Jun 12 08:56:43 EDT 1989
+
+	* src/port2vms/path2vms.c:
+	BASELINE Mon Sep 18 08:24:15 EDT 1989 -- support:ada_pits_000(rel3)
+
+	* src/port2vms/path2vms.c: BASELINE Tue Aug 14 16:27:44 1990
+
 1988-10-06  dickey@software.org
 
 	* src/string/strucpy.c: RCS_BASE
