@@ -1,12 +1,21 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)gid2s.c	1.6 88/08/10 12:46:29";
+static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/unix/RCS/gid2s.c,v 3.0 1988/08/12 09:36:30 ste_cm Rel $";
 #endif	lint
 
 /*
  * Title:	gid2s.c (gid/string converter)
  * Author:	T.E.Dickey
  * Created:	10 Nov 1987
- * Modified:
+ * $Log: gid2s.c,v $
+ * Revision 3.0  1988/08/12 09:36:30  ste_cm
+ * BASELINE Mon Jun 19 13:27:01 EDT 1989
+ *
+ *		Revision 2.0  88/08/12  09:36:30  ste_cm
+ *		BASELINE Thu Apr  6 09:45:13 EDT 1989
+ *		
+ *		Revision 1.8  88/08/12  09:36:30  dickey
+ *		sccs2rcs keywords
+ *		
  *		28 Jul 1988, added "<none>" for apollo.
  *
  * Function:	Maintain a lookup table of gid names for fast access.
@@ -35,8 +44,8 @@ char *
 gid2s(gid)
 {
 extern	 struct group  *getgrent();		/* cf: apollo sys5 */
-extern		VOID	setgrent();
-extern		VOID	endgrent();
+extern		V_OR_I	setgrent();
+extern		V_OR_I	endgrent();
 register struct group *p;
 register int	j;
 static   TABLE	*q;

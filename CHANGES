@@ -1,3 +1,37 @@
+1988-08-12  dickey@software.org
+
+	* src/cm_funcs/rcsedit.c:
+	correctly save/restore file's protection (r,x bits only) when editing.
+
+	* src/curses/rawgets.c, src/curses/killchar.c, src/curses/erasechr.c:
+	lint after apollo sys5 port
+
+	* src/unix/uid2s.c: VOID conflicted with <curses.h>
+
+	* src/unix/uid2s.c: sccs2rcs keywords
+
+1988-08-12  ste_cm@software.org
+
+	* src/unix/uid2s.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+	* src/unix/uid2s.c: BASELINE Thu Apr  6 09:45:13 EDT 1989
+
+1988-08-12  dickey@software.org
+
+	* src/unix/gid2s.c: VOID conflicted with <curses.h>
+
+	* src/unix/gid2s.c: sccs2rcs keywords
+
+1988-08-12  ste_cm@software.org
+
+	* src/unix/gid2s.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+	* src/unix/gid2s.c: BASELINE Thu Apr  6 09:45:13 EDT 1989
+
+1988-08-12  dickey@software.org
+
+	* include/ptypes.h: VOID conflicted with <curses.h>
+
 1988-08-11  dickey@software.org
 
 	* include/ptypes.h:

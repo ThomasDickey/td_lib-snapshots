@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)rcsedit.c	1.3 88/08/11 07:43:25";
+static	char	sccs_id[] = "@(#)rcsedit.c	1.4 88/08/12 11:24:01";
 #endif	lint
 
 /*
@@ -7,6 +7,8 @@ static	char	sccs_id[] = "@(#)rcsedit.c	1.3 88/08/11 07:43:25";
  * Author:	T.E.Dickey
  * Created:	26 May 1988
  * Modified:
+ *		12 Aug 1988, corrected call on 'copyback()'; wasn't saving the
+ *			     file's original protection.
  *		05 Aug 1988, removed 'rcsname()' call (done in callers).
  *			     changed interpretation of 'show' arg of 'rcsopen()'
  *
@@ -29,6 +31,7 @@ extern	char	*strchr();
 static	FILE	*fpS, *fpT;
 static	char	fname[BUFSIZ];
 static	char	buffer[BUFSIZ];
+static	int	fmode;		/* original protection of file */
 static	int	changed;	/* set if caller changed file */
 static	int	lines;		/* total # of records written to temp-file */
 static	int	verbose;	/* set if we show informational messages */
@@ -80,15 +83,19 @@ writeit()
 rcsopen(name, show)
 char	*name;
 {
+	struct	stat	sb;
+
 	(void)strcpy(fname, name);
 	changed	= FALSE;
 	lines	= 0;
 	verbose	= show;
 	VERBOSE("++ rcs-%s(%s)\n", (show > 0) ? "edit" : "scan", fname);
-	if (!(fpS = fopen(fname, "r"))) {
+	if ( ((fpS = fopen(fname, "r")) == 0)
+	||   (stat(fname, &sb) < 0) ) {
 		PRINTF("?? Cannot open \"%s\"\n", fname);
 		return (FALSE);
 	}
+	fmode	= sb.st_mode & 0555;	/* retain protection for copyback */
 	if (!fpT)
 		fpT = tmpfile();
 	rewind(fpT);
@@ -157,7 +164,7 @@ rcsclose()
 			writeit();
 		(void)fclose(fpS);
 		VERBOSE("++ rcs-copyback %d lines\n", lines);
-		if (!copyback(fpT, fname, 0444, lines))
+		if (!copyback(fpT, fname, fmode, lines))
 			perror(fname);
 	} else
 		(void)fclose(fpS);

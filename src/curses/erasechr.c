@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)erasechar.c	1.2 88/08/11 07:37:08";
+static	char	sccs_id[] = "@(#)erasechar.c	1.3 88/08/12 10:04:26";
 #endif	lint
 
 /*
@@ -14,6 +14,7 @@ static	char	sccs_id[] = "@(#)erasechar.c	1.2 88/08/11 07:37:08";
 #include <sgtty.h>
 
 #ifndef	SYSTEM5
+char
 erasechar()
 {
 int	code	= '\b';
