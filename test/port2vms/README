@@ -1,0 +1,6 @@
+$Header: /users/source/archives/td_lib.vcs/test/port2vms/RCS/README,v 1.1 1989/04/19 16:29:20 dickey Exp $
+
+-------------------------------------------------------------------------------
+
+The procedures in the PORTUNIX library are tested by compiling them with
+the TEST preprocessor variable defined.
