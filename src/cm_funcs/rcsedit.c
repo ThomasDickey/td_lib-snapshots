@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	*Id = "$Id: rcsedit.c,v 11.3 1992/10/26 13:59:44 dickey Exp $";
+static	char	*Id = "$Id: rcsedit.c,v 11.4 1992/10/27 07:56:33 dickey Exp $";
 #endif
 
 /*
@@ -47,6 +47,7 @@ static	FILE	*fpS, *fpT;
 static	char	fname[MAXPATHLEN];
 static	char	buffer[BUFSIZ];
 static	char	tmp_name[MAXPATHLEN];
+static	char	*edit_at;
 static	int	changes;	/* set if caller changed file */
 static	int	verbose;	/* set if we show informational messages */
 
@@ -76,7 +77,7 @@ int	dir_access(_AR0)
 	char	temp[MAXPATHLEN];
 	int	uid = geteuid();
 	int	gid = getegid();
-	struct	stat	sb;
+	STAT	sb;
 
 	if (s = strrchr(strcpy(temp, fname), '/'))
 		*s = EOS;
@@ -110,6 +111,7 @@ char *	readit(_AR0)
 {
 	char	*p = fgets(buffer, sizeof(buffer), fpS);
 	Show("<", p);
+	edit_at = 0;
 	return p;
 }
 
@@ -121,6 +123,7 @@ void	writeit(_AR0)
 		(void)fputs(buffer, fpT);
 	}
 	*buffer = EOS;
+	edit_at = 0;
 }
 
 static
@@ -154,7 +157,7 @@ char *	SkipBlanks(
 	while (s != 0) {
 		while ((c = *s) != EOS) {
 			if (!isspace(c))
-				return s;
+				return (edit_at = s);
 			s++;
 		}
 		s = ReadNewBuffer();
@@ -198,13 +201,14 @@ int	rcsopen(
 	_DCL(int,	show)
 	_DCL(int,	readonly)
 {
-	struct	stat	sb;
+	STAT	sb;
 	int	fd;
 
 	(void)strcpy(fname, name);
 	fpT     = 0;
 	changes	= 0;
 	verbose	= show;
+	edit_at = 0;
 	VERBOSE("++ rcs-%s(%s)\n", readonly ? "scan" : "edit", fname);
 	if (	(stat_file(fname, &sb) >= 0)
 	&&	(fpS = fopen(fname, "r")) ) {
@@ -250,20 +254,21 @@ char *	rcsread(
 	_DCL(char *,	s)
 	_DCL(int,	code)
 {
+	if (s == 0)
+		s = ReadNewBuffer();
 	if (s = SkipBlanks(s)) {
 		switch (code) {
-		case S_VERS:
+		case S_FAIL:	/* initial value before first call */
+		case S_VERS:	/* has no semicolon! */
 			break;
 		case S_DESC:
 		case S_LOG:
 		case S_TEXT:
 			if (*s == AT_SYMBOL)
 				s = rcsparse_str(s, NULL_FUNC);
-			s = SkipBlanks(s);
 			break;
 		default:
 			s = SkipPastSemicolon(s);
-			s = SkipBlanks(s);
 			break;
 		}
 	}
@@ -272,27 +277,26 @@ char *	rcsread(
 
 /*
  * rcsedit(@)
- *	Alter a field in the input buffer.
+ *	Alter a field in the input buffer.  This applies only to the most
+ *	recent call on 'rcsparse_id()' or 'rcsparse_num()'.
  */
 void	rcsedit (
-	_ARX(char *,	where)
 	_ARX(char *,	old)
 	_AR1(char *,	new)
 		)
-	_DCL(char *,	where)
 	_DCL(char *,	old)
 	_DCL(char *,	new)
 {
 	size_t	len = strlen(old);
 	char	tmp[BUFSIZ];
 
-	if ((where < buffer)
-	||  (where > buffer + strlen(buffer))
-	||  strncmp(old, where, len))
+	if ((edit_at < buffer)
+	 || (edit_at > buffer + strlen(buffer))
+	 || strncmp(old, edit_at, len))
 		failed("rcsedit");
 
-	(void)strcpy(tmp, where + len);
-	(void)strcat(strcpy(where, new), tmp);
+	(void)strcpy(tmp, edit_at + len);
+	(void)strcat(strcpy(edit_at, new), tmp);
 	changes++;
 }
 

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	*Id = "$Id: rcstime.c,v 11.0 1992/02/07 15:03:08 ste_cm Rel $";
+static	char	*Id = "$Id: rcstime.c,v 11.1 1992/10/27 08:15:44 dickey Exp $";
 #endif
 
 /*
@@ -14,6 +14,12 @@ static	char	*Id = "$Id: rcstime.c,v 11.0 1992/02/07 15:03:08 ste_cm Rel $";
 #include "rcsdefs.h"
 #include <time.h>
 
+#if	RCS_VERSION >= 5
+#define	RCS_ZONE	0	/* use GMT */
+#else
+#define	RCS_ZONE	5	/* I am in EST5EDT... */
+#endif
+
 /*
  * Decode an rcs archive-date
  */
@@ -25,7 +31,7 @@ _DCL(char *,	from)
 	time_t	the_time = 0;
 	int	year, mon, day, hour, min, sec;
 
-	newzone(5,0,FALSE);	/* format for EST5EDT */
+	newzone(RCS_ZONE,0,FALSE);
 
 	if (sscanf(from, FMT_DATE, &year, &mon, &day, &hour, &min, &sec) == 6)
 		the_time = packdate(1900+year, mon, day, hour, min, sec);
@@ -47,7 +53,7 @@ _DCL(time_t,	from)
 {
 	struct	tm *t;
 
-	newzone(5,0,FALSE);	/* format for EST5EDT */
+	newzone(RCS_ZONE,0,FALSE);
 	t = localtime(&from);
 	FORMAT(to, FMT_DATE,
 		t->tm_year, t->tm_mon + 1,

@@ -1,3 +1,17 @@
+1992-10-27  dickey@software.org
+
+	* src/cm_funcs/rcstime.c:
+	RCS version 5 uses GMT, not the local timezone
+
+	* src/cm_funcs/rcsedit.c:
+	revised 'rcsedit()' procedure so that we only modify the
+	last token parsed with 'rcsparse_id()' or 'rcsparse_num()'
+
+	* include/rcsdefs.h: simplified interface to 'rcsedit()'
+
+	* src/cm_funcs/rcsperm.c: corrected conflicting use of 's'
+	removed (now redundant) case for S_COMMENT
+
 1992-10-26  dickey@software.org
 
 	* src/cm_funcs/rcsedit.c:

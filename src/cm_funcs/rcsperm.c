@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcsperm.c,v 11.1 1992/10/26 07:16:19 dickey Exp $";
+static	char	Id[] = "$Id: rcsperm.c,v 11.2 1992/10/27 07:11:35 dickey Exp $";
 #endif
 
 /*
@@ -39,7 +39,7 @@ _AR1(char *,	base)
 _DCL(char *,	path)
 _DCL(char *,	base)
 {
-	auto	struct stat sb;
+	auto	STAT	sb;
 	auto	int	header	= TRUE;
 	auto	char	*s	= 0,
 			tip	[80],
@@ -58,8 +58,9 @@ _DCL(char *,	base)
 	 * one RCS directory.
 	 */
 	if (base != 0) {
-		if (s = getenv("RCS_BASE"))
-			(void)strcpy(base, s);
+		register char *t;
+		if (t = getenv("RCS_BASE"))
+			(void)strcpy(base, t);
 		else
 			*base = EOS;
 	}
@@ -106,9 +107,6 @@ _DCL(char *,	base)
 			break;
 		case S_VERS:
 			header = FALSE;
-			break;
-		case S_COMMENT:
-			s = rcsparse_str(s, NULL_FUNC);
 			break;
 		}
 	}
