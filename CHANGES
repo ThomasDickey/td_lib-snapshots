@@ -1,3 +1,9 @@
+1999-01-15  dickey@clark.net
+
+	* aclocal.m4: nits from lynx
+
+	* aclocal.m4: oops: typo in the function that tests for stat.st_blocks
+
 1998-12-09  dickey@clark.net
 
 	* install-sh: resync with my-autoconf

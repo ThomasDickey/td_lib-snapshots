@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Id: aclocal.m4,v 12.119 1998/07/21 13:27:42 tom Exp $
+dnl $Id: aclocal.m4,v 12.121 1999/01/15 22:43:02 tom Exp $
 dnl vi:set ts=4:
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "CF_" to "AC_"
@@ -180,7 +180,7 @@ dnl Check if we're accidentally using a cache from a different machine.
 dnl Derive the system name, as a check for reusing the autoconf cache.
 dnl
 dnl If we've packaged config.guess and config.sub, run that (since it does a
-dnl better job than uname). 
+dnl better job than uname).
 AC_DEFUN([CF_CHECK_CACHE],
 [
 if test -f $srcdir/config.guess ; then
@@ -353,6 +353,9 @@ hpux10.*)
 		ac_cv_func_initscr=yes
 		])])
 	;;
+linux*) # Suse Linux does not follow /usr/lib convention
+	$1="[$]$1 /lib"
+	;;
 esac
 
 if test ".$With5lib" != ".no" ; then
@@ -379,7 +382,7 @@ if test ".$ac_cv_func_initscr" != .yes ; then
 
 	# Check for library containing initscr
 	test "$cf_term_lib" != predefined && test "$cf_term_lib" != unknown && LIBS="-l$cf_term_lib $cf_save_LIBS"
-	for cf_curs_lib in curses ncurses xcurses cursesX jcurses unknown
+	for cf_curs_lib in cursesX curses ncurses xcurses jcurses unknown
 	do
 		AC_CHECK_LIB($cf_curs_lib,initscr,[break])
 	done
@@ -964,13 +967,13 @@ do
 	for cf_quote in '' '"'
 	do
 		cat >$cf_dir/makefile <<CF_EOF
-SHELL=/bin/sh
+SHELL=${CONFIG_SHELL-/bin/sh} 
 ${cf_include} ${cf_quote}../$cf_inc${cf_quote}
 all :
 	@echo 'cf_make_include=\$(RESULT)'
 CF_EOF
 	cf_make_include=""
-	eval `cd $cf_dir && ${MAKE-make} 2>&AC_FD_CC | grep cf_make_include=OK`
+	eval `(cd $cf_dir && ${MAKE-make}) 2>&AC_FD_CC | grep cf_make_include=OK`
 	if test -n "$cf_make_include"; then
 		make_include_left="$cf_include"
 		make_include_quote="$cf_quote"
@@ -1631,7 +1634,7 @@ AC_CACHE_VAL(cf_cv_st_blocks,[
 	AC_TRY_COMPILE([
 #include <sys/types.h>
 #include <sys/stat.h>],
-		[int t() {struct stat sb; return sb.st_blocks;}],
+		[int t(); {struct stat sb; return sb.st_blocks;}],
 		[cf_cv_st_blocks=yes],
 		[cf_cv_st_blocks=no])])
 AC_MSG_RESULT($cf_cv_st_blocks)
@@ -1921,6 +1924,7 @@ dnl Check for ANSI stdarg.h vs varargs.h.  Note that some systems include
 dnl <varargs.h> within <stdarg.h>.
 AC_DEFUN([CF_VARARGS],
 [
+AC_CHECK_HEADERS(stdarg.h varargs.h)
 AC_MSG_CHECKING(for standard varargs)
 AC_CACHE_VAL(cf_cv_ansi_varargs,[
 	AC_TRY_COMPILE([
