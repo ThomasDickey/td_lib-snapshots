@@ -1,3 +1,14 @@
+1990-03-23  ste_cm@software.org
+
+	* include/ptypes.h: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* include/ptypes.h:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+	* include/ptypes.h: oops: try again
+
+	* include/ptypes.h: L_tmpnam is defined in sr9.7, P_tmpdir is not
+
 1990-03-12  dickey@software.org
 
 	* src/pathname/abspath.c: lint (apollo sr10.1)

@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 5.7 1990/03/12 08:01:12 dickey Exp $ */
+/* $Id: ptypes.h,v 7.0 1990/03/23 14:15:54 ste_cm Rel $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -19,11 +19,14 @@
 
 #ifndef	P_tmpdir
 #define	P_tmpdir	"/usr/tmp"
+#ifdef	L_tmpnam
+#else
 #define	L_tmpnam	32
 #ifdef	apollo
 #define	apollo_sr10	/* ...must be independent of '__STDC__' for lint */
-#endif
-#endif
+#endif	/* apollo */
+#endif	/* L_tmpnam */
+#endif	/* P_tmpdir */
 
 #ifdef	S_IFSOCK
 #if	S_IFSOCK == S_IFLNK
