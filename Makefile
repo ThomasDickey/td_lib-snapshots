@@ -1,4 +1,4 @@
-# $Id: Makefile,v 10.4 1992/02/06 15:50:21 dickey Exp $
+# $Id: Makefile,v 11.0 1992/02/27 09:56:43 ste_cm Rel $
 # Top-level makefile for CM_TOOLS common library
 
 ####### (Development) ##########################################################
@@ -69,7 +69,7 @@ deinstall::		; rm -f $(ALL)
 
 ####### (Details of Productions) ###############################################
 $(MFILES)\
-$(SOURCES):				; $(GET) -x $@
+$(SOURCES):				; $(GET) $@
 lib:					; mkdir $@
 
 i=interface
