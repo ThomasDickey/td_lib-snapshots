@@ -1,3 +1,13 @@
+1988-05-24  dickey@software.org
+
+	* src/Makefile: forgot 'install'.
+
+	* src/Makefile: 'all' is default production.
+
+	* src/Makefile: added missing dependency.
+
+	* src/cm_funcs/packdate.c: port to sun & gould.
+
 1988-05-23  dickey@software.org
 
 	* src/cm_funcs/sccslast.c, src/cm_funcs/rcslast.c:

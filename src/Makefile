@@ -1,4 +1,4 @@
-# @(#)Makefile	1.17 88/05/21 10:24:42
+# @(#)Makefile	1.20 88/05/24 07:56:15
 # MAKE-file for miscellaneous library routines
 L=lib.a
 #
@@ -44,7 +44,7 @@ OBJS	=\
 	vecalloc.o\
 	which.o
 #
-it:	$L\
+all:	$L\
 	llib-ltd.ln
 $L:	$(OBJS)
 #
@@ -56,14 +56,17 @@ adj2est.o:	ptypes.h
 cmdch.o:	cmdch.h
 cutoff.o:	ptypes.h
 packdate.o:	ptypes.h
+rawgets.o:	cmdch.h
+sccszone.o:	ptypes.h
 set2est.o:	ptypes.h
 setmtime.o:	ptypes.h
-rawgets.o:	cmdch.h
 #
 clean:
 	rm *.o
 clobber: clean
 	rm *.a
+#
+install:
 #
 llib-ltd.ln:	LLIB
 	makellib.sh LLIB td
