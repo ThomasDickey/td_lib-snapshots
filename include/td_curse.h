@@ -1,4 +1,4 @@
-/* $Id: td_curse.h,v 12.2 1993/10/29 17:53:35 dickey Exp $ */
+/* $Id: td_curse.h,v 12.3 1993/11/01 20:07:59 dickey Exp $ */
 
 /*
  * TD_LIB CURSES-related definitions
@@ -30,7 +30,7 @@
 # endif
 #endif	/* SYSTEM5 */
 
-#if !defined(__hpux)	/* defined in <curses.h> */
+#if !defined(__hpux) && !defined(LINTLIBRARY)	/* defined in <curses.h> */
 extern	char	*tgetstr(_arx(char *,n) _ar1(char **,p));
 #endif
 

@@ -1,3 +1,20 @@
+1993-11-01  dickey@software.org
+
+	* src/curses/cmdch.c: tweaks for HP/UX and gcc
+
+	* certify/reusable.txt, certify/release.txt: *** empty log message ***
+
+	* src/curses/dumpwin.c: ifdef-ident
+
+	* include/td_curse.h: hack to make lintlib work again
+
+	* src/curses/erasechr.c: patch for HP/UX
+
+	* src/curses/wrepaint.c: hack to run on HP/UX, a pseudo-Sys5.4 system
+
+	* src/curses/rawterm.c:
+	patched this to run on HP/UX, where 'nonl()' does not appear to work
+
 1993-10-29  dickey@software.org
 
 	* src/cm_funcs/vercmp.c:

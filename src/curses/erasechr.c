@@ -1,5 +1,5 @@
-#ifndef	lint
-static	char	Id[] = "$Id: erasechr.c,v 12.1 1993/09/21 18:54:04 dickey Exp $";
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: erasechr.c,v 12.2 1993/11/01 17:50:14 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: erasechr.c,v 12.1 1993/09/21 18:54:04 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	24 Mar 1988
  * Modified:
+ *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		05 Aug 1992, added 'eraseword()'
  *		03 Oct 1991, converted to ANSI
@@ -18,7 +19,7 @@ static	char	Id[] = "$Id: erasechr.c,v 12.1 1993/09/21 18:54:04 dickey Exp $";
 #include	"td_curse.h"
 
 #ifndef	erasechar
-#ifndef	SYSTEM5
+#if !defined(SYSTEM5)
 int	erasechar(_AR0)
 {
 	int	code	= '\b';
@@ -33,10 +34,14 @@ int	erasechar(_AR0)
 
 int	eraseword(_AR0)
 {
+#ifdef __hpux
+	return -1;
+#else
 	int	code	= EOS;
 	struct ltchars buf;
 
 	if (ioctl(0, TIOCGLTC, (caddr_t)&buf) >= 0)
 		code = buf.t_werasc;
 	return (code);
+#endif
 }
