@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.77 1997/01/04 15:24:53 tom Exp $
+dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.78 1997/02/11 11:39:34 tom Exp $
 dnl vi:set ts=4:
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", without change
@@ -170,6 +170,8 @@ dnl
 AC_DEFUN([TD_CURSES_LIBS],
 [
 AC_PROVIDE([$0])
+# Check for gpm (general purpose mouse) since we may need this for ncurses.
+AC_CHECK_LIB(gpm,Gpm_Open)
 if test $WithNcurses = yes; then
 	TD_MSG_LOG(ncurses library, by option)
 	AC_CHECK_LIB(ncurses,initscr)
