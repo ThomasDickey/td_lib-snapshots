@@ -1,12 +1,13 @@
-MANIFEST for td_lib, version t19940521
+MANIFEST for td_lib, version t19940522
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         restrictions on copying/using this software
-MANIFEST.new                    =============================================================================
 Makefile                        top-level makefile for TD_LIB
 README                          read-me file for this directory
+acconfig.h                      configuration template file for td_lib using autoconf
+aclocal.m4                      local autoconf macros
+configure.in                    autoconf script for td_lib
 descrip.mms                     top-level MMS script for this library on VMS
-patchlevel.h                    =============================================================================
 certify                         subdirectory
 certify/Makefile                makefile for certify directory
 certify/README                  description of certify directory

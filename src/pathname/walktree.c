@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: walktree.c,v 12.4 1994/05/21 20:18:44 tom Exp $";
+static	char	Id[] = "$Id: walktree.c,v 12.5 1994/05/22 21:59:47 tom Exp $";
 #endif
 
 /*
@@ -96,7 +96,7 @@ int	walktree(
 	char		old_wd[BUFSIZ];
 	char		new_wd[BUFSIZ];
 	DIR		*dp;
-	DIRENT		*de;
+	Dirent_t	*de;
 
 	if (stat(namearg, sb_) >= 0) {
 		mode = (sb.st_mode & S_IFMT);

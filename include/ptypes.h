@@ -1,7 +1,9 @@
-/* $Id: ptypes.h,v 12.14 1994/05/21 20:15:07 tom Exp $ */
+/* $Id: ptypes.h,v 12.15 1994/05/22 23:40:31 tom Exp $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
+
+#include "config.h"
 
 /*
  * The definitions in this file cover simple cases of bsd4.x/system5 porting,
@@ -56,10 +58,8 @@
 #ifdef	CLASSIC_SYS5_FUNC
 #define	SYSTEM5		/* apollo sr10.x sys5 */
 #endif
-#ifdef	_DECL_FUNC	/* apollo sr10.3 */
-#ifndef	lint		/* too many void *'s */
-#define	HAS_STDLIB 1
-#endif
+#ifdef	lint		/* too many void *'s */
+#undef	HAVE_STDLIB_H
 #endif
 #endif
 
@@ -96,40 +96,31 @@ typedef	short	ino_t;
 
 #if	defined(__hpux) || defined(__svr4__) || defined(linux)
 #define	SYSTEM5
-#define	HAS_STDLIB 1
-#define HAS_UNISTD 1
 #endif
 
 #ifdef	MSDOS
 #undef  SYSTEM5
-#define	HAS_STDLIB 1
-#define HAS_UNISTD 0
+#define	HAVE_STDLIB_H 1
+#undef  HAVE_UNISTD_H
 #include <io.h>		/* for 'chmod()' */
 #endif
 
-#ifndef HAS_STDLIB
-#if defined(sun) || defined(vms)
-#define	HAS_STDLIB 1
-#else
-#define HAS_STDLIB 0
-#endif
+#if defined(vms)
+#define	HAVE_STDLIB_H 1
+#undef  HAVE_UNISTD_H
 #endif
 
-#if defined(sun) || defined(SYSTEM5)
-#define HAS_UNISTD 1
-#endif
-
-#if HAS_STDLIB
+#if HAVE_STDLIB_H
 #include	<stdlib.h>
 #endif
 
-#if HAS_UNISTD
+#if HAVE_UNISTD_H
 #include	<unistd.h>
 #endif
 
-#ifndef	S_IFLNK
+#if !HAVE_LSTAT
 #define	lstat	stat
-#endif	/* S_IFLNK */
+#endif
 
 /*
  * Define a symbol that is true iff we have an ANSI c-preprocessor (i.e., does
@@ -305,7 +296,7 @@ extern	char	*sprintf(_arx(char *,fmt) _DOTS);
 #endif
 #endif
 
-#if	!HAS_STDLIB
+#if	!HAVE_STDLIB_H
 extern	V_OR_I	_exit(_ar1(int,code));
 extern	V_OR_I2	exit(_ar1(int,code));
 extern	V_OR_I	free(_ar1(char *,s));
@@ -341,19 +332,14 @@ extern	char *	optarg;
 extern	int	optind;
 #endif
 
-#if	defined(__hpux) || defined(linux)
-#define	ltostr	td_ltostr
+#if	HAVE_LTOSTR
+#define	ltostr	td_ltostr	/* rename my version */
 #endif
 
 #ifdef	unix
 #ifdef	apollo_sr10
 extern	uid_t	getuid(), geteuid();
 extern	gid_t	getgid(), getegid();
-#else
-#if	!(defined(NBBY) || defined(__hpux) || defined(linux))
-typedef	int	uid_t;
-typedef	int	gid_t;
-#endif	/* SunOs 3.5 (fixed in SunOs 4.0) */
 #endif
 
 /*
@@ -426,16 +412,18 @@ extern	long	strtol(
 /*
  * Miscellaneous useful definitions for readability
  */
-#ifndef	TRUE
+#if	!defined(TRUE) || (TRUE != 1)
+#undef  TRUE
 #define	TRUE	(1)
+#endif
+
+#if	!defined(FALSE) || (FALSE != 0)
 #define	FALSE	(0)
-#endif	/* TRUE */
+#endif
 
 #define	EOS	'\0'
 
 #define	SIZEOF(v)	(sizeof(v)/sizeof(v[0]))
-
-#define NULL_FUNC (int (*)())0
 
 /*
  * Functions we (usually) ignore the return value from:
@@ -515,39 +503,40 @@ extern	int	toupper(int);
 #endif	/* CHR_PTYPES */
 
 /******************************************************************************
- * System5 does not provide the directory manipulation procedures in bsd4.x;  *
- * define macros so we can use the bsd4.x names:                              *
+ * Define macros for directory-scanning                                       * 
  ******************************************************************************/
 #ifdef	DIR_PTYPES
 
 #ifdef	vms
-#include	"unixdir.h"	/* get this from PORTUNIX */
-#else	/* unix */
-
-#if	defined(apollo)
-#include	<sys/dir.h>
-#else				/* SunOS, HPUX */
-#include	<dirent.h>
-#define	direct	dirent
-#endif
-
-#ifdef	MSDOS
-#include	<dir.h>		/* for 'chdir()' */
-#endif
-
-#ifdef	OLD_SYSTEM5		/* Sys5.4 has readdir */
-#define	DIR	FILE
-#define	opendir(n)	fopen(n,"r")
-#define	readdir(fp)	(fread(&dbfr, sizeof(dbfr), 1, fp)\
-				? &dbfr\
-				: (struct direct *)0)
-#define	closedir(fp)	FCLOSE(fp)
+#  include	"unixdir.h"	/* get this from PORTUNIX */
+#else
+#  if defined(MSDOS)
+#    include <dir.h>
+#  else	/* unix */
+#    if defined(DIRENT)
+#      include	<dirent.h>
+#      define	direct	dirent	/* so <sys/dir.h> looks like <dirent.h> */
+#    else
+#      if defined(SYSDIR)
+#        include	<sys/dir.h>
+#      else
+#        if defined(SYSNDIR)
+#          include	<sys/ndir.h>
+#        else			/* ...must be an antique unix clone */
+#          define	DIR	FILE
+#          define	opendir(n)	fopen(n,"r")
+#          define	readdir(fp)	(fread(&dbfr, sizeof(dbfr), 1, fp)\
+						? &dbfr\
+						: (struct direct *)0)
+#          define	closedir(fp)	FCLOSE(fp)
 static	struct	direct	dbfr;
-#endif	/* OLD_SYSTEM5 */
+#       endif		/* SYSNDIR/... */
+#     endif		/* SYSDIR/... */
+#   endif		/* DIRENT/... */
+# endif			/* MSDOS/unix */
+#endif			/* vms/MSDOS/unix */
 
-#endif	/* vms/unix */
-
-#define	DIRENT	struct	direct
+#define	Dirent_t struct	direct
 
 #endif	/* DIR_PTYPES */
 
@@ -575,7 +564,7 @@ static	struct	direct	dbfr;
  ******************************************************************************/
 #ifdef	PWD_PTYPES
 
-#ifndef MSDOS
+#if HAVE_PWD_H
 #include <pwd.h>
 
 #if	!(defined(__hpux) || defined(linux) || defined(__svr4__))
@@ -587,7 +576,8 @@ extern	V_OR_I		setpwent(_ar0);
 extern	V_OR_I		endpwent(_ar0);
 #endif
 
-#endif	/* MSDOS */
+#endif	/* HAVE_PWD_H */
+
 #endif	/* PWD_PTYPES */
 
 /******************************************************************************
@@ -601,15 +591,12 @@ extern	V_OR_I		endpwent(_ar0);
 #undef	SIGNAL_FUNC
 #undef	DCL_SIGNAL
 
-#define	SIG_T	void
+#define	SIG_T	RETSIGTYPE
 
 #ifdef	apollo
 #  ifdef	__SIG_HANDLER_T
 #    define	SIGNAL_ARGS _AR1(int,sig) _CDOTS
 #    define	SIGNAL_args _ar1(int,sig) _CDOTS
-#  else	/* sr10.2 or lower */
-#    undef	SIG_T
-#    define	SIG_T	int
 #  endif
 #endif
 
@@ -659,10 +646,12 @@ extern	char *	strtok (_arx(char *,s) _ar1(char *,t));
  * defines the argument-type for "wait()"                                     *
  ******************************************************************************/
 #ifdef	WAI_PTYPES
-#ifndef	MSDOS
+
 #ifdef	vms
 #include <processes.h>
-#else
+#endif
+
+#ifdef HAVE_SYS_WAIT_H
 #include <sys/wait.h>
 #endif
 
@@ -689,7 +678,6 @@ extern	char *	strtok (_arx(char *,s) _ar1(char *,t));
 #define	W_RETCODE(status)	(status.w_retcode)
 #endif	/* SYSTEM5/!SYSTEM5 */
 
-#endif	/* MSDOS */
 #endif	/* WAI_PTYPES */
 
 /******************************************************************************

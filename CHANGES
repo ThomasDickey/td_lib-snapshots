@@ -1,3 +1,30 @@
+1994-05-22  dickey@clark.net
+
+	* configure.in:
+	added hooks for <termios.h>, <sgtty.h>, tcgetattr(), utime(), uid_t
+
+	* src/unix/setmtime.c: use autoconf symbols HAVE_UTIME_H
+
+	* src/process/execute.c: use autoconf symbol HAVE_EXECVP
+
+	* src/curses/dumpwin.c: moved the USE_NCURSES fix to <td_curse.h>
+
+	* include/td_curse.h:
+	mods so I can compile with <ncurses.h> vs <curses.h>
+
+	* src/curses/rawterm.c:
+	mods to compile with Solaris; adapted with 'autoconf'
+
+	* include/ptypes.h: first pass of changes to accommodate 'autoconf'
+
+	* acconfig.h: RCS_BASE
+
+	* configure.in: added hooks for dev_t, ino_t, off_t
+
+	* aclocal.m4, configure.in: RCS_BASE
+
+	* src/pathname/walktree.c: mods for 'autoconf'
+
 1994-05-21  dickey@clark.net
 
 	* test/compare/test_cmp.c: renamed-STAT
