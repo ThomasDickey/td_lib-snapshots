@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: which.c,v 5.2 1989/12/11 13:13:11 dickey Exp $";
+static	char	Id[] = "$Id: which.c,v 8.0 1990/03/12 09:04:38 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,9 +7,21 @@ static	char	Id[] = "$Id: which.c,v 5.2 1989/12/11 13:13:11 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	18 Nov 1987
  * $Log: which.c,v $
- * Revision 5.2  1989/12/11 13:13:11  dickey
- * lint
+ * Revision 8.0  1990/03/12 09:04:38  ste_cm
+ * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
  *
+ *		Revision 7.0  90/03/12  09:04:38  ste_cm
+ *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+ *		
+ *		Revision 6.0  90/03/12  09:04:38  ste_cm
+ *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+ *		
+ *		Revision 5.3  90/03/12  09:04:38  dickey
+ *		lint (apollo sr10.1)
+ *		
+ *		Revision 5.2  89/12/11  13:14:38  dickey
+ *		lint
+ *		
  *		Revision 5.1  89/12/11  09:39:19  dickey
  *		corrected handling to relative pathnames
  *		
@@ -78,10 +90,10 @@ char	test[BUFSIZ];
 			(void)pathcat(test, dot, find);
 	} else while (*s) {
 		for (d = s; (*d != EOS) && (*d != ':'); d++);
-		if ((d == s) || !strncmp(s, ".", d-s))
+		if ((d == s) || !strncmp(s, ".", (size_t)(d-s)))
 			(void)strcpy(test, dot);
 		else {
-			(void)strncpy(test, s, d-s);
+			(void)strncpy(test, s, (size_t)(d-s));
 			test[d-s] = EOS;
 		}
 		abspath(test);

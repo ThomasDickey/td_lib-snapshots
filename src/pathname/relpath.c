@@ -1,11 +1,24 @@
 #ifndef	lint
-static	char	Id[] = "$Id: relpath.c,v 5.1 1989/11/30 10:44:52 dickey Exp $";
+static	char	Id[] = "$Id: relpath.c,v 8.0 1990/03/12 09:03:48 ste_cm Rel $";
 #endif	lint
 
 /*
  * Title:	relpath.c (convert path to relative-form)
  * Author:	T.E.Dickey
  * Created:	07 Sep 1989
+ * $Log: relpath.c,v $
+ * Revision 8.0  1990/03/12 09:03:48  ste_cm
+ * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ *
+ *		Revision 7.0  90/03/12  09:03:48  ste_cm
+ *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+ *		
+ *		Revision 6.0  90/03/12  09:03:48  ste_cm
+ *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+ *		
+ *		Revision 5.2  90/03/12  09:03:48  dickey
+ *		lint (apollo sr10.1)
+ *		
  *
  * Function:	Converts a pathname from (presumably absolute form) to relative
  *		form.
@@ -22,7 +35,7 @@ char	*dst, *cwd, *src;
 	auto	char	current[BUFSIZ];
 	auto	char	tmp[BUFSIZ];
 	auto	char	pre[BUFSIZ];
-	auto	int	j;
+	auto	size_t	j;
 
 	src = strcpy(tmp, src);	/* dst may be the same as src; copy it */
 	if (cwd == 0)		/* if cwd not given, get the actual path */

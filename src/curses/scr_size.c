@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: scr_size.c,v 5.0 1989/10/04 11:44:47 ste_cm Rel $";
+static	char	Id[] = "$Id: scr_size.c,v 7.0 1990/03/12 07:55:05 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,9 +7,18 @@ static	char	Id[] = "$Id: scr_size.c,v 5.0 1989/10/04 11:44:47 ste_cm Rel $";
  * Title:	scr_size.c (obtain screen size)
  * Created:	27 Jul 1988
  * $Log: scr_size.c,v $
- * Revision 5.0  1989/10/04 11:44:47  ste_cm
- * BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+ * Revision 7.0  1990/03/12 07:55:05  ste_cm
+ * BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
  *
+ *		Revision 6.0  90/03/12  07:55:05  ste_cm
+ *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+ *		
+ *		Revision 5.1  90/03/12  07:55:05  dickey
+ *		lint (apollo sr10.1)
+ *		
+ *		Revision 5.0  89/10/04  11:44:47  ste_cm
+ *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+ *		
  *		Revision 4.1  89/10/04  11:44:47  dickey
  *		modified (in SR10.1 conversion) so that the TEST-program
  *		generated from this is the same as the 'scr_size' program
@@ -36,11 +45,11 @@ static	char	Id[] = "$Id: scr_size.c,v 5.0 1989/10/04 11:44:47 ste_cm Rel $";
  */
 
 #ifdef	apollo
-#ifdef	__STDC__
+#ifdef	apollo_sr10
 #include <apollo/base.h>
 #else
 #include </sys/ins/base.ins.c>
-#endif	__STDC__
+#endif	apollo_sr10
 #endif	apollo
 extern	char	*getenv();
 

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	*Id = "$Id: rcsedit.c,v 5.1 1990/03/05 10:45:26 dickey Exp $";
+static	char	*Id = "$Id: rcsedit.c,v 6.0 1990/03/12 09:02:57 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,9 +7,15 @@ static	char	*Id = "$Id: rcsedit.c,v 5.1 1990/03/05 10:45:26 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	26 May 1988
  * $Log: rcsedit.c,v $
- * Revision 5.1  1990/03/05 10:45:26  dickey
- * port to sun3 (os3.4)
+ * Revision 6.0  1990/03/12 09:02:57  ste_cm
+ * BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
  *
+ *		Revision 5.2  90/03/12  09:02:57  dickey
+ *		lint (apollo sr10.1)
+ *		
+ *		Revision 5.1  90/03/05  13:41:41  dickey
+ *		port to sun3 (os3.4)
+ *		
  *		Revision 5.0  89/07/25  09:19:55  ste_cm
  *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
  *		
@@ -168,7 +174,7 @@ char	*s;
 rcsedit (where, old, new)
 char	*where, *old, *new;
 {
-int	len = strlen(old);
+size_t	len = strlen(old);
 char	tmp[BUFSIZ];
 
 	if ((where < buffer)

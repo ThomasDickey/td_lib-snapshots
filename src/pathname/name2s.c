@@ -1,5 +1,5 @@
 #ifndef lint
-static  char    Id[] = "$Id: name2s.c,v 5.0 1989/10/04 11:57:47 ste_cm Rel $";
+static  char    Id[] = "$Id: name2s.c,v 8.0 1990/03/12 09:05:51 ste_cm Rel $";
 #endif  lint
 
 /*
@@ -7,9 +7,21 @@ static  char    Id[] = "$Id: name2s.c,v 5.0 1989/10/04 11:57:47 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	18 Aug 1988 (from ded2s.c)
  * $Log: name2s.c,v $
- * Revision 5.0  1989/10/04 11:57:47  ste_cm
- * BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+ * Revision 8.0  1990/03/12 09:05:51  ste_cm
+ * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
  *
+ *		Revision 7.0  90/03/12  09:05:51  ste_cm
+ *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+ *		
+ *		Revision 6.0  90/03/12  09:05:51  ste_cm
+ *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+ *		
+ *		Revision 5.1  90/03/12  09:05:51  dickey
+ *		lint (apollo sr10.1)
+ *		
+ *		Revision 5.0  89/10/04  11:57:47  ste_cm
+ *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+ *		
  *		Revision 4.1  89/10/04  11:57:47  dickey
  *		lint (apollo SR10.1)
  *		
@@ -60,8 +72,8 @@ static  char    Id[] = "$Id: name2s.c,v 5.0 1989/10/04 11:57:47 ste_cm Rel $";
 #include	"ptypes.h"
 #include	<ctype.h>
 
-#define	isshell(c)	(strchr("*%?$()[]{}|<>^&;#\\\"`'", c) != 0)
-#define	isAEGIS(c)	(strchr("*%?()[]{}\\", c) != 0)
+#define	isshell(c)	(strchr("*%?$()[]{}|<>^&;#\\\"`'", (size_t)c) != 0)
+#define	isAEGIS(c)	(strchr("*%?()[]{}\\", (size_t)c) != 0)
 
 name2s(bfr, len, name, opt)
 char	*bfr, *name;
@@ -86,7 +98,7 @@ int	len, opt;
 				} else if ((c == ':')
 				||	   (c == '.'
 					&&  in_leaf == 1
-					&&  strchr("./", *name) == 0))
+					&&  strchr("./", (size_t)*name) == 0))
 					*bfr++ = ':';
 				else if (opt & 5) {
 					if (isAEGIS(c))

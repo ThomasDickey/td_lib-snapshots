@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 5.6 1990/03/05 11:54:13 dickey Exp $ */
+/* $Id: ptypes.h,v 5.7 1990/03/12 08:01:12 dickey Exp $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -20,6 +20,9 @@
 #ifndef	P_tmpdir
 #define	P_tmpdir	"/usr/tmp"
 #define	L_tmpnam	32
+#ifdef	apollo
+#define	apollo_sr10	/* ...must be independent of '__STDC__' for lint */
+#endif
 #endif
 
 #ifdef	S_IFSOCK
@@ -126,20 +129,17 @@ extern	char	*sprintf();
 
 extern	V_OR_I	_exit();
 extern	V_OR_I	exit();
-#ifndef	vms
-extern	V_OR_I	free();
-#endif	/* vms */
 extern	V_OR_I	qsort();
 #ifndef	vms
-#ifndef	__STDC__
+extern	V_OR_I	free();
+#if	!defined(__STDC__) && !defined(apollo_sr10)
 extern	V_OR_I	perror();
 extern	V_OR_I	rewind();
 #endif	/* __STDC__ */
 #endif
 
 #ifdef	unix
-#if	defined(apollo) && defined(__STDC__)
-#define	apollo_sr10
+#ifdef	apollo_sr10
 extern	uid_t	getuid(), geteuid();
 extern	gid_t	getgid(), getegid();
 #else
