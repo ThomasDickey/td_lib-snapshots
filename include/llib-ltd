@@ -1,4 +1,4 @@
-/* @(#)llib-ltd	1.49 89/03/08 13:21:58 */
+/* @(#)llib-ltd	1.51 89/03/13 13:21:58 */
 /*LINTLIBRARY*/
 
 #define	CUR_PTYPES
@@ -222,6 +222,9 @@ int	usercopy(s, d) char *s, *d; { return(0); }
 
 /* userprot.c --------------------------------------------------------- */
 int	userprot(name, mode, mtime) char *name; time_t mtime; { return(0); }
+
+/* vcs_file.c --------------------------------------------------------- */
+char *	vcs_file(path, name, temp) char *path, *name; { return(0); }
 
 /* vecalloc.c --------------------------------------------------------- */
 char	**vecalloc(len) unsigned len; { return(0); }
