@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: sameleaf.c,v 12.3 1993/11/27 16:29:04 dickey Exp $";
-#endif
-
 /*
  * Title:	sameleaf.c (compare to determine if same-leaf of paths)
  * Author:	T.E.Dickey
@@ -36,6 +32,8 @@ static	char	Id[] = "$Id: sameleaf.c,v 12.3 1993/11/27 16:29:04 dickey Exp $";
 #define	STR_PTYPES
 #include	"ptypes.h"
 
+MODULE_ID("$Id: sameleaf.c,v 12.5 1993/12/02 15:52:03 tom Exp $")
+
 int	sameleaf(
 	_ARX(char *,	path)
 	_AR1(char *,	leaf)
@@ -43,12 +41,13 @@ int	sameleaf(
 	_DCL(char *,	path)
 	_DCL(char *,	leaf)
 {
+	static	char	dotdot[] = { '.', '.', PATH_SLASH, EOS };
 	auto	 int	adjust;
 	auto	 char	tmp[BUFSIZ];
 	register char	*s;
 
 	(void)strcpy(tmp, path);
-	while (!strncmp(leaf, "../", 3))
+	while (!strncmp(leaf, dotdot, 3))
 		leaf += 3;
 	while ((s = fleaf(tmp)) != NULL) { /* find real leaf-name */
 		if (*s != EOS)

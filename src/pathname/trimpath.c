@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: trimpath.c,v 12.3 1993/11/27 16:35:14 dickey Exp $";
-#endif
-
 /*
  * Title:	trimpath.c
  * Author:	T.E.Dickey
@@ -22,14 +18,16 @@ static	char	Id[] = "$Id: trimpath.c,v 12.3 1993/11/27 16:35:14 dickey Exp $";
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-char	*
-trimpath(
-_ARX(char *,	path)
-_AR1(char *,	cwd)
-	)
-_DCL(char *,	path)
-_DCL(char *,	cwd)
+MODULE_ID("$Id: trimpath.c,v 12.5 1993/12/02 15:44:34 tom Exp $")
+
+char *	trimpath(
+	_ARX(char *,	path)
+	_AR1(char *,	cwd)
+		)
+	_DCL(char *,	path)
+	_DCL(char *,	cwd)
 {
+	static	char	slash[] = {PATH_SLASH,EOS};
 	register char *s, *d;
 
 	/*
@@ -46,7 +44,7 @@ _DCL(char *,	cwd)
 				s++;		/* absorb "." */
 		d += strlen(tmp);
 		if (!isSlash(d[-1]))		/* add delim iff we need it */
-			(void)strcat(d, "/");
+			(void)strcat(d, slash);
 		(void)strcat(d, s);
 		(void)strcpy(path,tmp);
 	}

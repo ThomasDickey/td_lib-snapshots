@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: abspath.c,v 12.3 1993/11/28 23:32:34 dickey Exp $";
+static	char	Id[] = "$Id: abspath.c,v 12.4 1993/12/02 17:27:02 dickey Exp $";
 #endif
 
 /*
@@ -163,7 +163,8 @@ void	abshome(
 	if (*d == '~') {	/* my home directory */
 		s = d+1;
 		if ((*s == EOS) || isSlash(*s)) {
-			s++;
+			if (*s != EOS)
+				s++;
 			while ((*d++ = *s++) != EOS)
 				;
 			precat(getenv("HOME"), path);

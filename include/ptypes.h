@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 12.10 1993/12/01 18:46:08 dickey Exp $ */
+/* $Id: ptypes.h,v 12.11 1993/12/02 16:10:28 dickey Exp $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -294,7 +294,7 @@ typedef	short	ino_t;
 
 #if	defined(SYSTEM5) || defined(vms) || defined(__TURBOC__)
 #define	getwd(p)	getcwd(p,sizeof(p)-2)
-#if	!defined(__hpux) && !defined(__TURBOC__)
+#if	!(defined(__hpux) || defined(__TURBOC__))
 extern	char	*getcwd(_ar1(char *,p));
 #endif
 #else	/* !SYSTEM5 */
@@ -317,7 +317,7 @@ extern	long	strtol(
 		_arx(char **,	d)
 		_ar1(int,	base));
 #endif
-#if	!defined(vms) && !defined(__TURBOC__)
+#if	!(defined(vms) || defined(__TURBOC__))
 #if	!(defined(apollo_sr10) || defined(__hpux) || defined(__CLCC__))
 extern	V_OR_I2	perror (_ar1(char *,s));
 extern	V_OR_I	rewind (_ar1(FILE *,s));
@@ -349,7 +349,7 @@ extern	int	optind;
 extern	uid_t	getuid(), geteuid();
 extern	gid_t	getgid(), getegid();
 #else
-#if	!defined(NBBY) && !defined(__hpux)
+#if	!(defined(NBBY) || defined(__hpux))
 typedef	int	uid_t;
 typedef	int	gid_t;
 #endif	/* SunOs 3.5 (fixed in SunOs 4.0) */
@@ -395,6 +395,13 @@ extern	int	tgetent	(char *, char *);
 extern	int	tgetnum	(char *);
 extern	int	ungetc	(int, FILE *);
 extern	int	vfork	(void);
+#endif
+
+#if	defined(sun)	/* missing from <stdlib.h> */
+extern	long	strtol(
+		_arx(char *,	s)
+		_arx(char **,	d)
+		_ar1(int,	base));
 #endif
 
 #endif	/* unix */
@@ -625,7 +632,7 @@ extern	V_OR_I		endpwent(_ar0);
 #ifdef	STR_PTYPES
 #ifndef LINTLIBRARY
 #include	<string.h>
-#if	!defined(SYSTEM5) && !defined(vms) && !defined(apollo) && !defined(sun) && !defined(__TURBOC__)
+#if	!(defined(SYSTEM5) || defined(vms) || defined(apollo) || defined(sun) || defined(__TURBOC__))
 #define	strchr	index
 #define	strrchr	rindex
 #endif	/* SYSTEM5 */
