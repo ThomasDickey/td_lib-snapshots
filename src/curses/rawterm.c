@@ -3,6 +3,8 @@
  * Author:	T.E.Dickey
  * Created:	24 Nov 1987
  * Modified:
+ *		16 Feb 1998, workaround: SVr4 curses doesn't do smkx unless it
+ *			     had endwin() call.
  *		16 Dec 1995, integration with ncurses mouse-support; moved
  *			     'keypad()' call from 'cmdch()'.
  *		16 Jul 1994, made 'dumptty()' a library procedure.
@@ -29,7 +31,7 @@
 #define TRM_PTYPES	/* <termios.h> */
 #include	"td_curse.h"
 
-MODULE_ID("$Id: rawterm.c,v 12.20 1995/12/17 01:32:48 tom Exp $")
+MODULE_ID("$Id: rawterm.c,v 12.21 1998/02/16 12:10:39 tom Exp $")
 
 TermioT	original_tty;
 TermioT	modified_tty;
@@ -106,6 +108,22 @@ static	void	disable_mouse(_AR0)
 #endif
 
 /*
+ * Ncurses emits rmkx/smkx when turning keypad() off/on.  SVr4 curses doesn't
+ * do that, preferring endwin/refresh, which we don't want, since that clears
+ * the screen as well.
+ */
+#if	HAVE_TIGETSTR && HAVE_PUTP && !defined(NCURSES_VERSION)
+static	void	set_cursor_mode(_AR0)
+{
+	char *s = tigetstr("smkx");
+	if (s != 0)
+		putp(s);
+}
+#else
+#define	set_cursor_mode()
+#endif
+
+/*
  * Call this to save the original terminal state, _before_ calling 'initscr()'.
  * I found this necessary on Solaris (explorer@clarknet.com) because the
  * terminal characteristics were not being saved/restored properly.  Because
@@ -163,6 +181,7 @@ void	rawterm(_AR0)
 	}
 
 	enable_mouse();
+	set_cursor_mode();
 	show_term("after--raw-");
 }
 
