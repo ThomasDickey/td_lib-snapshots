@@ -1,3 +1,10 @@
+2003-04-30  dickey@invisible-island.net
+
+	* src/pathname/samehead.c:
+	didn't notice when changing isPath() to isSlash() that the former did a
+	strchr, which allowed an EOS character to "match".  Change logic to explicitly
+	allow EOS.
+
 2003-04-26  dickey@invisible-island.net
 
 	* src/cm_funcs/cvslast.c:
