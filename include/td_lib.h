@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 12.6 1994/06/25 14:14:51 tom Exp $ */
+/* $Id: td_lib.h,v 12.7 1994/07/10 22:37:02 tom Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for TD_LIB common
@@ -443,7 +443,7 @@
 
 	/* newzone.c -------------------------------------------------- */
 #ifdef	unix
-	int	localzone;
+extern	int	localzone;
 
 	void	newzone(
 			_arx(int,	hours)

@@ -1,4 +1,4 @@
-# $Id: td_rules.mk,v 12.2 1994/07/02 14:30:02 tom Exp $
+# $Id: td_rules.mk,v 12.3 1994/07/05 00:01:25 tom Exp $
 # Common make-rules for TD_LIB
 
 ####### (Standard Productions) #################################################
@@ -7,8 +7,8 @@ run_test\
 install:	$(SOURCES) $(ALL)
 	@echo '** made '$@
 
-clean:				; rm -f $(CLEAN)
-clobber:	clean		; rm -f $(ALL)
+clean:				; -$(RM) $(CLEAN)
+clobber:	clean		; -$(RM) $(ALL)
 destroy:			; $(DESTROY)
 sources:	$(SOURCES)
 

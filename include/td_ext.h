@@ -1,4 +1,4 @@
-/* $Id: td_ext.h,v 12.4 1994/07/03 00:42:43 tom Exp $ */
+/* $Id: td_ext.h,v 12.5 1994/07/10 22:22:07 tom Exp $ */
 
 #ifndef	TD_EXT_H
 #define	TD_EXT_H
@@ -439,5 +439,9 @@ extern	int	tgetnum	 ARGS((char *s));
 #if HAVE_VFORK && NEED_VFORK
 extern	int	vfork	 ARGS((void));
 #endif /* HAVE_VFORK */
+
+#if !HAVE_GETWD
+#define	getwd(p)	getcwd(p,MAXPATHLEN)
+#endif
 
 #endif	/* TD_EXT_H */

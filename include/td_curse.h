@@ -1,4 +1,4 @@
-/* $Id: td_curse.h,v 12.17 1994/07/04 23:21:53 tom Exp $ */
+/* $Id: td_curse.h,v 12.18 1994/07/10 22:40:57 tom Exp $ */
 
 /*
  * TD_LIB CURSES-related definitions
@@ -158,14 +158,15 @@ extern	int	wstandout	ARGS((WINDOW *w));
 
 	/* cmdch.c ---------------------------------------------------- */
 #ifndef	NO_XTERM_MOUSE
-	struct	{
+typedef	struct	{
 	int	col;		/* 0 .. COLS-1 */
 	int	row;		/* 0 .. LINES-1 */
 	int	button;		/* 1, 2 or 3 */
 	int	pressed;	/* boolean */
 	int	released;	/* boolean */
 	int	dbl_clik;	/* boolean */
-	} xt_mouse;	/* state of XTerm-mouse */
+	} XtermMouse;
+extern	XtermMouse xt_mouse;	/* state of XTerm-mouse */
 #endif
 
 	int	cmdch(

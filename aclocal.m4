@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.30 1994/07/04 23:37:52 tom Exp $
+dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.31 1994/07/05 01:10:59 tom Exp $
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "TD_" to "AC_"
 dnl ---------------------------------------------------------------------------
@@ -366,6 +366,7 @@ then
 		;;
 	*)
 		LIBS="${td_save2LIBS}"
+		AC_HAVE_LIBRARY(termcap)
 		;;
 	esac
 fi

@@ -1,3 +1,31 @@
+1994-07-10  dickey@clark.net
+
+	* src/cm_funcs/rcstemp.c, src/cm_funcs/rcsedit.c: compiler warning
+
+	* src/cm_funcs/rcsedit.c: use MODULE_ID
+
+	* configure.in: for now, commented out ncurses stuff
+
+	* src/curses/cmdch.c:
+	added some logic to untranslate backspace and delete keys.
+
+	* src/pathname/acc_mode.c:
+	rephrased without 'strcat()', hopefully simpler
+
+	* include/td_curse.h: make xt_mouse explicitly extern
+
+	* include/td_lib.h: make localzone explicitly extern
+
+	* include/td_ext.h: define backup-macro for 'getwd()'
+
+	* support/Makefile: td_lib.mk isn't part of this control anymore
+
+	* test/Makefile, src/Makefile: omitted redundant 'clobber'
+
+	* td_make.in: added 'tags' to clean-rule
+
+	* configure.in: added has_colors
+
 1994-07-04  dickey@clark.net
 
 	* configure.in: tweaks from first pass on Solaris
