@@ -1,3 +1,13 @@
+1991-09-16  dickey@software.org
+
+	* src/cm_funcs/rcsload.c: load history-comment also
+
+	* include/rcsdefs.h: added 'logged' member to RCSTREE
+
+	* src/cm_funcs/rcsload.c:
+	construct vectors for text of file, plus deltas (must next
+	evaluate deltas, also load history-text).
+
 1991-09-13  dickey@software.org
 
 	* src/cm_funcs/rcsedit.c:

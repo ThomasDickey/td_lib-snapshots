@@ -1,4 +1,4 @@
-/* $Id: rcsdefs.h,v 9.4 1991/09/13 07:33:04 dickey Exp $ */
+/* $Id: rcsdefs.h,v 9.5 1991/09/16 07:51:43 dickey Exp $ */
 
 #ifndef	_RCSDEFS_H_
 #define	_RCSDEFS_H_
@@ -56,6 +56,7 @@ typedef	struct	{
 		int	num_deleted;	/* lines deleted	*/
 		char	*buffer;	/* loaded-file (raw)	*/
 		char	**vector;	/* pointers to lines	*/
+		char	*logged;	/* history-comment	*/
 	} RCSTREE;
 #endif	/* S_IFMT */
 
