@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: rcstime.c,v 12.2 1993/10/29 17:35:24 dickey Exp $";
-#endif
-
 /*
  * Title:	rcstime.c
  * Author:	T.E.Dickey
@@ -16,9 +12,11 @@ static	char	Id[] = "$Id: rcstime.c,v 12.2 1993/10/29 17:35:24 dickey Exp $";
  * Function:	converts to/from string/time_t values for RCS archives.
  */
 
+#define TIM_PTYPES
 #include "ptypes.h"
 #include "rcsdefs.h"
-#include <time.h>
+
+MODULE_ID("$Id: rcstime.c,v 12.4 1994/05/23 22:49:36 tom Exp $")
 
 #if	RCS_VERSION >= 5
 #define	RCS_ZONE(t)	gmt_offset(t)

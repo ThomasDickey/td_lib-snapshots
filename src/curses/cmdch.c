@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: cmdch.c,v 12.7 1994/05/21 18:42:48 tom Exp $";
+static	char	Id[] = "$Id: cmdch.c,v 12.8 1994/05/23 22:47:38 tom Exp $";
 #endif
 
 /*
@@ -43,6 +43,7 @@ static	char	Id[] = "$Id: cmdch.c,v 12.7 1994/05/21 18:42:48 tom Exp $";
  */
 
 #define		STR_PTYPES
+#define		TIM_PTYPES
 #include	"td_curse.h"
 #include	<ctype.h>
 
@@ -64,7 +65,6 @@ static	char	Id[] = "$Id: cmdch.c,v 12.7 1994/05/21 18:42:48 tom Exp $";
 #endif
 
 #ifndef	NO_XTERM_MOUSE
-#include <sys/time.h>
 
 #define XtermPos() (getch() - 041)	/* 0..COLS-1 or 0..LINES-1 */
 

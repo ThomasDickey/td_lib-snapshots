@@ -1,4 +1,4 @@
-/* $Id: td_curse.h,v 12.9 1994/05/21 18:41:39 tom Exp $ */
+/* $Id: td_curse.h,v 12.10 1994/05/23 00:09:58 tom Exp $ */
 
 /*
  * TD_LIB CURSES-related definitions
@@ -12,9 +12,12 @@
 #endif		/* _PTYPES_ */
 
 #ifdef USE_NCURSES
-#include	<ncurses/ncurses.h>
+#  include	<ncurses/ncurses.h>
+#  define _y       _line
+#  define _firstch _firstchar
+#  define _lastch  _lastchar
 #else
-#include	<curses.h>
+#  include	<curses.h>
 #endif
 
 /*----------------------------------------------------------------------------*/
