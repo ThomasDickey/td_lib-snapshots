@@ -1,3 +1,11 @@
+1997-03-15  dickey@clark.net
+
+	* src/curses/cmdch.c: fix an ifdef-conflict
+
+	* src/curses/cmdch.c:
+	ifdef'd out the code that looks for escape sequences which was conflicting
+	with the keypad() code
+
 1997-02-11  dickey@clark.net
 
 	* src/curses/resizwin.c: add fall-thru for SVr4-style resizing

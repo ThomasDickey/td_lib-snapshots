@@ -45,7 +45,7 @@
 #include	"td_curse.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: cmdch.c,v 12.22 1996/09/25 14:30:28 tom Exp $")
+MODULE_ID("$Id: cmdch.c,v 12.24 1997/03/15 21:58:00 tom Exp $")
 
 #define	ESC(c)	((c) == '\033')
 #define	END(s)	s[strlen(s)-1]
@@ -203,11 +203,13 @@ int	cmdch(
 		if (iscntrl(c) || j != 0)
 			i_blk[j++] = c;
 
+#if !HAVE_KEYPAD && !NO_XTERM_MOUSE
 		if (ESC(c)) {	/* assume "standard" escapes */
 			do {
 				i_blk[j++] = c = getch();
 			} while (!isalpha(c));
 		}
+#endif
 		if (j) {
 			i_blk[j] = EOS;
 			done	= TRUE;
