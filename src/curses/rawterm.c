@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: rawterm.c,v 12.10 1994/05/21 18:53:22 tom Exp $";
+static	char	Id[] = "$Id: rawterm.c,v 12.11 1994/05/22 23:56:20 tom Exp $";
 #endif
 
 /*
@@ -29,25 +29,27 @@ static	char	Id[] = "$Id: rawterm.c,v 12.10 1994/05/21 18:53:22 tom Exp $";
 #define STR_PTYPES
 #include	"td_curse.h"
 
-#if defined(__hpux) || !defined(VINTR)
-# define HAS_TERMIOS 0
-# include <sgtty.h>
-# define SGTTY struct sgttyb
-# define GetTerminal gtty(0, p)
-# define SetTerminal stty(0, p)
-#else
-# define HAS_TERMIOS 1
+#if defined(__hpux)
+# undef HAVE_TERMIOS_H	/* patch: I should have used <termios.h> */
 #endif
 
-#ifndef	GetTerminal
-# define SGTTY struct termios
-# ifdef OLD_TERMIOS
-#  define GetTerminal(p) ioctl(0, TCGETA, p)
-#  define SetTerminal(p) ioctl(0, TCSETAF, p)
-# else
-#  define GetTerminal(p) tcgetattr(0, p)
-#  define SetTerminal(p) tcsetattr(0, TCSAFLUSH, p)
-# endif
+#if HAVE_TERMIOS_H
+#  include <termios.h>
+#  define SGTTY struct termios
+#  if HAVE_TCGETATTR
+#    define GetTerminal(p) tcgetattr(0, p)
+#    define SetTerminal(p) tcsetattr(0, TCSAFLUSH, p)
+#  else
+#    define GetTerminal(p) ioctl(0, TCGETA, p)
+#    define SetTerminal(p) ioctl(0, TCSETAF, p)
+#  endif
+#else
+#  if HAVE_SGTTY_H
+#    include <sgtty.h>
+#    define SGTTY struct sgttyb
+#    define GetTerminal gtty(0, p)
+#    define SetTerminal stty(0, p)
+#  endif
 #endif
 
 SGTTY	original_tty;
@@ -61,7 +63,7 @@ void	show_term(s)
 	if (log == 0)
 		log = fopen("rawterm.log", "w");
 	if (log != 0) {
-#if HAS_TERMIOS	/* we've got <termios.h> */
+#if HAVE_TERMIOS_H	/* we've got <termios.h> */
 		int	n;
 		SGTTY sb;
 		GetTerminal(&sb);
