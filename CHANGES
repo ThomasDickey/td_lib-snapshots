@@ -1,3 +1,22 @@
+1994-09-28  dickey@clark.net
+
+	* src/cm_funcs/cmv_dir.c: implemented 'purge_cmv_dir()'
+
+	* src/cm_funcs/cmv_last.c: mods to use 'get_cmv_lock()' interface
+
+	* src/cm_funcs/cmv_dir.c: added entrypoint 'get_cmv_lock()' -- untested
+
+	* include/cmv_defs.h: added defs for get_cmv_lock, purge_cmv_dir
+
+	* src/cm_funcs/cmv_dir.c: capture info for lock-owner and revision
+
+	* src/cm_funcs/lastrev.c:
+	oops: fixed this so it works when DED_CM_LOOKUP isn't set
+
+1994-09-27  dickey@clark.net
+
+	* src/curses/win2file.c: mods to handle alternate character-set
+
 1994-09-22  dickey@clark.net
 
 	* src/curses/resizwin.c:

@@ -1,5 +1,5 @@
 #ifndef	NO_IDENT
-static	char	Id[] = "$Id: cmv_dir.c,v 12.3 1994/08/21 18:26:16 tom Exp $";
+static	char	Id[] = "$Id: cmv_dir.c,v 12.4 1994/09/28 23:36:59 tom Exp $";
 #endif
 
 /*
@@ -48,8 +48,10 @@ static	char	Id[] = "$Id: cmv_dir.c,v 12.3 1994/08/21 18:26:16 tom Exp $";
 #define	CMFILE	struct	CmFile
 	CMFILE	{
 	CMFILE	*next;
-	char	*internal;
-	char	*external;
+	char	*internal;	/* internal file-leafname (e.g., f-1234) */
+	char	*external;	/* external file-leafname (e.g., Makefile) */
+	char	*lockedby;	/* name of lock-owner, if non-null */
+	char	*revision;	/* ...and current-revision number */
 	};
 
 #define	CMTREE	struct	CmTree
@@ -214,39 +216,58 @@ CMTREE *FindInternalDir(
 
 /******************************************************************************/
 /*
- * Read the entries in the r-curr file in the given directory, adding them
- * to the file-list of the given CMTREE node.
+ * Read the entries in the r-curr file in the given directory, adding them to
+ * the file-list of the given CMTREE node.
  *
  * Fields are separated by semicolons:
  *	internal;description;external;version
+ *
+ * An empty description is usually a "/".  The first word of a nonempty
+ * description is the user who's locked the file for changes.
  */
 static
 void	read_r_curr(
 	_AR1(CMTREE *,	parent))
 	_DCL(CMTREE *,	parent)
 {
-	char	temp[MAXPATHLEN];
-	char	internal[BUFSIZ];
-	char	external[BUFSIZ];
+	char	temp[BUFSIZ];
 	FILE	*fp;
 	CMFILE	*p;
 
 	if ((fp = fopen(pathcat(temp, parent->fullpath, "r-curr"), "r")) != 0) {
 		while (fgets(temp, sizeof(temp), fp) != 0) {
-			char *s = strchr(strtrim(temp), ';');
-			char *d;
-			if (s == 0)
+			char	*external;
+			char	*internal;
+			char	*description;
+			char	*s;
+			char	*d;
+
+			internal = strtrim(temp);
+			if ((s = strchr(temp, ';')) == 0)
 				continue;
 			*s++ = EOS;
-			(void)strcpy(internal, temp);
-			/* skip description */
+
+			description = s;
 			if ((s = strchr(s, ';')) == 0)
 				continue;
-			if ((d = strchr(++s, ';')) == 0)
+			*s++ = EOS;
+
+			external = s;
+			if ((d = strchr(s, ';')) == 0)
 				continue;
-			*d = EOS;	/* version follows */
-			(void)strcpy(external, s);
+			*d++ = EOS;	/* version follows */
+
+			/* chop off the first word to get the lock-owner */
+			if ((s = strchr(description, ' ')) != 0) {
+				*s = EOS;
+				description = txtalloc(description);
+			} else {
+				description = 0;
+			}
+
 			p = typealloc(CMFILE);
+			p->lockedby = description;
+			p->revision = txtalloc(d);
 			p->internal = NewInternal(parent, internal);
 			p->external = NewExternal(parent, external);
 			p->next = parent->filelist;

@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: win2file.c,v 12.3 1994/07/20 22:32:10 tom Exp $";
+static	char	Id[] = "$Id: win2file.c,v 12.4 1994/09/28 01:08:33 tom Exp $";
 #endif
 
 /*
@@ -39,16 +39,20 @@ static	char	Id[] = "$Id: win2file.c,v 12.3 1994/07/20 22:32:10 tom Exp $";
 
 #define	OUT	FPRINTF(fp,
 
+#ifndef A_ATTRIBUTES
+#define A_ATTRIBUTES 0200
+#endif
+
 static
 void	mark(
 	_ARX(WINDOW *,	win)
 	_ARX(int,	row)
-	_ARX(int,	c)
+	_ARX(unsigned,	c)
 	_AR1(int,	bold)
 		)
 	_DCL(WINDOW *,	win)
 	_DCL(int,	row)
-	_DCL(int,	c)
+	_DCL(unsigned,	c)
 	_DCL(int,	bold)
 {
 	(void)wmove(win, row + win->_begy, win->_begx);
@@ -87,7 +91,9 @@ void	win2fp(
 			k = *s;
 			mark(win, j, '*', 1);
 			(void)wrefresh(win);
-			mark(win, j, toascii(k), !isascii(k));
+			mark(win, j,
+				(k & ~A_ATTRIBUTES),
+				(k & A_ATTRIBUTES) != 0);
 
 			/* find the last nonblank column */
 			while ((k = toascii(*s++)) != EOS) {
@@ -99,9 +105,36 @@ void	win2fp(
 
 			/* dump the line, setting boldface as needed */
 			for (s = win->_y[j]; s < t; s++) {
-				auto	int	bold = !isascii(k = *s);
+				auto	int	bold;
 
+				k = *s;
+				bold = (k & A_ATTRIBUTES) != 0;
+				k &= ~A_ATTRIBUTES;
+
+#ifdef ACS_HLINE /* figure we've got the others */
+				if (k == ACS_HLINE)
+					k = '-';
+				else if (k == ACS_VLINE)
+					k = '|';
+				else if (k == ACS_ULCORNER
+				   ||	 k == ACS_LLCORNER
+				   ||	 k == ACS_URCORNER
+				   ||	 k == ACS_LRCORNER
+				   ||	 k == ACS_RTEE
+				   ||	 k == ACS_LTEE
+				   ||	 k == ACS_BTEE
+				   ||	 k == ACS_TTEE
+				   ||	 k == ACS_PLUS)
+				   	k = '+';
+#if 1
+					else k = toascii(k);
+#else
+				else if (!isascii(k))
+					k = '*';
+#endif /**/
+#else
 				k = toascii(k);
+#endif
 				if (isprint(k)) {
 					if (bold)
 						OUT "%c\b", k);
