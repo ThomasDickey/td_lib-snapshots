@@ -1,4 +1,4 @@
-/* @(#)llib-ltd	1.47 88/09/19 07:36:58 */
+/* @(#)llib-ltd	1.48 88/12/14 11:27:19 */
 /*LINTLIBRARY*/
 
 #define	CUR_PTYPES
@@ -217,6 +217,9 @@ int	userprot(name, mode, mtime) char *name; time_t mtime; { return(0); }
 /* vecalloc.c --------------------------------------------------------- */
 char	**vecalloc(len) unsigned len; { return(0); }
 	vecfree(v) char **v; { }
+
+/* vercmp.c ----------------------------------------------------------- */
+int	vercmp (s1,s2,wild) char *s1,*s2; { return(0); }
 
 /* walktree.c --------------------------------------------------------- */
 int	walktree(p, n, f, m, lvl) char *p, *n, *m; int (*f)(); { return(0); }
