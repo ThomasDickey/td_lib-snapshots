@@ -1,3 +1,16 @@
+1995-08-15  dickey@clark.net
+
+	* aclocal.m4: corrected --with-prototypes default
+
+1995-08-06  dickey@clark.net
+
+	* src/curses/rawgets.c: guard against characters wider than 8 bits
+
+	* src/curses/logch.c:
+	assume we'll encode characters that may be wider than 8 bits
+
+	* src/curses/logch.c: use MODULE_ID
+
 1995-08-01  dickey@clark.net
 
 	* src/curses/cmdch.c: oops: still have to test for arrow keys!
