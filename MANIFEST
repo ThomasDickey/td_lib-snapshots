@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19940802
+MANIFEST for td_lib, version t19940803
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         restrictions on copying/using this software
@@ -44,6 +44,7 @@ src/cm_funcs/cmv_dir.c          lookup CmVision directory & file paths
 src/cm_funcs/cmv_last.c         lookup file's current version in CmVision
 src/cm_funcs/cutoff.c           SCCS-style cutoff date parsing
 src/cm_funcs/descrip.mms        MMS file for the TD_LIB/SRC/CM_FUNCS directory
+src/cm_funcs/lastrev.c          combines calls for RCS/SCCS/CMVision last-revision lookup
 src/cm_funcs/newzone.c          set new timezone
 src/cm_funcs/next_ver.c         next-version computation
 src/cm_funcs/packdate.c         pack numbers to make UNIX date

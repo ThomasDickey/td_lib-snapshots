@@ -1,4 +1,4 @@
-# $Id: Makefile,v 12.3 1994/08/02 18:44:46 tom Exp $
+# $Id: Makefile,v 12.4 1994/08/03 12:59:22 tom Exp $
 # MAKE-file for miscellaneous library routines
 
 ####### (Environment) ##########################################################
@@ -8,6 +8,7 @@ include ../td_defns.mk
 CSRC	=\
 	cmv_dir.c \
 	cutoff.c \
+	lastrev.c \
 	newzone.c \
 	next_ver.c \
 	packdate.c \
@@ -40,6 +41,7 @@ OBJS	=\
 	$Z(cmv_dir.o) \
 	$Z(cmv_last.o) \
 	$Z(cutoff.o) \
+	$Z(lastrev.o) \
 	$Z(newzone.o) \
 	$Z(next_ver.o) \
 	$Z(packdate.o) \
@@ -72,6 +74,9 @@ ALL	= $Z
 include ../td_rules.mk
 
 ####### (Details of Productions) ###############################################
+
+$Z(lastrev.o) :	$(PTYPES_H) $I/cmv_defs.h $(RCSDEFS_H) $(SCCSDEFS_H)
+
 $Z(cmv_dir.o)\
 $Z(cmv_last.o): $(PTYPES_H) $I/cmv_defs.h
 
