@@ -1,4 +1,4 @@
-/* @(#)llib-ltd	1.22 88/06/01 09:58:17 */
+/* @(#)llib-ltd	1.23 88/06/07 06:20:00 */
 /*LINTLIBRARY*/
 
 #include	<curses.h>
@@ -66,6 +66,9 @@ int	execute(verb, args) char *verb, *args; { return(0); }
 
 /* flushall.c --------------------------------------------------------- */
 	flushall(fd) { }
+
+/* gethome.c ---------------------------------------------------------- */
+char	*gethome() { return(0); }
 
 /* getuser.c ---------------------------------------------------------- */
 char	*getuser() { return(0); }
@@ -164,3 +167,6 @@ char	**vecalloc(len) unsigned len; { return(0); }
 
 /* which.c ------------------------------------------------------------ */
 int	which(bfr, len, find, dot) char	*bfr, *find, *dot; { return(0); }
+
+/* win2file.c --------------------------------------------------------- */
+	win2file(win, file) WINDOW *win; char *file; { }
