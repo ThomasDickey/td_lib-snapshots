@@ -1,3 +1,9 @@
+2003-01-16  dickey@invisible-island.net
+
+	* aclocal.m4:
+	oops - fixes for --with-ncurses, --with-ncursesw in almost all locations
+	outside /usr
+
 2002-12-21  dickey@invisible-island.net
 
 	* aclocal.m4:

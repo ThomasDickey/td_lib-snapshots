@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Id: aclocal.m4,v 12.147 2002/12/21 21:14:20 tom Exp $
+dnl $Id: aclocal.m4,v 12.148 2003/01/16 22:49:53 tom Exp $
 dnl vi:set ts=4:
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "CF_" to "AC_"
@@ -1387,33 +1387,32 @@ AC_CACHE_CHECK(for $cf_ncuhdr_root include-path, cf_cv_ncurses_h2,[
 	test -n "$verbose" && echo
 	CF_HEADER_PATH(cf_search,$cf_ncuhdr_root)
 	test -n "$verbose" && echo search path $cf_search
+	cf_save2_CPPFLAGS="$CPPFLAGS"
 	for cf_incdir in $cf_search
 	do
+		CF_ADD_INCDIR($cf_incdir)
 		for cf_header in \
 			ncurses.h \
 			curses.h
 		do
 			CF_NCURSES_CC_CHECK(cf_cv_ncurses_h2,$cf_header,$1)
-			if test "$cf_cv_ncurses_h" != no ; then
+			if test "$cf_cv_ncurses_h2" != no ; then
 				cf_cv_ncurses_h2=$cf_incdir/$cf_header
 				test -n "$verbose" && echo $ac_n "	... found $ac_c" 1>&AC_FD_MSG
 				break
 			fi
 			test -n "$verbose" && echo "	... tested $cf_incdir/$cf_header" 1>&AC_FD_MSG
 		done
+		CPPFLAGS="$cf_save2_CPPFLAGS"
 		test "$cf_cv_ncurses_h2" != no && break
 	done
 	test "$cf_cv_ncurses_h2" = no && AC_ERROR(not found)
 	])
 
 	CF_DIRNAME(cf_1st_incdir,$cf_cv_ncurses_h2)
-	CF_DIRNAME(cf_2nd_incdir,$cf_1st_incdir)
 	cf_cv_ncurses_header=`basename $cf_cv_ncurses_h2`
-	test -n "$verbose" && echo cf_1st_include=$cf_1st_incdir
-	test -n "$verbose" && echo cf_2nd_include=$cf_2nd_incdir
 	if test `basename $cf_1st_incdir` = $cf_ncuhdr_root ; then
 		cf_cv_ncurses_header=$cf_ncuhdr_root/$cf_cv_ncurses_header
-		CF_ADD_INCDIR($cf_2nd_incdir)
 	fi
 	CF_ADD_INCDIR($cf_1st_incdir)
 
@@ -1473,7 +1472,6 @@ esac
 
 LIBS="$cf_ncurses_LIBS $LIBS"
 
-
 if ( test -n "$cf_cv_curses_dir" && test "$cf_cv_curses_dir" != "no" )
 then
 	LIBS="-L$cf_cv_curses_dir/lib -l$cf_nculib_root $LIBS"
@@ -1499,6 +1497,9 @@ if test -n "$cf_ncurses_LIBS" ; then
 		[AC_MSG_RESULT(no)
 		 LIBS="$cf_ncurses_SAVE"])
 fi
+
+CF_UPPER(cf_nculib_ROOT,HAVE_LIB$cf_nculib_root)
+AC_DEFINE_UNQUOTED($cf_nculib_ROOT)
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Check for the version of ncurses, to aid in reporting bugs, etc.
@@ -2053,48 +2054,56 @@ AC_DEFUN([CF_SUBDIR_PATH],
 
 test -d [$]HOME && {
 	test -n "$verbose" && echo "	... testing $3-directories under [$]HOME"
-	test -d [$]HOME/$3 &&    $1="[$]$1 [$]HOME/$3"
-	test -d [$]HOME/$3/$2 && $1="[$]$1 [$]HOME/$3/$2"
+	test -d [$]HOME/$3 &&          $1="[$]$1 [$]HOME/$3"
+	test -d [$]HOME/$3/$2 &&       $1="[$]$1 [$]HOME/$3/$2"
+	test -d [$]HOME/$3/$2/$3 &&    $1="[$]$1 [$]HOME/$3/$2/$3"
 }
 
 # For other stuff under the home directory, it should be sufficient to put
 # a symbolic link for $HOME/$2 to the actual package location:
 test -d [$]HOME/$2 && {
 	test -n "$verbose" && echo "	... testing $3-directories under [$]HOME/$2"
-	test -d [$]HOME/$2/$3 &&    $1="[$]$1 [$]HOME/$2/$3"
-	test -d [$]HOME/$2/$3/$2 && $1="[$]$1 [$]HOME/$2/$3/$2"
+	test -d [$]HOME/$2/$3 &&       $1="[$]$1 [$]HOME/$2/$3"
+	test -d [$]HOME/$2/$3/$2 &&    $1="[$]$1 [$]HOME/$2/$3/$2"
 }
 
 test "$prefix" != /usr/local && \
 test -d /usr/local && {
 	test -n "$verbose" && echo "	... testing $3-directories under /usr/local"
-	test -d /usr/local/$3 &&    $1="[$]$1 /usr/local/$3"
-	test -d /usr/local/$3/$2 && $1="[$]$1 /usr/local/$3/$2"
-	test -d /usr/local/$2/$3 && $1="[$]$1 /usr/local/$2/$3"
+	test -d /usr/local/$3 &&       $1="[$]$1 /usr/local/$3"
+	test -d /usr/local/$3/$2 &&    $1="[$]$1 /usr/local/$3/$2"
+	test -d /usr/local/$3/$2/$3 && $1="[$]$1 /usr/local/$3/$2/$3"
+	test -d /usr/local/$2/$3 &&    $1="[$]$1 /usr/local/$2/$3"
+	test -d /usr/local/$2/$3/$2 && $1="[$]$1 /usr/local/$2/$3/$2"
 }
 
 test "$prefix" != NONE && \
 test -d $prefix && {
 	test -n "$verbose" && echo "	... testing $3-directories under $prefix"
-	test -d $prefix/$3 &&    $1="[$]$1 $prefix/$3"
-	test -d $prefix/$3/$2 && $1="[$]$1 $prefix/$3/$2"
-	test -d $prefix/$2/$3 && $1="[$]$1 $prefix/$2/$3"
+	test -d $prefix/$3 &&          $1="[$]$1 $prefix/$3"
+	test -d $prefix/$3/$2 &&       $1="[$]$1 $prefix/$3/$2"
+	test -d $prefix/$3/$2/$3 &&    $1="[$]$1 $prefix/$3/$2/$3"
+	test -d $prefix/$2/$3 &&       $1="[$]$1 $prefix/$2/$3"
+	test -d $prefix/$2/$3/$2 &&    $1="[$]$1 $prefix/$2/$3/$2"
 }
 
 test "$prefix" != /opt && \
 test -d /opt && {
 	test -n "$verbose" && echo "	... testing $3-directories under /opt"
-	test -d /opt/$3 &&    $1="[$]$1 /opt/$3"
-	test -d /opt/$3/$2 && $1="[$]$1 /opt/$3/$2"
-	test -d /opt/$2/$3 && $1="[$]$1 /opt/$2/$3"
+	test -d /opt/$3 &&             $1="[$]$1 /opt/$3"
+	test -d /opt/$3/$2 &&          $1="[$]$1 /opt/$3/$2"
+	test -d /opt/$3/$2/$3 &&       $1="[$]$1 /opt/$3/$2/$3"
+	test -d /opt/$2/$3 &&          $1="[$]$1 /opt/$2/$3"
+	test -d /opt/$2/$3/$2 &&       $1="[$]$1 /opt/$2/$3/$2"
 }
 
 test "$prefix" != /usr && \
 test -d /usr && {
 	test -n "$verbose" && echo "	... testing $3-directories under /usr"
-	test -d /usr/$3 &&    $1="[$]$1 /usr/$3"
-	test -d /usr/$3/$2 && $1="[$]$1 /usr/$3/$2"
-	test -d /usr/$2/$3 && $1="[$]$1 /usr/$2/$3"
+	test -d /usr/$3 &&             $1="[$]$1 /usr/$3"
+	test -d /usr/$3/$2 &&          $1="[$]$1 /usr/$3/$2"
+	test -d /usr/$3/$2/$3 &&       $1="[$]$1 /usr/$3/$2/$3"
+	test -d /usr/$2/$3 &&          $1="[$]$1 /usr/$2/$3"
 }
 ])dnl
 dnl ---------------------------------------------------------------------------
