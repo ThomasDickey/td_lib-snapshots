@@ -1,4 +1,4 @@
-/* $Id: td_ext.h,v 12.15 2001/05/15 00:57:04 tom Exp $ */
+/* $Id: td_ext.h,v 12.16 2002/04/21 15:20:37 tom Exp $ */
 
 #ifndef	TD_EXT_H
 #define	TD_EXT_H
@@ -329,6 +329,9 @@ extern	pid_t	wait    ARGS((WAIT_ARG_TYPE *p));
  ******************************************************************************/
 #ifdef	TIM_PTYPES
 
+#if HAVE_MKTIME && NEED_MKTIME
+extern	time_t	mktime  ARGS((struct tm *t));
+#endif /* HAVE_MKTEMP */
 #if HAVE_TIME && NEED_TIME
 extern	time_t	time    ARGS((time_t *t));
 #endif /* HAVE_TIME */
