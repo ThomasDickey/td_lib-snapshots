@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id: run_test.sh,v 12.2 1993/09/23 15:07:41 dickey Exp $
+# $Id: run_test.sh,v 12.1 1993/09/23 15:07:41 tom Exp $
 if test $# != 0
 then
 	echo '** '`date`

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcsload.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
+static	char	Id[] = "$Id: rcsload.c,v 12.2 1993/09/23 15:08:34 dickey Exp $";
 #endif
 
 /*
@@ -7,7 +7,8 @@ static	char	Id[] = "$Id: rcsload.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	19 Aug 1988
  * Modified:
- *		21 Sep 1993, gcc-warnings
+ *		21 Sep 1993, gcc-warnings.  Fixes for unintialized-memory with
+ *			     Purify.
  *		18 Nov 1992, fixed a broken loop in 'eat_text()'.  Plugged
  *			     memory leaks.
  *		26 Oct 1992, changed interface to 'rcsread()'.
@@ -107,8 +108,8 @@ void	append(
 	_DCL(char *,	s)
 {
 	if (load_last != 0 && s != 0) {
-		while ((*load_last++ = *s++) != EOS)
-			;
+		while ((*load_last = *s++) != EOS)
+			load_last++;
 	}
 }
 
@@ -120,8 +121,10 @@ void	loadtext(
 	static	char	edit_type;		/* editing type */
 	static	int	edit_at, skip;
 
-	if (my_buffer == 0)
+	if (my_buffer == 0) {
 		my_buffer = doalloc(my_buffer, my_limit = BUFSIZ);
+		*my_buffer = EOS;
+	}
 
 	if (c != EOS) {
 		if (my_length >= my_limit-1)
@@ -360,8 +363,9 @@ _DCL(int,	verbose)
 			if (*s == '\n')
 				length++;
 		DEBUG(("%d newlines, filesize=%d\n", length, s - load_buffer))
-		length += (s - load_buffer);
+		length += (s - load_buffer) + 2;
 		load_buffer = doalloc(load_buffer, length);
+		s = 0;
 	} else
 		load_buffer = 0;
 	load_last = load_buffer;

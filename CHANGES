@@ -1,3 +1,29 @@
+1993-09-23  dickey@software.org
+
+	* support/old-td_lib.mk: get rid of Purify-files in clean-rules
+
+	* src/cm_funcs/rcsload.c:
+	corrected a couple of places where I was referencing uninitialized memory,
+	or used a bad pointer.  Purify showed some of this...
+
+	* test/run_test.sh: better Purify options
+
+1993-09-23  dickey@software.org
+
+	* test/cm_funcs/run_test.sh, test/compare/run_test.sh, test/curses/run_test.sh, test/memory/run_test.sh, test/pathname/run_test.sh, test/port2dos/run_test.sh, test/process/run_test.sh, test/sheet/run_test.sh, test/string/run_test.sh, test/unix/run_test.sh:
+	RCS_BASE
+
+1993-09-23  dickey@software.org
+
+	* test/compare/test_cmp.c, src/compare/scomp.c:
+	clean compile on SunOs & gcc
+
+	* test/Makefile: corrected rules for m2comp, scomp test-programs
+
+	* src/string/strwcmp.c: gcc warning
+
+	* src/compare/m2comp.c: clean compile on SunOs & gcc
+
 1993-09-22  dickey@software.org
 
 	* include/td_scomp.h: clean-compile with SunOs & gcc

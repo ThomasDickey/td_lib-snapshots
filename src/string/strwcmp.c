@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	*Id = "$Id: strwcmp.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
+static	char	*Id = "$Id: strwcmp.c,v 12.2 1993/09/23 13:44:16 dickey Exp $";
 #endif
 
 /*
@@ -47,6 +47,7 @@ int	strwcmp(
 }
 
 #ifdef	TEST
+static
 void	default_test(_AR0)
 {
 	static	char	*names[] = {

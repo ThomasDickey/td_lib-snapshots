@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	II[] = "$Id: test_cmp.c,v 12.1 1993/09/21 18:46:43 dickey Exp $";
+static	char	II[] = "$Id: test_cmp.c,v 12.2 1993/09/23 14:11:49 dickey Exp $";
 #endif/*lint*/
 
 /*
@@ -12,9 +12,6 @@ static	char	II[] = "$Id: test_cmp.c,v 12.1 1993/09/21 18:46:43 dickey Exp $";
  * Function:	This module acts as a test-driver for the comparison
  *		utilities 'scomp' and 'm2comp'.
  */
-
-#define	STR_PTYPES
-#include "ptypes.h"
 
 static	int	c_opt;
 
@@ -45,6 +42,12 @@ char **	load(
 	return (v);
 }
 
+static
+void	freefile _ONE(char **,vec)
+{
+	free(vec[0]);
+	vecfree(vec);
+}
 
 static
 SCOMP_MATCH(s_match)
@@ -63,9 +66,9 @@ SCOMP_REPORT(s_report)
 	if (lo_2 >= hi_2)	PRINTF("%d",    1+hi_2);
 	else			PRINTF("%d,%d", 1+lo_2, 1+hi_2);
 	PRINTF("\n");
-	while (lo_1 <= hi_1)	PRINTF("< %s", v1x[lo_1++]);
+	while (lo_1 <= hi_1)	PRINTF("< %s", v1[lo_1++]);
 	if (both)		PRINTF("---\n");
-	while (lo_2 <= hi_2)	PRINTF("> %s", v2x[lo_2++]);
+	while (lo_2 <= hi_2)	PRINTF("> %s", v2[lo_2++]);
 }
 
 static
@@ -95,32 +98,32 @@ SCOMP_REPORT(s_context)
 
 	first = lo_1 - (c_opt - 1);
 	if (first < 0)	first = 0;
-	last  = argv_last(v1x, hi_1, hi_1 + c_opt + 1);
+	last  = argv_last(v1, hi_1, hi_1 + c_opt + 1);
 	mark = both ? '!' : '-';
 
 	PRINTF("*** %d,%d\n", first, last);
 	for (j = first-1; j < last; j++) {
 		if (j >= 0)
-		PRINTF("%c %s", (j < lo_1 || j > hi_1) ? ' ' : mark, v1x[j]);
+		PRINTF("%c %s", (j < lo_1 || j > hi_1) ? ' ' : mark, v1[j]);
 	}
 
 	first = lo_2 - (c_opt - 1);
 	if (first < 0)	first = 0;
-	last  = argv_last(v2x, hi_2, hi_2 + c_opt + 1);
+	last  = argv_last(v2, hi_2, hi_2 + c_opt + 1);
 	mark = both ? '!' : '+';
 
 	PRINTF("\n");
 	PRINTF("--- %d,%d -----\n", first, last);
 	for (j = first-1; j < last; j++) {
 		if (j >= 0)
-		PRINTF("%c %s", (j < lo_2 || j > hi_2) ? ' ' : mark, v2x[j]);
+		PRINTF("%c %s", (j < lo_2 || j > hi_2) ? ' ' : mark, v2[j]);
 	}
 }
 
 _MAIN
 {
 	auto	char	buffer[BUFSIZ];
-	auto	void	(*func)(SCOMP_REPORT_ARGS) = s_report;
+	auto	void	(*func)(SCOMP_REPORT_ARGS(p1,p2)) = s_report;
 
 	setbuf(stdout, buffer);
 	if ((argc > 1) && !strncmp(argv[1], "-c", 2)) {
@@ -135,6 +138,8 @@ _MAIN
 		auto	char **	v2 = load(argv[2], &n2, "---");
 		SCOMP((SCOMP_TYPE)v1, n1, (SCOMP_TYPE)v2, n2,
 			sizeof(char *), s_match, func);
+		freefile(v1);
+		freefile(v2);
 	}
 	exit(SUCCESS);
 	/*NOTREACHED*/

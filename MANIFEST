@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19930922
+MANIFEST for td_lib, version t19930923
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         restrictions on copying/using this software
@@ -209,6 +209,7 @@ test/cm_funcs/rcsload.ref       reference for 'rcsload.sh'
 test/cm_funcs/rcsload.sh        test-script for rcsload
 test/cm_funcs/rcsname.ref       test result
 test/cm_funcs/rcsname.sh        test-script for rcsname
+test/cm_funcs/run_test.sh       general test-script: td_lib/test/cm_funcs
 test/cm_funcs/samebr.ref        reference for samebr test
 test/cm_funcs/samebr.sh         test-script for samebr
 test/cm_funcs/sccsname.ref      reference for sccsname test
@@ -222,6 +223,7 @@ test/compare/diffload.ref       test result
 test/compare/diffload.sh        =============================================================================
 test/compare/m2comp.ref         reference for 'm2comp.sh'
 test/compare/m2comp.sh          test-script for 'm2comp'
+test/compare/run_test.sh        general test-script
 test/compare/scomp.ref          reference for 'scomp.sh'
 test/compare/scomp.sh           test-script for 'scomp'
 test/compare/test_cmp.c         test-driver for scomp/mcomp modules
@@ -230,6 +232,7 @@ test/curses/padedit.ref         reference for 'padedit'
 test/curses/padedit.sh          test-script for 'padedit'
 test/curses/rawgets.ref         reference for 'rawgets'
 test/curses/rawgets.sh          test-script for 'rawgets'
+test/curses/run_test.sh         general test script
 test/curses/scr_size.ref        reference for 'scr_size'
 test/curses/scr_size.sh         test-script for 'scr_size'
 test                            subdirectory
@@ -241,6 +244,7 @@ test/dummy4.txt                 long test-case for 'rcsload'
 test/memory                     subdirectory
 test/memory/doalloc.ref         reference for 'doalloc'
 test/memory/doalloc.sh          test-script for 'doalloc'
+test/memory/run_test.sh         general test script
 test/memory/txtalloc.ref        reference for 'txtalloc'
 test/memory/txtalloc.sh         test-script for 'txtalloc'
 test/memory/vecedit.ref         reference for 'vecedit'
@@ -272,6 +276,7 @@ test/pathname/pathleaf.ref      reference for 'pathleaf'
 test/pathname/pathleaf.sh       test-script for 'pathleaf'
 test/pathname/relpath.ref       reference for 'relpath'
 test/pathname/relpath.sh        test-script for 'relpath'
+test/pathname/run_test.sh       general test script
 test/pathname/sameleaf.ref      reference for 'sameleaf'
 test/pathname/sameleaf.sh       test-script for 'sameleaf'
 test/pathname/trimpath.ref      reference for 'trimpath'
@@ -282,6 +287,8 @@ test/pathname/walktree.ref      reference for 'walktree'
 test/pathname/walktree.sh       test-script for 'walktree'
 test/pathname/which.ref         reference for 'which'
 test/pathname/which.sh          test-script for 'which'
+test/port2dos                   subdirectory
+test/port2dos/run_test.sh       general test script
 test/port2vms                   subdirectory
 test/port2vms/README            description of test/port2vms
 test/port2vms/dir2path.ref      reference for 'dir2path'
@@ -312,12 +319,15 @@ test/process/gethome.ref        reference for 'gethome'
 test/process/gethome.sh         test-script for 'gethome'
 test/process/makeargv.ref       reference for 'makeargv'
 test/process/makeargv.sh        test-script for 'makeargv'
+test/process/run_test.sh        general test script
 test/process/usercopy.ref       reference for 'usercopy'
 test/process/usercopy.sh        test-script for 'usercopy'
 test/process/walkback.ref       reference (apollo only) for walkback
 test/process/walkback.sh        test script for walkback
 test                            subdirectory
 test/run_test.sh                =============================================================================
+test/sheet                      subdirectory
+test/sheet/run_test.sh          general test script
 test/string                     subdirectory
 test/string/dotcmp.ref          reference for 'dotcmp'
 test/string/dotcmp.sh           test-script for 'dotcmp'
@@ -325,6 +335,7 @@ test/string/lsbycols.ref        reference for 'lsbycols'
 test/string/lsbycols.sh         test-script for 'lsbycols'
 test/string/ltostr.ref          reference for 'ltostr' 
 test/string/ltostr.sh           test-script for 'ltostr'
+test/string/run_test.sh         general test script
 test/string/strbcmp.ref         reference for 'strbcmp'
 test/string/strbcmp.sh          test-script for 'strbcmp'
 test/string/strucmp.ref         reference for 'strucmp'
@@ -334,6 +345,7 @@ test/string/strwcmp.sh          test-script for 'strwcmp'
 test/unix                       subdirectory
 test/unix/gid2s.ref             reference for 'gid2s'
 test/unix/gid2s.sh              test-script for 'gid2s'
+test/unix/run_test.sh           general test script
 test/unix/s2uid.ref             reference for 's2uid'
 test/unix/s2uid.sh              test-script for 's2uid'
 test/unix/uid2s.ref             reference for 'uid2s'
