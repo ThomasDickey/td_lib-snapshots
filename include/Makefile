@@ -1,4 +1,4 @@
-# $Id: Makefile,v 10.2 1992/02/03 10:23:28 dickey Exp $
+# $Id: Makefile,v 10.3 1992/02/06 15:49:22 dickey Exp $
 # make-file for CM_TOOLS common interface directory
 #
 ####### (Development) ##########################################################
@@ -15,6 +15,7 @@ H_SRC	=\
 	cmdch.h\
 	common.h\
 	deltree.h\
+	dyn_string.h\
 	ptypes.h\
 	rcsdefs.h\
 	sccsdefs.h\

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	*Id = "$Id: rcsedit.c,v 10.0 1991/10/22 09:41:12 ste_cm Rel $";
+static	char	*Id = "$Id: rcsedit.c,v 11.0 1992/02/06 10:14:28 ste_cm Rel $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	*Id = "$Id: rcsedit.c,v 10.0 1991/10/22 09:41:12 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	26 May 1988
  * Modified:
+ *		06 Feb 1992, use 'stat_file()'
  *		22 Oct 1991, broke logic of 'rcs_close()' on 6-sep (must always
  *			     cleanup after writing the tempfile mode) -- fixed.
  *		04 Oct 1991, conversion to ANSI
@@ -78,7 +79,7 @@ dir_access(_AR0)
 		*s = EOS;
 	else
 		(void)strcpy(temp, ".");
-	if (stat(temp, &sb) < 0 || (sb.st_mode & S_IFMT) != S_IFDIR)
+	if (stat_dir(temp, &sb) < 0)
 		return FALSE;
 
 	if (!uid) {		/* root can do anything */
@@ -163,8 +164,7 @@ _DCL(int,	readonly)
 	changes	= 0;
 	verbose	= show;
 	VERBOSE("++ rcs-%s(%s)\n", readonly ? "scan" : "edit", fname);
-	if (	(stat(fname, &sb) >= 0)
-	&&	((sb.st_mode & S_IFMT) == S_IFREG)
+	if (	(stat_file(fname, &sb) >= 0)
 	&&	(fpS = fopen(fname, "r")) ) {
 		int	fmode;
 

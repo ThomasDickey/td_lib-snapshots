@@ -1,4 +1,4 @@
-# $Id: Makefile,v 10.4 1992/02/05 14:29:37 dickey Exp $
+# $Id: Makefile,v 10.6 1992/02/06 08:23:17 dickey Exp $
 # MAKE-file for miscellaneous library routines
 #
 ####### (Development) ##########################################################
@@ -75,8 +75,8 @@ CSRC	=\
 	rawterm.c\
 	rcs_debug.c\
 	rcs_dir.c\
+	rcsargpair.c\
 	rcsedit.c\
-	rcsfilepair.c\
 	rcskeys.c\
 	rcslast.c\
 	rcsload.c\
@@ -97,6 +97,8 @@ CSRC	=\
 	setmtime.c\
 	shoarg.c\
 	ss_field.c\
+	stat_dir.c\
+	stat_file.c\
 	stralloc.c\
 	strbcmp.c\
 	strclean.c\
@@ -182,8 +184,8 @@ OBJS	=\
 	rawterm.o\
 	rcs_debug.o\
 	rcs_dir.o\
+	rcsargpair.o\
 	rcsedit.o\
-	rcsfilepair.o\
 	rcskeys.o\
 	rcslast.o\
 	rcsload.o\
@@ -204,6 +206,8 @@ OBJS	=\
 	setmtime.o\
 	shoarg.o\
 	ss_field.o\
+	stat_dir.o\
+	stat_file.o\
 	stralloc.o\
 	strbcmp.o\
 	strclean.o\
@@ -260,8 +264,8 @@ RCSDEFS_H	= $I/rcsdefs.h	$I/deltree.h
 $(OBJS):	$I/ptypes.h	$I/common.h
 cmdch.o:	$I/cmdch.h
 rawgets.o:	$I/cmdch.h
+rcsargpair.o:	$(RCSDEFS_H)
 rcsedit.o:	$(RCSDEFS_H)
-rcsfilepair.o:	$(RCSDEFS_H)
 rcskeys.o:	$(RCSDEFS_H)
 rcslast.o:	$(RCSDEFS_H)
 rcsload.o:	$(RCSDEFS_H)

@@ -1,9 +1,9 @@
 #ifndef	lint
-static	char	*Id = "$Id: rcsargpr.c,v 10.5 1992/02/05 14:26:10 dickey Exp $";
+static	char	*Id = "$Id: rcsargpr.c,v 12.0 1992/02/06 16:04:17 ste_cm Rel $";
 #endif
 
 /*
- * Title:	rcsfilepair.c
+ * Title:	rcsargpair.c
  * Author:	T.E.Dickey
  * Created:	05 Feb 1992
  *
@@ -31,7 +31,7 @@ static	char	*Id = "$Id: rcsargpr.c,v 10.5 1992/02/05 14:26:10 dickey Exp $";
  *
  *			int	n = 1;
  *			while (n < argc) {
- *				n = rcsfilepair(n, argc, argv);
+ *				n = rcsargpair(n, argc, argv);
  *				process_pair();
  *			}
  *
@@ -77,6 +77,7 @@ static	char	*Id = "$Id: rcsargpr.c,v 10.5 1992/02/05 14:26:10 dickey Exp $";
 #define	STR_PTYPES
 #include "ptypes.h"
 #include "rcsdefs.h"
+#include <errno.h>
 
 /************************************************************************
  *	local data							*
@@ -86,6 +87,8 @@ static	char	*Id = "$Id: rcsargpr.c,v 10.5 1992/02/05 14:26:10 dickey Exp $";
 #else
 #define	TRACE(s)
 #endif
+
+#define	DEBUG(s)	if(RCS_DEBUG) PRINTF s;
 
 #define	NOT_YET		1	/* neither -1 nor 0 */
 
@@ -97,9 +100,9 @@ static	STAT	stat_working,
 		stat_archive,
 		stat_located;
 
-static	int	have_working = NOT_YET,
-		have_archive = NOT_YET,
-		have_located = NOT_YET;
+static	int	errs_working,	have_working,
+		errs_archive,	have_archive,
+		errs_located,	have_located;
 
 static	char	*name_working,	/* complete path of working file */
 		*name_archive,	/* complete path of RCS file */
@@ -218,42 +221,15 @@ initialize(_AR0)
 }
 
 /*
- * Re-initializes (for use in 'rcsfilepair()')
+ * Re-initializes (for use in 'rcsargpair()')
  */
 static
 void
 reinitialize(_AR0)
 {
 	initialize();
-	have_working =
-	have_archive =
-	have_located = NOT_YET;
-}
-
-/*
- * Perform a 'stat()' when caller requests this for a particular pathname.
- * Note that this assumes 'stat()' returns zero on success, negative on error.
- */
-static
-void
-stat_on_demand(
-_ARX(char *,	path)
-_ARX(STAT *,	sb)
-_AR1(int *,	code)
-	)
-_DCL(char *,	path)
-_DCL(STAT *,	sb)
-_DCL(int *,	code)
-{
-	if (*code == NOT_YET) {	/* did I ask for this one yet? */
-		if (*path)
-			*code = stat(path, sb);
-		else {
-			FPRINTF(stderr, "? %s bug at line %d\n",
-				__FILE__, __LINE__);
-			*code = -1;
-		}
-	}
+	errs_working = errs_archive = errs_located = 0;
+	have_working = have_archive = have_located = NOT_YET;
 }
 
 /************************************************************************
@@ -276,10 +252,14 @@ _DCL(char *,	Name)
 _DCL(STAT *,	Stat)
 {
 	initialize();
-	stat_on_demand(name_working, &stat_working, &have_working);
+	if (Stat != 0 || have_working == NOT_YET) {
+		have_working = stat_file(name_working, &stat_working);
+		errs_working = have_working ? errno : 0;
+	}
 	if (Stat != 0)	*Stat = stat_working;
 	if (Name != 0)	(void)strcpy(Name, name_working);
-	return have_working;
+	DEBUG(("++ rcs_working(%s) errs %d\n", name_working, errs_working))
+	return (errno = errs_working) ? -1 : 0;
 }
 
 int
@@ -291,10 +271,14 @@ _DCL(char *,	Name)
 _DCL(STAT *,	Stat)
 {
 	initialize();
-	stat_on_demand(name_archive, &stat_archive, &have_archive);
+	if (Stat != 0 || have_archive == NOT_YET) {
+		have_archive = stat_file(name_archive, &stat_archive);
+		errs_archive = have_archive ? errno : 0;
+	}
 	if (Stat != 0)	*Stat = stat_archive;
 	if (Name != 0)	(void)strcpy(Name, name_archive);
-	return have_archive;
+	DEBUG(("++ rcs_archive(%s) errs %d\n", name_archive, errs_archive))
+	return (errno = errs_archive) ? -1 : 0;
 }
 
 int
@@ -306,17 +290,21 @@ _DCL(char *,	Name)
 _DCL(STAT *,	Stat)
 {
 	initialize();
-	stat_on_demand(name_located, &stat_located, &have_located);
+	if (Stat != 0 || have_located == NOT_YET) {
+		have_located = stat_dir(name_located, &stat_located);
+		errs_located = have_located ? errno : 0;
+	}
 	if (Stat != 0)	*Stat = stat_located;
 	if (Name != 0)	(void)strcpy(Name, name_located);
-	return have_located;
+	DEBUG(("++ rcs_located(%s) errs %d\n", name_located, errs_located))
+	return (errno = errs_located) ? -1 : 0;
 }
 
 /*
  * Function to invoke for argument-parsing.
  */
 int
-rcsfilepair(
+rcsargpair(
 _ARX(int,	This)
 _ARX(int,	Last)	/* same as 'argc' */
 _AR1(char **,	Argv)	/* assumed non-volatile, from 'main()' */
@@ -420,7 +408,7 @@ _MAIN
 	rcs_working(0,0);
 	while (j < argc) {
 		PRINTF("%3d] parameter:%s\n", j, argv[j]);
-		j = rcsfilepair(j, argc, argv);
+		j = rcsargpair(j, argc, argv);
 		PRINTF("    working   :%s\n", name_working);
 		PRINTF("    archive   :%s\n", name_archive);
 		PRINTF("    located   :%s\n", name_located);

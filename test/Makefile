@@ -1,4 +1,4 @@
-# $Id: Makefile,v 10.0 1991/10/04 17:15:57 ste_cm Rel $
+# $Id: Makefile,v 10.1 1992/02/06 10:05:14 dickey Exp $
 # make-file for CM_TOOLS common/test library
 #
 
@@ -48,6 +48,7 @@ PROGS	=\
 	pathhead\
 	pathleaf\
 	rawgets\
+	rcsargpair\
 	rcsload\
 	rcsname\
 	relpath\
@@ -108,6 +109,7 @@ pathcmp.c\
 pathhead.c\
 pathleaf.c\
 rawgets.c\
+rcsargpair.c\
 rcsload.c\
 rcsname.c\
 relpath.c\

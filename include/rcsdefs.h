@@ -1,4 +1,4 @@
-/* $Id: rcsdefs.h,v 10.1 1992/02/05 14:33:18 dickey Exp $ */
+/* $Id: rcsdefs.h,v 10.2 1992/02/06 07:50:43 dickey Exp $ */
 
 #ifndef	_RCSDEFS_H_
 #define	_RCSDEFS_H_
@@ -55,6 +55,41 @@
 	char *	rcs_dir(_ar0)
 			_ret
 
+	/* rcsargpair.c ---------------------------------------------- */
+	int	rcs_working(
+			_arx(char *,	name)
+			_ar1(STAT *,	sb)
+			)
+			_dcl(char *,	name)
+			_dcl(STAT *,	sb)
+			_ret
+
+	int	rcs_archive(
+			_arx(char *,	name)
+			_ar1(STAT *,	sb)
+			)
+			_dcl(char *,	name)
+			_dcl(STAT *,	sb)
+			_ret
+
+	int	rcs_located(
+			_arx(char *,	name)
+			_ar1(STAT *,	sb)
+			)
+			_dcl(char *,	name)
+			_dcl(STAT *,	sb)
+			_ret
+
+	int	rcsargpair(
+			_arx(int,	this)
+			_arx(int,	argc)
+			_ar1(char **,	argv)
+			)
+			_dcl(int,	this)
+			_dcl(int,	argc)
+			_dcl(char **,	argv)
+			_ret
+
 	/* rcsedit.c ------------------------------------------------- */
 	int	rcsopen(
 			_arx(char *,	name)
@@ -107,41 +142,6 @@
 			)
 			_dcl(char *,	s)
 			_dcl(int,	(*f)())
-			_ret
-
-	/* rcsfilepair.c --------------------------------------------- */
-	int	rcs_working(
-			_arx(char *,	name)
-			_ar1(STAT *,	sb)
-			)
-			_dcl(char *,	name)
-			_dcl(STAT *,	sb)
-			_ret
-
-	int	rcs_archive(
-			_arx(char *,	name)
-			_ar1(STAT *,	sb)
-			)
-			_dcl(char *,	name)
-			_dcl(STAT *,	sb)
-			_ret
-
-	int	rcs_located(
-			_arx(char *,	name)
-			_ar1(STAT *,	sb)
-			)
-			_dcl(char *,	name)
-			_dcl(STAT *,	sb)
-			_ret
-
-	int	rcsfilepair(
-			_arx(int,	this)
-			_arx(int,	argc)
-			_ar1(char **,	argv)
-			)
-			_dcl(int,	this)
-			_dcl(int,	argc)
-			_dcl(char **,	argv)
 			_ret
 
 	/* rcskeys.c ------------------------------------------------- */

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcstemp.c,v 10.0 1991/10/22 11:31:05 ste_cm Rel $";
+static	char	Id[] = "$Id: rcstemp.c,v 11.0 1992/02/06 10:16:05 ste_cm Rel $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: rcstemp.c,v 10.0 1991/10/22 11:31:05 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	25 Aug 1988
  * Modified:
+ *		06 Feb 1992, use 'stat_dir()'
  *		22 Oct 1991, ensure that we unlink the temp-file if it already
  *			     exists.
  *		04 Oct 1991, conversion to ANSI
@@ -53,14 +54,14 @@ _DCL(int,	copy)
 	 && geteuid() != 0) {
 		char	*tf = pathcat(tmp, "/tmp", uid2s((int)getuid()));
 		int	mode = ((getgid() == getegid()) ? 0775 : 0777);
-		struct	stat	sb;
+		STAT	sb;
 
 		DEBUG(".. rcstemp mode is %o gid:%d(%s) egid:%d(%s)\n",
 			mode,
 			getgid(),	gid2s(getgid()),
 			getegid(),	gid2s(getegid()));
 
-		if (stat(tf, &sb) < 0) {
+		if (stat_dir(tf, &sb) < 0) {
 			int	oldmask = umask(0);
 
 			DEBUG("%% mkdir %s\n", tf);
@@ -77,12 +78,6 @@ _DCL(int,	copy)
 
 			(void)umask(oldmask);
 		} else {
-			if ((sb.st_mode & S_IFMT) != S_IFDIR) {
-				errno = ENOTDIR;
-				failed(tf);
-				/*NOTREACHED*/
-			}
-
 			DEBUG(".. %s group is %d(%s)\n",
 				tf, sb.st_gid, gid2s(sb.st_gid));
 

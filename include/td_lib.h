@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 10.2 1992/02/04 13:05:53 dickey Exp $ */
+/* $Id: td_lib.h,v 10.3 1992/02/06 08:29:56 dickey Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for CM_TOOLS COMMON
@@ -503,10 +503,10 @@
 	/* pathhead.c ------------------------------------------------- */
 	char *	pathhead(
 			_arx(char *,	path)
-			_ar1(struct stat *, s)
+			_ar1(STAT *,	s)
 			)
 			_dcl(char *,	path)
-			_dcl(struct stat *, s)
+			_dcl(STAT *,	s)
 			_ret
 #endif	/* unix */
 
@@ -669,6 +669,24 @@
 			_dcl(char *,	command)
 			_dcl(char *,	args)
 			_nul
+
+	/* stat_dir.c ------------------------------------------------- */
+	int	stat_dir(
+			_arx(char *,	path)
+			_ar1(STAT *,	sb)
+			)
+			_dcl(char *,	path)
+			_dcl(STAT *,	sb)
+			_ret
+
+	/* stat_file.c ------------------------------------------------ */
+	int	stat_file(
+			_arx(char *,	path)
+			_ar1(STAT *,	sb)
+			)
+			_dcl(char *,	path)
+			_dcl(STAT *,	sb)
+			_ret
 
 	/* stralloc.c ------------------------------------------------- */
 	char	*stralloc(
@@ -860,12 +878,12 @@
 #define	WALK_FUNC(f)	f(\
 			_ARX(char *,	path)\
 			_ARX(char *,	name)\
-			_ARX(struct stat *,sp)\
+			_ARX(STAT *,	sp)\
 			_ARX(int,	readable)\
 			_AR1(int,	level)	)\
 			_DCL(char *,	path)\
 			_DCL(char *,	name)\
-			_DCL(struct stat *,sp)\
+			_DCL(STAT *,	sp)\
 			_DCL(int,	readable)\
 			_DCL(int,	level)
 

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: pathhead.c,v 10.0 1991/10/03 08:30:48 ste_cm Rel $";
+static	char	Id[] = "$Id: pathhead.c,v 11.0 1992/02/06 10:14:03 ste_cm Rel $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: pathhead.c,v 10.0 1991/10/03 08:30:48 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	25 Aug 1988
  * Modified:
+ *		06 Feb 1992, use 'stat_dir()'
  *		03 Oct 1991, conversion to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
  *		01 Dec 1989, corrected handling of paths such as "name1/name2"
@@ -30,19 +31,16 @@ static	char	Id[] = "$Id: pathhead.c,v 10.0 1991/10/03 08:30:48 ste_cm Rel $";
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-#define	notDIR(path)	((stat(path, sb_) < 0)\
-			||  ((sb_->st_mode & S_IFMT) != S_IFDIR))
-
 char *
 pathhead (
-_ARX(char *,		path)
-_AR1(struct stat *,	sb_)
+_ARX(char *,	path)
+_AR1(STAT *,	sb_)
 	)
-_DCL(char *,		path)
-_DCL(struct stat *,	sb_)
+_DCL(char *,	path)
+_DCL(STAT *,	sb_)
 {
 	auto	int	trimmed	= 0;
-	struct	stat	sb;
+	STAT	sb;
 	register char  *s;
 	static	char	buffer[BUFSIZ];
 
@@ -57,14 +55,14 @@ _DCL(struct stat *,	sb_)
 			*s = EOS;	/* trim it */
 			trimmed++;
 		} else {
-			if (notDIR(path)) {
+			if (stat_dir(path, sb_) < 0) {
 				*s = EOS;
 				trimmed++;
 			} else
 				break;
 		}
 	}
-	if (notDIR(path)
+	if (stat_dir(path, sb_) < 0
 	||  (*path == EOS)
 	||  (s == 0 && !trimmed)) {
 		(void)stat(strcpy(path, "."), sb_);
@@ -80,6 +78,6 @@ _MAIN
 		printf("%d:\t\"%s\" => \"%s\"\n",
 			j,
 			argv[j],
-			pathhead(argv[j], (struct stat *)0));
+			pathhead(argv[j], (STAT *)0));
 }
 #endif

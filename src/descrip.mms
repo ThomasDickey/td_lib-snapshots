@@ -1,4 +1,4 @@
-# $Id: descrip.mms,v 10.3 1992/02/05 14:29:37 dickey Exp $
+# $Id: descrip.mms,v 10.5 1992/02/06 08:43:10 dickey Exp $
 # MMS-file for miscellaneous library routines	
 #
 ####### (Development) ##########################################################
@@ -48,6 +48,8 @@ LIBRARYMODULES = -
 	SAMELEAF, -
 	SHOARG, -
 	SS_FIELD, -
+	STAT_DIR, -
+	STAT_FILE, -
 	STRALLOC, -
 	STRBCMP, -
 	STRCLEAN, -
@@ -88,8 +90,8 @@ UNUSED_MODULES = -
 	RAWTERM,		# curses -
 	RCS_DEBUG,		# rcs (unix-only) -
 	RCS_DIR,		# rcs (unix-only) -
+	RCSARGPAIR,		# rcs (unix-only) -
 	RCSEDIT,		# rcs (unix-only) -
-	RCSFILEPAIR,		# rcs (unix-only) -
 	RCSKEYS,		# rcs (unix-only) -
 	RCSLAST,		# rcs (unix-only) -
 	RCSLOAD,		# rcs (unix-only) -
@@ -176,8 +178,8 @@ C_SRC	=-
 	RAWTERM.C -
 	RCS_DEBUG.C -
 	RCS_DIR.C -
+	RCSARGPAIR.C -
 	RCSEDIT.C -
-	RCSFILEPAIR.C -
 	RCSKEYS.C -
 	RCSLAST.C -
 	RCSLOAD.C -
@@ -200,6 +202,8 @@ C_SRC	=-
 	SETMTIME.C -
 	SHOARG.C -
 	SS_FIELD.C -
+	STAT_DIR.C -
+	STAT_FILE.C -
 	STRALLOC.C -
 	STRBCMP.C -
 	STRCLEAN.C -
@@ -293,8 +297,8 @@ PATHCMP.obj :		$(PTYPES_H)
 PATHLEAF.obj :		$(PTYPES_H)
 RAWGETS.obj :		$(PTYPES_H)	$(I)cmdch.h
 RAWTERM.obj :		$(PTYPES_H)
+# rcsargpair.obj :	$(PTYPES_H)	$(I)rcsdefs.h
 # rcsedit.obj :		$(PTYPES_H)	$(I)rcsdefs.h
-# rcsfilepair.obj :	$(PTYPES_H)	$(I)rcsdefs.h
 # rcskeys.obj :		$(PTYPES_H)	$(I)rcsdefs.h
 # rcslast.obj :		$(PTYPES_H)	$(I)rcsdefs.h
 # rcsload.obj :		$(PTYPES_H)	$(I)rcsdefs.h
@@ -308,6 +312,8 @@ SAVEWIN.obj :		$(PTYPES_H)
 SCCSLAST.obj :		$(PTYPES_H)
 SETMTIME.obj :		$(PTYPES_H)
 SHOARG.obj :		$(PTYPES_H)
+STAT_DIR.obj :		$(PTYPES_H)
+STAT_FILE.obj :		$(PTYPES_H)
 STRALLOC.obj :		$(PTYPES_H)
 STRCLEAN.obj :		$(PTYPES_H)
 STRUCPY.obj :		$(PTYPES_H)

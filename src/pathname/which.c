@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: which.c,v 10.0 1991/10/03 17:22:47 ste_cm Rel $";
+static	char	Id[] = "$Id: which.c,v 11.0 1992/02/06 10:12:07 ste_cm Rel $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: which.c,v 10.0 1991/10/03 17:22:47 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	18 Nov 1987
  * Modified:
+ *		06 Feb 1992, use 'stat_file()'
  *		03 Oct 1991, converted to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
  *		12 Mar 1990, lint (apollo sr10.1)
@@ -35,14 +36,8 @@ executable(
 _AR1(char *,	name))
 _DCL(char *,	name)
 {
-struct	stat	sb;
-	if (access(name, X_OK) >= 0) {
-		if (stat(name, &sb) >= 0) {
-			if ((sb.st_mode & S_IFMT) == S_IFREG)
-				return(TRUE);
-		}
-	}
-	return(FALSE);
+	STAT	sb;
+	return (access(name, X_OK) >= 0) && (stat_file(name, &sb) >= 0);
 }
 
 which(
