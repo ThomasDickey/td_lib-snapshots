@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: acc_mode.c,v 12.4 1994/10/07 00:06:13 tom Exp $";
-#endif
-
 /*
  * Title:	access_mode.c
  * Author:	T.E.Dickey
@@ -18,6 +14,8 @@ static	char	Id[] = "$Id: acc_mode.c,v 12.4 1994/10/07 00:06:13 tom Exp $";
 #define	STR_PTYPES
 #include "ptypes.h"
 
+MODULE_ID("$Id: acc_mode.c,v 12.6 1995/02/11 19:21:05 tom Exp $")
+
 char *	access_mode(
 	_AR1(int,	mode))
 	_DCL(int,	mode)
@@ -28,7 +26,7 @@ char *	access_mode(
 	if (mode == F_OK) {
 		*s++ = 'F';
 	} else if (mode > 7 || mode < 0) {
-		s = ltostr(value, (long)mode, 8);
+		s = l2str(value, (long)mode, 8);
 	} else {
 		if (mode & R_OK)	*s++ = 'R';
 		if (mode & W_OK)	*s++ = 'W';

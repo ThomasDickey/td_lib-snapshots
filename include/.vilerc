@@ -45,7 +45,7 @@ source ~/.vilerc
 		insert-string &cat %if_before ""
 		delete-til beginning-of-line
 		end-of-line
-		insert-string &cat "" &cat %if_after ""
+		append-string &cat "" &cat %if_after ""
 		back-line
 		end-of-line
 		write-message &cat "[Done ifdef'ing function " &cat %l_func "]"

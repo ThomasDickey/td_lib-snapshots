@@ -1,3 +1,56 @@
+1995-02-11  dickey@clark.net
+
+	* configure.in: moved the datatypes up so I can use them in prototypes
+
+	* include/ptypes.h: added GRP_PTYPES
+	also added <utime.h> to TIM_PTYPES
+
+	* aclocal.m4:
+	force gcc -Werror to get around a bug in gcc (sometimes it reports success
+	and sometimes failure when emitting prototype-mismatch warnings).
+
+	* configure.in: override autoconf 2.1's sneaking in '-g' option for gcc
+
+	* aclocal.m4:
+	make the NEED_xxx stuff turn on only when compiling with warnings.
+	(it's faster)
+
+	* aclocal.m4: _more_ corrections to TD_HAVE_FUNCS
+
+	* include/.vilerc: this _ought_ to work
+
+	* configure.in: sort the definitions to make differences easier to see
+
+	* src/curses/wrepaint.c: HPUX-pre-release
+
+	* src/string/ltostr.c:
+	renamed entrypoint to avoid conflict with a more official version
+
+	* src/pathname/acc_mode.c, src/unix/gid2s.c, src/unix/uid2s.c:
+	renamed l2str
+
+	* src/pathname/acc_mode.c, src/string/ltostr.c: use MODULE_ID
+
+	* src/curses/resizwin.c: HPUX-pre-release
+
+	* include/td_local.h: added a define to turn off 'main()' prototype
+
+	* src/cm_funcs/cmv_last.c:
+	don't need trailing ':', since sometimes CmVision doesn't supply it
+
+	* include/td_regex.h: don't reference NULL, since it may not be defined
+
+	* aclocal.m4: first pass of changes for irix/clix/hpux testing
+
+	* include/td_lib.h: renamed l2str
+
+	* include/td_ext.h:
+	took out ifdef for 'ltostr()' since I renamed my function.
+
+	* include/ptypes.h:
+	turn off 'main' prototype when doing autoconf stuff (IRIX breaks with the
+	'main()' stuff).
+
 1995-02-03  dickey@clark.net
 
 	* Makefile: added some stuff for distclean of autoconf 2.1

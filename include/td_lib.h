@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 12.12 1994/11/17 02:04:01 tom Exp $ */
+/* $Id: td_lib.h,v 12.13 1995/02/11 19:21:04 tom Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for TD_LIB common
@@ -459,7 +459,7 @@
 			_nul
 
 	/* ltostr.c --------------------------------------------------- */
-	char *	ltostr(
+	char *	l2str(
 			_arx(char *,	bfr)
 			_arx(long,	value)
 			_ar1(int,	base)

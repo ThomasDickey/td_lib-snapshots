@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: cmv_last.c,v 12.4 1995/01/05 23:38:03 tom Exp $";
+static	char	Id[] = "$Id: cmv_last.c,v 12.5 1995/02/11 19:21:04 tom Exp $";
 #endif
 
 /*
@@ -31,7 +31,8 @@ static	char	Id[] = "$Id: cmv_last.c,v 12.4 1995/01/05 23:38:03 tom Exp $";
  * 'path[]'.
  * this is copied from 'sccslast.c', but adapted for CmVision's special
  * change-comment:
- *	\{number}\{comment}\^AO{uid}:G{gid}:P{protection}:M{modified}:
+ *	\{number}\{comment}\^AO{uid}:G{gid}:P{protection}:M{modified}
+ * (except for the last line, each also ends with a ':').
  */
 static
 void	ScanSCCS (
@@ -74,7 +75,7 @@ void	ScanSCCS (
 				if ((s = strstr(bfr, "\\\001O")) != 0) {
 					while (strncmp(s, ":M", 2) && *s)
 						s++;
-					if (sscanf(s, ":M%ld:", &when))
+					if (sscanf(s, ":M%ld", &when))
 						*date_ = when;
 				}
 				break;

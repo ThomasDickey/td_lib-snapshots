@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 12.35 1995/01/31 00:38:26 tom Exp $ */
+/* $Id: ptypes.h,v 12.36 1995/02/11 19:21:04 tom Exp $ */
 
 #ifndef	PTYPES_H
 #define	PTYPES_H
@@ -629,7 +629,7 @@ extern	long	timezone;
 #include <td_ext.h>
 #include <td_lib.h>
 
-#ifndef	lint
+#if !(defined(lint) || defined(TESTING_CONFIG_H))
 extern	int	main(_arx(int,argc) _ar1(char **,argv));
 #endif	/* lint */
 #define	_MAIN\

@@ -1,4 +1,4 @@
-/* $Id: td_local.h,v 12.4 1994/08/21 18:03:51 tom Exp $ */
+/* $Id: td_local.h,v 12.5 1995/02/11 19:21:04 tom Exp $ */
 
 /*
  * Include all features in TD_LIB, used for configuration.
@@ -15,6 +15,8 @@
 #define	TIM_PTYPES
 #define	TRM_PTYPES
 #define	WAI_PTYPES
+
+#define TESTING_CONFIG_H
 
 #include <ptypes.h>
 #include <td_qsort.h>

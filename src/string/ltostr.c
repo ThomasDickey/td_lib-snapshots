@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: ltostr.c,v 12.3 1993/11/27 14:23:46 dickey Exp $";
-#endif
-
 /*
  * Title:	ltostr.c (long-to-string)
  * Author:	T.E.Dickey
@@ -28,8 +24,10 @@ static	char	Id[] = "$Id: ltostr.c,v 12.3 1993/11/27 14:23:46 dickey Exp $";
 
 #include "ptypes.h"
 
+MODULE_ID("$Id: ltostr.c,v 12.5 1995/02/11 19:21:05 tom Exp $")
+
 char *
-ltostr(
+l2str(
 _ARX(char *,	src)
 _ARX(long,	value)
 _AR1(int,	base)
@@ -89,7 +87,7 @@ static	long	mask16, mask8, mask2;
 				value &= mask8;
 			}
 		}
-		src = ltostr(src, value, base);
+		src = l2str(src, value, base);
 		*src++ = digits[remain];
 	}
 
@@ -115,9 +113,9 @@ _MAIN
 		char	bfr[132];
 			printf("** %ld, %#lo, %#lx\n", value, value, value);
 			printf("=> ");
-			(void)ltostr(bfr, value,   0); printf("%s, ", bfr);
-			(void)ltostr(bfr, value,  -8); printf("%s, ", bfr);
-			(void)ltostr(bfr, value, -16); printf("%s\n", bfr);
+			(void)l2str(bfr, value,   0); printf("%s, ", bfr);
+			(void)l2str(bfr, value,  -8); printf("%s, ", bfr);
+			(void)l2str(bfr, value, -16); printf("%s\n", bfr);
 		}
 	}
 	exit(SUCCESS);

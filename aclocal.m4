@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.50 1995/02/03 01:51:28 tom Exp $
+dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.53 1995/02/11 20:26:38 tom Exp $
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "TD_" to "AC_"
 dnl ---------------------------------------------------------------------------
@@ -129,6 +129,10 @@ done
 dnl ---------------------------------------------------------------------------
 dnl	Combines AC_HAVE_FUNCS logic with additional test from Kevin Buettner
 dnl	that checks to see if we need a prototype for the given function.
+dnl
+dnl The prototype-check is only turned on when we're configuring to compile
+dnl with warnings.
+dnl
 define([TD_HAVE_FUNCS],
 [
 td_CFLAGS="$CFLAGS"
@@ -141,15 +145,20 @@ changequote([,])dnl
 AC_MSG_CHECKING(for ${td_func})
 AC_CACHE_VAL(td_cv_func_$td_func,[
 AC_TRY_LINK([#undef ${td_func}],[${td_func}();],[
-AC_TRY_COMPILE(
-[#include <td_local.h>],
+if test $WithWarnings = yes; then
+	AC_TRY_COMPILE([
+#define HAVE_${td_tr_func} 1
+#include <td_local.h>],
 [
 #undef $td_func
-struct zowie { int a; double b; struct zowie *c; char d; };
-extern struct zowie *$td_func(); $td_func();
+	struct zowie { int a; double b; struct zowie *c; char d; };
+	extern struct zowie *$td_func(); $td_func() ],
+	[td_result=declared],
+	[td_result=undeclared])
+else
+	td_result=yes
+fi
 ],
-[td_result=undeclared],
-[td_result=declared])],
 [td_result=no])
 eval 'td_cv_func_'$td_func'=$td_result'
 ])
@@ -252,7 +261,7 @@ AC_CACHE_VAL(td_cv_REGEX_H,[
 		[td_cv_REGEX_H=no])
 	])
 AC_MSG_RESULT($td_cv_REGEX_H)
-test $td_cv_REGEX_H && AC_DEFINE(HAVE_REGEX_H_FUNCS)
+test $td_cv_REGEX_H = yes && AC_DEFINE(HAVE_REGEX_H_FUNCS)
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Tests for the <regexpr.h> include-file, and the functions associated with it.
@@ -269,7 +278,7 @@ AC_CACHE_VAL(td_cv_REGEXPR_H,[
 			char *e;
 			char *p = "foo";
 			char *s = "foobar";
-			if ((e = (char *)compile(p, NULL, NULL)) == 0
+			if ((e = (char *)compile(p, (char *)0, (char *)0)) == 0
 			 || step(s, e) == 0)
 		 		exit(1);
 			free(e);
@@ -326,7 +335,7 @@ AC_CACHE_VAL(td_cv_REGCMP_func,[
 		LIBS="$LIBS -lPW"
 		TD_REGCMP_LIBS
 		LIBS="${td_save_LIBS}"
-		test $td_cv_REGCMP_func = yes && td_cv_REGCMP_func="yes (-lPW)"
+		test $td_cv_REGCMP_func = yes && td_cv_REGCMP_func="yes-lPW"
 	fi
 ])
 AC_MSG_RESULT($td_cv_REGCMP_func)
@@ -362,12 +371,19 @@ test $td_cv_RE_COMP_func = yes && AC_DEFINE(HAVE_RE_COMP_FUNCS)
 dnl ---------------------------------------------------------------------------
 dnl Tests for the ensemble of include-files and functions that make up the
 dnl host's regular expression parsing.
+dnl
+dnl Only use REGCMP functions if no other is available, to avoid spurious
+dnl match on HP/UX with its broken -lPW.
 define([TD_REGEX],
 [
 TD_REGEX_H_FUNCS
 TD_REGEXPR_H_FUNCS
-TD_REGCMP_FUNCS
 TD_RE_COMP_FUNCS
+if	test $td_cv_REGEX_H = no && \
+	test $td_cv_REGEXPR_H = no && \
+	test $td_cv_RE_COMP_func = no ; then
+	TD_REGCMP_FUNCS
+fi
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Tests for the ensemble of programs that are used in RCS, SCCS, VCS, CVS.
@@ -443,7 +459,7 @@ AC_CACHE_VAL(td_cv_have_addchnstr,[
 		[td_cv_have_addchnstr=yes],
 		[td_cv_have_addchnstr=no])])
 AC_MSG_RESULT($td_cv_have_addchnstr)
-test td_cv_have_addchnstr = yes && AC_DEFINE(HAVE_ADDCHNSTR)
+test $td_cv_have_addchnstr = yes && AC_DEFINE(HAVE_ADDCHNSTR)
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Test if curses defines 'chtype' (usually a 16-bit type for SysV curses).
@@ -671,7 +687,7 @@ AC_DEFINE_UNQUOTED(SIG_ARGS_$td_cv_sig_args)
 
 if test -n "$GCC" && test $WithWarnings = yes
 then
-	AC_CHECKING(redefinable signal handler prototype)
+	AC_MSG_CHECKING(redefinable signal handler prototype)
 	AC_CACHE_VAL(td_cv_sigs_redef,[
 		td_cv_sigs_redef=no
 		# We're checking the definitions of the commonly-used predefined signal

@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: wrepaint.c,v 12.5 1994/07/20 22:29:07 tom Exp $";
+static	char	Id[] = "$Id: wrepaint.c,v 12.6 1995/02/11 19:21:05 tom Exp $";
 #endif
 
 /*
@@ -33,11 +33,17 @@ void	wrepaint(
 	_DCL(WINDOW *,	win)
 	_DCL(int,	row)
 {
+#ifdef _hpux
+	dlog_comment(wrepaint %p/%p @%d\n", win, curscr, __LINE__);
+#endif
+#ifdef hpux
+	dlog_comment(wrepaint %p/%p @%d\n", win, curscr, __LINE__);
+#endif
 #if	SYS5_CURSES
-# if defined(linux)
+# if defined(linux) || defined(hpux)
 	touchwin(win);
 	wrefresh(curscr);
-# else	/* tested with _hpux */
+# else	/* tested with _hpux in 1993 */
 	WINDOW	*tmp;
 	int	y, x;
 

@@ -1,4 +1,4 @@
-/* $Id: td_ext.h,v 12.9 1994/12/15 16:13:58 tom Exp $ */
+/* $Id: td_ext.h,v 12.10 1995/02/11 19:21:04 tom Exp $ */
 
 #ifndef	TD_EXT_H
 #define	TD_EXT_H
@@ -82,10 +82,6 @@ extern	long	timezone;
 #if	HAVE_SYS_ERRLIST
 extern	char	*sys_errlist[];
 extern	int	sys_nerr;
-#endif
-
-#if	HAVE_LTOSTR
-#define	ltostr	td_ltostr	/* rename my version */
 #endif
 
 /******************************************************************************
