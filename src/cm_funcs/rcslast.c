@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)rcslast.c	1.3 88/06/01 10:01:43";
+static	char	sccs_id[] = "@(#)rcslast.c	1.4 88/06/30 06:47:35";
 #endif	lint
 
 /*
@@ -7,6 +7,7 @@ static	char	sccs_id[] = "@(#)rcslast.c	1.3 88/06/01 10:01:43";
  * Author:	T.E.Dickey
  * Created:	18 May 1988, from 'sccslast.c'
  * Modified:
+ *		30 Jun 1988, use 'newzone()' rather than 'sccszone()'.
  *		01 Jun 1988, added 'locks' decoding.  Recoded using 'rcskeys()'.
  *		23 May 1988, combined 'rel', 'ver' args.
  *
@@ -27,7 +28,6 @@ extern	char	*strcat(),
 		*strrchr();
 
 extern	long	packdate();
-extern	long	sccszone();
 extern	char	*txtalloc();
 
 #ifndef	TRUE
@@ -111,6 +111,7 @@ char	key[BUFSIZ],
 	vstring[BUFSIZ];
 
 	if (rfp = fopen(path, "r")) {
+		newzone(5,0,FALSE);		/* interpret in EST5EDT */
 		*lstring =
 		*vstring =
 		*bfr = EOS;			/* initialize scanner */
@@ -136,8 +137,7 @@ char	key[BUFSIZ],
 					== 6) {
 					*lock_ = txtalloc(lstring);
 					*vers_ = txtalloc(vstring);
-					*date_ = packdate (1900+yy, mm, dd, hr, mn, sc)
-						- sccszone();
+					*date_ = packdate (1900+yy, mm, dd, hr, mn, sc);
 					finish = TRUE;
 				}
 				break;
@@ -146,6 +146,7 @@ char	key[BUFSIZ],
 			}
 		}
 		(void) fclose(rfp);
+		oldzone();		/* restore time-zone */
 	}
 }
 
