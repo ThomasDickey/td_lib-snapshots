@@ -1,12 +1,24 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)cmdch.c	1.3 88/05/09 07:59:45";
+static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/curses/RCS/cmdch.c,v 4.0 1988/08/11 07:13:14 ste_cm Rel $";
 #endif	lint
 
 /*
  * Title:	cmdch.c (command-character decoder)
  * Author:	T.E.Dickey
  * Created:	01 Dec 1987 (broke out of 'ded.c')
- * Modified:
+ * $Log: cmdch.c,v $
+ * Revision 4.0  1988/08/11 07:13:14  ste_cm
+ * BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+ *
+ *		Revision 3.0  88/08/11  07:13:14  ste_cm
+ *		BASELINE Mon Jun 19 13:27:01 EDT 1989
+ *		
+ *		Revision 2.0  88/08/11  07:13:14  ste_cm
+ *		BASELINE Thu Apr  6 09:45:13 EDT 1989
+ *		
+ *		Revision 1.5  88/08/11  07:13:14  dickey
+ *		sccs2rcs keywords
+ *		
  *		09 May 1988, extended arrow-key comparison so this will match
  *			     ansi/vt100 & vt52 terminals better.
  *		27 Apr 1988, broke out "cmdch.h".
@@ -18,7 +30,8 @@ static	char	sccs_id[] = "@(#)cmdch.c	1.3 88/05/09 07:59:45";
  *		(see "cmdch.h").
  */
 
-#include	<curses.h>
+#define		CUR_PTYPES
+#include	"ptypes.h"
 #include	<ctype.h>
 #include	"cmdch.h"
 extern	char	*getenv(),

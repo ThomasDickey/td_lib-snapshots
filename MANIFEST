@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19880810
+MANIFEST for td_lib, version t19880811
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 include                         subdirectory
@@ -19,6 +19,7 @@ src/cm_funcs/rcsname.c          derive RCS working/archive filenames
 src/cm_funcs/sccslast.c         scan for last SCCS date & version
 src/curses                      subdirectory
 src/curses/beep.c               sound audible alarm
+src/curses/blip.c               write 1 character to screen, bypassing curses
 src/curses/cmdch.c              command-character decoder
 src/curses/dumpchr.c            dump screen character to file
 src/curses/dumpwin.c            dump curses window to file

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)rcsedit.c	1.2 88/08/05 14:38:36";
+static	char	sccs_id[] = "@(#)rcsedit.c	1.3 88/08/11 07:43:25";
 #endif	lint
 
 /*
@@ -13,9 +13,9 @@ static	char	sccs_id[] = "@(#)rcsedit.c	1.2 88/08/05 14:38:36";
  * Function:	Open an RCS file, parse it, optionally modifying fields.
  */
 
+#include	"ptypes.h"
 #include	"rcsdefs.h"
 
-#include	<stdio.h>
 #include	<ctype.h>
 extern	FILE	*tmpfile();
 extern	char	*name2rcs();
@@ -24,11 +24,6 @@ extern	char	*strcpy();
 extern	char	*strchr();
 
 /* local definitions */
-#define	EOS	'\0'
-#define	TRUE	1
-#define	FALSE	0
-
-#define	PRINTF	(void) printf
 #define	VERBOSE	if (verbose) PRINTF
 
 static	FILE	*fpS, *fpT;

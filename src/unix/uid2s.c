@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)uid2s.c	1.7 88/08/10 12:47:09";
+static	char	sccs_id[] = "@(#)uid2s.c	1.8 88/08/11 07:17:49";
 #endif	lint
 
 /*
@@ -15,10 +15,8 @@ static	char	sccs_id[] = "@(#)uid2s.c	1.7 88/08/10 12:47:09";
  */
 
 #include	"ptypes.h"
-#include	<stdio.h>
 #include	<pwd.h>
-extern	char	*doalloc(),
-		*ltostr(),
+extern	char	*ltostr(),
 		*stralloc(),
 		*strcpy();
 

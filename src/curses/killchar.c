@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)killchar.c	1.1 88/03/24 14:25:33";
+static	char	sccs_id[] = "@(#)killchar.c	1.2 88/08/11 07:37:56";
 #endif	lint
 
 /*
@@ -7,11 +7,13 @@ static	char	sccs_id[] = "@(#)killchar.c	1.1 88/03/24 14:25:33";
  * Author:	T.E.Dickey
  * Created:	24 Mar 1988
  * Modified:
- *
+ *		11 Aug 1988, don't use on system5, since we want to use curses.
  */
 
+#include "ptypes.h"
 #include <sgtty.h>
 
+#ifndef	SYSTEM5
 killchar()
 {
 int	code	= '\177';
@@ -21,3 +23,4 @@ struct	sgttyb	buf;
 		code = buf.sg_kill;
 	return (code);
 }
+#endif	SYSTEM5

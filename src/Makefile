@@ -1,4 +1,4 @@
-# @(#)Makefile	1.37 88/08/09 09:37:56
+# @(#)Makefile	1.38 88/08/11 09:35:16
 # MAKE-file for miscellaneous library routines
 #
 ####### (Development) ##########################################################
@@ -18,6 +18,7 @@ CSRC	=\
 	abspath.c\
 	beep.c\
 	bldarg.c\
+	blip.c\
 	catarg.c\
 	closeall.c\
 	cmdch.c\
@@ -72,6 +73,7 @@ OBJS	=\
 	abspath.o\
 	beep.o\
 	bldarg.o\
+	blip.o\
 	catarg.o\
 	closeall.o\
 	cmdch.o\
@@ -137,24 +139,33 @@ archive: $(OBJS)
 	rm -f $A
 	ar rv $A $(OBJS)
 #
-cmdch.o:	cmdch.h
+cmdch.o:	ptypes.h	cmdch.h
+copyback.o:	ptypes.h
 cutoff.o:	ptypes.h
+doalloc.o:	ptypes.h
+dumpwin.o:	ptypes.h
+erasechar.o:	ptypes.h
 execute.o:	ptypes.h
 fp2argv.o:	ptypes.h
 gid2s.o:	ptypes.h
+killchar.o:	ptypes.h
 newzone.o:	ptypes.h
 packdate.o:	ptypes.h
-rawgets.o:	cmdch.h
+padedit.o:	ptypes.h
+rawgets.o:	ptypes.h	cmdch.h
+rawterm.o:	ptypes.h
 rcslast.o:	rcsdefs.h
-rcsedit.o:	rcsdefs.h
+rcsedit.o:	ptypes.h	rcsdefs.h
 rcskeys.o:	rcsdefs.h
 rcsname.o:	rcsdefs.h
+resizewin.o:	ptypes.h
 setmtime.o:	ptypes.h
+savewin.o:	ptypes.h
 uid2s.o:	ptypes.h
 win2file.o:	ptypes.h
 #
 ####### (Development) ##########################################################
-$(LLIB).ln:	$(LLIB)		; makellib.sh $(LLIB) $(llib)
+$(LLIB).ln:	ptypes.h $(LLIB) ; makellib.sh $(LLIB) $(llib)
 $(SRCS):			; $(GET) -s sccs/s.$@
 lint.out:	$(CSRC)		; $(DATE); tdlint $(LINTOPT) $? >>$@
 lincnt.out:	$(CSRC)		; $(DATE); lincnt $(CSRC) >>$@

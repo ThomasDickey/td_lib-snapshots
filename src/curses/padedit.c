@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)padedit.c	1.3 88/07/27 15:33:33";
+static	char	sccs_id[] = "@(#)padedit.c	1.4 88/08/11 08:33:58";
 #endif	lint
 
 /*
@@ -18,7 +18,7 @@ static	char	sccs_id[] = "@(#)padedit.c	1.3 88/07/27 15:33:33";
  *		This is probably due to an APOLLO bug.
  */
 
-#include	<stdio.h>
+#include	"ptypes.h"
 #ifdef	apollo
 #include	"/sys/ins/base.ins.c"
 #include	"/sys/ins/error.ins.c"

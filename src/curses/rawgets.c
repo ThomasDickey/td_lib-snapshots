@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)rawgets.c	1.5 88/04/28 15:54:32";
+static	char	sccs_id[] = "@(#)rawgets.c	1.6 88/08/11 07:15:18";
 #endif	lint
 
 /*
@@ -26,7 +26,9 @@ static	char	sccs_id[] = "@(#)rawgets.c	1.5 88/04/28 15:54:32";
  *
  *		On normal exit, the user provides a newline, which is echoed.
  */
-#include	<curses.h>
+
+#define		CUR_PTYPES
+#include	"ptypes.h"
 #include	<ctype.h>
 #include	"cmdch.h"
 

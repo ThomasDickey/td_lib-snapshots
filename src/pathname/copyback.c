@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)copyback.c	1.1 88/05/25 16:11:12";
+static	char	sccs_id[] = "@(#)copyback.c	1.2 88/08/11 07:41:16";
 #endif	lint
 
 /*
@@ -13,12 +13,8 @@ static	char	sccs_id[] = "@(#)copyback.c	1.1 88/05/25 16:11:12";
  *		file, which is here copied back to the original file.
  */
 
-#include	<stdio.h>
+#include	"ptypes.h"
 #include	<signal.h>
-
-/* local declarations: */
-#define	TRUE	1
-#define	FALSE	0
 
 copyback (fpT, name, mode, lines)
 FILE	*fpT;			/* temporary-file pointer */
@@ -26,10 +22,10 @@ char	*name;
 int	mode;			/* original mode of file */
 int	lines;			/* number of lines to copy (truncate) */
 {
-FILE	*fpS;
-char	bfr[BUFSIZ];
-int	(*sv_int)();
-int	(*sv_quit)();
+	FILE	*fpS;
+	char	bfr[BUFSIZ];
+	int	(*sv_int)();
+	int	(*sv_quit)();
 
 	if (chmod(name, 0644) < 0) {
 		perror(name);

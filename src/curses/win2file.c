@@ -1,12 +1,21 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)win2file.c	1.2 88/08/08 06:59:34";
+static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/curses/RCS/win2file.c,v 3.0 1988/08/11 08:42:33 ste_cm Rel $";
 #endif	lint
 
 /*
  * Title:	win2file.c (window-to-file dump)
  * Author:	T.E.Dickey
  * Created:	07 Jun 1988
- * Modified:
+ * $Log: win2file.c,v $
+ * Revision 3.0  1988/08/11 08:42:33  ste_cm
+ * BASELINE Mon Jun 19 13:27:01 EDT 1989
+ *
+ *		Revision 2.0  88/08/11  08:42:33  ste_cm
+ *		BASELINE Thu Apr  6 09:45:13 EDT 1989
+ *		
+ *		Revision 1.4  88/08/11  08:42:33  dickey
+ *		sccs2rcs keywords
+ *		
  *
  * Function:	Writes the contents of the given CURSES window 'win' to the
  *		specified file (appends if the file already exists).  Bold,
@@ -23,25 +32,21 @@ static	char	sccs_id[] = "@(#)win2file.c	1.2 88/08/08 06:59:34";
  * Returns:	nothing.
  */
 
+#define		CUR_PTYPES
 #include	"ptypes.h"
-#include	<curses.h>
 #include	<ctype.h>
 extern	time_t	time();
 extern	char	*ctime();
 
-#define	OUT	(void)fprintf(fp,
-
-#ifndef	SYSTEM5
-#define	chtype		char
-#endif	SYSTEM5
+#define	OUT	FPRINTF(fp,
 
 static
 mark(win, row, c, bold)
 WINDOW	*win;
 {
-	wmove(win, row + win->_begy, win->_begx);
+	(void)wmove(win, row + win->_begy, win->_begx);
 	if (bold)	standout();
-	waddch(win,c);
+	(void)waddch(win,c);
 	if (bold)	standend();
 }
 
@@ -53,7 +58,7 @@ char	*file;
 	time_t	now	= time((time_t *)0);
 	register chtype	*s;
 	register int	j;
-	register chtype	k;
+	register int	k;
 	int	y,x;
 
 	if (fp = fopen(file, "a+")) {
@@ -92,8 +97,8 @@ char	*file;
 			}
 			OUT "\n");
 		}
-		wmove(win, y,x);
+		(void)wmove(win, y,x);
 		wrefresh(win);
-		(void)fclose(fp);
+		FCLOSE(fp);
 	}
 }

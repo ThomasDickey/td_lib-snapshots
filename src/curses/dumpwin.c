@@ -1,12 +1,36 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)dumpwin.c	1.5 88/08/08 06:58:48";
+static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/curses/RCS/dumpwin.c,v 8.0 1988/08/11 07:13:54 ste_cm Rel $";
 #endif	lint
 
 /*
  * Title:	dumpwin.c (dump curses window)
  * Author:	T.E.Dickey
  * Created:	20 Apr 1988 (from code written 13 Nov 1987)
- * Modified:
+ * $Log: dumpwin.c,v $
+ * Revision 8.0  1988/08/11 07:13:54  ste_cm
+ * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ *
+ *		Revision 7.0  88/08/11  07:13:54  ste_cm
+ *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+ *		
+ *		Revision 6.0  88/08/11  07:13:54  ste_cm
+ *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+ *		
+ *		Revision 5.0  88/08/11  07:13:54  ste_cm
+ *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+ *		
+ *		Revision 4.0  88/08/11  07:13:54  ste_cm
+ *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+ *		
+ *		Revision 3.0  88/08/11  07:13:54  ste_cm
+ *		BASELINE Mon Jun 19 13:27:01 EDT 1989
+ *		
+ *		Revision 2.0  88/08/11  07:13:54  ste_cm
+ *		BASELINE Thu Apr  6 09:45:13 EDT 1989
+ *		
+ *		Revision 1.7  88/08/11  07:13:54  dickey
+ *		sccs2rcs keywords
+ *		
  *		11 May 1988, corrected dump of 'firstch[]', 'lastch[]' arrays,
  *			     which show the pending first/last change columns
  *			     for a given row.
@@ -15,8 +39,8 @@ static	char	sccs_id[] = "@(#)dumpwin.c	1.5 88/08/08 06:58:48";
  *
  */
 
-#include	<curses.h>
-#include	<sys/types.h>
+#define		CUR_PTYPES
+#include	"ptypes.h"
 extern	time_t	time();
 extern	char	*ctime(),
 		*getenv(),
@@ -29,6 +53,11 @@ dumpwin(w, tag)
 WINDOW	*w;
 char	*tag;
 {
+#ifdef	SYSTEM5
+chtype	*p;
+#else
+char	*p;
+#endif
 char	fname[BUFSIZ],
 	*s = strcat(strcpy(fname, getenv("HOME")), "/dumpwin.out");
 FILE	*fp = fopen(s, "a+");
@@ -43,8 +72,10 @@ int	j,k;
 		OUT "   _maxy:%d, _maxx:%d\n", w->_maxy, w->_maxx);
 		OUT "   _begy:%d, _begx:%d\n", w->_begy, w->_begx);
 
+#ifndef	SYSTEM5
 		OUT "   _orig:    %#x\n", w->_orig);
 		OUT "   _nextp:   %#x\n", w->_nextp);
+#endif	SYSTEM5
 		OUT "   _flags:   %#x\n", w->_flags);
 		OUT "   _clear:   %#x\n", w->_clear);
 		OUT "   _leave:   %#x\n", w->_leave);
@@ -52,11 +83,11 @@ int	j,k;
 
 		OUT "   _y @ %#x\n", w->_y);
 		for (j = 0; j < w->_maxy; j++) {
-			s = w->_y[j];
+			p = w->_y[j];
 			OUT "%8d) [%3d,%3d] %#x: \"",
-				j, w->_firstch[j], w->_lastch[j], s);
-			if (s)
-				while (k = *s++)
+				j, w->_firstch[j], w->_lastch[j], p);
+			if (p)
+				while (k = *p++)
 					dumpchr(fp,k);
 			OUT "\"\n");
 			(void)fflush(fp);
