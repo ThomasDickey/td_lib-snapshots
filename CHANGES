@@ -1,3 +1,25 @@
+1990-06-22  dickey@software.org
+
+	* src/cm_funcs/sccslast.c:
+	if we have successfully opened/scanned "s." file, try to do
+	the same for the "p." file so that we can show lock-owners.
+
+1990-06-22  ste_cm@software.org
+
+	* src/cm_funcs/sccslast.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+1990-06-22  dickey@software.org
+
+	* src/cm_funcs/sccs_dir.c:
+	changed default value from "sccs" to "SCCS" since this seems
+	to be the currently more-common usage.
+
+1990-06-22  ste_cm@software.org
+
+	* src/cm_funcs/sccs_dir.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
 1990-05-23  dickey@software.org
 
 	* src/curses/scr_size.c:

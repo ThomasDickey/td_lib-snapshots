@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs/RCS/sccs_dir.c,v 7.0 1988/09/02 08:48:57 ste_cm Rel $";
+static	char	Id[] = "$Id: sccs_dir.c,v 8.0 1990/06/22 07:13:11 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,9 +7,16 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs
  * Author:	T.E.Dickey
  * Created:	02 Sep 1988
  * $Log: sccs_dir.c,v $
- * Revision 7.0  1988/09/02 08:48:57  ste_cm
- * BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+ * Revision 8.0  1990/06/22 07:13:11  ste_cm
+ * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
  *
+ *		Revision 7.1  90/06/22  07:13:11  dickey
+ *		changed default value from "sccs" to "SCCS" since this seems
+ *		to be the currently more-common usage.
+ *		
+ *		Revision 7.0  88/09/02  08:48:57  ste_cm
+ *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+ *		
  *		Revision 6.0  88/09/02  08:48:57  ste_cm
  *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
  *		
@@ -41,6 +48,6 @@ sccs_dir()
 {
 	static	char	*name;
 	if (name == 0)	name = getenv("SCCS_DIR");
-	if (name == 0)	name = "sccs";
+	if (name == 0)	name = "SCCS";
 	return (name);
 }
