@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: padedit.c,v 9.1 1991/09/09 08:58:55 dickey Exp $";
+static	char	Id[] = "$Id: padedit.c,v 9.2 1991/09/12 08:01:52 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: padedit.c,v 9.1 1991/09/09 08:58:55 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	14 Dec 1987
  * Modified:
+ *		12 Sep 1991, removed redundant def for 'errno' (VMS C 3.2)
  *		09 Sep 1991, lint (apollo SR10.3)
  *		06 Jun 1991, modified debug-traces. If xterm is invoked,
  *			     explicitly add display-argument to make this
@@ -32,6 +33,8 @@ static	char	Id[] = "$Id: padedit.c,v 9.1 1991/09/09 08:58:55 dickey Exp $";
 #define	STR_PTYPES
 #define	WAI_PTYPES
 #include	"ptypes.h"
+#include	<errno.h>
+
 #ifdef	apollo
 #ifdef	apollo_sr10
 #include 	<apollo/base.h>
@@ -121,7 +124,6 @@ spawn(cmd, argv)
 char	*cmd;
 char	*argv[];
 {
-	extern	int	errno;
 	int	pid;
 #ifdef	TEST
 	int	debug	= 0;

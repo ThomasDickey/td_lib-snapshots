@@ -1,45 +1,13 @@
 #ifndef	lint
-static	char	Id[] = "$Id: filecopy.c,v 9.0 1991/05/15 10:02:18 ste_cm Rel $";
+static	char	Id[] = "$Id: filecopy.c,v 9.1 1991/09/12 07:33:39 dickey Exp $";
 #endif
 
 /*
  * Title:	filecopy.c (copy a file)
  * Author:	T.E.Dickey
  * Created:	30 Aug 1988
- * $Log: filecopy.c,v $
- * Revision 9.0  1991/05/15 10:02:18  ste_cm
- * BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
- *
- *		Revision 8.1  91/05/15  10:02:18  dickey
- *		apollo sr10.3 cpp complains about tag in #endif
- *		
- *		Revision 8.0  89/07/25  08:58:40  ste_cm
- *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
- *		
- *		Revision 7.0  89/07/25  08:58:40  ste_cm
- *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
- *		
- *		Revision 6.0  89/07/25  08:58:40  ste_cm
- *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
- *		
- *		Revision 5.0  89/07/25  08:58:40  ste_cm
- *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
- *		
- *		Revision 4.0  89/07/25  08:58:40  ste_cm
- *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
- *		
- *		Revision 3.1  89/07/25  08:58:40  dickey
- *		recompiled with apollo SR10 -- mods for function prototypes
- *		
- *		Revision 3.0  88/09/13  08:57:27  ste_cm
- *		BASELINE Mon Jun 19 13:27:01 EDT 1989
- *		
- *		Revision 2.0  88/09/13  08:57:27  ste_cm
- *		BASELINE Thu Apr  6 09:45:13 EDT 1989
- *		
- *		Revision 1.4  88/09/13  08:57:27  dickey
- *		sccs2rcs keywords
- *		
+ * Modified:
+ *		12 Sep 1991, removed redundant def for 'errno' (VMS C 3.2)
  *		13 Sep 1988, use 'catchall()'
  *		30 Aug 1988, redundant 'chmod()' is needed on Apollo SR9.7 if
  *			     we create a file with 0444 mode.
@@ -64,7 +32,6 @@ static	char	Id[] = "$Id: filecopy.c,v 9.0 1991/05/15 10:02:18 ste_cm Rel $";
 #include	<sys/file.h>
 #include	<sys/signal.h>
 #include	<errno.h>
-extern	int	errno;
 
 filecopy(src, dst, copy)
 char	*src;

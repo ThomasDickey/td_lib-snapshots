@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcstemp.c,v 9.1 1991/07/11 14:05:58 dickey Exp $";
+static	char	Id[] = "$Id: rcstemp.c,v 9.2 1991/09/12 07:35:49 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: rcstemp.c,v 9.1 1991/07/11 14:05:58 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	25 Aug 1988
  * Modified:
+ *		12 Sep 1991, removed redundant def for 'errno' (VMS C 3.2)
  *		11 Jul 1991, don't need temp-name if suid-root
  *		31 Oct 1989, account for present setting of 'umask'; use chown
  *			     to force the group of the created-directory
@@ -32,7 +33,6 @@ static	char	Id[] = "$Id: rcstemp.c,v 9.1 1991/07/11 14:05:58 dickey Exp $";
 #define	STR_PTYPES
 #include	"ptypes.h"
 #include	<errno.h>
-extern	int	errno;
 extern	char	*uid2s();
 extern	char	*pathcat();
 extern	char	*pathleaf();
