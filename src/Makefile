@@ -1,4 +1,4 @@
-# @(#)Makefile	1.42 88/08/24 11:05:14
+# @(#)Makefile	1.43 88/08/25 16:05:55
 # MAKE-file for miscellaneous library routines
 #
 ####### (Development) ##########################################################
@@ -32,6 +32,7 @@ CSRC	=\
 	dumpwin.c\
 	erasechar.c\
 	execute.c\
+	fexists.c\
 	flushall.c\
 	fp2argv.c\
 	gethome.c\
@@ -45,6 +46,7 @@ CSRC	=\
 	okpnum.c\
 	packdate.c\
 	padedit.c\
+	pathhead.c\
 	pathleaf.c\
 	rawgets.c\
 	rawterm.c\
@@ -54,6 +56,7 @@ CSRC	=\
 	rcsload.c\
 	rcslocks.c\
 	rcsname.c\
+	rcstemp.c\
 	resizewin.c\
 	savewin.c\
 	sccslast.c\
@@ -91,6 +94,7 @@ OBJS	=\
 	dumpwin.o\
 	erasechar.o\
 	execute.o\
+	fexists.o\
 	flushall.o\
 	fp2argv.o\
 	gethome.o\
@@ -104,15 +108,17 @@ OBJS	=\
 	okpnum.o\
 	packdate.o\
 	padedit.o\
+	pathhead.o\
 	pathleaf.o\
 	rawgets.o\
 	rawterm.o\
 	rcsedit.o\
 	rcskeys.o\
 	rcslast.o\
-	rcsname.o\
 	rcsload.o\
 	rcslocks.o\
+	rcsname.o\
+	rcstemp.o\
 	resizewin.o\
 	savewin.o\
 	sccslast.o\

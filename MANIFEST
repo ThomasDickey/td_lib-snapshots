@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19880824
+MANIFEST for td_lib, version t19880825
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 include                         subdirectory
@@ -18,6 +18,7 @@ src/cm_funcs/rcslast.c          scan for last RCS date & version
 src/cm_funcs/rcsload.c          load delta-tree for an RCS file
 src/cm_funcs/rcslocks.c         RCS lock-parsing
 src/cm_funcs/rcsname.c          derive RCS working/archive filenames
+src/cm_funcs/rcstemp.c          create temp-file for setuid operations
 src/cm_funcs/sccslast.c         scan for last SCCS date & version
 src/curses                      subdirectory
 src/curses/beep.c               sound audible alarm
@@ -47,6 +48,7 @@ src/pathname/dotname.c          test for "." or ".." names
 src/pathname/fp2argv.c          file-pointer to argv-list
 src/pathname/modechar.c         translate file-mode (binary) to character
 src/pathname/name2s.c           convert filename to printable string
+src/pathname/pathhead.c         obtain parent directory-name from path
 src/pathname/pathleaf.c         obtain basename (leaf) from pathname
 src/pathname/which.c            locate file in $PATH
 src/process                     subdirectory
