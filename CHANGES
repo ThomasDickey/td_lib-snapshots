@@ -1,3 +1,23 @@
+1988-08-25  dickey@software.org
+
+	* src/cm_funcs/rcstemp.c: New file.
+
+	* include/llib-ltd, src/Makefile:
+	added modules 'fexists.c', 'pathhead.c', 'rcstemp.c'
+
+	* src/pathname/pathhead.c: New file.
+
+	* src/pathname/pathhead.c: sccs2rcs keywords
+
+1988-08-25  ste_cm@software.org
+
+	* src/pathname/pathhead.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+	* src/pathname/pathhead.c: BASELINE Thu Apr  6 09:45:13 EDT 1989
+
+	* src/pathname/pathhead.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
 1988-08-24  dickey@software.org
 
 	* src/cm_funcs/rcslocks.c: New file.
