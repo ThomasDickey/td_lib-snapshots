@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: rcslast.c,v 12.3 1993/11/27 16:59:32 dickey Exp $";
+static	char	Id[] = "$Id: rcslast.c,v 12.4 1993/12/02 15:52:46 dickey Exp $";
 #endif
 
 /*
@@ -170,6 +170,8 @@ void	rcslast (
 	_DCL(time_t *,	date_)
 	_DCL(char **,	lock_)
 {
+	static	char	dotdot[] = { '.', '.', PATH_SLASH, EOS };
+	static	char	slash[] = {PATH_SLASH, EOS};		/* "/"   */
 	auto	 char	name[BUFSIZ+1],
 			*dname	= rcs_dir();
 	auto	 int	len_s	= strlen(RCS_SUFFIX),
@@ -215,7 +217,7 @@ void	rcslast (
 				name[0] = EOS;
 				(void)strcat(name, t);
 			} else
-				(void)strcat(strcpy(name, "../"), t);
+				(void)strcat(strcpy(name, dotdot), t);
 			name[strlen(name) - len_s] = EOS; /* trim suffix */
 
 			*date_ = filedate(name);
@@ -232,7 +234,7 @@ void	rcslast (
 		strcat(
 			strcat(
 				strcpy(&name[t-s],dname),
-				"/"),
+				slash),
 			t),
 		RCS_SUFFIX);
 	tryRCS(name, vers_, date_, lock_);

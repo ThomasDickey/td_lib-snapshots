@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: cmdch.c,v 12.5 1993/11/26 14:10:12 dickey Exp $";
+static	char	Id[] = "$Id: cmdch.c,v 12.6 1993/12/02 16:11:37 dickey Exp $";
 #endif
 
 /*
@@ -64,7 +64,7 @@ static	int	double_click (_AR0)
 	register int	event = FALSE;
 	register long	diff;
 
-	(void) gettimeofday(&this_time, this_zone);
+	(void) gettimeofday(&this_time, &this_zone);
 
 	diff = this_time.tv_sec - last_time.tv_sec;
 	if (diff <= 1) {

@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: rawterm.c,v 12.6 1993/11/23 19:12:16 dickey Exp $";
+static	char	Id[] = "$Id: rawterm.c,v 12.7 1993/12/02 15:20:31 dickey Exp $";
 #endif
 
 /*
@@ -101,6 +101,7 @@ void	rawterm(_AR0)
  */
 void	cookterm(_AR0)
 {
+	refresh();
 	disable_mouse();
 	resetty();
 }

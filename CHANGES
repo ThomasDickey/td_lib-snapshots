@@ -1,3 +1,32 @@
+1993-12-02  dickey@software.org
+
+	* src/pathname/abspath.c: corrected isSlash mod for "~"
+
+	* src/curses/cmdch.c: lint
+
+	* include/ptypes.h: more tweaks for SunOs lint
+
+	* src/cm_funcs/rcslast.c, src/pathname/sameleaf.c: PATH_SLASH-hacks
+
+1993-12-02  dickey@software.org
+
+	* src/pathname/sameleaf.c: use MODULE_ID
+
+1993-12-02  dickey@software.org
+
+	* src/cm_funcs/sccsname.c, src/cm_funcs/rcsname.c, src/pathname/trimpath.c:
+	PATH_SLASH-hacks
+
+1993-12-02  dickey@software.org
+
+	* src/pathname/trimpath.c: use MODULE_ID
+
+1993-12-02  dickey@software.org
+
+	* src/curses/rawterm.c:
+	do a 'refresh()' in 'cookterm()' to allow most 'refresh()' calls in DED
+	to be removed.
+
 1993-12-01  dickey@software.org
 
 	* src/port2vms/vms_rpth.c: ifdefs/TurboC-warnings

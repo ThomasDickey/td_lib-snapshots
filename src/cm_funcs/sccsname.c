@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: sccsname.c,v 12.3 1993/11/27 16:32:08 dickey Exp $";
+static	char	Id[] = "$Id: sccsname.c,v 12.4 1993/12/02 15:47:07 dickey Exp $";
 #endif
 
 /*
@@ -124,15 +124,15 @@ static	char	fname[BUFSIZ];
  * Given the name of either the working file, or the SCCS-file, obtain the name
  * of the SCCS-file.
  */
-char *
-name2sccs(
-_ARX(char *,	name)
-_AR1(int,	full)
-	)
-_DCL(char *,	name)
-_DCL(int,	full)
+char *	name2sccs(
+	_ARX(char *,	name)
+	_AR1(int,	full)
+		)
+	_DCL(char *,	name)
+	_DCL(int,	full)
 {
-static	char	fname[BUFSIZ];
+	static	char	slash[] = {PATH_SLASH, EOS};		/* "/"   */
+	static	char	fname[MAXPATHLEN];
 
 	if (sccs_prefix(name)) {
 		(void)strcpy(fname, name);
@@ -142,14 +142,14 @@ static	char	fname[BUFSIZ];
 			if (sameleaf(fname, sccs_dir()))
 				trim_leaf(fname);
 			if (*fname)
-				(void)strcat(fname, "/");
+				(void)strcat(fname, slash);
 		} else
 			*fname = EOS;
 		(void)strcat(
 			strcat(
 				strcat(
 					strcat(fname, sccs_dir()),
-					"/"),
+					slash),
 					prefix),
 			leaf(name));
 	}

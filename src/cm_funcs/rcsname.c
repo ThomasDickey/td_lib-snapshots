@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: rcsname.c,v 12.3 1993/11/27 16:25:50 dickey Exp $";
+static	char	Id[] = "$Id: rcsname.c,v 12.4 1993/12/02 15:46:35 dickey Exp $";
 #endif
 
 /*
@@ -133,15 +133,15 @@ static	char	fname[BUFSIZ];
  * Given the name of either the working file, or the RCS-file, obtain the name
  * of the RCS-file.
  */
-char *
-name2rcs(
-_ARX(char *,	name)
-_AR1(int,	full)
-	)
-_DCL(char *,	name)
-_DCL(int,	full)
+char *	name2rcs(
+	_ARX(char *,	name)
+	_AR1(int,	full)
+		)
+	_DCL(char *,	name)
+	_DCL(int,	full)
 {
-static	char	fname[BUFSIZ];
+	static	char	slash[] = {PATH_SLASH, EOS};		/* "/"   */
+	static	char	fname[MAXPATHLEN];
 
 	if (rcs_suffix(name)) {
 		(void)strcpy(fname, name);
@@ -151,14 +151,14 @@ static	char	fname[BUFSIZ];
 			if (sameleaf(fname, rcs_dir()))
 				trim_leaf(fname);
 			if (*fname)
-				(void)strcat(fname, "/");
+				(void)strcat(fname, slash);
 		} else
 			*fname = EOS;
 		(void)strcat(
 			strcat(
 				strcat(
 					strcat(fname, rcs_dir()),
-					"/"),
+					slash),
 				leaf(name)),
 			suffix);
 	}
