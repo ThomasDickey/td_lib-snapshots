@@ -1,4 +1,4 @@
-# @(#)Makefile	1.47 88/08/31 10:24:02
+# @(#)Makefile	1.48 88/09/01 06:58:54
 # MAKE-file for miscellaneous library routines
 #
 ####### (Development) ##########################################################
@@ -161,6 +161,7 @@ archive: $(OBJS)
 	rm -f $A
 	ar rv $A $(OBJS)
 #
+beep.o:		ptypes.h
 cmdch.o:	ptypes.h	cmdch.h
 copyback.o:	ptypes.h
 cutoff.o:	ptypes.h
@@ -168,8 +169,8 @@ doalloc.o:	ptypes.h
 dumpwin.o:	ptypes.h
 erasechar.o:	ptypes.h
 execute.o:	ptypes.h
-fp2argv.o:	ptypes.h
 filecopy.o:	ptypes.h
+fp2argv.o:	ptypes.h
 gid2s.o:	ptypes.h
 killchar.o:	ptypes.h
 name2s.o:	ptypes.h
@@ -181,6 +182,8 @@ rawterm.o:	ptypes.h
 rcslast.o:	rcsdefs.h
 rcsedit.o:	ptypes.h	rcsdefs.h
 rcskeys.o:	rcsdefs.h
+rcslast.o:	rcsdefs.h
+rcsload.o:	ptypes.h	rcsdefs.h
 rcslocks.o:	ptypes.h	rcsdefs.h
 rcsname.o:	rcsdefs.h
 resizewin.o:	ptypes.h
