@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.39 1994/07/23 18:32:58 tom Exp $
+dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.40 1994/07/29 20:10:04 tom Exp $
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "TD_" to "AC_"
 dnl ---------------------------------------------------------------------------
@@ -224,8 +224,13 @@ dnl Tests for the presence of regcmp/regex functions (no include-file?)
 dnl Some systems (CLIX) use <pw.h> for this purpose.
 define([TD_REGCMP_FUNCS],
 [save_libs="$LIBS"
-AC_HAVE_LIBRARY(gen, [LIBS="$LIBS -lPW"])
+AC_HAVE_LIBRARY(PW)
+AC_HAVE_HEADERS(pw.h)
 AC_TEST_PROGRAM([
+#include <stdio.h>	/* need this for CLIX to define '__' macro */
+#if HAVE_PW_H
+#include <pw.h>		/* _must_ use prototype on CLIX */
+#endif
 int main() {
 	char *e;
 	char *p = "foo";
@@ -375,12 +380,12 @@ dnl
 define([TD_CURSES_LIBS],
 [
 AC_PROVIDE([$0])
-td_save_LIBS="${LIBS}"
-if test -d /usr/5lib -a -d /usr/5include
-then
-	TD_INCLUDE_PATH(/usr/5include)
-	TD_LIBRARY_PATH(/usr/5lib)
-fi
+dnl:td_save_LIBS="${LIBS}"
+dnl:if test -d /usr/5lib -a -d /usr/5include
+dnl:then
+dnl:	TD_INCLUDE_PATH(/usr/5include)
+dnl:	TD_LIBRARY_PATH(/usr/5lib)
+dnl:fi
 AC_HAVE_LIBRARY(curses)
 td_have_keypad=yes
 case "$DEFS" in

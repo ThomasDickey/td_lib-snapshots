@@ -1,3 +1,17 @@
+1994-07-29  dickey@clark.net
+
+	* include/td_regex.h: hacks needed for CLIX regex
+
+	* configure.in: pw.h is tested in TD_REGEX_T
+
+	* aclocal.m4:
+	mods to make CLIX sort of find regcmp (dumped core though)
+
+	* include/ptypes.h:
+	hacked something to define 'unix' for CLIX and other almost *NIX systems
+
+	* Makefile: be more explicity about sh-commands for CLIX
+
 1994-07-26  dickey@clark.net
 
 	* src/curses/resizwin.c:

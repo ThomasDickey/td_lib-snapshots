@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 12.32 1994/07/18 00:46:21 tom Exp $ */
+/* $Id: ptypes.h,v 12.33 1994/07/29 19:31:52 tom Exp $ */
 
 #ifndef	PTYPES_H
 #define	PTYPES_H
@@ -103,6 +103,10 @@ typedef	short	ino_t;
 
 #if	defined(__hpux) || defined(__svr4__) || defined(linux)
 #define	SYSTEM5
+#endif
+
+#if	!defined(MSDOS) && !defined(vms) && !defined(unix)
+#define	unix		/* it's close enough for me */
 #endif
 
 #ifdef	MSDOS
