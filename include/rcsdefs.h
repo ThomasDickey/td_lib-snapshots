@@ -1,9 +1,11 @@
-/* $Id: rcsdefs.h,v 11.1 1992/08/03 14:32:48 dickey Exp $ */
+/* $Id: rcsdefs.h,v 11.2 1992/10/26 07:45:22 dickey Exp $ */
 
 #ifndef	_RCSDEFS_H_
 #define	_RCSDEFS_H_
 
-#define	RCS_VERSION	4	/* current version of rcs we are built over */
+#define	RCS_VERSION	5	/* current version of rcs we are built over */
+			/* version 5 defines "-M" option of 'ci' */
+			/* version 4 defines "-d" option of 'ci' */
 
 /*
  * State information for scanning RCS-file header
@@ -102,12 +104,14 @@
 			_ret
 
 	char *	rcsread(
-			_ar1(char *,	s)
+			_arx(char *,	s)
+			_ar1(int,	code)
 			)
 			_dcl(char *,	s)
+			_dcl(int,	code)
 			_ret
 
-		rcsedit (
+	void	rcsedit (
 			_arx(char *,	where)
 			_arx(char *,	old)
 			_ar1(char *,	new)
@@ -117,7 +121,7 @@
 			_dcl(char *,	new)
 			_nul
 
-		rcsclose(_ar0)
+	void	rcsclose(_ar0)
 			_nul
 
 	char *	rcsparse_num(

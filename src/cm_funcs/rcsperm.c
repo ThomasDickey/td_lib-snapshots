@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcsperm.c,v 11.0 1991/10/04 12:32:08 ste_cm Rel $";
+static	char	Id[] = "$Id: rcsperm.c,v 11.1 1992/10/26 07:16:19 dickey Exp $";
 #endif
 
 /*
@@ -48,6 +48,7 @@ _DCL(char *,	base)
 			tmp	[BUFSIZ];
 	auto	int	empty	= TRUE,		/* assume access-list empty */
 			my_file,
+			code	= S_FAIL,
 			ok	= FALSE;	/* assume no permission */
 
 	path = vcs_file(path, tmp, FALSE);
@@ -79,10 +80,10 @@ _DCL(char *,	base)
 	my_file = ((stat(path, &sb) >= 0)	/* ok always! */
 		&& (sb.st_uid == getuid()));
 
-	while (header && (s = rcsread(s))) {
+	while (header && (s = rcsread(s, code))) {
 		s = rcsparse_id(key, s);
 
-		switch (rcskeys(key)) {
+		switch (code = rcskeys(key)) {
 		case S_HEAD:
 			s = rcsparse_num(tip, s);
 			break;

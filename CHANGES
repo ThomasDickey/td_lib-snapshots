@@ -1,3 +1,21 @@
+1992-10-26  dickey@software.org
+
+	* src/cm_funcs/rcsedit.c:
+	fix rewritten 'rcsparse_str()' to skip blanks & check that
+	I am pointing to an escaped string
+
+	* src/cm_funcs/rcsedit.c:
+	RCS version 5 formats the file on multiple lines.
+	This broke my assumption that I had only to skip a record
+	when processing 'rcsread()'.
+
+	* include/rcsdefs.h:
+	changed interface to 'rcsread()' so we can determine how
+	to skip past the pending rcs-header record
+
+	* src/cm_funcs/rcsperm.c, src/cm_funcs/rcsload.c:
+	changed interface to 'rcsread()'
+
 1992-10-16  dickey@software.org
 
 	* Makefile: corrected destroy/clean rules

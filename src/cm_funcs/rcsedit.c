@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	*Id = "$Id: rcsedit.c,v 11.1 1992/09/02 15:36:12 dickey Exp $";
+static	char	*Id = "$Id: rcsedit.c,v 11.3 1992/10/26 13:59:44 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	*Id = "$Id: rcsedit.c,v 11.1 1992/09/02 15:36:12 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	26 May 1988
  * Modified:
+ *		26 Oct 1992, RCS version 5 uses multiline format.
  *		06 Feb 1992, use 'stat_file()'
  *		22 Oct 1991, broke logic of 'rcs_close()' on 6-sep (must always
  *			     cleanup after writing the tempfile mode) -- fixed.
@@ -39,6 +40,8 @@ static	char	*Id = "$Id: rcsedit.c,v 11.1 1992/09/02 15:36:12 dickey Exp $";
 
 /* local definitions */
 #define	VERBOSE	if (verbose) PRINTF
+#define	SEMICOLON	';'
+#define	AT_SYMBOL	'@'
 
 static	FILE	*fpS, *fpT;
 static	char	fname[MAXPATHLEN];
@@ -52,12 +55,12 @@ static	int	verbose;	/* set if we show informational messages */
  ************************************************************************/
 
 static
-Show(
-_ARX(char *,	tag)
-_AR1(char *,	text)
-	)
-_DCL(char *,	tag)
-_DCL(char *,	text)
+void	Show(
+	_ARX(char *,	tag)
+	_AR1(char *,	text)
+		)
+	_DCL(char *,	tag)
+	_DCL(char *,	text)
 {
 	if ((RCS_DEBUG > 1) && text != 0 && verbose) {
 		FFLUSH(stdout);
@@ -67,7 +70,7 @@ _DCL(char *,	text)
 }
 
 static
-dir_access(_AR0)
+int	dir_access(_AR0)
 {
 	register char	*s;
 	char	temp[MAXPATHLEN];
@@ -94,27 +97,16 @@ dir_access(_AR0)
 }
 
 static
-delim(
-_AR1(int,	c))
-_DCL(int,	c)
+int	delim(
+	_AR1(int,	c))
+	_DCL(int,	c)
 {
 	if (isspace(c))	return (TRUE);
 	return (strchr(";:,@", c) != 0);
 }
 
 static
-char *
-skips(
-_AR1(char *,	s))
-_DCL(char *,	s)
-{
-	while (isspace(*s))		s++;
-	return (s);
-}
-
-static
-char *
-readit(_AR0)
+char *	readit(_AR0)
 {
 	char	*p = fgets(buffer, sizeof(buffer), fpS);
 	Show("<", p);
@@ -122,7 +114,7 @@ readit(_AR0)
 }
 
 static
-writeit(_AR0)
+void	writeit(_AR0)
 {
 	if (*buffer != EOS && fpT != 0) {
 		Show(">", buffer);
@@ -132,12 +124,62 @@ writeit(_AR0)
 }
 
 static
-closeit(_AR0)
+void	closeit(_AR0)
 {
 	if (fpT != 0) {
 		FCLOSE(fpT);
 		fpT = 0;
 	}
+}
+
+/*
+ * Flush the current buffer and read a new one
+ */
+static
+char *	ReadNewBuffer(_AR0)
+{
+	writeit();
+	return readit();
+}
+
+/*
+ * Skips whitespace to the beginning of a token
+ */
+static
+char *	SkipBlanks(
+	_AR1(char *,	s))
+	_DCL(char *,	s)
+{
+	register int	c;
+	while (s != 0) {
+		while ((c = *s) != EOS) {
+			if (!isspace(c))
+				return s;
+			s++;
+		}
+		s = ReadNewBuffer();
+	}
+	return 0;
+}
+
+/*
+ * Skip past the semicolon which ends RCS header-records
+ */
+static
+char *	SkipPastSemicolon(
+	_AR1(char *,	s))
+	_DCL(char *,	s)
+{
+	while (s != 0) {
+		while (*s != EOS) {
+			if (*s == AT_SYMBOL)
+				s = rcsparse_str(s, NULL_FUNC);
+			else if (*s++ == SEMICOLON)
+				return s;
+		}
+		s = ReadNewBuffer();
+	}
+	return 0;		/* got an end-of-file */
 }
 
 /************************************************************************
@@ -147,14 +189,14 @@ closeit(_AR0)
 /*
  * Open the RCS file corresponding to 'name'.
  */
-rcsopen(
-_ARX(char *,	name)
-_ARX(int,	show)
-_AR1(int,	readonly)
-	)
-_DCL(char *,	name)
-_DCL(int,	show)
-_DCL(int,	readonly)
+int	rcsopen(
+	_ARX(char *,	name)
+	_ARX(int,	show)
+	_AR1(int,	readonly)
+		)
+	_DCL(char *,	name)
+	_DCL(int,	show)
+	_DCL(int,	readonly)
 {
 	struct	stat	sb;
 	int	fd;
@@ -190,49 +232,59 @@ _DCL(int,	readonly)
 
 /*
  * rcsread(@)
- *	Read the next RCS item from the RCS file.  Items are separated by
+ *	Given the last parse-position, and the code for the first token in an
+ *	RCS record.
+ *
+ *	Read the next RCS item from the RCS file.  Most items are separated by
  *	semicolons.  If the caller did not finish processing the last one,
- *	assume that the semicolon lies in the same record.  This simplifies
- *	parsing (by not requiring that the caller parse all items).
+ *	skip past that semicolon.  This simplifies parsing (by not requiring
+ *	that the caller parse all items).
  *
  *	Returns a pointer into our buffer (which may be edited by the caller
  *	before calling this procedure again).
  */
-char *
-rcsread(
-_AR1(char *,	s))
-_DCL(char *,	s)
+char *	rcsread(
+	_ARX(char *,	s)
+	_AR1(int,	code)
+		)
+	_DCL(char *,	s)
+	_DCL(int,	code)
 {
-	do {
-		if (s) {
-			while (*s && (*s != ';'))	s++;
-			while (*s == ';')		s = skips(s+1);
-			if (*s)
-				return (s);
+	if (s = SkipBlanks(s)) {
+		switch (code) {
+		case S_VERS:
+			break;
+		case S_DESC:
+		case S_LOG:
+		case S_TEXT:
+			if (*s == AT_SYMBOL)
+				s = rcsparse_str(s, NULL_FUNC);
+			s = SkipBlanks(s);
+			break;
+		default:
+			s = SkipPastSemicolon(s);
+			s = SkipBlanks(s);
+			break;
 		}
-		writeit();
-		if (!(s = readit()))
-			break;		/* end-of-file, or error */
-		s = skips(s);
-	} while (*s == EOS);
-	return(s);
+	}
+	return s;
 }
 
 /*
  * rcsedit(@)
  *	Alter a field in the input buffer.
  */
-rcsedit (
-_ARX(char *,	where)
-_ARX(char *,	old)
-_AR1(char *,	new)
-	)
-_DCL(char *,	where)
-_DCL(char *,	old)
-_DCL(char *,	new)
+void	rcsedit (
+	_ARX(char *,	where)
+	_ARX(char *,	old)
+	_AR1(char *,	new)
+		)
+	_DCL(char *,	where)
+	_DCL(char *,	old)
+	_DCL(char *,	new)
 {
-size_t	len = strlen(old);
-char	tmp[BUFSIZ];
+	size_t	len = strlen(old);
+	char	tmp[BUFSIZ];
 
 	if ((where < buffer)
 	||  (where > buffer + strlen(buffer))
@@ -249,7 +301,7 @@ char	tmp[BUFSIZ];
  *	Close the RCS-file which was opened, optionally copying back from the
  *	temporary file.
  */
-rcsclose(_AR0)
+void	rcsclose(_AR0)
 {
 	if (fpT != 0) {
 		if (changes) {
@@ -276,17 +328,19 @@ rcsclose(_AR0)
  ************************************************************************/
 
 /* {<digit>{.}} */
-char *
-rcsparse_num(
-_ARX(char *,	d)
-_AR1(char *,	s)
-	)
-_DCL(char *,	d)
-_DCL(char *,	s)
+char *	rcsparse_num(
+	_ARX(char *,	d)
+	_AR1(char *,	s)
+		)
+	_DCL(char *,	d)
+	_DCL(char *,	s)
 {
-	while (*s && (isdigit(*s) || (*s == '.')))	*d++ = *s++;
+	if (s = SkipBlanks(s)) {
+		while (*s && (isdigit(*s) || (*s == '.')))
+			*d++ = *s++;
+	}
 	*d = EOS;
-	return (skips(s));
+	return s;
 }
 
 /*
@@ -295,18 +349,19 @@ _DCL(char *,	s)
  *	a letter, but don't, since we allow a <num> to be processed too (see
  *	'rcskeys.c').
  */
-char *
-rcsparse_id(
-_ARX(char *,	d)
-_AR1(char *,	s)
-	)
-_DCL(char *,	d)
-_DCL(char *,	s)
+char *	rcsparse_id(
+	_ARX(char *,	d)
+	_AR1(char *,	s)
+		)
+	_DCL(char *,	d)
+	_DCL(char *,	s)
 {
-	s = skips(s);
-	while (*s && !delim(*s))	*d++ = *s++;
+	if (s = SkipBlanks(s)) {
+		while (*s && !delim(*s))
+			*d++ = *s++;
+	}
 	*d = EOS;
-	return (skips(s));
+	return s;
 }
 
 /*
@@ -316,36 +371,31 @@ _DCL(char *,	s)
  */
 #define	STR_FUNC(c)	if (str_func != 0)	str_func(c)
 
-char *
-rcsparse_str(
-_ARX(register char *,	s)
-_FN1(int,		str_func)	/* copies string as we read it */
-	)
-_DCL(register char *,	s)
-_DCL(int,		(*str_func)())
+char *	rcsparse_str(
+	_ARX(char *,	s)
+	_FN1(int,	str_func) /* copies string as we read it */
+		)
+	_DCL(char *,	s)
+	_DCL(int,	(*str_func)())
 {
-	register int c;
+	register int	c;
 
-	if (s != 0) {
-		while (isspace(*s)) {
-			STR_FUNC(*s);
-			s++;
-		}
-		while (*s != '@')
-			if ((s = rcsread(s)) == 0)		goto done;
-		s++;		/* skip past opening '@' */
+	s = SkipBlanks(s);
+	if (*s == AT_SYMBOL) {
+		s++;			/* skip past leading quote */
 		do {
-			while (*s) {
-				if ((c = *s++) == '@') {
-					if (*s != '@')		goto done;
-					s++;
-					STR_FUNC('@');
-				} else {
-					STR_FUNC(c);
+			while (*s != EOS) {
+				if ((c = *s++) == AT_SYMBOL) {
+					if (*s != AT_SYMBOL) {
+						STR_FUNC(EOS);
+						return s;
+					}
 				}
+				STR_FUNC(c);
 			}
-		} while (s = readit());
+		} while (s = ReadNewBuffer());
+
+		STR_FUNC(EOS);	/* got an end-of-file */
 	}
-done:	STR_FUNC(EOS);
-	return (s);
+	return s;
 }
