@@ -1,4 +1,4 @@
-# $Id: Makefile,v 10.1 1992/02/06 10:05:14 dickey Exp $
+# $Id: Makefile,v 10.2 1992/02/25 08:14:36 dickey Exp $
 # make-file for CM_TOOLS common/test library
 #
 
@@ -27,6 +27,7 @@ SOURCES	= Makefile descrip.mms README $(REF_FILES)
 
 PROGS	=\
 	abspath\
+	diffload\
 	doalloc\
 	dotcmp\
 	execute\
@@ -88,6 +89,7 @@ $(SOURCES):		; $(GET) $@
 
 # rules to make SunOs 'make' "work" with VPATH
 abspath.c\
+diffload.c\
 doalloc.c\
 dotcmp.c\
 execute.c\
