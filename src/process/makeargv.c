@@ -1,11 +1,13 @@
 #ifndef	lint
-static	char	Id[] = "$Id: makeargv.c,v 9.0 1991/05/15 10:04:09 ste_cm Rel $";
+static	char	Id[] = "$Id: makeargv.c,v 9.1 1991/10/03 17:17:15 dickey Exp $";
 #endif
 
 /*
  * Title:	makeargv.c
  * Author:	T.E.Dickey
  * Created:	14 Apr 1989
+ * Modified:
+ *		03 Oct 1991, converted to ANSI
  *
  * Function:	splits a string into argv-like array of strings.  The maximum
  *		number of strings is fixed (for simplicity).  Single-character
@@ -14,11 +16,20 @@ static	char	Id[] = "$Id: makeargv.c,v 9.0 1991/05/15 10:04:09 ste_cm Rel $";
  *		Unlike normal unix argv, this is not terminated by a null-
  *		pointer; unused strings are set to zero-length constant strings.
  */
+
+#include "ptypes.h"
 #include <ctype.h>
 
-makeargv(argv, maxarg, dst, src)
-char	**argv;
-char	*dst, *src;
+makeargv(
+_ARX(char **,	argv)
+_ARX(int,	maxarg)
+_ARX(char *,	dst)
+_AR1(char *,	src)
+	)
+_DCL(char **,	argv)
+_DCL(int,	maxarg)
+_DCL(char *,	dst)
+_DCL(char *,	src)
 {
 	auto	int	argc;
 
@@ -47,7 +58,7 @@ char	*dst, *src;
 }
 
 #ifdef	TEST
-main()
+_MAIN
 {
 	int	j,k;
 	char	*vec[NUM];

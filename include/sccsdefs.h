@@ -1,4 +1,4 @@
-/* $Id: sccsdefs.h,v 9.1 1991/09/17 08:09:45 dickey Exp $ */
+/* $Id: sccsdefs.h,v 12.0 1991/10/03 11:25:45 ste_cm Rel $ */
 
 #ifndef	_SCCSDEFS_H_
 #define	_SCCSDEFS_H_
@@ -8,7 +8,7 @@
 #define	SCCS_PREFIX	"s."
 
 	/* sccs_dir.c ------------------------------------------------- */
-	char *	sccs_dir()
+	char *	sccs_dir(_ar0)
 			_ret
 
 	/* sccslast.c ------------------------------------------------- */

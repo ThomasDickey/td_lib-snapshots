@@ -1,4 +1,4 @@
-# $Id: Makefile,v 9.2 1991/09/17 07:35:47 dickey Exp $
+# $Id: Makefile,v 10.0 1991/10/03 10:34:16 ste_cm Rel $
 # make-file for CM_TOOLS common interface directory
 #
 ####### (Development) ##########################################################
@@ -38,3 +38,4 @@ lincnt.out:	$(H_SRC)	; lincnt $(H_SRC) >$@
 #
 $(SOURCES):		; $(GET) $@
 $L/$(LLIB).ln:	$(H_SRC) $(LLIB) ; - sh -c 'makellib -I. -L$L $(LLIB) $(llib)'
+$(LLIB).i:	$(H_SRC) $(LLIB) ; /usr/lib/cpp -Dlint -I. $(LLIB) $@

@@ -1,3 +1,621 @@
+1991-10-03  dickey@software.org
+
+	* src/pathname/which.c: converted to ANSI
+
+1991-10-03  ste_cm@software.org
+
+	* src/pathname/which.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+1991-10-03  dickey@software.org
+
+	* src/curses/rawgets.c: converted to ANSI
+
+1991-10-03  ste_cm@software.org
+
+	* src/curses/rawgets.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+	* src/curses/rawgets.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1991-10-03  dickey@software.org
+
+	* src/cm_funcs/packdate.c: converted to ANSI
+
+1991-10-03  ste_cm@software.org
+
+	* src/cm_funcs/packdate.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+	* src/cm_funcs/packdate.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1991-10-03  dickey@software.org
+
+	* src/pathname/modechar.c: converted to ANSI
+
+1991-10-03  ste_cm@software.org
+
+	* src/pathname/modechar.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+	* src/pathname/modechar.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+	* src/pathname/modechar.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1991-10-03  dickey@software.org
+
+	* src/process/makeargv.c, src/pathname/walktree.c, src/curses/win2file.c:
+	converted to ANSI
+
+1991-10-03  ste_cm@software.org
+
+	* src/curses/win2file.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+	* src/curses/win2file.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+	* src/curses/win2file.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1991-10-03  dickey@software.org
+
+	* src/curses/wrepaint.c: converted to ANSI
+
+1991-10-03  ste_cm@software.org
+
+	* src/curses/wrepaint.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+	* src/curses/wrepaint.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+	* src/curses/wrepaint.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1991-10-03  dickey@software.org
+
+	* src/curses/beep.c: converted to ANSI
+
+1991-10-03  ste_cm@software.org
+
+	* src/curses/beep.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+	* src/curses/beep.c: BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1991-10-03  dickey@software.org
+
+	* src/process/bldarg.c: converted to ANSI
+
+1991-10-03  ste_cm@software.org
+
+	* src/process/bldarg.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+	* src/process/bldarg.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+	* src/process/bldarg.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1991-10-03  dickey@software.org
+
+	* src/cm_funcs/cutoff.c, src/string/dotcmp.c: converted to ANSI
+
+1991-10-03  ste_cm@software.org
+
+	* src/string/dotcmp.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+	* src/string/dotcmp.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1991-10-03  dickey@software.org
+
+	* src/pathname/dotname.c: converted to ANSI
+
+1991-10-03  ste_cm@software.org
+
+	* src/pathname/dotname.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+	* src/pathname/dotname.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+	* src/pathname/dotname.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1991-10-03  dickey@software.org
+
+	* src/curses/dumpchr.c: converted to ANSI
+
+1991-10-03  ste_cm@software.org
+
+	* src/curses/dumpchr.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+	* src/curses/dumpchr.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+	* src/curses/dumpchr.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1991-10-03  dickey@software.org
+
+	* src/curses/dumpwin.c: converted to ANSI
+
+1991-10-03  ste_cm@software.org
+
+	* src/curses/dumpwin.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+	* src/curses/dumpwin.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+	* src/curses/dumpwin.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1991-10-03  dickey@software.org
+
+	* src/string/dftenv.c: converted to ANSI
+
+1991-10-03  ste_cm@software.org
+
+	* src/string/dftenv.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+	* src/string/dftenv.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+	* src/string/dftenv.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1991-10-03  dickey@software.org
+
+	* src/curses/erasechr.c: converted to ANSI
+
+1991-10-03  ste_cm@software.org
+
+	* src/curses/erasechr.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+	* src/curses/erasechr.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1991-10-03  dickey@software.org
+
+	* src/curses/killchar.c: converted to ANSI
+
+1991-10-03  ste_cm@software.org
+
+	* src/curses/killchar.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+	* src/curses/killchar.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+	* src/curses/killchar.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1991-10-03  dickey@software.org
+
+	* src/string/ltostr.c: converted to ANSI
+
+1991-10-03  ste_cm@software.org
+
+	* src/string/ltostr.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+	* src/string/ltostr.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1991-10-03  dickey@software.org
+
+	* src/pathname/pathcmp.c: converted to ANSI
+
+1991-10-03  ste_cm@software.org
+
+	* src/pathname/pathcmp.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+1991-10-03  dickey@software.org
+
+	* src/curses/rawterm.c: converted to ANSI
+
+1991-10-03  ste_cm@software.org
+
+	* src/curses/rawterm.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+	* src/curses/rawterm.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+	* src/curses/rawterm.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1991-10-03  dickey@software.org
+
+	* src/cm_funcs/rcs_dir.c: converted to ANSI
+
+1991-10-03  ste_cm@software.org
+
+	* src/cm_funcs/rcs_dir.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+	* src/cm_funcs/rcs_dir.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+	* src/cm_funcs/rcs_dir.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1991-10-03  dickey@software.org
+
+	* src/pathname/add2fnam.c: converted to ANSI
+
+1991-10-03  ste_cm@software.org
+
+	* src/pathname/add2fnam.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+	* src/pathname/add2fnam.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+	* src/pathname/add2fnam.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1991-10-03  dickey@software.org
+
+	* src/memory/doalloc.c, src/string/lsbycols.c: converted to ANSI
+
+1991-10-03  ste_cm@software.org
+
+	* src/string/lsbycols.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+	* src/string/lsbycols.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1991-10-03  dickey@software.org
+
+	* include/td_lib.h: lint (uid2s)
+
+	* src/unix/uid2s.c: converted to ANSI
+
+1991-10-03  ste_cm@software.org
+
+	* src/unix/uid2s.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+	* src/unix/uid2s.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+	* src/unix/uid2s.c: BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1991-10-03  dickey@software.org
+
+	* src/cm_funcs/rcslocks.c: converted to ANSI
+
+	* include/ptypes.h:
+	ifdef out stuff that causes problems making lint-lib
+
+	* include/sccsdefs.h: use _ar0
+
+1991-10-03  ste_cm@software.org
+
+	* include/sccsdefs.h:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+	* include/sccsdefs.h:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+	* include/sccsdefs.h:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1991-10-03  dickey@software.org
+
+	* src/cm_funcs/sccslast.c, src/curses/savewin.c: converted to ANSI
+
+1991-10-03  ste_cm@software.org
+
+	* src/curses/savewin.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+	* src/curses/savewin.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+	* src/curses/savewin.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1991-10-03  dickey@software.org
+
+	* src/Makefile: typo
+
+	* src/Makefile: corrected rule for 'rcspath.o'
+
+	* include/Makefile: added rule for llib-ltd.i
+
+1991-10-03  ste_cm@software.org
+
+	* include/Makefile:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+1991-10-03  dickey@software.org
+
+	* include/ptypes.h: fixes for lint-lib
+
+	* include/rcsdefs.h: use _ar0
+
+	* include/ptypes.h: added definitions of _ar0, _AR0
+	use prototypes for _exit, exit, free, perror, getenv, strtol
+	and time functions.
+	added prototypes for main
+
+	* src/pathname/file2arg.c: converted to ANSI
+
+1991-10-03  ste_cm@software.org
+
+	* src/pathname/file2arg.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+	* src/pathname/file2arg.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+	* src/pathname/file2arg.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1991-10-03  dickey@software.org
+
+	* src/process/gethome.c: converted to ANSI
+
+1991-10-03  ste_cm@software.org
+
+	* src/process/gethome.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+	* src/process/gethome.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+	* src/process/gethome.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1991-10-03  dickey@software.org
+
+	* src/cm_funcs/rcsname.c: converted to ANSI
+
+1991-10-03  ste_cm@software.org
+
+	* src/cm_funcs/rcsname.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+	* src/cm_funcs/rcsname.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1991-10-03  dickey@software.org
+
+	* src/pathname/relpath.c: converted to ANSI
+
+1991-10-03  ste_cm@software.org
+
+	* src/pathname/relpath.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+1991-10-03  dickey@software.org
+
+	* src/unix/s2uid.c: converted to ANSI
+
+1991-10-03  ste_cm@software.org
+
+	* src/unix/s2uid.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+	* src/unix/s2uid.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+	* src/unix/s2uid.c: BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1991-10-03  dickey@software.org
+
+	* src/pathname/sameleaf.c: converted to ANSI
+
+1991-10-03  ste_cm@software.org
+
+	* src/pathname/sameleaf.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+	* src/pathname/sameleaf.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+	* src/pathname/sameleaf.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1991-10-03  dickey@software.org
+
+	* src/cm_funcs/sccs_dir.c: converted to ANSI
+
+1991-10-03  ste_cm@software.org
+
+	* src/cm_funcs/sccs_dir.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+	* src/cm_funcs/sccs_dir.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+	* src/cm_funcs/sccs_dir.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1991-10-03  dickey@software.org
+
+	* src/cm_funcs/sccsname.c: converted to ANSI
+
+1991-10-03  ste_cm@software.org
+
+	* src/cm_funcs/sccsname.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+	* src/cm_funcs/sccsname.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1991-10-03  dickey@software.org
+
+	* src/curses/scr_size.c: converted to ANSI
+
+1991-10-03  ste_cm@software.org
+
+	* src/curses/scr_size.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+	* src/curses/scr_size.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1991-10-03  dickey@software.org
+
+	* src/unix/setmtime.c: converted to ANSI
+
+1991-10-03  ste_cm@software.org
+
+	* src/unix/setmtime.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+	* src/unix/setmtime.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+	* src/unix/setmtime.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1991-10-03  dickey@software.org
+
+	* src/process/catarg.c: converted to ANSI
+
+1991-10-03  ste_cm@software.org
+
+	* src/process/catarg.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+1991-10-03  dickey@software.org
+
+	* src/curses/cmdch.c: converted to ANSI
+
+1991-10-03  ste_cm@software.org
+
+	* src/curses/cmdch.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+	* src/curses/cmdch.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1991-10-03  dickey@software.org
+
+	* src/process/getuser.c: converted to ANSI
+
+1991-10-03  ste_cm@software.org
+
+	* src/process/getuser.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+	* src/process/getuser.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+	* src/process/getuser.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1991-10-03  dickey@software.org
+
+	* src/unix/gid2s.c: converted to ANSI
+
+1991-10-03  ste_cm@software.org
+
+	* src/unix/gid2s.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+	* src/unix/gid2s.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+	* src/unix/gid2s.c: BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1991-10-03  dickey@software.org
+
+	* src/pathname/pathcat.c: converted to ANSI
+
+1991-10-03  ste_cm@software.org
+
+	* src/pathname/pathcat.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+1991-10-03  dickey@software.org
+
+	* src/pathname/pathhead.c: converted to ANSI
+
+1991-10-03  ste_cm@software.org
+
+	* src/pathname/pathhead.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+1991-10-03  dickey@software.org
+
+	* src/pathname/pathleaf.c: converted to ANSI
+
+1991-10-03  ste_cm@software.org
+
+	* src/pathname/pathleaf.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+	* src/pathname/pathleaf.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1991-10-03  dickey@software.org
+
+	* include/td_lib.h: use _ar0
+
+	* src/cm_funcs/rcslast.c: converted to ANSI
+
+1991-10-03  ste_cm@software.org
+
+	* src/cm_funcs/rcslast.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+1991-10-03  dickey@software.org
+
+	* src/curses/resizwin.c: converted to ANSI
+
+1991-10-03  ste_cm@software.org
+
+	* src/curses/resizwin.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+	* src/curses/resizwin.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+	* src/curses/resizwin.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1991-10-03  dickey@software.org
+
+	* src/process/revert.c: converted to ANSI
+
+1991-10-03  ste_cm@software.org
+
+	* src/process/revert.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+1991-10-03  dickey@software.org
+
+	* src/unix/s2gid.c: converted to ANSI
+
+1991-10-03  ste_cm@software.org
+
+	* src/unix/s2gid.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+	* src/unix/s2gid.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+	* src/unix/s2gid.c: BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
 1991-10-01  dickey@software.org
 
 	* include/td_lib.h: corrected definition of 'next_version()'

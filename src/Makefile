@@ -1,4 +1,4 @@
-# $Id: Makefile,v 9.7 1991/10/01 14:07:34 dickey Exp $
+# $Id: Makefile,v 9.9 1991/10/03 10:59:46 dickey Exp $
 # MAKE-file for miscellaneous library routines
 #
 ####### (Development) ##########################################################
@@ -252,7 +252,7 @@ rcslast.o:	$(RCSDEFS_H)
 rcsload.o:	$(RCSDEFS_H)
 rcslocks.o:	$(RCSDEFS_H)
 rcsname.o:	$(RCSDEFS_H)
-rcspath.o:	$J/rcspath.h	; $(CC) -I$I -I$J -c $*.c
+rcspath.o:	$J/rcspath.h	; $(CC) $(CPP_OPTS) -I$J $(CFLAGS) -c $*.c
 rcspermit.o:	$(RCSDEFS_H)
 sccsname.o:	$I/sccsdefs.h
 vcs_file.o:	$(RCSDEFS_H)

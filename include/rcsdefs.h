@@ -1,4 +1,4 @@
-/* $Id: rcsdefs.h,v 9.7 1991/09/17 08:08:53 dickey Exp $ */
+/* $Id: rcsdefs.h,v 9.8 1991/10/03 10:23:30 dickey Exp $ */
 
 #ifndef	_RCSDEFS_H_
 #define	_RCSDEFS_H_
@@ -43,22 +43,14 @@
 /*
  * Useful external-definitions
  */
-#ifndef	LINTLIBRARY
-extern	char *	getenv(
-			_ar1(char *,	name)
-			)
-			_dcl(char *,	name)
-			_ret
-#endif
-
 #include <deltree.h>
 
 	/* rcs_debug.c ----------------------------------------------- */
-	int	rcs_debug()
+	int	rcs_debug(_ar0)
 			_ret
 
 	/* rcs_dir.c ------------------------------------------------- */
-	char *	rcs_dir()
+	char *	rcs_dir(_ar0)
 			_ret
 
 	/* rcsedit.c ------------------------------------------------- */
@@ -88,7 +80,7 @@ extern	char *	getenv(
 			_dcl(char *,	new)
 			_nul
 
-		rcsclose()
+		rcsclose(_ar0)
 			_nul
 
 	char *	rcsparse_num(

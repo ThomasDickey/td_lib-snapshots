@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 9.2 1991/09/17 08:11:26 dickey Exp $ */
+/* $Id: ptypes.h,v 9.5 1991/10/03 11:39:05 dickey Exp $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -58,6 +58,7 @@ extern	char	*sprintf();
 #ifdef	LINTLIBRARY
 #define	_fn1(t,v)	v
 #define	_fnx(t,v)	_fn1(t,v),
+#define	_ar0
 #define	_ar1(t,v)	v
 #define	_arx(t,v)	_ar1(t,v),
 #define	_dcl(t,v)	t v;
@@ -67,6 +68,7 @@ extern	char	*sprintf();
 #ifdef	__STDC__	/* function prototypes */
 #define	_fn1(t,v)	t (*v)()
 #define	_fnx(t,v)	_fn1(t,v),
+#define	_ar0		void
 #define	_ar1(t,v)	t v
 #define	_arx(t,v)	_ar1(t,v),
 #define	_dcl(t,v)
@@ -75,6 +77,7 @@ extern	char	*sprintf();
 #else	/* !__STDC__	-- old-style declarations */
 #define	_fn1(t,v)
 #define	_fnx(t,v)
+#define	_ar0
 #define	_ar1(t,v)
 #define	_arx(t,v)
 #define	_dcl(t,v)
@@ -90,10 +93,12 @@ extern	char	*sprintf();
 #ifdef	__STDC__
 #define	_FN1(t,v)	t (*v)()
 #define	_AR1(t,v)	t v
+#define	_AR0		void
 #define	_DCL(t,v)
 #else
 #define	_FN1(t,v)	v
 #define	_AR1(t,v)	v
+#define	_AR0
 #define	_DCL(t,v)	t v;
 #endif
 
@@ -182,16 +187,22 @@ extern	char	*sprintf();
 #define	DCL_SIGNAL(func)	SIG_T	(*func)()
 #endif	/* SIG_PTYPES */
 
-extern	V_OR_I	_exit();
-extern	V_OR_I	exit();
+#ifndef	LINTLIBRARY
+extern	V_OR_I	_exit(_ar1(int,code));
+extern	V_OR_I	exit(_ar1(int,code));
 extern	V_OR_I	qsort();
 #ifndef	vms
-extern	V_OR_I	free();
+extern	V_OR_I	free(_ar1(char *,s));
 #if	!defined(__STDC__) && !defined(apollo_sr10)
-extern	V_OR_I	perror();
+extern	V_OR_I	perror(_ar1(char *,s));
 extern	V_OR_I	rewind();
 #endif	/* __STDC__ */
 #endif
+
+extern	char *	getenv(_ar1(char *,s));
+extern	long	strtol(_arx(char *,s) _arx(char **,d) _ar1(int,base));
+extern	time_t	time(_ar1(time_t *,t));
+#endif	/* LINTLIBRARY */
 
 #ifdef	unix
 #ifdef	apollo_sr10
@@ -333,6 +344,15 @@ extern	char	*strrchr();
 /*
  * Definitions of procedures in CM_TOOLS common library
  */
+#ifndef	LINTLIBRARY
 #include "common.h"
+
+#ifndef	lint
+extern		main(_arx(int,argc) _ar1(char **,argv));
+#define	_MAIN	main(_ARX(int,argc) _AR1(char **,argv))\
+		     _DCL(int,argc) _DCL(char **,argv)
+#endif	/* lint */
+
+#endif	/* LINTLIBRARY */
 
 #endif	/* _PTYPES_ */

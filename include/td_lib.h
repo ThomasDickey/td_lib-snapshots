@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 9.9 1991/10/01 14:30:24 dickey Exp $ */
+/* $Id: td_lib.h,v 9.11 1991/10/03 11:54:44 dickey Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for CM_TOOLS COMMON
@@ -56,7 +56,7 @@
 			_ret
 
 	/* beep.c ----------------------------------------------------- */
-		beep()
+		beep(_ar0)
 			_nul
 
 	/* bldarg.c --------------------------------------------------- */
@@ -296,11 +296,11 @@
 			_ret
 
 	/* gethome.c -------------------------------------------------- */
-	char	*gethome()
+	char	*gethome(_ar0)
 			_ret
 
 	/* getuser.c -------------------------------------------------- */
-	char	*getuser()
+	char	*getuser(_ar0)
 			_ret
 #endif	/* unix */
 
@@ -323,7 +323,7 @@
 #ifdef	killchar
 #undef	killchar
 #endif	/* killchar */
-	char	killchar()
+	char	killchar(_ar0)
 			_ret
 #endif	/* CUR_PTYPES */
 
@@ -407,7 +407,7 @@
 			_dcl(int,	apres)
 			_nul
 
-		oldzone()
+		oldzone(_ar0)
 			_nul
 
 	/* next_version.c --------------------------------------------- */
@@ -511,7 +511,7 @@
 			_ret
 
 	/* rawterm.c -------------------------------------------------- */
-		rawterm()
+		rawterm(_ar0)
 			_nul
 
 	/* relpath.c -------------------------------------------------- */
@@ -528,7 +528,7 @@
 #endif	/* unix */
 
 	/* resizewin.c ------------------------------------------------ */
-	int	resizewin()
+	int	resizewin(_ar0)
 			_ret
 #endif	/* CUR_PTYPES */
 
@@ -566,7 +566,7 @@
 
 	/* savewin.c -------------------------------------------------- */
 #ifdef	CUR_PTYPES
-		savewin()
+		savewin(_ar0)
 			_nul
 
 		lastwin(
@@ -738,6 +738,10 @@
 			_nul
 
 	/* uid2s.c ---------------------------------------------------- */
+#ifdef	apollo_sr10
+	int	len_passwd;
+	char	**vec_passwd;
+#endif
 	char	*uid2s(
 			_ar1(int,	uid)
 			)

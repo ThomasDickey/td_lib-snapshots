@@ -1,50 +1,20 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcslast.c,v 9.0 1991/05/15 09:40:44 ste_cm Rel $";
+static	char	Id[] = "$Id: rcslast.c,v 10.0 1991/10/03 08:26:50 ste_cm Rel $";
 #endif
 
 /*
  * Title:	rcslast.c (scan for last RCS date)
  * Author:	T.E.Dickey
  * Created:	18 May 1988, from 'sccslast.c'
- * $Log: rcslast.c,v $
- * Revision 9.0  1991/05/15 09:40:44  ste_cm
- * BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
- *
- *		Revision 8.1  91/05/15  09:40:44  dickey
- *		apollo sr10.3 cpp complains about tag in #endif
- *		
- *		Revision 8.0  89/10/26  09:05:08  ste_cm
- *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
- *		
- *		Revision 7.0  89/10/26  09:05:08  ste_cm
- *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
- *		
- *		Revision 6.0  89/10/26  09:05:08  ste_cm
- *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
- *		
- *		Revision 5.0  89/10/26  09:05:08  ste_cm
- *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
- *		
- *		Revision 4.1  89/10/26  09:05:08  dickey
- *		ensure that version, locker are set to "?" if not-set
- *		
- *		Revision 4.0  89/08/17  11:55:10  ste_cm
- *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
- *		
- *		Revision 3.1  89/08/17  11:55:10  dickey
- *		rewrote the code which computes the path of the working-file
- *		so that we don't use ".." unless necessary, so this works
- *		better with symbolic links.
- *		
- *		Revision 3.0  88/09/02  09:28:16  ste_cm
- *		BASELINE Mon Jun 19 13:27:01 EDT 1989
- *		
- *		Revision 2.0  88/09/02  09:28:16  ste_cm
- *		BASELINE Thu Apr  6 09:45:13 EDT 1989
- *		
- *		Revision 1.6  88/09/02  09:28:16  dickey
- *		sccs2rcs keywords
- *		
+ * Modified:
+ *		03 Oct 1991, conversion to ANSI
+ *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
+ *		26 Oct 1989, ensure that version, locker are set to "?" if not-
+ *			     set.
+ *		17 Aug 1989, rewrote the code which computes the path of the
+ *			     working-file so that we don't use ".." unless
+ *			     necessary, so this works better with symbolic
+ *			     links.
  *		02 Sep 1988, use 'rcs_dir()'
  *		30 Jun 1988, use 'newzone()' rather than 'sccszone()'.
  *		01 Jun 1988, added 'locks' decoding.  Recoded using 'rcskeys()'.
@@ -60,10 +30,6 @@ static	char	Id[] = "$Id: rcslast.c,v 9.0 1991/05/15 09:40:44 ste_cm Rel $";
 #include	<ctype.h>
 #include	"rcsdefs.h"
 
-extern	long	packdate();
-extern	char	*rcs_dir(),
-		*txtalloc();
-
 #define	SKIP(s)	while (isspace(*s)) s++;
 #define	COPY(name)\
 		SKIP(s);\
@@ -78,8 +44,12 @@ static	char	bfr[BUFSIZ];
  * separated by semicolons.
  */
 static
-parse(key, arg)
-char	*key, *arg;
+parse(
+_ARX(char *,	key)
+_AR1(char *,	arg)
+	)
+_DCL(char *,	key)
+_DCL(char *,	arg)
 {
 register
 char	*mark, *s;
@@ -104,8 +74,14 @@ char	*mark, *s;
  * patch: this looks only for the first lock.
  */
 static
-parse2(arg, locker, version)
-char	*arg, *locker, *version;
+parse2(
+_ARX(char *,	arg)
+_ARX(char *,	locker)
+_AR1(char *,	version)
+	)
+_DCL(char *,	arg)
+_DCL(char *,	locker)
+_DCL(char *,	version)
 {
 register char *s;
 
@@ -123,11 +99,16 @@ register char *s;
  * 'path[]'.  We scan for the following:
  */
 static
-tryRCS (path, vers_, date_, lock_)
-char	*path;
-char	**vers_;
-time_t	*date_;
-char	**lock_;
+tryRCS (
+_ARX(char *,	path)
+_ARX(char **,	vers_)
+_ARX(time_t *,	date_)
+_AR1(char **,	lock_)
+	)
+_DCL(char *,	path)
+_DCL(char **,	vers_)
+_DCL(time_t *,	date_)
+_DCL(char **,	lock_)
 {
 int	yy, mm, dd, hr, mn, sc;
 int	finish	= FALSE,
@@ -180,12 +161,18 @@ char	key[BUFSIZ],
  *	main procedure							*
  ************************************************************************/
 
-rcslast (working, path, vers_, date_, lock_)
-char	*working;		/* working directory (absolute) */
-char	*path;			/* pathname to check (may be relative) */
-char	**vers_;
-time_t	*date_;
-char	**lock_;
+rcslast (
+_ARX(char *,	working)	/* working directory (absolute) */
+_ARX(char *,	path)		/* pathname to check (may be relative) */
+_ARX(char **,	vers_)
+_ARX(time_t *,	date_)
+_AR1(char **,	lock_)
+	)
+_DCL(char *,	working)
+_DCL(char *,	path)
+_DCL(char **,	vers_)
+_DCL(time_t *,	date_)
+_DCL(char **,	lock_)
 {
 	auto	 char	name[BUFSIZ+1],
 			*dname	= rcs_dir();

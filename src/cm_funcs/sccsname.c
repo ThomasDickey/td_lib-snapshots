@@ -1,28 +1,16 @@
 #ifndef	lint
-static	char	Id[] = "$Id: sccsname.c,v 9.0 1991/05/15 09:50:32 ste_cm Rel $";
+static	char	Id[] = "$Id: sccsname.c,v 11.0 1991/10/03 08:44:35 ste_cm Rel $";
 #endif
 
 /*
  * Title:	sccsname.c (derive name of SCCS file)
  * Author:	T.E.Dickey
  * Created:	08 May 1990
- * $Log: sccsname.c,v $
- * Revision 9.0  1991/05/15 09:50:32  ste_cm
- * BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
- *
- *		Revision 8.1  91/05/15  09:50:32  dickey
- *		apollo sr10.3 cpp complains about tag in #endif
+ * Modified:
+ *		03 Oct 1991, convert to ANSI
+ *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
+ *		08 May 1990, use 'sccsdefs.h'
  *		
- *		Revision 8.0  90/05/08  14:12:23  ste_cm
- *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
- *		
- *		Revision 7.2  90/05/08  14:12:23  dickey
- *		use 'sccsdefs.h'
- *		
- *		Revision 7.1  90/05/08  13:29:34  dickey
- *		RCS_BASE
- *		
- *
  * Function:	Performs translation between SCCS archive and working filenames,
  *		according to the following rules:
  *
@@ -58,8 +46,9 @@ static	char	prefix[] = SCCS_PREFIX;
 
 static
 char *
-leaf(name)
-char	*name;
+leaf(
+_AR1(char *,	name))
+_DCL(char *,	name)
 {
 	register char	*s = strrchr(name, '/');
 	return ((s != 0) ? s+1 : name);
@@ -69,16 +58,18 @@ char	*name;
  * Returns TRUE if the name begins with SCCS_PREFIX.
  */
 static
-sccs_prefix(name)
-char	*name;
+sccs_prefix(
+_AR1(char *,	name))
+_DCL(char *,	name)
 {
 	register char	*s = leaf(name);
 	return (strlen(s) > LEN_PREFIX && !strncmp(s, prefix, LEN_PREFIX));
 }
 
 static
-trim_leaf(name)
-char	*name;
+trim_leaf(
+_AR1(char *,	name))
+_DCL(char *,	name)
 {
 	register char *s = strrchr(name, '/');
 	if (s != 0) name = s;
@@ -94,9 +85,12 @@ char	*name;
  * of the working file.
  */
 char *
-sccs2name(name,full)
-char	*name;
-int	full;
+sccs2name(
+_ARX(char *,	name)
+_AR1(int,	full)
+	)
+_DCL(char *,	name)
+_DCL(int,	full)
 {
 	char	*s, *t;
 static	char	fname[BUFSIZ];
@@ -128,9 +122,12 @@ static	char	fname[BUFSIZ];
  * of the SCCS-file.
  */
 char *
-name2sccs(name,full)
-char	*name;
-int	full;
+name2sccs(
+_ARX(char *,	name)
+_AR1(int,	full)
+	)
+_DCL(char *,	name)
+_DCL(int,	full)
 {
 static	char	fname[BUFSIZ];
 
@@ -157,8 +154,14 @@ static	char	fname[BUFSIZ];
 }
 
 #ifdef	TEST
-do_test(argc, argv, full)
-char	*argv[];
+do_test(
+_ARX(int,	argc)
+_ARX(char **,	argv)
+_AR1(int,	full)
+	)
+_DCL(int,	argc)
+_DCL(char **,	argv)
+_DCL(int,	full)
 {
 	int	j;
 	char	old[BUFSIZ], *new;
@@ -194,11 +197,10 @@ char	*argv[];
 	}
 }
 
-main(argc, argv)
-char	*argv[];
+_MAIN
 {
 	do_test(argc, argv, FALSE);
 	do_test(argc, argv, TRUE);
-	exit(0);
+	exit(SUCCESS);
 }
 #endif

@@ -1,43 +1,15 @@
 #ifndef	lint
-static	char	Id[] = "$Id: ltostr.c,v 9.0 1991/05/15 10:04:01 ste_cm Rel $";
+static	char	Id[] = "$Id: ltostr.c,v 11.0 1991/10/03 16:03:17 ste_cm Rel $";
 #endif
 
 /*
  * Title:	ltostr.c (long-to-string)
  * Author:	T.E.Dickey
  * Created:	12 May 1988
- * $Log: ltostr.c,v $
- * Revision 9.0  1991/05/15 10:04:01  ste_cm
- * BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
- *
- *		Revision 8.1  91/05/15  10:04:01  dickey
- *		apollo sr10.3 cpp complains about tag in #endif
+ * Modified:
+ *		03 Oct 1991, converted to ANSI
+ *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
  *		
- *		Revision 8.0  88/05/12  09:09:33  ste_cm
- *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
- *		
- *		Revision 7.0  88/05/12  09:09:33  ste_cm
- *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
- *		
- *		Revision 6.0  88/05/12  09:09:33  ste_cm
- *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
- *		
- *		Revision 5.0  88/05/12  09:09:33  ste_cm
- *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
- *		
- *		Revision 4.0  88/05/12  09:09:33  ste_cm
- *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
- *		
- *		Revision 3.0  88/05/12  09:09:33  ste_cm
- *		BASELINE Mon Jun 19 13:27:01 EDT 1989
- *		
- *		Revision 2.0  88/05/12  09:09:33  ste_cm
- *		BASELINE Thu Apr  6 09:45:13 EDT 1989
- *		
- *		Revision 1.2  88/05/12  09:09:33  dickey
- *		sccs2rcs keywords
- *		
- *
  * Function:	This is the functional inverse of 'strtol()'.  It
  *		converts a long-value to string without using sprintf
  *		so that it is relatively self-contained.  The code will
@@ -52,11 +24,17 @@ static	char	Id[] = "$Id: ltostr.c,v 9.0 1991/05/15 10:04:01 ste_cm Rel $";
  * Returns:	A pointer to the null ending the converted string.
  */
 
+#include "ptypes.h"
+
 char *
-ltostr(src, value, base)
-char	*src;
-long	value;
-int	base;
+ltostr(
+_ARX(char *,	src)
+_ARX(long,	value)
+_AR1(int,	base)
+	)
+_DCL(char *,	src)
+_DCL(long,	value)
+_DCL(int,	base)
 {
 static	char	digits[] = "0123456789abcdef";
 static	long	mask16, mask8, mask2;
@@ -116,11 +94,9 @@ static	long	mask16, mask8, mask2;
 }
 
 #ifdef	TEST
-main(argc, argv)
-char	*argv[];
+_MAIN
 {
-extern	long	strtol();
-int	j;
+	register int	j;
 
 	for (j = 1; j < argc; j++) {
 	char	*d, *s	= argv[j];
