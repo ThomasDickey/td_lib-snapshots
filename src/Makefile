@@ -1,9 +1,11 @@
-# @(#)Makefile	1.2 87/11/24 13:20:05
+# @(#)Makefile	1.3 87/11/25 11:30:15
 # MAKE-file for miscellaneous library routines
 L=lib.a
 #
 OBJS	=\
 	bldarg.o\
+	closeall.o\
+	flushall.o\
 	gid2s.o\
 	modechar.o\
 	packdate.o\
