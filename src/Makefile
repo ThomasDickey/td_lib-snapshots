@@ -1,4 +1,4 @@
-# @(#)Makefile	1.41 88/08/19 12:50:39
+# @(#)Makefile	1.42 88/08/24 11:05:14
 # MAKE-file for miscellaneous library routines
 #
 ####### (Development) ##########################################################
@@ -52,6 +52,7 @@ CSRC	=\
 	rcskeys.c\
 	rcslast.c\
 	rcsload.c\
+	rcslocks.c\
 	rcsname.c\
 	resizewin.c\
 	savewin.c\
@@ -111,6 +112,7 @@ OBJS	=\
 	rcslast.o\
 	rcsname.o\
 	rcsload.o\
+	rcslocks.o\
 	resizewin.o\
 	savewin.o\
 	sccslast.o\
@@ -164,6 +166,7 @@ rawterm.o:	ptypes.h
 rcslast.o:	rcsdefs.h
 rcsedit.o:	ptypes.h	rcsdefs.h
 rcskeys.o:	rcsdefs.h
+rcslocks.o:	ptypes.h	rcsdefs.h
 rcsname.o:	rcsdefs.h
 resizewin.o:	ptypes.h
 setmtime.o:	ptypes.h

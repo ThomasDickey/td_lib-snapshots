@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19880819
+MANIFEST for td_lib, version t19880824
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 include                         subdirectory
@@ -16,6 +16,7 @@ src/cm_funcs/rcsedit.c          edit RCS archive-file
 src/cm_funcs/rcskeys.c          decode RCS keywords
 src/cm_funcs/rcslast.c          scan for last RCS date & version
 src/cm_funcs/rcsload.c          load delta-tree for an RCS file
+src/cm_funcs/rcslocks.c         RCS lock-parsing
 src/cm_funcs/rcsname.c          derive RCS working/archive filenames
 src/cm_funcs/sccslast.c         scan for last SCCS date & version
 src/curses                      subdirectory
