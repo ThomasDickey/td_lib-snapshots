@@ -70,7 +70,7 @@
 #include	"td_curse.h"
 #include	"dyn_str.h"
 
-MODULE_ID("$Id: rawgets.c,v 12.20 1995/11/05 21:20:42 tom Exp $")
+MODULE_ID("$Id: rawgets.c,v 12.21 1995/11/07 23:08:44 tom Exp $")
 
 #define	SHIFT	5
 
@@ -251,9 +251,10 @@ void	ShowAt(
 			len = strlen(at);
 			cnt = xlast - col;
 			while (len-- > 0) {
-				register chtype	c = *at++ & 0xff;
+				register chtype	c;
 				if (cnt-- <= 0)
 					break;
+				c = *at++ & 0xff;
 				if (!isprint(c)) {
 					x++;
 					(void)waddch(Z, '^');

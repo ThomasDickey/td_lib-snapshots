@@ -1,3 +1,7 @@
+1995-11-07  dickey@clark.net
+
+	* src/curses/rawgets.c: corrected loop-limit in ShowAt()
+
 1995-11-05  dickey@clark.net
 
 	* src/pathname/name2s.c: added tilde to shell-chars
