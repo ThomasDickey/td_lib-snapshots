@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: which.c,v 4.2 1989/09/06 15:21:02 dickey Exp $";
+static	char	Id[] = "$Id: which.c,v 5.0 1989/09/28 10:48:21 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,9 +7,15 @@ static	char	Id[] = "$Id: which.c,v 4.2 1989/09/06 15:21:02 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	18 Nov 1987
  * $Log: which.c,v $
- * Revision 4.2  1989/09/06 15:21:02  dickey
- * use 'getwd()' definition from "ptypes.h"
+ * Revision 5.0  1989/09/28 10:48:21  ste_cm
+ * BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
  *
+ *		Revision 4.3  89/09/28  10:48:21  dickey
+ *		lint (apollo SR10.1)
+ *		
+ *		Revision 4.2  89/09/06  15:32:08  dickey
+ *		use 'getwd()' definition from "ptypes.h"
+ *		
  *		Revision 4.1  89/08/25  09:50:40  dickey
  *		force $PATH to be nonnull, in case this is invoked from a
  *		non-unix environment!
@@ -47,6 +53,7 @@ struct	stat	sb;
 
 which(bfr, len, find, dot)
 char	*bfr;
+int	len;
 char	*find;
 char	*dot;
 {

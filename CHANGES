@@ -1,3 +1,46 @@
+1989-09-28  dickey@software.org
+
+	* src/curses/wrepaint.c: lint (apollo SR10.1)
+
+1989-09-28  ste_cm@software.org
+
+	* src/curses/wrepaint.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/curses/wrepaint.c: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/curses/wrepaint.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/curses/wrepaint.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1989-09-28  dickey@software.org
+
+	* src/pathname/which.c: lint (apollo SR10.1)
+
+1989-09-28  ste_cm@software.org
+
+	* src/pathname/which.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+1989-09-28  dickey@software.org
+
+	* src/curses/viewfile.c: lint (apollo SR10.1)
+
+1989-09-28  ste_cm@software.org
+
+	* src/curses/viewfile.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/curses/viewfile.c: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/curses/viewfile.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/curses/viewfile.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
 1989-09-20  dickey@software.org
 
 	* src/pathname/dlettree.c:

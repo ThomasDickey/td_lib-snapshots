@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	what[] = "$Id: viewfile.c,v 4.0 1989/08/23 14:41:22 ste_cm Rel $";
+static	char	what[] = "$Id: viewfile.c,v 8.0 1989/09/28 10:47:34 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -23,6 +23,7 @@ extern	char	*dftenv();
 
 view_file(fname, readonly)
 char	*fname;
+int	readonly;
 {
 	auto	int	code;
 	auto	char	*editor = dftenv(readonly ? "view" : "vi", "EDITOR");
