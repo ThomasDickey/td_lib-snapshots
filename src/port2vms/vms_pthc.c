@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: vms_pthc.c,v 8.0 1992/11/20 08:14:49 ste_cm Rel $";
+static	char	Id[] = "$Id: vms_pthc.c,v 8.1 1993/09/22 17:42:18 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: vms_pthc.c,v 8.0 1992/11/20 08:14:49 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	26 Jun 1990
  * Modified:
+ *		22 Sep 1993, gcc warnings
  *		20 Nov 1992, use prototypes
  *		12 Dec 1991, corrected entrypoint-name
  *		18 Oct 1991, use macro _MAIN
@@ -41,11 +42,11 @@ char *	vms_pathcat(
 	auto	int	f_code;
 
 	/* find the highest-level of object in 'fname' */
-	if (s = strchr(fname, ':')) {
+	if ((s = strchr(fname, ':')) != NULL) {
 		f_code = (s[1] == ':') ? A_NODE : A_DEV;
-	} else if (s = strrchr(fname, ':')) {
+	} else if ((s = strrchr(fname, ':')) != NULL) {
 		f_code = A_DEV;
-	} else if (s = strchr(fname, ']')) {
+	} else if ((s = strchr(fname, ']')) != NULL) {
 		f_code = A_DIR;
 	} else
 		f_code = A_NAME;
@@ -58,7 +59,7 @@ char *	vms_pathcat(
 		s = tmp;
 		break;
 	case A_DEV:	/* append after NODE */
-		if (s = strchr(tmp, ':')) {
+		if ((s = strchr(tmp, ':')) != NULL) {
 			if (s[1] == ':')
 				s += 2;
 			else
@@ -68,7 +69,7 @@ char *	vms_pathcat(
 		break;
 	case A_DIR:	/* append after NODE or DEV (before DIR) */
 		if (!(s = strchr(tmp, '['))) {
-			if (s = strrchr(tmp, ':'))
+			if ((s = strrchr(tmp, ':')) != NULL)
 				s++;
 			else
 				s = tmp;

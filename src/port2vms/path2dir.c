@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: path2dir.c,v 8.0 1992/11/20 11:29:17 ste_cm Rel $";
+static	char	Id[] = "$Id: path2dir.c,v 8.1 1993/09/22 17:53:36 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: path2dir.c,v 8.0 1992/11/20 11:29:17 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	30 Sep 1988
  * Modified:
+ *		22 Sep 1993, gcc warnings
  *		20 Nov 1992, use prototypes
  *
  * Function:	Convert a VMS pathname into the name of the corresponding
@@ -34,13 +35,15 @@ char *	path2dir(
 				if (s == buffer+1) {	/* absorb "[]" */
 					register char *t = s + 1;
 					s = buffer;
-					while (*s++ = *t++);
+					while ((*s++ = *t++) != EOS)
+						;
 				}
 				break;
 			}
 			if (*s == '[') {		/* absorb "[" */
 				register char *t = s + 1;
-				while (*s++ = *t++);
+				while ((*s++ = *t++) != EOS)
+					;
 				break;
 			}
 		}
@@ -54,7 +57,6 @@ void	do_test(
 	_AR1(char *,	path))
 	_DCL(char *,	path)
 {
-	char	tmp[MAXPATHLEN];
 	PRINTF("%s => %s\n", path, path2dir(path));
 }
 

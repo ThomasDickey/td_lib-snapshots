@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: name2vms.c,v 8.0 1992/11/20 08:31:26 ste_cm Rel $";
+static	char	Id[] = "$Id: name2vms.c,v 8.1 1993/09/22 18:01:57 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: name2vms.c,v 8.0 1992/11/20 08:31:26 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	29 Sep 1988
  * Modified:
+ *		22 Sep 1993, gcc warnings
  *		20 Nov 1992, use prototypes
  *		01 Jun 1989, if 2nd-char in name is a '.' and 1st is not, only
  *			     change 2nd to a '$' if we expect that the name
@@ -25,9 +26,9 @@ static	char	Id[] = "$Id: name2vms.c,v 8.0 1992/11/20 08:31:26 ste_cm Rel $";
  * Function:	Translates a unix-style name into a VMS-style name.
  */
 
+#define	CHR_PTYPES
 #define	STR_PTYPES
 #include	"portunix.h"
-#include	<ctype.h>
 
 static	int	leaf_dot;   /* counts dots found in a particular leaf */
 
@@ -61,7 +62,7 @@ char	translate(
 {
 	if (isalpha(c)) {
 		if (islower(c))
-			c = toupper(c);
+			c = UpperMacro(c);
 	} else if (c == '.') {
 		if (leaf_dot++)
 			c = '$';
@@ -91,6 +92,7 @@ int	leading_uc(
 		*dst   = EOS;
 		src++;
 	}
+	*dst = EOS;
 	if ((*base) && (dst = getenv(base))) {
 		c = strlen(base);
 		while (isspace(*dst))	dst++;
@@ -124,7 +126,7 @@ char *	name2vms(
 	 * it corresponds to a logical device assignment.  As a special
 	 * case, if we have a leading token of this form, translate it.
 	 */
-	if (len = leading_uc(token,s)) {
+	if ((len = leading_uc(token,s)) != 0) {
 		s  += len;
 		len = strlen(strcpy(d, token));
 		while (len > 1 && d[len-1] == ' ')
@@ -147,10 +149,10 @@ char *	name2vms(
 			}
 		}
 		d[len] = EOS;
-		if (t = strchr(d, ':')) {
+		if ((t = strchr(d, ':')) != NULL) {
 			if (t[1] == ':') {
 				node = TRUE;
-				if (t = strchr(t+2, ':'))
+				if ((t = strchr(t+2, ':')) != NULL)
 					device = TRUE;
 			} else
 				device = TRUE;
@@ -199,7 +201,7 @@ char *	name2vms(
 		else if (!on_top)
 			*d++ = '.';
 		leaf_dot = prefix(s);
-		while (c = *s++) {
+		while ((c = *s++) != EOS) {
 			if (c == '/') {
 		    		leaf_dot = prefix(s);
 				if (strchr(s, '/'))
@@ -215,7 +217,7 @@ char *	name2vms(
 		*d++ = ']';
 	if (c != EOS && *s) {
 		leaf_dot = prefix(s);
-		while (c = *s++)
+		while ((c = *s++) != EOS)
 			*d++ = translate(c);
 		if (!leaf_dot)
 			*d++ = '.';
@@ -226,6 +228,7 @@ char *	name2vms(
 }
 
 #ifdef	TEST
+static
 void	do_test(
 	_ARX(int,	argc)
 	_AR1(char **,	argv)

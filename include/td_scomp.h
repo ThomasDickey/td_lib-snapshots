@@ -1,4 +1,4 @@
-/* $Id: td_scomp.h,v 12.1 1993/09/21 18:28:49 dickey Exp $ */
+/* $Id: td_scomp.h,v 12.2 1993/09/22 21:00:03 dickey Exp $ */
 
 #ifndef	_CM_SCOMP_H
 #define	_CM_SCOMP_H
@@ -17,15 +17,15 @@
 #define	SCOMP_TYPE	char **
 #endif
 
-#define	SCOMP_MATCH_ARGS \
+#define	SCOMP_MATCH_ARGS(p1,p2)\
 		_ARX(SCOMP_TYPE,p1)\
 		_AR1(SCOMP_TYPE,p2)
 
-#define	SCOMP_REPORT_ARGS \
-		_ARX(SCOMP_TYPE,v1x)\
+#define	SCOMP_REPORT_ARGS(v1,v2)\
+		_ARX(SCOMP_TYPE,v1)\
 		_ARX(int,	lo_1)\
 		_ARX(int,	hi_1)\
-		_ARX(SCOMP_TYPE,v2x)\
+		_ARX(SCOMP_TYPE,v2)\
 		_ARX(int,	lo_2)\
 		_AR1(int,	hi_2)
 
@@ -36,8 +36,8 @@
 		_arx(SCOMP_TYPE,v2)\
 		_arx(int,	n2)\
 		_arx(int,	size)\
-		_fnx(int,	match,	(SCOMP_MATCH_ARGS))\
-		_fn1(void,	report,	(SCOMP_REPORT_ARGS))\
+		_fnx(int,	match,	(SCOMP_MATCH_ARGS(p1,p2)))\
+		_fn1(void,	report,	(SCOMP_REPORT_ARGS(p1,p2)))\
 		)\
 		_dcl(SCOMP_TYPE,v1)\
 		_dcl(int,	n1)\
@@ -49,12 +49,12 @@
 		_nul
 
 #define	SCOMP_MATCH(func)\
-	int	func(SCOMP_MATCH_ARGS)\
+	int	func(SCOMP_MATCH_ARGS(p1,p2))\
 		_DCL(SCOMP_TYPE,p1)\
 		_DCL(SCOMP_TYPE,p2)
 
 #define	SCOMP_REPORT(func)\
-	void	func(SCOMP_REPORT_ARGS)\
+	void	func(SCOMP_REPORT_ARGS(v1,v2))\
 		_DCL(SCOMP_TYPE,v1)\
 		_DCL(SCOMP_TYPE,v2)
 

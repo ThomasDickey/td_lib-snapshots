@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: edittree.c,v 8.0 1993/04/29 14:58:00 ste_cm Rel $";
+static	char	Id[] = "$Id: edittree.c,v 8.1 1993/09/22 17:58:15 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: edittree.c,v 8.0 1993/04/29 14:58:00 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	06 Oct 1988
  * Modified:
+ *		22 Sep 1993, gcc warnings
  *		29 Apr 1993, sort _all_ leaves before doing translation.
  *		20 Nov 1992, added 3rd arg to _FNX macros.
  *		11 Dec 1991, added 'links' argument.  Process entire list of
@@ -42,7 +43,15 @@ typedef	char	*PTR;
 #ifdef	TEST
 #define	TELL_FILE(name)	TELL "%d\t%s => %s\n", changes, nesting, name);
 #define	TELL_DIR(name)	TELL "%d\t%s directory %s\n", changes, nesting, name); 
-static	editfile(n,f,s)	char *n; int (*f)(); STAT *s; { return 1;}
+static	int	editfile(
+		_ARX(char *,	n)
+		_FNX(int,	func,	(_ARX(FILE*,o) _ARX(FILE*,i) _AR1(STAT*,s)))
+		_AR1(STAT *,	s)
+			)
+		_DCL(char *,	n)
+		_DCL(int,	(*f)())
+		_DCL(STAT *,	s)
+		{ return 1;}
 #else
 #define	TELL_FILE(name)
 #define	TELL_DIR(name)
@@ -69,20 +78,20 @@ int	edittree(
 	_DCL(int,	recur)
 	_DCL(int,	links)
 {
-	auto	DIR		*dirp;
-	auto	struct	direct	*dp;
-	auto	int		changes = 0;
-	auto	int		next	= recur ? recur+1 : 0;
-	auto	STAT		sb;
-	auto	unsigned	num;
-	auto	PTR		*vec;
-	auto	char		newname[MAXPATHLEN];
-	auto	char		oldpath[MAXPATHLEN];
-	auto	char		*newpath;
+	auto	DIR	*dirp;
+	auto	DIRENT	*dp;
+	auto	int	changes = 0;
+	auto	int	next	= recur ? recur+1 : 0;
+	auto	STAT	sb;
+	auto	unsigned num;
+	auto	PTR	*vec;
+	auto	char	newname[MAXPATHLEN];
+	auto	char	oldpath[MAXPATHLEN];
+	auto	char	*newpath;
 
 #ifdef	TEST
-	static	char		stack[]	= ". . . . . . . ";
-	auto	char		*nesting = &stack[sizeof(stack)-(recur*2)];
+	static	char	stack[]	= ". . . . . . . ";
+	auto	char	*nesting = &stack[sizeof(stack)-(recur*2)];
 #endif
 
 	if (LOOK(oldname, &sb) < 0) {
@@ -109,10 +118,10 @@ int	edittree(
 			return(0);
 		}
 
-		if (dirp = opendir(newpath)) {
+		if ((dirp = opendir(newpath)) != NULL) {
 			num = 0;
 			vec = 0;
-			while (dp = readdir(dirp)) {
+			while ((dp = readdir(dirp)) != NULL) {
 				(void)strcpy(newname, dp->d_name);
 #ifndef	vms
 				if (dotname(newname))	continue;
@@ -164,6 +173,7 @@ int	do_copy(
 	return (1);
 }
 
+static
 void	do_test(
 	_ARX(int,	argc)
 	_AR1(char **,	argv)
