@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcsload.c,v 6.0 1989/10/04 12:04:36 ste_cm Rel $";
+static	char	Id[] = "$Id: rcsload.c,v 8.0 1990/04/18 08:12:27 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,9 +7,18 @@ static	char	Id[] = "$Id: rcsload.c,v 6.0 1989/10/04 12:04:36 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	19 Aug 1988
  * $Log: rcsload.c,v $
- * Revision 6.0  1989/10/04 12:04:36  ste_cm
- * BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+ * Revision 8.0  1990/04/18 08:12:27  ste_cm
+ * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
  *
+ *		Revision 7.0  90/04/18  08:12:27  ste_cm
+ *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+ *		
+ *		Revision 6.1  90/04/18  08:12:27  dickey
+ *		changed call on 'name2rcs()'
+ *		
+ *		Revision 6.0  89/10/04  12:04:36  ste_cm
+ *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+ *		
  *		Revision 5.0  89/10/04  12:04:36  ste_cm
  *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
  *		
@@ -43,13 +52,9 @@ static	char	Id[] = "$Id: rcsload.c,v 6.0 1989/10/04 12:04:36 ste_cm Rel $";
 #define	STR_PTYPES
 #include	"ptypes.h"
 #include	"rcsdefs.h"
-
-#include	<stdio.h>
 #include	<ctype.h>
 extern	long	packdate();
 extern	char	*ctime();
-extern	char	*name2rcs();
-extern	char	*rcsread(), *rcsparse_id(), *rcsparse_num(), *rcsparse_str();
 extern	char	*txtalloc();
 
 /* local definitions */
@@ -148,7 +153,7 @@ int	verbose;			/* TRUE if we show messages	*/
 	int	delta	= 0;
 	int	yd, md, dd, ht, mt, st;
 
-	if (!rcsopen(name2rcs(archive), -verbose))
+	if (!rcsopen(name2rcs(archive,TRUE), -verbose))
 		return(vec);
 
 	k = -1;

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	*Id = "$Id: rcsedit.c,v 6.0 1990/03/12 09:02:57 ste_cm Rel $";
+static	char	*Id = "$Id: rcsedit.c,v 8.0 1990/04/18 14:10:27 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,9 +7,18 @@ static	char	*Id = "$Id: rcsedit.c,v 6.0 1990/03/12 09:02:57 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	26 May 1988
  * $Log: rcsedit.c,v $
- * Revision 6.0  1990/03/12 09:02:57  ste_cm
- * BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+ * Revision 8.0  1990/04/18 14:10:27  ste_cm
+ * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
  *
+ *		Revision 7.0  90/04/18  14:10:27  ste_cm
+ *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+ *		
+ *		Revision 6.1  90/04/18  14:10:27  dickey
+ *		cleanup/lint (apollo sr10.2)
+ *		
+ *		Revision 6.0  90/03/12  09:02:57  ste_cm
+ *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+ *		
  *		Revision 5.2  90/03/12  09:02:57  dickey
  *		lint (apollo sr10.1)
  *		
@@ -47,13 +56,10 @@ static	char	*Id = "$Id: rcsedit.c,v 6.0 1990/03/12 09:02:57 ste_cm Rel $";
  * Function:	Open an RCS file, parse it, optionally modifying fields.
  */
 
+#define	STR_PTYPES
 #include	"ptypes.h"
 #include	"rcsdefs.h"
-
-#include	<string.h>
 #include	<ctype.h>
-extern	char	*name2rcs();
-extern	char	*strchr();
 
 /* local definitions */
 #define	VERBOSE	if (verbose) PRINTF
@@ -75,7 +81,7 @@ static
 delim(c)
 {
 	if (isspace(c))	return (TRUE);
-	return (strchr(";:,@", c) != 0);
+	return (strchr(";:,@", (long)c) != 0);
 }
 
 static
