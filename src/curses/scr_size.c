@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: scr_size.c,v 7.0 1990/03/12 07:55:05 ste_cm Rel $";
+static	char	Id[] = "$Id: scr_size.c,v 8.0 1990/05/23 12:26:20 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,9 +7,16 @@ static	char	Id[] = "$Id: scr_size.c,v 7.0 1990/03/12 07:55:05 ste_cm Rel $";
  * Title:	scr_size.c (obtain screen size)
  * Created:	27 Jul 1988
  * $Log: scr_size.c,v $
- * Revision 7.0  1990/03/12 07:55:05  ste_cm
- * BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+ * Revision 8.0  1990/05/23 12:26:20  ste_cm
+ * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
  *
+ *		Revision 7.1  90/05/23  12:26:20  dickey
+ *		apollo sr10.2 (X11.3) returns an off-by-one error for the
+ *		'termcap' results.
+ *		
+ *		Revision 7.0  90/03/12  07:55:05  ste_cm
+ *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+ *		
  *		Revision 6.0  90/03/12  07:55:05  ste_cm
  *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
  *		
@@ -44,13 +51,21 @@ static	char	Id[] = "$Id: scr_size.c,v 7.0 1990/03/12 07:55:05 ste_cm Rel $";
  *		an Apollo screen).
  */
 
+#include "ptypes.h"
 #ifdef	apollo
 #ifdef	apollo_sr10
+#define	sr10_bug	1
 #include <apollo/base.h>
 #else
 #include </sys/ins/base.ins.c>
 #endif	apollo_sr10
-#endif	apollo
+#else	unix
+#endif	apollo/unix
+
+#ifndef	sr10_bug
+#define	sr10_bug	0
+#endif
+
 extern	char	*getenv();
 
 #define	my_LINES	retval[0]
@@ -92,8 +107,8 @@ int	*retval;
 	 * info under X11.2 on Apollo SR9.7
 	 */
 	if (tgetent(i_blk,getenv("TERM")) >= 0) {
-		my_LINES = tgetnum("li");
-		my_COLS  = tgetnum("co");
+		my_LINES = tgetnum("li") + sr10_bug;
+		my_COLS  = tgetnum("co") + sr10_bug;
 		return (0);
 	}
 	return (-1);
