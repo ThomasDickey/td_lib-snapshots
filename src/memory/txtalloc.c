@@ -1,7 +1,3 @@
-#ifndef	NO_IDENT
-static	char	Id[] = "$Id: txtalloc.c,v 12.5 1995/09/04 16:44:49 tom Exp $";
-#endif
-
 /*
  * Title:	txtalloc.c (text-allocator)
  * Author:	T.E.Dickey
@@ -17,14 +13,17 @@ static	char	Id[] = "$Id: txtalloc.c,v 12.5 1995/09/04 16:44:49 tom Exp $";
 #define	STR_PTYPES
 #include <td_btree.h>
 
+MODULE_ID("$Id: txtalloc.c,v 12.7 1995/09/14 15:16:58 tom Exp $")
+
 static
 BI_NODE	*new_node (
 	_AR1(void *,	data))
 	_DCL(void *,	data)
 {
 	char *value = (char *)data;
-	BI_NODE *result = BI_NODE_ALLOC(strlen(value)+1);
-	memset(result, 0, sizeof(*result));
+	size_t need = strlen(value) + 1;
+	BI_NODE *result = BI_NODE_ALLOC(need);
+	memset(result, 0, BI_NODE_SIZE + need);
 	strcpy(result->value.text, value);
 	return result;
 }
