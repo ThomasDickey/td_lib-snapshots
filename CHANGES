@@ -1,3 +1,7 @@
+1990-02-14  dickey@software.org
+
+	* include/ptypes.h: fix for apollo sr10.2 test-compile
+
 1990-01-30  dickey@software.org
 
 	* src/curses/cmdch.c:
