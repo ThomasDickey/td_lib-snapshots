@@ -1,3 +1,21 @@
+1995-02-02  dickey@clark.net
+
+	* configure.in:
+	test environment-variables before actual programs for editor, etc.
+
+	* aclocal.m4:
+	third pass: corrected fullpath-macro (wasn't getting options), and
+	make struct-screen test cached.
+
+	* aclocal.m4:
+	second pass: fixed sys_errlist bug, cached the remaining stuff
+
+	* configure.in: first cut of rewrite using autoconf 2.1
+
+1995-02-01  dickey@clark.net
+
+	* aclocal.m4: first cut of rewrite using autoconf 2.1
+
 1995-01-30  dickey@clark.net
 
 	* include/ptypes.h: some symbols change with autoconf 2.1

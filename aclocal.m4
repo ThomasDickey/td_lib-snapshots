@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.47 1995/01/28 16:33:34 tom Exp $
+dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.48 1995/02/02 02:09:50 tom Exp $
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "TD_" to "AC_"
 dnl ---------------------------------------------------------------------------
@@ -7,69 +7,83 @@ dnl	Tests for a program given by name along the user's path, and sets a
 dnl	variable to the program's directory-prefix if found.  Don't match if
 dnl	the directory is ".", since we need an absolute path-reference.
 define([TD_PROGRAM_PREFIX],
-[if test -z "[$]$1"; then
-  # Extract the first word of `$2', so it can be a program name with args.
-  set ac_dummy $2; ac_word=[$]2
-  AC_CHECKING([for $ac_word])
-  IFS="${IFS= 	}"; ac_save_ifs="$IFS"; IFS="${IFS}:"
-  for ac_dir in $PATH; do
-    test -z "$ac_dir" && ac_dir=.
-    if test "$ac_dir" != "." -a -f $ac_dir/$ac_word -a -x $ac_dir/$ac_word; then
-      $1="$ac_dir"
-      break
-    fi
-  done
-  IFS="$ac_save_ifs"
+[
+# Extract the first word of `$2', so it can be a program name with args.
+set td_dummy $2; td_word=[$]2
+AC_MSG_CHECKING(for $td_word prefix ($1))
+AC_CACHE_VAL([td_cv_$1],[
+	# allow import from environment-variable
+	td_cv_$1="[$]$1"
+	if test -z "[$]td_cv_$1"; then
+		IFS="${IFS= 	}"; td_save_ifs="$IFS"; IFS="${IFS}:"
+		for td_dir in $PATH; do
+			test -z "$td_dir" && td_dir=.
+			if test "$td_dir" != "." && test -f $td_dir/$td_word && test -x $td_dir/$td_word; then
+				td_cv_$1="$td_dir"
+				break
+			fi
+		done
+		IFS="$td_save_ifs"
+	fi
+	ifelse([$3],,, [test -z "[$]td_cv_$1" && td_cv_$1="$3"])
+])
+if test -n "[$]td_cv_$1"; then
+  AC_DEFINE_UNQUOTED($1,"[$]td_cv_$1")
+  AC_MSG_RESULT("[$]td_cv_$1")
+else
+  AC_MSG_RESULT((not found))
 fi
-ifelse([$3],,, [test -z "[$]$1" && $1="$3"])
-test -n "[$]$1" && AC_DEFINE_UNQUOTED($1,[\"$]$1[\"])
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Tests for one or more programs given by name along the user's path, and
 dnl sets a variable to the program's full-path if found.
 define([TD_PROGRAM_FULLPATH],
-[if test -z "[$]$1"; then
-  set -- $2;
-  while test [$]# != 0
-  do
-    # autoconf gets confused when I add this to the while-statement
-    if test -n "[$]$1"; then
-      break
-    fi
-    ac_word=[$]1
-    AC_CHECKING([for "$ac_word"])
-    case [$]1 in
-    -*) ;;
-    *)
-      if test -f "$ac_word" -a ! -f "./$ac_word" -a -x "$ac_word"; then
-        $1="$ac_word"
-      else
-        IFS="${IFS= 	}"; ac_save_ifs="$IFS"; IFS="${IFS}:"
-        for ac_dir in $PATH; do
-          test -z "$ac_dir" && ac_dir=.
-          if test "$ac_dir" != "." -a -f $ac_dir/$ac_word -a -x $ac_dir/$ac_word; then
-            $1="$ac_dir/$ac_word"
-            break
-          fi
-        done
-        IFS="$ac_save_ifs"
-      fi
-      ;;
-    esac
-    shift
-  done
-fi
-# append options, if any
-if test -n "[$]$1"; then
-  while test [$]# != 0
-  do
-    case [$]1 in
-    -[*]) $1="[$]$1 [$]1";;
-    [*])  set -- end;;
-    esac
-    shift
-  done
-  AC_DEFINE_UNQUOTED($1,[\"$]$1[\"])
+[
+AC_MSG_CHECKING(full path of $1)
+AC_CACHE_VAL(td_cv_$1,[
+	td_cv_$1="[$]$1"
+	if test -z "[$]td_cv_$1"; then
+		set -- $2;
+		while test [$]# != 0; do
+			td_word=[$]1
+			case [$]1 in
+			-*)
+				;;
+			*)
+				if test -f "$td_word" && test ! -f "./$td_word" && test -x "$td_word"; then
+					td_cv_$1="$td_word"
+				else
+					IFS="${IFS= 	}"; td_save_ifs="$IFS"; IFS="${IFS}:"
+					for td_dir in $PATH; do
+						test -z "$td_dir" && td_dir=.
+						if test "$td_dir" != "." && test -f $td_dir/$td_word && test -x $td_dir/$td_word; then
+							td_cv_$1="$td_dir/$td_word"
+							break
+						fi
+					done
+					IFS="$td_save_ifs"
+				fi
+				;;
+			esac
+			shift
+		done
+	fi
+	# append options, if any
+	if test -n "[$]td_cv_$1"; then
+		while test [$]# != 0; do
+			case [$]1 in
+			-[*]) td_cv_$1="[$]td_cv_$1 [$]1";;
+			[*])  set -- end;;
+			esac
+			shift
+		done
+	fi
+])
+if test -n "[$]td_cv_$1"; then
+	AC_DEFINE_UNQUOTED($1,"[$]td_cv_$1")
+  AC_MSG_RESULT("[$]td_cv_$1")
+else
+  AC_MSG_RESULT((not found))
 fi
 ])dnl
 dnl ---------------------------------------------------------------------------
@@ -115,76 +129,107 @@ define([TD_HAVE_FUNCS],
 [
 td_CFLAGS="$CFLAGS"
 CFLAGS="$CFLAGS -Iinclude"
-for ac_func in $1
+for td_func in $1
 do
 changequote(,)dnl
-ac_tr_func=`echo $ac_func | tr '[a-z]' '[A-Z]'`
+td_tr_func=`echo $td_func | tr '[a-z]' '[A-Z]'`
 changequote([,])dnl
-AC_FUNC_CHECK(${ac_func},
-AC_DEFINE(HAVE_${ac_tr_func})
-AC_COMPILE_CHECK([missing "$ac_func" extern],
+AC_MSG_CHECKING(for ${td_func})
+AC_CACHE_VAL(td_cv_func_$td_func,[
+AC_TRY_LINK([#undef ${td_func}],[${td_func}();],[
+AC_TRY_COMPILE(
 [#include <td_local.h>],
 [
-#undef $ac_func
+#undef $td_func
 struct zowie { int a; double b; struct zowie *c; char d; };
-extern struct zowie *$ac_func(); $ac_func();
+extern struct zowie *$td_func(); $td_func();
 ],
-AC_DEFINE(NEED_${ac_tr_func})))
+[td_result=undeclared],
+[td_result=declared])],
+[td_result=no])
+eval 'td_cv_func_'$td_func'=$td_result'
+])
+# use the computed/retrieved cache-value:
+eval 'td_result=$td_cv_func_'$td_func
+AC_MSG_RESULT($td_result)
+if test $td_result != no; then
+	AC_DEFINE_UNQUOTED(HAVE_${td_tr_func})
+	if test $td_result = undeclared; then
+		AC_DEFINE_UNQUOTED(NEED_${td_tr_func})
+	fi
+fi
 done
 CFLAGS="$td_CFLAGS"
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl	On both Ultrix and CLIX, I find size_t defined in <stdio.h>
 define([TD_SIZE_T],
-[AC_CHECKING(for size_t in <sys/types.h> or <stdio.h>)
- AC_TEST_PROGRAM([
+[
+AC_MSG_CHECKING(for size_t in <sys/types.h> or <stdio.h>)
+AC_CACHE_VAL(td_cv_type_size_t,[
+	AC_TRY_COMPILE([
 #include <sys/types.h>
-#include <stdio.h>
-int main() { size_t x; exit (0);}
-], ,
-[AC_DEFINE(size_t, unsigned)])])dnl
-dnl ---------------------------------------------------------------------------
-define([TD_DEV_T],
-[AC_PROVIDE([$0])AC_CHECKING(for dev_t in sys/types.h)
-AC_HEADER_EGREP(dev_t, sys/types.h, , AC_DEFINE(dev_t, unsigned short))])dnl
-dnl ---------------------------------------------------------------------------
-define([TD_INO_T],
-[AC_PROVIDE([$0])AC_CHECKING(for ino_t in sys/types.h)
-AC_HEADER_EGREP(ino_t, sys/types.h, , AC_DEFINE(ino_t, unsigned short))])dnl
-dnl ---------------------------------------------------------------------------
-define([TD_MODE_T],
-[AC_PROVIDE([$0])AC_CHECKING(for mode_t in sys/types.h)
-AC_HEADER_EGREP(mode_t, sys/types.h, , AC_DEFINE(mode_t, int))])dnl
+#include <stdio.h>],
+		[size_t x],
+		[td_cv_type_size_t=yes],
+		[td_cv_type_size_t=no])
+	])
+AC_MSG_RESULT($td_cv_type_size_t)
+test $td_cv_type_size_t = no && AC_DEFINE(size_t, unsigned)
+])dnl
 dnl ---------------------------------------------------------------------------
 dnl Test if "##" is substituted properly, or failing that, if /**/ can do
-dnl the trick.
+dnl the trick.  We can test concatenation with a compile, but quoting has to
+dnl be tested by running a program.
 define([TD_ANSI_CPP],
-[AC_CHECKING(for ANSI CPP token-splicing/quoting)
-AC_TEST_PROGRAM([
-#define cat(a,b) a##b
-int main() { cat(lo,ng) x; char *y = "a" "b"; exit (0);}
-],
-[AC_DEFINE(HAVE_NEW_TOKEN_SPLICE)])
-AC_TEST_PROGRAM([
-#define quote(name) #name
-int main() { char *y = quote(a); exit (*y != 'a');}
-],
-[AC_DEFINE(HAVE_NEW_TOKEN_QUOTE)])
-AC_TEST_PROGRAM([
-#define cat(a,b) a/**/b
-int main() { cat(lo,ng) x; exit (0);}
-],
-[AC_DEFINE(HAVE_OLD_TOKEN_SPLICE)])
-AC_TEST_PROGRAM([
-#define quote(name) "name"
-int main() { char *y = quote(a); exit (*y != 'a');}
-],
-[AC_DEFINE(HAVE_OLD_TOKEN_QUOTE)])
+[
+AC_MSG_CHECKING(for ANSI CPP token-splicing)
+AC_CACHE_VAL(td_cv_ansi_splice,[
+	td_cv_ansi_splice=unknown
+	AC_TRY_COMPILE(
+		[#define cat(a,b) a##b],
+		[cat(lo,ng) x; char *y = "a" "b"],
+		[td_cv_ansi_splice=new],
+		[AC_TRY_COMPILE(
+			[#define cat(a,b) a/**/b],
+			[cat(lo,ng) x],
+			[td_cv_ansi_splice=old])
+		])
+	])
+
+AC_MSG_RESULT(${td_cv_ansi_splice}-style)
+if test $td_cv_ansi_splice = new; then
+	AC_DEFINE(HAVE_NEW_TOKEN_SPLICE)
+elif test $td_cv_ansi_splice = old; then
+	AC_DEFINE(HAVE_OLD_TOKEN_SPLICE)
+fi
+
+AC_MSG_CHECKING(for ANSI CPP token-quoting)
+AC_CACHE_VAL(td_cv_ansi_quote,[
+	td_cv_ansi_quote=unknown
+	AC_TRY_RUN([#define quote(name) #name
+		int main() { char *y = quote(a); exit (*y != 'a');} ],
+		[td_cv_ansi_quote=new])
+	if test $td_cv_ansi_quote = unknown; then
+		AC_TRY_RUN([#define quote(name) "name"
+			int main() { char *y = quote(a); exit (*y != 'a');} ],
+			[td_cv_ansi_quote=old])
+		fi
+	])
+
+AC_MSG_RESULT(${td_cv_ansi_quote}-style)
+if test $td_cv_ansi_quote = new; then
+	AC_DEFINE(HAVE_NEW_TOKEN_QUOTE)
+elif test $td_cv_ansi_quote = old; then
+	AC_DEFINE(HAVE_OLD_TOKEN_QUOTE)
+fi
+
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Tests for the <regex.h> include-file, and the functions associated with it.
 define([TD_REGEX_H_FUNCS],
-[AC_TEST_PROGRAM([
+[AC_MSG_CHECKING(regcomp/regexec functions)
+AC_TRY_RUN([
 #include <sys/types.h>
 #include <regex.h>
 int main() {
@@ -197,27 +242,40 @@ int main() {
 	regfree(&e);
 	exit(0);
 }
-], [AC_DEFINE(HAVE_REGEX_H_FUNCS)])
+],
+[td_have_regex_h_funcs=yes],
+[td_have_regex_h_funcs=no])
+AC_MSG_RESULT($td_have_regex_h_funcs)
+test $td_have_regex_h_funcs && AC_DEFINE(HAVE_REGEX_H_FUNCS)
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Tests for the <regexpr.h> include-file, and the functions associated with it.
 define([TD_REGEXPR_H_FUNCS],
-[save_libs="$LIBS"
-AC_HAVE_LIBRARY(gen, [LIBS="$LIBS -lgen"])
-AC_TEST_PROGRAM([
+[td_save_libs="$LIBS"
+AC_CHECK_LIB(gen, compile)
+AC_MSG_CHECKING(compile/step functions)
+AC_TRY_RUN([
 #include <sys/types.h>
 #include <regexpr.h>
 int main() {
 	char *e;
 	char *p = "foo";
 	char *s = "foobar";
-	if ((e = compile(p, NULL, NULL)) == 0
+	if ((e = (char *)compile(p, NULL, NULL)) == 0
 	 || step(s, e) == 0)
 	 	exit(1);
 	free(e);
 	exit(0);
 }
-], [AC_DEFINE(HAVE_REGEXPR_H_FUNCS)], [LIBS="$save_libs"])
+],
+[td_have_rexpr_h_funcs=yes],
+[td_have_rexpr_h_funcs=no])
+AC_MSG_RESULT($td_have_rexpr_h_funcs)
+if test $td_have_rexpr_h_funcs = yes; then
+	AC_DEFINE(HAVE_REGEXPR_H_FUNCS)
+else
+	LIBS="$td_save_libs"
+fi
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Tests for the presence of regcmp/regex functions (no include-file?)
@@ -225,7 +283,8 @@ dnl Some systems (CLIX) use <pw.h> for this purpose.  CLIX requires the -lPW,
 dnl but HPUX has only a broken version of that library, so we've got to
 dnl try the compile with/without the library.
 define([TD_REGCMP_LIBS],
-[AC_TEST_PROGRAM([
+[AC_MSG_CHECKING(regcmp/regex functions)
+AC_TRY_RUN([
 #include <stdio.h>	/* need this for CLIX to define '__' macro */
 #if HAVE_PW_H
 #include <pw.h>		/* _must_ use prototype on CLIX */
@@ -237,7 +296,7 @@ int main() {
 	char *e;
 	char *p = "foo";
 	char *s = "foobar";
-	if ((e = regcmp(p, 0)) == 0
+	if ((e = (char *)regcmp(p, 0)) == 0
 	 || regex(e, s, 0) == 0)
 	 	exit(1);
 	free(e);
@@ -245,6 +304,7 @@ int main() {
 }
 ], [td_have_regcmp_funcs=yes],
    [td_have_regcmp_funcs=no])
+AC_MSG_RESULT($td_have_regcmp_funcs)
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Test for the presence of regcmp/regex functions.
@@ -252,40 +312,41 @@ define([TD_REGCMP_FUNCS],
 [
 AC_HAVE_HEADERS(pw.h libgen.h)
 TD_REGCMP_LIBS
-save_libs="$LIBS"
 if test $td_have_regcmp_funcs = no; then
-	AC_HAVE_LIBRARY(PW)
-	if test -n "${ac_have_lib}"; then
+	AC_CHECK_LIB(PW, regcmp, td_have_lPW=yes, td_have_lPW=no)
+	if test $td_have_lPW = yes; then
+		LIBS="$LIBS -lPW"
 		TD_REGCMP_LIBS
 	fi
 fi
-if test $td_have_regcmp_funcs = no; then
-	LIBS="$save_libs"
-else
-	AC_DEFINE(HAVE_REGCMP_FUNCS)
-fi
+test $td_have_regcmp_funcs = yes && AC_DEFINE(HAVE_REGCMP_FUNCS)
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Tests for the presence of re_comp/re_exec functions (no include-file?)
 define([TD_RE_COMP_FUNCS],
-[AC_TEST_PROGRAM([
+[AC_MSG_CHECKING(re_comp/re_exec functions)
+AC_TRY_RUN([
 int main() {
 	extern char *re_comp();
 	char *e;
 	char *p = "foo";
 	char *s = "foobar";
-	if ((e = re_comp(p)) != 0
+	if ((e = (char *)re_comp(p)) != 0
 	 || re_exec(s) <= 0)
 	 	exit(1);
 	exit(0);
 }
-], [AC_DEFINE(HAVE_RE_COMP_FUNCS)])
+],
+[td_have_re_comp_funcs=yes],
+[td_have_re_comp_funcs=no])
+AC_MSG_RESULT($td_have_re_comp_funcs)
+test $td_have_re_comp_funcs = yes && AC_DEFINE(HAVE_RE_COMP_FUNCS)
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Tests for the ensemble of include-files and functions that make up the
 dnl host's regular expression parsing.
 define([TD_REGEX],
-[AC_CHECKING(for regular-expression library support)
+[
 TD_REGEX_H_FUNCS
 TD_REGEXPR_H_FUNCS
 TD_REGCMP_FUNCS
@@ -293,9 +354,10 @@ TD_RE_COMP_FUNCS
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Tests for the ensemble of programs that are used in RCS, SCCS, VCS, CVS.
+dnl We'll have to assume that the related utilities all reside in the same
+dnl directory.
 define([TD_RCS_SCCS],
-[AC_CHECKING(for SCCS/RCS programs)
-TD_PROGRAM_PREFIX(RCS_PATH, rcs)
+[TD_PROGRAM_PREFIX(RCS_PATH, rcs)
 TD_PROGRAM_PREFIX(SCCS_PATH, admin)dnl the SCCS tool
 TD_PROGRAM_PREFIX(VCS_PATH, vcs)dnl VCS is my RCS application
 TD_PROGRAM_PREFIX(CVS_PATH, cvs)dnl CVS is a layer above RCS
@@ -303,60 +365,120 @@ TD_PROGRAM_PREFIX(CMV_PATH, cmv)dnl CmVision combines RCS and SCCS archives
 ])dnl
 dnl ---------------------------------------------------------------------------
 define([TD_GMTOFF],
-[AC_REQUIRE([AC_STRUCT_TM])ac_decl='#include <sys/types.h>
+[
+td_decl='#include <sys/types.h>
 '
-case "$DEFS" in
-  *TM_IN_SYS_TIME*) ac_decl="$ac_decl
+if test $ac_cv_header_sys_time_h = yes; then
+	td_decl="$td_decl
 #include <sys/time.h>
-" ;;
-  *) ac_decl="$ac_decl
+"
+else
+	td_decl="$td_decl
 #include <time.h>
-" ;;
-esac
-AC_COMPILE_CHECK([localzone declared], $ac_decl,
-[long x = localzone;], AC_DEFINE(LOCALZONE_DECLARED))
-AC_COMPILE_CHECK([timezone declared], $ac_decl,
-[long x = timezone;], AC_DEFINE(TIMEZONE_DECLARED))
-AC_COMPILE_CHECK(tm_gmtoff in tm, $ac_decl,
-[struct tm tm; tm.tm_gmtoff;], AC_DEFINE(HAVE_TM_GMTOFF))
-AC_COMPILE_CHECK(tm_zone in tm, $ac_decl,
-[struct tm tm; tm.tm_isdst;], AC_DEFINE(HAVE_TM_ISDST))
+"
+fi
+
+AC_STRUCT_TM
+AC_MSG_CHECKING(for localzone declared)
+AC_CACHE_VAL(td_cv_decl_localzone,[
+	AC_TRY_COMPILE([$td_decl],
+		[long x = localzone],
+		[td_cv_decl_localzone=yes],
+		[td_cv_decl_localzone=no])])
+AC_MSG_RESULT($td_cv_decl_localzone)
+test $td_cv_decl_localzone = yes && AC_DEFINE(LOCALZONE_DECLARED)
+
+AC_MSG_CHECKING(for timezone declared)
+AC_CACHE_VAL(td_cv_decl_timezone,[
+	AC_TRY_COMPILE($td_decl,
+		[long x = timezone],
+		[td_cv_decl_timezone=yes],
+		[td_cv_decl_timezone=no])])
+AC_MSG_RESULT($td_cv_decl_timezone)
+test $td_cv_decl_timezone = yes && AC_DEFINE(TIMEZONE_DECLARED)
+
+AC_MSG_CHECKING(for .tm_gmtoff in struct tm)
+AC_CACHE_VAL(td_cv_tm_gmtoff_decl,[
+	AC_TRY_COMPILE([$td_decl],
+		[struct tm tm; tm.tm_gmtoff],
+		[td_cv_tm_gmtoff_decl=yes],
+		[td_cv_tm_gmtoff_decl=no])])
+AC_MSG_RESULT($td_cv_tm_gmtoff_decl)
+test $td_cv_tm_gmtoff_decl = yes && AC_DEFINE(HAVE_TM_GMTOFF)
+
+AC_MSG_CHECKING(for .tm_zone in struct tm)
+AC_CACHE_VAL(td_cv_tm_zone_decl,[
+	AC_TRY_COMPILE([$td_decl],
+		[struct tm tm; tm.tm_isdst],
+		[td_cv_tm_zone_decl=yes],
+		[td_cv_tm_zone_decl=no])])
+AC_MSG_RESULT($td_cv_tm_zone_decl)
+test $td_cv_tm_zone_decl = yes && AC_DEFINE(HAVE_TM_ISDST)
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Test if curses defines 'addchnstr()' (maybe a macro or function)
 define([TD_CURSES_ADDCHNSTR],
-[AC_COMPILE_CHECK([function/macro addchnstr],[#include <curses.h>
-], [addchnstr(0,0)], [AC_DEFINE(HAVE_ADDCHNSTR)])
+[
+AC_MSG_CHECKING(for function/macro addchnstr)
+AC_CACHE_VAL(td_cv_have_addchnstr,[
+	AC_TRY_LINK([#include <curses.h>],
+		[addchnstr(0,0)],
+		[td_cv_have_addchnstr=yes],
+		[td_cv_have_addchnstr=no])])
+AC_MSG_RESULT($td_cv_have_addchnstr)
+test td_cv_have_addchnstr = yes && AC_DEFINE(HAVE_ADDCHNSTR)
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Test if curses defines 'chtype' (usually a 16-bit type for SysV curses).
 define([TD_CURSES_CHTYPE],
-[AC_CHECKING(chtype typedef)
-AC_TEST_PROGRAM([#include <curses.h>
-int main() { chtype foo; exit(0); }
-], [AC_DEFINE(HAVE_TYPE_CHTYPE)])
+[
+AC_MSG_CHECKING(for chtype typedef)
+AC_CACHE_VAL(td_cv_chtype_decl,[
+	AC_TRY_COMPILE([#include <curses.h>],
+		[chtype foo],
+		[td_cv_chtype_decl=yes],
+		[td_cv_chtype_decl=no])])
+AC_MSG_RESULT($td_cv_chtype_decl)
+test $td_cv_chtype_decl = yes && AC_DEFINE(HAVE_TYPE_CHTYPE)
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Test if curses defines 'cbreak()' (maybe a macro or function)
 define([TD_CURSES_CBREAK],
-[AC_COMPILE_CHECK([function/macro cbreak],["#include <curses.h>
-"], [cbreak()], [AC_DEFINE(HAVE_CBREAK)])
+[
+AC_MSG_CHECKING(for function/macro cbreak)
+AC_CACHE_VAL(td_cv_have_cbreak,[
+	AC_TRY_LINK([#include <curses.h>],
+		[cbreak()],
+		[td_cv_have_cbreak=yes],
+		[td_cv_have_cbreak=no])])
+AC_MSG_RESULT($td_cv_have_cbreak)
+test $td_cv_have_cbreak = yes && AC_DEFINE(HAVE_CBREAK)
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Test if curses defines 'erasechar()' (maybe a macro or function)
 define([TD_CURSES_ERASECHAR],
-[AC_CHECKING(function/macro erasechar)
-AC_TEST_PROGRAM([#include <curses.h>
-int main() { int foo = erasechar(); exit(0); }
-], [AC_DEFINE(HAVE_ERASECHAR)])
+[
+AC_MSG_CHECKING(for function/macro erasechar)
+AC_CACHE_VAL(td_cv_have_erasechar,[
+	AC_TRY_LINK([#include <curses.h>],
+		[erasechar()],
+		[td_cv_have_erasechar=yes],
+		[td_cv_have_erasechar=no])])
+AC_MSG_RESULT($td_cv_have_erasechar)
+test $td_cv_have_erasechar = yes && AC_DEFINE(HAVE_ERASECHAR)
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Test if curses defines 'killchar()' (maybe a macro or function)
 define([TD_CURSES_KILLCHAR],
-[AC_CHECKING(function/macro killchar)
-AC_TEST_PROGRAM([#include <curses.h>
-int main() { int foo = killchar(); exit(0); }
-], [AC_DEFINE(HAVE_KILLCHAR)])
+[
+AC_MSG_CHECKING(for function/macro killchar)
+AC_CACHE_VAL(td_cv_have_killchar,[
+	AC_TRY_LINK([#include <curses.h>],
+		[killchar()],
+		[td_cv_have_killchar=yes],
+		[td_cv_have_killchar=no])])
+AC_MSG_RESULT($td_cv_have_killchar)
+test $td_cv_have_killchar = yes && AC_DEFINE(HAVE_KILLCHAR)
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Test if curses defines 'struct screen'.
@@ -365,8 +487,15 @@ dnl	If this isn't defined, we cannot build a lint library that will check
 dnl	for that type, since it isn't resolved.
 dnl
 define([TD_STRUCT_SCREEN],
-[AC_COMPILE_CHECK([definition of struct-screen/macro],["#include <curses.h>
-"], [struct screen { int dummy;}], [AC_DEFINE(NEED_STRUCT_SCREEN)])
+[
+AC_MSG_CHECKING(for definition of struct screen)
+AC_CACHE_VAL(td_cv_decl_screen,[
+	AC_TRY_COMPILE([#include <curses.h>],
+	[struct screen { int dummy;}],
+	[td_cv_decl_screen=yes],
+	[td_cv_decl_screen=no])])
+AC_MSG_RESULT($td_cv_decl_screen)
+test $td_cv_decl_screen = yes && AC_DEFINE(NEED_STRUCT_SCREEN)
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Test if curses defines KD, KU, etc., for cursor keys
@@ -377,10 +506,15 @@ dnl	they're not in the include-file, ignore them.  Otherwise, assume that
 dnl	curses initializes them in 'initscr()'.
 dnl
 define([TD_TCAP_CURSOR],
-[AC_CHECKING([termcap-cursor variables])
-AC_TEST_PROGRAM([#include <curses.h>
-int main() { char *d=KD, *u=KU, *r=KR, *l=KL; exit(0); }
-], [AC_DEFINE(HAVE_TCAP_CURSOR)])
+[
+AC_MSG_CHECKING(for termcap-cursor variables)
+AC_CACHE_VAL(td_cv_termcap_cursor,[
+	AC_TRY_COMPILE([#include <curses.h>],
+		[char *d=KD, *u=KU, *r=KR, *l=KL],
+		[td_cv_termcap_cursor=yes],
+		[td_cv_termcap_cursor=no])])
+AC_MSG_RESULT($td_cv_termcap_cursor)
+test $td_cv_termcap_cursor = yes && AC_DEFINE(HAVE_TCAP_CURSOR)
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Test for interesting things about curses functions/datatypes
@@ -416,46 +550,58 @@ dnl:then
 dnl:	TD_INCLUDE_PATH(/usr/5include)
 dnl:	TD_LIBRARY_PATH(/usr/5lib)
 dnl:fi
-AC_HAVE_LIBRARY(curses)
-td_have_keypad=yes
-case "$DEFS" in
-*HAVE_LIBCURSES*)
+AC_CHECK_LIB(termcap, tgetent)
+	# The curses library often depends on the termcap library, so we've
+	# checked for it first.  We could make a more complicated test to
+	# ensure that we don't add the termcap library, but some functions use
+	# it anyway if it's there.
+if test $ac_cv_lib_termcap = yes; then
+	LIBS="${td_save_LIBS} -lcurses -ltermcap"
+	AC_CHECK_LIB(curses, initscr)
+	if test $ac_cv_lib_curses = yes; then
+		LIBS="${td_save_LIBS} -lcurses -ltermcap"
+	else
+		LIBS="${td_save_LIBS} -ltermcap"
+	fi
+else
+	AC_CHECK_LIB(curses, initscr)
+fi
+	# The main distinction between bsd- and sysv-curses is that the latter
+	# has a keypad function.
+td_curses_type=sysv
+if test $ac_cv_lib_curses = yes; then
 	td_decl="#include <curses.h>
 "
-	AC_COMPILE_CHECK([BSD vs SYSV curses], $td_decl,
+	AC_MSG_CHECKING(BSD vs SYSV curses)
+	AC_TRY_LINK([
+#include <curses.h>
+],
 	[keypad(curscr,1)],,
-	td_have_keypad=no)
-	;;
-esac
-AC_WITH(ncurses,
-[
-if test $td_have_keypad = no
-then
+	td_curses_type=bsd)
+	AC_MSG_RESULT([$]td_curses_type)
+fi
+if test $WithNcurses = yes; then
+    if test $td_curses_type = bsd; then
 	td_save2LIBS="${LIBS}"
 	LIBS="${td_save_LIBS}"
-	AC_HAVE_LIBRARY(ncurses)
-	case "$DEFS" in
-	*HAVE_LIBNCURSES*)
+	AC_CHECK_LIB(ncurses,initscr)
+	if test $ac_cv_lib_ncurses = yes; then
 		# Linux installs NCURSES's include files in a separate
 		# directory to avoid confusion with the native curses.  Some
 		# versions have <ncurses.h>, while newer ones have it renamed
 		# to <curses.h> -- in either case it's linked, but we use the
 		# definition in <td_curse.h>
-		if test -d /usr/include/ncurses
-		then
+		if test -d /usr/include/ncurses; then
 			TD_INCLUDE_PATH(/usr/include/ncurses)
 			AC_DEFINE(HAVE_NCURSES_H)
 		else
 			AC_HAVE_HEADERS(ncurses.h)
 		fi
-		;;
-	*)
+	else
 		LIBS="${td_save2LIBS}"
-		AC_HAVE_LIBRARY(termcap)
-		;;
-	esac
+	fi
+    fi
 fi
-],[AC_HAVE_LIBRARY(termcap)])
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Test for non-Posix prototype for 'signal()'
@@ -470,42 +616,51 @@ dnl	(If the compiler doesn't recognize prototypes, of course, this test
 dnl	will not find anything :-)
 dnl
 define([TD_SIG_ARGS],
-[AC_REQUIRE([AC_RETSIGTYPE])
-AC_CHECKING([non-standard signal handler prototype])
-AC_TEST_PROGRAM([
+[
+AC_REQUIRE([AC_TYPE_SIGNAL])
+AC_MSG_CHECKING(for non-standard signal handler prototype)
+AC_CACHE_VAL(td_cv_sig_args,[
+	AC_TRY_RUN([
 #include <signal.h>
-RETSIGTYPE (*signal(int sig, RETSIGTYPE(*func)(int sig)))(int sig2);
-RETSIGTYPE catch(int sig) { exit(1); }
-main() { signal(SIGINT, catch); exit(0); }
-],[AC_DEFINE(SIG_ARGS_STANDARD)],[AC_TEST_PROGRAM([
+		RETSIGTYPE (*signal(int sig, RETSIGTYPE(*func)(int sig)))(int sig2);
+		RETSIGTYPE catch(int sig) { exit(1); }
+		main() { signal(SIGINT, catch); exit(0); } ],
+		[td_cv_sig_args=STANDARD],
+		[AC_TRY_RUN([
 #include <signal.h>
-RETSIGTYPE (*signal(int sig, RETSIGTYPE(*func)(int sig,...)))(int sig2,...);
-RETSIGTYPE catch(int sig, ...) { exit(1); }
-main() { signal(SIGINT, catch); exit(0); }
-],[AC_DEFINE(SIG_ARGS_VARYING)])]
-)
-if test -n "$GCC"
+			RETSIGTYPE (*signal(int sig, RETSIGTYPE(*func)(int sig,...)))(int sig2,...);
+			RETSIGTYPE catch(int sig, ...) { exit(1); }
+			main() { signal(SIGINT, catch); exit(0); } ],
+			[td_cv_sig_args=VARYING],
+			[td_cv_sig_args=UNKNOWN])
+		])
+	])
+AC_MSG_RESULT($td_cv_sig_args)
+AC_DEFINE_UNQUOTED(SIG_ARGS_$td_cv_sig_args)
+
+echo $WithWarnings
+if test -n "$GCC" && test $WithWarnings = yes
 then
-AC_WITH(warnings,
-	[
-AC_CHECKING([redefinable signal handler prototype])
-	# We're checking the definitions of the commonly-used predefined signal
-	# macros, to see if their values are the ones that we expect.  If so,
-	# we'll plug in our own definitions, that have complete prototypes.  We
-	# do this when we're developing with gcc, with all warnings, and
-	# shouldn't do it for other compilers, since (for example) the IRIX
-	# compiler complains a lot.
-		case "$DEFS" in
-		*SIG_ARGS_*) # we have prototypes
-AC_TEST_PROGRAM([
+	AC_CHECKING(redefinable signal handler prototype)
+	AC_CACHE_VAL(td_cv_sigs_redef,[
+		td_cv_sigs_redef=no
+		# We're checking the definitions of the commonly-used predefined signal
+		# macros, to see if their values are the ones that we expect.  If so,
+		# we'll plug in our own definitions, that have complete prototypes.  We
+		# do this when we're developing with gcc, with all warnings, and
+		# shouldn't do it for other compilers, since (for example) the IRIX
+		# compiler complains a lot.
+		if test $td_cv_sig_args != UNKNOWN; then	# we have prototypes
+			AC_TRY_RUN([
 #include <signal.h>
 #undef  NOT
 #define NOT(s,d) ((long)(s) != (long)(d))
-main() { exit(NOT(SIG_IGN,1) || NOT(SIG_DFL,0) || NOT(SIG_ERR,-1)); }
-],[AC_DEFINE(SIG_IGN_REDEFINEABLE)])
-		;;
-		esac
-	])
+				main() { exit(NOT(SIG_IGN,1) || NOT(SIG_DFL,0) || NOT(SIG_ERR,-1)); } ],
+				[td_cv_sigs_redef=yes])
+		fi
+		])
+		AC_MSG_RESULT($td_cv_sigs_redef)
+		test $td_cv_sigs_redef = yes && AC_DEFINE(SIG_IGN_REDEFINEABLE)
 fi
 ])dnl
 dnl ---------------------------------------------------------------------------
@@ -525,49 +680,68 @@ dnl	Don't use HAVE_UNION_WAIT, because the autoconf documentation implies
 dnl	that if we've got union-wait, we'll automatically use it.
 dnl
 define([TD_WAIT],
-[AC_CHECKING(wait include/argument type)
+[
 AC_HAVE_HEADERS(wait.h)
-AC_HAVE_HEADERS(sys/wait.h)td_decl='#include <sys/types.h>
-'
-case "$DEFS" in
-*_SYS_WAIT_H*)td_decl="$td_decl
+AC_HAVE_HEADERS(sys/wait.h)
+td_decl="#include <sys/types.h>
+"
+if test $ac_cv_header_sys_wait_h = yes; then
+td_decl="$td_decl
 #include <sys/wait.h>
-" ;;
-*_WAIT_H*)td_decl="$td_decl
+"
+elif test $ac_cv_header_wait_h = yes; then
+td_decl="$td_decl
 #include <wait.h>
-" ;;
-esac
-AC_COMPILE_CHECK([union wait declared], $td_decl,
+"
+fi
+AC_MSG_CHECKING(union wait declared)
+AC_TRY_COMPILE($td_decl,
 [union wait x],
-[AC_COMPILE_CHECK([union wait used as wait-arg], $td_decl,
- [union wait x; wait(&x)],
- [AC_DEFINE(WAIT_USES_UNION)])
- ])
+[td_union_wait_decl=yes],
+[td_union_wait_decl=no])
+AC_MSG_RESULT($td_union_wait_decl)
+
+if test $td_union_wait_decl = yes; then
+	AC_MSG_CHECKING(union wait used as wait-arg)
+	AC_TRY_COMPILE($td_decl,
+ 		[union wait x; wait(&x)],
+		[td_union_wait_used=yes],
+		[td_union_wait_used=no])
+	AC_MSG_RESULT($td_union_wait_used)
+	test $td_union_wait_used = yes && AC_DEFINE(WAIT_USES_UNION)
+fi
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Test if the <sys/stat.h> 'stat' struct defines 'st_blocks' member.
 dnl If not, assume it's some non-BSD system.
 define([TD_STAT_ST_BLOCKS],
-[AC_CHECKING(for .st_blocks in struct stat)
- AC_TEST_PROGRAM([
+[
+AC_MSG_CHECKING(for .st_blocks in struct stat)
+AC_CACHE_VAL(td_cv_st_blocks,[
+	AC_TRY_COMPILE([
 #include <sys/types.h>
-#include <sys/stat.h>
-int main() {exit(0);}
-int t() {struct stat sb; return sb.st_blocks; }
-],
-[AC_DEFINE(STAT_HAS_ST_BLOCKS)])
+#include <sys/stat.h>],
+		[int t() {struct stat sb; return sb.st_blocks;}],
+		[td_cv_st_blocks=yes],
+		[td_cv_st_blocks=no])])
+AC_MSG_RESULT($td_cv_st_blocks)
+test $td_cv_st_blocks = yes && AC_DEFINE(STAT_HAS_ST_BLOCKS)
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Test for the presence of the 'sys_errlist[]' array if we don't have the
 dnl 'strerror()' function.
 define([TD_SYS_ERRLIST],
-[AC_CHECKING(for sys_errlist in <errno.h>)
- AC_TEST_PROGRAM([
+[
+AC_MSG_CHECKING(for sys_errlist in <errno.h>)
+AC_CACHE_VAL(td_cv_sys_errlist,[
+	AC_TRY_RUN([
 #include <stdio.h>
 #include <errno.h>
-extern char *sys_errlist[];
-extern int sys_nerr;
-int main() { char *x = sys_errlist[sys_nerr-1]; exit (x==0);}
-],
-[AC_DEFINE(HAVE_SYS_ERRLIST)])
+		extern char **sys_errlist;
+		extern int sys_nerr;
+		int main() { char *x = *(sys_errlist+sys_nerr-1); exit x==0;}],
+		[td_cv_sys_errlist=yes],
+		[td_cv_sys_errlist=no])])
+AC_MSG_RESULT($td_cv_sys_errlist)
+test $td_cv_sys_errlist = yes && AC_DEFINE(HAVE_SYS_ERRLIST)
 ])dnl
