@@ -1,3 +1,27 @@
+1992-09-04  dickey@software.org
+
+	* src/curses/rawgets.c:
+	undid last patch: now 'EraseChar' overrides use of backspace
+	in scrolling-mode.
+
+	* src/curses/rawgets.c: patch:erase_char
+
+	* src/curses/rawgets.c:
+	forgot to implement the logging portion of CTL/V
+
+	* src/curses/rawgets.c:
+	implemented CTL/V command (as in 'vi'), and eliminated
+	some of the redundancy in the main loop.
+
+	* src/curses/rawgets.c:
+	allow display/navigation with nonprinting control chars
+	in the buffer -- must add code to allow them to be inserted.
+
+	* src/curses/rawgets.c:
+	only highlight the portion of a non-wrapped field that
+	contains text.  do this to make it simpler to see trailing
+	blanks, etc.
+
 1992-09-03  dickey@software.org
 
 	* src/curses/rawgets.c:

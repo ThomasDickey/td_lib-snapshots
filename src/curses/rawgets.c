@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rawgets.c,v 11.15 1992/09/03 07:31:25 dickey Exp $";
+static	char	Id[] = "$Id: rawgets.c,v 11.21 1992/09/04 15:26:35 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: rawgets.c,v 11.15 1992/09/03 07:31:25 dickey Exp $";
  * Title:	rawgets.c (raw-mode 'gets()')
  * Created:	29 Sep 1987 (from 'fl.c')
  * Modified:
+ *		04 Sep 1992, modified to allow nonprinting chars in buffer.
  *		25 Aug 1992, added 'first_mode' argument.
  *		20 Aug 1992, added 'field_len', 'first_col' arguments.
  *		17 Aug 1992, if 'fast_q' is non-null, start edit in scroll-mode
@@ -20,7 +21,7 @@ static	char	Id[] = "$Id: rawgets.c,v 11.15 1992/09/03 07:31:25 dickey Exp $";
  *		02 Mar 1990, modified so that if this is invoked in no-wrap
  *			     mode, and the output buffer is wider than the
  *			     screen, we automatically scroll left/right.  Also,
- *			     permit arrow keys to work in non-insert mode. 
+ *			     permit arrow keys to work in non-insert mode.
  *			     Finally, added a test-driver to exercise the code.
  *		04 Oct 1989, lint (apollo SR10.1)
  *		03 Aug 1989, broke into two procedures, 'rawgets()' and
@@ -62,6 +63,8 @@ static	char	Id[] = "$Id: rawgets.c,v 11.15 1992/09/03 07:31:25 dickey Exp $";
 
 #define	SHIFT	5
 
+#define	to_toggle(c)	((c) == '\t')
+#define	to_literal(c)	((c) == CTL('V'))
 #define	to_home(c)	(((c) == CTL('B')))
 #define	to_left(c)	(((c) == '\b') || ((c) == ARO_LEFT))
 #define	to_right(c)	(((c) == '\f') || ((c) == ARO_RIGHT))
@@ -87,9 +90,11 @@ void	ClearIt(_AR0)
 {
 	if (Z) {
 		register int	x;
+		auto	int	highlighted = (!wrap && !Imode);
 
-		for (x = Z->_curx; x < xlast; x++)
-			(void)waddch(Z,' ');
+		if (highlighted)			(void)wstandend(Z);
+		for (x = Z->_curx; x < xlast; x++)	(void)waddch(Z,' ');
+		if (highlighted)			(void)wstandout(Z);
 	}
 }
 
@@ -113,16 +118,14 @@ int	MoveTo(
 	_DCL(char *,	new)
 {
 	if (Z) {
+		register char	*s;
 		register int	y = ybase,
-				x = xbase,
-				z = new-(bbase+shift),
-				original = shift;
+				x = xbase;
+		auto	 int	original = shift;
 
-		while (z < 0) {		/* nowrap: shift-left */
-			shift -= SHIFT;
-			z += SHIFT;
-		}
-		while (z-- > 0) {
+		for (s = bbase, shift = 0; *s != EOS && s != new; s++) {
+			if (!isprint(*s))
+				x++;
 			if (++x >= xlast) {
 				if (wrap) {
 					x = 0;
@@ -157,8 +160,17 @@ int	ShowAt(
 			len = strlen(at);
 			max = xlast - col;
 			if (len > max)	len = max;
-			(void)wprintw(Z,"%.*s", len, at);
-			at += len;
+			while (len-- > 0) {
+				register int	c = *at++ & 0xff;
+				if (!isprint(c)) {
+					(void)waddch(Z, '^');
+					if (c == '\177')
+						c = '?';
+					else
+						c |= '@';
+				}
+				(void)waddch(Z, c);
+			}
 			col = 0;
 			if (!wrap)	break;
 		}
@@ -303,26 +315,6 @@ void	ToggleMode(_AR0)
 	}
 }
 
-/*
- * Move to end of the buffer
- */
-static
-char *
-move_end(
-_ARX(char *,	at)
-_AR1(int,	c)
-	)
-_DCL(char *,	at)
-_DCL(int,	c)
-{
-	if (to_home(c))		at = bbase;
-	else if (to_end(c))	at = bbase + strlen(bbase);
-	else			errs++;
-
-	if (!errs)		MoveTo(at);
-	return (at);
-}
-
 /************************************************************************
  *	main procedure							*
  ************************************************************************/
@@ -357,7 +349,7 @@ int	wrawgets (
 			EraseChar = erasechar(),
 			EraseWord = eraseword(),
 			EraseLine = killchar();
-	auto	 int	count, log_count;
+	auto	 int	count, log_count, literal;
 	static	 DYN	*saved;
 
 	saved = dyn_copy(saved, bfr);
@@ -379,13 +371,10 @@ int	wrawgets (
 		if (xlast >= Z->_maxx)
 			xlast = Z->_maxx - 1;
 
-		if (wrap) {
-			MoveTo(bfr+strlen(bfr));
-			wclrtobot(Z);
-		} else {
-			while (strlen(bfr) > (shift + xlast - xbase))
-				shift += SHIFT;
-		}
+		MoveTo(bfr+strlen(bfr));
+		if (wrap)
+			(void)wclrtobot(Z);
+
 		if (Imode != first_mode)
 			ToggleMode();
 		else
@@ -423,6 +412,8 @@ int	wrawgets (
 				*command = s;
 			}
 			c = decode_logch(command, (int *)0);
+			if (literal = to_literal(c))
+				c = decode_logch(command, (int *)0);
 		} else {
 			if (Z)
 				(void)wrefresh(Z);
@@ -430,6 +421,8 @@ int	wrawgets (
 			c = cmdch(Imode ? (int *)0 : &count);
 			log_count = (count != 1);
 
+			if (literal = to_literal(c))
+				c = wgetch(Z);
 		}
 		if (c == EOS)
 			continue;
@@ -440,6 +433,11 @@ int	wrawgets (
 		 */
 		if (logging) {
 			char	temp[20];
+			if (literal) {
+				encode_logch(temp, log_count ? &count : (int *)0, CTL('V'));
+				history = dyn_append(history, temp);
+				log_count = FALSE;
+			}
 			encode_logch(temp, log_count ? &count : (int *)0, c);
 			history = dyn_append(history, temp);
 		}
@@ -451,75 +449,91 @@ int	wrawgets (
 		 *	or return/newline
 		 * so that we can interlock this with a history-mechanism.
 		 */
-		if ((c == '\n') || (c == '\r')) {
-			MoveTo(bbase + strlen(bbase));
-			if (Z && newline)
-				(void)waddch(Z,'\n');
-			break;
-		}
-		if ((c == ARO_DOWN) || (c == ARO_UP))
-			break;
-
-		if (c == '\t') {
-			ToggleMode();
-		} else if (!Imode || !isascii(c)) {
-			/* process scroll-mode ops */
-
-			if ((c == fast_q)
-			 || ((fast_q != EOS) && (c == 'q'))) {
-				(void)strcpy(bfr, dyn_string(saved));
+		if (!literal) {
+			if (c == '\r')
+				c = '\n';
+			if (c == '\n') {
+				MoveTo(bbase + strlen(bbase));
+				if (Z && newline)
+					(void)waddch(Z,'\n');
 				break;
 			}
+			if ((c == ARO_DOWN) || (c == ARO_UP))
+				break;
 
-			if (to_left(c)) {
-				if (tag > bfr) {
-				char	*s = tag;
-					while (count-- > 0)
-						if (--s == bfr)
-							break;
-					MoveTo(tag = s);
-				} else
+			if (to_toggle(c)) {
+				ToggleMode();
+				continue;
+			}
+			if (!Imode) {
+				if ((c == fast_q)
+				 || ((fast_q != EOS) && (c == 'q'))) {
+					(void)strcpy(bfr, dyn_string(saved));
+					break;
+				}
+			}
+
+		}
+
+		/*
+		 * Normally we insert/edit only printing characters.
+		 * In literal-mode, we can insert any ascii character.
+		 */
+		if (literal || (Imode && isprint(c))) {
+			while (count-- > 0) {
+				if (tag-bfr < buffer_len)
+					InsertAt(tag++, c);
+				else {
 					errs++;
-			} else if (to_right(c)) {
-				if (*tag) {
-				char	*s = tag;
-					while (count-- > 0)
-						if (*(++s) == '\0')
-							break;
-					MoveTo(tag = s);
-				} else
-					errs++;
-			} else if (c == EraseChar) {
-				tag = DeleteBefore(tag,count);
-			} else if (c == EraseWord) {
-				tag = DeleteWordBefore(tag,count);
-			} else if (c == EraseLine) {
-				tag = DeleteBefore(tag, tag - bfr);
-			} else
-				tag = move_end(tag,c);
-		} else {	/* process insert-mode ops */
-			if (c == EraseChar) {
-				tag = DeleteBefore(tag,1);
-			} else if (c == EraseWord) {
-				tag = DeleteWordBefore(tag,count);
-			} else if (c == EraseLine) {
+					break;
+				}
+			}
+			continue;
+		}
+
+		if ((c == EraseChar)) {
+			tag = DeleteBefore(tag,count);
+		} else if (c == EraseWord) {
+			tag = DeleteWordBefore(tag,count);
+		} else if (c == EraseLine) {
+			if (Imode) {
 				count = strlen(bfr);
 				(void)DeleteBefore(bfr+count, count);
 				break;
-			} else if (isprint(c)) {
-				if (tag-bfr < buffer_len)
-					InsertAt(tag++,c);
-				else	errs++;
 			} else
-				tag = move_end(tag,c);
-		}
+				tag = DeleteBefore(tag, tag - bfr);
+
+		} else if (to_left(c)) {
+			if (tag > bfr) {
+			char	*s = tag;
+				while (count-- > 0)
+					if (--s == bfr)
+						break;
+				MoveTo(tag = s);
+			} else
+				errs++;
+		} else if (to_right(c)) {
+			if (*tag) {
+			char	*s = tag;
+				while (count-- > 0)
+					if (*(++s) == EOS)
+						break;
+				MoveTo(tag = s);
+			} else
+				errs++;
+		} else if (to_home(c)) {
+			MoveTo(tag = bbase);
+		} else if (to_end(c)) {
+			MoveTo(tag = bbase + strlen(bbase));
+		} else
+			errs++;
+
 	}
 
 	if (Z) {
-		if (!wrap && !Imode) {
-			(void)wstandend(Z);
-			ShowAll();
-		}
+		if (!wrap && !Imode)
+			ToggleMode();
+
 		if (!command || !*command)
 			(void)wrefresh(Z);
 	}
