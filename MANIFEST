@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19890822
+MANIFEST for td_lib, version t19890823
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 Makefile                        top-level makefile for TD_LIB
@@ -50,6 +50,7 @@ src/curses/rawterm.c            set terminal to raw (cooked) mode
 src/curses/resizwin.c           change size of curses window
 src/curses/savewin.c            save/unsave curses window
 src/curses/scr_size.c           obtain screen-size
+src/curses/viewfile.c           portable (curses) wrapper for padedit
 src/curses/win2file.c           dump curses window to file
 src                             subdirectory
 src/descrip.mms                 VMS build script for td_lib/src
