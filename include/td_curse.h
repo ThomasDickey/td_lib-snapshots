@@ -1,4 +1,4 @@
-/* $Id: td_curse.h,v 12.14 1994/06/25 14:15:08 tom Exp $ */
+/* $Id: td_curse.h,v 12.15 1994/06/27 23:08:28 tom Exp $ */
 
 /*
  * TD_LIB CURSES-related definitions
@@ -152,6 +152,17 @@ extern	int	wrefresh	(WINDOW *);
 			_ret
 #endif
 
+	/* on_winch.c ------------------------------------------------- */
+#ifdef SIG_PTYPES
+#  if SIGWINCH
+	void	on_winch(
+			_fn1(void,	func,(void)))
+			_dcl(void,	(*func)())
+			_nul
+#  else
+#    define	on_winch(func)	/* nothing */
+#  endif
+#endif
 	/* rawgets.c -------------------------------------------------- */
 	int	wrawgets (
 			_arx(WINDOW *,	win)

@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19940626
+MANIFEST for td_lib, version t19940627
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         restrictions on copying/using this software
@@ -76,6 +76,7 @@ src/curses/dumpwin.c            dump curses window to file
 src/curses/erasechr.c           returns erase-char value
 src/curses/killchar.c           returns kill-char value
 src/curses/logch.c              abstracts log-character encode/decode for 'ded'; put here so I can use it
+src/curses/on_winch.c           catch SIGWINCH and invoke display refresh procedures
 src/curses/padedit.c            opens an edit-pad (or xterm) on a file
 src/curses/rawgets.c            read a string via curses in raw mode (allow edits)
 src/curses/rawterm.c            set terminal to raw (cooked) mode

@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: scr_size.c,v 12.2 1993/10/29 18:41:44 dickey Exp $";
+static	char	Id[] = "$Id: scr_size.c,v 12.3 1994/06/27 00:15:08 tom Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: scr_size.c,v 12.2 1993/10/29 18:41:44 dickey Exp $";
  * Title:	scr_size.c (obtain screen size)
  * Created:	27 Jul 1988
  * Modified:
+ *		26 Jun 1994, use BSD-style ioctl to obtain screen size.
  *		29 Oct 1993, ifdef-ident. Compile on HP/UX.
  *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, convert to ANSI
@@ -32,18 +33,26 @@ static	char	Id[] = "$Id: scr_size.c,v 12.2 1993/10/29 18:41:44 dickey Exp $";
 
 #include "ptypes.h"
 #include "td_curse.h"
+
 #ifdef	apollo
-#ifdef	apollo_sr10
-#define	sr10_bug	1
-#include <apollo/base.h>
-#else
-#include </sys/ins/base.ins.c>
-#endif	/* apollo_sr10	*/
-#else	/* unix		*/
+#  ifdef	apollo_sr10
+#    define sr10_bug	1
+#    include <apollo/base.h>
+#  else
+#    include </sys/ins/base.ins.c>
+#  endif	/* apollo_sr10	*/
+#else	/* unix */
+#  if HAVE_IOCTL_H
+#    include <ioctl.h>
+#  else
+#    if HAVE_SYS_IOCTL_H
+#      include <sys/ioctl.h>
+#    endif
+#  endif
 #endif	/* apollo/unix	*/
 
-#ifndef	sr10_bug
-#define	sr10_bug	0
+#ifndef sr10_bug
+# define sr10_bug	0
 #endif
 
 #define	my_LINES	retval[0]
@@ -53,14 +62,17 @@ int	scr_size(
 	_AR1(int *,	retval))
 	_DCL(int *,	retval)
 {
+#ifdef TIOCGWINSZ
+	struct winsize size;
+#endif
 	char	i_blk[1024];
 
 	/*
 	 * Test for an Apollo screen first, so that we can distinguish between
-	 * Apollo's vt100 emulator (return=1) and X-windows (return=0).  If
-	 * we reversed this, the Apollo would always go from pad to vt100
-	 * and give a value.  Testing Apollo first lets us verify if we are in
-	 * a vt100 emulator running under the Display Manager.
+	 * Apollo's vt100 emulator (return=1) and X-windows (return=0).  If we
+	 * reversed this, the Apollo would always go from pad to vt100 and give
+	 * a value.  Testing Apollo first lets us verify if we are in a vt100
+	 * emulator running under the Display Manager.
 	 */
 #ifdef	apollo
 	extern	void	vte_$inq_screen_size();
@@ -79,6 +91,16 @@ int	scr_size(
 		return (1);
 	}
 #endif	/* apollo */
+
+#ifdef TIOCGWINSZ
+	if (ioctl (0, TIOCGWINSZ, (caddr_t)&size) == 0) {
+		if ((int)(size.ws_row) > 0)
+			my_LINES = size.ws_row;
+		if ((int)(size.ws_col) > 0)
+			my_COLS = size.ws_col;
+		return (0);
+	} else
+#endif
 
 	/*
 	 * If we can get the size from termcap, let's believe it.
