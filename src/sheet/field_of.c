@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	*Id = "$Id: field_of.c,v 12.0 1993/04/26 16:11:48 ste_cm Rel $";
+static	char	*Id = "$Id: field_of.c,v 12.1 1993/09/21 18:54:04 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	*Id = "$Id: field_of.c,v 12.0 1993/04/26 16:11:48 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	03 Feb 1992
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		24 Jul 1992, use dynamic-strings.
  *		17 Jul 1992, port to Apollo SR10.2 (no 'memmove()')
  *		24 Jun 1992, port to SunOs (no 'memmove()')
@@ -100,7 +101,7 @@ char *	QuotedField(
 	dyn_init(&tmp, BUFSIZ);
 	if (*src) {
 		tmp = dyn_append_c(tmp, QUOTE);
-		while (c = *src++) {
+		while ((c = *src++) != EOS) {
 			if (c == QUOTE)		/* quoted-quote */
 				tmp = dyn_append_c(tmp, c);
 			tmp = dyn_append_c(tmp, c);

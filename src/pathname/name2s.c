@@ -1,5 +1,5 @@
 #ifndef lint
-static  char    Id[] = "$Id: name2s.c,v 12.0 1992/11/24 15:27:47 ste_cm Rel $";
+static  char    Id[] = "$Id: name2s.c,v 12.2 1993/09/21 18:54:04 dickey Exp $";
 #endif 
 
 /*
@@ -7,6 +7,7 @@ static  char    Id[] = "$Id: name2s.c,v 12.0 1992/11/24 15:27:47 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	18 Aug 1988 (from ded2s.c)
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		04 Oct 1991, conversion to ANSI
  *		22 Jul 1991, allow space as a printing char.
  *		19 Aug 1988, added 'opt & 4' mode so we can make 'copy' work on
@@ -37,9 +38,9 @@ static  char    Id[] = "$Id: name2s.c,v 12.0 1992/11/24 15:27:47 ste_cm Rel $";
  *		This does not escape filenames containing a newline.
  */
 
+#define	CHR_PTYPES
 #define	STR_PTYPES
-#include	"ptypes.h"
-#include	<ctype.h>
+#include "ptypes.h"
 
 #define	isshell(c)	(strchr("*%?$()[]{}|<>^&;#\\\"`'", c) != 0)
 #define	isAEGIS(c)	(strchr("*%?()[]{}\\", c) != 0)
@@ -75,7 +76,7 @@ int	name2s(
 			if (isascii(c) && isgraph(c)) {
 				if (isalpha(c) && isupper(c)) {
 					*bfr++ = ':';
-					c = tolower(c);
+					c = LowerMacro(c);
 				} else if ((c == ':')
 				||	   (c == '.'
 					&&  in_leaf == 1
@@ -111,7 +112,7 @@ int	name2s(
 				*bfr++ = '?';
 		}
 	}
-	*bfr = '\0';
+	*bfr = EOS;
 	return (bfr-base);
 }
 

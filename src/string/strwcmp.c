@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	*Id = "$Id: strwcmp.c,v 12.0 1992/11/17 12:54:50 ste_cm Rel $";
+static	char	*Id = "$Id: strwcmp.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	*Id = "$Id: strwcmp.c,v 12.0 1992/11/17 12:54:50 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	27 Mar 1989
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, converted to ANSI
  *
  * Function:	Performs a wildcard comparison between two strings a la unix
@@ -18,12 +19,12 @@ static	char	*Id = "$Id: strwcmp.c,v 12.0 1992/11/17 12:54:50 ste_cm Rel $";
 #define	SINGLE	'?'
 #define	MULTI	'*'
 
-strwcmp(
-_ARX(char *,	wild)
-_AR1(char *,	name)
-	)
-_DCL(char *,	wild)
-_DCL(char *,	name)
+int	strwcmp(
+	_ARX(char *,	wild)
+	_AR1(char *,	name)
+		)
+	_DCL(char *,	wild)
+	_DCL(char *,	name)
 {
 	while (*wild || *name) {
 		if (*wild == MULTI) {
@@ -46,7 +47,7 @@ _DCL(char *,	name)
 }
 
 #ifdef	TEST
-default_test(_AR0)
+void	default_test(_AR0)
 {
 	static	char	*names[] = {
 		"",	"a",	"b",	"ab",	"ba",	"aa",	"bb",	"aba"

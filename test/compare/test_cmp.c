@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	II[] = "$Id: test_cmp.c,v 12.0 1992/11/20 13:14:00 ste_cm Rel $";
+static	char	II[] = "$Id: test_cmp.c,v 12.1 1993/09/21 18:46:43 dickey Exp $";
 #endif/*lint*/
 
 /*
@@ -7,6 +7,7 @@ static	char	II[] = "$Id: test_cmp.c,v 12.0 1992/11/20 13:14:00 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	05 Jul 1989 (for 'ddif' tests)
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *
  * Function:	This module acts as a test-driver for the comparison
  *		utilities 'scomp' and 'm2comp'.
@@ -27,7 +28,7 @@ char **	load(
 	_DCL(int *,	num)
 	_DCL(char *,	tag)
 {
-	extern	char *	ctime();
+	extern	char *	ctime(_ar1(time_t *,t));
 	auto	char **	v;
 	auto	STAT	sb;
 
@@ -62,9 +63,9 @@ SCOMP_REPORT(s_report)
 	if (lo_2 >= hi_2)	PRINTF("%d",    1+hi_2);
 	else			PRINTF("%d,%d", 1+lo_2, 1+hi_2);
 	PRINTF("\n");
-	while (lo_1 <= hi_1)	PRINTF("< %s", v1[lo_1++]);
+	while (lo_1 <= hi_1)	PRINTF("< %s", v1x[lo_1++]);
 	if (both)		PRINTF("---\n");
-	while (lo_2 <= hi_2)	PRINTF("> %s", v2[lo_2++]);
+	while (lo_2 <= hi_2)	PRINTF("> %s", v2x[lo_2++]);
 }
 
 static
@@ -94,32 +95,32 @@ SCOMP_REPORT(s_context)
 
 	first = lo_1 - (c_opt - 1);
 	if (first < 0)	first = 0;
-	last  = argv_last(v1, hi_1, hi_1 + c_opt + 1);
+	last  = argv_last(v1x, hi_1, hi_1 + c_opt + 1);
 	mark = both ? '!' : '-';
 
 	PRINTF("*** %d,%d\n", first, last);
 	for (j = first-1; j < last; j++) {
 		if (j >= 0)
-		PRINTF("%c %s", (j < lo_1 || j > hi_1) ? ' ' : mark, v1[j]);
+		PRINTF("%c %s", (j < lo_1 || j > hi_1) ? ' ' : mark, v1x[j]);
 	}
 
 	first = lo_2 - (c_opt - 1);
 	if (first < 0)	first = 0;
-	last  = argv_last(v2, hi_2, hi_2 + c_opt + 1);
+	last  = argv_last(v2x, hi_2, hi_2 + c_opt + 1);
 	mark = both ? '!' : '+';
 
 	PRINTF("\n");
 	PRINTF("--- %d,%d -----\n", first, last);
 	for (j = first-1; j < last; j++) {
 		if (j >= 0)
-		PRINTF("%c %s", (j < lo_2 || j > hi_2) ? ' ' : mark, v2[j]);
+		PRINTF("%c %s", (j < lo_2 || j > hi_2) ? ' ' : mark, v2x[j]);
 	}
 }
 
 _MAIN
 {
 	auto	char	buffer[BUFSIZ];
-	auto	int	(*func)()	= s_report;
+	auto	void	(*func)(SCOMP_REPORT_ARGS) = s_report;
 
 	setbuf(stdout, buffer);
 	if ((argc > 1) && !strncmp(argv[1], "-c", 2)) {

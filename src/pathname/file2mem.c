@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: file2mem.c,v 12.0 1992/09/02 15:19:51 ste_cm Rel $";
+static	char	Id[] = "$Id: file2mem.c,v 12.1 1993/09/21 18:54:04 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: file2mem.c,v 12.0 1992/09/02 15:19:51 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	11 May 1989
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		04 Oct 1991, conversion to ANSI
  *		13 Sep 1991, use 'filesize()'
  *		12 Sep 1991, removed redundant def for 'errno' (VMS C 3.2)
@@ -23,7 +24,7 @@ static	char	Id[] = "$Id: file2mem.c,v 12.0 1992/09/02 15:19:51 ste_cm Rel $";
 #define	STR_PTYPES
 #include "ptypes.h"
 #include <errno.h>
-extern	FILE	*tmpfile();
+extern	FILE	*tmpfile(_ar0);
 
 char	*
 file2mem(
@@ -99,13 +100,12 @@ _DCL(char *,	name)
 #ifdef	TEST
 _MAIN
 {
-	register int	j, k;
-	auto	 int	lines;
+	register int	j;
 	auto	 char	*blob;
 	auto	 char	*name;
 
 	for (j = 1; j < argc; j++) {
-		if (blob = file2mem(name = argv[j])) {
+		if ((blob = file2mem(name = argv[j])) != NULL) {
 			PRINTF("file: %s (%d chars)\n", name, strlen(blob));
 			PRINTF("%s<EOF>\n", blob);
 			dofree(blob);

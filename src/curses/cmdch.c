@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: cmdch.c,v 12.0 1992/08/12 09:18:03 ste_cm Rel $";
+static	char	Id[] = "$Id: cmdch.c,v 12.1 1993/09/21 18:54:05 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: cmdch.c,v 12.0 1992/08/12 09:18:03 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	01 Dec 1987 (broke out of 'ded.c')
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		12 Aug 1992, map carriage-return to newline.
  *		03 Oct 1991, conversion to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
@@ -27,10 +28,9 @@ static	char	Id[] = "$Id: cmdch.c,v 12.0 1992/08/12 09:18:03 ste_cm Rel $";
  */
 
 #define		STR_PTYPES
-#define		CUR_PTYPES
-#include	"ptypes.h"
-#include	<ctype.h>
+#include	"td_curse.h"
 #include	"cmdch.h"
+#include	<ctype.h>
 
 #define	ESC(c)	((c) == '\033')
 #define	END(s)	s[strlen(s)-1]
@@ -49,7 +49,7 @@ int	cmdch(
 	_AR1(int *,	cnt_))
 	_DCL(int *,	cnt_)
 {
-	auto	int	c,
+	auto	int	c	= EOS,
 			done	= FALSE,
 			had_c	= 0,
 			count	= 0;
@@ -95,7 +95,7 @@ int	cmdch(
 			} while (!isalpha(c));
 		}
 		if (j) {
-			i_blk[j] = '\0';
+			i_blk[j] = EOS;
 			done	= TRUE;
 			if	(EQL(KU))	c = ARO_UP;
 			else if	(EQL(KD))	c = ARO_DOWN;

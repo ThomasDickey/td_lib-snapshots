@@ -1,4 +1,4 @@
-# $Id: Makefile,v 12.0 1993/04/27 08:25:04 ste_cm Rel $
+# $Id: Makefile,v 12.1 1993/09/21 18:10:49 dickey Exp $
 # make-file for TD_LIB common/test library
 
 ####### (Development) ##########################################################
@@ -11,7 +11,7 @@ VPATH	= ../src
 .SUFFIXES:
 .SUFFIXES: .c .lint
 .c.lint:; tdlint $(CPP_OPTS) -ltd -lcurses $< >$@
-.c:	; $(CC) -o $@ $(CFLAGS) $(CPP_OPTS) $< $(LIBS) -lcurses -ltermcap
+.c:	; $(LINK) -o $@ $(CFLAGS) $(CPP_OPTS) $< $(LIBS) -lcurses -ltermcap
 
 ####### (Standard Lists) #######################################################
 DATA_FILES = \
@@ -180,10 +180,11 @@ ALL	= $(PROGS)
 
 ####### (Standard Productions) #################################################
 all:		$(SOURCES)	; @echo 'type "make run_test"'
-clean:				; rm -f $(CLEAN) *.tmp
+clean:				; rm -f $(CLEAN) *.tmp *.pure*
 clobber:	clean		; rm -f $(ALL)
 destroy:			; $(DESTROY)
 sources:	$(SOURCES)
+programs:	$(PROGS)
 run_test:	$(SOURCES) $(PROGS) ; $(RUN_TESTS)
 lint.out:
 lincnt.out:

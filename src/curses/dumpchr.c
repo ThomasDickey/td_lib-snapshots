@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: dumpchr.c,v 12.0 1991/10/03 16:07:36 ste_cm Rel $";
+static	char	Id[] = "$Id: dumpchr.c,v 12.1 1993/09/21 18:54:05 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: dumpchr.c,v 12.0 1991/10/03 16:07:36 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	20 Apr 1988
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, converted to ANSI
  *		
  *		Revision 8.1  91/05/15  10:01:57  dickey
@@ -21,12 +22,12 @@ static	char	Id[] = "$Id: dumpchr.c,v 12.0 1991/10/03 16:07:36 ste_cm Rel $";
 
 #define	OUT	FPRINTF(fp,
 
-dumpchr(
-_ARX(FILE *,	fp)
-_AR1(int,	c)
-	)
-_DCL(FILE *,	fp)
-_DCL(int,	c)
+void	dumpchr(
+	_ARX(FILE *,	fp)
+	_AR1(int,	c)
+		)
+	_DCL(FILE *,	fp)
+	_DCL(int,	c)
 {
 	c &= 0377;
 	if (!isascii(c)) {

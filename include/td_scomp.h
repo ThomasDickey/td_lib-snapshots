@@ -1,4 +1,4 @@
-/* $Id: td_scomp.h,v 12.0 1992/11/19 15:03:15 ste_cm Rel $ */
+/* $Id: td_scomp.h,v 12.1 1993/09/21 18:28:49 dickey Exp $ */
 
 #ifndef	_CM_SCOMP_H
 #define	_CM_SCOMP_H
@@ -22,10 +22,10 @@
 		_AR1(SCOMP_TYPE,p2)
 
 #define	SCOMP_REPORT_ARGS \
-		_ARX(SCOMP_TYPE,v1)\
+		_ARX(SCOMP_TYPE,v1x)\
 		_ARX(int,	lo_1)\
 		_ARX(int,	hi_1)\
-		_ARX(SCOMP_TYPE,v2)\
+		_ARX(SCOMP_TYPE,v2x)\
 		_ARX(int,	lo_2)\
 		_AR1(int,	hi_2)
 
@@ -37,7 +37,7 @@
 		_arx(int,	n2)\
 		_arx(int,	size)\
 		_fnx(int,	match,	(SCOMP_MATCH_ARGS))\
-		_fn1(int,	report,	(SCOMP_REPORT_ARGS))\
+		_fn1(void,	report,	(SCOMP_REPORT_ARGS))\
 		)\
 		_dcl(SCOMP_TYPE,v1)\
 		_dcl(int,	n1)\
@@ -45,7 +45,7 @@
 		_dcl(int,	n2)\
 		_dcl(int,	size)\
 		_dcl(int,	(*match)())\
-		_dcl(int,	(*report)())\
+		_dcl(void,	(*report)())\
 		_nul
 
 #define	SCOMP_MATCH(func)\
@@ -54,7 +54,7 @@
 		_DCL(SCOMP_TYPE,p2)
 
 #define	SCOMP_REPORT(func)\
-	int	func(SCOMP_REPORT_ARGS)\
+	void	func(SCOMP_REPORT_ARGS)\
 		_DCL(SCOMP_TYPE,v1)\
 		_DCL(SCOMP_TYPE,v2)
 

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: pathcat.c,v 12.0 1992/01/28 14:01:10 ste_cm Rel $";
+static	char	Id[] = "$Id: pathcat.c,v 12.1 1993/09/21 12:02:48 dickey Exp $";
 #endif
 
 /*
@@ -47,6 +47,6 @@ _DCL(char *,	fname)
 	}
 	(void)strcpy(tmp, dname);
 	if ((s = strrchr(tmp, '/')) && (!strcmp(s, "/")))
-		*s = '\0';		/* trim excess '/' */
+		*s = EOS;		/* trim excess '/' */
 	return (strcpy(dst, (strcat(strcat(tmp, "/"), fname))));
 }

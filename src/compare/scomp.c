@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: scomp.c,v 12.0 1993/04/27 07:49:56 ste_cm Rel $";
+static	char	Id[] = "$Id: scomp.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: scomp.c,v 12.0 1993/04/27 07:49:56 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	24 May 1989
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		13 Nov 1992, use prototypes
  *
  * Function:	Compares two vectors (using user-supplied function) and reports
@@ -38,7 +39,7 @@ void	SCOMP(
 	_ARX(int,		n2)	/* ...corresponding length	*/
 	_ARX(int,		size)	/* size of vector-entry		*/
 	_FNX(int,		match,	(SCOMP_MATCH_ARGS))
-	_FN1(int,		report,	(SCOMP_REPORT_ARGS))
+	_FN1(void,		report,	(SCOMP_REPORT_ARGS))
 		)
 	_DCL(SCOMP_TYPE,	v1)
 	_DCL(SCOMP_TYPE,	v2)
@@ -46,7 +47,7 @@ void	SCOMP(
 	_DCL(int,		n2)
 	_DCL(int,		size)
 	_DCL(int,		(*match)())
-	_DCL(int,		(*report)())
+	_DCL(void,		(*report)())
 {
 	register int	x,y,z;
 	register int	j1,j2;

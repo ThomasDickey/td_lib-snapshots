@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: blip.c,v 12.0 1992/11/18 08:57:22 ste_cm Rel $";
+static	char	Id[] = "$Id: blip.c,v 12.1 1993/09/21 18:54:05 dickey Exp $";
 #endif
 
 /*
@@ -7,14 +7,14 @@ static	char	Id[] = "$Id: blip.c,v 12.0 1992/11/18 08:57:22 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	11 Aug 1988, from 'beep()'
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		18 Oct 1991, if stderr is not a terminal, open directly to
  *			     /dev/tty.
  *		04 Oct 1991, conversion to ANSI
  *		20 Jun 1991, changed return-type to 'void'
  */
 
-#define	CUR_PTYPES
-#include	<ptypes.h>
+#include	"td_curse.h"
 
 void blip(
 _AR1(int,	c))

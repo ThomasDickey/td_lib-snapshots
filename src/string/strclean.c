@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: strclean.c,v 12.0 1991/10/04 07:59:55 ste_cm Rel $";
+static	char	Id[] = "$Id: strclean.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: strclean.c,v 12.0 1991/10/04 07:59:55 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	10 Nov 1987
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, converted to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
  *		04 Oct 1989, lint (apollo SR10.1)
@@ -20,22 +21,24 @@ static	char	Id[] = "$Id: strclean.c,v 12.0 1991/10/04 07:59:55 ste_cm Rel $";
 #include	"ptypes.h"
 #include	<ctype.h>
 
-strclean(
-_AR1(char *,	string))
-_DCL(char *,	string)
+int	strclean(
+	_AR1(char *,	string))
+	_DCL(char *,	string)
 {
-register char	*d, *s = string, *t;
+	register char	*d, *s = string, *t;
 
 	while (*s) {
 		if (isspace(*s)) {
 			for (t = s; isspace(*t); t++);
 			if (*t) {
 				if (s != string) *s++ = ' ';
-				for (d = s; *d++ = *t++;);
+				for (d = s; (*d++ = *t++) != EOS; )
+					;
 			} else
-				*s = '\0';
+				*s = EOS;
 		} else {
-			while (*s && !isspace(*s))	s++;
+			while (*s && !isspace(*s))
+				s++;
 		}
 	}
 	return(strlen(string));

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: next_ver.c,v 12.0 1992/01/21 10:31:40 ste_cm Rel $";
+static	char	Id[] = "$Id: next_ver.c,v 12.1 1993/09/21 18:54:04 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: next_ver.c,v 12.0 1992/01/21 10:31:40 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	01 Oct 1991
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *
  * Function:	Compute the next version number along a branch.
  */
@@ -14,17 +15,17 @@ static	char	Id[] = "$Id: next_ver.c,v 12.0 1992/01/21 10:31:40 ste_cm Rel $";
 #define		STR_PTYPES
 #include	"ptypes.h"
 
-next_version(
-_ARX(char *,	dst)
-_AR1(char *,	src)
-	)
-_DCL(char *,	dst)
-_DCL(char *,	src)
+void	next_version(
+	_ARX(char *,	dst)
+	_AR1(char *,	src)
+		)
+	_DCL(char *,	dst)
+	_DCL(char *,	src)
 {
 	char	*t;
 
 	*dst = EOS;
-	while (t = strchr(src, '.')) {
+	while ((t = strchr(src, '.')) != NULL) {
 		size_t	len = t - src + 1;
 		(void)strncpy(dst, src, len);
 		dst += len;

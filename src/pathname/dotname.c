@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: dotname.c,v 12.0 1991/10/03 16:08:28 ste_cm Rel $";
+static	char	Id[] = "$Id: dotname.c,v 12.1 1993/09/21 12:03:10 dickey Exp $";
 #endif
 
 /*
@@ -21,6 +21,6 @@ _DCL(register char *,	path)
 {
 	if (*path++ == '.') {
 		if (*path == '.')	path++;
-		return (*path == '\0');
+		return (*path == EOS);
 	} else				return (0);
 }

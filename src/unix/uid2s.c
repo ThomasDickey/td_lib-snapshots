@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: uid2s.c,v 12.0 1991/10/03 11:52:45 ste_cm Rel $";
+static	char	Id[] = "$Id: uid2s.c,v 12.1 1993/09/21 18:54:02 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: uid2s.c,v 12.0 1991/10/03 11:52:45 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	10 Nov 1987
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, conversion to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
  *		15 May 1990, added a hack to read the apollo passwd-file
@@ -22,15 +23,9 @@ static	char	Id[] = "$Id: uid2s.c,v 12.0 1991/10/03 11:52:45 ste_cm Rel $";
  *		defining the name.
  */
 
+#define	PWD_PTYPES
 #define	STR_PTYPES
 #include	"ptypes.h"
-#include	<pwd.h>
-
-#ifdef	SYSTEM5
-extern	 struct passwd *getpwent();
-extern		V_OR_I	setpwent();
-extern		V_OR_I	endpwent();
-#endif
 
 typedef	struct	_table	{
 	struct	_table	*link;
@@ -45,13 +40,16 @@ typedef	struct	_table	{
 static	TABLE	*table_uid2s;
 
 static
-define_uid2s(uid, name)
-int	uid;
-char	*name;
+void	define_uid2s(
+	_ARX(int,	id)
+	_AR1(char *,	name)
+		)
+	_DCL(int,	id)
+	_DCL(char *,	name)
 {
 	register TABLE	*q = ALLOC(TABLE,1);
 	q->link = table_uid2s;
-	q->user = uid;
+	q->user = id;
 	q->name = txtalloc(name);
 	table_uid2s = q;
 }
@@ -105,7 +103,7 @@ int	uid;
 		define_uid2s(uid, "<none>");
 	} else
 #endif
-	if (p = getpwuid(uid))
+	if ((p = getpwuid(uid)) != NULL)
 		define_uid2s(uid, p->pw_name);
 	else {
 		auto	char	bfr[80];

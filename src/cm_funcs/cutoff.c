@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: cutoff.c,v 12.0 1992/07/16 07:04:23 ste_cm Rel $";
+static	char	Id[] = "$Id: cutoff.c,v 12.1 1993/09/21 18:54:05 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: cutoff.c,v 12.0 1992/07/16 07:04:23 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	20 May 1988 (from 'sccsdate.c')
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		16 Jul 1992, 'optind' should always be index past most recent
  *			     argv-entry parsed.
  *		08 Jan 1992, allow year to be given as "xx", "19xx" or "20xx";
@@ -28,20 +29,19 @@ static	char	Id[] = "$Id: cutoff.c,v 12.0 1992/07/16 07:04:23 ste_cm Rel $";
 #define	Z(n)	twod(&bfr[n+n])
 
 static
-twod (
-_AR1(char *,	s))
-_DCL(char *,	s)
+int	twod (
+	_AR1(char *,	s))
+	_DCL(char *,	s)
 {
 	return (10*(s[0]-'0') + s[1]-'0');
 }
 
-time_t
-cutoff (
-_ARX(int,	argc)
-_AR1(char **,	argv)
-	)
-_DCL(int,	argc)
-_DCL(char **,	argv)
+time_t	cutoff (
+	_ARX(int,	argc)
+	_AR1(char **,	argv)
+		)
+	_DCL(int,	argc)
+	_DCL(char **,	argv)
 {
 	int	first	= TRUE;
 	int	year	= 1900;

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: s2uid.c,v 12.0 1991/10/03 08:45:27 ste_cm Rel $";
+static	char	Id[] = "$Id: s2uid.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: s2uid.c,v 12.0 1991/10/03 08:45:27 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	16 Nov 1987
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, conversion to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
  *		15 May 1990, added a hack which reads the apollo passwd-file
@@ -17,9 +18,9 @@ static	char	Id[] = "$Id: s2uid.c,v 12.0 1991/10/03 08:45:27 ste_cm Rel $";
  *		valid user-id.  (If an integer is given, no checking is done).
  */
 
+#define	PWD_PTYPES
 #define	STR_PTYPES
-#include	"ptypes.h"
-#include	<pwd.h>
+#include "ptypes.h"
 
 #ifdef	apollo_sr10
 	/*
@@ -52,16 +53,16 @@ static	unknown_uid(
 #define	unknown_uid(s)	-1
 #endif
 
-s2uid(
-_AR1(char *,	s))
-_DCL(char *,	s)
+int	s2uid(
+	_AR1(char *,	s))
+	_DCL(char *,	s)
 {
-char	*d;
-long	val = strtol(s, &d, 0);
+	char	*d;
+	long	val = strtol(s, &d, 0);
+
 	if (*d) {
-	extern	 struct	passwd	*getpwnam();	/* cf: apollo sys5 */
-	register struct	passwd	*p;
-		if (p = getpwnam(s))
+		register struct	passwd	*p;
+		if ((p = getpwnam(s)) != 0)
 			val = p->pw_uid;
 		else	val = unknown_uid(s);
 	}

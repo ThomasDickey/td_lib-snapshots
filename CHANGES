@@ -1,3 +1,13 @@
+1993-09-21  dickey@software.org
+
+	* src/cm_funcs/vercmp.c: fixed the ANSI-cpp usage for gcc
+
+	* test/run_test.sh:
+	made a quick hack to redirect the logfiles from Purify, one-per-test
+
+	* src/cm_funcs/cutoff.c, src/compare/diffload.c, src/curses/beep.c, src/curses/blip.c, src/curses/cmdch.c, src/curses/dumpchr.c, src/curses/dumpwin.c, src/memory/doalloc.c, src/pathname/copyback.c, src/process/bldarg.c, src/process/catarg.c, src/process/catchall.c, src/string/dotcmp.c, src/cm_funcs/newzone.c, src/cm_funcs/next_ver.c, src/compare/m2comp.c, src/curses/erasechr.c, src/curses/killchar.c, src/curses/logch.c, src/curses/padedit.c, src/curses/rawgets.c, src/pathname/file2arg.c, src/pathname/file2mem.c, src/pathname/filecopy.c, src/pathname/fp2argv.c, src/pathname/istextfl.c, src/pathname/mem2file.c, src/pathname/modechar.c, src/pathname/name2s.c, src/pathname/pathcmp.c, src/pathname/pathhead.c, src/pathname/pathleaf.c, src/process/execute.c, src/process/failed.c, src/process/for_admn.c, src/process/for_user.c, src/process/gethome.c, src/process/getuser.c, src/process/makeargv.c, src/sheet/field_of.c, src/string/lsbycols.c, src/string/ltostr.c, src/unix/gid2s.c, src/cm_funcs/rcs_dir.c, src/cm_funcs/rcsdebug.c, src/cm_funcs/rcsedit.c, src/cm_funcs/rcskeys.c, src/cm_funcs/rcslast.c, src/cm_funcs/rcsload.c, src/cm_funcs/rcsname.c, src/cm_funcs/rcspath.c, src/cm_funcs/rcsperm.c, src/cm_funcs/rcssymbs.c, src/cm_funcs/rcstemp.c, src/cm_funcs/rcstime.c, src/cm_funcs/sccs_dir.c, src/cm_funcs/sccslast.c, src/cm_funcs/sccsname.c, src/compare/scomp.c, src/curses/rawterm.c, src/curses/resizwin.c, src/curses/savewin.c, src/curses/scr_size.c, src/memory/stralloc.c, src/memory/txtalloc.c, src/pathname/relpath.c, src/pathname/sameleaf.c, src/pathname/track_wd.c, src/pathname/trimpath.c, src/process/shoarg.c, src/string/strbcmp.c, src/string/strclean.c, src/string/strucmp.c, src/string/strucpy.c, src/string/strwcmp.c, src/unix/s2gid.c, src/unix/s2uid.c, src/unix/setmtime.c, src/cm_funcs/samebr.c, src/cm_funcs/vercmp.c, src/curses/viewfile.c, src/curses/win2file.c, src/curses/wrepaint.c, src/memory/vecalloc.c, src/memory/vecedit.c, src/pathname/abspath.c, src/pathname/walktree.c, src/pathname/which.c, src/process/interact.c, src/process/usercopy.c, src/process/userprot.c, src/process/walkback.c, src/unix/uid2s.c, test/compare/test_cmp.c, include/td_scomp.h, test/Makefile, include/ptypes.h, include/rcsdefs.h, include/td_curse.h, include/td_lib.h, include/sccsdefs.h, src/Makefile, src/pathname/arg2file.c, src/pathname/add2fnam.c, src/pathname/denode.c, src/pathname/dotname.c, src/pathname/pathcat.c, src/string/strtrim.c:
+	gcc-warnings
+
 1993-06-24  dickey@software.org
 
 	* include/td_lib.h: lint-lib nit

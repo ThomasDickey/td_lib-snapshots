@@ -1,11 +1,12 @@
 #ifndef	lint
-static	char	Id[] = "$Id: abspath.c,v 12.0 1992/11/24 12:42:01 ste_cm Rel $";
+static	char	Id[] = "$Id: abspath.c,v 12.1 1993/09/21 18:54:02 dickey Exp $";
 #endif
 
 /*
  * Author:	T.E.Dickey
  * Created:	17 Sep 1987
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		13 Nov 1992, removed redundant 'index' macro.
  *		04 Oct 1991, conversion to ANSI
  *		22 Jul 1991, moved MAXPATHLEN def to "ptypes.h"
@@ -34,8 +35,11 @@ static	char	Id[] = "$Id: abspath.c,v 12.0 1992/11/24 12:42:01 ste_cm Rel $";
  *		strip it).
  */
 
+#define	CHR_PTYPES
+#define	PWD_PTYPES
 #define	STR_PTYPES
 #include	"ptypes.h"
+
 #ifdef	apollo
 #ifdef	apollo_sr10
 #ifdef	lint
@@ -49,17 +53,20 @@ static	char	Id[] = "$Id: abspath.c,v 12.0 1992/11/24 12:42:01 ste_cm Rel $";
 #else	/* !apollo_sr10 */
 #include	</sys/ins/base.ins.c>
 #include	</sys/ins/name.ins.c>
-#include	<ctype.h>
 #endif	/* apollo_sr10 */
 #endif	/* apollo */
-
-#include	<pwd.h>
 
 #ifdef	apollo
 #define	TOP	2			/* permit 2 leading /'s */
 #else
 #define	TOP	1
 #endif	/* apollo */
+
+#ifdef	TEST
+static	void	do_test(
+		_arx(int,	argc)
+		_ar1(char **,	argv));
+#endif	/* TEST */
 
 static	char	nodestr[MAXPATHLEN];	/* will hold nodename, if any */
 static	int	nodelen = -1;
@@ -81,33 +88,33 @@ _DCL(char *,	path)
 		out_len = 0;
 	path[out_len] = EOS;
 #else					/* sr9.x */
-register char	*s, *d = path;
-name_$pname_t	in_name, out_name;
-short		in_len,
-		out_len;
-status_$t	st;
+	register char	*s, *d = path;
+	name_$pname_t	in_name, out_name;
+	short		in_len,
+			out_len;
+	status_$t	st;
 
 	in_len = strlen(strcpy(in_name, d));
 	name_$get_path(in_name, in_len, out_name, out_len, st);
 
 	if (st.all == status_$ok) {
 		s = out_name;
-		s[out_len] = '\0';
+		s[out_len] = EOS;
 		/* Convert AEGIS name to UNIX name */
 		while (*d = *s++) {
 			if (*d == ':') {
 				*d = *s++;
 			} else if (*d == '#') {
-			char	tmp[3];
-			int	hex;
+				char	tmp[3];
+				int	hex;
+
 				(void)strncpy(tmp, s, 2);
-				tmp[2] = '\0';
+				tmp[2] = EOS;
 				s += strlen(tmp);
 				sscanf(tmp, "%x", &hex);
 				*d = hex;
 			} else {
-				if (isalpha(*d))
-					*d = _tolower(*d);
+				LowerCase(*d);
 			}
 			d++;
 		}
@@ -120,46 +127,48 @@ status_$t	st;
  * Concatenate two pathnames to make a longer one.
  */
 static
-precat(
-_ARX(char *,	prefix)
-_AR1(char *,	string)
-	)
-_DCL(char *,	prefix)
-_DCL(char *,	string)
+void	precat(
+	_ARX(char *,	prefix)
+	_AR1(char *,	string)
+		)
+	_DCL(char *,	prefix)
+	_DCL(char *,	string)
 {
-register char *s;
-char	tmp[MAXPATHLEN];
+	register char *s;
+	char	tmp[MAXPATHLEN];
+
 	s = strcpy(tmp, prefix) + strlen(prefix);
 	if (*string)
 		(void)strcat(strcat(s, "/"), string);
 	(void)strcpy(string, tmp);
-	*s = '\0';
+	*s = EOS;
 }
 
 /************************************************************************
  *	main procedures							*
  ************************************************************************/
-abshome(
-_AR1(char *,	path))
-_DCL(char *,	path)
+void	abshome(
+	_AR1(char *,	path))
+	_DCL(char *,	path)
 {
 	register char *s, *d = path;
 
 	if (*d == '~') {	/* my home directory */
 		s = d+1;
-		if ((*s == '\0') || (*s++ == '/')) {
-			while (*d++ = *s++);
+		if ((*s == EOS) || (*s++ == '/')) {
+			while ((*d++ = *s++) != EOS)
+				;
 			precat(getenv("HOME"), path);
 		} else {	/* someone else's home */
-		extern	 struct passwd *getpwnam();	/* cf: apollo sys5 */
-		register struct passwd *p;
-		char	user[MAXPATHLEN];
-			if (s = strchr(strcpy(user, d+1), '/'))
-				*s++ = '\0';
+			register struct passwd *p;
+			char	user[MAXPATHLEN];
+			if ((s = strchr(strcpy(user, d+1), '/')) != 0)
+				*s++ = EOS;
 			else
 				s = d + strlen(d);
-			if (p = getpwnam(user)) {
-				while (*d++ = *s++);
+			if ((p = getpwnam(user)) != 0) {
+				while ((*d++ = *s++) != EOS)
+					;
 				precat(p->pw_dir, path);
 			}
 			/* else no such home directory! */
@@ -167,11 +176,11 @@ _DCL(char *,	path)
 	}
 }
 
-abspath(
-_AR1(char *,	path))
-_DCL(char *,	path)
+void	abspath(
+	_AR1(char *,	path))
+	_DCL(char *,	path)
 {
-register char *s, *d = path;
+	register char *s, *d = path;
 
 	if (nodelen < 0) {	/* 'getwd()' is expensive... */
 		if (getwd(nodestr))
@@ -200,7 +209,8 @@ register char *s, *d = path;
 	if (nodelen > 0) {
 		if (strcmp(d, nodestr)) {
 			if (d != (s = denode(d, nodestr, (int *)0)))
-				while (*d++ = *s++);
+				while ((*d++ = *s++) != EOS)
+					;
 		} else
 			(void)strcpy(d, "/");
 	}
@@ -222,10 +232,10 @@ register char *s, *d = path;
 #endif	/* apollo */
 	} else if (*path) {
 	char	cwdpath[MAXPATHLEN];
-		if (d = getwd(cwdpath)) {
+		if ((d = getwd(cwdpath)) != 0) {
 			s = path;
 			if (*s == '.')
-				if (s[1] == '\0' || s[1] == '/')
+				if (s[1] == EOS || s[1] == '/')
 					s++;	/* absorb "." */
 			d += strlen(cwdpath);
 			if (d[-1] != '/')	/* add "/" iff we need it */
@@ -245,7 +255,7 @@ register char *s, *d = path;
 					s++;
 		} else if (*s == '.') {
 			if (s > path && s[-1] == '/') {
-				if (s[1] == '\0')
+				if (s[1] == EOS)
 					break;
 				else if (s[1] == '/') {
 					s++;
@@ -262,7 +272,7 @@ register char *s, *d = path;
 	while (d > path+TOP)
 		if (d[-1] == '/')	d--;
 		else			break;
-	*d = '\0';
+	*d = EOS;
 
 	/*
 	 * Trim out ".." constructs
@@ -270,7 +280,7 @@ register char *s, *d = path;
 	for (s = path; *s; s++) {
 		if (s[0] == '.' && s[1] == '.')
 			if ((s > path && s[-1] == '/')
-			&&  (s[2] == '\0' || s[2] == '/')) {
+			&&  (s[2] == EOS || s[2] == '/')) {
 				d = s+2;
 				if (s > (path+TOP)) {
 					s -= 2;
@@ -278,19 +288,20 @@ register char *s, *d = path;
 					if (s == path &&  !*d) s++;
 				} else if (*d)
 					s--;
-				while (*s++ = *d++);
+				while ((*s++ = *d++) != EOS)
+					;
 				s = path;	/* rescan */
 			}
 	}
 }
 
 #ifdef	TEST
-do_test(
-_ARX(int,	argc)
-_AR1(char **,	argv)
-	)
-_DCL(int,	argc)
-_DCL(char **,	argv)
+void	do_test(
+	_ARX(int,	argc)
+	_AR1(char **,	argv)
+		)
+	_DCL(int,	argc)
+	_DCL(char **,	argv)
 {
 	register int	j;
 	auto	 char	bfr[MAXPATHLEN];

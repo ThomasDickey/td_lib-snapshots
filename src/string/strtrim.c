@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: strtrim.c,v 12.0 1991/10/04 08:00:17 ste_cm Rel $";
+static	char	Id[] = "$Id: strtrim.c,v 12.1 1993/09/21 12:02:25 dickey Exp $";
 #endif
 
 /*
@@ -29,7 +29,7 @@ _DCL(char *,	s)
 	s += strlen(s);
 	while (--s >= base) {
 		if (isspace(*s))
-			*s = '\0';
+			*s = EOS;
 		else
 			break;
 	}

@@ -1,11 +1,12 @@
 #ifndef	lint
-static	char	Id[] = "$Id: bldarg.c,v 12.0 1991/10/03 16:16:00 ste_cm Rel $";
+static	char	Id[] = "$Id: bldarg.c,v 12.1 1993/09/21 18:54:05 dickey Exp $";
 #endif
 
 /*
  * Title:	bldarg.c (build argv-array)
  * Created:	17 Dec 1985
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, converted to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
  *		29 Jul 1988, if the string has a trailing blank, don't put a
@@ -38,21 +39,21 @@ static	char	Id[] = "$Id: bldarg.c,v 12.0 1991/10/03 16:16:00 ste_cm Rel $";
 #include	<ctype.h>
 #define	blank(c)	(isascii(c) && isspace(c))
 
-bldarg (
-_ARX(int,	argc)
-_ARX(char **,	argv)
-_AR1(char *,	string)
-	)
-_DCL(int,	argc)
-_DCL(char **,	argv)
-_DCL(char *,	string)
+void	bldarg (
+	_ARX(int,	argc)
+	_ARX(char **,	argv)
+	_AR1(char *,	string)
+		)
+	_DCL(int,	argc)
+	_DCL(char **,	argv)
+	_DCL(char *,	string)
 {
 register int  j  = 0;
 register char *s = string;
 
 	while (*s && (j < argc-1)) {
 		while (blank(*s))	
-			*s++ = '\0';
+			*s++ = EOS;
 		argv[j++] = *s ? s : 0;
 		while (*s && !blank(*s)) {
 			*s = toascii(*s);

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: fp2argv.c,v 12.0 1993/04/26 16:17:43 ste_cm Rel $";
+static	char	Id[] = "$Id: fp2argv.c,v 12.1 1993/09/21 18:54:04 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: fp2argv.c,v 12.0 1993/04/26 16:17:43 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	18 Jul 1988
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		17 Nov 1992, modified _FNX macro.
  *		25 Feb 1992, allow input-records to be arbitrarily wide.
  *		04 Oct 1991, conversion to ANSI
@@ -65,7 +66,7 @@ int	fp2argv(
 	register int  have  = 0;
 	char	*buffer;
 
-	while (buffer = get_line(fp)) {
+	while ((buffer = get_line(fp)) != 0) {
 		unsigned need	= (++lines | (CHUNK-1)) + 1;
 		if (need != have) {
 			vec  = DOALLOC(vec, char *, need);

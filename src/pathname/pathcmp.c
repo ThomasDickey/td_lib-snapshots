@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: pathcmp.c,v 12.0 1992/11/24 11:27:34 ste_cm Rel $";
+static	char	Id[] = "$Id: pathcmp.c,v 12.1 1993/09/21 18:54:04 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: pathcmp.c,v 12.0 1992/11/24 11:27:34 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	16 Mar 1989
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		12 May 1992, assume arguments are absolute pathnames (eliminate
  *			     time-consuming call to 'abspath()').
  *		03 Oct 1991, converted to ANSI
@@ -37,12 +38,12 @@ static	char	Id[] = "$Id: pathcmp.c,v 12.0 1992/11/24 11:27:34 ste_cm Rel $";
 #define	EQ	0
 #define	GT	1
 
-pathcmp(
-_ARX(char *,	p1)
-_AR1(char *,	p2)
-	)
-_DCL(char *,	p1)
-_DCL(char *,	p2)
+int	pathcmp(
+	_ARX(char *,	p1)
+	_AR1(char *,	p2)
+		)
+	_DCL(char *,	p1)
+	_DCL(char *,	p2)
 {
 	register char	*s1, *s2;
 	auto	int	code;
@@ -60,7 +61,7 @@ _DCL(char *,	p2)
 		CUT(p1,s1);
 		CUT(p2,s2);
 		TRACE((" [%s %s]", p1,p2))
-		if (code = strcmp(p1,p2))
+		if ((code = strcmp(p1,p2)) != 0)
 			return (code);
 		if ((s1 != 0) || (s2 != 0)) {
 			if (s2 == 0)
@@ -81,12 +82,16 @@ _DCL(char *,	p2)
  */
 #define	LOOP(i)	for (i = 1; i < argc; i++)
 
-do_test(
-_ARX(int,	argc)
-_AR1(char **,	argv)
-	)
-_DCL(int,	argc)
-_DCL(char **,	argv)
+void	do_test(
+	_arx(int,	argc)
+	_ar1(char **,	argv));
+
+void	do_test(
+	_ARX(int,	argc)
+	_AR1(char **,	argv)
+		)
+	_DCL(int,	argc)
+	_DCL(char **,	argv)
 {
 	register int	j, k;
 	auto	 int	len	= 0;

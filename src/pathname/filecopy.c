@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: filecopy.c,v 12.0 1991/10/04 12:26:18 ste_cm Rel $";
+static	char	Id[] = "$Id: filecopy.c,v 12.1 1993/09/21 18:54:04 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: filecopy.c,v 12.0 1991/10/04 12:26:18 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	30 Aug 1988
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		04 Oct 1991, conversion to ANSI
  *		12 Sep 1991, removed redundant def for 'errno' (VMS C 3.2)
  *		13 Sep 1988, use 'catchall()'
@@ -29,21 +30,22 @@ static	char	Id[] = "$Id: filecopy.c,v 12.0 1991/10/04 12:26:18 ste_cm Rel $";
  *		EEXIST - the source and destination are identical.
  */
 
+#define	SIG_PTYPES
 #include	"ptypes.h"
 #include	<sys/file.h>
 #include	<sys/signal.h>
 #include	<errno.h>
 
-filecopy(
-_ARX(char *,	src)
-_ARX(char *,	dst)
-_AR1(int,	copy)
-	)
-_DCL(char *,	src)
-_DCL(char *,	dst)
-_DCL(int,	copy)
+int	filecopy(
+	_ARX(char *,	src)
+	_ARX(char *,	dst)
+	_AR1(int,	copy)
+		)
+	_DCL(char *,	src)
+	_DCL(char *,	dst)
+	_DCL(int,	copy)
 {
-	struct	stat	sb1, sb2;
+	STAT	sb1, sb2;
 	register int	count,
 			fi,
 			fo;

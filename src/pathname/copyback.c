@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: copyback.c,v 12.0 1991/10/04 08:12:39 ste_cm Rel $";
+static	char	Id[] = "$Id: copyback.c,v 12.1 1993/09/21 18:54:05 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: copyback.c,v 12.0 1991/10/04 08:12:39 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	25 May 1988, from 'checkin'.
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, converted to ANSI
  *		15 May 1991, mods to compile under apollo sr10.3
  *		13 Sep 1988, use 'catchall()'.
@@ -20,16 +21,16 @@ static	char	Id[] = "$Id: copyback.c,v 12.0 1991/10/04 08:12:39 ste_cm Rel $";
 #include	"ptypes.h"
 #include	<signal.h>
 
-copyback (
-_ARX(FILE *,	fpT)			/* temporary-file pointer */
-_ARX(char *,	name)
-_ARX(int,	mode)			/* original mode of file */
-_AR1(int,	lines)			/* number of lines to copy (truncate) */
-	)
-_DCL(FILE *,	fpT)
-_DCL(char *,	name)
-_DCL(int,	mode)
-_DCL(int,	lines)
+int	copyback (
+	_ARX(FILE *,	fpT)		/* temporary-file pointer */
+	_ARX(char *,	name)
+	_ARX(int,	mode)		/* original mode of file */
+	_AR1(int,	lines)		/* number of lines to copy (truncate) */
+		)
+	_DCL(FILE *,	fpT)
+	_DCL(char *,	name)
+	_DCL(int,	mode)
+	_DCL(int,	lines)
 {
 	FILE	*fpS;
 	char	bfr[BUFSIZ];
@@ -39,7 +40,7 @@ _DCL(int,	lines)
 		return (FALSE);
 	}
 	catchall(SIG_IGN);
-	if (fpS = fopen (name, "w")) {
+	if ((fpS = fopen (name, "w")) != 0) {
 		(void) rewind (fpT);
 		while (lines-- > 0) {
 			(void) fgets (bfr, sizeof(bfr), fpT);

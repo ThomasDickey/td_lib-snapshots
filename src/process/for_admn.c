@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: for_admn.c,v 12.0 1993/04/29 10:17:06 ste_cm Rel $";
+static	char	Id[] = "$Id: for_admn.c,v 12.1 1993/09/21 18:54:04 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: for_admn.c,v 12.0 1993/04/29 10:17:06 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	11 Oct 1991 (from 'for_user.c')
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		23 Nov 1992, flush stderr/stdout if we fork
  *		17 Nov 1992, modified _FNX macro.
  *		
@@ -53,7 +54,7 @@ int	for_admin2(
 				break;
 			errno = 0;
 		}
-		if (errno = W_RETCODE(status))
+		if ((errno = W_RETCODE(status)) != 0)
 			return (-1);
 		return (0);
 	} else if (pid == 0) {

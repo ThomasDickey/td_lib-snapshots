@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: mem2file.c,v 12.0 1992/09/02 15:19:41 ste_cm Rel $";
+static	char	Id[] = "$Id: mem2file.c,v 12.1 1993/09/21 18:54:04 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: mem2file.c,v 12.0 1992/09/02 15:19:41 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	11 May 1989
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, converted to ANSI
  *
  * Function:	writes a string to a given file.  The mode of the file is
@@ -19,19 +20,19 @@ static	char	Id[] = "$Id: mem2file.c,v 12.0 1992/09/02 15:19:41 ste_cm Rel $";
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-mem2file(
-_ARX(char *,	blob)
-_ARX(char *,	name)
-_AR1(char *,	mode)
-	)
-_DCL(char *,	blob)
-_DCL(char *,	name)
-_DCL(char *,	mode)
+int	mem2file(
+	_ARX(char *,	blob)
+	_ARX(char *,	name)
+	_AR1(char *,	mode)
+		)
+	_DCL(char *,	blob)
+	_DCL(char *,	name)
+	_DCL(char *,	mode)
 {
-	auto	int		len;
-	auto	int		save;
-	auto	struct stat	sb;
-	auto	FILE		*fp;
+	auto	int	len	= -1;
+	auto	int	save;
+	auto	STAT	sb;
+	auto	FILE	*fp;
 
 	if (mode[0] != 'a' && mode[0] != 'w')
 		return (-1);
@@ -45,7 +46,7 @@ _DCL(char *,	mode)
 	} else
 		save = -1;
 
-	if (fp = fopen(name, mode)) {
+	if ((fp = fopen(name, mode)) != 0) {
 
 		len = fwrite(blob, sizeof(char), (LEN_FREAD)strlen(blob), fp);
 		(void)fclose(fp);

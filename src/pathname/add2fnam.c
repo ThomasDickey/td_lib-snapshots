@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: add2fnam.c,v 12.0 1991/10/03 14:59:50 ste_cm Rel $";
+static	char	Id[] = "$Id: add2fnam.c,v 12.1 1993/09/21 12:08:02 dickey Exp $";
 #endif
 
 /*
@@ -19,12 +19,12 @@ static	char	Id[] = "$Id: add2fnam.c,v 12.0 1991/10/03 14:59:50 ste_cm Rel $";
 #define	STR_PTYPES
 #include "ptypes.h"
 
-add2fname(
-_ARX(char *,	name)
-_AR1(char *,	suffix)
-	)
-_DCL(char *,	name)
-_DCL(char *,	suffix)
+int	add2fname(
+	_ARX(char *,	name)
+	_AR1(char *,	suffix)
+		)
+	_DCL(char *,	name)
+	_DCL(char *,	suffix)
 {
 	register char	*s;
 #ifdef	vms
@@ -42,7 +42,8 @@ _DCL(char *,	suffix)
 		}
 	}
 #else	/* unix */
-	if (s = strrchr(name, '/'))	name = s;
+	if ((s = strrchr(name, '/')) != 0)
+		name = s;
 #endif	/* vms/unix */
 	if (strlen(name) > strlen(suffix)
 	&&  !strcmp(name+strlen(name)-strlen(suffix), suffix))

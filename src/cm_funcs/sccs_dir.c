@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: sccs_dir.c,v 12.0 1991/10/03 08:44:52 ste_cm Rel $";
+static	char	Id[] = "$Id: sccs_dir.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: sccs_dir.c,v 12.0 1991/10/03 08:44:52 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	02 Sep 1988
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, conversion to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
  *		22 Jun 1990, changed default value from "sccs" to "SCCS" since
@@ -18,6 +19,7 @@ static	char	Id[] = "$Id: sccs_dir.c,v 12.0 1991/10/03 08:44:52 ste_cm Rel $";
  */
 
 #include "ptypes.h"
+#include "sccsdefs.h"
 
 char *
 sccs_dir(_AR0)

@@ -1,4 +1,4 @@
-/* $Id: td_curse.h,v 12.0 1993/04/26 15:27:21 ste_cm Rel $ */
+/* $Id: td_curse.h,v 12.1 1993/09/21 17:23:54 dickey Exp $ */
 
 /*
  * TD_LIB CURSES-related definitions
@@ -19,13 +19,30 @@ struct	screen	{ int dummy; };
 #else	/* SYSTEM5 */
 typedef char	chtype;		/* sys5-curses data-type */
 #ifndef	erasechar
-extern	char	erasechar();
+extern	int	erasechar(_ar0);
 #endif	/* erasechar */
 #ifndef	killchar
-extern	char	killchar();
+extern	int	killchar(_ar0);
 #endif	/* killchar */
 #endif	/* SYSTEM5 */
+
 #include	<curses.h>
+
+#if defined(__GNUC__) && defined(sun)
+extern	int	stty		(int, struct sgttyb *);
+extern	int	endwin		(void);
+extern	int	printw		(char *, ...);
+extern	int	touchwin	(WINDOW *);
+extern	int	waddch		(WINDOW *, int);
+extern	int	waddstr		(WINDOW *, char *);
+extern	int	wclrtobot	(WINDOW *);
+extern	int	wclrtoeol	(WINDOW *);
+extern	int	wgetch		(WINDOW *);
+extern	int	wmove		(WINDOW *, int ybase, int xbase);
+extern	int	wstandend	(WINDOW *);
+extern	int	wstandout	(WINDOW *);
+extern	int	wrefresh	(WINDOW *);
+#endif
 
 #ifdef	lint
 #undef	raw
@@ -55,7 +72,7 @@ extern	char	killchar();
 #endif
 
 	/* beep.c ----------------------------------------------------- */
-		beep(_ar0)
+	void	beep(_ar0)
 			_nul
 
 	/* blip.c ----------------------------------------------------- */
@@ -73,7 +90,7 @@ extern	char	killchar();
 			_ret
 
 	/* dumpwin.c -------------------------------------------------- */
-		dumpwin(
+	void	dumpwin(
 			_arx(WINDOW *,	w)
 			_ar1(char *,	s)
 			)
@@ -85,16 +102,16 @@ extern	char	killchar();
 #ifdef	erasechar
 #undef	erasechar
 #endif	/* erasechar */
-	char	erasechar(_ar0)
+	int	erasechar(_ar0)
 			_ret
-	char	eraseword(_ar0)
+	int	eraseword(_ar0)
 			_ret
 
 	/* killchar.c ------------------------------------------------- */
 #ifdef	killchar
 #undef	killchar
 #endif	/* killchar */
-	char	killchar(_ar0)
+	int	killchar(_ar0)
 			_ret
 
 	/* rawgets.c -------------------------------------------------- */
@@ -131,7 +148,7 @@ extern	char	killchar();
 	wrawgets(stdscr, b, p, bl, fl, fc, fm, nl, q, cmd, log)
 
 	/* rawterm.c -------------------------------------------------- */
-		rawterm(_ar0)
+	void	rawterm(_ar0)
 			_nul
 
 	/* resizewin.c ------------------------------------------------ */
@@ -139,10 +156,10 @@ extern	char	killchar();
 			_ret
 
 	/* savewin.c -------------------------------------------------- */
-		savewin(_ar0)
+	void	savewin(_ar0)
 			_nul
 
-		lastwin(
+	void	lastwin(
 			_arx(int,	redo)
 			_ar1(int,	top)
 			)
@@ -150,7 +167,7 @@ extern	char	killchar();
 			_dcl(int,	top)
 			_nul
 
-		unsavewin(
+	void	unsavewin(
 			_arx(int,	redo)
 			_ar1(int,	top)
 			)
@@ -159,7 +176,7 @@ extern	char	killchar();
 			_nul
 
 	/* win2file.c ------------------------------------------------- */
-	win2fp(
+	void	win2fp(
 			_arx(WINDOW *,	win)
 			_arx(FILE *,	fp)
 			_ar1(char *,	prefix)
@@ -169,7 +186,7 @@ extern	char	killchar();
 			_dcl(char *,	prefix)
 			_nul
 
-int	win2file(
+	int	win2file(
 			_arx(WINDOW *,	win)
 			_ar1(char *,	file)
 			)
@@ -178,7 +195,7 @@ int	win2file(
 			_ret
 
 	/* wrepaint.c ------------------------------------------------- */
-	wrepaint(
+	void	wrepaint(
 			_arx(WINDOW *,	win)
 			_ar1(int,	row)
 			)

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: for_user.c,v 12.0 1993/04/29 10:16:40 ste_cm Rel $";
+static	char	Id[] = "$Id: for_user.c,v 12.1 1993/09/21 18:54:04 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: for_user.c,v 12.0 1993/04/29 10:16:40 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	13 Sep 1988
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		23 Nov 1992, flush stderr/stdout if we fork
  *		17 Nov 1992, modified _FNX macro.
  *		04 Oct 1991, conversion to ANSI
@@ -31,11 +32,11 @@ static	char	Id[] = "$Id: for_user.c,v 12.0 1993/04/29 10:16:40 ste_cm Rel $";
 #include	<errno.h>
 
 int	for_user2(
-	_FNX(int,	func,	(_AR0))
+	_FNX(void,	func,	(_AR0))
 	_ARX(int,	the_uid)
 	_AR1(int,	the_gid)
 		)
-	_DCL(int,	(*func)())
+	_DCL(void,	(*func)())
 	_DCL(int,	the_uid)
 	_DCL(int,	the_gid)
 {
@@ -59,7 +60,7 @@ int	for_user2(
 				break;
 			errno = 0;
 		}
-		if (errno = W_RETCODE(status))
+		if ((errno = W_RETCODE(status)) != 0)
 			return (-1);
 		return (0);
 	} else if (pid == 0) {
@@ -77,8 +78,8 @@ int	for_user2(
 }
 
 int	for_user(
-	_FN1(int,	func,	(_AR0)))
-	_DCL(int,	(*func)())
+	_FN1(void,	func,	(_AR0)))
+	_DCL(void,	(*func)())
 {
 	return for_user2(func, (int)getuid(), (int)getgid());
 }

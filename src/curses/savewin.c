@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: savewin.c,v 12.0 1991/10/03 11:09:13 ste_cm Rel $";
+static	char	Id[] = "$Id: savewin.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: savewin.c,v 12.0 1991/10/03 11:09:13 ste_cm Rel $";
  * Title:	savewin.c (save/unsave curses window)
  * Created:	25 Mar 1988
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, conversion to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
  *		07 Dec 1989, lint (SunOs 3.4)
@@ -24,8 +25,7 @@ static	char	Id[] = "$Id: savewin.c,v 12.0 1991/10/03 11:09:13 ste_cm Rel $";
  *		this bit set, it retains highlighting.
  */
 
-#define		CUR_PTYPES
-#include	"ptypes.h"
+#include	"td_curse.h"
 #include	<ctype.h>
 
 typedef	struct	_save {
@@ -53,9 +53,9 @@ static	SAVE	*saved;
  * Force a character to be different
  */
 static
-newC(
-_AR1(int,c))
-_DCL(int,c)
+int	newC(
+	_AR1(int,c))
+	_DCL(int,c)
 {
 	c++;
 	if (!isprint(c))
@@ -69,11 +69,11 @@ _DCL(int,c)
 /*
  * Save a window on the stack.
  */
-savewin(_AR0)
+void	savewin(_AR0)
 {
-register int row, col;
-SAVE	*last;
-register int j = 0;
+	register int row, col;
+	SAVE	*last;
+	register int j = 0;
 
 	last         = saved;
 	saved        = S_ALLOC(1);
@@ -82,7 +82,8 @@ register int j = 0;
 	getyx(stdscr, saved->y, saved->x);
 
 	for (row = 0; row < LINES; row++) {
-	chtype	*src = stdscr->_y[row];
+		chtype	*src = stdscr->_y[row];
+
 		for (col = 0; col < COLS; col++)
 			saved->image[j++] = *src++;
 	}
@@ -91,17 +92,17 @@ register int j = 0;
 /*
  * Restore the state of the last window saved on the stack.
  */
-lastwin(
-_ARX(int,	redo)
-_AR1(int,	top)
-	)
-_DCL(int,	redo)
-_DCL(int,	top)
+void	lastwin(
+	_ARX(int,	redo)
+	_AR1(int,	top)
+		)
+	_DCL(int,	redo)
+	_DCL(int,	top)
 {
-chtype	*t,
-	*z = saved->image + (top * COLS);
-char	bfr[BUFSIZ];
-register int j, row;
+	chtype	*t,
+		*z = saved->image + (top * COLS);
+	char	bfr[BUFSIZ];
+	register int j, row;
 
 	if (saved) {
 
@@ -159,12 +160,12 @@ register int j, row;
 /*
  * Restore the last window, and pop it from the stack.
  */
-unsavewin(
-_ARX(int,	redo)
-_AR1(int,	top)
-	)
-_DCL(int,	redo)
-_DCL(int,	top)
+void	unsavewin(
+	_ARX(int,	redo)
+	_AR1(int,	top)
+		)
+	_DCL(int,	redo)
+	_DCL(int,	top)
 {
 SAVE	*last;
 	if (saved) {

@@ -1,11 +1,12 @@
 #ifndef	lint
-static	char	Id[] = "$Id: shoarg.c,v 12.0 1991/10/04 13:56:30 ste_cm Rel $";
+static	char	Id[] = "$Id: shoarg.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
 #endif
 
 /*
  * Title:	shoarg.c (display argv-array)
  * Created:	20 Jun 1991
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		04 Oct 1991, conversion to ANSI
  *		22 Jul 1991, don't assume that 'command' contains no spaces.
  *			     Added entrypoint 'bldcmd()'.
@@ -18,10 +19,14 @@ static	char	Id[] = "$Id: shoarg.c,v 12.0 1991/10/04 13:56:30 ste_cm Rel $";
 /*
  * Function:	Writes a new string with the non-ascii characters escaped.
  */
-char	*
-bldcmd(dst, src, len)
-char	*dst, *src;
-size_t	len;
+char *	bldcmd(
+	_ARX(char *,	dst)
+	_ARX(char *,	src)
+	_AR1(size_t,	len)
+		)
+	_DCL(char *,	dst)
+	_DCL(char *,	src)
+	_DCL(size_t,	len)
 {
 	char	*base = dst;
 	register int	c;
@@ -43,10 +48,16 @@ size_t	len;
  * Function:	Combines two strings into one destination, with non-ascii stuff
  *		escaped.
  */
-char	*
-bldcmd2(dst, src1, src2, len)
-char	*dst,*src1,*src2;
-size_t	len;
+char *	bldcmd2(
+	_ARX(char *,	dst)
+	_ARX(char *,	src1)
+	_ARX(char *,	src2)
+	_AR1(size_t,	len)
+		)
+	_DCL(char *,	dst)
+	_DCL(char *,	src1)
+	_DCL(char *,	src2)
+	_DCL(size_t,	len)
 {
 	char	*base = dst;
 	(void)bldcmd(dst, src1, len);			dst += strlen(dst);
@@ -62,9 +73,14 @@ size_t	len;
  *		command	- command-verb
  *		string	- the command-string to display
  */
-shoarg (fp, command, string)
-FILE	*fp;
-char	*command, *string;
+void	shoarg (
+	_ARX(FILE *,	fp)
+	_ARX(char *,	command)
+	_AR1(char *,	string)
+		)
+	_DCL(FILE *,	fp)
+	_DCL(char *,	command)
+	_DCL(char *,	string)
 {
 	char	temp[BUFSIZ];
 

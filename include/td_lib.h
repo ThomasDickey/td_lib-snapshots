@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 12.1 1993/06/24 17:21:03 dickey Exp $ */
+/* $Id: td_lib.h,v 12.2 1993/09/21 16:07:55 dickey Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for TD_LIB common
@@ -12,7 +12,7 @@
 #endif		/* _PTYPES_ */
 
 	/* MAIN-PROGRAM *********************************************** */
-		failed(
+	void	failed(
 			_ar1(char *,	s)
 			)
 			_dcl(char *,	s)
@@ -26,13 +26,13 @@
 
 	/* abspath.c -------------------------------------------------- */
 #ifdef	unix
-		abshome(
+	void	abshome(
 			_ar1(char *,	path)
 			)
 			_dcl(char *,	path)
 			_nul
 
-		abspath(
+	void	abspath(
 			_ar1(char *,	path)
 			)
 			_dcl(char *,	path)
@@ -67,7 +67,7 @@
 			_ret
 
 	/* bldarg.c --------------------------------------------------- */
-		bldarg (
+	void	bldarg (
 			_arx(int,	argc)
 			_arx(char **,	argv)
 			_ar1(char *,	string)
@@ -78,7 +78,7 @@
 			_nul
 
 	/* catarg.c --------------------------------------------------- */
-		catarg (
+	void	catarg (
 			_arx(char *,	dst)
 			_ar1(char *,	src)
 			)
@@ -98,8 +98,8 @@
 
 	/* catchall.c ------------------------------------------------- */
 #ifdef	SIG_PTYPES
-		catchall (
-			_fn1(SIG_T,	func,	(/*patch:SIG_T?*/))
+	void	catchall (
+			_fn1(SIG_T,	func,	(SIGNAL_ARGS))
 			)
 			_dcl(SIG_T,	(*func)())
 			_nul
@@ -184,7 +184,7 @@
 			_ret
 
 	/* dumpchr.c -------------------------------------------------- */
-		dumpchr(
+	void	dumpchr(
 			_arx(FILE *,	fp)
 			_ar1(int,	c)
 			)
@@ -255,19 +255,19 @@
 
 	/* for_user.c ------------------------------------------------- */
 	int	for_user2(
-			_fnx(int,	func,	(_AR0))
+			_fnx(void,	func,	(_AR0))
 			_arx(int,	the_uid)
 			_ar1(int,	the_gid)
 			)
-			_dcl(int,	(*func)())
+			_dcl(void,	(*func)())
 			_dcl(int,	the_uid)
 			_dcl(int,	the_gid)
 			_ret
 
 	int	for_user(
-			_fn1(int,	func,	(_AR0))
+			_fn1(void,	func,	(_AR0))
 			)
-			_dcl(int,	(*func)())
+			_dcl(void,	(*func)())
 			_ret
 #endif	/* unix */
 
@@ -334,7 +334,7 @@
 			_ret
 
 	/* lsbycols.c ------------------------------------------------- */
-		list_by_cols(
+	void	list_by_cols(
 			_arx(char **,	listp)
 			_arx(int,	sizep)
 			_ar1(int,	num)
@@ -422,7 +422,7 @@
 	/* newzone.c -------------------------------------------------- */
 	int	localzone;
 
-		newzone(
+	void	newzone(
 			_arx(int,	hours)
 			_arx(int,	minutes)
 			_ar1(int,	apres)
@@ -432,11 +432,11 @@
 			_dcl(int,	apres)
 			_nul
 
-		oldzone(_ar0)
+	void	oldzone(_ar0)
 			_nul
 
 	/* next_ver.c ------------------------------------------------- */
-		next_version(
+	void	next_version(
 			_arx(char *,	dst)
 			_ar1(char *,	src)
 			)
@@ -605,7 +605,7 @@
 			_dcl(size_t,	len)
 			_ret
 
-		shoarg (
+	void	shoarg (
 			_arx(FILE *,	fp)
 			_arx(char *,	command)
 			_ar1(char *,	args)
@@ -647,7 +647,7 @@
 			_dcl(char *,	string)
 			_ret
 
-		strfree(
+	void	strfree(
 			_ar1(char *,	string)
 			)
 			_dcl(char *,	string)
@@ -721,7 +721,7 @@
 			_ret
 
 	/* track_wd.c ------------------------------------------------- */
-		track_wd(
+	void	track_wd(
 			_ar1(char *,	path)
 			)
 			_dcl(char *,	path)
@@ -792,7 +792,7 @@
 			_dcl(unsigned,	len)
 			_ret
 
-		vecfree(
+	void	vecfree(
 			_ar1(char **,	v)
 			)
 			_dcl(char **,	v)

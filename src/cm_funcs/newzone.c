@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: newzone.c,v 12.0 1992/11/24 13:12:58 ste_cm Rel $";
+static	char	Id[] = "$Id: newzone.c,v 12.1 1993/09/21 18:54:04 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: newzone.c,v 12.0 1992/11/24 13:12:58 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	09 Jun 1988
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		24 Nov 1992, local copy of 'putenv()' is obsolete
  *		04 Oct 1991, conversion to ANSI
  *		09 Sep 1991, lint (apollo SR10.3)
@@ -137,7 +138,7 @@ void	init_tz(_AR0)
 /*
  * Set our timezone to a specified value
  */
-newzone(
+void	newzone(
 	_ARX(int,	hours)
 	_ARX(int,	minutes)
 	_AR1(int,	apres)
@@ -163,7 +164,7 @@ newzone(
 /*
  * Restore the original timezone (from before invoking 'newzone()')
  */
-oldzone(_AR0)
+void	oldzone(_AR0)
 {
 	init_tz();
 	reset_tz(old_TZ);
@@ -173,7 +174,8 @@ oldzone(_AR0)
  *	test driver							*
  ************************************************************************/
 #ifdef	TEST
-test(_AR0)
+static
+void	test(_AR0)
 {
 	newzone(5, 0, FALSE);
 	newzone(8, 0, FALSE);

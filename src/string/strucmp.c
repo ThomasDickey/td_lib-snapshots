@@ -1,24 +1,25 @@
 #ifndef	lint
-static	char	Id[] = "$Id: strucmp.c,v 12.0 1991/10/04 07:42:27 ste_cm Rel $";
+static	char	Id[] = "$Id: strucmp.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
 #endif
 
 /*
  * Title:	strucmp.c
  * Created:	05 Oct 1988
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, converted to ANSI
  * Function:	Compares two strings ignoring case.
  */
 
-#include	"ptypes.h"
-#include	<ctype.h>
+#define CHR_PTYPES
+#include "ptypes.h"
 
-strucmp(
-_ARX(register char *,	a)
-_AR1(register char *,	b)
-	)
-_DCL(register char *,	a)
-_DCL(register char *,	b)
+int	strucmp(
+	_ARX(register char *,	a)
+	_AR1(register char *,	b)
+		)
+	_DCL(register char *,	a)
+	_DCL(register char *,	b)
 {
 	register int	x, y;
 
@@ -26,8 +27,8 @@ _DCL(register char *,	b)
 		if ((x = *a++) != (y = *b++)) {
 			if (x == 0 || y == 0)
 				break;
-			if (isalpha(x) && islower(x))	x = toupper(x);
-			if (isalpha(y) && islower(y))	y = toupper(y);
+			UpperCase(x);
+			UpperCase(y);
 			if (x != y)
 				break;
 		} else if (x == 0)

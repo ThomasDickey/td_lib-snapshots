@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcssymbs.c,v 12.0 1992/02/11 10:37:26 ste_cm Rel $";
+static	char	Id[] = "$Id: rcssymbs.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: rcssymbs.c,v 12.0 1992/02/11 10:37:26 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	07 Feb 1992
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *
  * Function:	Within the 'rcsedit' state S_SYMBOLS, parse for information to
  *		complete our knowledge of the revision of an RCS file.  This is
@@ -22,8 +23,9 @@ static	char	Id[] = "$Id: rcssymbs.c,v 12.0 1992/02/11 10:37:26 ste_cm Rel $";
  */
 
 #define	STR_PTYPES
-#include	"ptypes.h"
-#include	"rcsdefs.h"
+#include "ptypes.h"
+#include "rcsdefs.h"
+#include <ctype.h>
 
 #define	isname(c)	(isalnum(c) || (c == '_'))
 
@@ -35,9 +37,11 @@ _DCL(char *,	in_out)
 {
 	register char	*s, *d;
 
-	for (s = in_out; (*s == '0') && isname(s[1]); s++);
+	for (s = in_out; (*s == '0') && isname(s[1]); s++)
+		;
 	if (s != in_out)
-		for (d = in_out; *d++ = *s++;);
+		for (d = in_out; (*d++ = *s++) != EOS; )
+			;
 
 	for (s = in_out; (*s != EOS);  s++) {
 		if (*s == '.') {

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcsperm.c,v 12.0 1993/04/26 16:17:42 ste_cm Rel $";
+static	char	Id[] = "$Id: rcsperm.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
 #endif
 
 /*
@@ -7,7 +7,8 @@ static	char	Id[] = "$Id: rcsperm.c,v 12.0 1993/04/26 16:17:42 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	08 Mar 1989
  * Modified:
- *		12 Nov 1992, added 'access' argument.
+ *		21 Sep 1993, gcc-warnings
+ *		12 Nov 1992, added 'accflag' argument.
  *		04 Oct 1991, conversion to ANSI
  *		06 Sep 1991, modified interface to 'rcsopen()'
  *		05 Jul 1989, if the access-list is empty, we must own the file
@@ -37,11 +38,11 @@ static	char	Id[] = "$Id: rcsperm.c,v 12.0 1993/04/26 16:17:42 ste_cm Rel $";
 int	rcspermit(
 	_ARX(char *,	path)
 	_ARX(char *,	base)
-	_AR1(char **,	access)
+	_AR1(char **,	accflag)
 		)
 	_DCL(char *,	path)
 	_DCL(char *,	base)
-	_DCL(char **,	access)
+	_DCL(char **,	accflag)
 {
 	static	DYN *	access_list;
 	auto	STAT	sb;
@@ -65,7 +66,7 @@ int	rcspermit(
 	 */
 	if (base != 0) {
 		register char *t;
-		if (t = getenv("RCS_BASE"))
+		if ((t = getenv("RCS_BASE")) != NULL)
 			(void)strcpy(base, t);
 		else
 			*base = EOS;
@@ -122,7 +123,7 @@ int	rcspermit(
 		}
 	}
 	rcsclose();
-	if (access != 0)
-		*access = txtalloc(dyn_string(access_list));
+	if (accflag != 0)
+		*accflag = txtalloc(dyn_string(access_list));
 	return(ok);
 }

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: vercmp.c,v 12.0 1993/04/27 07:52:22 ste_cm Rel $";
+static	char	Id[] = "$Id: vercmp.c,v 12.2 1993/09/21 19:43:23 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: vercmp.c,v 12.0 1993/04/27 07:52:22 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	14 Dec 1988 (from 'dotcmp()')
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, converted to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
  *
@@ -32,14 +33,14 @@ static	char	Id[] = "$Id: vercmp.c,v 12.0 1993/04/27 07:52:22 ste_cm Rel $";
 #define	TRACE(s)
 #endif
 
-vercmp(
-_ARX(char *,	s1)
-_ARX(char *,	s2)
-_AR1(int,	wild)
-	)
-_DCL(char *,	s1)
-_DCL(char *,	s2)
-_DCL(int,	wild)
+int	vercmp(
+	_ARX(char *,	s1)
+	_ARX(char *,	s2)
+	_AR1(int,	wild)
+		)
+	_DCL(char *,	s1)
+	_DCL(char *,	s2)
+	_DCL(int,	wild)
 {
 	register int	cmp1, cmp2;
 
@@ -52,14 +53,14 @@ _DCL(int,	wild)
 			s1, s2, cmp1,s1, cmp2,s2))
 		if (cmp1 == cmp2) {	/* same lengths, comparable */
 			while (cmp1-- > 0) {
-				if (cmp2 = (*s1++ - *s2++))
+				if ((cmp2 = (*s1++ - *s2++)) != EOS)
 					return (cmp2);
 			}
 			if ((*s1 != EOS) ^ (*s2 != EOS))
 				return wild ? 0 : (*s1 - *s2);
 			if (*s1 == DOT)	s1++;
 			if (*s2 == DOT)	s2++;
-		} else if (wild && (cmp1 == 0) || (cmp2 == 0)) {
+		} else if (wild && ((cmp1 == 0) || (cmp2 == 0))) {
 			return (0);
 		} else {
 			return (cmp1-cmp2);
@@ -83,7 +84,7 @@ QSORT_FUNC(compare)
 }
 
 #define	EQL(c)		((c > 0) ? ">" : ((c < 0) ? "<" : "="))
-#ifdef	__STDCPP__
+#if	defined(__STDCPP__) || defined(__GNUC__)
 #define	DO_TEST(a,b)	j = vercmp(#a, #b,  wild);\
 			PRINTF("%s\t%s %s \t(%d)\n", #a,  EQL(j), #b,  j)
 #else

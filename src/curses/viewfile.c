@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: viewfile.c,v 12.0 1991/10/04 07:56:37 ste_cm Rel $";
+static	char	Id[] = "$Id: viewfile.c,v 12.1 1993/09/21 18:54:02 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: viewfile.c,v 12.0 1991/10/04 07:56:37 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	23 Aug 1989
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, converted to ANSI
  *
  * Function:	From a process running in 'curses', builds another window
@@ -19,15 +20,14 @@ static	char	Id[] = "$Id: viewfile.c,v 12.0 1991/10/04 07:56:37 ste_cm Rel $";
  * Returns:	-1 if error occurs, 0 if success
  */
 
-#define		CUR_PTYPES
-#include	"ptypes.h"
+#include	"td_curse.h"
 
-view_file(
-_ARX(char *,	fname)
-_AR1(int,	readonly)
-	)
-_DCL(char *,	fname)
-_DCL(int,	readonly)
+int	view_file(
+	_ARX(char *,	fname)
+	_AR1(int,	readonly)
+		)
+	_DCL(char *,	fname)
+	_DCL(int,	readonly)
 {
 	auto	int	code;
 	auto	char	*editor = dftenv(readonly ? "view" : "vi", "EDITOR");

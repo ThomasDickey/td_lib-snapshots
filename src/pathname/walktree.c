@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: walktree.c,v 12.0 1993/04/26 16:34:55 ste_cm Rel $";
+static	char	Id[] = "$Id: walktree.c,v 12.1 1993/09/21 18:54:02 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: walktree.c,v 12.0 1993/04/26 16:34:55 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	31 Aug 1988
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		17 Nov 1992, modified _FNX macro.
  *		05 Feb 1992, missed prototype on main-function
  *		03 Oct 1991, converted to ANSI
@@ -72,14 +73,14 @@ typedef	char	*PTR;
  * nest to a new level.
  */
 int	walktree(
-	_ARX(char *,	path)
-	_ARX(char *,	name)
+	_ARX(char *,	patharg)
+	_ARX(char *,	namearg)
 	_FNX(int,	func,	(WALK_FUNC_ARGS))
 	_ARX(char *,	type)
 	_AR1(int,	level)
 		)
-	_DCL(char *,	path)
-	_DCL(char *,	name)
+	_DCL(char *,	patharg)
+	_DCL(char *,	namearg)
 	_DCL(int,	(*func)())
 	_DCL(char *,	type)
 	_DCL(int,	level)
@@ -96,7 +97,7 @@ int	walktree(
 	DIR		*dp;
 	DIRENT		*de;
 
-	if (stat(name, sb_) >= 0) {
+	if (stat(namearg, sb_) >= 0) {
 		mode = (sb.st_mode & S_IFMT);
 		ok_acc = 0;
 		if (mode == S_IFDIR)
@@ -107,7 +108,7 @@ int	walktree(
 			if (strchr(type, 'x'))	ok_acc |= X_OK;
 		}
 		if (ok_acc != 0) {
-			if ((ok_acc = access(name, ok_acc)) >= 0)
+			if ((ok_acc = access(namearg, ok_acc)) >= 0)
 				total++;
 		} else
 			total++;
@@ -115,19 +116,19 @@ int	walktree(
 		sb_ = 0;
 
 	if (level == 0)		/* do this once, to initialize */
-		path = getwd(old_wd);
+		patharg = getwd(old_wd);
 	else			/* ...and inherit otherwise */
-		(void)strcpy(old_wd, path);
+		(void)strcpy(old_wd, patharg);
 
-	if (((*func)(path, name, sb_, ok_acc, level) >= 0)
+	if (((*func)(patharg, namearg, sb_, ok_acc, level) >= 0)
 	&&  (ok_acc >= 0)
 	&&  (mode == S_IFDIR)) {
-		if ((chdir(name) >= 0)
+		if ((chdir(namearg) >= 0)
 		&&  (dp = opendir("."))) {
 			abspath(strcpy(new_wd, "."));
 			num = 0;
 			vec = 0;
-			while (de = readdir(dp)) {
+			while ((de = readdir(dp)) != NULL) {
 				if (dotname(de->d_name))	continue;
 				v_ALLOC(vec,num,de->d_name);
 			}
@@ -152,17 +153,19 @@ int	walktree(
 
 #ifdef	TEST
 static
-display(path, name, sp, ok_acc, level)
-char	*path;
-char	*name;
-STAT	*sp;
+void	do_arg(
+	_ARX(char *,	name)
+	_AR1(char *,	type));
+
+static
+int	WALK_FUNC(display)
 {
 	if (!strcmp(name, "RCS/"))
 		return -1;
 	if (!strcmp(name, "RCS")) /* filter this out to make tests regress */
 		return -1;
 
-	PRINTF("%c\t", (ok_acc < 0) ? '?' : ' ');
+	PRINTF("%c\t", (readable < 0) ? '?' : ' ');
 	while (level-- > 0)
 		PRINTF("|--%c", (level > 0) ? '-' : ' ');
 	if ((sp != 0)
@@ -170,13 +173,17 @@ STAT	*sp;
 		PRINTF("%s%c\n", name, name[strlen(name)-1] == '/' ? ' ' : '/');
 	else
 		PRINTF("%s\n", name);
-	return(ok_acc);
+	return(readable);
 }
 
 static
-do_arg(name,type)
-char	*name;
-char	*type;
+void	do_arg(
+	_ARX(char *,	name)
+	_AR1(char *,	type)
+		)
+	_DCL(char *,	name)
+	_DCL(char *,	type)
+
 {
 	PRINTF("** path = %s\n", name);
 	PRINTF("** total= %d\n", walktree((PTR)0, name,display,type,0));

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	*Id = "$Id: rcsedit.c,v 12.0 1992/11/24 14:43:26 ste_cm Rel $";
+static	char	*Id = "$Id: rcsedit.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	*Id = "$Id: rcsedit.c,v 12.0 1992/11/24 14:43:26 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	26 May 1988
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		17 Nov 1992, modified _FNX macro
  *		26 Oct 1992, RCS version 5 uses multiline format.
  *		06 Feb 1992, use 'stat_file()'
@@ -87,7 +88,7 @@ int	dir_access(_AR0)
 	int	gid = getegid();
 	STAT	sb;
 
-	if (s = strrchr(strcpy(temp, fname), '/'))
+	if ((s = strrchr(strcpy(temp, fname), '/')) != NULL)
 		*s = EOS;
 	else
 		(void)strcpy(temp, ".");
@@ -184,7 +185,7 @@ char *	SkipPastSemicolon(
 	while (s != 0) {
 		while ((s != 0) && (*s != EOS)) {
 			if (*s == AT_SYMBOL)
-				s = rcsparse_str(s, NULL_FUNC);
+				s = rcsparse_str(s, (RcsparseStr)0);
 			else if (*s++ == SEMICOLON)
 				return s;
 		}
@@ -264,7 +265,7 @@ char *	rcsread(
 {
 	if (s == 0)
 		s = ReadNewBuffer();
-	if (s = SkipBlanks(s)) {
+	if ((s = SkipBlanks(s)) != NULL) {
 		switch (code) {
 		case S_FAIL:	/* initial value before first call */
 		case S_VERS:	/* has no semicolon! */
@@ -273,7 +274,7 @@ char *	rcsread(
 		case S_LOG:
 		case S_TEXT:
 			if (*s == AT_SYMBOL)
-				s = rcsparse_str(s, NULL_FUNC);
+				s = rcsparse_str(s, (RcsparseStr)0);
 			break;
 		default:
 			s = SkipPastSemicolon(s);
@@ -347,7 +348,7 @@ char *	rcsparse_num(
 	_DCL(char *,	d)
 	_DCL(char *,	s)
 {
-	if (s = SkipBlanks(s)) {
+	if ((s = SkipBlanks(s)) != NULL) {
 		while (*s && (isdigit(*s) || (*s == '.')))
 			*d++ = *s++;
 	}
@@ -368,7 +369,7 @@ char *	rcsparse_id(
 	_DCL(char *,	d)
 	_DCL(char *,	s)
 {
-	if (s = SkipBlanks(s)) {
+	if ((s = SkipBlanks(s)) != NULL) {
 		while (*s && !delim(*s))
 			*d++ = *s++;
 	}
@@ -385,10 +386,10 @@ char *	rcsparse_id(
 
 char *	rcsparse_str(
 	_ARX(char *,	s)
-	_FN1(int,	str_func,	(_AR1(int,c)))
+	_AR1(RcsparseStr,str_func)
 		)
 	_DCL(char *,	s)
-	_DCL(int,	(*str_func)())
+	_DCL(RcsparseStr,str_func)
 {
 	register int	c;
 
@@ -408,7 +409,7 @@ char *	rcsparse_str(
 				}
 				STR_FUNC(c);
 			}
-		} while (s = ReadNewBuffer());
+		} while ((s = ReadNewBuffer()) != NULL);
 
 		STR_FUNC(EOS);	/* got an end-of-file */
 		DEBUG(("EOF encountered in rcsparse_str\n"))

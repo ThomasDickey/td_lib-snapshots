@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: wrepaint.c,v 12.0 1991/10/03 16:16:50 ste_cm Rel $";
+static	char	Id[] = "$Id: wrepaint.c,v 12.1 1993/09/21 18:54:02 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: wrepaint.c,v 12.0 1991/10/03 16:16:50 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	24 Aug 1989
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, converted to ANSI
  *
  * Function:	Given a starting row-number, forces the screen to be redrawn
@@ -18,15 +19,14 @@ static	char	Id[] = "$Id: wrepaint.c,v 12.0 1991/10/03 16:16:50 ste_cm Rel $";
  * Returns:	nothing.
  */
 
-#define		CUR_PTYPES
-#include	"ptypes.h"
+#include	"td_curse.h"
 
-wrepaint(
-_ARX(WINDOW *,	win)
-_AR1(int,	row)
-	)
-_DCL(WINDOW *,	win)
-_DCL(int,	row)
+void	wrepaint(
+	_ARX(WINDOW *,	win)
+	_AR1(int,	row)
+		)
+	_DCL(WINDOW *,	win)
+	_DCL(int,	row)
 {
 	auto	int	min_row	= win->_begy,
 			min_col	= win->_begx,

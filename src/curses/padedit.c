@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: padedit.c,v 12.0 1992/12/22 11:46:54 ste_cm Rel $";
+static	char	Id[] = "$Id: padedit.c,v 12.1 1993/09/21 18:54:04 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: padedit.c,v 12.0 1992/12/22 11:46:54 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	14 Dec 1987
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		22 Dec 1992, reset process-group on SunOs to avoid having
  *			     signals kill the spawned xterms.
  *		04 Dec 1992, split 'editor' param in case it has options.
@@ -148,19 +149,20 @@ int	spawn(
 
 	if ((pid = fork()) > 0) {
 		DEBUG("** spawn-1st (pid= %d)\r\n", pid);
-		while (wait(ARG_WAIT(status)) >= 0);
-		DEBUG("spawn-1st (status= %#x)\n", status);
-		if (errno = W_RETCODE(status))
+		while (wait(ARG_WAIT(status)) >= 0)
+			;
+		DEBUG("spawn-1st (status= %#x)\n", W_RETCODE(status));
+		if ((errno = W_RETCODE(status)) != 0)
 			return (-1);
 		return (0);
 	} else if (pid == 0) {
-		DEBUG("spawn-1st\n",0);
+		DEBUG("spawn-%dst\n",1);
 		if ((pid = fork()) > 0) {
-			DEBUG("** spawn-2nd\r\n",0);
+			DEBUG("** spawn-%dnd\r\n",2);
 			(void)_exit(0);		/* abandon exec'ing process */
 			/*NOTREACHED*/
 		} else if (pid == 0) {
-			DEBUG("** exec'ing process\r\n",0);
+			DEBUG("** exec'ing %drd-process\r\n",3);
 #ifdef	sun
 			setsid();
 #endif
@@ -208,7 +210,7 @@ int	padedit(
 
 		argc = 0;
 		argv[argc++] = xt;
-		if (display = getenv("DISPLAY")) {
+		if ((display = getenv("DISPLAY")) != NULL) {
 			argv[argc++] = "-display";
 			argv[argc++] = display;
 		}

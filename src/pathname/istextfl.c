@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: istextfl.c,v 12.0 1991/10/04 07:34:20 ste_cm Rel $";
+static	char	Id[] = "$Id: istextfl.c,v 12.1 1993/09/21 18:54:04 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: istextfl.c,v 12.0 1991/10/04 07:34:20 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	24 Oct 1989
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, converted to ANSI
  *
  * Function:	Test a given file to see if if contains characters which are
@@ -19,15 +20,15 @@ static	char	Id[] = "$Id: istextfl.c,v 12.0 1991/10/04 07:34:20 ste_cm Rel $";
 #include	"ptypes.h"
 #include	<ctype.h>
 
-istextfile(
-_AR1(char *,	name))
-_DCL(char *,	name)
+int	istextfile(
+	_AR1(char *,	name))
+	_DCL(char *,	name)
 {
 	auto	FILE	*fp;
 	auto	char	bfr[BUFSIZ];
 	register int	n, c;
 
-	if (fp = fopen(name, "r")) {
+	if ((fp = fopen(name, "r")) != 0) {
 		while ((n = fread(bfr, sizeof(char), sizeof(bfr), fp)) > 0) {
 			while (n-- > 0) {
 				c = bfr[n];

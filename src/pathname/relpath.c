@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: relpath.c,v 12.0 1992/11/18 13:47:27 ste_cm Rel $";
+static	char	Id[] = "$Id: relpath.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: relpath.c,v 12.0 1992/11/18 13:47:27 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	07 Sep 1989
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		21 Jan 1992, If 'cwd[]' is empty, treat it as a null-pointer.
  *			     Also, force single return-point.
  *			     Strip special case of apollo node-name.
@@ -139,15 +140,19 @@ _DCL(char *,	src)
 		(void)strcpy(dst, src);
 	if (*dst == '.' && dst[1] == '/') {
 		register char	*s, *d;
-		for (s = dst+2, d = dst; *d++ = *s++;);
+		for (s = dst+2, d = dst; (*d++ = *s++) != EOS; )
+			;
 	}
 	return dst;
 }
 
 #ifdef	TEST
-do_test(
-_AR1(char *,	s))
-_DCL(char *,	s)
+void	do_test(
+	_ar1(char *,	s));
+
+void	do_test(
+	_AR1(char *,	s))
+	_DCL(char *,	s)
 {
 	auto	char	tmp[BUFSIZ];
 	PRINTF(" %s <= %s\n", relpath(tmp, (char *)0, s), s);

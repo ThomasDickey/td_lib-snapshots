@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: sccslast.c,v 12.0 1991/10/18 11:25:25 ste_cm Rel $";
+static	char	Id[] = "$Id: sccslast.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: sccslast.c,v 12.0 1991/10/18 11:25:25 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	20 Oct 1986
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		18 Oct 1991, look only for tip-version, not for "last" version
  *		03 Oct 1991, conversion to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
@@ -38,16 +39,17 @@ static	char	Id[] = "$Id: sccslast.c,v 12.0 1991/10/18 11:25:25 ste_cm Rel $";
  * Set the release.version and date values iff we find a legal sccs-file at
  * 'path[]'.
  */
-static	trysccs (
-_ARX(char *,	path)
-_ARX(char **,	vers_)
-_ARX(time_t *,	date_)
-_AR1(char **,	lock_)
-	)
-_DCL(char *,	path)
-_DCL(char **,	vers_)
-_DCL(time_t *,	date_)
-_DCL(char **,	lock_)
+static
+void	trysccs (
+	_ARX(char *,	path)
+	_ARX(char **,	vers_)
+	_ARX(time_t *,	date_)
+	_AR1(char **,	lock_)
+		)
+	_DCL(char *,	path)
+	_DCL(char **,	vers_)
+	_DCL(time_t *,	date_)
+	_DCL(char **,	lock_)
 {
 	auto	FILE	*fp = fopen(path, "r");
 	auto	int	gotten = 0;
@@ -80,12 +82,12 @@ _DCL(char **,	lock_)
 	}
 
 	if (gotten) {
-		if (s = strrchr(strcpy(bfr, path), '/'))
+		if ((s = strrchr(strcpy(bfr, path), '/')) != NULL)
 			s++;
 		else
 			s = bfr;
 		*s = 'p';
-		if (fp = fopen(bfr, "r")) {
+		if ((fp = fopen(bfr, "r")) != 0) {
 			if (fgets(bfr, sizeof(bfr), fp)) {
 				if (sscanf(bfr, "%d.%d %d.%d %s",
 					&yy, &mm, &dd, &hr, ver) == 5)
@@ -96,24 +98,24 @@ _DCL(char **,	lock_)
 	}
 }
 
-sccslast (
-_ARX(char *,	working)	/* working directory (absolute) */
-_ARX(char *,	path)		/* pathname to check (may be relative) */
-_ARX(char **,	vers_)
-_ARX(time_t *,	date_)
-_AR1(char **,	lock_)
-	)
-_DCL(char *,	working)
-_DCL(char *,	path)
-_DCL(char **,	vers_)
-_DCL(time_t *,	date_)
-_DCL(char **,	lock_)
+void	sccslast (
+	_ARX(char *,	working)	/* working directory (absolute) */
+	_ARX(char *,	path)		/* pathname to check (may be relative) */
+	_ARX(char **,	vers_)
+	_ARX(time_t *,	date_)
+	_AR1(char **,	lock_)
+		)
+	_DCL(char *,	working)
+	_DCL(char *,	path)
+	_DCL(char **,	vers_)
+	_DCL(time_t *,	date_)
+	_DCL(char **,	lock_)
 {
+	auto	 STAT	sbfr;
 	auto	 char	name[BUFSIZ+1],
 			*dname = sccs_dir();
 	auto	 int	is_sccs;
 	register char	*s, *t;
-	struct	 stat	sbfr;
 
 	*lock_ =
 	*vers_ = "?";
@@ -124,15 +126,15 @@ _DCL(char **,	lock_)
 	 * an appropriate prefix (lowercase letter followed by '.' and then
 	 * more characters) assume it is an sccs file.
 	 */
-	if (s = strrchr(t = path, '/')) { /* determine directory from path */
-		*(t = s) = '\0';
-		if (s = strrchr(path, '/'))
+	if ((s = strrchr(t = path, '/')) != NULL) { /* determine directory from path */
+		*(t = s) = EOS;
+		if ((s = strrchr(path, '/')) != NULL)
 			s++;
 		else
 			s = path;
 		is_sccs = !strcmp(s,dname);
 		*t++ = '/';
-	} else if (s = strrchr(working, '/')) {
+	} else if ((s = strrchr(working, '/')) != NULL) {
 		is_sccs = !strcmp(++s,dname);
 	} else
 		return;			/* illegal input: give up */
@@ -156,7 +158,7 @@ _DCL(char **,	lock_)
 
 			if (t != path) {
 				name[t - path - 1] = EOS;
-				if (s = strrchr(name, '/'))
+				if ((s = strrchr(name, '/')) != NULL)
 					s[1] = EOS;
 				else
 					name[0] = EOS;
