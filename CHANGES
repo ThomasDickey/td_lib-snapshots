@@ -1,3 +1,22 @@
+1992-08-03  dickey@software.org
+
+	* include/rcsdefs.h, src/descrip.mms, src/Makefile: samebranch.c
+
+	* src/cm_funcs/samebr.c: RCS_BASE
+
+	* test/Makefile: samebranch
+
+	* src/sheet/field_of.c:
+	revised to make 'get_field_of()' return its result in
+	a DYN-string so we don't have to worry about field sizes.
+
+	* src/sheet/count_ss.c, src/sheet/ss_field.c:
+	'get_field_of()' now returns DYN-string
+
+	* include/td_sheet.h:
+	make 'get_field_of()' return a DYN-string so we don't
+	worry about buffer sizes.
+
 1992-07-24  dickey@software.org
 
 	* src/Makefile, src/descrip.mms: added 'dyn_append_c.c'

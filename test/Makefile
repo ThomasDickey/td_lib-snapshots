@@ -1,4 +1,4 @@
-# $Id: Makefile,v 11.0 1992/06/30 07:14:30 ste_cm Rel $
+# $Id: Makefile,v 11.1 1992/08/03 14:22:23 dickey Exp $
 # make-file for CM_TOOLS common/test library
 #
 
@@ -55,6 +55,7 @@ PROGS	=\
 	rcsname\
 	relpath\
 	s2uid\
+	samebranch\
 	sameleaf\
 	sccsname\
 	scr_size\
@@ -118,6 +119,7 @@ rcsload.c\
 rcsname.c\
 relpath.c\
 s2uid.c\
+samebranch.c\
 sameleaf.c\
 sccsname.c\
 scr_size.c\

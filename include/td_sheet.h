@@ -1,4 +1,4 @@
-/* $Id: td_sheet.h,v 11.0 1992/02/04 09:24:27 ste_cm Rel $ */
+/* $Id: td_sheet.h,v 11.1 1992/08/03 08:24:47 dickey Exp $ */
 
 /*
  * Functions for manipulating spreadsheet text which has been loaded into
@@ -8,6 +8,7 @@
 #define	 _SPREADSHEET_H_
 
 #include "ptypes.h"
+#include "dyn_string.h"
 
 		/* ***(field_of.c)*** */
 extern	void	field_uses_quotes(
@@ -19,13 +20,13 @@ extern	void	field_uses_quotes(
 extern	char *	get_field_of(
 		_arx(char *,	list)
 		_arx(int,	col)
-		_arx(char *,	buffer)
-		_ar1(char *,	dftval)
+		_arx(char *,	dftval)
+		_ar1(DYN **,	result)
 			)
 		_dcl(char *,	list)
 		_dcl(int,	col)
-		_dcl(char *,	buffer)
 		_dcl(char *,	dftval)
+		_dcl(DYN **,	result)
 		_ret
 
 extern	char *	set_field_of(
@@ -43,14 +44,14 @@ extern	char *	get_ss_field(
 		_arx(char **,	vec)
 		_arx(int,	row)
 		_arx(int,	col)
-		_arx(char *,	buffer)
-		_ar1(char *,	dftval)
+		_arx(char *,	dftval)
+		_ar1(DYN **,	result)
 			)
 		_dcl(char **,	vec)
 		_dcl(int,	row)
 		_dcl(int,	col)
-		_dcl(char *,	buffer)
 		_dcl(char *,	dftval)
+		_dcl(DYN **,	result)
 		_ret
 
 extern	char *	set_ss_field(
