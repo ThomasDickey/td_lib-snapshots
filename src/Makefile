@@ -1,7 +1,7 @@
-# @(#)Makefile	1.32 88/07/28 09:59:20
+# @(#)Makefile	1.33 88/07/29 10:45:06
 # MAKE-file for miscellaneous library routines
 L=lib.a
-GET=sccsget
+GET=getdelta
 #
 SRCS	=\
 	abspath.c\
@@ -136,14 +136,14 @@ destroy:
 #
 install: all
 #
+cmdch.h\
+ptypes.h\
+rcsdefs.h\
+lintit.sh\
+makellib.sh:
 LLIB\
 $(SRCS):
 	$(GET) -s sccs/s.$@
-#
-lintit.sh\
-makellib.sh:
-	$(GET) -s sccs/s.$@
-	chmod +x $@
 #
 llib-ltd.ln:	makellib.sh LLIB
 	makellib.sh LLIB td
