@@ -1,3 +1,7 @@
+2003-02-22  dickey@invisible-island.net
+
+	* config.sub, config.guess: resync from tin
+
 2003-01-16  dickey@invisible-island.net
 
 	* aclocal.m4:
