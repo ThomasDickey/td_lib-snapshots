@@ -1,3 +1,8 @@
+2004-03-21  dickey@invisible-island.net
+
+	* support/selflink.sh:
+	FreeBSD sh does not set $PWD (apparently csh does).  Use `pwd` instead.
+
 2004-03-08  dickey@invisible-island.net
 
 	* configure.in: typo
