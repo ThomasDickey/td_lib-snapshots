@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: cmdch.c,v 12.15 1995/07/30 17:54:07 tom Exp $";
+static	char	Id[] = "$Id: cmdch.c,v 12.16 1995/08/01 23:20:28 tom Exp $";
 #endif
 
 /*
@@ -149,6 +149,10 @@ int	cmdch(
 		case KEY_BACKSPACE: c = '\b';	done = TRUE;	break;
 #endif
 #endif
+		case KEY_UP:			/* FALLTHRU */
+		case KEY_DOWN:			/* FALLTHRU */
+		case KEY_LEFT:			/* FALLTHRU */
+		case KEY_RIGHT:			done = TRUE;	break;
 		}
 		if (done)
 			break;
