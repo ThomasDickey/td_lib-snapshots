@@ -1,10 +1,16 @@
-# $Header: /users/source/archives/td_lib.vcs/src/RCS/Makefile,v 1.62 1989/03/27 14:26:39 dickey Exp $
+# $Header: /users/source/archives/td_lib.vcs/src/RCS/Makefile,v 2.0 1989/03/29 11:41:11 ste_cm Exp $
 # MAKE-file for miscellaneous library routines
 #
 # $Log: Makefile,v $
-# Revision 1.62  1989/03/27 14:26:39  dickey
-# use 'rcspath.h' include-file for 'rcspath.c' path-constant.
+# Revision 2.0  1989/03/29 11:41:11  ste_cm
+# BASELINE Thu Apr  6 09:45:13 EDT 1989
 #
+#	Revision 1.63  89/03/29  11:41:11  dickey
+#	fixed lint for 'rcspath.c'
+#	
+#	Revision 1.62  89/03/27  14:26:39  dickey
+#	use 'rcspath.h' include-file for 'rcspath.c' path-constant.
+#	
 #	Revision 1.61  89/03/20  12:31:36  dickey
 #	converted to STE CM-format
 #	
@@ -18,7 +24,7 @@ J	= ../../../interface
 INCLUDES= -I$I
 CFLAGS  = $(DEFINES) $(INCLUDES) -O
 DATE	= echo '****'`date` >> $@
-LINTOPT	= $(DEFINES) $(INCLUDES) -ltd -lcurses -lapollo
+LINTOPT	= $(DEFINES) $(INCLUDES) -I$J -ltd -lcurses -lapollo
 #
 ####### (Standard Lists) #######################################################
 A	= ../lib/lib.a

@@ -1,4 +1,4 @@
-/* $Header: /users/source/archives/td_lib.vcs/include/RCS/ptypes.h,v 1.10 1989/03/16 07:47:26 dickey Exp $ */
+/* $Header: /users/source/archives/td_lib.vcs/include/RCS/ptypes.h,v 2.0 1989/03/29 11:31:57 ste_cm Exp $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -142,6 +142,8 @@ extern	char	killchar();
 #define	strchr	index
 #define	strrchr	rindex
 #endif	SYSTEM5
+extern	char	*strchr();
+extern	char	*strrchr();
 #endif	STR_PTYPES
 
 #endif	_PTYPES_
