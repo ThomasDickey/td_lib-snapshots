@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19920724
+MANIFEST for td_lib, version t19920803
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 Makefile                        top-level makefile for TD_LIB
@@ -42,6 +42,7 @@ src/cm_funcs/rcsperm.c          directory-level RCS permissions
 src/cm_funcs/rcssymbs.c         RCS symbols-parsing
 src/cm_funcs/rcstemp.c          create temp-file for setuid operations
 src/cm_funcs/rcstime.c          encapsulates how to encode/decode archive-times
+src/cm_funcs/samebr.c           compares two RCS versions to see if they are from the same branch or trunk
 src/cm_funcs/sccs_dir.c         returns name of SCCS directory
 src/cm_funcs/sccslast.c         scan for last SCCS date & version
 src/cm_funcs/sccsname.c         SCCS working/archive name translation (like 'rcsname.c').

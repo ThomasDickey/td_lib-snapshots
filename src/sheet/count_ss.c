@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	*Id = "$Id: count_ss.c,v 11.0 1992/02/03 12:03:23 ste_cm Rel $";
+static	char	*Id = "$Id: count_ss.c,v 11.1 1992/08/03 08:28:57 dickey Exp $";
 #endif
 
 /*
@@ -19,11 +19,11 @@ count_ss_cols(
 _AR1(char **,	vec))
 _DCL(char **,	vec)
 {
-	auto	char	temp[BUFSIZ];
 	auto	int	count	= 0;
+	static	DYN	*temp;
 
 	if (vec && *vec)
-		while (get_field_of(*vec, count, temp, (char *)0))
+		while (get_field_of(*vec, count, (char *)0, &temp))
 			count++;
 	return count;
 }

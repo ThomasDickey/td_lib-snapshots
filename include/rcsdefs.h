@@ -1,4 +1,4 @@
-/* $Id: rcsdefs.h,v 11.0 1992/02/07 15:05:35 ste_cm Rel $ */
+/* $Id: rcsdefs.h,v 11.1 1992/08/03 14:32:48 dickey Exp $ */
 
 #ifndef	_RCSDEFS_H_
 #define	_RCSDEFS_H_
@@ -262,6 +262,15 @@
 			_ar1(char *,	buffer)
 			)
 			_dcl(char *,	buffer)
+			_ret
+
+	/* samebranch.c ----------------------------------------------- */
+	int	samebranch(
+			_arx(char *,	rev1)
+			_ar1(char *,	rev2)
+			)
+			_dcl(char *,	rev1)
+			_dcl(char *,	rev2)
 			_ret
 
 	/* vcs_file.c ------------------------------------------------- */

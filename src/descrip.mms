@@ -1,4 +1,4 @@
-# $Id: descrip.mms,v 11.1 1992/07/24 15:26:59 dickey Exp $
+# $Id: descrip.mms,v 11.2 1992/08/03 14:30:07 dickey Exp $
 # MMS-file for miscellaneous library routines	
 #
 ####### (Development) ##########################################################
@@ -215,6 +215,7 @@ C_SRC	=-
 	REVERT.C -
 	S2GID.C -
 	S2UID.C -
+	SAMEBRANCH.C -
 	SAMELEAF.C -
 	SAVEWIN.C -
 	SCCS_DIR.C -
@@ -338,6 +339,7 @@ RAWTERM.obj :		$(PTYPES_H)
 # rcspath.obj :		$J/rcspath.h	; $(CC) -I$J -c $*.c
 # rcspermit.obj :	$(PTYPES_H)	$(I)rcsdefs.h
 RESIZWWIN.obj :		$(PTYPES_H)
+# samebranch.obj :	$(PTYPES_H)	$(I)rcsdefs.h
 SAMELEAF.obj :		$(PTYPES_H)
 SAVEWIN.obj :		$(PTYPES_H)
 SCCSLAST.obj :		$(PTYPES_H)

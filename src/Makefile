@@ -1,4 +1,4 @@
-# $Id: Makefile,v 11.1 1992/07/24 15:27:12 dickey Exp $
+# $Id: Makefile,v 11.2 1992/08/03 14:29:30 dickey Exp $
 # MAKE-file for miscellaneous library routines
 
 ####### (Environment) ##########################################################
@@ -100,6 +100,7 @@ CSRC	=\
 	relpath.c\
 	resizewin.c\
 	revert.c\
+	samebranch.c\
 	sameleaf.c\
 	savewin.c\
 	sccs_dir.c\
@@ -221,6 +222,7 @@ OBJS	=\
 	$Z(relpath.o)\
 	$Z(resizewin.o)\
 	$Z(revert.o)\
+	$Z(samebranch.o)\
 	$Z(sameleaf.o)\
 	$Z(savewin.o)\
 	$Z(sccs_dir.o)\
@@ -301,6 +303,7 @@ $Z(rcsload.o)\
 $Z(rcslocks.o)\
 $Z(rcsname.o)\
 $Z(rcspermit.o)\
+$Z(samebranch.o)\
 $Z(vcs_file.o):	$(RCSDEFS_H)
 #
 $Z(rcspath.o):	$J/rcspath.h
