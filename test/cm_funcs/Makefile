@@ -1,4 +1,4 @@
-# $Id: Makefile,v 12.3 1994/07/02 17:39:19 tom Exp $
+# $Id: Makefile,v 12.4 1994/08/02 16:48:58 tom Exp $
 # make-file for TD_LIB common/test library
 
 ####### (Development) ##########################################################
@@ -36,6 +36,8 @@ C_SRC	=
 SOURCES	= Makefile $(SCRIPTS) $(REF_FILES) $(DATA_FILES)
 
 PROGS	=\
+	cmv_dir \
+	cmv_last \
 	cutoff \
 	newzone \
 	packdate \
@@ -52,6 +54,8 @@ include ../td_rules.mk
 
 # rules to make SunOs 'make' "work" with VPATH
 
+cmv_dir.c \
+cmv_last.c \
 cutoff.c \
 newzone.c \
 packdate.c \

@@ -1,4 +1,4 @@
-/* $Id: td_local.h,v 12.2 1994/07/04 10:38:28 tom Exp $ */
+/* $Id: td_local.h,v 12.3 1994/08/02 14:21:46 tom Exp $ */
 
 /*
  * Include all features in TD_LIB, used for configuration.
@@ -20,6 +20,7 @@
 #include <td_qsort.h>
 #include <td_scomp.h>
 #include <dyn_str.h>
+#include <cmv_defs.h>
 #include <rcsdefs.h>
 #include <sccsdefs.h>
 #include <td_sheet.h>

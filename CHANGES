@@ -1,3 +1,20 @@
+1994-08-02  dickey@clark.net
+
+	* src/cm_funcs/cmv_dir.c: RCS_BASE
+
+	* src/cm_funcs/Makefile: added modules cmv_dir, cmv_last
+
+	* src/cm_funcs/cmv_last.c: RCS_BASE
+
+	* include/Makefile: added cmv_defs.h
+
+	* include/cmv_defs.h, test/cm_funcs/cmv_dir.sh, test/cm_funcs/cmv_last.sh:
+	RCS_BASE
+
+	* test/cm_funcs/Makefile: added test programs for cmv_dir, cmv_last
+
+	* include/td_local.h: include CmVision defs
+
 1994-08-01  dickey@clark.net
 
 	* configure.in: try to show result of `uname -a` in config.h header

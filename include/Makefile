@@ -1,4 +1,4 @@
-# $Id: Makefile,v 12.5 1994/07/18 22:30:22 tom Exp $
+# $Id: Makefile,v 12.6 1994/08/02 18:36:48 tom Exp $
 # make-file for CM_TOOLS common interface directory
 
 THIS	= td
@@ -16,6 +16,7 @@ H_SRC	=\
 	deltree.h\
 	dyn_str.h\
 	ptypes.h\
+	cmv_defs.h\
 	rcsdefs.h\
 	sccsdefs.h\
 	td_ext.h\

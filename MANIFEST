@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19940801
+MANIFEST for td_lib, version t19940802
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         restrictions on copying/using this software
@@ -19,6 +19,7 @@ include                         subdirectory
 include/.vilerc                 macro to use in ifdef'ing td_ext.h for autoconf
 include/Makefile                make-file for CM_TOOLS common interface directory
 include/acl.h                   defines ACL bits for apollo SR10.1
+include/cmv_defs.h              definitions for CmVision wrappers
 include/deltree.h               delta-tree function interface
 include/dyn_str.h               dynamic-strings interface
 include/llib-ltd                template for lint-library
@@ -39,6 +40,8 @@ src                             subdirectory
 src/Makefile                    makefile for td_lib/src
 src/cm_funcs                    subdirectory
 src/cm_funcs/Makefile           makefile for td_lib/src/cm_funcs
+src/cm_funcs/cmv_dir.c          lookup CmVision directory & file paths
+src/cm_funcs/cmv_last.c         lookup file's current version in CmVision
 src/cm_funcs/cutoff.c           SCCS-style cutoff date parsing
 src/cm_funcs/descrip.mms        MMS file for the TD_LIB/SRC/CM_FUNCS directory
 src/cm_funcs/newzone.c          set new timezone
@@ -241,6 +244,8 @@ test/Makefile                   makefile for td_lib/test
 test/README                     description of td_lib/test
 test/cm_funcs                   subdirectory
 test/cm_funcs/Makefile          makefile for td_lib/test/cm_funcs
+test/cm_funcs/cmv_dir.sh        test-script for cmv_dir
+test/cm_funcs/cmv_last.sh       test-script for cmv_last
 test/cm_funcs/cutoff.ref        reference for 'dotcmp'
 test/cm_funcs/cutoff.sh         test-script for cutoff
 test/cm_funcs/newzone.ref       test result for newzone.sh
