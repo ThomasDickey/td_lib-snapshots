@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: fp2argv.c,v 11.1 1992/11/17 13:02:14 dickey Exp $";
+static	char	Id[] = "$Id: fp2argv.c,v 11.2 1992/11/18 14:52:05 dickey Exp $";
 #endif
 
 /*
@@ -90,7 +90,7 @@ _MAIN
 
 	fp2argv(stdin, &list, 0);
 	for (j = 0; list[j]; j++)
-		PRINTF("%5d:\t%s", j+1, list[j]);
+		PRINTF("%d:\t%s", j+1, list[j]);
 	exit(SUCCESS);
 	/*NOTREACHED*/
 }

@@ -1,0 +1,4 @@
+vecedit.sh dummy.txt
+dummy.txt dummy2.txt
+dummy2.txt dummy.txt
+dummy.txt vecedit.sh

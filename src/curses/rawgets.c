@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rawgets.c,v 11.21 1992/09/04 15:26:35 dickey Exp $";
+static	char	Id[] = "$Id: rawgets.c,v 11.24 1992/11/18 14:04:37 dickey Exp $";
 #endif
 
 /*
@@ -558,21 +558,31 @@ _MAIN
 	register int	j	= 0;
 	auto	 int	wrap	= ((argc > 1) && !strcmp(argv[1], "-w"));
 	auto	 char	bfr[BUFSIZ];
-	static	 char	**pref[] = { "> " : "^ "};
+	static	 char	*pref[] = { "^ ", "> "};
 
 	initscr();
 	rawterm();
 	*bfr = EOS;
 	while (strlen(bfr) < 3 * COLS) {
 		(void)strcat(bfr, "abcdefghijklmnopqrstuvwxyz.");
-		(void)sprintf(bfr + strlen(bfr), "%d.", j++);
+		(void)sprintf(bfr + strlen(bfr), "%d ", j++);
 	}
-	for (j = 0; j < LINES; j++) {
+	move(0,0);
+	printw("You will be prompted at each line, until the buffer is empty");
+	j = 1;
+	for (;;) {
 		move(j,0);
 		clrtobot();
 		move(j,0);
 		printw("%05d> ", j);
-		rawgets(bfr, pref, sizeof(bfr), wrap, 'q');
+		rawgets(bfr, pref, sizeof(bfr),
+			COLS/2, strlen(bfr), TRUE,
+			wrap, 'q',
+			(char **)0, FALSE);
+		if (!*bfr)
+			break;
+		if (++j >= LINES)
+			j = 1;
 	}
 	endwin();
 }

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: beep.c,v 11.0 1991/10/03 16:16:16 ste_cm Rel $";
+static	char	Id[] = "$Id: beep.c,v 12.0 1992/11/18 08:58:54 ste_cm Rel $";
 #endif
 
 /*
@@ -13,6 +13,7 @@ static	char	Id[] = "$Id: beep.c,v 11.0 1991/10/03 16:16:16 ste_cm Rel $";
  *			     don't use it in system5!
  */
 
+#define	CUR_PTYPES
 #include	"ptypes.h"
 
 #ifndef	SYSTEM5

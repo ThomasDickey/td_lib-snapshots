@@ -1,0 +1,45 @@
+  1] parameter:xxx
+...case 3
+    working   :xxx
+    archive   :FOO/xxx,v
+    located   :FOO
+  1] parameter:xxx,v
+...case 2
+    working   :./xxx
+    archive   :FOO/xxx,v
+    located   :FOO
+  1] parameter:xxx
+...case 1
+    working   :xxx
+    archive   :FOO/xxx,v
+    located   :FOO
+  1] parameter:xxx
+...case 1
+    working   :xxx
+    archive   :FOO/xxx,v
+    located   :FOO
+  3] parameter:yyy
+...case 3
+    working   :yyy
+    archive   :FOO/yyy,v
+    located   :FOO
+  1] parameter:xxx
+...case 3
+    working   :xxx
+    archive   :FOO/xxx,v
+    located   :FOO
+  2] parameter:yyy
+...case 3
+    working   :yyy
+    archive   :FOO/yyy,v
+    located   :FOO
+  1] parameter:xxx,v
+...case 1
+    working   :xxx
+    archive   :FOO/xxx,v
+    located   :FOO
+  3] parameter:yyy
+...case 3
+    working   :yyy
+    archive   :FOO/yyy,v
+    located   :FOO

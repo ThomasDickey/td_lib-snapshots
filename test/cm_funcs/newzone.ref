@@ -1,0 +1,18 @@
+** now = Fri Jun 10 12:00:00 1988
+  newzone( 300) = 'TZ=EST5EDT'
+				=>Fri Jun 10 12:00:00 1988
+  newzone( 480) = 'TZ=PST8PDT'
+				=>Fri Jun 10 09:00:00 1988
+  newzone(-270) = 'TZ=GMT+4:30'
+				=>Fri Jun 10 11:30:00 1988
+  newzone( 270) = 'TZ=GMT-4:30'
+				=>Fri Jun 10 20:30:00 1988
+** six-months ago
+  newzone( 300) = 'TZ=EST5EDT'
+				=>Sun Dec 13 11:00:00 1987
+  newzone( 480) = 'TZ=PST8PDT'
+				=>Sun Dec 13 08:00:00 1987
+  newzone(-270) = 'TZ=GMT+4:30'
+				=>Sun Dec 13 11:30:00 1987
+  newzone( 270) = 'TZ=GMT-4:30'
+				=>Sun Dec 13 20:30:00 1987

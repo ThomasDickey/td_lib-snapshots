@@ -1,3 +1,839 @@
+1992-11-18  dickey@software.org
+
+	* test/cm_funcs/rcsload.sh: implemented test (does not work yet)
+
+	* test/dummy4.txt: RCS_BASE
+
+1992-11-18  ste_cm@software.org
+
+	* test/dummy4.txt:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* src/cm_funcs/rcsload.c: corrected (?) a broken loop
+
+	* test/pathname/walktree.ref: RCS_BASE
+
+	* test/pathname/walktree.sh: implemented test
+
+	* test/process/usercopy.ref: RCS_BASE
+
+1992-11-18  ste_cm@software.org
+
+	* test/process/usercopy.ref:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/process/usercopy.sh: implemented test
+
+1992-11-18  ste_cm@software.org
+
+	* test/process/usercopy.sh:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/compare/diffload.ref: RCS_BASE
+
+1992-11-18  ste_cm@software.org
+
+	* test/compare/diffload.ref:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/compare/diffload.sh: implemented test
+
+1992-11-18  ste_cm@software.org
+
+	* test/compare/diffload.sh:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/memory/vecedit.sh: implemented a test
+
+1992-11-18  ste_cm@software.org
+
+	* test/memory/vecedit.sh:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/memory/vecedit.ref: RCS_BASE
+
+1992-11-18  ste_cm@software.org
+
+	* test/memory/vecedit.ref:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/dummy2.txt: RCS_BASE
+
+1992-11-18  ste_cm@software.org
+
+	* test/dummy2.txt:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/pathname/filecopy.ref: RCS_BASE
+
+1992-11-18  ste_cm@software.org
+
+	* test/pathname/filecopy.ref:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/pathname/filecopy.sh: implemented test
+
+1992-11-18  ste_cm@software.org
+
+	* test/pathname/filecopy.sh:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/pathname/fp2argv.ref: RCS_BASE
+
+1992-11-18  ste_cm@software.org
+
+	* test/pathname/fp2argv.ref:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* src/pathname/fp2argv.c:
+	make test-driver output look more like file2argv's
+
+	* test/pathname/fp2argv.sh: implemented test
+
+1992-11-18  ste_cm@software.org
+
+	* test/pathname/fp2argv.sh:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/pathname/file2mem.ref: RCS_BASE
+
+1992-11-18  ste_cm@software.org
+
+	* test/pathname/file2mem.ref:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/pathname/file2mem.sh: implemented test
+
+1992-11-18  ste_cm@software.org
+
+	* test/pathname/file2mem.sh:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/pathname/file2arg.ref: RCS_BASE
+
+1992-11-18  ste_cm@software.org
+
+	* test/pathname/file2arg.ref:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/pathname/file2arg.sh: implemented test
+
+	* test/memory/doalloc.ref: RCS_BASE
+
+1992-11-18  ste_cm@software.org
+
+	* test/memory/doalloc.ref:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/memory/doalloc.sh: implemented test
+
+1992-11-18  ste_cm@software.org
+
+	* test/memory/doalloc.sh:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* src/memory/doalloc.c: split out 'walkback()'
+	refined test-driver some
+
+	* test/process/failed.sh: make a clean listing
+
+1992-11-18  ste_cm@software.org
+
+	* test/process/failed.sh:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/process/execute.ref: RCS_BASE
+
+1992-11-18  ste_cm@software.org
+
+	* test/process/execute.ref:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/process/execute.sh: implemented test
+
+	* test/process/failed.ref: RCS_BASE
+
+1992-11-18  ste_cm@software.org
+
+	* test/process/failed.ref:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/process/failed.sh: implemented test
+
+	* test/pathname/trimpath.ref: RCS_BASE
+
+1992-11-18  ste_cm@software.org
+
+	* test/pathname/trimpath.ref:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/pathname/trimpath.sh: implemented test
+
+1992-11-18  ste_cm@software.org
+
+	* test/pathname/trimpath.sh:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/curses/padedit.ref: RCS_BASE
+
+1992-11-18  ste_cm@software.org
+
+	* test/curses/padedit.ref:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/curses/padedit.sh: implemented test
+
+1992-11-18  ste_cm@software.org
+
+	* test/curses/padedit.sh:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/curses/scr_size.ref: RCS_BASE
+
+1992-11-18  ste_cm@software.org
+
+	* test/curses/scr_size.ref:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/curses/scr_size.sh: implemented test
+
+1992-11-18  ste_cm@software.org
+
+	* test/curses/scr_size.sh:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/pathname/pathcmp.ref: RCS_BASE
+
+1992-11-18  ste_cm@software.org
+
+	* test/pathname/pathcmp.ref:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/pathname/pathcmp.sh: implemented test
+
+1992-11-18  ste_cm@software.org
+
+	* test/pathname/pathcmp.sh:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/pathname/pathhead.ref: RCS_BASE
+
+1992-11-18  ste_cm@software.org
+
+	* test/pathname/pathhead.ref:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/pathname/pathhead.sh: implemented test
+
+1992-11-18  ste_cm@software.org
+
+	* test/pathname/pathhead.sh:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/pathname/pathleaf.ref: RCS_BASE
+
+1992-11-18  ste_cm@software.org
+
+	* test/pathname/pathleaf.ref:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/pathname/pathleaf.sh: implemented test
+
+1992-11-18  ste_cm@software.org
+
+	* test/pathname/pathleaf.sh:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/curses/rawgets.ref: RCS_BASE
+
+1992-11-18  ste_cm@software.org
+
+	* test/curses/rawgets.ref:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/curses/rawgets.sh: implemented a test
+
+	* src/curses/rawgets.c: correction to line-limit in test-driver
+
+	* src/curses/rawgets.c: polished test-driver
+
+	* test/cm_funcs/rcsargpr.ref: RCS_BASE
+
+1992-11-18  ste_cm@software.org
+
+	* test/cm_funcs/rcsargpr.ref:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/cm_funcs/rcsargpr.sh: implemented a test
+
+	* test/cm_funcs/rcsname.ref: RCS_BASE
+
+1992-11-18  ste_cm@software.org
+
+	* test/cm_funcs/rcsname.ref:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/cm_funcs/rcsname.sh: implemented a test
+
+1992-11-18  ste_cm@software.org
+
+	* test/cm_funcs/rcsname.sh:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/pathname/relpath.ref: RCS_BASE
+
+	* test/pathname/relpath.sh: implemented a test
+
+1992-11-18  ste_cm@software.org
+
+	* test/pathname/relpath.sh:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* src/pathname/relpath.c:
+	make output from test-driver simpler to edit with 'sed'
+
+1992-11-18  ste_cm@software.org
+
+	* src/pathname/relpath.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/unix/s2uid.ref: RCS_BASE
+
+1992-11-18  ste_cm@software.org
+
+	* test/unix/s2uid.ref:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/unix/s2uid.sh: implemented test
+
+	* test/cm_funcs/samebr.ref: RCS_BASE
+
+1992-11-18  ste_cm@software.org
+
+	* test/cm_funcs/samebr.ref:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/cm_funcs/samebr.sh: implemented test
+
+	* test/pathname/sameleaf.ref: RCS_BASE
+
+1992-11-18  ste_cm@software.org
+
+	* test/pathname/sameleaf.ref:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/pathname/sameleaf.sh: implemented test
+
+1992-11-18  ste_cm@software.org
+
+	* test/pathname/sameleaf.sh:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/cm_funcs/sccsname.ref: RCS_BASE
+
+1992-11-18  ste_cm@software.org
+
+	* test/cm_funcs/sccsname.ref:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/cm_funcs/sccsname.sh: implemented test
+
+1992-11-18  ste_cm@software.org
+
+	* test/cm_funcs/sccsname.sh:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/string/strbcmp.ref: RCS_BASE
+
+1992-11-18  ste_cm@software.org
+
+	* test/string/strbcmp.ref:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* src/string/strbcmp.c:
+	ifdef'd out the timing test, since I won't be able to regress it
+
+	* test/string/strbcmp.sh: implemented test
+
+1992-11-18  ste_cm@software.org
+
+	* test/string/strbcmp.sh:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/string/strucmp.ref: RCS_BASE
+
+1992-11-18  ste_cm@software.org
+
+	* test/string/strucmp.ref:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/string/strucmp.sh: implemented test
+
+1992-11-18  ste_cm@software.org
+
+	* test/string/strucmp.sh:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/string/strwcmp.ref: RCS_BASE
+
+1992-11-18  ste_cm@software.org
+
+	* test/string/strwcmp.ref:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/string/strwcmp.sh: implemented test
+
+1992-11-18  ste_cm@software.org
+
+	* test/string/strwcmp.sh:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/memory/txtalloc.ref: RCS_BASE
+
+1992-11-18  ste_cm@software.org
+
+	* test/memory/txtalloc.ref:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/memory/txtalloc.sh: implemented test
+
+1992-11-18  ste_cm@software.org
+
+	* test/memory/txtalloc.sh:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/unix/uid2s.sh: implemented test
+
+	* test/unix/uid2s.ref: RCS_BASE
+
+1992-11-18  ste_cm@software.org
+
+	* test/unix/uid2s.ref:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/cm_funcs/vcs_file.ref: RCS_BASE
+
+1992-11-18  ste_cm@software.org
+
+	* test/cm_funcs/vcs_file.ref:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/cm_funcs/vcs_file.sh: implemented test
+
+1992-11-18  ste_cm@software.org
+
+	* test/cm_funcs/vcs_file.sh:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/cm_funcs/vercmp.ref: RCS_BASE
+
+1992-11-18  ste_cm@software.org
+
+	* test/cm_funcs/vercmp.ref:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/cm_funcs/vercmp.sh: implemented a test
+
+1992-11-18  ste_cm@software.org
+
+	* test/cm_funcs/vercmp.sh:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/pathname/which.ref: RCS_BASE
+
+1992-11-18  ste_cm@software.org
+
+	* test/pathname/which.ref:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/pathname/which.sh: implemented a test
+
+1992-11-18  ste_cm@software.org
+
+	* test/pathname/which.sh:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/cm_funcs/newzone.ref: RCS_BASE
+
+1992-11-18  ste_cm@software.org
+
+	* test/cm_funcs/newzone.ref:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/unix/gid2s.sh: turn off trace
+
+	* test/cm_funcs/packdate.ref: RCS_BASE
+
+1992-11-18  ste_cm@software.org
+
+	* test/cm_funcs/packdate.ref:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/cm_funcs/packdate.sh: implemented a test
+
+1992-11-18  ste_cm@software.org
+
+	* test/cm_funcs/packdate.sh:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* src/cm_funcs/packdate.c: corrected month-value in test-driver
+
+1992-11-18  ste_cm@software.org
+
+	* src/cm_funcs/packdate.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/cm_funcs/newzone.sh: implemented a test
+
+1992-11-18  ste_cm@software.org
+
+	* test/cm_funcs/newzone.sh:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/pathname/name2s.ref: RCS_BASE
+
+1992-11-18  ste_cm@software.org
+
+	* test/pathname/name2s.ref:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/pathname/name2s.sh: implemented test
+
+1992-11-18  ste_cm@software.org
+
+	* test/pathname/name2s.sh:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/process/makeargv.ref: RCS_BASE
+
+1992-11-18  ste_cm@software.org
+
+	* test/process/makeargv.ref:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/process/makeargv.sh: implemented test
+
+1992-11-18  ste_cm@software.org
+
+	* test/process/makeargv.sh:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/string/ltostr.ref: RCS_BASE
+
+1992-11-18  ste_cm@software.org
+
+	* test/string/ltostr.ref:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/string/ltostr.sh: implemented a test
+
+1992-11-18  ste_cm@software.org
+
+	* test/string/ltostr.sh:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/string/lsbycols.ref: RCS_BASE
+
+1992-11-18  ste_cm@software.org
+
+	* test/string/lsbycols.ref:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/string/lsbycols.sh: implemented test
+
+	* test/unix/gid2s.sh: implemented a test
+
+	* test/unix/gid2s.ref: RCS_BASE
+
+1992-11-18  ste_cm@software.org
+
+	* test/unix/gid2s.ref:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/process/gethome.ref: RCS_BASE
+
+1992-11-18  ste_cm@software.org
+
+	* test/process/gethome.ref:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/process/gethome.sh: implemented
+
+1992-11-18  ste_cm@software.org
+
+	* test/process/gethome.sh:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/run_test.sh: remove the ".tmp" file if the test succeeds
+
+	* test/cm_funcs/cutoff.ref: RCS_BASE
+
+1992-11-18  ste_cm@software.org
+
+	* test/cm_funcs/cutoff.ref:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/string/dotcmp.ref: RCS_BASE
+
+1992-11-18  ste_cm@software.org
+
+	* test/string/dotcmp.ref:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/string/dotcmp.sh: implemented a test
+
+1992-11-18  ste_cm@software.org
+
+	* test/string/dotcmp.sh:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/cm_funcs/cutoff.sh: implemented a test
+
+1992-11-18  ste_cm@software.org
+
+	* test/cm_funcs/cutoff.sh:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/pathname/abspath.ref: RCS_BASE
+
+	* test/run_test.sh: make a simple regression-test
+
+	* test/pathname/abspath.sh: filtered result to something I can test
+
+1992-11-18  ste_cm@software.org
+
+	* test/pathname/abspath.sh:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* src/cm_funcs/vercmp.c: refined test-driver
+
+	* test/dummy.txt: RCS_BASE
+
+1992-11-18  ste_cm@software.org
+
+	* test/dummy.txt:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* test/pathname/which.sh, test/cm_funcs/vercmp.sh, test/pathname/walktree.sh, test/cm_funcs/vcs_file.sh, test/memory/vecedit.sh, test/memory/txtalloc.sh, test/process/usercopy.sh, test/unix/uid2s.sh, test/pathname/trimpath.sh, test/string/strwcmp.sh, test/string/strucmp.sh, test/curses/scr_size.sh, test/string/strbcmp.sh, test/cm_funcs/sccsname.sh, test/pathname/sameleaf.sh, test/cm_funcs/samebr.sh, test/unix/s2uid.sh, test/cm_funcs/rcsname.sh, test/pathname/relpath.sh, test/cm_funcs/rcsargpr.sh, test/cm_funcs/rcsload.sh, test/curses/rawgets.sh, test/pathname/pathhead.sh, test/pathname/pathleaf.sh, test/curses/padedit.sh, test/pathname/pathcmp.sh, test/cm_funcs/newzone.sh, test/cm_funcs/packdate.sh, test/pathname/name2s.sh, test/process/makeargv.sh, test/string/lsbycols.sh, test/string/ltostr.sh, test/unix/gid2s.sh, test/pathname/fp2argv.sh, test/process/gethome.sh, test/pathname/file2mem.sh, test/pathname/filecopy.sh, test/pathname/file2arg.sh, test/process/failed.sh, test/process/execute.sh, test/string/dotcmp.sh, test/compare/diffload.sh, test/memory/doalloc.sh, test/cm_funcs/cutoff.sh, test/pathname/abspath.sh:
+	RCS_BASE
+
+	* test/run_test.sh: *** empty log message ***
+
+	* test/run_test.sh: RCS_BASE
+
+	* test/Makefile: added 'run_tests.sh'
+
+	* src/curses/rawgets.c: make test-driver compile
+
+	* test/Makefile: make this compile test-drivers
+
+	* src/string/dotcmp.c: use "cm_qsort.h"
+
+	* src/curses/beep.c: make this dependent on "cm_curses.h"
+
+1992-11-18  ste_cm@software.org
+
+	* src/curses/beep.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* src/curses/blip.c: make this dependent on "cm_curses.h"
+
+1992-11-18  ste_cm@software.org
+
+	* src/curses/blip.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1992-11-18  dickey@software.org
+
+	* src/descrip.mms: added modules CMP_QSORT, WALKBACK
+
+	* src/Makefile:
+	split out dependencies for "cm_curses.h" and "cm_qsort.h"
+
+	* support/old-td_lib.mk: added macros CURSES_H, QSORT_H
+
+	* include/td_curse.h, include/ptypes.h:
+	moved CUR_PTYPES ifdef to "cm_curses.h"
+
+	* include/td_qsort.h: make this work for lint-lib
+
+	* include/llib-ltd: split out 'cm_qsort.h'
+
+	* include/Makefile: split out 'cm_curses.h' and 'cm_qsort.h'
+
+	* include/td_lib.h: split out "cm_curses.h"
+	added 'walkback()'
+	deleted NO_LEAKS macro
+
+	* include/td_curse.h: RCS_BASE
+
+	* include/ptypes.h: split out def of 'qsort()'
+
+	* src/compare/cmpqsort.c, include/td_qsort.h, src/process/walkback.c:
+	RCS_BASE
+
 1992-11-17  dickey@software.org
 
 	* src/memory/doalloc.c: mods to add/support 'show_doalloc()'

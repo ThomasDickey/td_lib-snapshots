@@ -1,5 +1,4 @@
-/* $Id: td_lib.h,v 11.8 1992/11/17 12:34:17 dickey Exp $ */
-#define	NO_LEAKS
+/* $Id: td_lib.h,v 11.9 1992/11/18 08:23:36 dickey Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for CM_TOOLS COMMON
@@ -20,6 +19,10 @@
 			_nul
 
 	/* GENERIC-LIBRARY ******************************************** */
+
+#ifdef	CUR_PTYPES
+#include "cm_curses.h"
+#endif
 
 	/* abspath.c -------------------------------------------------- */
 #ifdef	unix
@@ -63,10 +66,6 @@
 			_dcl(char *,	mode)
 			_ret
 
-	/* beep.c ----------------------------------------------------- */
-		beep(_ar0)
-			_nul
-
 	/* bldarg.c --------------------------------------------------- */
 		bldarg (
 			_arx(int,	argc)
@@ -76,13 +75,6 @@
 			_dcl(int,	argc)
 			_dcl(char **,	argv)
 			_dcl(char *,	string)
-			_nul
-
-	/* blip.c ----------------------------------------------------- */
-	void	blip(
-			_ar1(int,	c)
-			)
-			_dcl(int,	c)
 			_nul
 
 	/* catarg.c --------------------------------------------------- */
@@ -112,15 +104,6 @@
 			_dcl(SIG_T,	(*func)())
 			_nul
 #endif
-
-	/* cmdch.c ---------------------------------------------------- */
-#ifdef	CUR_PTYPES
-	int	cmdch(
-			_ar1(int *,	cntp)
-			)
-			_dcl(int *,	cntp)
-			_ret
-#endif	/* CUR_PTYPES */
 
 	/* copyback.c ------------------------------------------------- */
 	int	copyback(
@@ -208,26 +191,6 @@
 			_dcl(FILE *,	fp)
 			_dcl(int,	c)
 			_nul
-
-	/* dumpwin.c -------------------------------------------------- */
-#ifdef	CUR_PTYPES
-		dumpwin(
-			_arx(WINDOW *,	w)
-			_ar1(char *,	s)
-			)
-			_dcl(WINDOW *,	w)
-			_dcl(char *,	s)
-			_nul
-
-	/* erasechar.c ------------------------------------------------ */
-#ifdef	erasechar
-#undef	erasechar
-#endif	/* erasechar */
-	char	erasechar(_ar0)
-			_ret
-#endif	/* CUR_PTYPES */
-	char	eraseword(_ar0)
-			_ret
 
 	/* execute.c -------------------------------------------------- */
 	int	execute(
@@ -369,15 +332,6 @@
 			)
 			_dcl(char *,	name)
 			_ret
-
-	/* killchar.c ------------------------------------------------- */
-#ifdef	CUR_PTYPES
-#ifdef	killchar
-#undef	killchar
-#endif	/* killchar */
-	char	killchar(_ar0)
-			_ret
-#endif	/* CUR_PTYPES */
 
 	/* list_by_cols.c --------------------------------------------- */
 		list_by_cols(
@@ -563,45 +517,6 @@
 			_dcl(char *,	path)
 			_ret
 
-	/* rawgets.c -------------------------------------------------- */
-#ifdef	CUR_PTYPES
-	int	wrawgets (
-			_arx(WINDOW *,	win)
-			_arx(char *,	buffer)
-			_arx(char **,	prefix)
-			_arx(int,	buffer_len)
-			_arx(int,	field_len)
-			_arx(int,	first_col)
-			_arx(int,	first_mode)
-			_arx(int,	newline)
-			_arx(int,	fast_q)
-			_arx(char **,	command)
-			_ar1(int,	logging)
-			)
-			_dcl(WINDOW *,	win)
-			_dcl(char *,	buffer)
-			_dcl(char **,	prefix)
-			_dcl(int,	buffer_len)
-			_dcl(int,	field_len)
-			_dcl(int,	first_col)
-			_dcl(int,	first_mode)
-			_dcl(int,	newline)
-			_dcl(int,	fast_q)
-			_dcl(char **,	command)
-			_dcl(int,	logging)
-			_ret
-
-	char *	rawgets_log(_ar0)
-			_ret
-
-#define		 rawgets(b, p, bl, fl, fc, fm, nl, q, cmd, log) \
-	wrawgets(stdscr, b, p, bl, fl, fc, fm, nl, q, cmd, log)
-
-	/* rawterm.c -------------------------------------------------- */
-		rawterm(_ar0)
-			_nul
-#endif	/* CUR_PTYPES */
-
 	/* relpath.c -------------------------------------------------- */
 #ifdef	unix
 	char *	relpath(
@@ -613,16 +528,8 @@
 			_dcl(char *,	cwd)
 			_dcl(char *,	src)
 			_ret
-#endif	/* unix */
-
-	/* resizewin.c ------------------------------------------------ */
-#ifdef	CUR_PTYPES
-	int	resizewin(_ar0)
-			_ret
-#endif	/* CUR_PTYPES */
 
 	/* revert.c --------------------------------------------------- */
-#ifdef	unix
 	int	revert(
 			_ar1(char *,	msg)
 			)
@@ -652,28 +559,6 @@
 			_dcl(char *,	path)
 			_dcl(char *,	leaf)
 			_ret
-
-	/* savewin.c -------------------------------------------------- */
-#ifdef	CUR_PTYPES
-		savewin(_ar0)
-			_nul
-
-		lastwin(
-			_arx(int,	redo)
-			_ar1(int,	top)
-			)
-			_dcl(int,	redo)
-			_dcl(int,	top)
-			_nul
-
-		unsavewin(
-			_arx(int,	redo)
-			_ar1(int,	top)
-			)
-			_dcl(int,	redo)
-			_dcl(int,	top)
-			_nul
-#endif	/* CUR_PTYPES */
 
 #ifdef	unix
 	/* scr_size.c ------------------------------------------------- */
@@ -947,6 +832,10 @@
 			_ret
 #endif	/* unix */
 
+	/* walkback.c ------------------------------------------------- */
+	void	walkback(_ar0)
+			_nul
+
 	/* walktree.c ------------------------------------------------- */
 #ifdef	unix
 
@@ -992,33 +881,4 @@
 			_ret
 #endif	/* unix */
 
-	/* win2file.c ------------------------------------------------- */
-#ifdef	CUR_PTYPES
-	win2fp(
-			_arx(WINDOW *,	win)
-			_arx(FILE *,	fp)
-			_ar1(char *,	prefix)
-			)
-			_dcl(WINDOW *,	win)
-			_dcl(FILE *,	fp)
-			_dcl(char *,	prefix)
-			_nul
-
-int	win2file(
-			_arx(WINDOW *,	win)
-			_ar1(char *,	file)
-			)
-			_dcl(WINDOW *,	win)
-			_dcl(char *,	file)
-			_ret
-
-	/* wrepaint.c ------------------------------------------------- */
-	wrepaint(
-			_arx(WINDOW *,	win)
-			_ar1(int,	row)
-			)
-			_dcl(WINDOW *,	win)
-			_dcl(int,	row)
-			_nul
-#endif	/* CUR_PTYPES */
 #endif		/* _COMMON_H_ */

@@ -1,0 +1,8 @@
+aaa == aaa
+aaa == AAA
+aaa == aAa
+baa == baa
+baa == bAA
+baa > aAa
+baa == bAa
+baa < caa

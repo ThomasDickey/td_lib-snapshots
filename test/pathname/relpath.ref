@@ -1,0 +1,16 @@
+case  0)  RCS <= RCS
+          RCS <= TOP2/cm_library/test/RCS
+case  1)  . <= .
+          . <= TOP2/cm_library/test
+case  2)  .. <= ..
+          .. <= TOP2/cm_library
+case  3)  ../.. <= ../..
+          ../.. <= TOP2
+case  4)  ../bin <= ../bin
+          ../bin <= TOP2/cm_library/bin
+case  5)  /bin <= /bin
+          /bin <= /bin
+case  6)  ../../bin <= ../../bin
+          ../../bin <= TOP2/bin
+case  7)  ../../bin/RCS <= ../../bin/RCS
+          ../../bin/RCS <= TOP2/bin/RCS

@@ -1,29 +1,24 @@
-# $Id: Makefile,v 11.3 1992/10/09 11:45:32 dickey Exp $
+# $Id: Makefile,v 11.5 1992/11/18 09:41:56 dickey Exp $
 # make-file for CM_TOOLS common/test library
 
 ####### (Development) ##########################################################
+TOP	= ../..
 include ../support/cm_library.mk
 
-I	= ../interface
-S	= ../src
-
-INCLUDES= -I$I
-CPP_OPTS= -DTEST $(DEFINES) $(INCLUDES)
-
-LIBS	= ../lib/lib.a -lcurses -ltermcap
-INCS	= $I/ptypes.h
-
+DEFINES	= -DTEST
 VPATH	= ../src
 
 .SUFFIXES:
 .SUFFIXES: .c .lint
-.c.lint:	; tdlint $(CPP_OPTS) -ltd -lcurses $< >$@
-.c:		; $(CC) -o $@ $(CFLAGS) $(CPP_OPTS) $< $(LIBS)
+.c.lint:; tdlint $(CPP_OPTS) -ltd -lcurses $< >$@
+.c:	; $(CC) -o $@ $(CFLAGS) $(CPP_OPTS) $< $(LIBS) -lcurses -ltermcap
 
 ####### (Standard Lists) #######################################################
 REF_FILES =
+SCRIPTS	= \
+	run_tests.sh
 
-SOURCES	= Makefile descrip.mms README $(REF_FILES)
+SOURCES	= Makefile descrip.mms README $(SCRIPTS) $(REF_FILES)
 
 PROGS	=\
 	abspath\
@@ -80,7 +75,7 @@ clean:				; rm -f $(CLEAN)
 clobber:	clean		; rm -f $(ALL)
 destroy:			; $(DESTROY)
 sources:	$(SOURCES)
-run_tests:	$(PROGS)	; echo 'no module-level tests available'
+run_tests:	$(PROGS)	; $(RUN_TESTS)
 lint.out:
 lincnt.out:
 

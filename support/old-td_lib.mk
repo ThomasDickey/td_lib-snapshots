@@ -1,4 +1,4 @@
-# $Id: old-td_lib.mk,v 11.5 1992/10/16 08:30:10 dickey Exp $
+# $Id: old-td_lib.mk,v 11.6 1992/11/18 08:38:16 dickey Exp $
 # common definitions for makefiles built over CM_TOOLS library.
 
 ####### (Environment) ##########################################################
@@ -35,6 +35,8 @@ DESTROY	=sh -c 'for i in *;do case $$i in RCS);; *) rm -f $$i;;esac;done;exit 0'
 RUN_TESTS=sh -c '$@.sh 2>&1 | tee -a $@.out'
 
 PTYPES_H =	$I/ptypes.h	$I/common.h
+CURSES_H =	$(PTYPES_H)	$I/cm_curses.h
+QSORT_H =	$(PTYPES_H)	$I/cm_qsort.h
 RCSDEFS_H =	$(PTYPES_H)	$I/rcsdefs.h	$I/deltree.h
 SCCSDEFS_H =	$(PTYPES_H)	$I/sccsdefs.h
 

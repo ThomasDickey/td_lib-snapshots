@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: relpath.c,v 11.1 1992/11/17 12:53:04 dickey Exp $";
+static	char	Id[] = "$Id: relpath.c,v 12.0 1992/11/18 13:47:27 ste_cm Rel $";
 #endif
 
 /*
@@ -150,7 +150,7 @@ _AR1(char *,	s))
 _DCL(char *,	s)
 {
 	auto	char	tmp[BUFSIZ];
-	PRINTF("%s <= %s\n", relpath(tmp, (char *)0, s), s);
+	PRINTF(" %s <= %s\n", relpath(tmp, (char *)0, s), s);
 }
 
 _MAIN
@@ -178,8 +178,10 @@ _MAIN
 			do_test(argv[j]);
 	} else {
 		for (j = 0; j < SIZEOF(tbl); j++) {
+			PRINTF("case %2d) ", j);
 			do_test(tbl[j]);
 			abspath(strcpy(tmp, tbl[j]));
+			PRINTF("         ");
 			do_test(tmp);
 		}
 	}

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: strbcmp.c,v 11.1 1992/11/17 12:54:31 dickey Exp $";
+static	char	Id[] = "$Id: strbcmp.c,v 11.2 1992/11/18 13:25:27 dickey Exp $";
 #endif
 
 /*
@@ -70,6 +70,7 @@ _MAIN
 				CMP(strcmp));
 		}
 	}
+#ifdef	TEST2
 	now = time(0);
 	for (cmp = 0; cmp < 20000; cmp++)
 		LOOP(j) {
@@ -78,6 +79,7 @@ _MAIN
 			}
 		}
 	printf("# %d seconds\n", time(0) - now);
+#endif
 	(void)exit(0);
 	/*NOTREACHED*/
 }

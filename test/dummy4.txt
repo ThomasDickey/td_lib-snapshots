@@ -1,0 +1,417 @@
+head     3.2;
+branch   ;
+access   dickey impact;
+symbols  ;
+locks    ; strict;
+comment  @# @;
+
+
+3.2
+date     88.08.16.23.39.33;  author reuse;  state Exp;
+branches ;
+next     3.1;
+
+3.1
+date     88.08.10.09.51.11;  author reuse;  state Exp;
+branches ;
+next     3.0;
+
+3.0
+date     88.07.14.11.48.46;  author reuse;  state Exp;
+branches ;
+next     2.4;
+
+2.4
+date     88.07.14.11.48.46;  author reuse;  state Exp;
+branches ;
+next     2.3;
+
+2.3
+date     88.07.14.11.01.40;  author reuse;  state Exp;
+branches ;
+next     2.2;
+
+2.2
+date     88.07.14.08.57.46;  author reuse;  state Exp;
+branches ;
+next     2.1;
+
+2.1
+date     88.07.13.14.53.09;  author reuse;  state Exp;
+branches ;
+next     2.0;
+
+2.0
+date     88.07.07.13.26.30;  author reuse;  state Exp;
+branches 2.0.1.1;
+next     1.4;
+
+1.4
+date     88.07.07.13.26.30;  author reuse;  state Exp;
+branches ;
+next     1.3;
+
+1.3
+date     88.07.05.14.58.14;  author reuse;  state Exp;
+branches ;
+next     1.2;
+
+1.2
+date     88.07.05.13.41.09;  author reuse;  state Exp;
+branches ;
+next     1.1;
+
+1.1
+date     88.07.01.15.54.45;  author reuse;  state Exp;
+branches ;
+next     ;
+
+2.0.1.1
+date     88.08.19.13.34.19;  author dickey;  state Exp;
+branches ;
+next     2.0.1.2;
+
+2.0.1.2
+date     88.08.19.14.52.50;  author dickey;  state Exp;
+branches ;
+next     ;
+
+
+desc
+@Make DBS-library
+@
+
+
+3.2
+log
+@(shafron) put -g (debug) option back in for compilation
+@
+text
+@# &RCS: //tower/local/dickey/src/rcshist/test/RCS/test1.in,v 3.1 89/10/02 11:31:27 dickey Exp $
+# Make-file for DBS (Data Base Services)
+#
+#	Environment: Apollo SR9.7
+#
+#	GDML files end with ".e".  We develop this by using GDML to generate
+#	both GDML and SQL using 'gpre'.  Interbase SQL is relatively simple
+#	to understand and maintain, so we then break out the SQL-only code
+#	to make this more modular.
+#
+#	Note that linking and running the DBS applications must be done from
+#	C-shell due to the reliance upon 'inlib'.
+#
+TOP	= ../../..
+top	= ..
+#
+i	= $(TOP)/interface
+I	= $(TOP)/interface
+J	= ../interface
+INCLUDES=-I$I -I$J
+DEFINES	=
+OPTS	= -g -O
+CFLAGS	= $(OPTS) $(INCLUDES) $(DEFINES)
+#
+CPP	=/usr/lib/cpp -C
+ENV	=set inprocess; inlib /interbase/lib/gdslib
+#
+LLIB	= llib-ldbs
+ILIB	= llib-lDBS
+CSRCS	= \
+	builds.c\
+	debug.c\
+	fetch.c\
+	init_h.c\
+	ialloc.c\
+	ifetched.c\
+	ifindname.c\
+	iprepare.c\
+	isetup.c\
+	isqltype.c\
+	next.c\
+	release_h.c\
+	select.c
+ESRCS	= \
+	dbs.e
+SRCS	= \
+	$(CSRCS)\
+	$(ESRCS)
+#
+OBJS	= \
+	builds.o\
+	debug.o\
+	fetch.o\
+	init_h.o\
+	ialloc.o\
+	ifetched.o\
+	ifindname.o\
+	iprepare.o\
+	isetup.o\
+	isqltype.o\
+	next.o\
+	release_h.o\
+	select.o\
+	dbs.o
+#
+A	= $(TOP)/lib/dbs.a
+#############################################################################
+ALL	= \
+	$A \
+	lintit.sh\
+	$i/$(LLIB).ln
+#
+all:	$(ALL)
+#
+$A:	$(OBJS)
+	ar rv $A $?
+	ranlib $A
+#
+# The SQL-only modules all have the same dependency:
+$(OBJS): $I/dbs.h $J/ibs.h
+#
+# Create the main-module, which contains GDML source:
+dbs.c:	dbs.gdb dbs.e
+	csh -f -c '$(ENV); gpre -c -manual dbs.e'
+#
+# Create the (dummy) GDB-file:
+dbs.gdb:	dbs.gdl
+	rm -f $@@
+	gdef  $?
+#############################################################################
+#
+clean:
+	rm -f *.o *.out *.ln
+clobber: clean
+	rm -f $(ALL)
+destroy: clobber
+	$(TOP)/support/destroy.sh
+install:
+#
+tags:	$(SRCS)
+	ctags -t $(SRCS)
+#
+dbs.gdl\
+lintit.sh\
+llib-ldbs\
+$(SRCS):
+	checkout $@@
+#
+# Lint-library: we have two; one with only public definitions, and the other
+# (used for linting locally) with internal definitions.
+llib:		$i/$(LLIB).ln $(ILIB).ln
+$i/$(LLIB).ln:	$(LLIB) $I/dbs.h $J/ibs.h
+	$(TOP)/support/makellib.sh $i $(LLIB) dbs $(INCLUDES) $(DEFINES)
+#
+$(ILIB).ln:	$(LLIB) $I/dbs.h $J/ibs.h
+	cp $(LLIB) $(ILIB).c
+	tdlint -o DBS $(INCLUDES) -DDBS_INTERNAL $(ILIB).c
+	rm -f $(ILIB).c
+#
+lint.out: $(CSRCS) dbs.c
+	lintit.sh -l $? >>$@@
+#
+lincnt.out: $(SRCS)
+	echo '****'`date` >>$@@
+	lincnt $(SRCS) >>$@@
+#
+cflow.out: $(SRCS)
+	cflow $(DEFINES) $(INCLUDES) $(SRCS) >$@@
+@
+
+
+3.1
+log
+@added OPTS variable for compilation options -- tyler
+@
+text
+@d1 1
+a1 1
+# &RCS: //tower/local/dickey/src/rcshist/test/RCS/test1.in,v 3.1 89/10/02 11:31:27 dickey Exp $
+d22 1
+a22 1
+OPTS	= -O
+@
+
+
+3.0
+log
+@BASELINE Wed Aug  3 10:39:26 EDT 1988
+@
+text
+@d1 1
+a1 1
+# &RCS: //tower/local/dickey/src/rcshist/test/RCS/test1.in,v 3.1 89/10/02 11:31:27 dickey Exp $
+d22 2
+a23 1
+CFLAGS	= -g $(INCLUDES) $(DEFINES)
+@
+
+
+2.4
+log
+@auto-checkout lintit.sh -- dickey
+@
+text
+@d1 1
+a1 1
+# &RCS: //tower/local/dickey/src/rcshist/test/RCS/test1.in,v 3.1 89/10/02 11:31:27 dickey Exp $
+@
+
+
+2.3
+log
+@auto-checkout 'dbs.gdl' -- dickey
+@
+text
+@d1 1
+a1 1
+# &RCS: //tower/local/dickey/src/rcshist/test/RCS/test1.in,v 3.1 89/10/02 11:31:27 dickey Exp $
+d69 1
+@
+
+
+2.2
+log
+@corrected 'destroy' production -- dickey
+@
+text
+@d1 1
+a1 1
+# &RCS: //tower/local/dickey/src/rcshist/test/RCS/test1.in,v 3.1 89/10/02 11:31:27 dickey Exp $
+d101 1
+@
+
+
+2.1
+log
+@moved the "dbs.a" file to the top-level library-directory (out of local) -- dickey
+@
+text
+@d1 1
+a1 1
+# &RCS: //tower/local/dickey/src/rcshist/test/RCS/test1.in,v 3.1 89/10/02 11:31:27 dickey Exp $
+d67 3
+a69 1
+all:	$A llib
+d71 2
+d91 1
+a91 1
+	rm -f *.o *.out
+d93 3
+a95 3
+	rm -f $A *.ln $i/$(LLIB).ln
+destroy:
+	rm -f *
+a100 2
+$I/dbs.h:	; sh -c 'cd $I;checkout dbs.h'
+$J/ibs.h:	; sh -c 'cd $J;checkout ibs.h'
+d102 1
+@
+
+
+2.0
+log
+@BASELINE Fri Jul  8 08:40:04 EDT 1988
+@
+text
+@d1 1
+a1 1
+# &RCS: //tower/local/dickey/src/rcshist/test/RCS/test1.in,v 3.1 89/10/02 11:31:27 dickey Exp $
+d65 1
+a65 1
+A	= $(top)/lib/dbs.a
+d87 1
+a87 1
+	rm -f *.o
+@
+
+
+2.0.1.1
+log
+@make a branch delta
+@
+text
+@d1 1
+a1 1
+# &RCS: //tower/local/dickey/src/rcshist/test/RCS/test1.in,v 3.1 89/10/02 11:31:27 dickey Exp $
+d24 1
+a24 1
+CPP	=/usr/lib/cpp -C -P
+@
+
+
+2.0.1.2
+log
+@test delta after branch
+@
+text
+@d1 1
+a1 1
+# &RCS: //tower/local/dickey/src/rcshist/test/RCS/test1.in,v 3.1 89/10/02 11:31:27 dickey Exp $
+d5 5
+@
+
+
+1.4
+log
+@added 'debug.o' module -- dickey
+@
+text
+@d1 1
+a1 1
+# &RCS: //tower/local/dickey/src/rcshist/test/RCS/test1.in,v 3.1 89/10/02 11:31:27 dickey Exp $
+@
+
+
+1.3
+log
+@broke out modules 'builds.c', 'init_h.c', 'release_h.c' and 'select.c' -- dickey
+@
+text
+@d1 1
+a1 1
+# &RCS: //tower/local/dickey/src/rcshist/test/RCS/test1.in,v 3.1 89/10/02 11:31:27 dickey Exp $
+d31 1
+d51 1
+@
+
+
+1.2
+log
+@added second (internal) lint library, and module 'iprepare.c' -- dickey
+@
+text
+@d1 1
+a1 1
+# &RCS: //tower/local/dickey/src/rcshist/test/RCS/test1.in,v 3.1 89/10/02 11:31:27 dickey Exp $
+d30 1
+d32 1
+d39 3
+a41 1
+	next.c
+d49 1
+d51 1
+d59 2
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d1 1
+a1 1
+# &RCS: //tower/local/dickey/src/rcshist/test/RCS/test1.in,v 3.1 89/10/02 11:31:27 dickey Exp $
+d28 1
+d34 1
+d49 1
+d79 1
+a79 1
+	rm -f $A
+d93 10
+a102 4
+# Lint-library
+llib:		$i/$(LLIB).ln
+$i/$(LLIB).ln:	$(LLIB) $I/dbs.h
+	$(TOP)/support/makellib.sh $i $(LLIB) dbs $(INCLUDES)
+@

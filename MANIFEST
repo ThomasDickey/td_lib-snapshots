@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19921117
+MANIFEST for td_lib, version t19921118
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         restrictions on copying/using this software
@@ -22,7 +22,9 @@ include/port2vms.h              interface for vms-porting functions
 include/ptypes.h                principal include-file for TD_LIB
 include/rcsdefs.h               interface for rcs functions
 include/sccsdefs.h              interface for sccs functions
+include/td_curse.h              interface for curses functions
 include/td_lib.h                interface of common TD_LIB functions
+include/td_qsort.h              interface for 'qsort()'
 include/td_sheet.h              interface for spreadsheet (CSV) functions
 include/vms_dirs.h              VMS unix-style directory-interface definitions
 src                             subdirectory
@@ -53,6 +55,7 @@ src/cm_funcs/sccsname.c         SCCS working/archive name translation (like 'rcs
 src/cm_funcs/vcs_file.c         encapsulates name of directory-level RCS permissions file
 src/cm_funcs/vercmp.c           compare version-strings
 src/compare                     subdirectory
+src/compare/cmpqsort.c          default-comparison for 'qsort()'
 src/compare/diffload.c          load delta-tree from difference of files
 src/compare/m2comp.c            Miller/Myers difference algorithm
 src/compare/scomp.c             simple difference algorithm
@@ -152,6 +155,7 @@ src/process/shoarg.c            shows arguments built with 'catarg()'
 src/process/showuids.c          shows uid+gid, for traces
 src/process/usercopy.c          copy file for set-uid user
 src/process/userprot.c          set file protection for set-uid user
+src/process/walkback.c          generate a walkback (apollo, or systems with core/adb)
 src/sheet                       subdirectory
 src/sheet/count_ss.c            counts fields in in-memory spreadsheet
 src/sheet/field_of.c            'get_field_of()' from 'hist2ileaf.c'
@@ -190,8 +194,111 @@ support/td_progs.mms            VMS MMS include-file defining program-generation
 test                            subdirectory
 test/Makefile                   makefile for td_lib/test
 test/README                     description of td_lib/test
+test/cm_funcs                   subdirectory
+test/cm_funcs/cutoff.ref        reference for 'dotcmp'
+test/cm_funcs/cutoff.sh         test-script for cutoff
+test/cm_funcs/newzone.ref       test result for newzone.sh
+test/cm_funcs/newzone.sh        test-script for newzone
+test/cm_funcs/packdate.ref      test result for packdate.sh
+test/cm_funcs/packdate.sh       test-script for packdate
+test/cm_funcs/rcsargpr.ref      test-result
+test/cm_funcs/rcsargpr.sh       test-script for rcsargpr
+test/cm_funcs/rcsload.sh        test-script for rcsload
+test/cm_funcs/rcsname.ref       test result
+test/cm_funcs/rcsname.sh        test-script for rcsname
+test/cm_funcs/samebr.ref        reference for samebr test
+test/cm_funcs/samebr.sh         test-script for samebr
+test/cm_funcs/sccsname.ref      reference for sccsname test
+test/cm_funcs/sccsname.sh       test-script for sccsname
+test/cm_funcs/vcs_file.ref      test-result for vcs_file
+test/cm_funcs/vcs_file.sh       test-script for vcs_file
+test/cm_funcs/vercmp.ref        reference for vercmp test
+test/cm_funcs/vercmp.sh         test-script for vercmp
+test/compare                    subdirectory
+test/compare/diffload.ref       test result
+test/compare/diffload.sh        =============================================================================
+test/curses                     subdirectory
+test/curses/padedit.ref         reference for 'padedit'
+test/curses/padedit.sh          test-script for 'padedit'
+test/curses/rawgets.ref         reference for 'rawgets'
+test/curses/rawgets.sh          test-script for 'rawgets'
+test/curses/scr_size.ref        reference for 'scr_size'
+test/curses/scr_size.sh         test-script for 'scr_size'
+test                            subdirectory
 test/descrip.mms                =============================================================================
+test/dummy.txt                  test-file #1
+test/dummy2.txt                 test-file
+test/dummy4.txt                 long test-case for 'rcsload'
+test/memory                     subdirectory
+test/memory/doalloc.ref         reference for 'doalloc'
+test/memory/doalloc.sh          test-script for 'doalloc'
+test/memory/txtalloc.ref        reference for 'txtalloc'
+test/memory/txtalloc.sh         test-script for 'txtalloc'
+test/memory/vecedit.ref         reference for 'vecedit'
+test/memory/vecedit.sh          test-script for 'vecedit'
+test/pathname                   subdirectory
+test/pathname/abspath.ref       reference for 'abspath'
+test/pathname/abspath.sh        test-script for 'abspath'
+test/pathname/file2arg.ref      reference for 'file2arg'
+test/pathname/file2arg.sh       test-script for 'file2arg'
+test/pathname/file2mem.ref      reference for 'file2mem'
+test/pathname/file2mem.sh       test-script for 'file2mem'
+test/pathname/filecopy.ref      reference for 'filecopy'
+test/pathname/filecopy.sh       test-script for 'filecopy'
+test/pathname/fp2argv.ref       reference for 'fp2argv'
+test/pathname/fp2argv.sh        test-script for 'fp2argv'
+test/pathname/name2s.ref        reference for 'name2s'
+test/pathname/name2s.sh         test-script for 'name2s'
+test/pathname/pathcmp.ref       reference for 'pathcmp'
+test/pathname/pathcmp.sh        test-script for 'pathcmp'
+test/pathname/pathhead.ref      reference for 'pathhead'
+test/pathname/pathhead.sh       test-script for 'pathhead'
+test/pathname/pathleaf.ref      reference for 'pathleaf'
+test/pathname/pathleaf.sh       test-script for 'pathleaf'
+test/pathname/relpath.ref       reference for 'relpath'
+test/pathname/relpath.sh        test-script for 'relpath'
+test/pathname/sameleaf.ref      reference for 'sameleaf'
+test/pathname/sameleaf.sh       test-script for 'sameleaf'
+test/pathname/trimpath.ref      reference for 'trimpath'
+test/pathname/trimpath.sh       test-script for 'trimpath'
+test/pathname/walktree.ref      reference for 'walktree'
+test/pathname/walktree.sh       test-script for 'walktree'
+test/pathname/which.ref         reference for 'which'
+test/pathname/which.sh          test-script for 'which'
 test/port2vms                   subdirectory
 test/port2vms/README            description of test/port2vms
 test/port2vms/vms_pthc.ref      reference for 'vms_pthc'
 test/port2vms/vms_rpth.ref      reference for 'vms_rpth'
+test/process                    subdirectory
+test/process/execute.ref        reference for 'execute'
+test/process/execute.sh         test-script for 'execute'
+test/process/failed.ref         reference for 'failed'
+test/process/failed.sh          test-script for 'failed'
+test/process/gethome.ref        reference for 'gethome'
+test/process/gethome.sh         test-script for 'gethome'
+test/process/makeargv.ref       reference for 'makeargv'
+test/process/makeargv.sh        test-script for 'makeargv'
+test/process/usercopy.ref       reference for 'usercopy'
+test/process/usercopy.sh        test-script for 'usercopy'
+test                            subdirectory
+test/run_test.sh                =============================================================================
+test/string                     subdirectory
+test/string/dotcmp.ref          reference for 'dotcmp'
+test/string/dotcmp.sh           test-script for 'dotcmp'
+test/string/lsbycols.ref        reference for 'lsbycols'
+test/string/lsbycols.sh         test-script for 'lsbycols'
+test/string/ltostr.ref          reference for 'ltostr' 
+test/string/ltostr.sh           test-script for 'ltostr'
+test/string/strbcmp.ref         reference for 'strbcmp'
+test/string/strbcmp.sh          test-script for 'strbcmp'
+test/string/strucmp.ref         reference for 'strucmp'
+test/string/strucmp.sh          test-script for 'strucmp'
+test/string/strwcmp.ref         reference for 'strwcmp'
+test/string/strwcmp.sh          test-script for 'strwcmp'
+test/unix                       subdirectory
+test/unix/gid2s.ref             reference for 'gid2s'
+test/unix/gid2s.sh              test-script for 'gid2s'
+test/unix/s2uid.ref             reference for 's2uid'
+test/unix/s2uid.sh              test-script for 's2uid'
+test/unix/uid2s.ref             reference for 'uid2s'
+test/unix/uid2s.sh              test-script for 'uid2s'

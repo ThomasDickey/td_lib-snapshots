@@ -1,0 +1,117 @@
+file: dummy.txt (115 lines)
+1:	#ifndef	lint
+2:	static	char	Id[] = "@Id: file2argv.c,v 11.0 91/10/03 08:47:45 ste_cm Rel @";
+3:	#endif
+4:	
+5:	/*
+6:	 * Title:	file2argv.c (file to argv-conversion)
+7:	 * Author:	T.E.Dickey
+8:	 * Created:	06 Apr 1989
+9:	 * Modified:
+10:	 *		03 Oct 1991, conversion to ANSI
+11:	 *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
+12:	 *		05 Mar 1990, lint
+13:	 *		12 Dec 1989, lint (SunOs 4.0.3)
+14:	 *		
+15:	 *
+16:	 * Function:	Reads a file and converts it to an argv-style array of pointers
+17:	 *		to strings.
+18:	 *
+19:	 * Arguments:	name -	the name of the file to read from.  If "-", then we
+20:	 *			read from the standard input.
+21:	 *		vec -	the address of a pointer to array-of-pointers to
+22:	 *			strings.
+23:	 *
+24:	 * Returns:	the number of lines read from the input file (or -1 if an error
+25:	 *		prevents reading the file).  The return value should never be
+26:	 *		exactly zero.
+27:	 *
+28:	 * Assumptions:	The file contains no embedded nulls.
+29:	 *		The newline character ends each (except possibly the last) line.
+30:	 */
+31:	
+32:	#include "ptypes.h"
+33:	
+34:	#define	AVG_LINE	25		/* nominal line-length */
+35:	#define	AMOUNT(n)	(unsigned)(n)
+36:	
+37:	file2argv(
+38:	_ARX(char *,	name)
+39:	_AR1(char ***,	vec)
+40:		)
+41:	_DCL(char *,	name)
+42:	_DCL(char ***,	vec)
+43:	{
+44:		auto	 int	j,
+45:				length,
+46:				newlines,	/* number of newlines found */
+47:				lines;		/* number of newlines found */
+48:		auto	 char	**p, *blob;
+49:		register char	*s, *d;
+50:	
+51:		*vec = 0;	/* in case we find an error */
+52:		if (!(blob = file2mem(name)))
+53:			return (-1);
+54:	
+55:		for (s = blob, lines = 0; *s; ++s)
+56:			if (*s == '\n')
+57:				lines++;
+58:		length   = s - blob;
+59:		newlines = lines;
+60:		if (length > 0 && blob[length-1] != '\n')
+61:			lines++;
+62:	
+63:		/*
+64:		 * Reallocate space for the file counting the nulls inserted
+65:		 * after each newline.
+66:		 */
+67:		if (!(blob = doalloc(blob, AMOUNT(length + lines + 1))))
+68:			return (-1);
+69:	
+70:		/*
+71:		 * Allocate space for the vector pointing to the strings
+72:		 */
+73:		*vec = p = vecalloc((unsigned)((lines + 1) * sizeof(char *)));
+74:	
+75:		/*
+76:		 * Recopy the blob onto itself, putting a null after each newline.
+77:		 */
+78:		for (j = newlines, s = blob + length, d = s + newlines; d != s; ) {
+79:			if (*s == '\n') {
+80:				p[j--] = d + 1;
+81:				*d-- = '\0';
+82:			}
+83:			*d-- = *s--;
+84:		}
+85:		p[lines] = 0;		/* always supply a null-pointer */
+86:		p[0] = blob;
+87:	
+88:		return (lines);
+89:	}
+90:	
+91:	
+92:	#ifdef	TEST
+93:	_MAIN
+94:	{
+95:		register int	j, k;
+96:		auto	 int	lines;
+97:		auto	 char	**vec;
+98:		auto	 char	*name;
+99:	
+100:		for (j = 1; j < argc; j++) {
+101:			if ((lines = file2argv(name = argv[j], &vec)) > 0) {
+102:				PRINTF("file: %s (%d lines)\n", name, lines);
+103:				for (k=0; vec[k]; k++)
+104:					PRINTF("%d:\t%s", k + 1, vec[k]);
+105:				dofree(vec[0]);	/* frees the blob */
+106:				dofree((char *)vec);
+107:				PRINTF("<EOF>\n");
+108:			} else {
+109:				perror(name);
+110:			}
+111:		}
+112:		(void)exit(SUCCESS);
+113:		/*NOTREACHED*/
+114:	}
+115:	#endif
+<EOF>

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: doalloc.c,v 11.2 1992/11/17 15:58:16 dickey Exp $";
+static	char	Id[] = "$Id: doalloc.c,v 11.3 1992/11/18 14:43:40 dickey Exp $";
 #endif
 
 /*
@@ -32,21 +32,6 @@ static	long	count_alloc,
 		count_freed;
 
 static
-void	walkback(_AR0)
-{
-#ifdef	apollo
-	char	msg[80];
-	FORMAT(msg, "/com/tb %d", getpid());
-	FFLUSH(stdout);
-	FFLUSH(stderr);
-	(void)system(msg);
-#endif	/* apollo */
-#ifdef	vms
-	*((char *)0) = 0;	/* patch */
-#endif	/* vms */
-}
-
-static
 void	fail_alloc(
 	_ARX(char *,	msg)
 	_AR1(char *,	ptr)
@@ -61,16 +46,25 @@ void	fail_alloc(
 	abort();
 }
 
+#ifdef	TEST
+#ifndef	DEBUG
+#define	DEBUG	100
+#endif
+#endif
+
 #ifdef	DEBUG
 typedef	struct	{
 	long	size;	/* ...its size */
 	char	*text;	/* the actual segment */
 	int	note;	/* ...last value of 'count_alloc' */
 	} AREA;
+
 static	AREA	area[DEBUG];
+
 static	long	maxAllocated,	/* maximum # of bytes allocated */
-		nowAllocated;	/* current # of bytes allocated */
-static	int	now_pending;	/* current end of 'area[]' table */
+		nowAllocated,	/* current # of bytes allocated */
+		nowPending,	/* current end of 'area[]' table */
+		maxPending;	/* maximum # of segments allocated */
 
 static
 int	FindArea(
@@ -80,8 +74,11 @@ int	FindArea(
 	register int j;
 	for (j = 0; j < DEBUG; j++)
 		if (area[j].text == ptr) {
-			if ((ptr != 0) && (j >= now_pending))
-				now_pending = j+1;
+			if ((ptr != 0) && (j >= nowPending)) {
+				nowPending = j+1;
+				if (nowPending > maxPending)
+					maxPending = nowPending;
+			}
 			return j;
 		}
 	return -1;
@@ -98,11 +95,11 @@ int	record_freed(
 		area[j].size = 0;
 		area[j].text = 0;
 		area[j].note = count_freed;
-		if (j+1 == now_pending) {
+		if (j+1 == nowPending) {
 			register int	k;
 			for (k = j; k >= 0; k--)
 				if (!area[k].size)
-					now_pending = k;
+					nowPending = k;
 		}
 	}
 	return j;
@@ -229,7 +226,7 @@ void	show_alloc(_AR0)
 		register int	j, count = 0;
 		register long	total	= 0;
 
-		for (j = 0; j < now_pending; j++)
+		for (j = 0; j < nowPending; j++) {
 			if (area[j].text) {
 				if (count++ < 10)
 					PRINTF("...%d) %d bytes in alloc #%d:%#x\n",
@@ -239,10 +236,13 @@ void	show_alloc(_AR0)
 						area[j].text);
 				total += area[j].size;
 			}
-		PRINTF("...%d:%d segments allocated\n", count, now_pending);
+		}
 		PRINTF(fmt, "total bytes allocated:",   total);
 		PRINTF(fmt, "current bytes allocated:", nowAllocated);
 		PRINTF(fmt, "maximum bytes allocated:", maxAllocated);
+		PRINTF(fmt, "segment-table length:",    nowPending);
+		PRINTF(fmt, "current # of segments:",   count);
+		PRINTF(fmt, "maximum # of segments:",   maxPending);
 	}
 #endif
 }
@@ -250,7 +250,22 @@ void	show_alloc(_AR0)
 #ifdef	TEST
 _MAIN
 {
-	dofree((char *)-1);		/* make sure walkback works */
+	char	*p = 0,
+		*q = 0;
+
+	p = doalloc(p, 100);
+	dofree(p);
+
+	p = doalloc(q, 200);
+	p = doalloc(p, 100);
+	p = doalloc(p, 300);
+	q = doalloc(q, 300);
+
+	dofree(q);
+	dofree(p);
+
+	show_alloc();
+
 	exit(SUCCESS);
 	/*NOTREACHED*/
 }

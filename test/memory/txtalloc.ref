@@ -1,0 +1,47 @@
+** added aaa
+aaa (0)
+** added bb
+aaa (1)
+. bb (0)
+** added aaa
+aaa (1)
+. bb (0)
+** added zzz
+. aaa (0)
+bb (0)
+. zzz (0)
+** added cc
+. aaa (0)
+bb (1)
+. . cc (0)
+. zzz (-1)
+** added xyz
+. aaa (0)
+bb (1)
+. . cc (0)
+. xyz (0)
+. . zzz (0)
+** added zzzz
+. . aaa (0)
+. bb (0)
+. . cc (0)
+xyz (0)
+. zzz (1)
+. . zzzz (0)
+** added zabc
+. . aaa (0)
+. bb (0)
+. . cc (0)
+xyz (0)
+. . zabc (0)
+. zzz (0)
+. . zzzz (0)
+** added abc
+. . aaa (1)
+. . . abc (0)
+. bb (-1)
+. . cc (0)
+xyz (-1)
+. . zabc (0)
+. zzz (0)
+. . zzzz (0)

@@ -1,4 +1,4 @@
-# $Id: descrip.mms,v 11.3 1992/08/06 11:19:09 dickey Exp $
+# $Id: descrip.mms,v 11.4 1992/11/18 08:48:59 dickey Exp $
 # MMS-file for miscellaneous library routines	
 #
 ####### (Development) ##########################################################
@@ -22,6 +22,7 @@ LIBRARYMODULES = -
 	BLIP, -
 	CATARG, -
 	CATCHALL, -
+	CMP_QSORT, -
 	COPYBACK, -
 	COUNT_SS, -
 	DFTENV, -
@@ -72,6 +73,7 @@ LIBRARYMODULES = -
 	VECEDIT, -
 	VECLEN, -
 	VERCMP, -
+	WALKBACK, -
 	WALKTREE
 UNUSED_MODULES = -
 	ABSPATH, 		# unix-style 'getwd()' -
@@ -145,6 +147,7 @@ C_SRC	=-
 	CATARG.C -
 	CATCHALL.C -
 	CMDCH.C -
+	CMP_QSORT.C, -
 	COPYBACK.C -
 	COUNT_SS.C -
 	CUTOFF.C -
@@ -250,6 +253,7 @@ C_SRC	=-
 	VECLEN.C -
 	VERCMP.C -
 	VIEW_FILE.C -
+	WALKBACK.C -
 	WALKTREE.C -
 	WHICH.C -
 	WIN2FILE.C -
@@ -295,6 +299,7 @@ BEEP.obj :		$(PTYPES_H)
 CATARG.obj :		$(PTYPES_H)
 CATCHALL.obj :		$(PTYPES_H)
 CMDCH.obj :		$(PTYPES_H)	$(I)cmdch.h
+CMP_QSORT.obj :		$(PTYPES_H)	$(I)cm_qsort.h
 COPYBACK.obj :		$(PTYPES_H)
 CUTOFF.obj :		$(PTYPES_H)
 DOALLOC.OBJ :		$(PTYPES_H)
@@ -362,6 +367,7 @@ UID2S.obj :		$(PTYPES_H)
 USERCOPY.obj :		$(PTYPES_H)
 USERPROT.obj :		$(PTYPES_H)
 # vcs_file.obj :	$(PTYPES_H)	$(I)rcsdefs.h
+WALKBACK.OBJ :		$(PTYPES_H)
 WALKTREE.OBJ :		$(PTYPES_H)
 WIN2FILE.obj :		$(PTYPES_H)
 #
