@@ -3,7 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	18 Aug 1988 (from ded2s.c)
  * Modified:
- *		29 Oct 1993, ifdef-ident
+ *		05 Nov 1995, added tilde to shell-characters
  *		21 Sep 1993, gcc-warnings
  *		04 Oct 1991, conversion to ANSI
  *		22 Jul 1991, allow space as a printing char.
@@ -39,9 +39,9 @@
 #define	STR_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: name2s.c,v 12.5 1993/11/27 17:18:40 tom Exp $")
+MODULE_ID("$Id: name2s.c,v 12.6 1995/11/05 23:14:50 tom Exp $")
 
-#define	isshell(c)	(strchr("*%?$()[]{}|<>^&;#\\\"`'", c) != 0)
+#define	isshell(c)	(strchr("*%?$()[]{}|<>^&;#\\\"`'~", c) != 0)
 #define	isAEGIS(c)	(strchr("*%?()[]{}\\", c) != 0)
 
 #undef	doAEGIS

@@ -9,7 +9,7 @@
 
 #include <td_curse.h>
 
-MODULE_ID("$Id: bindkeys.c,v 12.5 1995/09/19 00:58:25 tom Exp $")
+MODULE_ID("$Id: bindkeys.c,v 12.6 1995/11/05 23:10:07 tom Exp $")
 
 #define KEYCODE int
 #define	BINDKEYS struct BindKeys
@@ -65,6 +65,8 @@ BINDKEYS *FillNode(
 	_ARX(BINDKEYS *, parent)
 	_AR1(KEYCODE,    given)
 		)
+	_DCL(BINDKEYS *, parent)
+	_DCL(KEYCODE,    given)
 {
 	BINDKEYS *p, *q;
 	int	found = FALSE;
@@ -111,6 +113,9 @@ define_key_binding(
 	_ARX(KEYCODE *,  definition)
 	_AR1(KEYCODE,    result)
 		)
+	_DCL(BINDKEYS **,tablep)
+	_DCL(KEYCODE *,  definition)
+	_DCL(KEYCODE,    result)
 {
 	BINDKEYS *parent = *tablep;
 	BINDKEYS *p;
@@ -187,6 +192,8 @@ remove_key_binding(
 	_ARX(BINDKEYS *, tablep)
 	_AR1(KEYCODE *,  definition)
 		)
+	_DCL(BINDKEYS *, tablep)
+	_DCL(KEYCODE *,  definition)
 {
 	if (lookup_key_binding(tablep, definition) >= 0) {
 		/* FIXME */
@@ -208,6 +215,8 @@ lookup_key_binding(
 	_ARX(BINDKEYS *, table)
 	_AR1(KEYCODE *,  input)
 		)
+	_DCL(BINDKEYS *, table)
+	_DCL(KEYCODE *,  input)
 {
 	if (table != 0) {
 		int	level = 0;
