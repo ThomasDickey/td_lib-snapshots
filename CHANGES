@@ -1,3 +1,12 @@
+1991-10-01  dickey@software.org
+
+	* include/td_lib.h: corrected definition of 'next_version()'
+
+	* src/Makefile: corrected include-path for 'rcspath.c'
+
+	* include/td_lib.h, src/cm_funcs/next_ver.c, src/descrip.mms, src/Makefile:
+	RCS_BASE
+
 1991-09-17  dickey@software.org
 
 	* src/memory/vecedit.c: lint

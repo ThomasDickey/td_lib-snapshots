@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 9.7 1991/09/17 09:07:39 dickey Exp $ */
+/* $Id: td_lib.h,v 9.9 1991/10/01 14:30:24 dickey Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for CM_TOOLS COMMON
@@ -408,6 +408,15 @@
 			_nul
 
 		oldzone()
+			_nul
+
+	/* next_version.c --------------------------------------------- */
+		next_version(
+			_arx(char *,	dst)
+			_ar1(char *,	src)
+			)
+			_dcl(char *,	dst)
+			_dcl(char *,	src)
 			_nul
 
 	/* packdate.c ------------------------------------------------- */
