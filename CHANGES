@@ -1,3 +1,10 @@
+1996-04-08  dickey@clark.net
+
+	* src/cm_funcs/packdate.c:
+	extern symbol 'daylight' is an extra flag on IRIX (probably other sysvr4)
+	to indicate whether we do daylight-savings adjustment.  I'm pretty sure
+	that older systems embedded the adjustment into 'timezone'.
+
 1996-03-20  dickey@clark.net
 
 	* src/curses/lnextchr.c: both HPUX and CLIX don't have VLNEXT
