@@ -1,3 +1,14 @@
+1989-05-12  dickey@software.org
+
+	* src/pathname/mem2file.c: RCS_BASE
+
+1989-05-12  ste_cm@software.org
+
+	* src/pathname/mem2file.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+	* src/pathname/mem2file.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
 1989-05-11  dickey@software.org
 
 	* src/Makefile:
