@@ -1,3 +1,25 @@
+2001-12-11  dickey@invisible-island.net
+
+	* src/cm_funcs/rcslast.c: nit to make rcs_dir() provide $RCS_VAULT info
+
+	* src/cm_funcs/vcs_file.c, src/cm_funcs/rcsname.c, src/cm_funcs/rcslast.c, src/cm_funcs/rcsargpr.c:
+	quick change to rcs_dir() interface
+
+	* src/cm_funcs/rcs_dir.c:
+	use sccs_dir's $SCCS_VAULT logic here, for CS-RCS integration
+
+	* include/rcsdefs.h:
+	change interface of rcs_dir() to implement $RCS_VAULT
+
+	* include/td_curse.h:
+	quick fix for cygwin, which botched the ncurses header install
+
+	* aclocal.m4: check for -lregex, for cygwin
+
+2001-12-07  dickey@invisible-island.net
+
+	* aclocal.m4: resync with macro updates for lynx
+
 2001-10-19  dickey@invisible-island.net
 
 	* include/td_curse.h:

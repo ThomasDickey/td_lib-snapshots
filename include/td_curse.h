@@ -1,4 +1,4 @@
-/* $Id: td_curse.h,v 12.47 2001/10/19 09:52:27 tom Exp $ */
+/* $Id: td_curse.h,v 12.48 2001/12/11 13:52:04 tom Exp $ */
 
 /*
  * TD_LIB CURSES-related definitions
@@ -51,7 +51,7 @@
 #endif
 #endif
 
-#if HAVE_TERMCAP_H
+#if HAVE_TERMCAP_H && !defined(NCURSES_VERSION)
 #include <termcap.h>
 #endif
 
