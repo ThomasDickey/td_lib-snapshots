@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: pathcat.c,v 6.0 1989/12/06 08:52:49 ste_cm Rel $";
+static	char	Id[] = "$Id: pathcat.c,v 8.0 1990/04/24 11:32:21 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,9 +7,19 @@ static	char	Id[] = "$Id: pathcat.c,v 6.0 1989/12/06 08:52:49 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	12 Sep 1988
  * $Log: pathcat.c,v $
- * Revision 6.0  1989/12/06 08:52:49  ste_cm
- * BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+ * Revision 8.0  1990/04/24 11:32:21  ste_cm
+ * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
  *
+ *		Revision 7.0  90/04/24  11:32:21  ste_cm
+ *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+ *		
+ *		Revision 6.1  90/04/24  11:32:21  dickey
+ *		if fname-argument begins with "~", assume caller can expand
+ *		it ok; simply copy as in '/'-paths.
+ *		
+ *		Revision 6.0  89/12/06  08:52:49  ste_cm
+ *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+ *		
  *		Revision 5.1  89/12/06  08:52:49  dickey
  *		'fname' argument may be empty (cf: link2rcs).
  *		
@@ -49,7 +59,7 @@ char	*dst, *dname, *fname;
 	auto	char	tmp[BUFSIZ],
 			*s;
 
-	if (*fname == '/')
+	if (*fname == '/' || *fname == '~')
 		return (strcpy(dst, fname));
 	else if (*fname == EOS) {
 		if (dst != dname)

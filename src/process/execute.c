@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/process/RCS/execute.c,v 6.0 1988/08/30 07:10:36 ste_cm Rel $";
+static	char	Id[] = "$Id: execute.c,v 6.1 1990/04/24 13:31:12 dickey Exp $";
 #endif	lint
 
 /*
@@ -7,9 +7,13 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/process/
  * Author:	T.E.Dickey
  * Created:	21 May 1988
  * $Log: execute.c,v $
- * Revision 6.0  1988/08/30 07:10:36  ste_cm
- * BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+ * Revision 6.1  1990/04/24 13:31:12  dickey
+ * flush stdout, stderr before forking to ensure that we don't
+ * get unnecessarily garbled output!
  *
+ *		Revision 6.0  88/08/30  07:10:36  ste_cm
+ *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+ *		
  *		Revision 5.0  88/08/30  07:10:36  ste_cm
  *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
  *		
@@ -37,12 +41,10 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/process/
  *		returned on any error.
  */
 
+#define	STR_PTYPES
 #include	"ptypes.h"
-#include	<stdio.h>
 #include	<ctype.h>
 #include	<errno.h>
-extern	char	*strcat();
-extern	char	*strcpy();
 extern	int	errno;
 
 #ifdef	SYSTEM5
@@ -105,6 +107,8 @@ union	wait	status;
 	}
 #endif	SYSTEM5
 
+	(void)fflush(stdout);
+	(void)fflush(stderr);
 	if ((pid = fork()) > 0) {
 		while ((count = wait(&status)) != pid) {
 			if ((count < 0) || (errno == ECHILD))
