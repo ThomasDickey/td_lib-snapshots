@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)savewin.c	1.1 88/04/21 13:24:51";
+static	char	sccs_id[] = "@(#)savewin.c	1.2 88/04/22 06:49:31";
 #endif	lint
 
 /*
@@ -7,6 +7,8 @@ static	char	sccs_id[] = "@(#)savewin.c	1.1 88/04/21 13:24:51";
  * Title:	savewin.c (save/unsave curses window)
  * Created:	25 Mar 1988
  * Modified:
+ *		22 Apr 1988, added 'top' arg to lastwin(), unsavewin().
+ *		21 Apr 1988 (first version)
  *
  * Function:	Save/unsave the curses window state on a stack (actually a
  *		linked list).
@@ -74,21 +76,22 @@ register int j = 0;
 /*
  * Restore the state of the last window saved on the stack.
  */
-lastwin(redo)
+lastwin(redo,top)
 {
-chtype	*s, *t;
+chtype	*s, *t,
+	*z = saved->image + (top * COLS);
 char	bfr[BUFSIZ];
 register int j, row;
 
 	if (saved) {
-		t = saved->image;
 
 		if (redo) {
 			/* "touch" cursor position */
 			wmove(stdscr, LINES, COLS);
 			wmove(curscr, LINES, COLS);
 
-			for (row = 0; row < LINES; row++) {
+			/* do "touch" pass first to avoid clrtoeol bug */
+			for (row = top, t = z; row < LINES; row++) {
 				/* retrieve saved-image */
 				for (j = 0; j < COLS; bfr[j++] = *t++);
 				bfr[j] = '\0';
@@ -103,10 +106,9 @@ register int j, row;
 				for (s = curscr->_y[row], j = 0; s[j+1]; j++)
 					s[j] = newC(newC(bfr[j]));
 			}
-			t = saved->image;
 		}
 
-		for (row = 0; row < LINES; row++) {
+		for (row = top, t = z; row < LINES; row++) {
 
 			/* retrieve saved-image */
 			for (j = 0; j < COLS; bfr[j++] = *t++);
@@ -128,11 +130,11 @@ register int j, row;
 /*
  * Restore the last window, and pop it from the stack.
  */
-unsavewin(redo)
+unsavewin(redo,top)
 {
 SAVE	*last;
 	if (saved) {
-		lastwin(redo);
+		lastwin(redo,top);
 		last = saved->link;
 		free(saved->image);
 		free(saved);
