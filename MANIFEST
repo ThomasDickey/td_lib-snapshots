@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19880919
+MANIFEST for td_lib, version t19880928
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 include                         subdirectory
@@ -60,6 +60,8 @@ src/pathname/pathleaf.c         obtain basename (leaf) from pathname
 src/pathname/sameleaf.c         compare ends of pathnames
 src/pathname/walktree.c         walk directory-tree, performing function
 src/pathname/which.c            locate file in $PATH
+src/port2vms                    subdirectory
+src/port2vms/vms_dirs.c         VMS hack to provide unix-style directory access
 src/process                     subdirectory
 src/process/bldarg.c            build argc+argv array from string
 src/process/catarg.c            concatenate argument (cf: bldarg)
