@@ -1,17 +1,24 @@
-# @(#)Makefile	1.6 87/12/03 13:07:21
+# @(#)Makefile	1.7 88/03/24 11:41:41
 # MAKE-file for miscellaneous library routines
 L=lib.a
 #
 OBJS	=\
+	abspath.o\
+	beep.o\
 	bldarg.o\
 	closeall.o\
 	cmdch.o\
+	denode.o\
 	doalloc.o\
+	dotname.o\
+	erasechar.o\
 	flushall.o\
 	gid2s.o\
+	killchar.o\
 	modechar.o\
 	okpnum.o\
 	packdate.o\
+	rawgets.o\
 	rawterm.o\
 	sccslast.o\
 	sccszone.o\
