@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 8.3 1991/05/31 17:28:45 dickey Exp $ */
+/* $Id: ptypes.h,v 8.4 1991/06/05 16:53:30 dickey Exp $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -161,10 +161,11 @@ extern	char	*sprintf();
 #ifdef	SIG_PTYPES
 #include <signal.h>
 #if	defined(apollo) && !defined(__SIG_HANDLER_T)
-#define	DCL_SIGNAL(func)	int	(*func)()
+#define	SIG_T	int
 #else
-#define	DCL_SIGNAL(func)	void	(*func)()
+#define	SIG_T	void
 #endif
+#define	DCL_SIGNAL(func)	SIG_T	(*func)()
 #endif	/* SIG_PTYPES */
 
 extern	V_OR_I	_exit();

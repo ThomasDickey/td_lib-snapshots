@@ -1,10 +1,16 @@
-# $Id: Makefile,v 8.0 1990/05/08 13:53:34 ste_cm Rel $
+# $Id: Makefile,v 9.0 1991/06/05 14:36:31 ste_cm Rel $
 # Top-level makefile for CM_TOOLS common library
 #
 # $Log: Makefile,v $
-# Revision 8.0  1990/05/08 13:53:34  ste_cm
-# BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+# Revision 9.0  1991/06/05 14:36:31  ste_cm
+# BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
 #
+#	Revision 8.1  91/06/05  14:36:31  dickey
+#	cleanup install-rule
+#	
+#	Revision 8.0  90/05/08  13:53:34  ste_cm
+#	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+#	
 #	Revision 7.1  90/05/08  13:53:34  dickey
 #	added 'sccsdefs.h' to install-rule; simplified other rules
 #	
@@ -12,10 +18,12 @@
 #	BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
 #	
 ####### (Development) ##########################################################
-I	= ../../interface
-L	= ../../lib
+TOP	= ../..
+B	= $(TOP)/bin
+I	= $(TOP)/interface
+L	= $(TOP)/lib
 GET	= checkout
-PUT	= copy -v -d ../$@
+PUT	= ../$B/copy -d ../$@
 CFLAGS	=
 MAKE	= make $(MFLAGS) -k$(MAKEFLAGS)	GET=$(GET) CFLAGS="$(CFLAGS)"
 

@@ -1,19 +1,16 @@
-# $Id: Makefile,v 8.1 1991/06/03 14:07:38 dickey Exp $
+# $Id: Makefile,v 8.2 1991/06/05 16:47:20 dickey Exp $
 # MAKE-file for miscellaneous library routines
 #
 # $Log: Makefile,v $
-# Revision 8.1  1991/06/03 14:07:38  dickey
-# added rule for ".i"
+# Revision 8.2  1991/06/05 16:47:20  dickey
+# corrected typo in ".i" rule
 #
+#	Revision 8.1  91/06/05  11:06:19  dickey
+#	added rule for ".i"
+#	
 #	Revision 8.0  90/05/08  13:28:12  ste_cm
 #	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
 #	
-#	Revision 7.1  90/05/08  13:28:12  dickey
-#	added module 'sccsname.c'
-#	
-#	Revision 7.0  90/03/27  13:24:46  ste_cm
-#	BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
-#
 ####### (Development) ##########################################################
 GET	= checkout
 #
@@ -275,4 +272,4 @@ lincnt.out:	$(CSRC)		; $(DATE); lincnt $(CSRC) >>$@
 .c.o:
 	$(CC) $(CFLAGS) $(INCLUDES) $(DEFINES) -c $<
 .c.i:
-	$(CC) -P -C $(INCLUDES) $(DEFINES) -c $<
+	$(CC) -P -C $(INCLUDES) $(DEFINES) $<
