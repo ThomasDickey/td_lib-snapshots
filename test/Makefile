@@ -1,9 +1,9 @@
-# $Id: Makefile,v 11.12 1992/12/04 12:17:01 ste_cm Exp $
-# make-file for CM_TOOLS common/test library
+# $Id: Makefile,v 12.0 1993/04/27 08:25:04 ste_cm Rel $
+# make-file for TD_LIB common/test library
 
 ####### (Development) ##########################################################
 TOP	= ../..
-include ../support/cm_library.mk
+include ../support/td_lib.mk
 
 DEFINES	= -DTEST
 VPATH	= ../src
@@ -28,13 +28,13 @@ REF_FILES = \
 	dotcmp.ref \
 	execute.ref \
 	failed.ref \
-	file2argv.ref \
+	file2arg.ref \
 	file2mem.ref \
 	filecopy.ref \
 	fp2argv.ref \
 	gethome.ref \
 	gid2s.ref \
-	list_by_cols.ref \
+	lsbycols.ref \
 	ltostr.ref \
 	m2comp.ref \
 	makeargv.ref \
@@ -46,12 +46,12 @@ REF_FILES = \
 	pathhead.ref \
 	pathleaf.ref \
 	rawgets.ref \
-	rcsargpair.ref \
+	rcsargpr.ref \
 	rcsload.ref \
 	rcsname.ref \
 	relpath.ref \
 	s2uid.ref \
-	samebranch.ref \
+	samebr.ref \
 	sameleaf.ref \
 	sccsname.ref \
 	scomp.ref \
@@ -71,7 +71,7 @@ REF_FILES = \
 	which.ref
 
 SCRIPTS	= \
-	run_tests.sh \
+	run_test.sh \
 	abspath.sh \
 	cutoff.sh \
 	diffload.sh \
@@ -79,13 +79,13 @@ SCRIPTS	= \
 	dotcmp.sh \
 	execute.sh \
 	failed.sh \
-	file2argv.sh \
+	file2arg.sh \
 	file2mem.sh \
 	filecopy.sh \
 	fp2argv.sh \
 	gethome.sh \
 	gid2s.sh \
-	list_by_cols.sh \
+	lsbycols.sh \
 	ltostr.sh \
 	m2comp.sh \
 	makeargv.sh \
@@ -97,12 +97,12 @@ SCRIPTS	= \
 	pathhead.sh \
 	pathleaf.sh \
 	rawgets.sh \
-	rcsargpair.sh \
+	rcsargpr.sh \
 	rcsload.sh \
 	rcsname.sh \
 	relpath.sh \
 	s2uid.sh \
-	samebranch.sh \
+	samebr.sh \
 	sameleaf.sh \
 	sccsname.sh \
 	scomp.sh \
@@ -122,9 +122,9 @@ SCRIPTS	= \
 	which.sh
 
 C_SRC	= \
-	test_scomp.c
+	test_cmp.c
 
-SOURCES	= Makefile descrip.mms README $(C_SRC) $(SCRIPTS) $(REF_FILES) $(DATA_FILES)
+SOURCES	= Makefile README $(C_SRC) $(SCRIPTS) $(REF_FILES) $(DATA_FILES)
 
 PROGS	=\
 	abspath\
@@ -134,13 +134,13 @@ PROGS	=\
 	dotcmp\
 	execute\
 	failed\
-	file2argv\
+	file2arg\
 	file2mem\
 	filecopy\
 	fp2argv\
 	gethome\
 	gid2s\
-	list_by_cols\
+	lsbycols\
 	ltostr\
 	m2comp\
 	makeargv\
@@ -152,12 +152,12 @@ PROGS	=\
 	pathhead\
 	pathleaf\
 	rawgets\
-	rcsargpair\
+	rcsargpr\
 	rcsload\
 	rcsname\
 	relpath\
 	s2uid\
-	samebranch\
+	samebr\
 	sameleaf\
 	sccsname\
 	scomp\
@@ -179,12 +179,12 @@ PROGS	=\
 ALL	= $(PROGS)
 
 ####### (Standard Productions) #################################################
-all:		$(SOURCES)	; @echo 'type "make run_tests"'
+all:		$(SOURCES)	; @echo 'type "make run_test"'
 clean:				; rm -f $(CLEAN) *.tmp
 clobber:	clean		; rm -f $(ALL)
 destroy:			; $(DESTROY)
 sources:	$(SOURCES)
-run_tests:	$(SOURCES) $(PROGS) ; $(RUN_TESTS)
+run_test:	$(SOURCES) $(PROGS) ; $(RUN_TESTS)
 lint.out:
 lincnt.out:
 
@@ -200,13 +200,13 @@ doalloc.c\
 dotcmp.c\
 execute.c\
 failed.c\
-file2argv.c\
+file2arg.c\
 file2mem.c\
 filecopy.c\
 fp2argv.c\
 gethome.c\
 gid2s.c\
-list_by_cols.c\
+lsbycols.c\
 ltostr.c\
 m2comp.c\
 makeargv.c\
@@ -218,12 +218,12 @@ pathcmp.c\
 pathhead.c\
 pathleaf.c\
 rawgets.c\
-rcsargpair.c\
+rcsargpr.c\
 rcsload.c\
 rcsname.c\
 relpath.c\
 s2uid.c\
-samebranch.c\
+samebr.c\
 sameleaf.c\
 sccsname.c\
 scomp.c\

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: dotcmp.c,v 11.1 1992/11/18 09:21:00 dickey Exp $";
+static	char	Id[] = "$Id: dotcmp.c,v 12.0 1993/04/27 07:43:40 ste_cm Rel $";
 #endif
 
 /*
@@ -52,7 +52,7 @@ register int	cmp1, cmp2;
 }
 
 #ifdef	TEST
-#include "cm_qsort.h"
+#include "td_qsort.h"
 
 static
 QSORT_FUNC(compare)

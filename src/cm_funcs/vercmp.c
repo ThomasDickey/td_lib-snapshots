@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: vercmp.c,v 11.1 1992/11/18 11:24:28 dickey Exp $";
+static	char	Id[] = "$Id: vercmp.c,v 12.0 1993/04/27 07:52:22 ste_cm Rel $";
 #endif
 
 /*
@@ -70,7 +70,7 @@ _DCL(int,	wild)
 }
 
 #ifdef	TEST
-#include "cm_qsort.h"
+#include "td_qsort.h"
 
 static	int	wild;
 

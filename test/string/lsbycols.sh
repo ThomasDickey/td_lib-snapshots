@@ -1,3 +1,4 @@
 #!/bin/sh
-# $Id: lsbycols.sh,v 11.2 1992/11/18 12:17:33 dickey Exp $
-./list_by_cols >list_by_cols.tmp
+# $Id: lsbycols.sh,v 12.0 1993/04/27 08:04:00 ste_cm Rel $
+ME=lsbycols
+./$ME >$ME.tmp

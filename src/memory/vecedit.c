@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	*Id = "$Id: vecedit.c,v 11.0 1991/10/10 09:32:17 ste_cm Rel $";
+static	char	*Id = "$Id: vecedit.c,v 12.0 1993/04/27 07:52:07 ste_cm Rel $";
 #endif
 
 /*
@@ -102,7 +102,7 @@ _MAIN
 	extern	FILE	*popen();
 
 	FILE	*pp;
-	int	len1,	len2,	len3,	len4;
+	int	len2,	len4;
 	char	**vec1, **vec2, **vec3, **vec4;
 	char	command[BUFSIZ];
 
@@ -113,12 +113,12 @@ _MAIN
 		exit(FAIL);
 		/*NOTREACHED*/
 	}
-	len1 = file2argv(argv[1], &vec1);
+	(void)file2argv(argv[1], &vec1);
 	len2 = file2argv(argv[2], &vec2);
 
 	FORMAT(command, "diff -n %s %s", argv[1], argv[2]);
 	if (pp = popen(command, "r")) {
-		len3 = fp2argv(pp, &vec3, show_delta);
+		(void)fp2argv(pp, &vec3, show_delta);
 		(void)pclose(pp);
 		vec4 = vecedit(vec1, vec3);
 		len4 = veclen(vec4);

@@ -28,9 +28,9 @@
  	|-- failed
 ?	|-- failed.ref
  	|-- failed.sh
- 	|-- file2argv
-?	|-- file2argv.ref
- 	|-- file2argv.sh
+ 	|-- file2arg
+?	|-- file2arg.ref
+ 	|-- file2arg.sh
  	|-- file2mem
 ?	|-- file2mem.ref
  	|-- file2mem.sh
@@ -46,9 +46,9 @@
  	|-- gid2s
 ?	|-- gid2s.ref
  	|-- gid2s.sh
- 	|-- list_by_cols
-?	|-- list_by_cols.ref
- 	|-- list_by_cols.sh
+ 	|-- lsbycols
+?	|-- lsbycols.ref
+ 	|-- lsbycols.sh
  	|-- ltostr
 ?	|-- ltostr.ref
  	|-- ltostr.sh
@@ -83,9 +83,9 @@
  	|-- rawgets
 ?	|-- rawgets.ref
  	|-- rawgets.sh
- 	|-- rcsargpair
-?	|-- rcsargpair.ref
- 	|-- rcsargpair.sh
+ 	|-- rcsargpr
+?	|-- rcsargpr.ref
+ 	|-- rcsargpr.sh
  	|-- rcsload
 ?	|-- rcsload.ref
  	|-- rcsload.sh
@@ -95,14 +95,14 @@
  	|-- relpath
 ?	|-- relpath.ref
  	|-- relpath.sh
-?	|-- run_tests.out
- 	|-- run_tests.sh
+?	|-- run_test.out
+ 	|-- run_test.sh
  	|-- s2uid
 ?	|-- s2uid.ref
  	|-- s2uid.sh
- 	|-- samebranch
-?	|-- samebranch.ref
- 	|-- samebranch.sh
+ 	|-- samebr
+?	|-- samebr.ref
+ 	|-- samebr.sh
  	|-- sameleaf
 ?	|-- sameleaf.ref
  	|-- sameleaf.sh
@@ -124,7 +124,7 @@
  	|-- strwcmp
 ?	|-- strwcmp.ref
  	|-- strwcmp.sh
-?	|-- test_scomp.c
+?	|-- test_cmp.c
  	|-- trimpath
 ?	|-- trimpath.ref
  	|-- trimpath.sh
@@ -156,4 +156,4 @@
  	|-- which
 ?	|-- which.ref
  	|-- which.sh
-** total= 99
+** total= 98

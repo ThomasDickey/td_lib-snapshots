@@ -1,8 +1,8 @@
-$Id: config.txt,v 11.1 1992/10/09 12:10:19 dickey Exp $
+$Id: config.txt,v 12.0 1993/04/27 07:24:18 ste_cm Rel $
 
 --------------------------------------------------------------------------------
 
-The CM_LIBRARY functions are designed to be portable among not only UNIX
-systems, but also (largely) to VAX/VMS.  On that system, the common-library
-tree is installed as CM_LIBRARY (there it requires the PORTUNIX tree):
+The TD_LIB functions are designed to be portable among not only UNIX systems,
+but also (largely) to VAX/VMS.  On that system, the common-library tree is
+installed as TD_LIB (there it requires the PORTUNIX tree):
 	VAX/VMS 5.3-1 -- CC 3.2

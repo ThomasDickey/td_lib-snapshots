@@ -1,4 +1,4 @@
-$Id: release.txt,v 11.4 1992/11/19 15:20:48 dickey Exp $
+$Id: release.txt,v 12.0 1993/04/27 07:24:47 ste_cm Rel $
 
 --------------------------------------------------------------------------------
 
@@ -16,9 +16,9 @@ Added test-scripts & reference files for the (41) modules that currently have
 test-drivers.
 
 Added includes:
-	cm_curses.h
-	cm_qsort.h
-	cm_scomp.h
+	td_curse.h
+	td_qsort.h
+	td_scomp.h
 
 Added modules:
 	cmp_qsort

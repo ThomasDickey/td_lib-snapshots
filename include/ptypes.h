@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 11.12 1993/04/26 15:38:17 dickey Exp $ */
+/* $Id: ptypes.h,v 11.13 1993/04/27 15:00:03 dickey Exp $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -173,6 +173,10 @@ extern	char	*sprintf();
 #ifdef	sun
 #define	V_OR_I		int
 #define	V_OR_I2		void
+#endif
+
+#ifdef	apollo_sr10
+#define	V_OR_I		void
 #endif
 
 #ifndef	V_OR_I
