@@ -1,3 +1,15 @@
+1994-06-27  dickey@clark.net
+
+	* src/curses/on_winch.c: made this work
+
+	* src/descrip.mms: added ON_WINCH.C
+
+	* src/Makefile: added on_winch.c
+
+	* src/curses/on_winch.c: RCS_BASE
+
+	* include/td_curse.h: added 'on_winch.c'
+
 1994-06-26  dickey@clark.net
 
 	* src/curses/scr_size.c: use BSD-style ioctl to obtain window size

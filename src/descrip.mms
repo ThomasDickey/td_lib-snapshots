@@ -1,4 +1,4 @@
-# $Id: descrip.mms,v 12.2 1993/11/30 14:25:17 dickey Exp $
+# $Id: descrip.mms,v 12.3 1994/06/27 23:13:46 tom Exp $
 # MMS-file for miscellaneous library routines	
 #
 ####### (Development) ##########################################################
@@ -97,6 +97,7 @@ UNUSED_MODULES = -
 	LOGCH, 			# curses/ded -
 	NAME2S,			# unix-style names only -
 	NEWZONE,		# unix environment -
+	ON_WINCH,		# catch SIGWINCH -
 	PACKDATE,		# localtime() -
 	PADEDIT,		# apollo or termcap -
 	PATHCMP,		# uses ABSPATH -
@@ -199,6 +200,7 @@ C_SRC	=-
 	NEXT_VER.C -
 	NAME2S.C -
 	NEWZONE.C -
+	ON_WINCH.C -
 	PACKDATE.C -
 	PADEDIT.C -
 	PATHCAT.C -
@@ -338,6 +340,7 @@ LOGCH.obj :		$(PTYPES_H)	$(I)td_curse.h
 MEM2FILE.obj :		$(PTYPES_H)
 NAME2S.obj :		$(PTYPES_H)
 NEWZONE.obj :		$(PTYPES_H)
+ON_WINCH.obj :		$(PTYPES_H)	$(I)td_curse.h
 PACKDATE.obj :		$(PTYPES_H)
 PADEDIT.obj :		$(PTYPES_H)
 PATHCAT.obj :		$(PTYPES_H)

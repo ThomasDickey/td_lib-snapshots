@@ -1,4 +1,4 @@
-# $Id: Makefile,v 12.5 1994/05/30 18:35:32 tom Exp $
+# $Id: Makefile,v 12.6 1994/06/27 23:12:16 tom Exp $
 # MAKE-file for miscellaneous library routines
 
 ####### (Environment) ##########################################################
@@ -70,6 +70,7 @@ CSRC	=\
 	name2s.c\
 	newzone.c\
 	next_ver.c\
+	on_winch.c\
 	packdate.c\
 	padedit.c\
 	pathcat.c\
@@ -200,6 +201,7 @@ OBJS	=\
 	$Z(name2s.o)\
 	$Z(newzone.o)\
 	$Z(next_ver.o)\
+	$Z(on_winch.o)\
 	$Z(packdate.o)\
 	$Z(padedit.o)\
 	$Z(pathcat.o)\
@@ -295,6 +297,7 @@ $Z(dumpwin.o)\
 $Z(erasechr.o)\
 $Z(killchar.o)\
 $Z(logch.o)\
+$Z(on_winch.o)\
 $Z(rawgets.o)\
 $Z(rawterm.o)\
 $Z(resizwin.o)\
