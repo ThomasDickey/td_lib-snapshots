@@ -1,3 +1,11 @@
+1989-09-20  dickey@software.org
+
+	* src/pathname/dlettree.c:
+	when I recompiled "REMOVE" for VMS_TOOLS, the top-level directory stopped
+	getting deleted, e.g, "REMOVE -RF VMS_TOOLS.DIR" deleted all of the
+	contents, but not the VMS_TOOLS.DIR -- fixed this, but don't know why
+	it worked before
+
 1989-09-18  dickey@software.org
 
 	* include/port2vms.h:
