@@ -1,3 +1,7 @@
+1989-12-12  dickey@software.org
+
+	* src/pathname/file2arg.c, include/td_lib.h: lint (SunOs 4.0.3)
+
 1989-12-11  dickey@software.org
 
 	* src/pathname/which.c: lint
