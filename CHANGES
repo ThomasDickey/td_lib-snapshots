@@ -1,3 +1,13 @@
+1994-10-05  dickey@clark.net
+
+	* configure.in: added test for getgroups
+
+	* src/cm_funcs/lastrev.c: added symbol CMV_PATH
+
+	* src/cm_funcs/lastrev.c: use MODULE_ID
+
+	* aclocal.m4: added CMV_PATH
+
 1994-09-29  dickey@clark.net
 
 	* src/cm_funcs/cmv_dir.c:
