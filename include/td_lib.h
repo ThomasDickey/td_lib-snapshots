@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 12.23 2002/07/05 11:15:57 tom Exp $ */
+/* $Id: td_lib.h,v 12.24 2003/04/25 22:21:41 tom Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for TD_LIB common
@@ -663,6 +663,15 @@ extern	int	localzone;
 			_dcl(char *,	s)
 			_ret
 #endif	/* SYS_UNIX */
+
+	/* samehead.c ------------------------------------------------- */
+	int	samehead(
+			_arx(char *,	path)
+			_ar1(char *,	leaf)
+			)
+			_dcl(char *,	path)
+			_dcl(char *,	leaf)
+			_ret
 
 	/* sameleaf.c ------------------------------------------------- */
 	int	sameleaf(
