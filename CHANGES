@@ -1,3 +1,443 @@
+1989-10-04  dickey@software.org
+
+	* include/acl.h: corrected is_EXTENDED_ACL macro
+
+1989-10-04  ste_cm@software.org
+
+	* include/acl.h:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+	* include/acl.h:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+	* include/acl.h:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* include/acl.h: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* include/acl.h: BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* include/acl.h: BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+	* include/acl.h: BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+	* include/acl.h:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1989-10-04  dickey@software.org
+
+	* src/process/gethome.c: lint (apollo SR10.1)
+
+1989-10-04  ste_cm@software.org
+
+	* src/process/gethome.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/process/gethome.c: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/process/gethome.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/process/gethome.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1989-10-04  dickey@software.org
+
+	* src/process/getuser.c: lint (apollo SR10.1)
+
+1989-10-04  ste_cm@software.org
+
+	* src/process/getuser.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/process/getuser.c: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/process/getuser.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/process/getuser.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1989-10-04  dickey@software.org
+
+	* src/pathname/mem2file.c: lint (apollo SR10.1)
+
+1989-10-04  ste_cm@software.org
+
+	* src/pathname/mem2file.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/pathname/mem2file.c:
+	BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/pathname/mem2file.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/pathname/mem2file.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1989-10-04  dickey@software.org
+
+	* src/cm_funcs/rcstemp.c: lint (apollo SR10.1)
+
+1989-10-04  ste_cm@software.org
+
+	* src/cm_funcs/rcstemp.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+1989-10-04  dickey@software.org
+
+	* src/memory/txtalloc.c: lint (apollo SR10.1)
+
+1989-10-04  ste_cm@software.org
+
+	* src/memory/txtalloc.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/memory/txtalloc.c: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/memory/txtalloc.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/memory/txtalloc.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1989-10-04  dickey@software.org
+
+	* src/string/strclean.c: lint (apollo SR10.1)
+
+1989-10-04  ste_cm@software.org
+
+	* src/string/strclean.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/string/strclean.c: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/string/strclean.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/string/strclean.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1989-10-04  dickey@software.org
+
+	* src/memory/stralloc.c: lint (apollo SR10.1)
+
+1989-10-04  ste_cm@software.org
+
+	* src/memory/stralloc.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/memory/stralloc.c: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/memory/stralloc.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/memory/stralloc.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1989-10-04  dickey@software.org
+
+	* src/pathname/pathleaf.c: lint (apollo SR10.1)
+
+1989-10-04  ste_cm@software.org
+
+	* src/pathname/pathleaf.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/pathname/pathleaf.c:
+	BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/pathname/pathleaf.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/pathname/pathleaf.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1989-10-04  dickey@software.org
+
+	* src/process/revert.c: lint (apollo SR10.1)
+
+1989-10-04  ste_cm@software.org
+
+	* src/process/revert.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+1989-10-04  dickey@software.org
+
+	* src/string/strtrim.c: lint (apollo SR10.1)
+
+1989-10-04  ste_cm@software.org
+
+	* src/string/strtrim.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/string/strtrim.c: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/string/strtrim.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/string/strtrim.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1989-10-04  dickey@software.org
+
+	* src/pathname/sameleaf.c: lint (apollo SR10.1)
+
+1989-10-04  ste_cm@software.org
+
+	* src/pathname/sameleaf.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/pathname/sameleaf.c:
+	BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/pathname/sameleaf.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/pathname/sameleaf.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1989-10-04  dickey@software.org
+
+	* src/cm_funcs/rcsname.c: lint (apollo SR10.1)
+
+1989-10-04  ste_cm@software.org
+
+	* src/cm_funcs/rcsname.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/cm_funcs/rcsname.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1989-10-04  dickey@software.org
+
+	* src/pathname/pathhead.c: lint (apollo SR10.1)
+
+1989-10-04  ste_cm@software.org
+
+	* src/pathname/pathhead.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+1989-10-04  dickey@software.org
+
+	* src/Makefile:
+	made "ptypes.h" and "common.h" dependencies for all objects (most
+	needed it anyway).
+
+	* src/pathname/pathcat.c: lint (apollo SR10.1)
+
+1989-10-04  ste_cm@software.org
+
+	* src/pathname/pathcat.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+1989-10-04  dickey@software.org
+
+	* src/pathname/ftype2.c: lint (apollo SR10.1)
+
+1989-10-04  ste_cm@software.org
+
+	* src/pathname/ftype2.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/pathname/ftype2.c: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/pathname/ftype2.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/pathname/ftype2.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1989-10-04  dickey@software.org
+
+	* src/pathname/arg2file.c: lint (apollo SR10.1)
+
+1989-10-04  ste_cm@software.org
+
+	* src/pathname/arg2file.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/pathname/arg2file.c:
+	BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/pathname/arg2file.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/pathname/arg2file.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1989-10-04  dickey@software.org
+
+	* src/pathname/file2mem.c: lint (apollo SR10.1)
+
+1989-10-04  ste_cm@software.org
+
+	* src/pathname/file2mem.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/pathname/file2mem.c:
+	BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/pathname/file2mem.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/pathname/file2mem.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1989-10-04  dickey@software.org
+
+	* src/cm_funcs/rcsload.c: lint (apollo SR10.1)
+
+1989-10-04  ste_cm@software.org
+
+	* src/cm_funcs/rcsload.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/cm_funcs/rcsload.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1989-10-04  dickey@software.org
+
+	* src/cm_funcs/rcsperm.c: lint (apollo SR10.1)
+
+1989-10-04  ste_cm@software.org
+
+	* src/cm_funcs/rcsperm.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/cm_funcs/rcsperm.c: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/cm_funcs/rcsperm.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/cm_funcs/rcsperm.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1989-10-04  dickey@software.org
+
+	* src/cm_funcs/newzone.c: lint (apollo SR10.1)
+
+1989-10-04  ste_cm@software.org
+
+	* src/cm_funcs/newzone.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/cm_funcs/newzone.c: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/cm_funcs/newzone.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/cm_funcs/newzone.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1989-10-04  dickey@software.org
+
+	* src/curses/rawgets.c: lint (apollo SR10.1)
+
+1989-10-04  ste_cm@software.org
+
+	* src/curses/rawgets.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+1989-10-04  dickey@software.org
+
+	* src/pathname/name2s.c: lint (apollo SR10.1)
+
+1989-10-04  ste_cm@software.org
+
+	* src/pathname/name2s.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+1989-10-04  dickey@software.org
+
+	* src/pathname/ftype.c: lint (apollo SR10.1)
+
+1989-10-04  ste_cm@software.org
+
+	* src/pathname/ftype.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/pathname/ftype.c: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/pathname/ftype.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/pathname/ftype.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1989-10-04  dickey@software.org
+
+	* src/curses/scr_size.c:
+	modified (in SR10.1 conversion) so that the TEST-program
+	generated from this is the same as the 'scr_size' program
+	I use in running 'rterm' to the sun's
+
+1989-10-04  ste_cm@software.org
+
+	* src/curses/scr_size.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+1989-10-04  dickey@software.org
+
+	* src/unix/uid2s.c: speedup (?) by reading ids only as needed
+
+1989-10-04  ste_cm@software.org
+
+	* src/unix/uid2s.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/unix/uid2s.c: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/unix/uid2s.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1989-10-04  dickey@software.org
+
+	* src/unix/gid2s.c: speedup (?) by reading ids only as needed
+
+1989-10-04  ste_cm@software.org
+
+	* src/unix/gid2s.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/unix/gid2s.c: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/unix/gid2s.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/unix/gid2s.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1989-10-04  dickey@software.org
+
+	* src/curses/cmdch.c:
+	apollo SR10.1 curses (like sun) has KD, KU, KR and KL data.
+	don't ask for it twice!
+
+1989-10-04  ste_cm@software.org
+
+	* src/curses/cmdch.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+1989-10-04  dickey@software.org
+
+	* include/Makefile: added "acl.h" to source-list
+
+1989-10-04  ste_cm@software.org
+
+	* include/Makefile:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* include/Makefile: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* include/Makefile:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1989-10-04  dickey@software.org
+
+	* include/acl.h: RCS_BASE
+
 1989-10-03  dickey@software.org
 
 	* include/ptypes.h: added defs for getuid(), ..., getegid()

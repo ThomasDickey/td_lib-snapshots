@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	what[] = "$Id: rawgets.c,v 4.0 1989/08/03 10:54:01 ste_cm Rel $";
+static	char	Id[] = "$Id: rawgets.c,v 5.0 1989/10/04 11:58:21 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,9 +7,15 @@ static	char	what[] = "$Id: rawgets.c,v 4.0 1989/08/03 10:54:01 ste_cm Rel $";
  * Title:	rawgets.c (raw-mode 'gets()')
  * Created:	29 Sep 1987 (from 'fl.c')
  * $Log: rawgets.c,v $
- * Revision 4.0  1989/08/03 10:54:01  ste_cm
- * BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+ * Revision 5.0  1989/10/04 11:58:21  ste_cm
+ * BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
  *
+ *		Revision 4.1  89/10/04  11:58:21  dickey
+ *		lint (apollo SR10.1)
+ *		
+ *		Revision 4.0  89/08/03  10:54:01  ste_cm
+ *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+ *		
  *		Revision 3.2  89/08/03  10:54:01  dickey
  *		broke into two procedures, 'rawgets()' and 'wrawgets()'.
  *		return the terminating character, allowing up/down arrow as
@@ -51,6 +57,7 @@ static	char	what[] = "$Id: rawgets.c,v 4.0 1989/08/03 10:54:01 ste_cm Rel $";
  */
 
 #define		CUR_PTYPES
+#define		STR_PTYPES
 #include	"ptypes.h"
 #include	<ctype.h>
 #include	"cmdch.h"

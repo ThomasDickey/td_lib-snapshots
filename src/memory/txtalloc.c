@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/memory/RCS/txtalloc.c,v 4.0 1988/05/17 09:23:59 ste_cm Rel $";
+static	char	Id[] = "$Id: txtalloc.c,v 8.0 1989/10/04 13:04:16 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,9 +7,24 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/memory/R
  * Author:	T.E.Dickey
  * Created:	29 Apr 1988
  * $Log: txtalloc.c,v $
- * Revision 4.0  1988/05/17 09:23:59  ste_cm
- * BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+ * Revision 8.0  1989/10/04 13:04:16  ste_cm
+ * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
  *
+ *		Revision 7.0  89/10/04  13:04:16  ste_cm
+ *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+ *		
+ *		Revision 6.0  89/10/04  13:04:16  ste_cm
+ *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+ *		
+ *		Revision 5.0  89/10/04  13:04:16  ste_cm
+ *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+ *		
+ *		Revision 4.1  89/10/04  13:04:16  dickey
+ *		lint (apollo SR10.1)
+ *		
+ *		Revision 4.0  88/05/17  09:23:59  ste_cm
+ *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+ *		
  *		Revision 3.0  88/05/17  09:23:59  ste_cm
  *		BASELINE Mon Jun 19 13:27:01 EDT 1989
  *		
@@ -27,8 +42,8 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/memory/R
  *		-- Volume 3 -- Sorting and Searching", by Donald Knuth.
  */
 
-extern	char	*strcpy();
-extern	char	*doalloc();
+#define	STR_PTYPES
+#include	"ptypes.h"
 
 typedef	struct	_node	{
 	struct	_node	*links[2];
@@ -48,9 +63,9 @@ typedef	struct	_node	{
 #define	LINK(a,p)	p->links[(a)>0]
 
 #ifdef	lint
-#define	DOALLOC(c,n)	(c *)0
+#define	MYALLOC(c,n)	(c *)0
 #else	lint
-#define	DOALLOC(c,n)	(c *)doalloc((char *)0, (n)*sizeof(c))
+#define	MYALLOC(c,n)	(c *)doalloc((char *)0, (n))
 #endif	lint
 
 static	NODE	head;
@@ -61,7 +76,7 @@ new_NODE(text)
 char	*text;
 {
 register
-NODE	*p = DOALLOC(NODE, sizeof(NODE) + strlen(text));
+NODE	*p = MYALLOC(NODE, sizeof(NODE) + strlen(text));
 	(void)strcpy(KEY(p),text);
 	LLINK(p) =
 	RLINK(p) = 0;

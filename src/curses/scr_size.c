@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/curses/RCS/scr_size.c,v 4.0 1988/07/27 13:24:40 ste_cm Rel $";
+static	char	Id[] = "$Id: scr_size.c,v 5.0 1989/10/04 11:44:47 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,9 +7,17 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/curses/R
  * Title:	scr_size.c (obtain screen size)
  * Created:	27 Jul 1988
  * $Log: scr_size.c,v $
- * Revision 4.0  1988/07/27 13:24:40  ste_cm
- * BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+ * Revision 5.0  1989/10/04 11:44:47  ste_cm
+ * BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
  *
+ *		Revision 4.1  89/10/04  11:44:47  dickey
+ *		modified (in SR10.1 conversion) so that the TEST-program
+ *		generated from this is the same as the 'scr_size' program
+ *		I use in running 'rterm' to the sun's
+ *		
+ *		Revision 4.0  88/07/27  13:24:40  ste_cm
+ *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+ *		
  *		Revision 3.0  88/07/27  13:24:40  ste_cm
  *		BASELINE Mon Jun 19 13:27:01 EDT 1989
  *		
@@ -20,9 +28,7 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/curses/R
  *		sccs2rcs keywords
  *		
  *
- * Function:	(Apollo only) inquire to see if the VT100 window has changed
- *		size since curses was initialized.  If so, adjust stdscr and
- *		curscr to match.
+ * Function:	inquire to see the size of VT100 window
  *
  * Returns:	A negative code if any error is found, 0 for normal (termcap)
  *		usage, and a positive number for system-dependent sizing (i.e.,
@@ -30,7 +36,11 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/curses/R
  */
 
 #ifdef	apollo
+#ifdef	__STDC__
+#include <apollo/base.h>
+#else
 #include </sys/ins/base.ins.c>
+#endif	__STDC__
 #endif	apollo
 extern	char	*getenv();
 
@@ -81,15 +91,19 @@ int	*retval;
 }
 
 #ifdef	TEST
+#include <stdio.h>
 main()
 {
 	int	lc[2];
 	int	code;
 
-	if ((code = scr_size(lc)) >= 0)
-		printf("%d lines, %d columns (code=%d)\n", lc[0], lc[1], code);
-	else
-		printf("?? cannot determine screen size\n");
-	sleep(3);		/* in case we were in a pad */
+	if ((code = scr_size(lc)) >= 0) {
+		fprintf(stderr, "%s %d lines, %d columns\n",
+			code ? "Termcap" : "Size:",
+			lc[0], lc[1]);
+	} else
+		fprintf(stderr, "?? cannot determine screen size\n");
+	if (code <= 0)
+		sleep(3);	/* in case we were in a pad */
 }
 #endif	TEST

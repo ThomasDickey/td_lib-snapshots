@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19891003
+MANIFEST for td_lib, version t19891004
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 Makefile                        top-level makefile for TD_LIB
@@ -8,6 +8,7 @@ certify                         subdirectory
 certify/reusable.txt            summary of reusable components
 include                         subdirectory
 include/Makefile                make-file for CM_TOOLS common interface directory
+include/acl.h                   defines ACL bits for apollo SR10.1
 include/cmdch.h                 
 include/llib-ltd                template for lint-library
 include/port2vms.h              interface for vms-porting functions

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RCS/pathcat.c,v 4.0 1988/09/13 11:46:17 ste_cm Rel $";
+static	char	Id[] = "$Id: pathcat.c,v 5.0 1989/10/04 12:12:08 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,9 +7,15 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname
  * Author:	T.E.Dickey
  * Created:	12 Sep 1988
  * $Log: pathcat.c,v $
- * Revision 4.0  1988/09/13 11:46:17  ste_cm
- * BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+ * Revision 5.0  1989/10/04 12:12:08  ste_cm
+ * BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
  *
+ *		Revision 4.1  89/10/04  12:12:08  dickey
+ *		lint (apollo SR10.1)
+ *		
+ *		Revision 4.0  88/09/13  11:46:17  ste_cm
+ *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+ *		
  *		Revision 3.0  88/09/13  11:46:17  ste_cm
  *		BASELINE Mon Jun 19 13:27:01 EDT 1989
  *		
@@ -27,10 +33,8 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname
  *		'dst' and 'dname' buffers may be the same, though.
  */
 
-#include	<stdio.h>
-extern	char	*strcat();
-extern	char	*strrchr();
-extern	char	*strcpy();
+#define	STR_PTYPES
+#include	"ptypes.h"
 
 char *
 pathcat(dst, dname, fname)

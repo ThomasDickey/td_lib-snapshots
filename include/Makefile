@@ -1,18 +1,21 @@
-# $Id: Makefile,v 4.0 1989/08/22 10:31:03 ste_cm Rel $
+# $Id: Makefile,v 7.0 1989/10/04 11:19:02 ste_cm Rel $
 # make-file for CM_TOOLS common interface directory
 #
 # $Log: Makefile,v $
-# Revision 4.0  1989/08/22 10:31:03  ste_cm
-# BASELINE Thu Aug 24 09:35:35 EDT 1989 -- support:navi_011(rel2)
+# Revision 7.0  1989/10/04 11:19:02  ste_cm
+# BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
 #
-#	Revision 3.2  89/08/22  10:31:03  dickey
-#	invoke 'makellib' via 'sh' so this works ok on sparc.
+#	Revision 6.0  89/10/04  11:19:02  ste_cm
+#	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
 #	
-#	Revision 3.1  89/08/22  09:36:10  dickey
-#	corrected 'destroy' rule; added 'lincnt.out'
+#	Revision 5.0  89/10/04  11:19:02  ste_cm
+#	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
 #	
-#	Revision 3.0  89/06/08  12:25:14  ste_cm
-#	BASELINE Mon Jun 19 13:22:44 EDT 1989
+#	Revision 4.1  89/10/04  11:19:02  dickey
+#	added "acl.h" to source-list
+#	
+#	Revision 4.0  89/08/22  10:31:03  ste_cm
+#	BASELINE Thu Aug 24 09:35:35 EDT 1989 -- support:navi_011(rel2)
 #	
 
 ####### (Development) ##########################################################
@@ -25,6 +28,7 @@ LLIB	= llib-l$(llib)
 ####### (Standard Lists) #######################################################
 L	= ../lib
 H_SRC	=\
+	acl.h \
 	cmdch.h\
 	common.h\
 	ptypes.h\
@@ -36,7 +40,7 @@ SOURCES	= Makefile $(H_SRC) $(L_SRC)
 ALL	= $L/$(LLIB).ln
 
 ####### (Standard Productions) #################################################
-all:	$(ALL)
+all:		sources $(ALL)
 clean:			; rm -f *.out *.ln core
 clobber:	clean	; rm -f $(ALL)
 destroy:

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: ftype.c,v 4.1 1989/09/14 15:00:47 dickey Exp $";
+static	char	Id[] = "$Id: ftype.c,v 8.0 1989/10/04 11:52:08 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,9 +7,24 @@ static	char	Id[] = "$Id: ftype.c,v 4.1 1989/09/14 15:00:47 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	13 Sep 1988
  * $Log: ftype.c,v $
- * Revision 4.1  1989/09/14 15:00:47  dickey
- * made ftype.c portable to vms
+ * Revision 8.0  1989/10/04 11:52:08  ste_cm
+ * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
  *
+ *		Revision 7.0  89/10/04  11:52:08  ste_cm
+ *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+ *		
+ *		Revision 6.0  89/10/04  11:52:08  ste_cm
+ *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+ *		
+ *		Revision 5.0  89/10/04  11:52:08  ste_cm
+ *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+ *		
+ *		Revision 4.2  89/10/04  11:52:08  dickey
+ *		lint (apollo SR10.1)
+ *		
+ *		Revision 4.1  89/09/14  15:02:10  dickey
+ *		made ftype.c portable to vms
+ *		
  *		Revision 4.0  88/09/13  06:46:16  ste_cm
  *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
  *		
@@ -27,8 +42,8 @@ static	char	Id[] = "$Id: ftype.c,v 4.1 1989/09/14 15:00:47 dickey Exp $";
  *		the given pathname.
  */
 
-extern	char	*strchr();
-extern	char	*strrchr();
+#define	STR_PTYPES
+#include	"ptypes.h"
 
 #ifdef	vms
 #define	PATH_END	']'
