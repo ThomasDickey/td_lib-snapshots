@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: packdate.c,v 12.2 1993/10/29 17:35:25 dickey Exp $";
+static	char	Id[] = "$Id: packdate.c,v 12.3 1993/11/26 22:11:52 dickey Exp $";
 #endif
 
 /*
@@ -30,7 +30,7 @@ static	char	Id[] = "$Id: packdate.c,v 12.2 1993/10/29 17:35:25 dickey Exp $";
  */
 
 #include	"ptypes.h"
-#include	<sys/time.h>
+#include	<time.h>
 
 #define	MINUTE	60
 #define	HOUR	(60*MINUTE)
@@ -54,6 +54,7 @@ long	gmt_offset(
 	 */
 	tm = *localtime(&t);
 
+#ifdef	unix
 #ifdef	SYSTEM5
 	{
 	extern	long	timezone;
@@ -70,6 +71,11 @@ long	gmt_offset(
 		sec += (tz.tz_minuteswest * MINUTE);
 	}
 #endif	/* sun/UNIX */
+#endif	/* unix */
+
+#ifdef	MSDOS
+	sec += timezone;
+#endif
 #endif	/* SYSTEM5/sun/UNIX */
 
 	/*
@@ -150,4 +156,4 @@ _MAIN
 	exit(SUCCESS);
 	/*NOTREACHED*/
 }
-#endif
+#endif	/* TEST */

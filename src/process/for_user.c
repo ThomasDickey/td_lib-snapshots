@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: for_user.c,v 12.2 1993/10/29 17:35:26 dickey Exp $";
-#endif
-
 /*
  * Title:	for_user.c (carry out function for set-uid user)
  * Author:	T.E.Dickey
@@ -32,6 +28,9 @@ static	char	Id[] = "$Id: for_user.c,v 12.2 1993/10/29 17:35:26 dickey Exp $";
 #include	"ptypes.h"
 #include	<errno.h>
 
+MODULE_ID("$Id: for_user.c,v 12.4 1993/11/26 21:55:50 tom Exp $")
+
+#ifdef	unix
 int	for_user2(
 	_FNX(void,	func,	(_AR0))
 	_ARX(int,	the_uid)
@@ -84,3 +83,5 @@ int	for_user(
 {
 	return for_user2(func, (int)getuid(), (int)getgid());
 }
+
+#endif	/* unix */

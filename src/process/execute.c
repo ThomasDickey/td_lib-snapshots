@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: execute.c,v 12.2 1993/10/29 17:35:26 dickey Exp $";
+static	char	Id[] = "$Id: execute.c,v 12.3 1993/11/26 14:15:18 dickey Exp $";
 #endif
 
 /*
@@ -123,7 +123,8 @@ int	execute(
 		return (0);
 	errno = EVMSERR;	/* can't do much better than that! */
 
-#else	/* unix */
+#endif	/* vms */
+#ifdef	unix
 static	char	**myargv;	/* argument vector for 'bldarg()' */
 #ifdef	SYSTEM5
 char	*what;
@@ -188,7 +189,7 @@ int	count	= 3,		/* minimum needed for 'bldarg()' */
 		(void)_exit(errno);	/* just in case exec-failed */
 		/*NOTREACHED*/
 	}
-#endif	/* vms/unix */
+#endif	/* unix */
 	return (-1);
 }
 

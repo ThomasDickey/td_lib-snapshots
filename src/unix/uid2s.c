@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: uid2s.c,v 12.2 1993/10/29 17:35:23 dickey Exp $";
+static	char	Id[] = "$Id: uid2s.c,v 12.3 1993/11/26 22:27:44 dickey Exp $";
 #endif
 
 /*
@@ -27,6 +27,8 @@ static	char	Id[] = "$Id: uid2s.c,v 12.2 1993/10/29 17:35:23 dickey Exp $";
 #define	PWD_PTYPES
 #define	STR_PTYPES
 #include	"ptypes.h"
+
+#ifdef	unix
 
 typedef	struct	_table	{
 	struct	_table	*link;
@@ -132,4 +134,6 @@ _MAIN
 	}
 	exit(SUCCESS);
 }
-#endif
+#endif	/* TEST */
+
+#endif	/* unix */

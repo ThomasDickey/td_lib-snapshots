@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: dumpwin.c,v 12.2 1993/11/01 20:26:18 dickey Exp $";
+static	char	Id[] = "$Id: dumpwin.c,v 12.3 1993/11/26 14:10:38 dickey Exp $";
 #endif
 
 /*
@@ -33,7 +33,7 @@ void	dumpwin(
 	_DCL(WINDOW *,	w)
 	_DCL(char *,	tag)
 {
-#ifdef	SYSTEM5
+#if	SYS5_CURSES
 	chtype	*p;
 #else
 	char	*p;
@@ -52,7 +52,7 @@ void	dumpwin(
 		OUT "   _maxy:%d, _maxx:%d\n", w->_maxy, w->_maxx);
 		OUT "   _begy:%d, _begx:%d\n", w->_begy, w->_begx);
 
-#if !defined(SYSTEM5)
+#if !SYS5_CURSES
 		OUT "   _orig:    %p\n", w->_orig);
 		OUT "   _nextp:   %p\n", w->_nextp);
 #endif
@@ -75,3 +75,4 @@ void	dumpwin(
 		FCLOSE(fp);
 	}
 }
+

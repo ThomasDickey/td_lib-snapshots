@@ -1,3 +1,97 @@
+1993-11-26  dickey@software.org
+
+	* src/process/walkback.c: ifdef'd for unix-only
+
+1993-11-26  dickey@software.org
+
+	* src/process/walkback.c: use MODULE_ID
+
+1993-11-26  dickey@software.org
+
+	* src/unix/s2gid.c: ifdef'd for unix-only
+
+1993-11-26  dickey@software.org
+
+	* src/unix/s2gid.c: use MODULE_ID
+
+1993-11-26  dickey@software.org
+
+	* src/unix/s2uid.c, src/unix/uid2s.c: ifdef'd for unix-only
+
+1993-11-26  dickey@software.org
+
+	* src/unix/s2uid.c: use MODULE_ID
+
+1993-11-26  dickey@software.org
+
+	* src/process/revert.c: ifdef'd for unix-only
+
+1993-11-26  dickey@software.org
+
+	* src/process/revert.c: use MODULE_ID
+
+1993-11-26  dickey@software.org
+
+	* src/curses/padedit.c: ifdef'd for unix-only
+
+1993-11-26  dickey@software.org
+
+	* src/curses/padedit.c: use MODULE_ID
+
+1993-11-26  dickey@software.org
+
+	* src/cm_funcs/packdate.c: port to MSDOS (untested)
+
+	* src/unix/gid2s.c: ifdef'd for unix-only
+
+	* src/curses/killchar.c: changed ifdef for SYS5_CURSES
+
+	* src/process/getuser.c: ifdef'd for unix-only
+
+1993-11-26  dickey@software.org
+
+	* src/process/getuser.c: use MODULE_ID
+
+1993-11-26  dickey@software.org
+
+	* src/process/gethome.c: hack for vms & MSDOS
+
+	* src/process/for_user.c: ifdef'd for unix-only
+
+1993-11-26  dickey@software.org
+
+	* src/process/for_user.c: use MODULE_ID
+
+1993-11-26  dickey@software.org
+
+	* src/process/for_admn.c: ifdef'd for unix-only
+
+1993-11-26  dickey@software.org
+
+	* src/process/for_admn.c: use MODULE_ID
+
+1993-11-26  dickey@software.org
+
+	* src/pathname/filecopy.c: compiled with TurboC
+
+	* src/process/execute.c: hack for MSDOS (doesn't work at all there yet)
+
+	* src/curses/erasechr.c: ifdef'd for MSDOS
+
+	* src/curses/dumpwin.c: compile on TurboC
+
+	* src/curses/cmdch.c: ifdef'd for SYS5_CURSES
+
+	* include/td_qsort.h: adapted to MSDOS
+
+	* src/curses/beep.c: ifdef'd for SYS5_CURSES
+
+	* src/process/catchall.c: compiled with TurboC
+
+1993-11-26  dickey@software.org
+
+	* src/process/catchall.c: use MODULE_ID
+
 1993-11-24  dickey@software.org
 
 	* src/curses/rawgets.c: added mouse support for xterm
