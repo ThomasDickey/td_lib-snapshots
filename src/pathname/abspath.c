@@ -1,11 +1,12 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)abspath.c	1.4 88/05/06 07:12:52";
+static	char	sccs_id[] = "@(#)abspath.c	1.5 88/05/16 14:46:58";
 #endif	lint
 
 /*
  * Author:	T.E.Dickey
  * Created:	17 Sep 1987
  * Modified:
+ *		16 May 1988, 'getcwd()' is not as portable as 'getwd()'.
  *		05 May 1988, make "/tmp" translate ok on Apollo (must provide
  *			     missing node-name).  Also, translate csh-like "~".
  *		03 May 1988, added more Apollo-specific prefixes
@@ -29,13 +30,19 @@ static	char	sccs_id[] = "@(#)abspath.c	1.4 88/05/06 07:12:52";
 
 #include	<stdio.h>
 #include	<pwd.h>
-extern	char	*getcwd(),
-		*getenv(),
+extern	char	*getenv(),
 		*index(),
 		*strcat(),
 		*strcpy();
 
 #define	MAXPATHLEN	BUFSIZ
+
+#ifdef	S_IFSOCK
+extern	char	*getwd();
+#else	S_IFSOCK
+#define	getwd(p)	getcwd(p,sizeof(p)-2)
+extern	char	*getcwd();
+#endif	S_IFSOCK
 
 #ifdef	apollo
 #define	TOP	2			/* permit 2 leading /'s */
@@ -111,8 +118,8 @@ char	*path;
 {
 register char *s, *d = path;
 
-	if (nodelen < 0) {	/* 'getcwd()' is expensive... */
-		(void)getcwd(nodestr,sizeof(nodestr)-2);
+	if (nodelen < 0) {	/* 'getwd()' is expensive... */
+		(void)getwd(nodestr);
 		(void)denode(nodestr,nodestr,&nodelen);
 	}
 
@@ -178,7 +185,7 @@ register char *s, *d = path;
 #endif	apollo
 	} else if (*path) {
 	char	cwdpath[MAXPATHLEN];
-		(void)getcwd(cwdpath,sizeof(cwdpath)-2);
+		(void)getwd(cwdpath);
 		s = path;
 		if (*s == '.')
 			if (s[1] == '\0' || s[1] == '/')

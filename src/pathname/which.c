@@ -1,12 +1,25 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)which.c	1.1 87/11/18 07:29:21";
+static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RCS/which.c,v 4.0 1988/05/16 13:17:20 ste_cm Rel $";
 #endif	lint
 
 /*
  * Title:	which.c (which-executable scanner)
  * Author:	T.E.Dickey
  * Created:	18 Nov 1987
- * Modified:
+ * $Log: which.c,v $
+ * Revision 4.0  1988/05/16 13:17:20  ste_cm
+ * BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+ *
+ *		Revision 3.0  88/05/16  13:17:20  ste_cm
+ *		BASELINE Mon Jun 19 13:27:01 EDT 1989
+ *		
+ *		Revision 2.0  88/05/16  13:17:20  ste_cm
+ *		BASELINE Thu Apr  6 09:45:13 EDT 1989
+ *		
+ *		Revision 1.3  88/05/16  13:17:20  dickey
+ *		sccs2rcs keywords
+ *		
+ *		16 May 1988, use 'abspath()' to expand directory names.
  *
  * Function:	Perform scanning along the PATH environment variable to
  *		find the first instance of a file 'find' which is
@@ -65,6 +78,7 @@ char	test[BUFSIZ];
 			(void)strncpy(test, s, d-s);
 			test[d-s] = EOS;
 		}
+		abspath(test);
 		(void)strcat(strcat(test, "/"), find);
 		if (executable(test)) break;
 		for (s = d; (*s != EOS) && (*s == ':'); s++);
