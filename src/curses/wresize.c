@@ -14,7 +14,7 @@
 #include "ptypes.h"
 #include "td_curse.h"
 
-MODULE_ID("$Id: wresize.c,v 12.10 1995/09/04 20:00:04 tom Exp $")
+MODULE_ID("$Id: wresize.c,v 12.11 1995/12/16 00:17:05 tom Exp $")
 
 #if CURSES_LIKE_BSD
 #ifdef	lint
@@ -42,6 +42,8 @@ MODULE_ID("$Id: wresize.c,v 12.10 1995/09/04 20:00:04 tom Exp $")
 #endif
 #endif
 
+#undef GOOD_RESIZE
+
 #if !HAVE_WRESIZE
 int	wresize(
 	_ARX(WINDOW *,	w)
@@ -52,7 +54,8 @@ int	wresize(
 	_DCL(int,	ToLines)
 	_DCL(int,	ToCols)
 {
-#if CURSES_LIKE_BSD
+#if CURSES_LIKE_BSD && !GOOD_TOUCHWIN
+#define GOOD_WRESIZE 1
 	register int	row;
 	int	adjx	= w->_maxx - COLS;
 	int	adjy	= w->_maxy - LINES;
@@ -107,6 +110,7 @@ int	wresize(
 #endif	/* CURSES_LIKE_BSD */
 
 #if CURSES_LIKE_BSD44
+#define GOOD_WRESIZE 1
 	/*
 	 * This is based on "newwin.c 8.3 7/27/94" in the SlackWare 2.2 release.
 	 *
@@ -152,6 +156,7 @@ int	wresize(
 #endif
 
 #if CURSES_LIKE_NCURSES
+#define GOOD_WRESIZE 1
 	register int	row;
 
 	/*
@@ -203,6 +208,10 @@ int	wresize(
 	w->_maxx = ToCols;  if (w->_curx >= ToCols)  w->_curx = 0;
 	w->_maxy = ToLines; if (w->_cury >= ToLines) w->_cury = 0;
 	return OK;
+#endif
+
+#if !defined(GOOD_RESIZE)
+	return ERR;
 #endif
 }
 #endif	/* !HAVE_WRESIZE */

@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	01 Dec 1987 (broke out of 'ded.c')
  * Modified:
+ *		16 Dec 1995, integration with ncurses mouse-support.
  *		04 Jul 1994, mods for autoconf.
  *		18 Nov 1993, added xt_mouse support.
  *		05 Nov 1993, absorb "cmdch.h" into "td_curse.h"
@@ -43,19 +44,20 @@
 #include	"td_curse.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: cmdch.c,v 12.19 1995/10/31 23:19:58 tom Exp $")
+MODULE_ID("$Id: cmdch.c,v 12.20 1995/12/16 13:07:56 tom Exp $")
 
 #define	ESC(c)	((c) == '\033')
 #define	END(s)	s[strlen(s)-1]
 #define	if_C(c)	if (i_blk[j] == c)
 #define	EQL(s)	(!strcmp(i_blk,((s)?(s):"")))
 
-#ifndef	NO_XTERM_MOUSE
+#if !NO_XTERM_MOUSE
 
 #define XtermPos() (getch() - 041)	/* 0..COLS-1 or 0..LINES-1 */
 
 XtermMouse xt_mouse;	/* state of XTerm-mouse */
 
+#if !defined(NCURSES_MOUSE_VERSION)
 static	int	double_click (_AR0)
 {
 #if HAVE_GETTIMEOFDAY
@@ -80,7 +82,8 @@ static	int	double_click (_AR0)
 	return FALSE;
 #endif
 }
-#endif
+#endif	/* !NCURSES_MOUSE_VERSION */
+#endif	/* !NO_XTERM_MOUSE */
 
 int	cmdch(
 	_AR1(int *,	cnt_))
@@ -98,6 +101,9 @@ int	cmdch(
 # endif
 	static	int	ansi	= FALSE;
 #endif	/* HAVE_KEYPAD */
+#if NCURSES_MOUSE_VERSION && !NO_XTERM_MOUSE
+	MEVENT	myevent;
+#endif
 
 	if (!init) {
 		init = TRUE;
@@ -156,6 +162,41 @@ int	cmdch(
 		case KEY_ENTER: c = '\n';	done = TRUE;	break;
 #endif
 #endif
+#if NCURSES_MOUSE_VERSION && !NO_XTERM_MOUSE
+		case KEY_MOUSE:
+			getmouse(&myevent);
+			xt_mouse.col = myevent.x;
+			xt_mouse.row = myevent.y;
+			if (myevent.bstate & BUTTON1_CLICKED) {
+				xt_mouse.button = 1;
+				xt_mouse.dbl_clik = FALSE;
+			} else
+			if (myevent.bstate & BUTTON1_DOUBLE_CLICKED) {
+				xt_mouse.button = 1;
+				xt_mouse.dbl_clik = TRUE;
+			} else
+			if (myevent.bstate & BUTTON2_CLICKED) {
+				xt_mouse.button = 2;
+				xt_mouse.dbl_clik = FALSE;
+			} else
+			if (myevent.bstate & BUTTON2_DOUBLE_CLICKED) {
+				xt_mouse.button = 2;
+				xt_mouse.dbl_clik = TRUE;
+			} else
+			if (myevent.bstate & BUTTON3_CLICKED) {
+				xt_mouse.button = 3;
+				xt_mouse.dbl_clik = FALSE;
+			} else
+			if (myevent.bstate & BUTTON3_DOUBLE_CLICKED) {
+				xt_mouse.button = 3;
+				xt_mouse.dbl_clik = TRUE;
+			} else
+				break;
+			xt_mouse.pressed  = TRUE;
+			xt_mouse.released = TRUE;
+			done = TRUE;
+			break;
+#endif
 		case KEY_UP:			/* FALLTHRU */
 		case KEY_DOWN:			/* FALLTHRU */
 		case KEY_LEFT:			/* FALLTHRU */
@@ -183,7 +224,7 @@ int	cmdch(
 			else
 #endif /* !HAVE_KEYPAD */
 			if (j > 1) {	/* extended escapes */
-#ifndef	NO_XTERM_MOUSE
+#if !NO_XTERM_MOUSE && !NCURSES_MOUSE_VERSION
 				/* patch: should test for xterm_mouse */
 				if (!strncmp(i_blk, "\033[M", 3)) {
 					auto	int	the_button;
@@ -207,7 +248,7 @@ int	cmdch(
 						last_col = xt_mouse.col;
 					}
 				} else
-#endif	/* NO_XTERM_MOUSE */
+#endif	/* !NO_XTERM_MOUSE */
 #if !HAVE_KEYPAD
 				if (ansi) {
 					j--;

@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	24 Nov 1987
  * Modified:
+ *		16 Dec 1995, integration with ncurses mouse-support
  *		16 Jul 1994, made 'dumptty()' a library procedure.
  *		21 May 1994, ClarkNet's Solaris doesn't do savetty/resetty ok.
  *		26 Apr 1994, port to Linux
@@ -27,7 +28,7 @@
 #define TRM_PTYPES	/* <termios.h> */
 #include	"td_curse.h"
 
-MODULE_ID("$Id: rawterm.c,v 12.18 1994/12/16 14:15:22 tom Exp $")
+MODULE_ID("$Id: rawterm.c,v 12.19 1995/12/16 13:07:13 tom Exp $")
 
 TermioT	original_tty;
 TermioT	modified_tty;
@@ -48,10 +49,8 @@ void	show_term(
 #define show_term(s)
 #endif
 
-#ifdef	NO_XTERM_MOUSE
-#define	enable_mouse()
-#define	disable_mouse()
-#else
+#if	!NO_XTERM_MOUSE
+#if	!NCURSES_MOUSE_VERSION
 static	int	xterm_mouse(_AR0)
 {
 	static	int	initialized;
@@ -69,6 +68,7 @@ static	int	xterm_mouse(_AR0)
 	}
 	return use_mouse;
 }
+#endif	/* !NCURSES_MOUSE_VERSION */
 
 #define XTERM_ENABLE_TRACKING   "\033[?1000h"	/* normal tracking mode */
 #define XTERM_DISABLE_TRACKING  "\033[?1000l"
@@ -77,17 +77,31 @@ static	int	xterm_mouse(_AR0)
 
 static	void	enable_mouse(_AR0)
 {
+#if NCURSES_MOUSE_VERSION
+	(void)mousemask(
+		 BUTTON1_CLICKED |BUTTON1_DOUBLE_CLICKED
+		|BUTTON2_CLICKED |BUTTON2_DOUBLE_CLICKED
+		|BUTTON3_CLICKED |BUTTON3_DOUBLE_CLICKED, (mmask_t *)0);
+#else
 	if (xterm_mouse()) {
 		Puts(XTERM_ENABLE_TRACKING);
 	}
+#endif
 }
 
 static	void	disable_mouse(_AR0)
 {
+#if NCURSES_MOUSE_VERSION
+	(void)mousemask((mmask_t)0, (mmask_t *)0);
+#else
 	if (xterm_mouse()) {
 		Puts(XTERM_DISABLE_TRACKING);
 	}
+#endif
 }
+#else
+#define	enable_mouse()
+#define	disable_mouse()
 #endif
 
 /*

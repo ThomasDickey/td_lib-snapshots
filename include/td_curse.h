@@ -1,4 +1,4 @@
-/* $Id: td_curse.h,v 12.38 1995/11/04 23:22:52 tom Exp $ */
+/* $Id: td_curse.h,v 12.39 1995/12/16 00:08:56 tom Exp $ */
 
 /*
  * TD_LIB CURSES-related definitions
@@ -48,13 +48,12 @@
  *	   (e.g., for resizing and touching).
  *	b) there are different member names for the WINDOW struct (only
  *	   important when debugging).
- *
- * The SYS5_CURSES definition is used only for places where we must assume,
- * rather than provide an explicit test.  Some implementations will break this
- * assumption.
- *
- * On MS-DOS, I've used PDCurses 2.x, which is derived from NCurses.
+ *	c) some implementations of 'touchwin()' do not work (these usually
+ *	   are the older BSD versions).
  */
+#if HAVE_KEYPAD
+#define GOOD_TOUCHWIN 1
+#endif
 
 /*----------------------------------------------------------------------------*/
 /*
