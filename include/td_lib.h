@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 5.2 1990/03/27 13:27:11 dickey Exp $ */
+/* $Id: td_lib.h,v 6.0 1990/03/28 08:04:32 ste_cm Rel $ */
 
 /*
  * Combined lint-library/function prototype definitions for CM_TOOLS COMMON
@@ -644,13 +644,13 @@
 			_NUL
 
 	/* strwcmp.c -------------------------------------------------- */
-		strwcmp(
+	int	strwcmp(
 			_ARX(char *,	wild)
 			_AR1(char *,	name)
 			)
 			_DCL(char *,	wild)
 			_DCL(char *,	name)
-			_NUL
+			_RET
 
 	/* track_wd.c ------------------------------------------------- */
 		track_wd(
