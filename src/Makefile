@@ -1,9 +1,20 @@
-# @(#)Makefile	1.33 88/07/29 10:45:06
+# @(#)Makefile	1.34 88/08/03 15:34:48
 # MAKE-file for miscellaneous library routines
-L=lib.a
-GET=getdelta
 #
-SRCS	=\
+####### (Development) ##########################################################
+GET	= getdelta
+#
+####### (Command-line Options) #################################################
+llib	= td
+LLIB	= llib-l$(llib)
+CFLAGS  = $(DEFINES) $(INCLUDES) -O
+DATE	= echo '****'`date` >> $@
+LINTOPT	= $(DEFINES) $(INCLUDES) -DNO_SCCS_ID -ltd -lcurses -lapollo
+#
+####### (Standard Lists) #######################################################
+ALL	= $A $(LLIB).ln
+A	= lib.a
+CSRC	=\
 	abspath.c\
 	beep.c\
 	bldarg.c\
@@ -52,6 +63,10 @@ SRCS	=\
 	vecalloc.c\
 	which.c\
 	win2file.c
+#
+HSRC	= cmdch.h ptypes.h rcsdefs.h
+SCRIPTS	= lintit.sh makellib.sh
+SRCS	= $(CSRC) $(HSRC) $(SCRIPTS) $(LLIB)
 #
 OBJS	=\
 	abspath.o\
@@ -103,16 +118,24 @@ OBJS	=\
 	which.o\
 	win2file.o
 #
-all:	$L\
-	llib-ltd.ln
+####### (Standard Productions) #################################################
+all:		$(ALL)
 #
-$L:	$(OBJS)
-	ar rv $L $?
-	ranlib $L
+clean:				; rm -f *.o *.out *.ln
+clobber:	clean		; rm -f $(ALL)
+destroy:			; rm -f *
+sources:	$(SRCS)
+#
+install: all
+#
+####### (Details of Productions) ###############################################
+$A:	$(OBJS)
+	ar rv $A $?
+	ranlib $A
 #
 archive: $(OBJS)
-	rm -f $L
-	ar rv $L ($OBJS)
+	rm -f $A
+	ar rv $A $(OBJS)
 #
 cmdch.o:	cmdch.h
 cutoff.o:	ptypes.h
@@ -127,26 +150,8 @@ rcsname.o:	rcsdefs.h
 setmtime.o:	ptypes.h
 win2file.o:	ptypes.h
 #
-clean:
-	rm -f *.o *.out *.ln
-clobber: clean
-	rm -f *.a
-destroy:
-	rm -f *
-#
-install: all
-#
-cmdch.h\
-ptypes.h\
-rcsdefs.h\
-lintit.sh\
-makellib.sh:
-LLIB\
-$(SRCS):
-	$(GET) -s sccs/s.$@
-#
-llib-ltd.ln:	makellib.sh LLIB
-	makellib.sh LLIB td
-#
-lint.out:	lintit.sh llib-ltd.ln
-	lintit.sh *.c >lint.out
+####### (Development) ##########################################################
+$(LLIB).ln:	$(LLIB)		; makellib.sh $(LLIB) $(llib)
+$(SRCS):			; $(GET) -s sccs/s.$@
+lint.out:	$(CSRC)		; $(DATE); tdlint $(LINTOPT) $? >>$@
+lincnt.out:	$(CSRC)		; $(DATE); lincnt $(CSRC) >>$@
