@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 4.4 1989/10/19 11:56:49 dickey Exp $ */
+/* $Id: td_lib.h,v 4.5 1989/10/24 11:53:28 dickey Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for CM_TOOLS COMMON
@@ -282,6 +282,13 @@
 			_AR1(int,	gid)
 			)
 			_DCL(int,	gid)
+			_RET
+
+	/* istextfile.c ----------------------------------------------- */
+	int	istextfile(
+			_AR1(char *,	name)
+			)
+			_DCL(char *,	name)
 			_RET
 
 	/* killchar.c ------------------------------------------------- */

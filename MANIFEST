@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19891023
+MANIFEST for td_lib, version t19891024
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 Makefile                        top-level makefile for TD_LIB
@@ -77,6 +77,7 @@ src/pathname/filecopy.c         copy a file
 src/pathname/fp2argv.c          file-pointer to argv-list
 src/pathname/ftype.c            finds filename's suffix
 src/pathname/ftype2.c           finds filename's suffix (style 2)
+src/pathname/istextfl.c         tests a file to see if it is normal text vs binary
 src/pathname/mem2file.c         write a blob-string from memory to a file
 src/pathname/modechar.c         translate file-mode (binary) to character
 src/pathname/name2s.c           convert filename to printable string
