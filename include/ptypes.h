@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 5.0 1989/10/26 11:12:35 ste_cm Rel $ */
+/* $Id: ptypes.h,v 5.1 1989/10/30 10:24:26 dickey Exp $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -130,8 +130,10 @@ extern	V_OR_I	rewind();
 extern	uid_t	getuid(), geteuid();
 extern	gid_t	getgid(), getegid();
 #else
+#if	!defined(NBBY)
 typedef	int	uid_t;
 typedef	int	gid_t;
+#endif	/* SunOs 3.5 (fixed in SunOs 4.0) */
 #endif
 #endif	unix
 
