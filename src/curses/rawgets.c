@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rawgets.c,v 11.12 1992/08/25 12:09:36 dickey Exp $";
+static	char	Id[] = "$Id: rawgets.c,v 11.14 1992/08/28 13:48:29 dickey Exp $";
 #endif
 
 /*
@@ -357,7 +357,7 @@ int	wrawgets (
 			EraseChar = erasechar(),
 			EraseWord = eraseword(),
 			EraseLine = killchar();
-	auto	 int	count;
+	auto	 int	count, log_count;
 	static	 DYN	*saved;
 
 	saved = dyn_copy(saved, bfr);
@@ -406,13 +406,16 @@ int	wrawgets (
 		}
 
 		if (command && *command && **command) {
+			log_count = FALSE;
 			if (Imode || !isdigit(**command))
 				count = 1;
 			else {
 				register char	*s = *command;
 				count = 0;
-				while (isdigit(*s))
+				while (isdigit(*s)) {
+					log_count = TRUE;
 					count = (count * 10) + (*s++ - '0');
+				}
 				*command = s;
 			}
 			c = decode_logch(command, (int *)0);
@@ -421,20 +424,20 @@ int	wrawgets (
 				(void)wrefresh(Z);
 			count = 1;
 			c = cmdch(Imode ? (int *)0 : &count);
+			log_count = (count != 1);
+
 		}
 		if (c == EOS)
 			continue;
 
 		/*
-		 * Record every character that we can infer.
+		 * Note: the command-script will be logged exactly only if
+		 * none of the repeat-counts have leading zeroes.
 		 */
 		if (logging) {
-			if (count != 1) {
-				char	temp[20];
-				FORMAT(temp, "%d", count);
-				history = dyn_append(history, temp);
-			}
-			history = dyn_append_c(history, c);
+			char	temp[20];
+			encode_logch(temp, log_count ? &count : (int *)0, c);
+			history = dyn_append(history, temp);
 		}
 
 		/*

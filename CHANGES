@@ -1,3 +1,15 @@
+1992-08-28  dickey@software.org
+
+	* src/curses/rawgets.c:
+	oops: that did not work well; revised to log everything
+	from the original point
+
+	* src/curses/rawgets.c:
+	modified the logging code so that as long as we read from
+	the command-script, we make an *exact* copy.  This allows
+	the caller to determine the point at which the result from
+	'rawgets_log()' begins non-scripted input.
+
 1992-08-25  dickey@software.org
 
 	* include/td_lib.h: added 'first_mode' arg to 'wrawgets()'
