@@ -1,3 +1,37 @@
+1994-05-23  dickey@clark.net
+
+	* configure.in: added test for 'rename()'
+
+	* src/curses/rawterm.c: added more debug-traces
+
+	* acconfig.h: added TIMEZONE_DECLARED, HAVE_TM_GMTOFF, HAVE_TM_ZONE
+
+	* src/unix/setmtime.c: expressed in terms of HAVE_UTIME_H
+
+	* src/cm_funcs/packdate.c:
+	expressed in terms of TIMEZONE_DECLARED, HAVE_TM_GMTOFF, HAVE_TM_ZONE
+
+	* aclocal.m4: added macro AC_GMTOFF
+
+	* include/ptypes.h: more tweaks (a long way to go)
+
+	* configure.in: added macros to handle timezone variable, etc.
+
+	* src/curses/wrepaint.c: express in terms of SYS5_CURSES
+
+	* src/cm_funcs/rcstime.c: use MODULE_ID
+
+	* src/cm_funcs/rcstime.c, src/curses/cmdch.c, src/cm_funcs/newzone.c:
+	use TIM_PTYPES
+
+	* src/process/interact.c: use MODULE_ID
+
+	* src/process/interact.c: use OPN_PTYPES
+
+	* src/curses/beep.c: use HAVE_BEEP
+
+	* src/curses/beep.c: use MODULE_ID
+
 1994-05-22  dickey@clark.net
 
 	* configure.in:

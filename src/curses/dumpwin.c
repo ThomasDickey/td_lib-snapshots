@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: dumpwin.c,v 12.4 1994/05/21 18:46:07 tom Exp $";
+static	char	Id[] = "$Id: dumpwin.c,v 12.5 1994/05/23 00:10:03 tom Exp $";
 #endif
 
 /*
@@ -25,12 +25,6 @@ static	char	Id[] = "$Id: dumpwin.c,v 12.4 1994/05/21 18:46:07 tom Exp $";
 #include	<time.h>
 
 #define	OUT	FPRINTF(fp,
-
-#ifdef USE_NCURSES
-#define _y       _line
-#define _firstch _firstchar
-#define _lastch  _lastchar
-#endif
 
 void	dumpwin(
 	_ARX(WINDOW *,	w)

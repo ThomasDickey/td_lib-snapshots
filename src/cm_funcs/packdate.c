@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: packdate.c,v 12.5 1993/12/01 19:13:12 dickey Exp $";
+static	char	Id[] = "$Id: packdate.c,v 12.6 1994/05/23 23:40:37 tom Exp $";
 #endif
 
 /*
@@ -29,16 +29,8 @@ static	char	Id[] = "$Id: packdate.c,v 12.5 1993/12/01 19:13:12 dickey Exp $";
  *		Base date is Thu Jan 1, 1970
  */
 
+#define TIM_PTYPES
 #include	"ptypes.h"
-#ifdef	apollo
-#include	<sys/time.h>
-#endif
-#include	<time.h>
-
-#define	MINUTE	60
-#define	HOUR	(60*MINUTE)
-#define	DAY	(24*HOUR)
-#define	YEAR	(365*DAY)
 
 #define	LEAP(y)	(!(y&3))
 
@@ -57,29 +49,20 @@ long	gmt_offset(
 	 */
 	tm = *localtime(&t);
 
-#ifdef	unix
-#ifdef	SYSTEM5
-	{
-	extern	long	timezone;
-		sec += timezone;
-	}
-#else	/* !SYSTEM5 */
-#if	defined(sun) && !defined(__CLCC__)
+#if	HAVE_TIMEZONE
+	sec += timezone;
+#else
+#  if	HAVE_TM_GMTOFF
 	sec -= tm.tm_gmtoff;
-#else	/* UNIX */
+#  else	/* UNIX */
 	{
 	struct	timeval	t2;
 	struct	timezone tz;
 		(void)gettimeofday(&t2, &tz);
 		sec += (tz.tz_minuteswest * MINUTE);
 	}
-#endif	/* sun/UNIX */
-#endif	/* unix */
-
-#ifdef	MSDOS
-	sec += timezone;
-#endif
-#endif	/* SYSTEM5/sun/UNIX */
+#  endif
+#endif	/* HAVE_TIMEZONE */
 
 	/*
 	 * Check to see if the local-time display for a given clock-time
@@ -92,24 +75,23 @@ long	gmt_offset(
 	return sec;
 }
 
-long
-packdate (
-_ARX(int,	 year)
-_ARX(int,	 mon)
-_ARX(int,	 day)
-_ARX(int,	 hour)
-_ARX(int,	 min)
-_AR1(int,	 s)
-	)
-_DCL(int,	 year)
-_DCL(int,	 mon)
-_DCL(int,	 day)
-_DCL(int,	 hour)
-_DCL(int,	 min)
-_DCL(int,	 s)
+long	packdate (
+	_ARX(int,	 year)
+	_ARX(int,	 mon)
+	_ARX(int,	 day)
+	_ARX(int,	 hour)
+	_ARX(int,	 min)
+	_AR1(int,	 s)
+		)
+	_DCL(int,	 year)
+	_DCL(int,	 mon)
+	_DCL(int,	 day)
+	_DCL(int,	 hour)
+	_DCL(int,	 min)
+	_DCL(int,	 s)
 {
-time_t	sec = s;
-register int	j;
+	auto	time_t	sec = s;
+	register int	j;
 static	int	m[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 /*			  jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec */
 
@@ -148,8 +130,10 @@ _MAIN
 	printf("  wday  =%d\n",  tm.tm_wday);
 	printf("  yday  =%d\n",  tm.tm_yday);
 	printf("  isdst =%d\n",  tm.tm_isdst);
-#ifdef	sun
+#if HAVE_TM_ZONE
 	printf("  zone  =%s\n",  tm.tm_zone);
+#endif
+#if HAVE_TM_GMTOFF
 	printf("  gmtoff=%ld\n", tm.tm_gmtoff);
 #endif
 

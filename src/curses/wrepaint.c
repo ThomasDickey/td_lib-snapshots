@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: wrepaint.c,v 12.3 1994/04/27 23:03:44 tom Exp $";
+static	char	Id[] = "$Id: wrepaint.c,v 12.4 1994/05/23 23:12:57 tom Exp $";
 #endif
 
 /*
@@ -8,9 +8,9 @@ static	char	Id[] = "$Id: wrepaint.c,v 12.3 1994/04/27 23:03:44 tom Exp $";
  * Created:	24 Aug 1989
  * Modified:
  *		26 Apr 1994, port to Linux
- *		01 Nov 1993, ported to HP/UX (SYSTEM5). This works well enough
- *			     to manage the curses output, but not the non-curses
- *			     output -- for that we must still clear the screen.
+ *		01 Nov 1993, ported to HP/UX. This works well enough to manage
+ *			     the curses output, but not the non-curses output
+ *			     -- for that we must still clear the screen.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, converted to ANSI
@@ -33,7 +33,7 @@ void	wrepaint(
 	_DCL(WINDOW *,	win)
 	_DCL(int,	row)
 {
-#ifdef	SYSTEM5
+#if	SYS5_CURSES
 # if defined(linux)
 	touchwin(win);
 	wrefresh(curscr);

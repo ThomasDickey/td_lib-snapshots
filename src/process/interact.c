@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: interact.c,v 12.2 1993/10/29 17:35:25 dickey Exp $";
-#endif
-
 /*
  * Title:	interactive.c
  * Author:	T.E.Dickey
@@ -14,10 +10,10 @@ static	char	Id[] = "$Id: interact.c,v 12.2 1993/10/29 17:35:25 dickey Exp $";
  *		non-batch).
  */
 
+#define OPN_PTYPES
 #include "ptypes.h"
-#ifdef	SYSTEM5
-#include <sys/fcntl.h>
-#endif
+
+MODULE_ID("$Id: interact.c,v 12.4 1994/05/23 22:26:49 tom Exp $")
 
 int
 interactive(_AR0)

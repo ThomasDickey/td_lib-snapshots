@@ -1,9 +1,11 @@
-/* $Id: ptypes.h,v 12.15 1994/05/22 23:40:31 tom Exp $ */
+/* $Id: ptypes.h,v 12.16 1994/05/23 23:18:24 tom Exp $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
 
+#ifdef unix
 #include "config.h"
+#endif
 
 /*
  * The definitions in this file cover simple cases of bsd4.x/system5 porting,
@@ -19,6 +21,7 @@
  *	PWD_PTYPES	<pwd.h>
  *	SIG_PTYPES	<signal.h>
  *	STR_PTYPES	<string.h>
+ *	TIM_PTYPES	<time.h>
  *	WAI_PTYPES	<wait.h>
  *
  * We include <stdio.h> here so that 'sprintf()' lints properly.
@@ -100,8 +103,11 @@ typedef	short	ino_t;
 
 #ifdef	MSDOS
 #undef  SYSTEM5
+#define STDC_HEADERS 1	/* ...at least for TurboC */
+#define HAVE_FCNTL_H 1
 #define	HAVE_STDLIB_H 1
 #undef  HAVE_UNISTD_H
+#define HAVE_TIMEZONE 1
 #include <io.h>		/* for 'chmod()' */
 #endif
 
@@ -458,20 +464,24 @@ extern	long	strtol(
  * Define symbols used in 'access()' function                                 *
  ******************************************************************************/
 #ifdef	ACC_PTYPES
+
 #ifdef	unix
-#ifndef	SYSTEM5
-#include	<sys/file.h>
-#endif	/* SYSTEM5 */
+#  if HAVE_SYS_FILE_H
+#    include	<sys/file.h>
+#  endif
 #endif	/* vms/unix */
+
 #ifdef	MSDOS
-#include <io.h>
+#  include <io.h>
 #endif
+
 #ifndef F_OK
-#define	F_OK	0	/* file-exists */
-#define	X_OK	1	/* executable */
-#define	W_OK	2	/* writeable */
-#define	R_OK	4	/* readable */
+#  define	F_OK	0	/* file-exists */
+#  define	X_OK	1	/* executable */
+#  define	W_OK	2	/* writeable */
+#  define	R_OK	4	/* readable */
 #endif
+
 #endif	/* ACC_PTYPES */
 
 /******************************************************************************
@@ -503,7 +513,7 @@ extern	int	toupper(int);
 #endif	/* CHR_PTYPES */
 
 /******************************************************************************
- * Define macros for directory-scanning                                       * 
+ * Define macros for directory-scanning                                       *
  ******************************************************************************/
 #ifdef	DIR_PTYPES
 
@@ -545,16 +555,12 @@ static	struct	direct	dbfr;
  ******************************************************************************/
 #ifdef	OPN_PTYPES
 
-#ifdef	MSDOS
-#include <fcntl.h>
-#endif
-
-#ifdef	unix
-#ifdef	SYSTEM5
-#include <sys/fcntl.h>
+#if HAVE_FCNTL_H
+#  include <fcntl.h>
 #else
-#include <sys/file.h>
-#endif
+#  if HAVE_SYS_FCNTL_H
+#    include <sys/fcntl.h>
+#  endif
 #endif
 
 #endif	/* OPN_PTYPES */
@@ -628,19 +634,57 @@ extern	V_OR_I		endpwent(_ar0);
  * Define string-procedures                                                   *
  ******************************************************************************/
 #ifdef	STR_PTYPES
-#ifndef LINTLIBRARY
-#include	<string.h>
-#if	!(defined(SYSTEM5) || defined(vms) || defined(apollo) || defined(sun) || defined(__TURBOC__))
-#define	strchr	index
-#define	strrchr	rindex
-#endif	/* SYSTEM5 */
-#if	!(defined(__hpux) || defined(linux) || defined(__svr4__) || defined(__TURBOC__) || defined(__CLCC__))
-extern	char *	strchr (_arx(char *,s) _ar1(int,c));
-extern	char *	strrchr(_arx(char *,s) _ar1(int,c));
-extern	char *	strtok (_arx(char *,s) _ar1(char *,t));
+
+#if STDC_HEADERS || HAVE_STRING_H
+#  include <string.h>
+/* An ANSI string.h and pre-ANSI memory.h might conflict.  */
+#  if !STDC_HEADERS && HAVE_MEMORY_H
+#    include <memory.h>
+#  endif /* not STDC_HEADERS and HAVE_MEMORY_H */
+#  define bcopy(s, d, n) memcpy ((d), (s), (n))
+#  define bcmp(s1, s2, n) memcmp ((s1), (s2), (n))
+#  define bzero(s, n) memset ((s), 0, (n))
+#else /* not STDC_HEADERS and not HAVE_STRING_H */
+#  include <strings.h>
+#  define strchr index
+#  define strrchr rindex
+/* memory.h and strings.h conflict on some systems.  */
+#endif /* not STDC_HEADERS and not HAVE_STRING_H */
+
+#if	!defined(LINTLIBRARY) && !STDC_HEADERS
+extern	char *	strchr (_arx(const char *,s) _ar1(int,c));
+extern	char *	strrchr(_arx(const char *,s) _ar1(int,c));
+extern	char *	strtok (_arx(char *,s) _ar1(const char *,t));
 #endif
-#endif
+
 #endif	/* STR_PTYPES */
+
+/******************************************************************************
+ * Handles proper include for <time.h>                                        *
+ ******************************************************************************/
+#ifdef	TIM_PTYPES
+
+#ifdef TIME_WITH_SYS_TIME
+#  include <sys/time.h>
+#  include <time.h>
+#else
+#  ifdef HAVE_SYS_TIME_H
+#    include <sys/time.h>
+#  else
+#    include <time.h>
+#  endif
+#endif
+
+#define	MINUTE	60
+#define	HOUR	(60*MINUTE)
+#define	DAY	(24*HOUR)
+#define	YEAR	(365*DAY)
+
+#if HAVE_TIMEZONE && !TIMEZONE_DECLARED && !LINTLIBRARY
+extern	long	timezone;
+#endif
+
+#endif
 
 /******************************************************************************
  * defines the argument-type for "wait()"                                     *
@@ -687,10 +731,10 @@ extern	char *	strtok (_arx(char *,s) _ar1(char *,t));
 #include <td_lib.h>
 
 #ifndef	lint
-extern	void	main(_arx(int,argc) _ar1(char **,argv));
+extern	int	main(_arx(int,argc) _ar1(char **,argv));
 #endif	/* lint */
 #define	_MAIN\
-	void	main(_ARX(int,argc) _AR1(char **,argv))\
+	int	main(_ARX(int,argc) _AR1(char **,argv))\
 		     _DCL(int,argc) _DCL(char **,argv)
 
 #endif	/* LINTLIBRARY */

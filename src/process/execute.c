@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: execute.c,v 12.4 1993/12/05 00:50:48 tom Exp $";
+static	char	Id[] = "$Id: execute.c,v 12.5 1994/05/23 00:35:11 tom Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: execute.c,v 12.4 1993/12/05 00:50:48 tom Exp $";
  * Author:	T.E.Dickey
  * Created:	21 May 1988
  * Modified:
+ *		21 May 1994, mods for 'autoconf'
  *		04 Dec 1993, port to TurboC
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
@@ -40,18 +41,17 @@ static	char	Id[] = "$Id: execute.c,v 12.4 1993/12/05 00:50:48 tom Exp $";
 #include	<ctype.h>
 #include	<errno.h>
 
-#if	defined(SYSTEM5) && !defined(vms)
-#define	EXECV(c,v,e)	execvp(c,v)
-#else	/* bsd4.x or vms */
 #ifdef	vms
-#include	<descrip.h>
-#include	<unixlib.h>
-#include	<processes.h>
+#  include	<descrip.h>
+#  include	<unixlib.h>
+#  include	<processes.h>
 #else	/* bsd4.x */
-extern	char	**environ;
-#endif
-#define	fork		vfork
-#define	EXECV(c,v,e)	execve(c,v,e)
+#  if HAVE_EXECVP
+#    define	EXECV(c,v,e)	execvp(c,v)
+#  else		/* assume bsd4.x */
+     extern	char	**environ;
+#    define	EXECV(c,v,e)	execve(c,v,e)
+#  endif
 #endif	/* sys5 vs bsd4.x/vms */
 
 #ifdef	__TURBOC__
@@ -131,14 +131,14 @@ int	execute(
 
 #endif	/* vms */
 #ifdef	unix
-static	char	**myargv;	/* argument vector for 'bldarg()' */
-#ifdef	SYSTEM5
-char	*what;
-#else	/* !SYSTEM5 */
-char	what[BUFSIZ];
-#endif	/* SYSTEM5/!SYSTEM5 */
-int	count	= 3,		/* minimum needed for 'bldarg()' */
-	pid;
+	static	char	**myargv;	/* argument vector for 'bldarg()' */
+#if HAVE_EXECVP
+	auto	char	*what;
+#else
+	auto	char	what[BUFSIZ];
+#endif	/* HAVE_EXECVP */
+	auto	int	count	= 3,	/* minimum needed for 'bldarg()' */
+			pid;
 
 	DCL_WAIT(status);
 
@@ -156,9 +156,9 @@ int	count	= 3,		/* minimum needed for 'bldarg()' */
 	myargv = DOALLOC(myargv, char *, (unsigned)count);
 	bldarg(count, myargv, cmds);
 
-#ifdef	SYSTEM5
+#if HAVE_EXECVP
 	what = *myargv;
-#else	/* !SYSTEM5 */
+#else
 	/*
 	 * 'execve()' needs an absolute pathname in the first argument.
 	 * Use 'which()' to get it.  Note that this won't work for ".",
@@ -168,7 +168,7 @@ int	count	= 3,		/* minimum needed for 'bldarg()' */
 		errno = ENOENT;
 		return (-1);
 	}
-#endif	/* SYSTEM5 */
+#endif	/* HAVE_EXECVP */
 
 #ifdef	TEST
 	dump_exec(what,myargv);

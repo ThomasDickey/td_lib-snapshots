@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: newzone.c,v 12.2 1993/10/29 17:35:25 dickey Exp $";
+static	char	Id[] = "$Id: newzone.c,v 12.3 1994/05/23 22:45:26 tom Exp $";
 #endif
 
 /*
@@ -36,12 +36,9 @@ static	char	Id[] = "$Id: newzone.c,v 12.2 1993/10/29 17:35:25 dickey Exp $";
  */
 
 #define	STR_PTYPES
+#define	TIM_PTYPES
 #include	"ptypes.h"
-#include	<time.h>
 
-#define	MINUTE	60
-#define	HOUR	(60 * MINUTE)
-#define	DAY	(24 * HOUR)
 #define	SIX_MM	(6 * (30 * DAY))
 
 #define	EST_REF	581961600	/* EST: jun 10, 1988 12:00 */

@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: setmtime.c,v 12.3 1993/11/27 14:56:30 dickey Exp $";
+static	char	Id[] = "$Id: setmtime.c,v 12.5 1994/05/23 23:45:16 tom Exp $";
 #endif
 
 /*
@@ -20,6 +20,13 @@ static	char	Id[] = "$Id: setmtime.c,v 12.3 1993/11/27 14:56:30 dickey Exp $";
 #include	"ptypes.h"
 #include	<time.h>
 
+#if HAVE_UTIME_H
+#include	<utime.h>
+#else
+struct	utimbuf { time_t actime, modtime; };
+extern	int	utime(_arx(const char *,s) _ar1(const struct utimbuf *,p));
+#endif
+
 int	setmtime(
 	_ARX(char *,	name)			/* name of file to touch */
 	_AR1(time_t,	mtime)			/* time we want to leave */
@@ -27,20 +34,8 @@ int	setmtime(
 	_DCL(char *,	name)
 	_DCL(time_t,	mtime)
 {
-#ifdef	SYSTEM5
-#if	defined(__hpux)
 	struct utimbuf tp;
-#else
-	struct { time_t actime, modtime; } tp;
-#endif
 	tp.actime  = time((time_t *)0);
 	tp.modtime = mtime;
 	return (utime(name, &tp));
-#else
-	extern	int	utime(_arx(char *,s) _ar1(time_t *,p));
-	time_t	tv[2];
-	tv[0] = time((time_t *)0);
-	tv[1] = mtime;
-	return (utime(name, tv));
-#endif
 }
