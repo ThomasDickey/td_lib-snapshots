@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: pathhead.c,v 5.0 1989/10/04 12:14:05 ste_cm Rel $";
+static	char	Id[] = "$Id: pathhead.c,v 8.0 1989/12/01 12:20:03 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,9 +7,22 @@ static	char	Id[] = "$Id: pathhead.c,v 5.0 1989/10/04 12:14:05 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	25 Aug 1988
  * $Log: pathhead.c,v $
- * Revision 5.0  1989/10/04 12:14:05  ste_cm
- * BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+ * Revision 8.0  1989/12/01 12:20:03  ste_cm
+ * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
  *
+ *		Revision 7.0  89/12/01  12:20:03  ste_cm
+ *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+ *		
+ *		Revision 6.0  89/12/01  12:20:03  ste_cm
+ *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+ *		
+ *		Revision 5.1  89/12/01  12:20:03  dickey
+ *		corrected handling of paths such as "name1/name2" which
+ *		should evaluate to "name1".
+ *		
+ *		Revision 5.0  89/10/04  12:14:05  ste_cm
+ *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+ *		
  *		Revision 4.1  89/10/04  12:14:05  dickey
  *		lint (apollo SR10.1)
  *		
@@ -51,6 +64,7 @@ pathhead (path, sb_)
 char	*path;
 struct	stat	*sb_;
 {
+	auto	int	trimmed	= 0;
 	struct	stat	sb;
 	register char  *s;
 	static	char	buffer[BUFSIZ];
@@ -64,16 +78,18 @@ struct	stat	*sb_;
 			if (!strcmp(path, "//"))	break;
 #endif	apollo
 			*s = EOS;	/* trim it */
+			trimmed++;
 		} else {
-			if (notDIR(path))
+			if (notDIR(path)) {
 				*s = EOS;
-			else
+				trimmed++;
+			} else
 				break;
 		}
 	}
 	if (notDIR(path)
 	||  (*path == EOS)
-	||  (s == 0)) {
+	||  (s == 0 && !trimmed)) {
 		(void)stat(strcpy(path, "."), sb_);
 	}
 	return (path);
