@@ -1,3 +1,24 @@
+1989-04-27  dickey@software.org
+
+	* support/td_lib.mms: added TOOL_LIB (CM_TOOLS) variable
+
+1989-04-27  ste_cm@software.org
+
+	* support/td_lib.mms: BASELINE Mon Jun 12 09:07:53 EDT 1989
+
+1989-04-27  dickey@software.org
+
+	* src/process/failed.c: RCS_BASE
+
+1989-04-27  ste_cm@software.org
+
+	* src/process/failed.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+1989-04-27  dickey@software.org
+
+	* src/descrip.mms, src/Makefile:
+	added 'failed.c' to simplify use of this library
+
 1989-04-26  dickey@software.org
 
 	* src/descrip.mms: forgot some modules in the list

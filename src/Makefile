@@ -1,10 +1,13 @@
-# $Header: /users/source/archives/td_lib.vcs/src/RCS/Makefile,v 2.2 1989/04/20 16:05:10 dickey Exp $
+# $Header: /users/source/archives/td_lib.vcs/src/RCS/Makefile,v 2.3 1989/04/27 07:19:41 dickey Exp $
 # MAKE-file for miscellaneous library routines
 #
 # $Log: Makefile,v $
-# Revision 2.2  1989/04/20 16:05:10  dickey
-# added MMS script to controlled-sources.
+# Revision 2.3  1989/04/27 07:19:41  dickey
+# added 'failed.c' to simplify use of this library
 #
+#	Revision 2.2  89/04/20  16:09:45  dickey
+#	added MMS script to controlled-sources.
+#	
 #	Revision 2.1  89/04/20  12:34:27  dickey
 #	absorbed a bunch of library routines from MDIFF and PORTUNIX
 #	
@@ -42,6 +45,7 @@ CSRC	=\
 	dumpwin.c\
 	erasechar.c\
 	execute.c\
+	failed.c\
 	file2argv.c\
 	filecopy.c\
 	for_user.c\
@@ -125,6 +129,7 @@ OBJS	=\
 	dumpwin.o\
 	erasechar.o\
 	execute.o\
+	failed.o\
 	file2argv.o\
 	filecopy.o\
 	for_user.o\
@@ -217,6 +222,7 @@ doalloc.o:	$I/ptypes.h
 dumpwin.o:	$I/ptypes.h
 erasechar.o:	$I/ptypes.h
 execute.o:	$I/ptypes.h
+failed.o:	$I/ptypes.h
 file2argv.o:	$I/ptypes.h
 filecopy.o:	$I/ptypes.h
 for_user.o:	$I/ptypes.h
