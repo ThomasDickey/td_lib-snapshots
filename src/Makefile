@@ -1,34 +1,15 @@
-# $Header: /users/source/archives/td_lib.vcs/src/RCS/Makefile,v 3.1 1989/08/08 14:00:54 dickey Exp $
+# $Id: Makefile,v 3.2 1989/08/22 09:33:56 dickey Exp $
 # MAKE-file for miscellaneous library routines
 #
 # $Log: Makefile,v $
-# Revision 3.1  1989/08/08 14:00:54  dickey
-# added module 'dftenv'
+# Revision 3.2  1989/08/22 09:33:56  dickey
+# corrected 'destroy' rule
 #
+#	Revision 3.1  89/08/08  14:00:54  dickey
+#	added module 'dftenv'
+#	
 #	Revision 3.0  89/06/05  13:23:58  ste_cm
 #	BASELINE Mon Jun 19 13:27:01 EDT 1989
-#	
-#	Revision 2.6  89/06/05  13:23:58  dickey
-#	added module 'add2fname'
-#	
-#	Revision 2.5  89/05/18  11:12:40  dickey
-#	added argv2file
-#	
-#	Revision 2.4  89/05/11  15:32:12  dickey
-#	added file2mem & mem2file modules.  added ptypes.h-dependency for
-#	catchall.c; revised destroy-rule.
-#	
-#	Revision 2.3  89/04/27  11:22:49  dickey
-#	added 'failed.c' to simplify use of this library
-#	
-#	Revision 2.2  89/04/20  16:09:45  dickey
-#	added MMS script to controlled-sources.
-#	
-#	Revision 2.1  89/04/20  12:34:27  dickey
-#	absorbed a bunch of library routines from MDIFF and PORTUNIX
-#	
-#	Revision 2.0  89/03/29  11:41:11  ste_cm
-#	BASELINE Thu Apr  6 09:45:13 EDT 1989
 #	
 ####### (Development) ##########################################################
 GET	= checkout
@@ -222,12 +203,12 @@ OBJS	=\
 ALL	= $A
 #
 ####### (Standard Productions) #################################################
-all:		$(ALL)
+all:		sources $(ALL)
 #
 clean:				; rm -f *.o *.out *.ln
 clobber:	clean		; rm -f $(ALL)
 destroy:
-	sh -c 'for i in *;do case $$i in RCS);; *) rm -f $$i;;esac;done'
+	sh -c 'for i in *;do case $$i in RCS);; *) rm -f $$i;;esac;done;exit 0'
 sources:	$(SOURCES)
 #
 install: all

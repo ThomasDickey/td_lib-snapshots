@@ -1,9 +1,11 @@
-MANIFEST for td_lib, version t19890817
+MANIFEST for td_lib, version t19890822
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 Makefile                        top-level makefile for TD_LIB
 README                          read-me file for this directory
 descrip.mms                     top-level MMS script for this library on VMS
+certify                         subdirectory
+certify/reusable.txt            summary of reusable components
 include                         subdirectory
 include/Makefile                make-file for CM_TOOLS common interface directory
 include/cmdch.h                 
