@@ -1,4 +1,4 @@
-/* $Id: td_curse.h,v 12.52 2002/07/05 12:45:48 tom Exp $ */
+/* $Id: td_curse.h,v 12.54 2003/07/02 21:22:56 tom Exp $ */
 
 /*
  * TD_LIB CURSES-related definitions
@@ -90,9 +90,14 @@
  * The SYS5 clone "ncurses" 1.8.5 has an off-by-one error in the computation of
  * the _maxy/_maxx values.  These macros are used to hide this bug.
  */
-#if  defined(getmaxx) && defined(getmaxy)
+#if  defined(HAVE_GETMAXX) && defined(HAVE_GETMAXY)
 #define wMaxX(w) getmaxx(w)
 #define wMaxY(w) getmaxy(w)
+#endif
+
+#if  defined(HAVE_GETBEGX) && defined(HAVE_GETBEGY)
+#define wBegX(w) getbegx(w)
+#define wBegY(w) getbegy(w)
 #endif
 
 #ifndef wMaxX
@@ -105,12 +110,14 @@
 #endif
 #endif	/* wMaxX */
 
+#ifndef wBegX
 #if defined(CURSES_LIKE_BSD44)
 #define	wBegX(w)	((w)->begx)
 #define	wBegY(w)	((w)->begy)
 #else
 #define	wBegX(w)	((w)->_begx)
 #define	wBegY(w)	((w)->_begy)
+#endif
 #endif
 
 /*----------------------------------------------------------------------------*/
