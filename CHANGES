@@ -1,3 +1,25 @@
+1989-05-01  dickey@software.org
+
+	* test/port2vms/README: added disclaimer
+
+1989-05-01  ste_cm@software.org
+
+	* test/port2vms/README: BASELINE Mon Jun 12 09:13:51 EDT 1989
+
+	* test/port2vms/README:
+	BASELINE Mon Oct 21 13:09:39 1991 -- adapt to CM_TOOLS #10
+
+	* test/port2vms/README:
+	BASELINE Mon Sep 18 08:33:44 EDT 1989 -- support:ada_pits_000(rel3)
+
+	* test/port2vms/README:
+	BASELINE Thu Jul 16 16:14:02 1992 -- CM_TOOLS #11
+
+	* test/port2vms/README: BASELINE Tue Aug 14 16:27:44 1990
+
+	* test/port2vms/README:
+	BASELINE Tue Jun 11 16:44:53 1991 -- apollo sr10.3
+
 1989-04-27  dickey@software.org
 
 	* support/td_lib.mms: added TOOL_LIB (CM_TOOLS) variable
