@@ -1,3 +1,16 @@
+1997-09-13  dickey@clark.net
+
+	* configure.in: test for touchwin
+
+	* src/curses/wrepaint.c:
+	make this work on FreeBSD 2.1.5 with "BSD 4.4" curses.
+
+	* aclocal.m4: FreeBSD has a timezone function
+
+	* makefile.in, configure.in: don't maintain stamp-h
+
+	* aclocal.m4: split-out CF_SRC_MAKEFILE macro
+
 1997-09-12  dickey@clark.net
 
 	* aclocal.m4: add CF_TOP_SRCDIR

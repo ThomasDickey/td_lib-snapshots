@@ -1,4 +1,4 @@
-# $Id: makefile.in,v 12.10 1997/09/12 00:14:23 tom Exp $
+# $Id: makefile.in,v 12.11 1997/09/13 12:11:28 tom Exp $
 # Top-level makefile for TD_LIB common library
 
 SHELL		= /bin/sh
@@ -31,7 +31,7 @@ MAKE_OPTS	= @cf_cv_makeflags@
 
 RM		= -rm -f
 CLEAN		= *.bak *.log *.out *.tst .nfs* core
-PURE		= stamp-* config_h *.cache *.status $(I_CFG) $(MDEFN)
+PURE		= config_h *.cache *.status $(I_CFG) $(MDEFN)
 
 ####### (Standard Lists) #######################################################
 CONFIG_H=\

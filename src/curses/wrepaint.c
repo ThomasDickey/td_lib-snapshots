@@ -24,7 +24,7 @@
 
 #include	"td_curse.h"
 
-MODULE_ID("$Id: wrepaint.c,v 12.11 1996/10/20 18:05:31 tom Exp $")
+MODULE_ID("$Id: wrepaint.c,v 12.12 1997/09/13 14:25:15 tom Exp $")
 
 void	wrepaint(
 	_ARX(WINDOW *,	win)
@@ -42,6 +42,11 @@ void	wrepaint(
 	touchwin(win);
 	wrefresh(curscr);
 #else
+	/*
+	 * Otherwise, try to work around.  This works with BSD 4.2 and BSD 4.3;
+	 * but not however, with BSD 4.4, which has a partially functional
+	 * touchwin.
+	 */
 	auto	int	min_row = win->_begy,
 			min_col = win->_begx,
 			max_col = wMaxX(win) + min_col - 1;
@@ -60,6 +65,9 @@ void	wrepaint(
 		row++;
 	}
 	clearok(win, FALSE);
+#if HAVE_TOUCHWIN
+	touchwin(win); /* this does no harm, and makes BSD 4.4 work */
+#endif
 	(void)wrefresh(win);
 #endif
 }
