@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: pathcat.c,v 10.0 1991/10/03 08:33:10 ste_cm Rel $";
+static	char	Id[] = "$Id: pathcat.c,v 12.0 1992/01/28 14:01:10 ste_cm Rel $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: pathcat.c,v 10.0 1991/10/03 08:33:10 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	12 Sep 1988
  * Modified:
+ *		28 Jan 1992, 'dname' may be empty.
  *		03 Oct 1991, conversion to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
  *		24 Apr 1990, if fname-argument begins with "~", assume caller
@@ -37,7 +38,7 @@ _DCL(char *,	fname)
 	auto	char	tmp[BUFSIZ],
 			*s;
 
-	if (*fname == '/' || *fname == '~')
+	if (*fname == '/' || *fname == '~' || !dname || !*dname)
 		return (strcpy(dst, fname));
 	else if (*fname == EOS) {
 		if (dst != dname)
