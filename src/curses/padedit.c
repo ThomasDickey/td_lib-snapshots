@@ -1,12 +1,21 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)padedit.c	1.4 88/08/11 08:33:58";
+static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/curses/RCS/padedit.c,v 3.0 1988/08/15 09:49:33 ste_cm Rel $";
 #endif	lint
 
 /*
  * Title:	padedit.c (pad-edit)
  * Author:	T.E.Dickey
  * Created:	14 Dec 1987
- * Modified:
+ * $Log: padedit.c,v $
+ * Revision 3.0  1988/08/15 09:49:33  ste_cm
+ * BASELINE Mon Jun 19 13:27:01 EDT 1989
+ *
+ *		Revision 2.0  88/08/15  09:49:33  ste_cm
+ *		BASELINE Thu Apr  6 09:45:13 EDT 1989
+ *		
+ *		Revision 1.6  88/08/15  09:49:33  dickey
+ *		sccs2rcs keywords
+ *		
  *		27 Jul 1988, if we don't have Apollo pad, assume we may open
  *			     xterm-window.
  *
@@ -108,7 +117,7 @@ char	*argv[];
 padedit(name, readonly, editor)
 char	*name, *editor;
 {
-	extern	char	*getwd();
+	extern	char	*getcwd();
 	int	lc[2];
 	int	code = scr_size(lc);
 
@@ -129,7 +138,7 @@ char	*name, *editor;
 		char	wd[BUFSIZ],
 			xt[BUFSIZ];
 
-		if (getwd(wd) == 0)
+		if (getcwd(wd,sizeof(wd)-2) == 0)
 			return (-1);
 		if (which(xt, sizeof(xt), "xterm", wd) <= 0)
 			return (-1);
