@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: padedit.c,v 12.1 1993/09/21 18:54:04 dickey Exp $";
+static	char	Id[] = "$Id: padedit.c,v 12.2 1993/09/27 17:19:27 dickey Exp $";
 #endif
 
 /*
@@ -217,7 +217,7 @@ int	padedit(
 		argv[argc++] = "-title";
 		argv[argc++] = the_title;
 		argv[argc++] = "-e";
-		argc += makeargv(&argv[argc], SIZEOF(argv)-argc-2, tmp, editor);
+		argc += makeargv(&argv[argc], (int)(SIZEOF(argv)-argc-2), tmp, editor);
 		argv[argc++] = name;
 		argv[argc]   = 0;
 

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: packdate.c,v 12.0 1992/11/18 12:32:13 ste_cm Rel $";
+static	char	Id[] = "$Id: packdate.c,v 12.1 1993/09/27 17:08:09 dickey Exp $";
 #endif
 
 /*
@@ -63,9 +63,9 @@ long	gmt_offset(
 	sec -= tm.tm_gmtoff;
 #else	/* UNIX */
 	{
-	struct	timeval	t;
+	struct	timeval	t2;
 	struct	timezone tz;
-		(void)gettimeofday(&t, &tz);
+		(void)gettimeofday(&t2, &tz);
 		sec += (tz.tz_minuteswest * MINUTE);
 	}
 #endif	/* sun/UNIX */
