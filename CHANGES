@@ -1,3 +1,14 @@
+1989-09-18  dickey@software.org
+
+	* include/port2vms.h:
+	added patch-definition for 'getwd()' so I don't have to baseline CM_TOOLS
+	yet, tho I am baselining PORTUNIX
+
+1989-09-18  ste_cm@software.org
+
+	* include/port2vms.h:
+	BASELINE Mon Sep 18 08:21:35 EDT 1989 -- support:ada_pits_000(rel3)
+
 1989-09-15  dickey@software.org
 
 	* src/port2vms/rmsio.c:
