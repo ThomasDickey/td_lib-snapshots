@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	20 Oct 1986
  * Modified:
+ *		21 Jul 2000, mods to support $SCCS_VAULT
  *		09 Jan 2000, implement 2037 window for Y2K years.
  *		04 Jan 2000, decode Solaris' 2-digit pre-Y2K years.
  *		31 Dec 1999, move 1900's to packdate().
@@ -40,7 +41,7 @@
 #include	<sccsdefs.h>
 #include	<ctype.h>
 
-MODULE_ID("$Id: sccslast.c,v 12.14 2000/01/09 20:02:27 tom Exp $")
+MODULE_ID("$Id: sccslast.c,v 12.15 2000/07/21 23:03:41 tom Exp $")
 
 /*
  * Post-Y2K years require special decoding
@@ -193,12 +194,13 @@ void	sccslast (
 		*(the_leaf = s) = EOS;
 		if ((s = fleaf(path)) == NULL)
 			s = path;
-		is_sccs = sameleaf(s,dname);
+		is_sccs = sameleaf(s,dname) || sameleaf(dname, s);
 		*the_leaf++ = PATH_SLASH;
 	} else if ((s = fleaf(working)) != NULL) {
 		is_sccs = sameleaf(s,dname);
-	} else
+	} else {
 		return;			/* illegal input: give up */
+	}
 
 	/*
 	 * If the file is an sccs-file, we wish to show the file-modification
@@ -219,20 +221,14 @@ void	sccslast (
 			/* look for checked-out file */
 
 			if (the_leaf != path) {
-				fname[the_leaf - path - 1] = EOS;
-				if ((s = fleaf(fname)) != NULL)
-					*s = EOS;
-				else
-					fname[0] = EOS;
-				(void)strcat(fname, the_leaf+LEN_PREFIX);
+				pathcat(fname, working, the_leaf + LEN_PREFIX);
 			} else {
-				(void)strcat(
-					strcpy(fname, "../"),
-					the_leaf+LEN_PREFIX);
+				pathcat(fname, "../", the_leaf + LEN_PREFIX);
 			}
 			*date_ = 0;	/* use actual modification-date! */
-			if (stat(fname, &sbfr) >= 0)
+			if (stat(fname, &sbfr) >= 0) {
 				*date_ = sbfr.st_mtime;
+			}
 			return;
 		}
 	}

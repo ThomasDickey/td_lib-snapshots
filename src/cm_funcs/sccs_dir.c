@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	02 Sep 1988
  * Modified:
+ *		21 Jul 2000, mods to support checkup -o & $SCCS_VAULT
  *		30 Jun 2000, fix infinite loop if PATHLIST_SEP is found.
  *		13 Jul 1994, added SCCS_VAULT interpretation.
  *		29 Oct 1993, ifdef-ident
@@ -36,7 +37,7 @@
 #include "ptypes.h"
 #include "sccsdefs.h"
 
-MODULE_ID("$Id: sccs_dir.c,v 12.6 2000/06/30 10:21:10 tom Exp $")
+MODULE_ID("$Id: sccs_dir.c,v 12.7 2000/07/21 23:04:40 tom Exp $")
 
 #define	WORKING	struct	Working
 	WORKING	{
@@ -196,7 +197,9 @@ char *	sccs_dir(
 	_DCL(char *,	working_directory)
 	_DCL(char *,	filename)
 {
-	auto	char	*name;
+	char	*name;
+	int	vault	= FALSE;
+	int	n;
 
 	if (!initialized)
 		Initialize();
@@ -226,13 +229,21 @@ char *	sccs_dir(
 		 * prior match is found.
 		 */
 		for (p = VaultList; p != 0; p = p->next) {
+			if ((n = samehead(temp, p->archive)) > 0) {
+				if (n > max_n) {
+					max_p = p;
+					max_q = p->working;
+					max_n = n;
+					vault = TRUE;
+				}
+			}
 			for (q = p->working; q != 0; q = q->next) {
-				int	n;
 				if ((n = samehead(temp, q->working)) > 0) {
 					if (n > max_n) {
 						max_p = p;
 						max_q = q;
 						max_n = n;
+						vault = FALSE;
 					}
 				}
 			}
@@ -246,16 +257,26 @@ char *	sccs_dir(
 		if (max_n > 0) {	/* we found a match */
 			char	archive[MAXPATHLEN];
 
-			if (temp[max_n] != EOS)
-				max_n++;
-			pathcat(
-				archive,
+			if (vault) {
+				/*
+				 * FIXME: if we found the path was in a vault
+				 * directory, use it as is (we are assuming
+				 * the working directory corresponds to this
+				 * vault!)
+				 */
+				name = txtalloc(temp);
+			} else {
+				if (temp[max_n] != EOS)
+					max_n++;
 				pathcat(
 					archive,
-					strcpy(archive, max_p->archive),
-					temp + max_n),
-				name);
-			name = txtalloc(archive);
+					pathcat(
+						archive,
+						strcpy(archive, max_p->archive),
+						temp + max_n),
+					name);
+				name = txtalloc(archive);
+			}
 		}
 	}
 
