@@ -1,3 +1,9 @@
+1989-07-26  dickey@software.org
+
+	* src/pathname/trnstree.c:
+	use dummy-macro for 'dir2path()' : DIR2PATH so that this code will work on
+	unix.
+
 1989-07-25  dickey@software.org
 
 	* src/cm_funcs/rcspath.c:
