@@ -1,3 +1,46 @@
+1991-12-13  dickey@software.org
+
+	* support/td_progs.mms:
+	changed standard-rules to double-colon form so I can append to them
+
+1991-12-13  ste_cm@software.org
+
+	* support/td_progs.mms: BASELINE Fri Dec 13 13:18:38 1991
+
+	* support/td_progs.mms:
+	BASELINE Thu Jul 16 16:14:02 1992 -- CM_TOOLS #11
+
+1991-12-13  dickey@software.org
+
+	* src/pathname/edittree.c:
+	added sb- and links-args to make like my changes for 'transtree()'
+	(need this to make 'copyrite' program work properly on vms).
+
+1991-12-13  ste_cm@software.org
+
+	* src/pathname/edittree.c: BASELINE Fri Dec 13 09:02:51 1991
+
+1991-12-13  dickey@software.org
+
+	* src/pathname/editfile.c: pass 'sb' arg down to 'func()'
+
+1991-12-13  ste_cm@software.org
+
+	* src/pathname/editfile.c: BASELINE Fri Dec 13 09:03:13 1991
+
+	* src/pathname/editfile.c:
+	BASELINE Thu Jul 16 16:14:02 1992 -- CM_TOOLS #11
+
+1991-12-13  dickey@software.org
+
+	* include/port2vms.h: moved defs of EDITDIR_ARG here from 'edittree()'
+	added sb-arg to 'editfile()'
+	added links-arg to 'edittree()'
+
+1991-12-13  ste_cm@software.org
+
+	* include/port2vms.h: BASELINE Fri Dec 13 09:02:02 1991
+
 1991-12-12  dickey@software.org
 
 	* src/port2vms/vms_pthc.c: corrected entrypoint-name
