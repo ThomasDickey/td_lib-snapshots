@@ -1,5 +1,5 @@
 /*
- * $Header: /users/source/archives/td_lib.vcs/include/RCS/port2vms.h,v 2.0 1989/04/26 08:14:23 ste_cm Rel $
+ * $Header: /users/source/archives/td_lib.vcs/include/RCS/port2vms.h,v 2.1 1989/07/31 09:24:16 dickey Exp $
  *
  * VMS-definitions for supporting unix/vms port
  */
@@ -181,4 +181,10 @@ time_t	zone2vms(
 #define	PATH2DIR(path)		path
 #endif	vms/unix
 
+/* corrections to DEC's runtime library */
+#ifdef	vms
+#define	wgetch	vms_wgetch
+#define	wgetstr	vms_wgetstr
+#endif	vms
+ 
 #endif	_PORTUNIX_
