@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 12.36 1995/02/11 19:21:04 tom Exp $ */
+/* $Id: ptypes.h,v 12.37 1995/02/12 01:00:47 tom Exp $ */
 
 #ifndef	PTYPES_H
 #define	PTYPES_H
@@ -17,6 +17,7 @@
  *	ACC_PTYPES	<sys/file.h>
  *	CHR_PTYPES	<ctype.h>
  *	DIR_PTYPES	<dirent.h>
+ *	GRP_PTYPES	<grp.h>
  *	OPN_PTYPES	<fcntl.h>
  *	PWD_PTYPES	<pwd.h>
  *	SIG_PTYPES	<signal.h>
@@ -433,6 +434,17 @@ extern int sys_nerr;
 #endif
 
 /******************************************************************************
+ * defines externals used in group-file routines                              *
+ ******************************************************************************/
+#ifdef	GRP_PTYPES
+
+#if HAVE_GRP_H
+#include <grp.h>
+#endif	/* HAVE_GRP_H */
+
+#endif	/* GRP_PTYPES */
+
+/******************************************************************************
  * defines externals used in low-level I/O routines                           *
  ******************************************************************************/
 #ifdef	OPN_PTYPES
@@ -550,7 +562,11 @@ extern int sys_nerr;
 extern	long	timezone;
 #endif
 
+#if HAVE_UTIME_H
+#include <utime.h>
 #endif
+
+#endif	/* TIM_PTYPES */
 
 /******************************************************************************
  * Handles proper include for <termios.h>                                     *
