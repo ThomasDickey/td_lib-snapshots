@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: trnstree.c,v 5.2 1991/12/10 09:18:05 dickey Exp $";
+static	char	Id[] = "$Id: trnstree.c,v 7.0 1991/12/11 07:50:30 ste_cm Rel $";
 #endif
 
 /*
@@ -143,6 +143,10 @@ _DCL(int,	links)
 				qsort((PTR)vec, (LEN_QSORT)num,
 					sizeof(PTR), compare);
 				while (num-- != 0) {
+					if (LOOK(vec[num], &sb) < 0) {
+						perror(vec[num]);
+						continue;
+					}
 					TELL_FILE(vec[num]);
 					(*func)(vec[num], &sb);
 				}
