@@ -1,0 +1,46 @@
+#! /bin/sh
+# $Id: ins_mak,v 12.1 1997/09/11 11:00:10 tom Exp $
+#
+# Install the td_lib make include-file.  We adjust the symbols that refer
+# to the location of the include- and lib-directory.
+
+if test $# = 0 ; then
+	echo '? No INSTALL program given'
+	exit 1
+fi
+PRG="$1"
+shift
+
+if test $# = 0 ; then
+	echo '? No LIBDIR given'
+	exit 1
+fi
+LIBDIR=$1
+shift
+
+if test $# = 0 ; then
+	echo '? No INCLUDEDIR given'
+	exit 1
+fi
+INCDIR=$1
+shift
+
+if test $# = 0 ; then
+	echo '? No SOURCE given'
+	exit 1
+fi
+
+SED=${TMPDIR-/tmp}/sed$$
+cat >$SED <<EOF
+s@^TD_LIB[ 	]*=.*@TD_LIB = $LIBDIR@
+s@^TD_INC[ 	]*=.*@TD_INC = $INCDIR@
+EOF
+
+for SRC in $*
+do
+	src=`basename $SRC`
+	TMP=${TMPDIR-/tmp}/$src
+	sed -f $SED $SRC > $TMP
+	eval $PRG $TMP $LIBDIR
+	rm -f $TMP
+done

@@ -1,15 +1,14 @@
-# $Id: makefile.in,v 12.6 1997/09/10 00:15:47 tom Exp $
+# $Id: makefile.in,v 12.7 1997/09/11 10:55:54 tom Exp $
 # Top-level makefile for TD_LIB common library
-
-####### (Development) ##########################################################
 
 SHELL		= /bin/sh
 @SET_MAKE@
 
-RM	= -rm -f
-TOP	= ..
-THIS	= td_lib
-THAT	= libtd
+####### (Development) ##########################################################
+
+TOP		= .
+THIS		= td_lib
+THAT		= libtd
 
 prefix		= @prefix@
 exec_prefix	= @exec_prefix@
@@ -24,13 +23,13 @@ INSTALL_PROGRAM	= @INSTALL_PROGRAM@
 INSTALL_DATA	= @INSTALL_DATA@
 RANLIB		= @RANLIB@
 
-I_CFG	= include/td_config.h
-MDEFN	= support/td_lib.mk
-I_LIST	= `cat $(srcdir)/include/headers`
+I_CFG		= include/td_config.h
+MDEFN		= support/td_lib.mk
+I_LIST		= `cat $(srcdir)/include/headers`
 
-CLEAN	= *.bak *.log *.out *.tst .nfs* core
-PURE	= stamp-* config_h *.cache *.status $(I_CFG) $(MDEFN)
-DESTROY	=$(SHELL) -c 'for i in *;do case $$i in RCS);; *) $(RM) $$i;;esac;done;exit 0'
+RM		= -rm -f
+CLEAN		= *.bak *.log *.out *.tst .nfs* core
+PURE		= stamp-* config_h *.cache *.status $(I_CFG) $(MDEFN)
 
 ####### (Standard Lists) #######################################################
 CONFIG_H=\
@@ -90,11 +89,13 @@ distclean:	clobber
 
 install::	all $(my_incdir) $(libdir)
 	$(srcdir)/support/ins_hdr "$(INSTALL_DATA)" $(my_incdir) $(I_LIST)
+	$(srcdir)/support/ins_mak "$(INSTALL_DATA)" $(libdir) $(my_incdir) support/$(THIS).mk
 	$(INSTALL_DATA) lib/$(THAT).a $(libdir)
 	$(RANLIB) $(libdir)/$(THAT).a
 
 deinstall::
 	$(srcdir)/support/rem_hdr $(my_incdir) $(I_LIST)
+	$(RM) $(libdir)/$(THIS).mk
 	$(RM) $(libdir)/$(THAT).a
 
 ####### (Details of Productions) ###############################################
