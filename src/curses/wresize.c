@@ -1,11 +1,10 @@
-#ifndef	NO_IDENT
-static	char	*Id = "$Id: wresize.c,v 12.8 1995/07/30 17:55:50 tom Exp $";
-#endif
-
 /*
  * Title:	wresize.c (WINDOW-resize)
  * Author:	T.E.Dickey
  * Created:	22 Jul 1994 (from 'resizwin.c')
+ * Modified:
+ *		03 Sep 1995, integration with bsd4.4 curses
+ *		02 Jul 1995, integration with ncurses 1.9.3
  *
  * Function:	This reallocates a curses WINDOW struct to either shrink or
  *		grow to the specified new lines/columns.  If it grows, the new
@@ -14,6 +13,8 @@ static	char	*Id = "$Id: wresize.c,v 12.8 1995/07/30 17:55:50 tom Exp $";
  */
 #include "ptypes.h"
 #include "td_curse.h"
+
+MODULE_ID("$Id: wresize.c,v 12.10 1995/09/04 20:00:04 tom Exp $")
 
 #if CURSES_LIKE_BSD
 #ifdef	lint
@@ -39,10 +40,6 @@ static	char	*Id = "$Id: wresize.c,v 12.8 1995/07/30 17:55:50 tom Exp $";
 #define	c_ALLOC(p,n)	DOALLOC(p,chtype,n)
 #define	s_ALLOC(p,n)	DOALLOC(p,short,n)
 #endif
-#endif
-
-#ifndef max
-#define max(a,b) ((a)<(b)?(b):(a))
 #endif
 
 #if !HAVE_WRESIZE
@@ -108,6 +105,43 @@ int	wresize(
 	w->_maxy = adjy + ToLines; if (w->_cury >= ToLines) w->_cury = 0;
 	return OK;
 #endif	/* CURSES_LIKE_BSD */
+
+#if CURSES_LIKE_BSD44
+	/*
+	 * This is based on "newwin.c 8.3 7/27/94" in the SlackWare 2.2 release.
+	 *
+	 * The simplest way to proceed is to allocate a new window, copy the
+	 * old data to it, and then reset the first/last changes so that only
+	 * the new area will be touched.  This relies on knowing that
+	 *
+	 *	the window's size won't be clipped by the values of LINES and
+	 *	COLS.
+	 *
+	 *	we know how to tinker with firstch/lastch
+	 *
+	 *	we know how to deallocate the temporary 'win' struct.
+	 *
+	 * We touch the whole window because some xterms (sigh) don't properly
+	 * repaint their bitmap when it's resized.
+	 */
+	WINDOW *w2 = newwin(ToLines, ToCols, 0, 0);
+
+	overlay(w, w2);
+	touchwin(w2);	/* ...this isn't done automatically */
+
+	free(w->lines);
+	free(w->lspace);
+	free(w->wspace);
+
+	*w = *w2;
+	w->nextp = w;	/* self-pointer */
+
+	free((char *)w2);
+
+	w->maxx = ToCols;  if (w->curx >= ToCols)  w->curx = 0;
+	w->maxy = ToLines; if (w->cury >= ToLines) w->cury = 0;
+	return OK;
+#endif	/* CURSES_LIKE_BSD44 */
 
 #if CURSES_LIKE_SYSV
 	/*

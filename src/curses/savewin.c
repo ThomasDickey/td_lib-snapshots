@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: savewin.c,v 12.5 1995/03/31 01:36:45 tom Exp $";
-#endif
-
 /*
  * Author:	T.E.Dickey
  * Title:	savewin.c (save/unsave curses window)
@@ -19,7 +15,8 @@ static	char	Id[] = "$Id: savewin.c,v 12.5 1995/03/31 01:36:45 tom Exp $";
  *		21 Apr 1988 (first version)
  *
  * Function:	Save/unsave the curses window state on a stack (actually a
- *		linked list).
+ *		linked list).  This is used to force a "nice" repaint on
+ *		bsd4.3 curses systems, where 'touchwin()' doesn't work ok.
  *
  * Notes:	The bsd4.2 curses stores highlighting in the high-order bit of
  *		the screen-image characters.  When we do an 'addstr()' with
@@ -28,6 +25,10 @@ static	char	Id[] = "$Id: savewin.c,v 12.5 1995/03/31 01:36:45 tom Exp $";
 
 #include	"td_curse.h"
 #include	<ctype.h>
+
+MODULE_ID("$Id: savewin.c,v 12.7 1995/09/04 20:07:46 tom Exp $")
+
+#if CURSES_LIKE_BSD
 
 typedef	struct	_save {
 	struct	_save	*link;
@@ -46,7 +47,6 @@ static	SAVE	*saved;
 #define	c_ALLOC(n)	ALLOC(chtype,n)
 #endif
 
-#if	!SYS5_CURSES
 /*
  * Force a character to be different
  */
@@ -62,7 +62,6 @@ int	newC(
 		c = '.';
 	return (c);
 }
-#endif	/* !SYS5_CURSES */
 
 /*
  * Save a window on the stack.
@@ -105,11 +104,6 @@ void	lastwin(
 	if (saved) {
 
 		if (redo) {
-#if SYS5_CURSES
-			touchwin(stdscr);
-			clear();
-			refresh();
-#else	/* !SYS5_CURSES */
 			/* "touch" cursor position */
 			(void)wmove(stdscr, LINES, COLS);
 			(void)wmove(curscr, LINES, COLS);
@@ -133,7 +127,6 @@ void	lastwin(
 				FOR_ROW(curscr,row)
 					s[j] = newC(newC(bfr[j]));
 			}
-#endif	/* SYS5_CURSES/!SYS5_CURSES */
 		}
 
 		for (row = top, t = z; row < LINES; row++) {
@@ -176,3 +169,5 @@ void	unsavewin(
 		saved = last;
 	}
 }
+
+#endif /* CURSES_LIKE_BSD */

@@ -1,4 +1,4 @@
-/* $Id: td_btree.h,v 12.2 1995/07/30 20:55:58 tom Exp $ */
+/* $Id: td_btree.h,v 12.3 1995/09/04 14:06:47 tom Exp $ */
 
 /*
  * TD_LIB binary-tree functions
@@ -15,8 +15,20 @@
 	BI_NODE	{
 	BI_NODE	*links[2];
 	char	 balance;	/* holds 0, -1, +1 */
-	char	 value[1];	/* we'll return pointer to this data */
+	union	{		/* force worst-cast alignment */
+		char	text[1];
+		int	num;
+	}	value;		/* we'll return pointer to this data */
 	};
+
+	/* cf: offsetof */
+#define BI_NODE_SIZE ((size_t) &((BI_NODE *)0)->value.text)
+
+#ifdef lint
+#define	BI_NODE_ALLOC(size) (BI_NODE *)(size)
+#else
+#define	BI_NODE_ALLOC(size) (BI_NODE *)doalloc((char *)0, size + BI_NODE_SIZE)
+#endif
 
 #define BI_TREE struct _bi_tree
 	BI_TREE	{
@@ -27,17 +39,17 @@
 	};
 
 	void *	btree_find(
-		_arx(BI_TREE *,	funcs)
+		_arx(BI_TREE *,	tree)
 		_ar1(void *,	data)
 			)
-		_dcl(BI_TREE *,	funcs)
+		_dcl(BI_TREE *,	tree)
 		_dcl(void *,	data)
 		_ret
 
 	void	btree_dump(
-		_ar1(BI_TREE *,	funcs)
+		_ar1(BI_TREE *,	tree)
 			)
-		_dcl(BI_TREE *,	funcs)
+		_dcl(BI_TREE *,	tree)
 		_nul
 
 #endif /* TD_BTREE_H */
