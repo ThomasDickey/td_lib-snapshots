@@ -1,3 +1,13 @@
+2001-01-29  dickey@clark.net
+
+	* configure.in: add CF_MIXEDCASE_FILENAMES
+
+	* aclocal.m4:
+	get rid of changequote, since it is deliberately broken in autoconf 2.49c
+
+	* aclocal.m4: add CF_MIXEDCASE_FILENAMES
+	updates for OS/2 and ncurses
+
 2001-01-11  dickey@clark.net
 
 	* config.guess: update
