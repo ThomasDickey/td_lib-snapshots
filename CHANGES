@@ -1,3 +1,14 @@
+1988-05-27  dickey@software.org
+
+	* src/cm_funcs/rcsedit.c: New file.
+
+	* include/llib-ltd: added 'show' arg to 'rcsopen()'.
+
+	* src/cm_funcs/rcsname.c: New file.
+
+	* src/Makefile, include/llib-ltd:
+	added several modules: catarg, getuser, rcsedit, rcskeys, rcsname.
+
 1988-05-26  dickey@software.org
 
 	* src/cm_funcs/rcskeys.c, include/rcsdefs.h: New file.

@@ -1,4 +1,4 @@
-/* @(#)llib-ltd	1.19 88/05/25 16:06:05 */
+/* @(#)llib-ltd	1.21 88/05/27 10:06:29 */
 /*LINTLIBRARY*/
 
 #include	<curses.h>
@@ -20,6 +20,9 @@ time_t	adj2est(bug1) { return(0); }
 
 /* bldarg.c ----------------------------------------------------------- */
 	bldarg (argc, argv, string) char *argv[], *string; { }
+
+/* catarg.c ----------------------------------------------------------- */
+	catarg (dst, src) char *dst, *src; { }
 
 /* closeall.c --------------------------------------------------------- */
 	closeall(fd) { }
@@ -64,8 +67,10 @@ int	execute(verb, args) char *verb, *args; { return(0); }
 /* flushall.c --------------------------------------------------------- */
 	flushall(fd) { }
 
-/* gid2s.c ------------------------------------------------------------ */
+/* getuser.c ---------------------------------------------------------- */
+char	*getuser() { return(0); }
 
+/* gid2s.c ------------------------------------------------------------ */
 char	*gid2s(gid) { return(0); }
 
 /* killchar.c --------------------------------------------------------- */
@@ -95,8 +100,23 @@ int	padedit(name, readonly) char *name; { return(0); }
 /* rawterm.c ---------------------------------------------------------- */
 	rawterm() { }
 
+/* rcsedit.c --------------------------------------------------------- */
+int	rcsopen(name, show) char *name; { return (0); }
+char *	rcsread(s) char *s; { return(0); }
+	rcsedit (where, old, new) char *where, *old, *new; { }
+	rcsclose() { }
+char *	rcsparse_num(d, s) char *d, *s; { return (0); }
+char *	rcsparse_id(d, s) char *d, *s; { return (0); }
+char *	rcsparse_str(s) char *s; { return (0); }
+
+/* rcskeys.c --------------------------------------------------------- */
+int	rcskeys(s) char *s; { return(0); }
+
 /* rcslast.c --------------------------------------------------------- */
 	rcslast(wd,n,v_,t_) char *wd,*n; char **v_; time_t *t_; { }
+
+/* rcsname.c ---------------------------------------------------------- */
+char *	rcsname(name) char *name; { return(0); }
 
 /* resizewin.c -------------------------------------------------------- */
 int	resizewin() { return(0); }
