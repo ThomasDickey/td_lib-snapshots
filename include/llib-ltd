@@ -1,4 +1,4 @@
-/* @(#)llib-ltd	1.43 88/09/09 09:31:40 */
+/* @(#)llib-ltd	1.44 88/09/12 15:09:24 */
 /*LINTLIBRARY*/
 
 #define	CUR_PTYPES
@@ -102,6 +102,9 @@ long	packdate (year, mon, day, hour, min, s) { return (0); }
 
 /* padedit.c ---------------------------------------------------------- */
 int	padedit(name, readonly, editor) char *name, *editor; { return(0); }
+
+/* pathcat.c ---------------------------------------------------------- */
+char *	pathcat(dst, p, n) char *dst, *p, *n; { return(0); }
 
 /* pathhead.c --------------------------------------------------------- */
 char *	pathhead(path, s) char *path; struct stat *s; { return(0); }

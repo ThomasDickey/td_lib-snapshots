@@ -1,3 +1,9 @@
+1988-09-12  dickey@software.org
+
+	* src/pathname/pathcat.c: New file.
+
+	* include/llib-ltd, src/Makefile: added 'pathcat.c' module.
+
 1988-09-09  dickey@software.org
 
 	* include/rcsdefs.h:
