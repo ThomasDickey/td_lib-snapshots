@@ -1,4 +1,4 @@
-# $Id: Makefile,v 12.0 1993/04/26 15:11:28 ste_cm Rel $
+# $Id: Makefile,v 12.1 1993/11/05 17:57:58 dickey Exp $
 # make-file for CM_TOOLS common interface directory
 
 THIS	= td
@@ -13,7 +13,6 @@ LLIB	= llib-l$(llib)
 H_SRC	=\
 	$(THIS)_lib.h\
 	acl.h \
-	cmdch.h\
 	deltree.h\
 	dyn_str.h\
 	ptypes.h\

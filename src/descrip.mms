@@ -1,4 +1,4 @@
-# $Id: descrip.mms,v 12.0 1993/04/29 14:01:53 ste_cm Rel $
+# $Id: descrip.mms,v 12.1 1993/11/05 17:57:35 dickey Exp $
 # MMS-file for miscellaneous library routines	
 #
 ####### (Development) ##########################################################
@@ -303,7 +303,7 @@ ARG2FILE.obj :		$(PTYPES_H)
 BEEP.obj :		$(PTYPES_H)
 CATARG.obj :		$(PTYPES_H)
 CATCHALL.obj :		$(PTYPES_H)
-CMDCH.obj :		$(PTYPES_H)	$(I)cmdch.h
+CMDCH.obj :		$(PTYPES_H)	$(I)td_curse.h
 CMPQSORT.obj :		$(PTYPES_H)	$(I)td_qsort.h
 COPYBACK.obj :		$(PTYPES_H)
 CUTOFF.obj :		$(PTYPES_H)
@@ -331,7 +331,7 @@ IS_SPATH.obj :		$(PTYPES_H)
 ISTEXTFL.obj :		$(PTYPES_H)
 KILLCHAR.obj :		$(PTYPES_H)
 LSBYCOLS.obj :		$(PTYPES_H)
-LOGCH.obj :		$(PTYPES_H)	$(I)cmdch.h
+LOGCH.obj :		$(PTYPES_H)	$(I)td_curse.h
 MEM2FILE.obj :		$(PTYPES_H)
 NAME2S.obj :		$(PTYPES_H)
 NEWZONE.obj :		$(PTYPES_H)
@@ -340,7 +340,7 @@ PADEDIT.obj :		$(PTYPES_H)
 PATHCAT.obj :		$(PTYPES_H)
 PATHCMP.obj :		$(PTYPES_H)
 PATHLEAF.obj :		$(PTYPES_H)
-RAWGETS.obj :		$(PTYPES_H)	$(I)cmdch.h
+RAWGETS.obj :		$(PTYPES_H)	$(I)td_curse.h
 RAWTERM.obj :		$(PTYPES_H)
 # rcsargpr.obj :	$(PTYPES_H)	$(I)rcsdefs.h
 # rcsedit.obj :		$(PTYPES_H)	$(I)rcsdefs.h

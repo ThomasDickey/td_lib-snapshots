@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: logch.c,v 12.2 1993/10/29 17:35:25 dickey Exp $";
+static	char	Id[] = "$Id: logch.c,v 12.3 1993/11/05 17:56:01 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: logch.c,v 12.2 1993/10/29 17:35:25 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	06 Aug 1992, from ded/dlog.c
  * Modified:
+ *		05 Nov 1993, absorb "cmdch.h" into "td_curse.h"
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *
@@ -15,7 +16,7 @@ static	char	Id[] = "$Id: logch.c,v 12.2 1993/10/29 17:35:25 dickey Exp $";
 
 #define	STR_PTYPES
 #include	"ptypes.h"
-#include	"cmdch.h"
+#include	"td_curse.h"
 #include	<ctype.h>
 
 #define	CONVERT(base,p,n)	n = (base * n) + (*p++ - '0')

@@ -1,4 +1,4 @@
-# $Id: Makefile,v 12.1 1993/09/21 12:44:17 dickey Exp $
+# $Id: Makefile,v 12.2 1993/11/05 17:57:37 dickey Exp $
 # MAKE-file for miscellaneous library routines
 
 ####### (Environment) ##########################################################
@@ -304,10 +304,6 @@ $Z(cm_qsort.o):	$(QSORT_H)
 
 $Z(m2comp.o)\
 $Z(scomp.o):	$I/td_scomp.h
-
-$Z(cmdch.o)\
-$Z(logch.o)\
-$Z(rawgets.o):	$I/cmdch.h
 
 $Z(diffload.o)\
 $Z(dyn_app.o)\

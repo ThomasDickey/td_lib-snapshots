@@ -1,3 +1,8 @@
+1993-11-05  dickey@software.org
+
+	* include/td_curse.h, include/Makefile, src/Makefile, src/descrip.mms, src/curses/cmdch.c, src/curses/logch.c, src/curses/rawgets.c:
+	absorbed:cmdch.h
+
 1993-11-01  dickey@software.org
 
 	* src/curses/cmdch.c: tweaks for HP/UX and gcc

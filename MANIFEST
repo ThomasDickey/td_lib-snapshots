@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19931101
+MANIFEST for td_lib, version t19931105
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         restrictions on copying/using this software
@@ -14,7 +14,6 @@ certify/reusable.txt            summary of reusable components
 include                         subdirectory
 include/Makefile                make-file for CM_TOOLS common interface directory
 include/acl.h                   defines ACL bits for apollo SR10.1
-include/cmdch.h                 
 include/deltree.h               delta-tree function interface
 include/dyn_str.h               dynamic-strings interface
 include/llib-ltd                template for lint-library
