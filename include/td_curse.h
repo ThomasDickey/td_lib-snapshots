@@ -1,4 +1,4 @@
-/* $Id: td_curse.h,v 12.44 1999/08/10 22:09:42 tom Exp $ */
+/* $Id: td_curse.h,v 12.45 2001/04/15 16:37:10 tom Exp $ */
 
 /*
  * TD_LIB CURSES-related definitions
@@ -37,7 +37,15 @@
 #undef HZ	/* conflict with EMX's param.h */
 #endif
 
+#ifdef HAVE_NCURSES_NCURSES_H
+#include	<ncurses/ncurses.h>
+#else
+#ifdef HAVE_NCURSES_H
+#include	<ncurses.h>
+#else
 #include	<curses.h>
+#endif
+#endif
 
 #if HAVE_TERMCAP_H
 #include <termcap.h>
