@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/port2vms/RCS/name2vms.c,v 1.1 1989/03/02 11:38:03 dickey Exp $";
+static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/port2vms/RCS/name2vms.c,v 4.0 1989/06/01 14:45:24 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,6 +7,9 @@ static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/port2vms/RC
  * Author:	T.E.Dickey
  * Created:	29 Sep 1988
  * Modified:
+ *		01 Jun 1989, if 2nd-char in name is a '.' and 1st is not, only
+ *			     change 2nd to a '$' if we expect that the name
+ *			     might be an SCCS-file, for example.
  *		02 Mar 1989, added more test cases, changed (to work with new
  *			     'vms2name()') so that it recognizes node and device
  *			     names in form compatible with VMS/unix scheme.
@@ -33,7 +36,22 @@ static	int	leaf_dot;   /* counts dots found in a particular leaf */
  * a dollar sign.  Otherwise, keep the first dot in each unix leaf as a dot in
  * the resulting vms name.
  */
-#define	PREFIX(s)   (s[0] == '.' || s[1] == '.') ? -1 : 0
+#define	ONE_CHAR_DOT	"sp"	/* e.g., for SCCS */
+
+static
+prefix(s)
+char	*s;
+{
+	if (s[0] == '.'
+	||    (	   s[0] != EOS
+		&& s[1] == '.'
+		&& s[2] != EOS
+		&& strchr(ONE_CHAR_DOT, s[0])
+	      )
+	    )
+		return (-1);
+	return (0);
+}
 
 static	char
 translate(c)
@@ -170,10 +188,10 @@ char	*dst, *src;
 		else if (!on_top)
 			*d++ = '.';
 		on_top++;
-		leaf_dot = PREFIX(s);
+		leaf_dot = prefix(s);
 		while (c = *s++) {
 			if (c == '/') {
-		    		leaf_dot = PREFIX(s);
+		    		leaf_dot = prefix(s);
 				if (strchr(s, '/'))
 					*d++ = '.';
 				else {
@@ -186,7 +204,7 @@ char	*dst, *src;
 	if (bracket)
 		*d++ = ']';
 	if (c != EOS && *s) {
-		leaf_dot = PREFIX(s);
+		leaf_dot = prefix(s);
 		while (c = *s++)
 			*d++ = translate(c);
 		if (!leaf_dot)
@@ -216,6 +234,11 @@ char	*argv[];
 				"/x/y/",
 				"/x.y",
 				"x.y.z",
+				"x.y",
+				"s.x",
+				"s.x.y",	/* SCCS cases */
+				"s.",
+				"x.",
 				"HOME",
 				"HOME/x",
 				"HOME/x/y",

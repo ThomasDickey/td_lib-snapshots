@@ -1,3 +1,18 @@
+1989-06-01  dickey@software.org
+
+	* src/port2vms/name2vms.c:
+	changed the way I translate a dot in the second character of a name to
+	reflect that the reason I do that is to handle SCCS-files.
+
+1989-06-01  ste_cm@software.org
+
+	* src/port2vms/name2vms.c: BASELINE Mon Jun 12 08:56:43 EDT 1989
+
+	* src/port2vms/name2vms.c:
+	BASELINE Mon Sep 18 08:24:15 EDT 1989 -- support:ada_pits_000(rel3)
+
+	* src/port2vms/name2vms.c: BASELINE Tue Aug 14 16:27:44 1990
+
 1989-05-25  dickey@software.org
 
 	* src/port2vms/vms2name.c:
