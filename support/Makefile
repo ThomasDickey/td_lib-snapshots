@@ -1,4 +1,4 @@
-# $Id: Makefile,v 12.4 1994/08/21 23:29:52 tom Exp $
+# $Id: Makefile,v 12.5 1994/11/06 21:55:39 tom Exp $
 # make-file for TD_LIB support directory
 
 ####### (Development) ##########################################################
@@ -16,6 +16,8 @@ VMS_FILES = \
 	td_progs.mms
 
 SOURCES	= Makefile $(VMS_FILES)
+
+ALL =
 
 ####### (Standard Productions) #################################################
 all\

@@ -1,4 +1,4 @@
-# $Id: Makefile,v 12.4 1994/08/03 12:59:22 tom Exp $
+# $Id: Makefile,v 12.5 1994/11/06 21:58:16 tom Exp $
 # MAKE-file for miscellaneous library routines
 
 ####### (Environment) ##########################################################
@@ -67,8 +67,6 @@ OBJS	=\
 	$Z(sccspath.o) \
 	$Z(vcs_file.o) \
 	$Z(vercmp.o)
-
-ALL	= $Z
 
 ####### (Standard Productions) #################################################
 include ../td_rules.mk

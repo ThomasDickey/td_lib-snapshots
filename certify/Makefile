@@ -1,4 +1,4 @@
-# $Id: Makefile,v 12.1 1994/05/28 12:16:00 tom Exp $
+# $Id: Makefile,v 12.2 1994/11/06 21:55:56 tom Exp $
 
 TOP	= ../..
 include $(TOP)/td_lib/support/td_lib.mk
@@ -9,6 +9,8 @@ SOURCES	=\
 	config.txt\
 	release.txt\
 	reusable.txt
+
+ALL =
 
 ####### (Standard Productions) #################################################
 all:		$(SOURCES) $(ALL)

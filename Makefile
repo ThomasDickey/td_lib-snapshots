@@ -1,4 +1,4 @@
-# $Id: Makefile,v 12.9 1994/07/29 15:46:50 tom Exp $
+# $Id: Makefile,v 12.10 1994/11/06 21:54:00 tom Exp $
 # Top-level makefile for TD_LIB common library
 
 ####### (Development) ##########################################################
@@ -6,8 +6,10 @@ INSTALL_INC = ../install_inc
 INSTALL_LIB = ../install_lib
 INSTALL_MAN = ../install_man
 
+SHELL	= /bin/sh
+COPY	= cp
 RM	= -rm -f
-PUT	= $(RM) $@; cp -p $? $@
+PUT	= $(RM) $@; $(COPY) $? $@
 TOP	= ..
 GET	= checkout
 THIS	= td_lib
