@@ -20,7 +20,7 @@
 #include	"ptypes.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: catarg.c,v 12.3 1993/10/29 17:35:27 tom Exp $")
+MODULE_ID("$Id: catarg.c,v 12.4 2002/07/03 13:04:43 tom Exp $")
 
 void	catarg(
 	_ARX(char *,	dst)
@@ -33,7 +33,7 @@ void	catarg(
 	if (*src) {
 		(void)strcpy(dst, src);
 		while (*dst) {
-			if (isspace(*dst))
+			if (isspace(UCH(*dst)))
 				*dst |= 0200;
 			dst++;
 		}

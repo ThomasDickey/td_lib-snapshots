@@ -19,9 +19,9 @@
 #include	<ptypes.h>
 #include	<ctype.h>
 
-MODULE_ID("$Id: strbcmp.c,v 12.3 1993/10/29 17:35:24 tom Exp $")
+MODULE_ID("$Id: strbcmp.c,v 12.4 2002/07/03 13:07:33 tom Exp $")
 
-#define	SKIP(p)	while (isspace(*p))	p++;
+#define	SKIP(p)	while (isspace(UCH(*p)))	p++;
 
 int	strbcmp(
 	_ARX(register char *,	a)
@@ -33,7 +33,7 @@ int	strbcmp(
 	register int	cmp;
 
 	while (*a && *b) {
-		if (isspace(*a) && isspace(*b)) {
+		if (isspace(UCH(*a)) && isspace(UCH(*b))) {
 			SKIP(a);
 			SKIP(b);
 		} else if ((cmp = (*a++ - *b++)) != EOS)

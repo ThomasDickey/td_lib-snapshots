@@ -24,7 +24,7 @@
 #include	<ctype.h>
 #include	<time.h>
 
-MODULE_ID("$Id: cutoff.c,v 12.4 2000/07/18 15:17:06 tom Exp $")
+MODULE_ID("$Id: cutoff.c,v 12.5 2002/07/03 13:04:43 tom Exp $")
 
 #define	Z(n)	twod(&bfr[n+n])
 
@@ -56,7 +56,7 @@ time_t	cutoff (
 	 * Decode the date from the argument list
 	 */
 	while (*d) {
-		if (isdigit(*s)) {
+		if (isdigit(UCH(*s))) {
 			*d++ = *s++;
 
 			if (first && (d - bfr) == 2) {
@@ -81,7 +81,7 @@ time_t	cutoff (
 				s++;
 			else {
 				if (optind < argc) {
-					if (isdigit(*argv[optind]))
+					if (isdigit(UCH(*argv[optind])))
 						s = argv[optind++];
 					else
 						break;

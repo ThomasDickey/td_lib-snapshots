@@ -38,9 +38,9 @@
 #define	STR_PTYPES
 #include	"port2vms.h"
 
-MODULE_ID("$Id: vms2name.c,v 12.3 1998/05/30 10:55:21 tom Exp $")
+MODULE_ID("$Id: vms2name.c,v 12.4 2002/07/03 13:04:43 tom Exp $")
 
-#define	LOWER(p)	((isalpha(*p) && isupper(*p)) ? LowerMacro(*p) : *p)
+#define	LOWER(p)	((isalpha(UCH(*p)) && isupper(UCH(*p))) ? LowerMacro(*p) : *p)
 
 static	struct	{
 		int	len;	/* number of chars to uppercase */
@@ -174,7 +174,7 @@ char *	vms2name(
 	 * case-conversion (i.e., after ":" and "]").
 	 */
 	for (s = dst; *d; s++, d++) {
-		if (isalpha(*d) && isupper(*d))
+		if (isalpha(UCH(*d)) && isupper(UCH(*d)))
 			*s = tolower(*d);
 		else {
 			*s = *d;
@@ -208,7 +208,7 @@ char *	vms2name(
 		}
 	}
 	while (uc_len-- > 0 && *s) {
-		if (isalpha(*s))
+		if (isalpha(UCH(*s)))
 			*s = UpperMacro(*s);
 		s++;
 	}

@@ -71,7 +71,7 @@
 #include	"td_curse.h"
 #include	"dyn_str.h"
 
-MODULE_ID("$Id: rawgets.c,v 12.23 2001/05/15 01:50:48 tom Exp $")
+MODULE_ID("$Id: rawgets.c,v 12.24 2002/07/03 13:04:43 tom Exp $")
 
 #define	SHIFT	5
 
@@ -167,7 +167,7 @@ void	MoveTo(
 		auto	 int	original = shift;
 
 		for (s = bbase, shift = 0; *s != EOS && s != at; s++) {
-			if (!isprint(*s))
+			if (!isprint(UCH(*s)))
 				x++;
 			if (++x >= xlast) {
 				if (wrap) {
@@ -183,7 +183,7 @@ void	MoveTo(
 		 * don't count in the adjustment
 		 */
 		for (s = bbase; s-bbase < shift; s++)
-			if (!isprint(*s))
+			if (!isprint(UCH(*s)))
 				x--;
 		if (shift != original)
 			ShowAll();
@@ -219,7 +219,7 @@ char *	MoveFrom(
 			if (y == row
 			 && x == col)
 			 	break;
-			if (!isprint(*s))
+			if (!isprint(UCH(*s)))
 				x++;
 			if (++x >= xlast) {
 				if (wrap) {
@@ -378,7 +378,7 @@ char *	DeleteWordBefore(
 
 	while ((at > bbase) && (count-- > 0)) {
 		for (s = at-1, found = 0; s >= bbase; s--) {
-			if (isspace(*s)) {
+			if (isspace(UCH(*s))) {
 				if (found) {
 					s++;	/* point to first nonblank */
 					break;
@@ -547,12 +547,12 @@ int	wrawgets (
 
 		if (command && *command && **command) {
 			log_count = FALSE;
-			if (Imode || !isdigit(**command))
+			if (Imode || !isdigit(UCH(**command)))
 				count = 1;
 			else {
 				register char	*s = *command;
 				count = 0;
-				while (isdigit(*s)) {
+				while (isdigit(UCH(*s))) {
 					log_count = TRUE;
 					count = (count * 10) + (*s++ - '0');
 				}

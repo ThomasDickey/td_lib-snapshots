@@ -35,7 +35,7 @@
 #define CHR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: bldarg.c,v 12.4 2000/12/23 16:43:44 tom Exp $")
+MODULE_ID("$Id: bldarg.c,v 12.5 2002/07/03 13:04:43 tom Exp $")
 
 #define	blank(c)	(isascii(c) && isspace(c))
 
@@ -52,10 +52,10 @@ register int  j  = 0;
 register char *s = string;
 
 	while (*s && (j < argc-1)) {
-		while (blank(*s))	
+		while (blank(UCH(*s)))	
 			*s++ = EOS;
 		argv[j++] = *s ? s : 0;
-		while (*s && !blank(*s)) {
+		while (*s && !blank(UCH(*s))) {
 			*s = toascii(*s);
 			s++;
 		}

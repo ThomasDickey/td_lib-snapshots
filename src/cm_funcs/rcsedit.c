@@ -39,7 +39,7 @@
 #include	"rcsdefs.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: rcsedit.c,v 12.8 2000/06/30 10:39:34 tom Exp $")
+MODULE_ID("$Id: rcsedit.c,v 12.9 2002/07/03 13:04:43 tom Exp $")
 
 /* local definitions */
 #define	VERBOSE	if (verbose) PRINTF
@@ -350,7 +350,7 @@ char *	rcsparse_num(
 	_DCL(char *,	s)
 {
 	if ((s = SkipBlanks(s)) != NULL) {
-		while (*s && (isdigit(*s) || (*s == '.')))
+		while (*s && (isdigit(UCH(*s)) || (*s == '.')))
 			*d++ = *s++;
 	}
 	*d = EOS;

@@ -28,7 +28,7 @@
 #define	STR_PTYPES
 #include	"port2vms.h"
 
-MODULE_ID("$Id: name2vms.c,v 12.3 1994/08/25 23:53:55 tom Exp $")
+MODULE_ID("$Id: name2vms.c,v 12.4 2002/07/03 13:04:43 tom Exp $")
 
 static	int	leaf_dot;   /* counts dots found in a particular leaf */
 static	int	leaf_ver;   /* set if we found a DECshell version */
@@ -94,7 +94,7 @@ int	leading_uc(
 	*dst = EOS;
 	if ((*base) && (dst = getenv(base)) != 0) {
 		c = strlen(base);
-		while (isspace(*dst))	dst++;
+		while (isspace(UCH(*dst)))	dst++;
 		(void)strcpy(base, dst);
 		return (c);
 	}

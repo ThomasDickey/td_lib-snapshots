@@ -17,7 +17,7 @@
 #include	<ptypes.h>
 #include	<td_curse.h>
 
-MODULE_ID("$Id: logch.c,v 12.9 2000/12/24 22:32:32 tom Exp $")
+MODULE_ID("$Id: logch.c,v 12.10 2002/07/03 13:04:43 tom Exp $")
 
 #define	CONVERT(base,p,n)	n = (base * n) + (*p++ - '0')
 
@@ -39,7 +39,7 @@ int	decode_logch(
 
 	if (count_) {
 		c = 0;
-		while (isdigit(*pointer)) {
+		while (isdigit(UCH(*pointer))) {
 			CONVERT(10,pointer,c);
 		}
 		*count_ = c;
@@ -86,10 +86,10 @@ int	decode_logch(
 			break;
 #endif
 		default:
-			if (isdigit(*pointer)) {
+			if (isdigit(UCH(*pointer))) {
 				c = 0;
 				for (j = 0; j < 3; j++) {
-					if (isdigit(*pointer))
+					if (isdigit(UCH(*pointer)))
 						CONVERT(8,pointer,c);
 					else
 						break;	/* error? */

@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 12.21 2001/05/15 01:36:37 tom Exp $ */
+/* $Id: td_lib.h,v 12.22 2002/07/03 12:56:33 tom Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for TD_LIB common
@@ -174,8 +174,8 @@
 			_ret
 
 	/* doalloc.c -------------------------------------------------- */
-	char *	doalloc(
-			_arx(char *,	oldp)
+	void *	doalloc(
+			_arx(void *,	oldp)
 			_ar1(unsigned,	len)
 			)
 			_dcl(char *,	oldp)
@@ -183,9 +183,9 @@
 			_ret
 
 	void	dofree(
-			_ar1(char *,	oldp)
+			_ar1(void *,	oldp)
 			)
-			_dcl(char *,	oldp)
+			_dcl(void *,	oldp)
 			_nul
 
 	void	show_alloc(_ar0)

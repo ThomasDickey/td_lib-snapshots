@@ -26,7 +26,7 @@
 
 #include	"ptypes.h"
 
-MODULE_ID("$Id: doalloc.c,v 12.6 2001/05/15 00:59:54 tom Exp $")
+MODULE_ID("$Id: doalloc.c,v 12.7 2002/07/03 12:58:10 tom Exp $")
 
 static	long	count_alloc,
 		count_freed;
@@ -34,10 +34,10 @@ static	long	count_alloc,
 static
 void	fail_alloc(
 	_ARX(char *,	msg)
-	_AR1(char *,	ptr)
+	_AR1(void *,	ptr)
 		)
 	_DCL(char *,	msg)
-	_DCL(char *,	ptr)
+	_DCL(void *,	ptr)
 {
 	PRINTF("%s: %p\n", msg, ptr);
 #ifdef	SYS_UNIX
@@ -57,7 +57,7 @@ void	fail_alloc(
 #ifdef	DEBUG
 typedef	struct	{
 	long	size;	/* ...its size */
-	char	*text;	/* the actual segment */
+	void	*text;	/* the actual segment */
 	int	note;	/* ...last value of 'count_alloc' */
 	} AREA;
 
@@ -70,8 +70,8 @@ static	long	maxAllocated,	/* maximum # of bytes allocated */
 
 static
 int	FindArea(
-	_AR1(char *,	ptr))
-	_DCL(char *,	ptr)
+	_AR1(void *,	ptr))
+	_DCL(void *,	ptr)
 {
 	register int j;
 	for (j = 0; j < DEBUG; j++)
@@ -88,8 +88,8 @@ int	FindArea(
 
 static
 int	record_freed(
-	_AR1(char *,	ptr))
-	_DCL(char *,	ptr)
+	_AR1(void *,	ptr))
+	_DCL(void *,	ptr)
 {
 	register int j;
 	if ((j = FindArea(ptr)) >= 0) {
@@ -108,12 +108,12 @@ int	record_freed(
 
 static
 int	record_alloc(
-	_ARX(char *,	newp)
-	_ARX(char *,	oldp)
+	_ARX(void *,	newp)
+	_ARX(void *,	oldp)
 	_AR1(unsigned,	len)
 		)
-	_DCL(char *,	newp)
-	_DCL(char *,	oldp)
+	_DCL(void *,	newp)
+	_DCL(void *,	oldp)
 	_DCL(unsigned,	len)
 {
 	register int	j;
@@ -128,7 +128,7 @@ int	record_alloc(
 	} else {
 		if (oldp != 0)
 			record_freed(oldp);
-		if ((j = FindArea((char *)0)) >= 0) {
+		if ((j = FindArea((void *)0)) >= 0) {
 			area[j].text = newp;
 			area[j].size = len;
 			area[j].note = count_alloc;
@@ -177,14 +177,14 @@ void	logit(
 /************************************************************************
  *	public entrypoints						*
  ************************************************************************/
-char *	doalloc (
-	_ARX(char *,	oldp)
+void *	doalloc (
+	_ARX(void *,	oldp)
 	_AR1(unsigned,	amount)
 		)
-	_DCL(register char *,	oldp)
+	_DCL(register void *,	oldp)
 	_DCL(register unsigned,	amount)
 {
-	register char	*newp;
+	register void	*newp;
 
 	count_alloc += (oldp == 0);
 	LOGIT("allocate", amount)
@@ -202,8 +202,8 @@ char *	doalloc (
  * Entrypoint so we can validate pointers
  */
 void	dofree(
-	_AR1(char *,	oldp))
-	_DCL(char *,	oldp)
+	_AR1(void *,	oldp))
+	_DCL(void *,	oldp)
 {
 	count_freed++;
 	LOGIT("dealloc ", oldp)
@@ -252,7 +252,7 @@ void	show_alloc(_AR0)
 #ifdef	TEST
 _MAIN
 {
-	char	*p = 0,
+	void	*p = 0,
 		*q = 0;
 
 	p = doalloc(p, 100);

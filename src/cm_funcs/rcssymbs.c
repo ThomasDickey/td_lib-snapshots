@@ -25,9 +25,9 @@
 #include "rcsdefs.h"
 #include <ctype.h>
 
-MODULE_ID("$Id: rcssymbs.c,v 12.4 1998/05/30 10:51:39 tom Exp $")
+MODULE_ID("$Id: rcssymbs.c,v 12.5 2002/07/03 13:04:43 tom Exp $")
 
-#define	isname(c)	(isalnum(c) || (c == '_'))
+#define	isname(c)	(isalnum(UCH(c)) || (c == '_'))
 
 static
 void

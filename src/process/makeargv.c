@@ -18,7 +18,7 @@
 #include "ptypes.h"
 #include <ctype.h>
 
-MODULE_ID("$Id: makeargv.c,v 12.3 1993/10/29 17:35:25 tom Exp $")
+MODULE_ID("$Id: makeargv.c,v 12.4 2002/07/03 13:06:37 tom Exp $")
 
 int	makeargv(
 	_ARX(char **,	argv)
@@ -38,9 +38,9 @@ int	makeargv(
 	argc++;
 
 	while ((*dst = *src++) != EOS) {
-		if (isspace(*dst)) {
+		if (isspace(UCH(*dst))) {
 			*dst++ = EOS;
-			while (isspace(*src))
+			while (isspace(UCH(*src)))
 				src++;
 			if (argc >= maxarg)
 				break;
