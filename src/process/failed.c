@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/process/RCS/failed.c,v 3.0 1989/04/27 07:28:01 ste_cm Rel $";
+static	char	what[] = "$Id: failed.c,v 8.0 1989/08/17 09:05:22 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -22,7 +22,10 @@ failed(s)
 char	*s;
 {
 	perror(s);
+	(void)fflush(stdout);
+	(void)fflush(stderr);
 	exit(FAIL);
+	/*NOTREACHED*/
 }
 
 #ifdef	TEST

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs/RCS/sccslast.c,v 3.0 1988/09/02 09:17:11 ste_cm Rel $";
+static	char	what[] = "$Id: sccslast.c,v 7.0 1989/08/17 13:12:18 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,9 +7,26 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs
  * Author:	T.E.Dickey
  * Created:	20 Oct 1986
  * $Log: sccslast.c,v $
- * Revision 3.0  1988/09/02 09:17:11  ste_cm
- * BASELINE Mon Jun 19 13:27:01 EDT 1989
+ * Revision 7.0  1989/08/17 13:12:18  ste_cm
+ * BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
  *
+ *		Revision 6.0  89/08/17  13:12:18  ste_cm
+ *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+ *		
+ *		Revision 5.0  89/08/17  13:12:18  ste_cm
+ *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+ *		
+ *		Revision 4.0  89/08/17  13:12:18  ste_cm
+ *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+ *		
+ *		Revision 3.1  89/08/17  13:12:18  dickey
+ *		rewrote the code which computes the path of the working-file
+ *		so that we don't use ".." unless necessary, so this works
+ *		better with symbolic links.
+ *		
+ *		Revision 3.0  88/09/02  09:17:11  ste_cm
+ *		BASELINE Mon Jun 19 13:27:01 EDT 1989
+ *		
  *		Revision 2.0  88/09/02  09:17:11  ste_cm
  *		BASELINE Thu Apr  6 09:45:13 EDT 1989
  *		
@@ -28,13 +45,11 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs
  *		for directory-editor.
  */
 
+#define	STR_PTYPES
 #include	"ptypes.h"
 #include	<ctype.h>
 extern	long	packdate();
 extern	char	*sccs_dir(),
-		*strcat(),
-		*strcpy(),
-		*strrchr(),
 		*txtalloc();
 
 /*
@@ -126,7 +141,16 @@ char	**lock_;
 		trysccs(name, vers_, date_, lock_);
 		if (*date_) {		/* it was an ok sccs file */
 			/* look for checked-out file */
-			(void)strcat(strcpy(name+(t-path), "../"), t+2);
+
+			if (t != path) {
+				name[t - path - 1] = EOS;
+				if (s = strrchr(name, '/'))
+					s[1] = EOS;
+				else
+					name[0] = EOS;
+				(void)strcat(name, t+2);
+			} else
+				(void)strcat(strcpy(name, "../"), t+2);
 			*date_ = 0;	/* use actual modification-date! */
 			if (stat(name, &sbfr) >= 0)
 				*date_ = sbfr.st_mtime;
