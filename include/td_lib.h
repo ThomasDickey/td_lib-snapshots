@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 11.6 1992/08/25 12:10:25 dickey Exp $ */
+/* $Id: td_lib.h,v 11.7 1992/10/30 08:14:11 dickey Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for CM_TOOLS COMMON
@@ -487,6 +487,12 @@
 			_nul
 
 	/* packdate.c ------------------------------------------------- */
+	long	gmt_offset(
+			_ar1(time_t,	t)
+			)
+			_dcl(time_t,	t)
+			_ret
+
 	long	packdate (
 			_arx(int,	year)
 			_arx(int,	mon)

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: packdate.c,v 11.0 1991/10/03 17:19:29 ste_cm Rel $";
+static	char	Id[] = "$Id: packdate.c,v 11.1 1992/10/30 07:20:30 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: packdate.c,v 11.0 1991/10/03 17:19:29 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	26 Mar 1986
  * Modified:
+ *		30 Oct 1992, added entrypoint 'gmt_offset()'
  *		03 Oct 1991, converted to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
  *		26 Jun 1990, added a test-driver.  Modified (for SunOs 4.1
@@ -37,39 +38,12 @@ static	char	Id[] = "$Id: packdate.c,v 11.0 1991/10/03 17:19:29 ste_cm Rel $";
 
 #define	LEAP(y)	(!(y&3))
 
-long
-packdate (
-_ARX(int,	 year)
-_ARX(int,	 mon)
-_ARX(int,	 day)
-_ARX(int,	 hour)
-_ARX(int,	 min)
-_AR1(int,	 s)
-	)
-_DCL(int,	 year)
-_DCL(int,	 mon)
-_DCL(int,	 day)
-_DCL(int,	 hour)
-_DCL(int,	 min)
-_DCL(int,	 s)
+long	gmt_offset(
+	_AR1(time_t,	t))
+	_DCL(time_t,	t)
 {
-struct	tm tm;
-time_t	sec = s;
-register int	j;
-static	int	m[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-/*			  jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec */
-
-	sec += (MINUTE * min) + (HOUR * hour);
-	for (j = 1970; j < year; j++) {
-		sec += YEAR;
-		if (LEAP(j))	sec += DAY;
-	}
-	for (j = 1; j < mon; j++) {
-		sec += DAY * m[j-1];
-	}
-	if (mon > 2 && LEAP(year))	sec += DAY;
-	sec += (day-1) * DAY;
-	/* adjustments for timezone, etc. */
+	struct	tm tm;
+	long	sec	= 0;
 
 	/*
 	 * Parse the computed time using 'localtime' to avoid the complication
@@ -77,7 +51,7 @@ static	int	m[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 	 * last-Sunday-in-October. Invoke it here so we can bypass the SunOs
 	 * 'gettimeofday()' procedure, which does not work well.
 	 */
-	tm = *localtime(&sec);
+	tm = *localtime(&t);
 
 #ifdef	SYSTEM5
 	{
@@ -105,8 +79,42 @@ static	int	m[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 #ifndef	sun
 	if (tm.tm_isdst)	sec -= HOUR;
 #endif
+	return sec;
+}
 
-	return (sec);
+long
+packdate (
+_ARX(int,	 year)
+_ARX(int,	 mon)
+_ARX(int,	 day)
+_ARX(int,	 hour)
+_ARX(int,	 min)
+_AR1(int,	 s)
+	)
+_DCL(int,	 year)
+_DCL(int,	 mon)
+_DCL(int,	 day)
+_DCL(int,	 hour)
+_DCL(int,	 min)
+_DCL(int,	 s)
+{
+time_t	sec = s;
+register int	j;
+static	int	m[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+/*			  jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec */
+
+	sec += (MINUTE * min) + (HOUR * hour);
+	for (j = 1970; j < year; j++) {
+		sec += YEAR;
+		if (LEAP(j))	sec += DAY;
+	}
+	for (j = 1; j < mon; j++) {
+		sec += DAY * m[j-1];
+	}
+	if (mon > 2 && LEAP(year))	sec += DAY;
+	sec += (day-1) * DAY;
+
+	return (sec + gmt_offset(sec));
 }
 
 /************************************************************************
