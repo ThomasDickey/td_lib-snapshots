@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: for_admn.c,v 11.1 1992/11/17 12:35:55 dickey Exp $";
+static	char	Id[] = "$Id: for_admn.c,v 11.2 1992/11/23 13:34:25 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: for_admn.c,v 11.1 1992/11/17 12:35:55 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	11 Oct 1991 (from 'for_user.c')
  * Modified:
+ *		23 Nov 1992, flush stderr/stdout if we fork
  *		17 Nov 1992, modified _FNX macro.
  *		
  * Function:	For a set-uid program, invokes a function (presumably a system
@@ -44,6 +45,8 @@ int	for_admin2(
 		return (errno ? -1 : 0);
 	}
 
+	FFLUSH(stdout);
+	FFLUSH(stderr);
 	if ((pid = fork()) > 0) {
 		while ((count = wait(ARG_WAIT(status))) != pid) {
 			if ((count < 0) || (errno == ECHILD))
