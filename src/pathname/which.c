@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: which.c,v 12.2 1993/10/29 17:35:23 dickey Exp $";
+static	char	Id[] = "$Id: which.c,v 12.3 1993/11/28 23:51:44 dickey Exp $";
 #endif
 
 /*
@@ -61,22 +61,28 @@ int	which(
 	s = path;
 	*test = *bfr = EOS;
 
-	if (strchr(find,'/') != 0) {
+	if (fleaf_delim(find) != 0) {
 		if (executable(find))
 			(void)pathcat(test, dot, find);
-	} else while (*s) {
-		for (d = s; (*d != EOS) && (*d != ':'); d++);
-		if ((d == s) || !strncmp(s, ".", (size_t)(d-s)))
-			(void)strcpy(test, dot);
-		else {
-			(void)strncpy(test, s, (size_t)(d-s));
-			test[d-s] = EOS;
+	} else {
+		while (*s) {
+			size_t n;
+			for (n = 0; s[n] != EOS && s[n] != PATHLIST_SEP; n++)
+				;
+			d = s + n;
+			if ((n == 0) || !strncmp(s, ".", n)) {
+				(void)strcpy(test, dot);
+			} else {
+				strncpy(test, s, n)[n] = EOS;
+			}
+			abspath(test);
+			(void)pathcat(test, test, find);
+			if (executable(test))
+				break;
+			for (s = d; (*s != EOS) && (*s == PATHLIST_SEP); s++)
+				;
+			*test = EOS;
 		}
-		abspath(test);
-		(void)strcat(strcat(test, "/"), find);
-		if (executable(test)) break;
-		for (s = d; (*s != EOS) && (*s == ':'); s++);
-		*test = EOS;
 	}
 
 	if (len > strlen(test))
@@ -99,4 +105,4 @@ char	bfr[BUFSIZ],
 	exit(SUCCESS);
 	/*NOTREACHED*/
 }
-#endif
+#endif	/* TEST */

@@ -1,3 +1,21 @@
+1993-11-28  dickey@software.org
+
+	* include/ptypes.h: first pass of adaptations to MSDOS
+
+	* src/pathname/which.c: mods for MSDOS
+
+	* src/pathname/file2mem.c: limited file size available on MSDOS
+
+	* src/pathname/denode.c: mods for MSDOS
+
+1993-11-28  dickey@software.org
+
+	* src/pathname/denode.c: use MODULE_ID
+
+1993-11-28  dickey@software.org
+
+	* src/pathname/abspath.c: first cut for MSDOS (partly tested)
+
 1993-11-27  dickey@software.org
 
 	* src/pathname/relpath.c: mods for MSDOS
