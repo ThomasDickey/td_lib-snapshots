@@ -1,3 +1,7 @@
+1992-12-01  dickey@software.org
+
+	* include/ptypes.h: added DIRENT definition
+
 1992-11-24  dickey@software.org
 
 	* src/memory/txtalloc.c: lint
