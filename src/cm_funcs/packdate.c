@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)packdate.c	1.8 88/05/24 07:37:03";
+static	char	sccs_id[] = "@(#)packdate.c	1.9 88/08/08 07:39:45";
 #endif	lint
 
 /*
@@ -73,7 +73,7 @@ static	int	m[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
  * range between the last-Sunday-in-April to the last-Sunday-in-October!
  */
 static	dst (clock)
-long	clock;
+time_t	clock;
 {
 struct	tm	tm;
 	tm = *localtime(&clock);
