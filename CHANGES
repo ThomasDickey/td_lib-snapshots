@@ -1,3 +1,15 @@
+1995-09-03  dickey@clark.net
+
+	* src/unix/gid2s.c:
+	rewrote using btree to allow for systems that may have a _lot_ of groups
+	(since this is used for sorting in 'ded')
+
+	* src/unix/uid2s.c: mods for testing with blank-passwd
+
+	* src/unix/uid2s.c:
+	rewrote to use btree (some hosts have 1000's of users!) to speed up
+	sorting in 'ded'.
+
 1995-08-15  dickey@clark.net
 
 	* aclocal.m4: corrected --with-prototypes default

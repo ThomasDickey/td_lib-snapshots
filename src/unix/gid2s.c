@@ -1,5 +1,5 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: gid2s.c,v 12.4 1995/02/11 19:21:05 tom Exp $";
+#ifndef NO_IDENT
+static	char	Id[] = "$Id: gid2s.c,v 12.5 1995/09/03 21:48:17 tom Exp $";
 #endif
 
 /*
@@ -7,6 +7,8 @@ static	char	Id[] = "$Id: gid2s.c,v 12.4 1995/02/11 19:21:05 tom Exp $";
  * Author:	T.E.Dickey
  * Created:	10 Nov 1987
  * Modified:
+ *		03 Sep 1995, use btree rather than linked list, to speed up
+ *			     sorting in 'ded'.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, conversion to ANSI
@@ -21,66 +23,89 @@ static	char	Id[] = "$Id: gid2s.c,v 12.4 1995/02/11 19:21:05 tom Exp $";
  *		defining the name.
  */
 
+#define	GRP_PTYPES
 #define	STR_PTYPES
-#include	"ptypes.h"
+#include <td_btree.h>
 
-#ifdef	unix
-#include	<grp.h>
+#if HAVE_GETGRGID
 
-typedef	struct	_table	{
-	struct	_table	*link;
-	int	group;
-	char	*name;
-	} TABLE;
+/*ARGSUSED*/ def_ALLOC(BI_NODE)
 
-#define	def_alloc	def_GID_TABLE	/* lint (gould) */
-	/*ARGSUSED*/
-	def_ALLOC(TABLE)
+typedef	struct {
+	int		user;
+	char		*name;
+	} GID_DATA;
 
-static	TABLE	*table_gid2s;
-
-static
-void	define_gid2s(
-	_ARX(int,	gid)
-	_AR1(char *,	name)
-		)
+static char * lookup_gid (
+	_AR1(int,	gid))
 	_DCL(int,	gid)
-	_DCL(char *,	name)
-{
-	register TABLE	*q = ALLOC(TABLE,1);
-	q->link  = table_gid2s;
-	q->group = gid;
-	q->name  = txtalloc(name);
-	table_gid2s = q;
-}
-
-char *
-gid2s(
-_AR1(int,	gid))
-_DCL(int,	gid)
 {
 	register struct group *p;
-	register TABLE	*q;
-
-	/* search the table for previously-known items */
-	for (q = table_gid2s; q; q = q->link)
-		if (q->group == gid)
-			return(q->name);
 
 	/* if not found, lookup/translate it for future use */
 #ifdef	apollo
 	if (gid == -3) {
-		define_gid2s(gid, "<none>");
+		return txtalloc("<none>");
 	} else
 #endif
 	if ((p = getgrgid(gid)) != 0)
-		define_gid2s(gid, p->gr_name);
+		return txtalloc(p->gr_name);
 	else {
 		auto	char	bfr[80];
 		(void)l2str(bfr, (long)gid, 0);
-		define_gid2s(gid, bfr);
+		return txtalloc(bfr);
 	}
-	return (gid2s(gid));
+}
+
+static
+BI_NODE	*new_node (
+	_AR1(void *,	data))
+	_DCL(void *,	data)
+{
+	GID_DATA *value = (GID_DATA *)data;
+	BI_NODE *result = ALLOC(BI_NODE, sizeof(BI_NODE) + sizeof(GID_DATA));
+	memset(result, 0, sizeof(*result));
+	value->name = lookup_gid(value->user);
+	memcpy(result->value, data, sizeof(GID_DATA));
+	return result;
+}
+
+static
+int	cmp_node (
+	_ARX(void *,	a)
+	_AR1(void *,	b)
+		)
+	_DCL(void *,	a)
+	_DCL(void *,	b)
+{
+	return ((GID_DATA *)a)->user
+	   -   ((GID_DATA *)b)->user;
+}
+
+static
+void	dpy_node (
+	_AR1(void *,	a))
+	_DCL(void *,	a)
+{
+	PRINTF("%d:%s",
+		((GID_DATA *)a)->user,
+		((GID_DATA *)a)->name);
+}
+
+static	BI_TREE	gid2s_tree = {
+	cmp_node,
+	new_node,
+	dpy_node
+	};
+
+char *	gid2s(
+	_AR1(int,	user))
+	_DCL(int,	user)
+{
+	static GID_DATA data;
+	data.user = user;
+	data = *(GID_DATA *)btree_find(&gid2s_tree, &data);
+	return data.name;
 }
 
 #ifdef	TEST
@@ -88,17 +113,38 @@ _MAIN
 {
 	register int	j;
 	auto	 char	*d;
-	auto	 int	group;
+	auto	 int	user;
 
-	for (j = 1; j < argc; j++) {
-		group = strtol(argv[j], &d, 0);
-		if (*d) {
-			printf("? illegal character /%s/\n", d);
-			continue;
+	printf("argc:%d\n", argc);
+	if (argc > 1) {
+		for (j = 1; j < argc; j++) {
+			user = strtol(argv[j], &d, 0);
+			if (*d) {
+				printf("? illegal character /%s/\n", d);
+				continue;
+			}
+			printf("%d => \"%s\"\n", user, gid2s(user));
 		}
-		printf("%d => \"%s\"\n", group, gid2s(group));
+	} else {
+		int	tst_len;
+		char	**tst_vec;
+		tst_len = file2argv("/etc/group", &tst_vec);
+		printf("tst_len:%d\n", tst_len);
+		for (j = 0; j < tst_len; j++) {
+			if ((d = strchr(tst_vec[j], ':')) == 0)
+				continue;
+			*d++ = EOS;
+			if ((d = strchr(d, ':')) == 0)
+				continue;
+			user = atoi(++d);
+			printf("%s -> %d -> %s\n", tst_vec[j], user, d = gid2s(user));
+			if (strcmp(tst_vec[j], d))
+				printf("** DIFF\n");
+		}
+		btree_dump(&gid2s_tree);
 	}
 	exit(SUCCESS);
 }
 #endif	/* TEST */
-#endif	/* unix */
+
+#endif	/* HAVE_GETPWGID */
