@@ -1,3 +1,8 @@
+1994-09-22  dickey@clark.net
+
+	* src/curses/resizwin.c:
+	forgot to initialize 'lc[]' in case 'scr_size()' fails
+
 1994-08-25  dickey@clark.net
 
 	* test/port2vms/name2vms.ref:
