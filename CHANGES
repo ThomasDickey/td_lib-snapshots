@@ -1,3 +1,14 @@
+1993-02-01  dickey@software.org
+
+	* src/cm_funcs/rcslast.c:
+	corrected parsing of S_LOCKS case (forgot that rcsparse_id
+	no longer allowed ':' to be part of the parse)
+
+1993-02-01  ste_cm@software.org
+
+	* src/cm_funcs/rcslast.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
 1992-12-22  dickey@software.org
 
 	* src/curses/padedit.c: reset process group
