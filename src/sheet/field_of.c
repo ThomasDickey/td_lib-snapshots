@@ -1,12 +1,9 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: field_of.c,v 12.2 1993/10/29 17:35:26 dickey Exp $";
-#endif
-
 /*
  * Title:	field_of.c
  * Author:	T.E.Dickey
  * Created:	03 Feb 1992
  * Modified:
+ *		01 Jul 1994, use autoconf to control use of 'memmove()'
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		24 Jul 1992, use dynamic-strings.
@@ -23,60 +20,21 @@ static	char	Id[] = "$Id: field_of.c,v 12.2 1993/10/29 17:35:26 dickey Exp $";
 #include "td_sheet.h"
 #include <ctype.h>
 
+MODULE_ID("$Id: field_of.c,v 12.4 1994/07/01 23:54:04 tom Exp $")
+
 static	int	opt_Blanks;
 
 #define	COMMA		','
 #define	QUOTE		'"'
 #define	isquote(c)	((c) == QUOTE || (c) == '\'')
 
-#define	HAS_MEMMOVE
-
-#ifdef	sun
-#undef	HAS_MEMMOVE
-#endif
-
-#if	defined(apollo) && !defined(__STDCPP__)
-#undef	HAS_MEMMOVE
-#endif
-
-#ifndef	HAS_MEMMOVE
-#define	memmove	my_memmove
-static
-char *	memmove(
-	_ARX(char *,	s1)
-	_ARX(char *,	s2)
-	_AR1(size_t,	n)
-		)
-	_DCL(char *,	s1)
-	_DCL(char *,	s2)
-	_DCL(size_t,	n)
-{
-	if (n != 0) {
-		if ((s1+n > s2) && (s2+n > s1)) {
-			static	char	*buffer;
-			static	unsigned length;
-			register int	j;
-			if (length < n)
-				buffer = doalloc(buffer, length = n);
-			for (j = 0; j < n; j++)
-				buffer[j] = s2[j];
-			s2 = buffer;
-		}
-		while (n-- != 0)
-			s1[n] = s2[n];
-	}
-	return s1;
-}
-#endif
-
 /*
  * Looks to see if we must quote a field.
  */
 static
-int
-must_quote(
-_AR1(char *,	buffer))
-_DCL(char *,	buffer)
+int	must_quote(
+	_AR1(char *,	buffer))
+	_DCL(char *,	buffer)
 {
 	register int	c;
 	while ((c = *buffer++) != EOS) {
@@ -116,10 +74,9 @@ char *	QuotedField(
  * Skips past the current position if it has a comma
  */
 static
-char *
-skip_past_comma(
-_AR1(char *,	src))
-_DCL(char *,	src)
+char *	skip_past_comma(
+	_AR1(char *,	src))
+	_DCL(char *,	src)
 {
 	if (*src == COMMA)
 		src++;
@@ -131,10 +88,9 @@ _DCL(char *,	src)
  * empty, this may be the first character in the field.
  */
 static
-char *
-skip_to_comma(
-_AR1(char *,	src))
-_DCL(char *,	src)
+char *	skip_to_comma(
+	_AR1(char *,	src))
+	_DCL(char *,	src)
 {
 	auto	int	quote	= EOS;
 	register int	c;
@@ -253,10 +209,9 @@ char *	UnquotedField(
  * Set/clear a flag which we can use to control whether embedded blanks in a
  * field must be quoted.
  */
-void
-field_uses_quotes(
-_AR1(int,	flag))
-_DCL(int,	flag)
+void	field_uses_quotes(
+	_AR1(int,	flag))
+	_DCL(int,	flag)
 {
 	opt_Blanks = !flag;
 }
@@ -354,5 +309,6 @@ char *	set_field_of(
 #ifdef	TEST
 _MAIN
 {
+	/*NOT IMPLEMENTED*/
 }
 #endif

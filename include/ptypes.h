@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 12.22 1994/06/25 22:03:57 tom Exp $ */
+/* $Id: ptypes.h,v 12.23 1994/07/01 23:43:34 tom Exp $ */
 
 #ifndef	PTYPES_H
 #define	PTYPES_H
@@ -219,18 +219,6 @@ typedef	short	ino_t;
 	/* shorthand for single-argument */
 #define	_ONE(t,v)	(_AR1(t,v)) _DCL(t,v)
 #define _one(t,a)	(_ar1(t,a))
-
-/*
- * Declare argument for 'exit()' and '_exit()':
- */
-#ifdef	vms
-#include	<stsdef.h>
-#define	SUCCESS	(STS$M_INHIB_MSG | STS$K_SUCCESS)
-#define	FAIL	(STS$M_INHIB_MSG | STS$K_ERROR)
-#else	/* unix */
-#define	SUCCESS	(0)		/* if no error */
-#define	FAIL	(1)		/* if any error */
-#endif	/* vms/unix */
 
 /*
  * Declare functions which are int (or implicit) in some systems, but explicitly
@@ -588,5 +576,22 @@ extern	int	main(_arx(int,argc) _ar1(char **,argv));
 #ifndef	MAXPATHLEN
 #define	MAXPATHLEN	256
 #endif
+
+/*
+ * Declare argument for 'exit()' and '_exit()' (usually in <stdlib.h>):
+ */
+#ifndef	EXIT_FAILURE
+# ifdef	vms
+#  include	<stsdef.h>
+#  define	SUCCESS	(STS$M_INHIB_MSG | STS$K_SUCCESS)
+#  define	FAIL	(STS$M_INHIB_MSG | STS$K_ERROR)
+# else	/* unix */
+#  define	SUCCESS	(0)		/* if no error */
+#  define	FAIL	(1)		/* if any error */
+# endif	/* vms/unix */
+# define EXIT_FAILURE FAIL
+# define EXIT_SUCCESS SUCCESS
+#endif
+
 
 #endif	/* PTYPES_H */
