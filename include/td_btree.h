@@ -1,4 +1,4 @@
-/* $Id: td_btree.h,v 12.5 1997/09/08 00:57:59 tom Exp $ */
+/* $Id: td_btree.h,v 12.6 2000/06/30 10:48:42 tom Exp $ */
 
 /*
  * TD_LIB binary-tree functions
@@ -21,6 +21,7 @@
 		int	num;
 	}	value;		/* we'll return pointer to this data */
 	};
+#define BI_NODE_NULL {{0,0}, 0, {{0}}}
 
 	/* cf: offsetof */
 #define BI_NODE_SIZE ((size_t) ((BI_NODE *)0)->value.text)

@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	02 Sep 1988
  * Modified:
+ *		30 Jun 2000, fix infinite loop if PATHLIST_SEP is found.
  *		13 Jul 1994, added SCCS_VAULT interpretation.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
@@ -35,7 +36,7 @@
 #include "ptypes.h"
 #include "sccsdefs.h"
 
-MODULE_ID("$Id: sccs_dir.c,v 12.5 1994/07/18 22:24:19 tom Exp $")
+MODULE_ID("$Id: sccs_dir.c,v 12.6 2000/06/30 10:21:10 tom Exp $")
 
 #define	WORKING	struct	Working
 	WORKING	{
@@ -149,7 +150,8 @@ void	Initialize(_AR0)
 					add_working(p, s);
 				}
 			}
-			*next = at_next;
+			if ((*next = at_next) != EOS)
+				next++;
 		}
 		SccsVault = txtalloc(SccsVault);
 	}

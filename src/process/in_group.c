@@ -10,7 +10,7 @@
 #include <ptypes.h>
 #include <grp.h>
 
-MODULE_ID("$Id: in_group.c,v 12.4 1994/12/15 15:48:22 tom Exp $")
+MODULE_ID("$Id: in_group.c,v 12.5 2000/06/30 10:39:14 tom Exp $")
 
 #if HAVE_GETGROUPS
 #  if HAVE_SYS_PARAM_H
@@ -46,7 +46,7 @@ int	in_group (
 
 #ifdef	HAVE_GETGROUPS
 	for (i = 0; i < ngroups; ++i)
-		if (groups[i] == given_gid)
+		if ((int) groups[i] == given_gid)
 			return TRUE;
 #else
 	if (given_gid == getgid())

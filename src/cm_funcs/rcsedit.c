@@ -39,7 +39,7 @@
 #include	"rcsdefs.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: rcsedit.c,v 12.7 1998/05/30 10:51:39 tom Exp $")
+MODULE_ID("$Id: rcsedit.c,v 12.8 2000/06/30 10:39:34 tom Exp $")
 
 /* local definitions */
 #define	VERBOSE	if (verbose) PRINTF
@@ -100,9 +100,9 @@ int	dir_access(_AR0)
 		uid = sb.st_uid;
 		gid = sb.st_gid;
 	}
-	if (uid == sb.st_uid)
+	if (uid == (int) sb.st_uid)
 		return (sb.st_mode & S_IWRITE);
-	else if (gid == sb.st_gid)
+	else if (gid == (int) sb.st_gid)
 		return (sb.st_mode & (S_IWRITE >> 3));
 	return (sb.st_mode & (S_IWRITE >> 6));
 }

@@ -13,7 +13,7 @@
 #define	STR_PTYPES
 #include <td_btree.h>
 
-MODULE_ID("$Id: txtalloc.c,v 12.7 1995/09/14 15:16:58 tom Exp $")
+MODULE_ID("$Id: txtalloc.c,v 12.8 2000/06/30 10:48:46 tom Exp $")
 
 static
 BI_NODE	*new_node (
@@ -50,7 +50,8 @@ void	dpy_node (
 static	BI_TREE	text_tree = {
 	cmp_node,
 	new_node,
-	dpy_node
+	dpy_node,
+	BI_NODE_NULL
 	};
 
 char *	txtalloc(

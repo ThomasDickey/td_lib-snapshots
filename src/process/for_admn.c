@@ -22,7 +22,7 @@
 #include	"ptypes.h"
 #include	<errno.h>
 
-MODULE_ID("$Id: for_admn.c,v 12.4 1993/11/26 21:55:26 tom Exp $")
+MODULE_ID("$Id: for_admn.c,v 12.5 2000/06/30 10:38:59 tom Exp $")
 
 #ifdef	unix
 int	for_admin2(
@@ -39,8 +39,8 @@ int	for_admin2(
 
 	DCL_WAIT(status);
 
-	if (the_uid == getuid()
-	&&  the_gid == getgid()) {
+	if (the_uid == (int) getuid()
+	&&  the_gid == (int) getgid()) {
 		errno = 0;		/* ensure that 'errno' is reset */
 		(void)(*func)();	/* invoke the special function */
 		return (errno ? -1 : 0);
