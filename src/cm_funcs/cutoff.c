@@ -1,12 +1,22 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)cutoff.c	1.1 88/05/20 09:47:20";
+static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs/RCS/cutoff.c,v 3.0 1988/06/13 06:54:53 ste_cm Rel $";
 #endif	lint
 
 /*
  * Title:	cutoff.c (parse SCCS-style cutoff date)
  * Author:	T.E.Dickey
  * Created:	20 May 1988 (from 'sccsdate.c')
- * Modified:
+ * $Log: cutoff.c,v $
+ * Revision 3.0  1988/06/13 06:54:53  ste_cm
+ * BASELINE Mon Jun 19 13:27:01 EDT 1989
+ *
+ *		Revision 2.0  88/06/13  06:54:53  ste_cm
+ *		BASELINE Thu Apr  6 09:45:13 EDT 1989
+ *		
+ *		Revision 1.3  88/06/13  06:54:53  dickey
+ *		sccs2rcs keywords
+ *		
+ *		13 Jun 1988, use 'newzone()'.
  *
  * Function:	Convert an SCCS-style cutoff date-string to unix time.  The
  *		string is read from the argument list using 'getopt()'.
@@ -36,19 +46,12 @@ time_t
 cutoff (argc, argv)
 char	*argv[];
 {
+time_t	date;
 char	bfr[80],
 	*d = strcpy(bfr, "991231235959"),
 	*s = optarg;
 
-	/*
-	 * Ensure that we will interpret the date in the form in which it
-	 * is stored in the SCCS file.
-	 */
-	putenv("TZ=EST5EDT");
-	putenv("TZNAME=EST,EDT");
-#ifdef	SYSTEM5
-	tzset();
-#endif	SYSTEM5
+	newzone(5,0,0);		/* interpret date in EST5EDT */
 
 	/*
 	 * Decode the date from the argument list
@@ -74,5 +77,7 @@ char	bfr[80],
 			}
 		}
 	}
-	return (packdate(1900+Z(0),Z(1),Z(2),Z(3),Z(4),Z(5)));
+	date = packdate(1900+Z(0),Z(1),Z(2),Z(3),Z(4),Z(5));
+	oldzone();		/* restore original timezone */
+	return (date);
 }

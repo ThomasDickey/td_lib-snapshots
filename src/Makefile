@@ -1,10 +1,9 @@
-# @(#)Makefile	1.25 88/06/09 13:42:45
+# @(#)Makefile	1.26 88/06/13 09:28:26
 # MAKE-file for miscellaneous library routines
 L=lib.a
 #
 OBJS	=\
 	abspath.o\
-	adj2est.o\
 	beep.o\
 	bldarg.o\
 	catarg.o\
@@ -41,7 +40,6 @@ OBJS	=\
 	savewin.o\
 	sccslast.o\
 	sccszone.o\
-	set2est.o\
 	setmtime.o\
 	stralloc.o\
 	strclean.o\
@@ -61,7 +59,6 @@ $L:
 	ar rv $L $?
 	ranlib $L
 #
-adj2est.o:	ptypes.h
 cmdch.o:	cmdch.h
 cutoff.o:	ptypes.h
 newzone.o:	ptypes.h
@@ -72,7 +69,6 @@ rcsedit.o:	rcsdefs.h
 rcskeys.o:	rcsdefs.h
 rcsname.o:	rcsdefs.h
 sccszone.o:	ptypes.h
-set2est.o:	ptypes.h
 setmtime.o:	ptypes.h
 win2file.o:	ptypes.h
 #
