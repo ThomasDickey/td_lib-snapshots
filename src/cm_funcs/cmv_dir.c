@@ -1,5 +1,5 @@
 #ifndef	NO_IDENT
-static	char	Id[] = "$Id: cmv_dir.c,v 12.1 1994/08/02 19:43:50 tom Exp $";
+static	char	Id[] = "$Id: cmv_dir.c,v 12.2 1994/08/10 18:55:16 tom Exp $";
 #endif
 
 /*
@@ -203,7 +203,8 @@ CMTREE *FindInternalDir(
 			return p;
 		len2 = strlen(p->external);
 		if (len2 <= len1
-		 && !strncmp(p->external, external, len2)) {
+		 && !strncmp(p->external, external, len2)
+		 && (external[len2] == PATH_SLASH)) {
 			return FindInternalDir(vault, p, external);
 		}
 		p = p->siblings;

@@ -1,3 +1,9 @@
+1994-08-10  dickey@clark.net
+
+	* src/cm_funcs/cmv_dir.c:
+	corrected a place where recursion was done incorrectly because I forgot to
+	test for a pathname delimiter
+
 1994-08-03  dickey@clark.net
 
 	* include/cmv_defs.h: added 'lastrev()' (does it belong here?)
