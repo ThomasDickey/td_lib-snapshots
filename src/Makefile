@@ -1,4 +1,4 @@
-# @(#)Makefile	1.15 88/05/18 11:55:08
+# @(#)Makefile	1.16 88/05/19 08:24:59
 # MAKE-file for miscellaneous library routines
 L=lib.a
 #
@@ -10,6 +10,7 @@ OBJS	=\
 	cmdch.o\
 	denode.o\
 	doalloc.o\
+	dotcmp.o\
 	dotname.o\
 	dumpchr.o\
 	dumpwin.o\
