@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: rawgets.c,v 12.13 1994/07/20 22:36:39 tom Exp $";
+static	char	Id[] = "$Id: rawgets.c,v 12.14 1995/07/30 17:55:04 tom Exp $";
 #endif
 
 /*
@@ -77,10 +77,10 @@ static	char	Id[] = "$Id: rawgets.c,v 12.13 1994/07/20 22:36:39 tom Exp $";
 #define	to_toggle(c)	((c) == '\t')
 #define	to_literal(c)	((c) == CTL('V'))
 #define	to_home(c)	(((c) == CTL('B')))
-#define	to_up(c)	(((c) == CTL('P')) || ((c) == ARO_UP))
-#define	to_down(c)	(((c) == CTL('N')) || ((c) == ARO_DOWN))
-#define	to_left(c)	(((c) == '\b') || ((c) == ARO_LEFT))
-#define	to_right(c)	(((c) == '\f') || ((c) == ARO_RIGHT))
+#define	to_up(c)	(((c) == CTL('P')) || ((c) == KEY_UP))
+#define	to_down(c)	(((c) == CTL('N')) || ((c) == KEY_DOWN))
+#define	to_left(c)	(((c) == '\b') || ((c) == KEY_LEFT))
+#define	to_right(c)	(((c) == '\f') || ((c) == KEY_RIGHT))
 #define	to_end(c)	(((c) == CTL('F')))
 
 #ifdef A_REVERSE
@@ -564,7 +564,7 @@ int	wrawgets (
 		 * Use the mouse for (re)positioning the cursor within the
 		 * buffer.
 		 */
-		if (c == ARO_MOUSE) {
+		if (c == KEY_MOUSE) {
 			if (xt_mouse.released) {
 				if (xt_mouse.button == 1) {
 					CurIns = MoveFrom(xt_mouse.row,
@@ -593,11 +593,11 @@ int	wrawgets (
 				break;
 			}
 			if (to_up(c)) {
-				c = ARO_UP;
+				c = KEY_UP;
 				break;
 			}
 			if (to_down(c)) {
-				c = ARO_DOWN;
+				c = KEY_DOWN;
 				break;
 			}
 

@@ -1,3 +1,58 @@
+1995-07-30  dickey@clark.net
+
+	* src/memory/txtalloc.c:
+	use 'doalloc()' to ensure we'll check the result...
+
+	* src/memory/txtalloc.c:
+	split-out binary-tree logic as a separate module
+
+	* src/compare/btree.c: added function for dumping nodes
+
+	* include/td_btree.h: added display-function
+
+	* src/compare/Makefile: added include-deps for btree.c
+
+	* src/compare/descrip.mms: added BTREE
+
+	* src/compare/Makefile: added btree.c
+
+	* include/td_btree.h, src/compare/btree.c, src/curses/is_xterm.c:
+	RCS_BASE
+
+	* src/curses/is_xterm.c: use MODULE_ID
+
+	* include/td_curse.h, src/curses/Makefile: added 'is_xterm()'
+
+	* aclocal.m4: added test for curses-mouse
+	modified test for curses-screen to define lint
+
+	* td_make.in: substitute lint
+
+	* configure.in: added test for lint, is_xterm(), and curses-mouse
+
+	* include/port2vms.h:
+	don't test if $DESCRIPTOR is defined, since that breaks some ANSI compiles
+
+	* src/curses/wresize.c, src/curses/rawgets.c, src/curses/logch.c, src/curses/cmdch.c:
+	ARO/KEY-definitions
+
+	* include/td_curse.h:
+	making ARO() macro obsolete in favor of sys5 compatibility
+
+	* src/port2vms/Makefile: added dummy 'ALL' def for osf1
+
+	* aclocal.m4: sorted by macro name
+	added TD_MAKEFLAGS and TD_UPPERCASE
+
+	* configure.in: added "--enable-debug"
+	change "--with-warnings" to "--enable-warnigns"
+	use TD_MAKEFLAGS
+
+	* td_make.in: drop COPY, CFLAGS from recursive make-flags
+	derive passthru makeflags from configuration
+	use CFLAGS on link-command
+	use standard prefix/exec_prefix symbols
+
 1995-07-07  dickey@clark.net
 
 	* src/cm_funcs/cmv_dir.c: corrected (again) 'samehead()'

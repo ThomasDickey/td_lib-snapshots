@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19950707
+MANIFEST for td_lib, version t19950730
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         restrictions on copying/using this software
@@ -28,6 +28,7 @@ include/port2vms.h              interface for vms-porting functions
 include/ptypes.h                principal include-file for TD_LIB
 include/rcsdefs.h               interface for rcs functions
 include/sccsdefs.h              interface for sccs functions
+include/td_btree.h              interface of btree.c
 include/td_curse.h              interface for curses functions
 include/td_ext.h                external function definitions used by TD_LIB and related applications
 include/td_lib.h                interface of common TD_LIB functions
@@ -73,6 +74,7 @@ src/cm_funcs/vcs_file.c         encapsulates name of directory-level RCS permiss
 src/cm_funcs/vercmp.c           compare version-strings
 src/compare                     subdirectory
 src/compare/Makefile            makefile for td_lib/src/compare
+src/compare/btree.c             lookup/create nodes in binary-tree
 src/compare/cmpqsort.c          default-comparison for 'qsort()'
 src/compare/descrip.mms         mms file for td_lib/src/compare
 src/compare/diffload.c          load delta-tree from difference of files
@@ -90,6 +92,7 @@ src/curses/dumpchr.c            dump screen character to file
 src/curses/dumptty.c            dumps termio settings to a file, for debugging
 src/curses/dumpwin.c            dump curses window to file
 src/curses/erasechr.c           returns erase-char value
+src/curses/is_xterm.c           return true if terminal is xterm
 src/curses/killchar.c           returns kill-char value
 src/curses/logch.c              abstracts log-character encode/decode for 'ded'; put here so I can use it
 src/curses/on_winch.c           catch SIGWINCH and invoke display refresh procedures

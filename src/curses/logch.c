@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: logch.c,v 12.3 1993/11/05 17:56:01 dickey Exp $";
+static	char	Id[] = "$Id: logch.c,v 12.4 1995/07/30 17:54:37 tom Exp $";
 #endif
 
 /*
@@ -54,10 +54,10 @@ int	decode_logch(
 		case 'F':	c = CTL('F');		break;
 		case 'B':	c = CTL('B');		break;
 		case 'W':	c = CTL('W');		break;
-		case 'U':	c = ARO_UP;		break;
-		case 'D':	c = ARO_DOWN;		break;
-		case 'L':	c = ARO_LEFT;		break;
-		case 'R':	c = ARO_RIGHT;		break;
+		case 'U':	c = KEY_UP;		break;
+		case 'D':	c = KEY_DOWN;		break;
+		case 'L':	c = KEY_LEFT;		break;
+		case 'R':	c = KEY_RIGHT;		break;
 		default:
 			if (isdigit(*pointer)) {
 				c = 0;
@@ -115,10 +115,10 @@ void	encode_logch(
 		case CTL('F'):	FORMAT(s, "\\F");	break;
 		case CTL('B'):	FORMAT(s, "\\B");	break;
 		case CTL('W'):	FORMAT(s, "\\W");	break;
-		case ARO_UP:	FORMAT(s, "\\U");	break;
-		case ARO_DOWN:	FORMAT(s, "\\D");	break;
-		case ARO_LEFT:	FORMAT(s, "\\L");	break;
-		case ARO_RIGHT:	FORMAT(s, "\\R");	break;
+		case KEY_UP:	FORMAT(s, "\\U");	break;
+		case KEY_DOWN:	FORMAT(s, "\\D");	break;
+		case KEY_LEFT:	FORMAT(s, "\\L");	break;
+		case KEY_RIGHT:	FORMAT(s, "\\R");	break;
 		default:	FORMAT(s, "\\%03o", c);
 	}
 }

@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: cmdch.c,v 12.14 1995/07/06 17:33:56 tom Exp $";
+static	char	Id[] = "$Id: cmdch.c,v 12.15 1995/07/30 17:54:07 tom Exp $";
 #endif
 
 /*
@@ -149,14 +149,6 @@ int	cmdch(
 		case KEY_BACKSPACE: c = '\b';	done = TRUE;	break;
 #endif
 #endif
-		/*
-		 * These definitions are just because I've not completely
-		 * integrated my definitions with Sys5 curses...
-		 */
-		case KEY_UP:	c = ARO_UP;	done = TRUE;	break;
-		case KEY_DOWN:	c = ARO_DOWN;	done = TRUE;	break;
-		case KEY_LEFT:	c = ARO_LEFT;	done = TRUE;	break;
-		case KEY_RIGHT:	c = ARO_RIGHT;	done = TRUE;	break;
 		}
 		if (done)
 			break;
@@ -173,10 +165,10 @@ int	cmdch(
 			i_blk[j] = EOS;
 			done	= TRUE;
 #if !HAVE_KEYPAD
-			if	(EQL(KU))	c = ARO_UP;
-			else if	(EQL(KD))	c = ARO_DOWN;
-			else if	(EQL(KL))	c = ARO_LEFT;
-			else if	(EQL(KR))	c = ARO_RIGHT;
+			if	(EQL(KU))	c = KEY_UP;
+			else if	(EQL(KD))	c = KEY_DOWN;
+			else if	(EQL(KL))	c = KEY_LEFT;
+			else if	(EQL(KR))	c = KEY_RIGHT;
 			else
 #endif /* !HAVE_KEYPAD */
 			if (j > 1) {	/* extended escapes */
@@ -187,7 +179,7 @@ int	cmdch(
 					static	int	last_row = -1;
 					static	int	last_col = -1;
 
-					c = ARO_MOUSE;
+					c = KEY_MOUSE;
 					the_button   = (getch() & 3) + 1;
 					xt_mouse.col = XtermPos();
 					xt_mouse.row = XtermPos();
@@ -208,10 +200,10 @@ int	cmdch(
 #if !HAVE_KEYPAD
 				if (ansi) {
 					j--;
-					if_C('A')	c = ARO_UP;
-					else if_C('B')	c = ARO_DOWN;
-					else if_C('C')	c = ARO_RIGHT;
-					else if_C('D')	c = ARO_LEFT;
+					if_C('A')	c = KEY_UP;
+					else if_C('B')	c = KEY_DOWN;
+					else if_C('C')	c = KEY_RIGHT;
+					else if_C('D')	c = KEY_LEFT;
 					else {
 						beep();
 						done = FALSE;

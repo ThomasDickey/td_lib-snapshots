@@ -1,5 +1,5 @@
 #ifndef	NO_IDENT
-static	char	*Id = "$Id: wresize.c,v 12.7 1995/07/06 00:29:00 tom Exp $";
+static	char	*Id = "$Id: wresize.c,v 12.8 1995/07/30 17:55:50 tom Exp $";
 #endif
 
 /*
@@ -106,6 +106,7 @@ int	wresize(
 	 */
 	w->_maxx = adjx + ToCols;  if (w->_curx >= ToCols)  w->_curx = 0;
 	w->_maxy = adjy + ToLines; if (w->_cury >= ToLines) w->_cury = 0;
+	return OK;
 #endif	/* CURSES_LIKE_BSD */
 
 #if CURSES_LIKE_SYSV

@@ -1,4 +1,4 @@
-# $Id: Makefile,v 12.3 1995/01/28 21:10:25 tom Exp $
+# $Id: Makefile,v 12.5 1995/07/30 20:32:41 tom Exp $
 # MAKE-file for comparison/sorting library routines
 
 ####### (Environment) ##########################################################
@@ -8,6 +8,7 @@ include ../../support/td_lib.mk
 ####### (Standard Lists) #######################################################
 
 CSRC	=\
+	btree.c \
 	cmpqsort.c \
 	diffload.c \
 	m2comp.c \
@@ -16,6 +17,7 @@ CSRC	=\
 SOURCES	= Makefile descrip.mms $(CSRC)
 
 OBJS	=\
+	$Z(btree.o) \
 	$Z(cmpqsort.o) \
 	$Z(diffload.o) \
 	$Z(m2comp.o) \
@@ -25,6 +27,8 @@ OBJS	=\
 include ../td_rules.mk
 
 ####### (Details of Productions) ###############################################
+
+$Z(btree.o):	$(PTYPES_H) $I/td_btree.h
 
 $Z(cm_qsort.o):	$(QSORT_H)
 

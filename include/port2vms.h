@@ -1,5 +1,5 @@
 /*
- * $Id: port2vms.h,v 12.4 1994/10/07 00:13:04 tom Exp $
+ * $Id: port2vms.h,v 12.5 1995/07/30 18:38:29 tom Exp $
  *
  * VMS-definitions for supporting unix/vms port
  */
@@ -30,9 +30,9 @@ typedef	struct	timeval {
 #define	OPENDIR_ARG	"*.*;*"
 #define	EDITDIR_ARG	"*.*;"
 
-#ifndef		$DESCRIPTOR
+/*#ifndef	$DESCRIPTOR*/
 #include	<descrip.h>
-#endif
+/*#endif*/
 		/* (try doing strings w/o descriptors!) */
 
 #else	/* unix or MSDOS */

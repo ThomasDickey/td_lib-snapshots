@@ -1,4 +1,4 @@
-# $Id: Makefile,v 12.5 1995/01/28 21:10:25 tom Exp $
+# $Id: Makefile,v 12.6 1995/07/30 19:53:51 tom Exp $
 # MAKE-file for miscellaneous library routines
 
 ####### (Environment) ##########################################################
@@ -17,6 +17,7 @@ CSRC	=\
 	dumptty.c \
 	dumpwin.c \
 	erasechr.c \
+	is_xterm.c \
 	killchar.c \
 	logch.c \
 	on_winch.c \
@@ -43,6 +44,7 @@ OBJS	=\
 	$Z(dumptty.o) \
 	$Z(dumpwin.o) \
 	$Z(erasechr.o) \
+	$Z(is_xterm.o) \
 	$Z(killchar.o) \
 	$Z(logch.o) \
 	$Z(on_winch.o) \
