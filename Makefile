@@ -1,24 +1,24 @@
-# $Header: /users/source/archives/td_lib.vcs/RCS/Makefile,v 3.0 1989/06/08 12:28:54 ste_cm Rel $
+# $Id: Makefile,v 7.0 1989/08/22 09:29:58 ste_cm Rel $
 # Top-level makefile for CM_TOOLS common library
 #
 # $Log: Makefile,v $
-# Revision 3.0  1989/06/08 12:28:54  ste_cm
-# BASELINE Mon Jun 19 13:20:43 EDT 1989
+# Revision 7.0  1989/08/22 09:29:58  ste_cm
+# BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
 #
-#	Revision 2.4  89/06/08  12:28:54  dickey
+#	Revision 6.0  89/08/22  09:29:58  ste_cm
+#	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+#	
+#	Revision 5.0  89/08/22  09:29:58  ste_cm
+#	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+#	
+#	Revision 4.0  89/08/22  09:29:58  ste_cm
+#	BASELINE Thu Aug 24 09:34:01 EDT 1989 -- support:navi_011(rel2)
+#	
+#	Revision 3.1  89/08/22  09:29:58  dickey
 #	corrected 'destroy' rule
 #	
-#	Revision 2.3  89/04/25  12:48:12  dickey
-#	added common.h to install-list
-#	
-#	Revision 2.2  89/04/25  08:35:36  dickey
-#	ported subset of this library to VMS; added descrip.mms for that purpose
-#	
-#	Revision 2.1  89/04/24  11:42:17  dickey
-#	added README file
-#	
-#	Revision 2.0  89/03/28  10:20:53  ste_cm
-#	BASELINE Thu Apr  6 09:37:24 EDT 1989
+#	Revision 3.0  89/06/08  12:28:54  ste_cm
+#	BASELINE Mon Jun 19 13:20:43 EDT 1989
 #	
 ####### (Development) ##########################################################
 I	= ../../interface
@@ -53,11 +53,11 @@ lint.out:	$(FIRST)
 	cd src;		$(MAKE) $@
 
 rdestroy\
-destroy:	$(FIRST) clobber
+destroy:	$(FIRST)
 	cd interface;	$(MAKE) destroy
 	cd src;		$(MAKE) destroy
-	rmdir lib
-	sh -c 'for i in *;do case $$i in RCS);; *) rm -f $$i;;esac;done'
+	rm -rf lib
+	sh -c 'for i in *;do case $$i in RCS);; *) rm -f $$i;;esac;done;exit 0'
 
 run_tests:
 	@echo '** no test suite available for this module'

@@ -1,19 +1,18 @@
-# $Header: /users/source/archives/td_lib.vcs/include/RCS/Makefile,v 3.0 1989/06/08 12:25:14 ste_cm Rel $
+# $Id: Makefile,v 4.0 1989/08/22 10:31:03 ste_cm Rel $
 # make-file for CM_TOOLS common interface directory
 #
 # $Log: Makefile,v $
-# Revision 3.0  1989/06/08 12:25:14  ste_cm
-# BASELINE Mon Jun 19 13:22:44 EDT 1989
+# Revision 4.0  1989/08/22 10:31:03  ste_cm
+# BASELINE Thu Aug 24 09:35:35 EDT 1989 -- support:navi_011(rel2)
 #
-#	Revision 2.2  89/06/08  12:25:14  dickey
-#	corrections to 'clean' & 'destroy' rules
+#	Revision 3.2  89/08/22  10:31:03  dickey
+#	invoke 'makellib' via 'sh' so this works ok on sparc.
 #	
-#	Revision 2.1  89/04/20  14:07:03  dickey
-#	moved guts of llib-ltd to "common.h" to use for function-prototype on
-#	VMS.
+#	Revision 3.1  89/08/22  09:36:10  dickey
+#	corrected 'destroy' rule; added 'lincnt.out'
 #	
-#	Revision 2.0  89/03/21  16:17:11  ste_cm
-#	BASELINE Thu Apr  6 09:38:25 EDT 1989
+#	Revision 3.0  89/06/08  12:25:14  ste_cm
+#	BASELINE Mon Jun 19 13:22:44 EDT 1989
 #	
 
 ####### (Development) ##########################################################
@@ -41,11 +40,12 @@ all:	$(ALL)
 clean:			; rm -f *.out *.ln core
 clobber:	clean	; rm -f $(ALL)
 destroy:
-	sh -c 'for i in *;do case $$i in RCS);; *) rm -f $$i;;esac;done'
+	sh -c 'for i in *;do case $$i in RCS);; *) rm -f $$i;;esac;done;exit 0'
 sources:	$(SOURCES)
 lint.out:
+lincnt.out:	$(H_SRC)	; lincnt $(H_SRC) >$@
 
 ####### (Details of Productions) ###############################################
 #
 $(SOURCES):		; $(GET) $@
-$L/$(LLIB).ln:	$(H_SRC) $(LLIB) ; -makellib -L$L $(LLIB) $(llib)
+$L/$(LLIB).ln:	$(H_SRC) $(LLIB) ; - sh -c 'makellib -L$L $(LLIB) $(llib)'

@@ -1,3 +1,41 @@
+1989-08-22  dickey@software.org
+
+	* include/Makefile:
+	invoke 'makellib' via 'sh' so this works ok on sparc.
+
+1989-08-22  ste_cm@software.org
+
+	* include/Makefile:
+	BASELINE Thu Aug 24 09:35:35 EDT 1989 -- support:navi_011(rel2)
+
+1989-08-22  dickey@software.org
+
+	* include/Makefile: corrected 'destroy' rule; added 'lincnt.out'
+
+	* src/Makefile, Makefile: corrected 'destroy' rule
+
+1989-08-22  ste_cm@software.org
+
+	* Makefile:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* Makefile: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* Makefile:
+	BASELINE Thu Aug 24 09:34:01 EDT 1989 -- support:navi_011(rel2)
+
+	* Makefile:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1989-08-22  dickey@software.org
+
+	* certify/reusable.txt: RCS_BASE
+
+1989-08-22  ste_cm@software.org
+
+	* certify/reusable.txt:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
 1989-08-17  dickey@software.org
 
 	* src/cm_funcs/sccslast.c:
