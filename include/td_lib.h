@@ -1,10 +1,12 @@
-/* $Id: td_lib.h,v 4.5 1989/10/24 11:53:28 dickey Exp $ */
+/* $Id: td_lib.h,v 5.0 1989/10/26 09:25:24 ste_cm Rel $ */
 
 /*
  * Combined lint-library/function prototype definitions for CM_TOOLS COMMON
  * library.
  */
 
+#ifndef		_COMMON_H_
+#define		_COMMON_H_
 #ifndef		_PTYPES_
 #include "ptypes.h"
 #endif		_PTYPES_
@@ -641,6 +643,13 @@
 			_DCL(char *,	b)
 			_NUL
 
+	/* track_wd.c ------------------------------------------------- */
+		track_wd(
+			_AR1(char *,	path)
+			)
+			_DCL(char *,	path)
+			_NUL
+
 	/* trimpath.c ------------------------------------------------- */
 	char	*trimpath(
 			_ARX(char *,	path)
@@ -786,3 +795,4 @@ int	win2file(
 			_DCL(int,	row)
 			_NUL
 #endif	CUR_PTYPES
+#endif		_COMMON_H_

@@ -1,4 +1,4 @@
-# $Id: descrip.mms,v 4.5 1989/10/24 11:50:18 dickey Exp $
+# $Id: descrip.mms,v 5.0 1989/10/26 08:55:23 ste_cm Rel $
 # MMS-file for miscellaneous library routines	
 #
 ####### (Development) ##########################################################
@@ -96,6 +96,7 @@ UNUSED_MODULES = -
 	SCCSLAST,		# sccs (unix-only) -
 	SCR_SIZE,		# curses/apollo/termcap -
 	SETMTIME,		# utime() call -
+	TRACK_WD,		# unix-style 'getwd()' -
 	UID2S,			# PORTUNIX -
 	USERCOPY 		# uses FOR_USER -
 	USERPROT 		# uses FOR_USER -
@@ -182,6 +183,7 @@ C_SRC	=-
 	STRTRIM.C -
 	STRUCMP.C -
 	STRUCPY.C -
+	TRACK_WD.C -
 	TRIMPATH.C -
 	TXTALLOC.C -
 	UID2S.C -
