@@ -1,3 +1,7 @@
+#ifndef	NO_IDENT
+static	char	Id[] = "$Id: utimes.c,v 12.1 1994/08/21 18:39:51 tom Exp $";
+#endif
+
 /*
  * Title:	utimes.c
  * Author:	T.E.Dickey
@@ -13,8 +17,6 @@
  */
 
 #include	"port2vms.h"
-
-MODULE_ID("$Id: utimes.c,v 12.2 1994/08/21 18:39:51 tom Exp $")
 
 #ifdef	vms
 #include	<rms.h>

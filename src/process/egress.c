@@ -1,3 +1,7 @@
+#ifndef NO_IDENT
+static char *Id = "$Id: egress.c,v 12.1 1994/11/12 22:33:11 tom Exp $";
+#endif
+
 /*
  * Title:	egress.c ("access" for effective-user)
  * Author:	T.E.Dickey
@@ -11,8 +15,6 @@
 #define ACC_PTYPES
 #define ERR_PTYPES
 #include <ptypes.h>
-
-MODULE_ID("$Id: egress.c,v 12.2 1994/11/12 22:33:11 tom Exp $")
 
 int	egress(
 	_ARX(char *,	pathname)

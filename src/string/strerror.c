@@ -1,5 +1,5 @@
 #ifndef	NO_IDENT
-static	char	Id[] = "$Id: strerror.c,v 12.3 1994/07/02 11:47:47 tom Exp $";
+static	char	Id[] = "$Id: strerror.c,v 12.4 1995/02/18 00:04:00 tom Exp $";
 #endif
 
 /*
@@ -22,7 +22,7 @@ char	*strerror (
 	if (errnum > 0 && errnum < sys_nerr)
 		return sys_errlist[errnum];
 #endif
-	(void)ltostr(unknown+6, (long)errnum, 10);
+	(void)l2str(unknown+6, (long)errnum, 10);
 	return unknown;
 }
 #endif

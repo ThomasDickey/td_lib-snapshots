@@ -1,3 +1,7 @@
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: bldarg.c,v 12.2 1993/10/29 17:35:27 dickey Exp $";
+#endif
+
 /*
  * Title:	bldarg.c (build argv-array)
  * Created:	17 Dec 1985
@@ -34,9 +38,6 @@
 
 #include	"ptypes.h"
 #include	<ctype.h>
-
-MODULE_ID("$Id: bldarg.c,v 12.3 1993/10/29 17:35:27 tom Exp $")
-
 #define	blank(c)	(isascii(c) && isspace(c))
 
 void	bldarg (

@@ -1,3 +1,7 @@
+#ifndef NO_IDENT
+static	char	Id[] = "$Id: lastrev.c,v 12.4 1994/10/06 00:02:27 tom Exp $";
+#endif
+
 /*
  * Title:	lastrev.c (find last revision & date)
  * Author:	T.E.Dickey
@@ -12,8 +16,6 @@
 #include	"cmv_defs.h"
 #include	"rcsdefs.h"
 #include	"sccsdefs.h"
-
-MODULE_ID("$Id: lastrev.c,v 12.5 1994/10/06 00:02:27 tom Exp $")
 
 /*
  * This is driven by an environment variable, but ultimately should be done

@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: cmv_last.c,v 12.5 1995/02/11 19:21:04 tom Exp $";
+static	char	Id[] = "$Id: cmv_last.c,v 12.6 1995/02/18 00:04:00 tom Exp $";
 #endif
 
 /*
@@ -55,12 +55,14 @@ void	ScanSCCS (
 	if (fp) {
 		newzone(5,0,FALSE);	/* interpret in EST5EDT */
 		while (fgets(bfr, sizeof(bfr), fp)) {
+			if (*bfr != '\001')
+				break;
 			if (!gotten) {
-				if (strncmp(bfr, "\001h", 2))
+				if (bfr[1] != 'h')
 					break;
 				gotten++;
 			}
-			if ((strncmp(bfr, "\001d D ", 4) == 0)
+			if ((strncmp(bfr+1, "d D ", 3) == 0)
 			 && (sscanf(bfr+4, "%s %d/%d/%d %d:%d:%d ",
 				ver,
 				&yy, &mm, &dd,
@@ -70,9 +72,9 @@ void	ScanSCCS (
 				*date_ = packdate (1900+yy, mm, dd, hr, mn, sc);
 			}
 			if (match
-			 && !strncmp(bfr, "\001c ", 3)) {
+			 && !strncmp(bfr+1, "c ", 2)) {
 				time_t	when;
-				if ((s = strstr(bfr, "\\\001O")) != 0) {
+				if ((s = strstr(bfr+1, "\\\001O")) != 0) {
 					while (strncmp(s, ":M", 2) && *s)
 						s++;
 					if (sscanf(s, ":M%ld", &when))

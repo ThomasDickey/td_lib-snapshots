@@ -1,3 +1,7 @@
+#ifndef	NO_IDENT
+static	char	Id[] = "$Id: vms_rpth.c,v 12.1 1994/08/21 18:39:51 tom Exp $";
+#endif
+
 /*
  * Title:	vms_relpath.c (convert VMS path to relative-form)
  * Author:	T.E.Dickey
@@ -17,8 +21,6 @@
 
 #define	STR_PTYPES
 #include	"port2vms.h"
-
-MODULE_ID("$Id: vms_rpth.c,v 12.2 1994/08/21 18:39:51 tom Exp $")
 
 static
 char *	after_leaf(

@@ -1,3 +1,7 @@
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: vecalloc.c,v 12.3 1994/11/17 13:23:17 tom Exp $";
+#endif
+
 /*
  * Title:	vecalloc.c (vector-allocator)
  * Author:	T.E.Dickey
@@ -14,8 +18,6 @@
  */
 
 #include "ptypes.h"
-
-MODULE_ID("$Id: vecalloc.c,v 12.4 1994/11/17 13:23:17 tom Exp $")
 
 	/*ARGSUSED*/
 	def_ALLOC(char *)

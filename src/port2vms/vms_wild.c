@@ -1,3 +1,7 @@
+#ifndef	NO_IDENT
+static	char	Id[] = "$Id: vms_wild.c,v 12.1 1994/08/21 18:40:53 tom Exp $";
+#endif
+
 /*
  * Title:	vms_iswild.c (vms wildcard-test)
  * Author:	T.E.Dickey
@@ -13,8 +17,6 @@
 
 #define	STR_PTYPES
 #include	"port2vms.h"
-
-MODULE_ID("$Id: vms_wild.c,v 12.2 1994/08/21 18:40:53 tom Exp $")
 
 int	vms_iswild(
 	_AR1(char *,	name))

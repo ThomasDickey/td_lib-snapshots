@@ -1,3 +1,7 @@
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: stralloc.c,v 12.2 1993/10/29 17:35:24 dickey Exp $";
+#endif
+
 /*
  * Title:	stralloc.c (string-allocator)
  * Author:	T.E.Dickey
@@ -26,8 +30,6 @@
 
 #define	STR_PTYPES
 #include	"ptypes.h"
-
-MODULE_ID("$Id: stralloc.c,v 12.3 1993/10/29 17:35:24 tom Exp $")
 
 char *	stralloc(
 	_AR1(char *,	s))

@@ -1,3 +1,7 @@
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: fp2argv.c,v 12.2 1993/10/29 17:35:26 dickey Exp $";
+#endif
+
 /*
  * Title:	fp2argv (file-pointer to argv-list)
  * Author:	T.E.Dickey
@@ -21,8 +25,6 @@
 
 #include	"ptypes.h"
 #include	"dyn_str.h"
-
-MODULE_ID("$Id: fp2argv.c,v 12.3 1993/10/29 17:35:26 tom Exp $")
 
 	/*ARGSUSED*/
 	def_DOALLOC(char *)

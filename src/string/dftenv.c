@@ -1,3 +1,7 @@
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: dftenv.c,v 12.1 1993/10/29 17:35:27 dickey Exp $";
+#endif
+
 /*
  * Title:	dftenv.c (getenv with default)
  * Author:	T.E.Dickey
@@ -11,8 +15,6 @@
  */
 
 #include "ptypes.h"
-
-MODULE_ID("$Id: dftenv.c,v 12.2 1993/10/29 17:35:27 tom Exp $")
 
 char *
 dftenv(

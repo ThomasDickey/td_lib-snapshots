@@ -1,3 +1,7 @@
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: revert.c,v 12.2 1993/11/26 22:24:28 dickey Exp $";
+#endif
+
 /*
  * Title:	revert.c
  * Author:	T.E.Dickey
@@ -16,8 +20,6 @@
  */
 
 #include	"ptypes.h"
-
-MODULE_ID("$Id: revert.c,v 12.3 1993/11/26 22:24:28 tom Exp $")
 
 #ifdef	unix
 

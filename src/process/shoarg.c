@@ -1,3 +1,7 @@
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: shoarg.c,v 12.3 1993/11/27 14:56:46 dickey Exp $";
+#endif
+
 /*
  * Title:	shoarg.c (display argv-array)
  * Created:	20 Jun 1991
@@ -12,8 +16,6 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 #include	<ctype.h>
-
-MODULE_ID("$Id: shoarg.c,v 12.4 1993/11/27 14:56:46 tom Exp $")
 
 /*
  * Function:	Writes a new string with the non-ascii characters escaped.

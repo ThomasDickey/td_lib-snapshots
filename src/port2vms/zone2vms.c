@@ -1,3 +1,7 @@
+#ifndef	NO_IDENT
+static	char	Id[] = "$Id: zone2vms.c,v 12.3 1994/10/07 00:07:02 tom Exp $";
+#endif
+
 /*
  * Title:	zone2vms.c
  * Author:	T.E.Dickey
@@ -16,8 +20,6 @@
  */
 
 #include	"port2vms.h"
-
-MODULE_ID("$Id: zone2vms.c,v 12.4 1994/10/07 00:07:02 tom Exp $")
 
 #undef MIN
 

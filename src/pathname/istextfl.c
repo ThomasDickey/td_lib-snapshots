@@ -1,3 +1,7 @@
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: istextfl.c,v 12.2 1993/10/29 17:35:25 dickey Exp $";
+#endif
+
 /*
  * Title:	istextfile.c (is this a text-file?)
  * Author:	T.E.Dickey
@@ -16,8 +20,6 @@
 
 #include	"ptypes.h"
 #include	<ctype.h>
-
-MODULE_ID("$Id: istextfl.c,v 12.3 1993/10/29 17:35:25 tom Exp $")
 
 int	istextfile(
 	_AR1(char *,	name))

@@ -1,3 +1,7 @@
+#ifndef	NO_IDENT
+static	char	Id[] = "$Id: fleaf.c,v 12.2 1993/11/30 13:34:40 dickey Exp $";
+#endif
+
 /*
  * Title:	fleaf.c (file/pathname leaf)
  * Author:	T.E.Dickey
@@ -13,8 +17,6 @@
  */
 #define STR_PTYPES
 #include "ptypes.h"
-
-MODULE_ID("$Id: fleaf.c,v 12.3 1993/11/30 13:34:40 tom Exp $")
 
 char *	fleaf_delim(
 	_AR1(char *, path))

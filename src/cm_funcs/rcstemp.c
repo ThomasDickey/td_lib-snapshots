@@ -1,3 +1,7 @@
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: rcstemp.c,v 12.6 1994/07/16 15:25:20 tom Exp $";
+#endif
+
 /*
  * Title:	rcstemp.c (rcs to temp-name)
  * Author:	T.E.Dickey
@@ -37,8 +41,6 @@
 #include "ptypes.h"
 #include "rcsdefs.h"
 #include <errno.h>
-
-MODULE_ID("$Id: rcstemp.c,v 12.7 1994/07/16 15:25:20 tom Exp $")
 
 #define	DEBUG	if (RCS_DEBUG) PRINTF
 

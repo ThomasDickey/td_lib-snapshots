@@ -1,3 +1,7 @@
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: mem2file.c,v 12.4 1994/07/16 15:24:08 tom Exp $";
+#endif
+
 /*
  * Title:	mem2file.c (memory-to-file I/O)
  * Author:	T.E.Dickey
@@ -16,8 +20,6 @@
 
 #define	STR_PTYPES
 #include	"ptypes.h"
-
-MODULE_ID("$Id: mem2file.c,v 12.5 1994/07/16 15:24:08 tom Exp $")
 
 int	mem2file(
 	_ARX(char *,	blob)

@@ -1,3 +1,7 @@
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: rcskeys.c,v 12.2 1993/10/29 17:35:24 dickey Exp $";
+#endif
+
 /*
  * Title:	rcskeys.c (decode RCS keywords)
  * Author:	T.E.Dickey
@@ -25,8 +29,6 @@
 #include	"ptypes.h"
 #include	"rcsdefs.h"
 #include	<ctype.h>
-
-MODULE_ID("$Id: rcskeys.c,v 12.3 1993/10/29 17:35:24 tom Exp $")
 
 int	rcskeys(
 	_AR1(char *,	arg))

@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: sccslast.c,v 12.7 1994/08/15 23:37:13 tom Exp $";
+static	char	Id[] = "$Id: sccslast.c,v 12.8 1995/02/18 00:04:00 tom Exp $";
 #endif
 
 /*
@@ -64,6 +64,8 @@ void	trysccs (
 	if (fp) {
 		newzone(5,0,FALSE);	/* interpret in EST5EDT */
 		while (fgets(bfr, sizeof(bfr), fp)) {
+			if (*bfr != '\001')
+				break;
 			if (!gotten) {
 				if (strncmp(bfr, "\001h", 2))	break;
 				gotten++;

@@ -1,3 +1,7 @@
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: denode.c,v 12.3 1993/11/28 23:36:40 dickey Exp $";
+#endif
+
 /*
  * Title:	denode.c
  * Author:	T.E.Dickey
@@ -24,8 +28,6 @@
  */
 
 #include "ptypes.h"
-
-MODULE_ID("$Id: denode.c,v 12.4 1993/11/28 23:36:40 tom Exp $")
 
 char *	denode (
 	_ARX(register char *,	path)

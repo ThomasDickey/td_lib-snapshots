@@ -1,3 +1,7 @@
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: strclean.c,v 12.2 1993/10/29 17:35:23 dickey Exp $";
+#endif
+
 /*
  * Title:	strclean.c (string-cleaner)
  * Author:	T.E.Dickey
@@ -17,8 +21,6 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 #include	<ctype.h>
-
-MODULE_ID("$Id: strclean.c,v 12.3 1993/10/29 17:35:23 tom Exp $")
 
 int	strclean(
 	_AR1(char *,	string))

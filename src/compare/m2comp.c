@@ -1,3 +1,7 @@
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: m2comp.c,v 12.3 1993/10/29 17:35:25 dickey Exp $";
+#endif
+
 /*
  * Title:	m2comp.c
  * Author:	T.E.Dickey (from MDIFF program)
@@ -18,8 +22,6 @@
 #define	STR_PTYPES
 #define	SCOMP	m2comp			/* name of this module */
 #include "td_scomp.h"
-
-MODULE_ID("$Id: m2comp.c,v 12.4 1993/10/29 17:35:25 tom Exp $")
 
 #define	INSERT	1
 #define	DELETE	2

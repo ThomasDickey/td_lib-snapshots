@@ -1,3 +1,7 @@
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: padedit.c,v 12.4 1993/11/26 22:12:34 dickey Exp $";
+#endif
+
 /*
  * Title:	padedit.c (pad-edit)
  * Author:	T.E.Dickey
@@ -37,8 +41,6 @@
 #define	WAI_PTYPES
 #include	"ptypes.h"
 #include	<errno.h>
-
-MODULE_ID("$Id: padedit.c,v 12.5 1993/11/26 22:12:34 tom Exp $")
 
 #ifdef	unix
 

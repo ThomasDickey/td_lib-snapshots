@@ -1,3 +1,7 @@
+#ifndef	NO_IDENT
+static	char	Id[] = "$Id: memmove.c,v 12.1 1994/07/01 23:57:13 tom Exp $";
+#endif
+
 /*
  * Title:	memmove.c
  * Author:	T.E.Dickey
@@ -8,8 +12,6 @@
  * Function:	substitute for the commonly available function 'memmove'
  */
 #include "ptypes.h"
-
-MODULE_ID("$Id: memmove.c,v 12.2 1994/07/01 23:57:13 tom Exp $")
 
 #if	!HAVE_MEMMOVE
 char *	memmove(

@@ -1,3 +1,7 @@
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: getuser.c,v 12.3 1993/11/26 22:02:42 dickey Exp $";
+#endif
+
 /*
  * Title:	getuser.c (get user name)
  * Author:	T.E.Dickey
@@ -15,8 +19,6 @@
 
 #define PWD_PTYPES
 #include "ptypes.h"
-
-MODULE_ID("$Id: getuser.c,v 12.4 1993/11/26 22:02:42 tom Exp $")
 
 #ifdef	unix
 char *	getuser(_AR0)

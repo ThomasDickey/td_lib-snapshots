@@ -1,5 +1,5 @@
 #ifndef	NO_IDENT
-static	char	Id[] = "$Id: cmv_dir.c,v 12.11 1995/01/31 00:21:38 tom Exp $";
+static	char	Id[] = "$Id: cmv_dir.c,v 12.12 1995/02/18 00:04:00 tom Exp $";
 #endif
 
 /*
@@ -286,7 +286,7 @@ void	read_r_curr(
 			/* some revision-fields, for binary files, contain
 			 * other info.
 			 */
-			if ((s = strchr(d, ' ')) != 0)
+			if ((s = strpbrk(d, " ;")) != 0)
 				*s = EOS;
 			p->revision = txtalloc(d);
 			p->internal = NewInternal(parent, internal);

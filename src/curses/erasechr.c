@@ -1,3 +1,7 @@
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: erasechr.c,v 12.7 1994/07/04 11:58:27 tom Exp $";
+#endif
+
 /*
  * Title:	erasechar.c (return erase-char value)
  * Author:	T.E.Dickey
@@ -16,8 +20,6 @@
  */
 
 #include	"td_curse.h"
-
-MODULE_ID("$Id: erasechr.c,v 12.8 1994/07/04 11:58:27 tom Exp $")
 
 #define	STDIN_FD 0
 

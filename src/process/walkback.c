@@ -1,3 +1,7 @@
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: walkback.c,v 12.4 1993/11/26 22:30:38 dickey Exp $";
+#endif
+
 /*
  * Author:	T.E.Dickey
  * Created:	18 Nov 1992, from 'doalloc.c'
@@ -13,8 +17,6 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 #include	<errno.h>
-
-MODULE_ID("$Id: walkback.c,v 12.5 1993/11/26 22:30:38 tom Exp $")
 
 #ifdef	unix
 

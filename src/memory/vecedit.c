@@ -1,3 +1,7 @@
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: vecedit.c,v 12.2 1993/10/29 17:35:23 dickey Exp $";
+#endif
+
 /*
  * Title:	vecedit.c
  * Author:	T.E.Dickey
@@ -16,8 +20,6 @@
  */
 
 #include <ptypes.h>
-
-MODULE_ID("$Id: vecedit.c,v 12.3 1993/10/29 17:35:23 tom Exp $")
 
 char **
 vecedit(

@@ -1,3 +1,7 @@
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: walktree.c,v 12.6 1994/06/26 21:15:18 tom Exp $";
+#endif
+
 /*
  * Title:	walktree.c (link/directory tree)
  * Author:	T.E.Dickey
@@ -48,8 +52,6 @@
 #define		STR_PTYPES
 #include	"ptypes.h"
 #include	"td_qsort.h"
-
-MODULE_ID("$Id: walktree.c,v 12.7 1994/06/26 21:15:18 tom Exp $")
 
 /************************************************************************
  *	local definitions						*

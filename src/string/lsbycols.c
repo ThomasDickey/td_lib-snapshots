@@ -1,3 +1,7 @@
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: lsbycols.c,v 12.2 1993/10/29 17:35:25 dickey Exp $";
+#endif
+
 /*
  * Title:	list_by_cols.c
  * Author:	T.E.Dickey
@@ -18,8 +22,6 @@
 
 #define	STR_PTYPES
 #include "ptypes.h"
-
-MODULE_ID("$Id: lsbycols.c,v 12.3 1993/10/29 17:35:25 tom Exp $")
 
 #ifdef	lint
 #define	LIST(n)	(*(listp + n))		/* close enough to fool lint */

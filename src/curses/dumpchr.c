@@ -1,3 +1,7 @@
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: dumpchr.c,v 12.2 1993/10/29 17:35:27 dickey Exp $";
+#endif
+
 /*
  * Title:	dumpchr.c (dump character)
  * Author:	T.E.Dickey
@@ -16,8 +20,6 @@
 
 #include	"ptypes.h"
 #include	<ctype.h>
-
-MODULE_ID("$Id: dumpchr.c,v 12.3 1993/10/29 17:35:27 tom Exp $")
 
 #define	OUT	FPRINTF(fp,
 

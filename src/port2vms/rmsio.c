@@ -1,3 +1,7 @@
+#ifndef	NO_IDENT
+static	char	Id[] = "$Id: rmsio.c,v 12.1 1994/08/21 18:39:51 tom Exp $";
+#endif
+
 /*
  * Title:	rmsio.c
  * Author:	T.E.Dickey
@@ -21,8 +25,6 @@
 #include	"port2vms.h"
 #include	<ctype.h>
 #include	<errno.h>
-
-MODULE_ID("$Id: rmsio.c,v 12.2 1994/08/21 18:39:51 tom Exp $")
 
 #ifdef	vms
 #include	<rms.h>
