@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: cmdch.c,v 11.0 1991/10/03 08:41:41 ste_cm Rel $";
+static	char	Id[] = "$Id: cmdch.c,v 12.0 1992/08/12 09:18:03 ste_cm Rel $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: cmdch.c,v 11.0 1991/10/03 08:41:41 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	01 Dec 1987 (broke out of 'ded.c')
  * Modified:
+ *		12 Aug 1992, map carriage-return to newline.
  *		03 Oct 1991, conversion to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
  *		12 Mar 1990, lint (apollo sr10.1)
@@ -44,22 +45,19 @@ static	char	Id[] = "$Id: cmdch.c,v 11.0 1991/10/03 08:41:41 ste_cm Rel $";
 #endif
 #endif
 
-int
-cmdch(
-_AR1(int *,	cnt_))
-_DCL(int *,	cnt_)
+int	cmdch(
+	_AR1(int *,	cnt_))
+	_DCL(int *,	cnt_)
 {
-int	c,
-	done	= FALSE,
-	had_c	= 0,
-	count	= 0;
-char	i_blk[1024];
-static
-int	init	= FALSE,
-	ansi	= FALSE;
+	auto	int	c,
+			done	= FALSE,
+			had_c	= 0,
+			count	= 0;
+	auto	char	i_blk[1024];
+	static	int	init	= FALSE,
+			ansi	= FALSE;
 #ifndef	HAS_CURSOR
-static
-char	*KU, *KD, *KR, *KL;
+	static	char	*KU, *KD, *KR, *KL;
 #endif
 
 	if (!init) {
@@ -86,7 +84,8 @@ char	*KU, *KD, *KR, *KL;
 	}
 
 	while (!done) {
-	register j = 0;
+		register j = 0;
+
 		c = getch();
 		if (iscntrl(c))
 			i_blk[j++] = c;
@@ -125,8 +124,10 @@ char	*KU, *KD, *KR, *KL;
 			done = TRUE;
 	}
 
-	if (cnt_) {
+	if (cnt_)
 		*cnt_ = (had_c != 0) ? count : 1;
-	}
+
+	if (c == '\r')
+		c = '\n';
 	return(c);
 }

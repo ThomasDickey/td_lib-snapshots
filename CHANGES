@@ -1,3 +1,23 @@
+1992-08-12  dickey@software.org
+
+	* src/curses/cmdch.c: map-returns
+
+1992-08-12  ste_cm@software.org
+
+	* src/curses/cmdch.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1992-08-12  dickey@software.org
+
+	* src/curses/logch.c:
+	in 'encode_logch()', ensure that we put a null at the
+	buffer location, and mask 'c' to 8-bits.
+
+1992-08-12  ste_cm@software.org
+
+	* src/curses/logch.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
 1992-08-10  dickey@software.org
 
 	* src/curses/rawgets.c:
