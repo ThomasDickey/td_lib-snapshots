@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Id: aclocal.m4,v 12.118 1998/07/01 09:45:17 tom Exp $
+dnl $Id: aclocal.m4,v 12.119 1998/07/21 13:27:42 tom Exp $
 dnl vi:set ts=4:
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "CF_" to "AC_"
@@ -180,7 +180,7 @@ dnl Check if we're accidentally using a cache from a different machine.
 dnl Derive the system name, as a check for reusing the autoconf cache.
 dnl
 dnl If we've packaged config.guess and config.sub, run that (since it does a
-dnl better job than uname).
+dnl better job than uname). 
 AC_DEFUN([CF_CHECK_CACHE],
 [
 if test -f $srcdir/config.guess ; then
@@ -299,6 +299,7 @@ dnl ---------------------------------------------------------------------------
 dnl Curses-functions are a little complicated, since a lot of them are macros.
 AC_DEFUN([CF_CURSES_FUNCS],
 [
+AC_REQUIRE([CF_XOPEN_CURSES])
 for cf_func in $1
 do
 	CF_UPPER(cf_tr_func,$cf_func)
@@ -308,7 +309,6 @@ do
 		eval cf_result='$ac_cv_func_'$cf_func
 		if test ".$cf_result" != ".no"; then
 			AC_TRY_LINK([
-#define _XOPEN_SOURCE_EXTENDED
 #include <curses.h>
 #ifdef HAVE_TERM_H
 #include <term.h>
@@ -379,7 +379,7 @@ if test ".$ac_cv_func_initscr" != .yes ; then
 
 	# Check for library containing initscr
 	test "$cf_term_lib" != predefined && test "$cf_term_lib" != unknown && LIBS="-l$cf_term_lib $cf_save_LIBS"
-	for cf_curs_lib in cursesX curses ncurses xcurses jcurses unknown
+	for cf_curs_lib in curses ncurses xcurses cursesX jcurses unknown
 	do
 		AC_CHECK_LIB($cf_curs_lib,initscr,[break])
 	done
@@ -1995,4 +1995,24 @@ if test $cf_cv_decl_union_wait = yes; then
 	AC_MSG_RESULT($cf_cv_arg_union_wait)
 	test $cf_cv_arg_union_wait = yes && AC_DEFINE(WAIT_USES_UNION)
 fi
+])dnl
+dnl ---------------------------------------------------------------------------
+dnl Test if we should define X/Open source for curses, needed on Digital Unix
+dnl 4.x, to see the extended functions, but breaks on IRIX 6.x.
+AC_DEFUN([CF_XOPEN_CURSES],
+[
+AC_CACHE_CHECK(if we must define _XOPEN_SOURCE_EXTENDED,cf_cv_need_xopen_extension,[
+AC_TRY_LINK([
+#include <stdlib.h>
+#include <curses.h>],[
+	long x = winnstr(stdscr, "", 0)],
+	[cf_cv_need_xopen_extension=no],
+	[AC_TRY_LINK([
+#define _XOPEN_SOURCE_EXTENDED
+#include <stdlib.h>
+#include <curses.h>],[
+	long x = winnstr(stdscr, "", 0)],
+	[cf_cv_need_xopen_extension=yes],
+	[cf_cv_need_xopen_extension=no])])])
+test $cf_cv_need_xopen_extension = yes && AC_DEFINE(_XOPEN_SOURCE_EXTENDED)
 ])dnl

@@ -1,3 +1,10 @@
+1998-07-21  dickey@clark.net
+
+	* configure.in: add a check for gethostname()
+
+	* aclocal.m4:
+	improved CF_CURSES_FUNCS using a check for _XOPEN_SOURCE_EXTENDED
+
 1998-07-01  dickey@clark.net
 
 	* aclocal.m4: pick up change the puts cursesX ahead of curses
