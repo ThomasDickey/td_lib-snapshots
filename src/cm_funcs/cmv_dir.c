@@ -20,11 +20,12 @@
  *		this lets us use 'txtalloc()'.
  */
 
+#define	CHR_PTYPES
 #define	STR_PTYPES
 #include "ptypes.h"
 #include "cmv_defs.h"
 
-MODULE_ID("$Id: cmv_dir.c,v 12.17 1995/07/07 16:11:46 tom Exp $")
+MODULE_ID("$Id: cmv_dir.c,v 12.18 1996/04/10 18:58:48 tom Exp $")
 
 /******************************************************************************/
 #ifdef	lint
@@ -527,6 +528,78 @@ int	samehead(
 }
 
 /******************************************************************************/
+
+/*
+ * Skip backwards in the given substring to the previous path separator.  If
+ * the entire leaf looks like a CmVision internal name (e.g., d-<number>),
+ * return the pointer to that path separator.  Otherwise, return null.
+ */
+static
+char *	UpInternalDir(
+	_ARX(char *,	first)
+	_AR1(char *,	last)
+		)
+	_DCL(char *,	first)
+	_DCL(char *,	last)
+{
+	int	state = 3;
+
+	Debug((stderr, "Up(%s) %s\n", first, last))
+	while (--last >= first) {
+		if (isdigit(*last)) {
+			if (state != 3)
+				break;
+		} else if (*last == '-') {
+			if (state-- != 3)
+				break;
+		} else if (*last == 'd') {
+			if (state-- != 2)
+				break;
+		} else if (isSlash(*last)) {
+			if (state-- != 1)
+				break;
+			Debug((stderr, "=> %s\n", last))
+			return last;
+		} else {
+			break;
+		}
+	}
+	return 0;
+}
+
+/*
+ * Links are (apparently) always relative to the second level of the CmVision
+ * vault.  Strip off extra levels from the archive path so we'll be able to
+ * append the internal name correctly.
+ *
+ * For example, /vault/d-1234/d-3456 becomes /vault/d-1234.
+ */
+static
+void	StripToTop(
+	_ARX(char *,	dst)
+	_AR1(char *,	src)
+		)
+	_DCL(char *,	dst)
+	_DCL(char *,	src)
+{
+	char *base = strcpy(dst, src);
+	char *last = base + strlen(base);
+	char *ptr1;
+	char *ptr2;
+
+	if ((ptr1 = UpInternalDir(base, last)) != 0) {
+		while (last > base) {
+			if ((ptr2 = UpInternalDir(base, ptr1)) == 0) {
+				*last = EOS;
+				return;
+			}
+			last = ptr1;
+			ptr1 = ptr2;
+		}
+	}
+}
+
+/******************************************************************************/
 static
 VAULTS *LookupVault(
 	_ARX(char *,	working_directory)
@@ -643,10 +716,8 @@ char *	cmv_file (
 		if ((p = FindInternalDir(max_p->cmtree, temp)) != 0
 		 && (q = FindInternalFile(p, pathcat(temp, temp, pathleaf(filename)))) != 0) {
 			if (q->internal[0] == PATH_SLASH) {
-				(void)strcpy(
-					fleaf(
-						strcpy(archive, max_p->archive)),
-					q->internal);
+				StripToTop(archive, max_p->archive);
+				(void)strcat(archive, q->internal);
 			} else {
 				(void)pathcat(
 					archive,
