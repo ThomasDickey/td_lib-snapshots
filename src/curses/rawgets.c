@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: rawgets.c,v 12.12 1994/07/19 23:00:07 tom Exp $";
+static	char	Id[] = "$Id: rawgets.c,v 12.13 1994/07/20 22:36:39 tom Exp $";
 #endif
 
 /*
@@ -7,7 +7,7 @@ static	char	Id[] = "$Id: rawgets.c,v 12.12 1994/07/19 23:00:07 tom Exp $";
  * Title:	rawgets.c (raw-mode 'gets()')
  * Created:	29 Sep 1987 (from 'fl.c')
  * Modified:
- *		19 Jul 1994, adjustment for ncurses.
+ *		19 Jul 1994, adjustment for ncurses _max[xy] bug.
  *		16 Jul 1994, explicitly call for reverse-video if Sys5-curses.
  *		30 Jun 1994, added CTL/P, CTL/N as synonyms for up/down arrows
  *		28 Jun 1994, modified for window-resizing.
@@ -71,12 +71,6 @@ static	char	Id[] = "$Id: rawgets.c,v 12.12 1994/07/19 23:00:07 tom Exp $";
 #include	<ctype.h>
 #include	"td_curse.h"
 #include	"dyn_str.h"
-
-#if HAVE_LIBNCURSES		/* I think this is a bug in ncurses 1.8.5 */
-#define NCURSES_ADJ 1
-#else
-#define NCURSES_ADJ 0
-#endif
 
 #define	SHIFT	5
 
@@ -237,9 +231,10 @@ void	ShowAt(
 {
 	if (Z) {
 		register int	y, x, row, col, len, max;
+		auto	int	margin = wMaxY(Z);
 
 		getyx(Z, y, x);
-		for (row = y, col = x; *at && (row < Z->_maxy + NCURSES_ADJ); row++) {
+		for (row = y, col = x; (*at != EOS) && (row < margin); row++) {
 			(void)wmove(Z, row, col);
 			len = strlen(at);
 			max = xlast - col;
@@ -419,8 +414,8 @@ void	Redisplay (_AR0)
 	(void) wmove(win, y_rawgets, x_rawgets);
 	if (wrap) {
 		xlast = x_rawgets + FieldLen;
-		if (xlast >= Z->_maxx)
-			xlast = Z->_maxx - 1;
+		if (xlast >= wMaxX(Z))
+			xlast = wMaxX(Z) - 1;
 		(void) wclrtobot(win);
 		(void) wmove(win, y_rawgets, x_rawgets);
 	} else {
@@ -486,8 +481,8 @@ int	wrawgets (
 		ShowPrefix();
 		(void)wmove(Z, y_rawgets, x_rawgets);
 		xlast = x_rawgets + FieldLen;
-		if (xlast >= Z->_maxx)
-			xlast = Z->_maxx - 1;
+		if (xlast >= wMaxX(Z))
+			xlast = wMaxX(Z) - 1;
 
 		MoveTo(bfr+strlen(bfr));
 		if (wrap)
