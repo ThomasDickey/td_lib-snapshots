@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/port2vms/RCS/vms2name.c,v 1.2 1989/04/24 16:01:21 dickey Exp $";
+static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/port2vms/RCS/vms2name.c,v 2.0 1989/05/25 15:21:45 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,6 +7,8 @@ static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/port2vms/RC
  * Author:	T.E.Dickey
  * Created:	02 Nov 1988
  * Modified:
+ *		25 May 1989, handle special case of "[]".  Lowercase entire
+ *			     pathname.  Generate ".." cases.
  *		13 Apr 1989, added special cases for leaf-editing which assume
  *			     that we got "s$" prefix from "s." (sccs), "$v"
  *			     suffix from ",v" (RCS), and "$" prefix from "."
@@ -20,12 +22,23 @@ static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/port2vms/RC
  *		09 Jan 1989, trim trailing "." if suffix is null.
  *
  * Function:	Translates a VMS-style name into a unix-style name.
+ *
+ * Assumes:	The VMS-style name is syntactically correct.
+ *		There is enough room in the output buffer to store the name.
+ *
+ * Notes:	This will translate a string which is either entirely a VMS
+ *		pathname to a unix-style name, or one which is unix-style
+ *		except for the leaf-name.  It looks explicitly for the ']'
+ *		to determine where to put '/' marks.  This feature is used by
+ *		vms-tar.
  */
 
 #define	STR_PTYPES
 #include	"portunix.h"
 #include	<ctype.h>
 extern	char	*getcwd();
+
+#define	LOWER(p)	((isalpha(*p) && isupper(*p)) ? tolower(*p) : *p)
 
 static	struct	{
 		int	len;	/* number of chars to uppercase */
@@ -46,10 +59,11 @@ char	*dst, *src;
 	auto	int	need_dev = FALSE,
 			have_dev = FALSE,
 			rcs_suffix= FALSE;
-	char	tmp[MAXPATHLEN],
-		*base = tmp,
-		*s = strcpy(tmp, src),	/* ... to permit src == dst */
-		*d;
+	auto	char	tmp[MAXPATHLEN],
+			*output = dst,
+			*base = tmp,
+			*s = strcpy(tmp, src),	/* ... to permit src == dst */
+			*d;
 
 	if (s = strchr(s, ';')) {	/* trim off version */
 		*s = EOS;
@@ -59,8 +73,10 @@ char	*dst, *src;
 	/* look for node specification */
 	if ((s = strchr(base, ':'))
 	&&  (s[1] == ':')) {
-		while (base < s)
-			*dst++ = *base++;
+		while (base < s) {
+			*dst++ = LOWER(base);
+			base++;
+		}
 		*dst++ = '!';
 		base += 2;
 		need_dev = TRUE;
@@ -73,13 +89,17 @@ char	*dst, *src;
 	 */
 	if (s = strchr(base, ':')) {
 		*dst++ = '/';
-		while (base < s)
-			*dst++ = *base++;
+		while (base < s) {
+			*dst++ = LOWER(base);
+			base++;
+		}
 		base++;			/* skip over ":" */
 		have_dev = TRUE;
 	} else if (need_dev
 	||	  ((base[0] == '[')
-	&&	   (base[1] != '.'))) {	/* must supply a device */
+	&&	   (base[1] != '-')
+	&&	   (base[1] != '.')
+	&&	   (base[1] != ']'))) {	/* must supply a device */
 		register char	*a = getcwd(current, sizeof(current)),
 				*b = strchr(a ? a : "?", ':');
 		if ((b != 0)
@@ -89,23 +109,45 @@ char	*dst, *src;
 		}
 		if (b != 0) {
 			*dst++ = '/';	/* begin the device */
-			while (a < b)
-				*dst++ = *a++;
+			while (a < b) {
+				*dst++ = LOWER(a);
+				a++;
+			}
 			have_dev = TRUE;
 		}			/* else, no device in getcwd! */
 	}
 
 	/* translate directory-syntax */
 	if (s = strchr(base, '[')) {
-		if (s[1] == '.') {
+		if (s[1] == ']') {
+			*dst++ = '.';
+			if (s[2] != EOS)
+				*dst++ = '/';
+			s += 2;
+			d = s;
+		} else if (s[1] == '.') {
 			if (have_dev)
 				*dst++ = '/';
 			s += 2;
+			d = s;
+		} else if (s[1] == '-' && strchr("-.]", s[2])) {
+			s++;
+			while (*s == '-') {
+				s++;
+				*dst++ = '.';
+				*dst++ = '.';
+				if (*s == '.' && (s[1] == '-' || s[1] == ']'))
+					/* allow "-.-" */
+					s++;
+				if (*s == '-')
+					*dst++ = '/';
+			}
 			d = s;
 		} else {
 			d = s;
 			*s++ = '/';
 		}
+		/* expect s points to the last token before ']' */
 		while (*s && *s != ']') {
 			if (*s == '.')
 				*s = '/';
@@ -119,7 +161,11 @@ char	*dst, *src;
 		d = base;
 	}
 
-	/* ensure that we map consistently to lowercase */
+	/*
+	 * Ensure that we map consistently to lowercase
+	 * 'd' points to the beginning of character-string which needs only
+	 * case-conversion (i.e., after ":" and "]").
+	 */
 	for (s = dst; *d; s++, d++) {
 		if (isalpha(*d) && isupper(*d))
 			*s = _tolower(*d);
@@ -161,7 +207,7 @@ char	*dst, *src;
 	}
 	if (rcs_suffix)
 		(void)strcat(dst, ",v");
-	return (dst);
+	return (output);
 }
 
 #ifdef	TEST
@@ -188,28 +234,41 @@ char	*argv[];
 		dotest(argc, argv);
 	else {
 		static	char	*testv[] = {
-				"a",
-				"[a]",
-				"[a.b]",
-				"[.a]",
-				"[.a.b]",
-				"[a]b",
-				"[.a]b",
-				"[.a.b]c",
-				"$cshrc",
-				"s$readme",	/* sccs */
-				"readme$v",	/* RCS  */
-				"read.me",
-				"read.me;-1",
-				"readme.txt",
-				"readme.",
-				"dev:[a]",
-				"dev:[.a]",
-				"node::dev:a",
-				"node::dev:[a]",
-				"node::a",
-				"node::[a]",
-				"node::[a.b]"
+				"A",
+				"[A]",
+				"[A.B]",
+				"[.A]",
+				"[.A.B]",
+				"[A]B",
+				"[.A]B",
+				"[.A.B]C",
+				"[]",
+				"[]A",
+				"[-]",
+				"[-]A",
+				"[--]",
+				"[--]A",
+				"[-.]",
+				"[-.]A",
+				"[-.-]",
+				"[-.-]A",
+				"[-.A]",
+				"[-A]",
+				"[-]bin/tar.exe;26",	/* mixed-mode */
+				"$CSHRC",
+				"S$README",	/* SCCS */
+				"README$V",	/* RCS  */
+				"READ.ME",
+				"READ.ME;-1",
+				"README.TXT",
+				"README.",
+				"DEV:[A]",
+				"DEV:[.A]",
+				"NODE::DEV:A",
+				"NODE::DEV:[A]",
+				"NODE::A",
+				"NODE::[A]",
+				"NODE::[A.B]"
 				};
 		dotest(sizeof(testv)/sizeof(testv[0]), testv);
 	}
