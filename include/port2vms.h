@@ -1,8 +1,11 @@
 /*
- * $Header: /users/source/archives/td_lib.vcs/include/RCS/port2vms.h,v 1.7 1989/04/25 10:59:17 dickey Exp $
+ * $Header: /users/source/archives/td_lib.vcs/include/RCS/port2vms.h,v 2.0 1989/04/26 08:14:23 ste_cm Rel $
  *
  * VMS-definitions for supporting unix/vms port
  */
+
+#ifndef	_PORTUNIX_
+#define	_PORTUNIX_
 
 #include	"ptypes.h"		/* CM_TOOLS common */
 
@@ -177,3 +180,5 @@ time_t	zone2vms(
 #define	DIR2PATH(path)		path
 #define	PATH2DIR(path)		path
 #endif	vms/unix
+
+#endif	_PORTUNIX_
