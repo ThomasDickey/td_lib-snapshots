@@ -1,3 +1,16 @@
+1992-07-24  dickey@software.org
+
+	* src/Makefile, src/descrip.mms: added 'dyn_append_c.c'
+
+	* src/string/dyn_appc.c: RCS_BASE
+
+	* include/dyn_str.h: added 'dyn_append_c()'
+
+1992-07-24  ste_cm@software.org
+
+	* include/dyn_str.h:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
 1992-07-17  dickey@software.org
 
 	* src/sheet/field_of.c:

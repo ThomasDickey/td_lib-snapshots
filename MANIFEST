@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19920717
+MANIFEST for td_lib, version t19920724
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 Makefile                        top-level makefile for TD_LIB
@@ -152,6 +152,7 @@ src/string                      subdirectory
 src/string/dftenv.c             returns 'getenv()' with a default (non-null) value
 src/string/dotcmp.c             compare dot-separated strings
 src/string/dyn_app.c            append to a dynamic-string
+src/string/dyn_appc.c           appends a single char to a dynamic-string
 src/string/dyn_cata.c           dyn-string interface to 'catarg()'
 src/string/dyn_copy.c           copy ordinary string to DYN string
 src/string/dyn_str.c            module for managing dynamic-strings
