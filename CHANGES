@@ -1,3 +1,8 @@
+1995-09-16  dickey@clark.net
+
+	* configure.in, aclocal.m4:
+	hack to make 'lstat' configure with Linux + gcc 2.7.0
+
 1995-09-14  dickey@clark.net
 
 	* src/unix/gid2s.c: lint test-driver

@@ -1,6 +1,30 @@
 dnl Extended Macros that test for specific features.
-dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.68 1995/09/04 20:59:06 tom Exp $
+dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.69 1995/09/16 13:03:20 tom Exp $
 dnl vi:set ts=4:
+dnl ---------------------------------------------------------------------------
+dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", without change
+dnl ---------------------------------------------------------------------------
+dnl A conventional existence-check for 'lstat' won't work with the Linux
+dnl version of gcc 2.7.0, since the symbol is defined only within <sys/stat.h>
+dnl as an inline function.
+dnl
+dnl So much for portability.
+AC_DEFUN([AC_FUNC_LSTAT],
+[
+AC_MSG_CHECKING(for lstat)
+AC_CACHE_VAL(ac_cv_func_lstat,[
+AC_TRY_LINK([
+#include <sys/types.h>
+#include <sys/stat.h>],
+	[lstat(".", (struct stat *)0)],
+	[ac_cv_func_lstat=yes],
+	[ac_cv_func_lstat=no])
+	])
+AC_MSG_RESULT($ac_cv_func_lstat )
+if test $ac_cv_func_lstat = yes; then
+	AC_DEFINE(HAVE_LSTAT)
+fi
+])dnl
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "TD_" to "AC_"
 dnl and "td_" to "ac_".
