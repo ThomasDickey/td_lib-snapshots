@@ -1,11 +1,15 @@
 #ifndef	lint
-static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RCS/file2arg.c,v 5.0 1989/06/09 13:43:34 ste_cm Rel $";
+static	char	Id[] = "$Id: file2arg.c,v 5.1 1989/12/12 09:14:27 dickey Exp $";
 #endif	lint
 
 /*
  * Title:	file2argv.c (file to argv-conversion)
  * Author:	T.E.Dickey
  * Created:	06 Apr 1989
+ * $Log: file2arg.c,v $
+ * Revision 5.1  1989/12/12 09:14:27  dickey
+ * lint (SunOs 4.0.3)
+ *
  *
  * Function:	Reads a file and converts it to an argv-style array of pointers
  *		to strings.
@@ -66,7 +70,7 @@ char	***vec;
 	/*
 	 * Allocate space for the vector pointing to the strings
 	 */
-	*vec = p = vecalloc((lines + 1) * sizeof(char *));
+	*vec = p = vecalloc((unsigned)((lines + 1) * sizeof(char *)));
 
 	/*
 	 * Recopy the blob onto itself, putting a null after each newline.
