@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcsload.c,v 11.1 1992/09/02 15:36:09 dickey Exp $";
+static	char	Id[] = "$Id: rcsload.c,v 11.2 1992/10/26 07:15:55 dickey Exp $";
 #endif
 
 /*
@@ -334,7 +334,8 @@ _DCL(int,	verbose)
 		*name,
 		*s	= 0;
 	register int j, k;
-	int	delta	= 0;
+	int	delta	= 0,
+		code	= S_FAIL;
 
 	if (!rcsopen(name = name2rcs(archive,full), verbose, TRUE))
 		return(vec);
@@ -357,10 +358,10 @@ _DCL(int,	verbose)
 	load_logged = 0;
 
 	k = -1;
-	while (s = rcsread(s)) {
+	while (s = rcsread(s, code)) {
 		s = rcsparse_id(key, s);
 
-		switch (rcskeys(key)) {
+		switch (code = rcskeys(key)) {
 		case S_HEAD:
 			s = rcsparse_num(tmp, s);
 			break;
