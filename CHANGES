@@ -1,3 +1,14 @@
+2001-01-11  dickey@clark.net
+
+	* config.guess: update
+
+	* config.sub: update - OS/2 EMX in subversions
+
+2001-01-10  dickey@clark.net
+
+	* aclocal.m4:
+	more resync for CFLAGS/CPPFLAGS, and a fix for ncurses-version not checked
+
 2000-12-24  dickey@clark.net
 
 	* src/pathname/istextfl.c, src/curses/logch.c:
