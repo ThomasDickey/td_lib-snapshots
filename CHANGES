@@ -1,3 +1,17 @@
+1988-08-31  dickey@software.org
+
+	* src/pathname/walktree.c: New file.
+
+	* src/pathname/walktree.c: sccs2rcs keywords
+
+1988-08-31  ste_cm@software.org
+
+	* src/pathname/walktree.c: BASELINE Thu Apr  6 09:45:13 EDT 1989
+
+1988-08-31  dickey@software.org
+
+	* src/Makefile, include/llib-ltd: added 'walktree.c' module.
+
 1988-08-30  dickey@software.org
 
 	* src/pathname/filecopy.c:
