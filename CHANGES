@@ -1,3 +1,13 @@
+1996-01-10  dickey@clark.net
+
+	* src/pathname/abspath.c:
+	was incorrectly getting leaf in abshome for ~-parsing, rather than the
+	first segment of the pathname
+
+1996-01-09  dickey@clark.net
+
+	* configure.in: added tests for wscrl, wsetscrreg
+
 1995-12-24  dickey@clark.net
 
 	* src/curses/bindkeys.c: typo
