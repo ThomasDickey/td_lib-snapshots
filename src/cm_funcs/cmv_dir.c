@@ -1,5 +1,5 @@
 #ifndef	NO_IDENT
-static	char	Id[] = "$Id: cmv_dir.c,v 12.10 1995/01/28 12:34:39 tom Exp $";
+static	char	Id[] = "$Id: cmv_dir.c,v 12.11 1995/01/31 00:21:38 tom Exp $";
 #endif
 
 /*
@@ -276,10 +276,10 @@ void	read_r_curr(
 			/* chop off the first word to get the lock-owner */
 			if ((s = strchr(description, ' ')) != 0) {
 				*s = EOS;
-				description = txtalloc(description);
 			} else {
-				description = 0;
+				description = "";
 			}
+			description = txtalloc(description);
 
 			p = typealloc(CMFILE);
 			p->lockedby = description;

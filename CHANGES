@@ -1,3 +1,12 @@
+1995-01-30  dickey@clark.net
+
+	* include/ptypes.h: some symbols change with autoconf 2.1
+
+	* test/cm_funcs/Makefile, test/compare/Makefile, test/curses/Makefile, test/memory/Makefile, test/pathname/Makefile, test/port2dos/Makefile, test/port2vms/Makefile, test/process/Makefile, test/sheet/Makefile, test/string/Makefile, test/unix/Makefile:
+	include-ordering
+
+	* src/cm_funcs/cmv_dir.c: lock-owner must not be null-pointer!
+
 1995-01-29  dickey@clark.net
 
 	* Makefile: use SHELL variable locally

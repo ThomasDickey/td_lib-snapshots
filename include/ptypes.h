@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 12.34 1994/12/16 19:57:49 tom Exp $ */
+/* $Id: ptypes.h,v 12.35 1995/01/31 00:38:26 tom Exp $ */
 
 #ifndef	PTYPES_H
 #define	PTYPES_H
@@ -390,15 +390,15 @@ typedef	short	ino_t;
 #  if defined(MSDOS)
 #    include <dir.h>
 #  else	/* unix */
-#    if defined(DIRENT)
+#    if defined(HAVE_DIRENT_H)
 #      include	<dirent.h>
 #      define	direct	dirent	/* so <sys/dir.h> looks like <dirent.h> */
 #      define   d_namlen d_reclen
 #    else
-#      if defined(SYSDIR)
+#      if defined(HAVE_SYS_DIR_H)
 #        include	<sys/dir.h>
 #      else
-#        if defined(SYSNDIR)
+#        if defined(HAVE_SYS_NDIR_H)
 #          include	<sys/ndir.h>
 #        else			/* ...must be an antique unix clone */
 #          define	DIR	FILE
