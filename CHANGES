@@ -1,3 +1,7 @@
+2000-08-24  dickey@clark.net
+
+	* config.guess, config.sub: OS/2
+
 2000-07-21  dickey@clark.net
 
 	* src/cm_funcs/sccs_dir.c:
