@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	*Id = "$Id: rcsedit.c,v 9.1 1991/07/10 12:26:11 dickey Exp $";
+static	char	*Id = "$Id: rcsedit.c,v 9.2 1991/09/05 10:18:17 dickey Exp $";
 #endif
 
 /*
@@ -33,9 +33,9 @@ static	char	*Id = "$Id: rcsedit.c,v 9.1 1991/07/10 12:26:11 dickey Exp $";
 #define	VERBOSE	if (verbose) PRINTF
 
 static	FILE	*fpS, *fpT;
-static	char	fname[256];
+static	char	fname[MAXPATHLEN];
 static	char	buffer[BUFSIZ];
-static	char	tmp_name[256];
+static	char	tmp_name[MAXPATHLEN];
 static	int	changed;	/* set if caller changed file */
 static	int	verbose;	/* set if we show informational messages */
 
@@ -47,7 +47,7 @@ static
 dir_access()
 {
 	register char	*s;
-	char	temp[256];
+	char	temp[MAXPATHLEN];
 	int	uid = geteuid();
 	int	gid = getegid();
 	struct	stat	sb;
@@ -96,7 +96,7 @@ readit()
 static
 writeit()
 {
-	if (*buffer) {
+	if (*buffer != EOS && fpT != 0) {
 		fputs(buffer, fpT);
 	}
 	*buffer = EOS;
@@ -124,12 +124,16 @@ int	show;
 	if (	(stat(fname, &sb) >= 0)
 	&&	((sb.st_mode & S_IFMT) == S_IFREG)
 	&&	(fpS = fopen(fname, "r")) ) {
-		int	fmode	= sb.st_mode & 0555;
-		if (dir_access())
+		int	fmode;
+
+		if (show < 0)
+			return (TRUE);
+		else if (dir_access())
 			strcpy(tmp_name, fname)[strlen(fname)-1] = 'V';
 		else
 			FORMAT(tmp_name, "%s/rcsedit%d", P_tmpdir, getpid());
 
+		fmode	= sb.st_mode & 0555;
 		if ((fd = open(tmp_name, O_CREAT|O_EXCL|O_WRONLY, fmode)) < 0
 		 || !(fpT = fdopen(fd, "w"))) {
 			perror(tmp_name);
@@ -198,7 +202,7 @@ char	tmp[BUFSIZ];
 rcsclose()
 {
 	writeit();
-	if (changed) {
+	if (changed && fpT != 0) {
 		while (readit())
 			writeit();
 		FCLOSE(fpT);
