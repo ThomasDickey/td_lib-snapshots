@@ -1,4 +1,4 @@
-# @(#)Makefile	1.12 88/05/06 16:12:22
+# @(#)Makefile	1.13 88/05/11 09:19:25
 # MAKE-file for miscellaneous library routines
 L=lib.a
 #
@@ -52,8 +52,8 @@ clean:
 clobber: clean
 	rm *.a
 #
-llib-ltd.ln:	LINT
-	makellib.sh LINT td
+llib-ltd.ln:	LLIB
+	makellib.sh LLIB td
 #
 lint.out:	llib-ltd.ln
 	tdlint -lcurses -ltd -lapollo -DNO_SCCS_ID *.c >lint.out
