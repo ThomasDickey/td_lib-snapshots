@@ -1,3 +1,15 @@
+1992-08-10  dickey@software.org
+
+	* src/curses/rawgets.c:
+	added 'prefix' argument to 'wrawgets()', for merge of
+	inline/normal text entry of 'ded'.
+
+	* include/td_lib.h: added prefix-arg to 'wrawgets()'
+
+	* src/curses/rawgets.c:
+	allow window-arg to be null, so that we can use this logic
+	to refresh buffers that happen to not be visible.
+
 1992-08-07  dickey@software.org
 
 	* test/Makefile, Makefile: use:common.mk

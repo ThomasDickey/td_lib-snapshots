@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rawgets.c,v 11.7 1992/08/07 07:04:54 dickey Exp $";
+static	char	Id[] = "$Id: rawgets.c,v 11.9 1992/08/10 08:21:04 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,8 @@ static	char	Id[] = "$Id: rawgets.c,v 11.7 1992/08/07 07:04:54 dickey Exp $";
  * Title:	rawgets.c (raw-mode 'gets()')
  * Created:	29 Sep 1987 (from 'fl.c')
  * Modified:
+ *		10 Aug 1992, allow window-arg to be null, for replaying scripts
+ *			     to buffers that are not visible.
  *		06 Aug 1992, added command/logging arguments.
  *		05 Aug 1992, highlight in insert-mode when wrap is disabled.
  *			     Added fast-quit and erase-word features.
@@ -63,13 +65,14 @@ static	char	Id[] = "$Id: rawgets.c,v 11.7 1992/08/07 07:04:54 dickey Exp $";
 #define	to_end(c)	(((c) == CTL('F')))
 
 static	WINDOW	*Z;		/* window we use in this module */
+static	char	**Prefix;	/* insert/scrolling prefix, if any */
 static	DYN	*history;	/* record of keystrokes if logging active */
 static	int	xbase,	ybase,	/* base-position of 'bfr[]' */
 		xlast,		/* last usable column in screen */
 		shift,		/* amount shifted in no-wrap mode */
 		wrap,		/* if we echo newline, assume wrappable */
 		errs,		/* flag for error/illegal char */
-		Imode;		/* insert:1, scroll:-1 */
+		Imode;		/* insert:1, scroll:0 */
 static	char	*bbase;		/* 'bfr[]' copy */
 
 /*
@@ -79,21 +82,25 @@ static	char	*bbase;		/* 'bfr[]' copy */
 static
 void	ClearIt(_AR0)
 {
-	if (wrap) {
-		register int	x;
+	if (Z) {
+		if (wrap) {
+			register int	x;
 
-		for (x = Z->_curx; x < xlast; x++)
-			(void)waddch(Z,' ');
-	} else {
-		(void)wclrtoeol(Z);
+			for (x = Z->_curx; x < xlast; x++)
+				(void)waddch(Z,' ');
+		} else {
+			(void)wclrtoeol(Z);
+		}
 	}
 }
 
 static
 void	ShowAll(_AR0)
 {
-	(void)wmove(Z, ybase, xbase);
-	ShowAt(bbase+shift);
+	if (Z) {
+		(void)wmove(Z, ybase, xbase);
+		ShowAt(bbase+shift);
+	}
 }
 
 /*
@@ -106,30 +113,32 @@ int	MoveTo(
 	_AR1(char *,	new))
 	_DCL(char *,	new)
 {
-	register int	y = ybase,
-			x = xbase,
-			z = new-(bbase+shift),
-			original = shift;
+	if (Z) {
+		register int	y = ybase,
+				x = xbase,
+				z = new-(bbase+shift),
+				original = shift;
 
-	while (z < 0) {		/* nowrap: shift-left */
-		shift -= SHIFT;
-		z += SHIFT;
-	}
-	while (z-- > 0) {
-		if (++x >= xlast) {
-			if (wrap) {
-				x = 0;
-				y++;
-			} else {
-				shift += SHIFT;
-				x -= SHIFT;
+		while (z < 0) {		/* nowrap: shift-left */
+			shift -= SHIFT;
+			z += SHIFT;
+		}
+		while (z-- > 0) {
+			if (++x >= xlast) {
+				if (wrap) {
+					x = 0;
+					y++;
+				} else {
+					shift += SHIFT;
+					x -= SHIFT;
+				}
 			}
 		}
-	}
-	if (shift != original)
-		ShowAll();
+		if (shift != original)
+			ShowAll();
 
-	(void)wmove(Z,y,x);
+		(void)wmove(Z,y,x);
+	}
 }
 
 /*
@@ -140,21 +149,23 @@ int	ShowAt(
 	_AR1(char *,	at))
 	_DCL(char *,	at)
 {
-	register int	y,x, row, col, len, max;
+	if (Z) {
+		register int	y,x, row, col, len, max;
 
-	getyx(Z, y, x);
-	for (row = y, col = x; *at && (row < Z->_maxy); row++) {
-		(void)wmove(Z, row, col);
-		len = strlen(at);
-		max = xlast - col;
-		if (len > max)	len = max;
-		(void)wprintw(Z,"%.*s", len, at);
-		at += len;
-		col = 0;
-		if (!wrap)	break;
+		getyx(Z, y, x);
+		for (row = y, col = x; *at && (row < Z->_maxy); row++) {
+			(void)wmove(Z, row, col);
+			len = strlen(at);
+			max = xlast - col;
+			if (len > max)	len = max;
+			(void)wprintw(Z,"%.*s", len, at);
+			at += len;
+			col = 0;
+			if (!wrap)	break;
+		}
+		ClearIt();
+		(void)wmove(Z,y,x);
 	}
-	ClearIt();
-	(void)wmove(Z,y,x);
 }
 
 /*
@@ -191,29 +202,34 @@ char *	DeleteBefore(
 	_DCL(int,	count)
 {
 	if (at > bbase) {
-	int	old, new, x;
-	char	*d = at,
-		*s = at;
+		register char	*d = at,
+				*s = at;
+		register int	old, new, x;
 
 		while (count-- > 0) {
 			at--;
 			if (--d == bbase)
 				break;
 		}
+
 		while (*d++ = *s++);
 
-		getyx(Z, old, x);
-		MoveTo(at);
-		ShowAt(at);
+		if (Z) {
+			old = Z->_cury;
+			MoveTo(at);
+			ShowAt(at);
+			getyx(Z, new, x);
 
-		getyx(Z, new, x);
-		while (old > new) {
-			(void)wmove(Z,old,0);
-			ClearIt();
-			old--;
+			while (old > new) {
+				(void)wmove(Z,old,0);
+				ClearIt();
+				old--;
+			}
+			(void)wmove(Z,new,x);
 		}
-		(void)wmove(Z,new,x);
-	} else errs++;
+	} else
+		errs++;
+
 	return(at);
 }
 
@@ -247,6 +263,22 @@ char *	DeleteWordBefore(
 }
 
 /*
+ * Show the insert/scroll prefix
+ */
+static
+void	ShowPrefix(_AR0)
+{
+	if (Z && Prefix) {
+		register char	*prefix = Prefix[Imode];
+
+		(void)wstandend(Z);
+		(void)wmove(Z, ybase, xbase-strlen(prefix));
+		while (*prefix)
+			(void)waddch(Z,*prefix++);
+	}
+}
+
+/*
  * Toggle the insert/scroll mode, and show the state of this flag by
  * overwriting the ":" position of the prompt which is written before
  * calling this procedure.
@@ -254,21 +286,22 @@ char *	DeleteWordBefore(
 static
 void	ToggleMode(_AR0)
 {
-	register int	y,x;
-
 	Imode = !Imode;
-	getyx(Z,y,x);
-	wstandend(Z);
-	(void)wmove(Z,ybase,xbase-2);
-	(void)waddch(Z,Imode ? ':' : '^');
 
-	if (!wrap) {
-		if (!Imode)
-			wstandout(Z);
-		ShowAll();
+	if (Z) {
+		register int	y,x;
+
+		getyx(Z,y,x);
+		ShowPrefix();
+
+		if (!wrap) {
+			if (!Imode)
+				(void)wstandout(Z);
+			ShowAll();
+		}
+
+		(void)wmove(Z,y,x);
 	}
-
-	(void)wmove(Z,y,x);
 }
 
 /*
@@ -298,6 +331,7 @@ _DCL(int,	c)
 int	wrawgets (
 	_ARX(WINDOW *,	win)
 	_ARX(char *,	bfr)		/* in/out buffer */
+	_ARX(char **,	pref)
 	_ARX(int,	size)		/* maximum length of 'bfr' */
 	_ARX(int,	newline)	/* force newline-echo on completion */
 	_ARX(int,	fast_q)		/* nonnull: extra quit character */
@@ -306,6 +340,7 @@ int	wrawgets (
 		)
 	_DCL(WINDOW *,	win)
 	_DCL(char *,	bfr)
+	_DCL(char **,	pref)
 	_DCL(int,	size)
 	_DCL(int,	newline)
 	_DCL(int,	fast_q)
@@ -324,15 +359,25 @@ int	wrawgets (
 	if (logging)
 		dyn_init(&history, 1);
 
-	Z = win;
+	Prefix = pref;
 	Imode = 1;
 	errs  = 0;
 	bbase = bfr;
 	shift = 0;
-	getyx(Z,ybase,xbase);		/* get my initial position */
-	xlast = xbase + size;
-	if (xlast >= Z->_maxx)
-		xlast = Z->_maxx - 1;
+
+	if (Z = win) {
+		getyx(Z,ybase,xbase);		/* get my initial position */
+		ShowPrefix();
+		(void)wmove(Z,ybase,xbase);
+		xlast = xbase + size;
+		if (xlast >= Z->_maxx)
+			xlast = Z->_maxx - 1;
+	} else {
+		xbase =
+		ybase = 0;
+		xlast = 80;
+	}
+
 	if (!(wrap = newline))
 		while (strlen(bfr) > (shift + xlast - xbase))
 			shift += SHIFT;
@@ -359,7 +404,8 @@ int	wrawgets (
 			}
 			c = decode_logch(command, (int *)0);
 		} else {
-			(void)wrefresh(Z);
+			if (Z)
+				(void)wrefresh(Z);
 			count = 1;
 			c = cmdch(Imode ? (int *)0 : &count);
 		}
@@ -385,7 +431,8 @@ int	wrawgets (
 		 */
 		if ((c == '\n') || (c == '\r')) {
 			MoveTo(bbase + strlen(bbase));
-			if (newline) (void)waddch(Z,'\n');
+			if (Z && newline)
+				(void)waddch(Z,'\n');
 			break;
 		}
 		if ((c == ARO_DOWN) || (c == ARO_UP))
@@ -445,11 +492,15 @@ int	wrawgets (
 				tag = move_end(tag,c);
 		}
 	}
-	if (!wrap && !Imode) {
-		wstandend(Z);
-		ShowAll();
+
+	if (Z) {
+		if (!wrap && !Imode) {
+			(void)wstandend(Z);
+			ShowAll();
+		}
+		(void)wrefresh(Z);
 	}
-	(void)wrefresh(Z);
+
 	return (c);	/* returns character which terminated this call */
 }
 
@@ -470,6 +521,7 @@ _MAIN
 	register int	j	= 0;
 	auto	 int	wrap	= ((argc > 1) && !strcmp(argv[1], "-w"));
 	auto	 char	bfr[BUFSIZ];
+	static	 char	**pref[] = { "> " : "^ "};
 
 	initscr();
 	rawterm();
@@ -483,7 +535,7 @@ _MAIN
 		clrtobot();
 		move(j,0);
 		printw("%05d> ", j);
-		rawgets(bfr, sizeof(bfr), wrap, 'q');
+		rawgets(bfr, pref, sizeof(bfr), wrap, 'q');
 	}
 	endwin();
 }
