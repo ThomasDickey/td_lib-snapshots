@@ -1,4 +1,4 @@
-# $Id: td_make.in,v 12.21 2000/01/01 00:59:26 tom Exp $
+# $Id: td_make.in,v 12.22 2001/12/12 22:28:34 tom Exp $
 # common definitions for makefiles built over TD_LIB library.
 
 SHELL	= /bin/sh
@@ -39,9 +39,9 @@ CPP_OPTS	= $(CPP_CONFIG)
 
 x		= @PROG_EXT@
 LIB_DEPS	= $(TD_LIB)/@LIB_PREFIX@td.a
-LIB_ARGS	= -L$(TD_LIB) -ltd @LIBS@
+LIB_ARGS	= @LDFLAGS@ -L$(TD_LIB) -ltd @LIBS@
 
-CURSES_LIBS	= -L$(TD_LIB) -ltd @CURSES_LIBS@ @LIBS@
+CURSES_LIBS	= @LDFLAGS@ -L$(TD_LIB) -ltd @CURSES_LIBS@ @LIBS@
 
 DATE		= echo '** '`date` >> $@
 
