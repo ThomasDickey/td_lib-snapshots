@@ -1,3 +1,12 @@
+1994-08-25  dickey@clark.net
+
+	* test/port2vms/name2vms.ref:
+	stripped line numbers to make this simpler to regression-test
+
+	* src/port2vms/name2vms.c: allow leading "." for leafname
+
+	* src/port2vms/name2vms.c: use MODULE_ID
+
 1994-08-21  dickey@clark.net
 
 	* src/Makefile: added descrip.mms
