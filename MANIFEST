@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19881005
+MANIFEST for td_lib, version t19881006
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 include                         subdirectory
@@ -62,6 +62,7 @@ src/pathname/sameleaf.c         compare ends of pathnames
 src/pathname/walktree.c         walk directory-tree, performing function
 src/pathname/which.c            locate file in $PATH
 src/port2vms                    subdirectory
+src/port2vms/dir2path.c         VMS directory/pathname conversion
 src/port2vms/path2dir.c         convert VMS pathname to directory
 src/port2vms/vms_dirs.c         VMS hack to provide unix-style directory access
 src/port2vms/zone2vms.c         compute timezone adjustment for VMS/unix time conversion
@@ -80,6 +81,7 @@ src/string/dotcmp.c             compare dot-separated strings
 src/string/ltostr.c             convert 'long' to a string
 src/string/strclean.c           "clean" string, removes unnecessary blanks
 src/string/strucmp.c            compare two strings ignoring case
+src/string/strucpy.c            copy string, uppercasing it
 src/unix                        subdirectory
 src/unix/gid2s.c                convert group-id to string
 src/unix/s2gid.c                convert string to group-id
