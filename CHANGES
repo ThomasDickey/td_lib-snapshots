@@ -1,3 +1,7 @@
+1986-03-26  Thomas E. Dickey
+
+	* src/cm_funcs/packdate.c: New file.
+
 1986-01-09  Thomas E. Dickey
 
 	* src/memory/doalloc.c: New file.
