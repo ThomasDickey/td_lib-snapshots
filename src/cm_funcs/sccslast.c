@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: sccslast.c,v 12.4 1994/05/21 20:18:44 tom Exp $";
+static	char	Id[] = "$Id: sccslast.c,v 12.5 1994/07/13 18:50:42 tom Exp $";
 #endif
 
 /*
@@ -111,8 +111,9 @@ void	sccslast (
 	_DCL(char **,	lock_)
 {
 	auto	 Stat_t	sbfr;
-	auto	 char	name[BUFSIZ+1],
-			*dname = sccs_dir();
+	auto	 char	fname[MAXPATHLEN],
+			temp[MAXPATHLEN],
+			*dname = sccs_dir(working, path);
 	auto	 int	is_sccs;
 	register char	*s, *t;
 
@@ -129,10 +130,10 @@ void	sccslast (
 		*(t = s) = EOS;
 		if ((s = fleaf(path)) == NULL)
 			s = path;
-		is_sccs = !strcmp(s,dname);
+		is_sccs = sameleaf(s,dname);
 		*t++ = PATH_SLASH;
 	} else if ((s = fleaf(working)) != NULL) {
-		is_sccs = !strcmp(s,dname);
+		is_sccs = sameleaf(s,dname);
 	} else
 		return;			/* illegal input: give up */
 
@@ -147,23 +148,24 @@ void	sccslast (
 	&&  (t[1] == '.')) {
 	char	xx = *t;
 		*t = 's';
-		(void)strcpy(name, path);
+		(void)strcpy(fname, path);
 		*t = xx;
-		trysccs(name, vers_, date_, lock_);
+		trysccs(fname, vers_, date_, lock_);
 		if (*date_) {		/* it was an ok sccs file */
 			/* look for checked-out file */
 
 			if (t != path) {
-				name[t - path - 1] = EOS;
-				if ((s = fleaf(name)) != NULL)
+				fname[t - path - 1] = EOS;
+				if ((s = fleaf(fname)) != NULL)
 					*s = EOS;
 				else
-					name[0] = EOS;
-				(void)strcat(name, t+2);
-			} else
-				(void)strcat(strcpy(name, "../"), t+2);
+					fname[0] = EOS;
+				(void)strcat(fname, t+2);
+			} else {
+				(void)strcat(strcpy(fname, "../"), t+2);
+			}
 			*date_ = 0;	/* use actual modification-date! */
-			if (stat(name, &sbfr) >= 0)
+			if (stat(fname, &sbfr) >= 0)
 				*date_ = sbfr.st_mtime;
 			return;
 		}
@@ -173,7 +175,17 @@ void	sccslast (
 	 * The file was not itself an sccs-file.  Construct the name of an
 	 * sccs-file assuming the standard naming convention, and try again.
 	 */
-	(void)strcpy(name,  s = path);
-	(void)strcat(strcat(strcpy(&name[t-s], dname), "/s."), t);
-	trysccs(name, vers_, date_, lock_);
+	(void)strcpy(fname, s = path);
+	(void)strcpy(temp, t);
+
+	if (t != s)
+		*--t = EOS;
+
+	if (isSlash(*dname) || *dname == '~')
+		(void)strcpy(fname, dname);
+	else
+		(void)pathcat(fname, fname, dname);
+	(void)strcat(pathcat(fname, fname, SCCS_PREFIX), temp);
+
+	trysccs(fname, vers_, date_, lock_);
 }

@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: acc_mode.c,v 12.2 1994/07/10 23:26:36 tom Exp $";
+static	char	Id[] = "$Id: acc_mode.c,v 12.3 1994/07/13 01:32:50 tom Exp $";
 #endif
 
 /*
@@ -18,7 +18,7 @@ static	char	Id[] = "$Id: acc_mode.c,v 12.2 1994/07/10 23:26:36 tom Exp $";
 #define	STR_PTYPES
 #include "ptypes.h"
 
-char *	td_access_mode(
+char *	access_mode(
 	_AR1(int,	mode))
 	_DCL(int,	mode)
 {

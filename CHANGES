@@ -1,3 +1,22 @@
+1994-07-13  dickey@clark.net
+
+	* src/pathname/fileblox.c: RCS_BASE
+
+	* src/pathname/Makefile, include/td_lib.h: added fileblox.c
+
+	* src/cm_funcs/sccspath.c: RCS_BASE
+
+	* src/cm_funcs/sccspath.c: use MODULE_ID
+
+	* include/sccsdefs.h: added args to sccs_dir
+	added sccspath
+
+	* src/cm_funcs/sccsname.c: sccs_dir-interface
+
+	* src/cm_funcs/sccsname.c: use MODULE_ID
+
+	* src/cm_funcs/sccs_dir.c, src/cm_funcs/sccslast.c: sccs_dir-interface
+
 1994-07-12  dickey@clark.net
 
 	* src/pathname/acc_mode.c: typo

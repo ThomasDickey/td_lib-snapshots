@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.34 1994/07/12 18:19:02 tom Exp $
+dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.35 1994/07/13 01:01:55 tom Exp $
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "TD_" to "AC_"
 dnl ---------------------------------------------------------------------------
@@ -399,20 +399,29 @@ RETSIGTYPE catch(int sig, ...) { exit(1); }
 main() { signal(SIGINT, catch); exit(0); }
 ],[AC_DEFINE(SIG_ARGS_VARYING)])]
 )
+if test -n "$GCC"
+then
+	if test -n "$with_warnings"
+	then
 AC_CHECKING([redefinable signal handler prototype])
-# We're checking the definitions of the commonly-used predefined signal macros,
-# to see if their values are the ones that we expect.  If so, we'll plug in our
-# own definitions, that have complete prototypes.
-case "$DEFS" in
-*SIG_ARGS_*) # we have prototypes
+	# We're checking the definitions of the commonly-used predefined signal
+	# macros, to see if their values are the ones that we expect.  If so,
+	# we'll plug in our own definitions, that have complete prototypes.  We
+	# do this when we're developing with gcc, with all warnings, and
+	# shouldn't do it for other compilers, since (for example) the IRIX
+	# compiler complains a lot.
+		case "$DEFS" in
+		*SIG_ARGS_*) # we have prototypes
 AC_TEST_PROGRAM([
 #include <signal.h>
 #undef  NOT
 #define NOT(s,d) ((long)(s) != (long)(d))
 main() { exit(NOT(SIG_IGN,1) || NOT(SIG_DFL,0) || NOT(SIG_ERR,-1)); }
 ],[AC_DEFINE(SIG_IGN_REDEFINEABLE)])
-;;
-esac
+		;;
+		esac
+	fi
+fi
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Test for the presence of <sys/wait.h>, 'union wait', arg-type of 'wait()'.

@@ -1,12 +1,9 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: sccsname.c,v 12.4 1993/12/02 15:47:07 dickey Exp $";
-#endif
-
 /*
  * Title:	sccsname.c (derive name of SCCS file)
  * Author:	T.E.Dickey
  * Created:	08 May 1990
  * Modified:
+ *		13 Jul 1994, modified interface with 'sccs_dir()'
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, convert to ANSI
@@ -37,6 +34,8 @@ static	char	Id[] = "$Id: sccsname.c,v 12.4 1993/12/02 15:47:07 dickey Exp $";
 #include	"sccsdefs.h"
 
 #include	<ctype.h>
+
+MODULE_ID("$Id: sccsname.c,v 12.6 1994/07/13 19:22:54 tom Exp $")
 
 #define	LEN_PREFIX	(sizeof(prefix)-1)
 
@@ -108,7 +107,7 @@ static	char	fname[BUFSIZ];
 			if (full) {
 				s[-1] = EOS;
 				if (((t = leaf(d)) > d)
-				&&  sameleaf(t, sccs_dir()))
+				&&  sameleaf(t, sccs_dir((char *)0,(char *)0)))
 					d = t;
 			}
 			while ((*d++ = *s++) != EOS)
@@ -131,26 +130,28 @@ char *	name2sccs(
 	_DCL(char *,	name)
 	_DCL(int,	full)
 {
-	static	char	slash[] = {PATH_SLASH, EOS};		/* "/"   */
 	static	char	fname[MAXPATHLEN];
 
 	if (sccs_prefix(name)) {
 		(void)strcpy(fname, name);
 	} else {
+		char	*dname = sccs_dir(".", name);
+
 		if (full) {
 			trim_leaf(strcpy(fname, name));
-			if (sameleaf(fname, sccs_dir()))
+			if (sameleaf(fname, dname))
 				trim_leaf(fname);
-			if (*fname)
-				(void)strcat(fname, slash);
-		} else
+		} else {
 			*fname = EOS;
+		}
+
+		if (isSlash(*dname) || *dname == '~')
+			(void)strcpy(fname, dname);
+		else
+			(void)pathcat(fname, fname, dname);
+
 		(void)strcat(
-			strcat(
-				strcat(
-					strcat(fname, sccs_dir()),
-					slash),
-					prefix),
+			pathcat(fname, fname, prefix),
 			leaf(name));
 	}
 	return (fname);
