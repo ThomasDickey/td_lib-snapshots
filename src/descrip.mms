@@ -1,4 +1,4 @@
-# $Id: descrip.mms,v 9.4 1991/10/01 09:50:12 dickey Exp $
+# $Id: descrip.mms,v 10.0 1991/10/11 07:47:16 ste_cm Rel $
 # MMS-file for miscellaneous library routines	
 #
 ####### (Development) ##########################################################
@@ -67,6 +67,7 @@ UNUSED_MODULES = -
 	DUMPWIN, 		# curses -
 	ERASECHAR, 		# curses -
 	FILECOPY, 		# needs unix system-I/O -
+	FOR_ADMIN, 		# only for setuid programs -
 	FOR_USER, 		# only for setuid programs -
 	FTYPE2, 		# unix-style suffix -
 	GETHOME, 		# unix-passwd -
@@ -139,6 +140,7 @@ C_SRC	=-
 	FILE2MEM.C -
 	FILECOPY.C -
 	FILESIZE.C -
+	FOR_ADMIN.C -
 	FOR_USER.C -
 	FP2ARGV.C -
 	FTYPE.C -
@@ -262,6 +264,7 @@ FILE2ARGV.obj :		$(PTYPES_H)
 FILE2MEM.obj :		$(PTYPES_H)
 FILECOPY.obj :		$(PTYPES_H)
 FILESIZE.obj :		$(PTYPES_H)
+FOR_ADMIN.obj :		$(PTYPES_H)
 FOR_USER.obj :		$(PTYPES_H)
 FP2ARGV.obj :		$(PTYPES_H)
 FTYPE.obj :		$(PTYPES_H)
