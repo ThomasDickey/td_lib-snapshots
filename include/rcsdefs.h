@@ -1,7 +1,9 @@
-/* $Id: rcsdefs.h,v 9.8 1991/10/03 10:23:30 dickey Exp $ */
+/* $Id: rcsdefs.h,v 10.0 1991/10/07 08:26:35 ste_cm Rel $ */
 
 #ifndef	_RCSDEFS_H_
 #define	_RCSDEFS_H_
+
+#define	RCS_VERSION	4	/* current version of rcs we are built over */
 
 /*
  * State information for scanning RCS-file header

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcsload.c,v 9.10 1991/10/04 09:42:12 dickey Exp $";
+static	char	Id[] = "$Id: rcsload.c,v 9.12 1991/10/07 13:21:04 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,9 @@ static	char	Id[] = "$Id: rcsload.c,v 9.10 1991/10/04 09:42:12 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	19 Aug 1988
  * Modified:
+ *		07 Oct 1991, if file-contents are loaded, provide enough space
+ *			     to keep newlines on each record, for compat with
+ *			     file2argv/vecedit procedures.
  *		04 Oct 1991, conversion to ANSI
  *		17 Sep 1991, renamed RCSTREE to DELTREE; use prototype-macros
  *		16 Sep 1991, Construct vectors for text of file, plus deltas
@@ -34,6 +37,12 @@ static	char	Id[] = "$Id: rcsload.c,v 9.10 1991/10/04 09:42:12 dickey Exp $";
 #include	<ctype.h>
 #include	<time.h>
 
+#ifdef	TEST
+#define	DEBUG(s) PRINTF s;
+#else
+#define	DEBUG(s)
+#endif
+
 /* local definitions */
 #define	CHUNK	31			/* one less than a power of 2 */
 #define	def_doalloc DELTREE_alloc
@@ -59,6 +68,24 @@ static	unsigned my_limit;
  *	local procedures						*
  ************************************************************************/
 
+#ifdef	TEST
+static
+show_vector(
+_AR1(char **,v))
+_DCL(char **,v)
+{
+	register int	j;
+
+	PRINTF("TEXT:\n");
+	if (v != 0)
+		for (j = 0; v[j]; j++)
+			PRINTF("%5d\t%s", j+1, v[j]);
+}
+#define	SHOW_VECTOR(v)	show_vector(v)
+#else
+#define	SHOW_VECTOR(v)
+#endif
+
 static
 append(
 _AR1(char *,	s))
@@ -80,10 +107,17 @@ _DCL(int,	c)
 	if (my_buffer == 0)
 		my_buffer = doalloc(my_buffer, my_limit = BUFSIZ);
 
+	if (c != EOS) {
+		if (my_length >= my_limit-1)
+			my_buffer = doalloc(my_buffer, my_limit += BUFSIZ);
+		my_buffer[my_length++] = c;
+		my_buffer[my_length] = EOS;
+	}
+
 	if ((c == '\n') || (c == EOS && my_length > 0)) {
 #ifdef	TEST2
 		static	char	tag[] = ">-=";
-		PRINTF("%c>'%s'\n", tag[log_or_edit+1], my_buffer);
+		PRINTF("%c>'%s'", tag[log_or_edit+1], my_buffer);
 #endif
 		my_length = 0;
 
@@ -123,11 +157,6 @@ _DCL(int,	c)
 		} else if (load_last != 0) {
 			append(my_buffer);
 		}
-	} else if (c != EOS) {
-		if (my_length >= my_limit-1)
-			my_buffer = doalloc(my_buffer, my_limit += BUFSIZ);
-		my_buffer[my_length++] = c;
-		my_buffer[my_length] = EOS;
 	}
 	if (c == EOS)
 		skip = 0;
@@ -166,11 +195,7 @@ _DCL(int,	code)
 		for (j = 0, p = base; p != load_last; p += strlen(p)+1, j++)
 			load_vector[j] = p;
 		load_vector[j] = 0;
-#ifdef	TEST
-		PRINTF("TEXT:\n");
-		for (j = 0; load_vector[j]; j++)
-			PRINTF("%5d\t%s\n", j+1, load_vector[j]);
-#endif
+		SHOW_VECTOR(load_vector);
 	} else {
 		register char	*p;
 
@@ -180,9 +205,7 @@ _DCL(int,	code)
 				break;
 		}
 		load_logged = base;
-#ifdef	TEST
-		PRINTF("NOTES:\n%s\n", load_logged);
-#endif
+		DEBUG(("NOTES:\n%s", load_logged))
 	}
 
 	return s;
@@ -307,10 +330,16 @@ _DCL(int,	verbose)
 		return(vec);
 
 	if (load) {
-		off_t	length = filesize(name);
-		if (length < 0)
+		unsigned length = 0;
+		load_buffer = file2mem(name);
+		if (load_buffer == 0)
 			return vec;
-		load_buffer = doalloc((char *)0, (unsigned)length);
+		for (s = load_buffer; *s; s++)
+			if (*s == '\n')
+				length++;
+		DEBUG(("%d newlines, filesize=%d\n", length, s - load_buffer))
+		length += (s - load_buffer);
+		load_buffer = doalloc(load_buffer, length);
 	} else
 		load_buffer = 0;
 	load_last = load_buffer;
@@ -346,8 +375,6 @@ _DCL(int,	verbose)
 			s = rcsparse_num(tmp,s);
 			new.parent = txtalloc(tmp);
 			new.buffer = load_buffer;	load_buffer = 0;
-			new.vector = load_vector;	load_vector = 0;
-			new.logged = load_logged;	load_logged = 0;
 			vec = DOALLOC(vec,DELTREE,((total+1)|CHUNK)+1);
 			vec[total++] = new;
 			vec[total+1] = nil;
@@ -366,6 +393,10 @@ _DCL(int,	verbose)
 			break;
 		case S_LOG:
 			s = eat_text(s, -1);
+			if (k >= 0) {
+				vec[k].logged      = load_logged;
+				load_logged = 0;
+			}
 			break;
 		case S_TEXT:
 			s = eat_text(s, (delta++ != 1));
@@ -373,6 +404,8 @@ _DCL(int,	verbose)
 				vec[k].num_lines   = 0;
 				vec[k].num_added   = cur_added;
 				vec[k].num_deleted = cur_deleted;
+				vec[k].vector      = load_vector;
+				load_vector = 0;
 			}
 			break;
 		}
@@ -400,6 +433,12 @@ _DCL(int,	verbose)
 				vec[j].num_lines   = vec[k].num_lines
 						   - vec[k].num_deleted
 						   + vec[k].num_added;
+				if (vec[j].vector != 0) {
+					char	**script = vec[j].vector;
+					vec[j].vector =
+						vecedit(vec[k].vector, script);
+					vecfree(script);
+				}
 				k = j;
 				break;
 			}
@@ -439,20 +478,63 @@ _DCL(DELTREE *,	p)
 }
 
 #ifdef	TEST
+static
+compare(
+_ARX(char *,	name)
+_ARX(char **,	vector)
+_AR1(char *,	revision)
+	)
+_DCL(char *,	name)
+_DCL(char **,	vector)
+_DCL(char *,	revision)
+{
+	extern	char	*mktemp();
+
+	char	temp[BUFSIZ],
+		version[80],
+		buffer[BUFSIZ];
+	FILE	*fp;
+
+	strcat(strcpy(temp, "/usr/tmp/"), name);
+	printf("compare(%s) %s\n", temp, revision);
+	(void)unlink(temp);
+
+	if (!(fp = fopen(temp, "w")))
+		failed(temp);
+
+	while (*vector) {
+		fputs(*vector, fp);
+		vector++;
+	}
+	FCLOSE(fp);
+
+	*buffer = EOS;
+	catarg(buffer, strcat(strcpy(version, "-r"), revision));
+	catarg(buffer, name2rcs(name,TRUE));
+	catarg(buffer, temp);
+	shoarg(stdout, "rcsdiff", buffer);
+	execute("rcsdiff", buffer);
+	(void)unlink(temp);
+}
+
 _MAIN
 {
 	DELTREE	*p;
 	register int	j, k;
 
 	for (j = 1; j < argc; j++) {
-		if (p = rcsload(argv[j], TRUE, TRUE, TRUE)) {
-			for (k = 0; p[k].tstamp; k++)
+		char	*name = argv[j];
+		if (p = rcsload(name, TRUE, TRUE, TRUE)) {
+			for (k = 0; p[k].tstamp; k++) {
 				PRINTF("%05d/%05d  %3s => %s \t%s",
 					p[k].num_added,
 					p[k].num_deleted,
 					p[k].parent,
 					p[k].revision,
 					ctime(&p[k].tstamp));
+				SHOW_VECTOR(p[k].vector);
+				compare(name, p[k].vector, p[k].revision);
+			}
 			rcsunload(p);
 		}
 	}

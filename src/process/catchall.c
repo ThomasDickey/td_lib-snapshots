@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: catchall.c,v 9.3 1991/10/04 13:46:51 dickey Exp $";
+static	char	Id[] = "$Id: catchall.c,v 11.0 1991/10/07 07:32:20 ste_cm Rel $";
 #endif
 
 /*
@@ -25,8 +25,9 @@ static	char	Id[] = "$Id: catchall.c,v 9.3 1991/10/04 13:46:51 dickey Exp $";
 #define	SIG_PTYPES
 #include "ptypes.h"
 
-catchall(catchsig)
-DCL_SIGNAL(catchsig);
+catchall(
+_FN1(SIG_T,	catchsig))
+_DCL(SIG_T,	(*catchsig)())
 {
 #define	SAVE(j)	save[j].func
 	static	struct	{ DCL_SIGNAL(func); } save[NSIG+1];
