@@ -1,28 +1,28 @@
-# $Id: Makefile,v 11.15 1992/12/21 09:57:35 dickey Exp $
+# $Id: Makefile,v 12.0 1993/04/26 16:38:31 ste_cm Rel $
 # MAKE-file for miscellaneous library routines
 
 ####### (Environment) ##########################################################
 TOP	= ../..
-include ../support/cm_library.mk
+include ../support/td_lib.mk
 LINTLIBS = -ltd -lcurses -ltermcap -lapollo
 
 RCS_PATH= `which rcs | sed -e s+/rcs$$+/+`
 
 ####### (Standard Lists) #######################################################
-Z	= $L/$(CM_LIB).a
+Z	= $L/$(TD_LIB).a
 
 CSRC	=\
 	abspath.c\
-	access_mode.c\
-	add2fname.c\
-	argv2file.c\
+	acc_mode.c\
+	add2fnam.c\
+	arg2file.c\
 	beep.c\
 	bldarg.c\
 	blip.c\
 	catarg.c\
 	catchall.c\
 	cmdch.c\
-	cmp_qsort.c\
+	cmpqsort.c\
 	copyback.c\
 	count_ss.c\
 	cutoff.c\
@@ -34,20 +34,20 @@ CSRC	=\
 	dotname.c\
 	dumpchr.c\
 	dumpwin.c\
-	dyn_append.c\
-	dyn_append_c.c\
-	dyn_catarg.c\
+	dyn_app.c\
+	dyn_appc.c\
+	dyn_cata.c\
 	dyn_copy.c\
-	dyn_string.c\
-	erasechar.c\
+	dyn_str.c\
+	erasechr.c\
 	execute.c\
 	failed.c\
 	field_of.c\
-	file2argv.c\
+	file2arg.c\
 	file2mem.c\
 	filecopy.c\
 	filesize.c\
-	for_admin.c\
+	for_admn.c\
 	for_user.c\
 	fp2argv.c\
 	ftype.c\
@@ -55,11 +55,11 @@ CSRC	=\
 	gethome.c\
 	getuser.c\
 	gid2s.c\
-	interactive.c\
-	is_subpath.c\
-	istextfile.c\
+	interact.c\
+	is_spath.c\
+	istextfl.c\
 	killchar.c\
-	list_by_cols.c\
+	lsbycols.c\
 	logch.c\
 	ltostr.c\
 	m2comp.c\
@@ -68,7 +68,7 @@ CSRC	=\
 	modechar.c\
 	name2s.c\
 	newzone.c\
-	next_version.c\
+	next_ver.c\
 	packdate.c\
 	padedit.c\
 	pathcat.c\
@@ -77,9 +77,9 @@ CSRC	=\
 	pathleaf.c\
 	rawgets.c\
 	rawterm.c\
-	rcs_debug.c\
+	rcsdebug.c\
 	rcs_dir.c\
-	rcsargpair.c\
+	rcsargpr.c\
 	rcsedit.c\
 	rcskeys.c\
 	rcslast.c\
@@ -87,16 +87,16 @@ CSRC	=\
 	rcslocks.c\
 	rcsname.c\
 	rcspath.c\
-	rcspermit.c\
-	rcssymbols.c\
+	rcsperm.c\
+	rcssymbs.c\
 	rcstemp.c\
 	rcstime.c\
 	relpath.c\
-	resizewin.c\
+	resizwin.c\
 	revert.c\
-	samebranch.c\
+	samebr.c\
 	sameleaf.c\
-	saves_uid.c\
+	savesuid.c\
 	savewin.c\
 	scomp.c\
 	sccs_dir.c\
@@ -105,10 +105,10 @@ CSRC	=\
 	scr_size.c\
 	setmtime.c\
 	shoarg.c\
-	show_uids.c\
+	showuids.c\
 	ss_field.c\
 	stat_dir.c\
-	stat_file.c\
+	stat_fil.c\
 	stralloc.c\
 	strbcmp.c\
 	strclean.c\
@@ -130,7 +130,7 @@ CSRC	=\
 	vecedit.c\
 	veclen.c\
 	vercmp.c\
-	view_file.c\
+	viewfile.c\
 	walkback.c\
 	walktree.c\
 	which.c\
@@ -141,16 +141,16 @@ SOURCES	= Makefile descrip.mms $(CSRC)
 
 OBJS	=\
 	$Z(abspath.o)\
-	$Z(access_mode.o)\
-	$Z(add2fname.o)\
-	$Z(argv2file.o)\
+	$Z(acc_mode.o)\
+	$Z(add2fnam.o)\
+	$Z(arg2file.o)\
 	$Z(beep.o)\
 	$Z(bldarg.o)\
 	$Z(blip.o)\
 	$Z(catarg.o)\
 	$Z(catchall.o)\
 	$Z(cmdch.o)\
-	$Z(cmp_qsort.o)\
+	$Z(cmpqsort.o)\
 	$Z(copyback.o)\
 	$Z(count_ss.o)\
 	$Z(cutoff.o)\
@@ -162,20 +162,20 @@ OBJS	=\
 	$Z(dotname.o)\
 	$Z(dumpchr.o)\
 	$Z(dumpwin.o)\
-	$Z(dyn_append.o)\
-	$Z(dyn_append_c.o)\
-	$Z(dyn_catarg.o)\
+	$Z(dyn_app.o)\
+	$Z(dyn_appc.o)\
+	$Z(dyn_cata.o)\
 	$Z(dyn_copy.o)\
-	$Z(dyn_string.o)\
-	$Z(erasechar.o)\
+	$Z(dyn_str.o)\
+	$Z(erasechr.o)\
 	$Z(execute.o)\
 	$Z(failed.o)\
 	$Z(field_of.o)\
-	$Z(file2argv.o)\
+	$Z(file2arg.o)\
 	$Z(file2mem.o)\
 	$Z(filecopy.o)\
 	$Z(filesize.o)\
-	$Z(for_admin.o)\
+	$Z(for_admn.o)\
 	$Z(for_user.o)\
 	$Z(fp2argv.o)\
 	$Z(ftype.o)\
@@ -183,11 +183,11 @@ OBJS	=\
 	$Z(gethome.o)\
 	$Z(getuser.o)\
 	$Z(gid2s.o)\
-	$Z(interactive.o)\
-	$Z(is_subpath.o)\
-	$Z(istextfile.o)\
+	$Z(interact.o)\
+	$Z(is_spath.o)\
+	$Z(istextfl.o)\
 	$Z(killchar.o)\
-	$Z(list_by_cols.o)\
+	$Z(lsbycols.o)\
 	$Z(logch.o)\
 	$Z(ltostr.o)\
 	$Z(m2comp.o)\
@@ -196,7 +196,7 @@ OBJS	=\
 	$Z(modechar.o)\
 	$Z(name2s.o)\
 	$Z(newzone.o)\
-	$Z(next_version.o)\
+	$Z(next_ver.o)\
 	$Z(packdate.o)\
 	$Z(padedit.o)\
 	$Z(pathcat.o)\
@@ -205,9 +205,9 @@ OBJS	=\
 	$Z(pathleaf.o)\
 	$Z(rawgets.o)\
 	$Z(rawterm.o)\
-	$Z(rcs_debug.o)\
+	$Z(rcsdebug.o)\
 	$Z(rcs_dir.o)\
-	$Z(rcsargpair.o)\
+	$Z(rcsargpr.o)\
 	$Z(rcsedit.o)\
 	$Z(rcskeys.o)\
 	$Z(rcslast.o)\
@@ -215,16 +215,16 @@ OBJS	=\
 	$Z(rcslocks.o)\
 	$Z(rcsname.o)\
 	$Z(rcspath.o)\
-	$Z(rcspermit.o)\
-	$Z(rcssymbols.o)\
+	$Z(rcsperm.o)\
+	$Z(rcssymbs.o)\
 	$Z(rcstemp.o)\
 	$Z(rcstime.o)\
 	$Z(relpath.o)\
-	$Z(resizewin.o)\
+	$Z(resizwin.o)\
 	$Z(revert.o)\
-	$Z(samebranch.o)\
+	$Z(samebr.o)\
 	$Z(sameleaf.o)\
-	$Z(saves_uid.o)\
+	$Z(savesuid.o)\
 	$Z(savewin.o)\
 	$Z(sccs_dir.o)\
 	$Z(sccslast.o)\
@@ -233,10 +233,10 @@ OBJS	=\
 	$Z(scr_size.o)\
 	$Z(setmtime.o)\
 	$Z(shoarg.o)\
-	$Z(show_uids.o)\
+	$Z(showuids.o)\
 	$Z(ss_field.o)\
 	$Z(stat_dir.o)\
-	$Z(stat_file.o)\
+	$Z(stat_fil.o)\
 	$Z(stralloc.o)\
 	$Z(strbcmp.o)\
 	$Z(strclean.o)\
@@ -258,7 +258,7 @@ OBJS	=\
 	$Z(vecedit.o)\
 	$Z(veclen.o)\
 	$Z(vercmp.o)\
-	$Z(view_file.o)\
+	$Z(viewfile.o)\
 	$Z(walkback.o)\
 	$Z(walktree.o)\
 	$Z(which.o)\
@@ -269,7 +269,7 @@ ALL	= $Z rcspath.h
 
 ####### (Standard Productions) #################################################
 all\
-run_tests\
+run_test\
 install:	$(SOURCES) $(ALL)
 
 clean:				; rm -f $(CLEAN)
@@ -289,47 +289,47 @@ $Z(beep.o)\
 $Z(blip.o)\
 $Z(cmdch.o)\
 $Z(dumpwin.o)\
-$Z(erasechar.o)\
+$Z(erasechr.o)\
 $Z(killchar.o)\
 $Z(logch.o)\
 $Z(rawgets.o)\
 $Z(rawterm.o)\
-$Z(resizewin.o)\
+$Z(resizwin.o)\
 $Z(savewin.o)\
-$Z(view_file.o)\
+$Z(viewfile.o)\
 $Z(win2file.o)\
 $Z(wrepaint.o):	$(CURSES_H)
 
 $Z(cm_qsort.o):	$(QSORT_H)
 
 $Z(m2comp.o)\
-$Z(scomp.o):	$I/cm_scomp.h
+$Z(scomp.o):	$I/td_scomp.h
 
 $Z(cmdch.o)\
 $Z(logch.o)\
 $Z(rawgets.o):	$I/cmdch.h
 
 $Z(diffload.o)\
-$Z(dyn_append.o)\
-$Z(dyn_append_c.o)\
-$Z(dyn_catarg.o)\
+$Z(dyn_app.o)\
+$Z(dyn_appc.o)\
+$Z(dyn_cata.o)\
 $Z(dyn_copy.o)\
-$Z(dyn_string.o)\
+$Z(dyn_str.o)\
 $Z(fp2argv.o)\
 $Z(rawgets.o)\
-$Z(rcspermit.o):	$I/dyn_string.h
+$Z(rcsperm.o):	$I/dyn_str.h
 
-$Z(rcsargpair.o)\
+$Z(rcsargpr.o)\
 $Z(rcsedit.o)\
 $Z(rcskeys.o)\
 $Z(rcslast.o)\
 $Z(rcsload.o)\
 $Z(rcslocks.o)\
 $Z(rcsname.o)\
-$Z(rcspermit.o)\
-$Z(rcssymbols.o)\
+$Z(rcsperm.o)\
+$Z(rcssymbs.o)\
 $Z(rcstime.o)\
-$Z(samebranch.o)\
+$Z(samebr.o)\
 $Z(vcs_file.o):	$(RCSDEFS_H)
 #
 $Z(rcspath.o):	rcspath.h
@@ -342,7 +342,7 @@ $Z(sccsname.o):	$(SCCSDEFS_H)
 #
 $Z(count_ss.o)\
 $Z(field_of.o)\
-$Z(ss_field.o):	$I/spreadsheet.h $I/dyn_string.h
+$Z(ss_field.o):	$I/td_sheet.h $I/dyn_str.h
 #
 # If the rcs tool is not found in our path, assume that it lies in the same
 # directory as that in which we will install; but the install-directory has

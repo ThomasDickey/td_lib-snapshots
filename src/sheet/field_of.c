@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	*Id = "$Id: field_of.c,v 11.3 1992/11/12 08:56:42 dickey Exp $";
+static	char	*Id = "$Id: field_of.c,v 12.0 1993/04/26 16:11:48 ste_cm Rel $";
 #endif
 
 /*
@@ -18,7 +18,7 @@ static	char	*Id = "$Id: field_of.c,v 11.3 1992/11/12 08:56:42 dickey Exp $";
  */
 
 #define	STR_PTYPES
-#include "spreadsheet.h"
+#include "td_sheet.h"
 #include <ctype.h>
 
 static	int	opt_Blanks;

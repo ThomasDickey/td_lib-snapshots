@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	*Id = "$Id: ss_field.c,v 11.1 1992/08/03 08:26:23 dickey Exp $";
+static	char	*Id = "$Id: ss_field.c,v 12.0 1993/04/26 16:11:56 ste_cm Rel $";
 #endif
 
 /*
@@ -12,7 +12,7 @@ static	char	*Id = "$Id: ss_field.c,v 11.1 1992/08/03 08:26:23 dickey Exp $";
  * Function:	insert/extract data from in-memory spreadsheet-table.
  */
 
-#include "spreadsheet.h"
+#include "td_sheet.h"
 
 char *	get_ss_field(
 	_ARX(char **,	vec)

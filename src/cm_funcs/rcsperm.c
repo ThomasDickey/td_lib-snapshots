@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcsperm.c,v 11.4 1992/11/12 07:17:42 dickey Exp $";
+static	char	Id[] = "$Id: rcsperm.c,v 12.0 1993/04/26 16:17:42 ste_cm Rel $";
 #endif
 
 /*
@@ -31,7 +31,7 @@ static	char	Id[] = "$Id: rcsperm.c,v 11.4 1992/11/12 07:17:42 dickey Exp $";
 #define	STR_PTYPES
 #include	"ptypes.h"
 #include	"rcsdefs.h"
-#include	"dyn_string.h"
+#include	"dyn_str.h"
 #include	<ctype.h>
 
 int	rcspermit(

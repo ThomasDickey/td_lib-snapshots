@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	*Id = "$Id: count_ss.c,v 11.1 1992/08/03 08:28:57 dickey Exp $";
+static	char	*Id = "$Id: count_ss.c,v 12.0 1993/04/26 16:11:32 ste_cm Rel $";
 #endif
 
 /*
@@ -11,7 +11,7 @@ static	char	*Id = "$Id: count_ss.c,v 11.1 1992/08/03 08:28:57 dickey Exp $";
  *		'file2argv()').
  */
 
-#include "spreadsheet.h"
+#include "td_sheet.h"
 
 
 int

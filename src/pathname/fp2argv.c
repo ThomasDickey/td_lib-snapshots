@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: fp2argv.c,v 11.2 1992/11/18 14:52:05 dickey Exp $";
+static	char	Id[] = "$Id: fp2argv.c,v 12.0 1993/04/26 16:17:43 ste_cm Rel $";
 #endif
 
 /*
@@ -22,7 +22,7 @@ static	char	Id[] = "$Id: fp2argv.c,v 11.2 1992/11/18 14:52:05 dickey Exp $";
  */
 
 #include	"ptypes.h"
-#include	"dyn_string.h"
+#include	"dyn_str.h"
 
 	/*ARGSUSED*/
 	def_DOALLOC(char *)

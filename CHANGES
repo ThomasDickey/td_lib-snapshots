@@ -1,3 +1,194 @@
+1993-04-26  dickey@software.org
+
+	* src/Makefile: shorten-filenames
+
+1993-04-26  ste_cm@software.org
+
+	* src/Makefile:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1993-04-26  dickey@software.org
+
+	* support/Makefile: shorten-filenames
+
+1993-04-26  ste_cm@software.org
+
+	* support/Makefile:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1993-04-26  dickey@software.org
+
+	* Makefile, certify/Makefile: shorten-filenames
+
+1993-04-26  ste_cm@software.org
+
+	* certify/Makefile:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1993-04-26  dickey@software.org
+
+	* src/pathname/walktree.c: shorten-filenames
+
+1993-04-26  ste_cm@software.org
+
+	* src/pathname/walktree.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1993-04-26  dickey@software.org
+
+	* README: shorten-filenames
+
+1993-04-26  ste_cm@software.org
+
+	* README: BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1993-04-26  dickey@software.org
+
+	* src/compare/scomp.c, src/descrip.mms, src/compare/m2comp.c, src/string/dyn_str.c:
+	shorten-filenames
+
+1993-04-26  ste_cm@software.org
+
+	* src/string/dyn_str.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1993-04-26  dickey@software.org
+
+	* src/pathname/fp2argv.c, src/string/dyn_appc.c, src/string/dyn_cata.c, src/string/dyn_copy.c:
+	shorten-filenames
+
+1993-04-26  ste_cm@software.org
+
+	* src/pathname/fp2argv.c, src/string/dyn_appc.c, src/string/dyn_cata.c, src/string/dyn_copy.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1993-04-26  dickey@software.org
+
+	* src/cm_funcs/rcsperm.c, src/curses/rawgets.c: shorten-filenames
+
+1993-04-26  ste_cm@software.org
+
+	* src/cm_funcs/rcsperm.c, src/curses/rawgets.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1993-04-26  dickey@software.org
+
+	* src/string/dyn_app.c: shorten-filenames
+
+1993-04-26  ste_cm@software.org
+
+	* src/string/dyn_app.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1993-04-26  dickey@software.org
+
+	* src/compare/diffload.c: shorten-filenames
+
+1993-04-26  ste_cm@software.org
+
+	* src/compare/diffload.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1993-04-26  dickey@software.org
+
+	* src/sheet/ss_field.c: shorten-filenames
+
+1993-04-26  ste_cm@software.org
+
+	* src/sheet/ss_field.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1993-04-26  dickey@software.org
+
+	* src/sheet/field_of.c: shorten-filenames
+
+1993-04-26  ste_cm@software.org
+
+	* src/sheet/field_of.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1993-04-26  dickey@software.org
+
+	* src/sheet/count_ss.c: shorten-filenames
+
+1993-04-26  ste_cm@software.org
+
+	* src/sheet/count_ss.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1993-04-26  dickey@software.org
+
+	* src/compare/cmpqsort.c: shorten-filenames
+
+1993-04-26  ste_cm@software.org
+
+	* src/compare/cmpqsort.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1993-04-26  dickey@software.org
+
+	* include/ptypes.h, support/old-td_lib.mk, include/td_lib.h:
+	shorten-filenames
+
+1993-04-26  ste_cm@software.org
+
+	* include/td_lib.h:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1993-04-26  dickey@software.org
+
+	* include/td_sheet.h: shorten-filenames
+
+1993-04-26  ste_cm@software.org
+
+	* include/td_sheet.h:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1993-04-26  dickey@software.org
+
+	* include/llib-ltd: shorten-filenames
+
+1993-04-26  ste_cm@software.org
+
+	* include/llib-ltd:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1993-04-26  dickey@software.org
+
+	* include/cmdch.h: shorten-filenames
+
+1993-04-26  ste_cm@software.org
+
+	* include/cmdch.h:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1993-04-26  dickey@software.org
+
+	* include/td_curse.h: shorten-filenames
+
+1993-04-26  ste_cm@software.org
+
+	* include/td_curse.h:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1993-04-26  dickey@software.org
+
+	* include/ptypes.h, include/Makefile: shorten-filenames
+
+1993-04-26  ste_cm@software.org
+
+	* include/Makefile:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1993-04-26  dickey@software.org
+
+	* certify/README: shorten-filenames
+
+1993-04-26  ste_cm@software.org
+
+	* certify/README:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
 1993-02-01  dickey@software.org
 
 	* src/cm_funcs/rcslast.c:

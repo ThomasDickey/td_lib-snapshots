@@ -1,11 +1,12 @@
-$Id: README,v 11.1 1992/10/09 08:55:14 dickey Exp $
+$Id: README,v 12.0 1993/04/26 16:31:51 ste_cm Rel $
 
-CM_LIBRARY
+TD_LIB
 
 -------------------------------------------------------------------------------
 
-This is a common library procedures which are shared not only among the programs
-of CM_TOOLS, but also with other programs which are not part of CM_TOOLS.
+This is a common library procedures which are shared not only among the
+CM_TOOLS utilities, but also with other programs which are not part of
+CM_TOOLS.
 
 Portions of this library are portable to VAX/VMS, where it is used for support
 of various programs.

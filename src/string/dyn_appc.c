@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	*Id = "$Id: dyn_appc.c,v 11.1 1992/07/24 13:06:30 dickey Exp $";
+static	char	*Id = "$Id: dyn_appc.c,v 12.0 1993/04/26 16:17:43 ste_cm Rel $";
 #endif
 
 /*
@@ -12,7 +12,7 @@ static	char	*Id = "$Id: dyn_appc.c,v 11.1 1992/07/24 13:06:30 dickey Exp $";
 
 #define	STR_PTYPES
 #include "ptypes.h"
-#include "dyn_string.h"
+#include "dyn_str.h"
 
 DYN *	dyn_append_c(
 	_ARX(DYN *,	p)

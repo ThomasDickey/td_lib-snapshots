@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: walktree.c,v 11.4 1992/12/04 12:52:05 ste_cm Exp $";
+static	char	Id[] = "$Id: walktree.c,v 12.0 1993/04/26 16:34:55 ste_cm Rel $";
 #endif
 
 /*
@@ -49,7 +49,7 @@ static	char	Id[] = "$Id: walktree.c,v 11.4 1992/12/04 12:52:05 ste_cm Exp $";
 #define		DIR_PTYPES		/* include directory-stuff */
 #define		STR_PTYPES
 #include	"ptypes.h"
-#include	"cm_qsort.h"
+#include	"td_qsort.h"
 
 /************************************************************************
  *	local definitions						*

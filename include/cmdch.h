@@ -1,4 +1,8 @@
-/* $Header: /users/source/archives/td_lib.vcs/include/RCS/cmdch.h,v 11.0 1991/05/15 13:32:32 ste_cm Rel $ */
+/* $Id: cmdch.h,v 12.0 1993/04/26 15:27:49 ste_cm Rel $ */
+
+/*
+ * definitions for 'cmdch()'
+ */
 
 #define	CTL(c)		(c&037)
 #define	ARO(c)		(CTL(c)|0200)

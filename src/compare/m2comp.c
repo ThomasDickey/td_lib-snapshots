@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: m2comp.c,v 11.3 1992/11/20 13:18:56 dickey Exp $";
+static	char	Id[] = "$Id: m2comp.c,v 11.4 1993/04/26 16:23:01 dickey Exp $";
 #endif
 
 /*
@@ -19,7 +19,7 @@ static	char	Id[] = "$Id: m2comp.c,v 11.3 1992/11/20 13:18:56 dickey Exp $";
 
 #define	STR_PTYPES
 #define	SCOMP	m2comp			/* name of this module */
-#include "cm_scomp.h"
+#include "td_scomp.h"
 
 #define	INSERT	1
 #define	DELETE	2

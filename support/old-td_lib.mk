@@ -1,13 +1,13 @@
-# $Id: old-td_lib.mk,v 11.8 1992/11/19 15:51:43 dickey Exp $
-# common definitions for makefiles built over CM_TOOLS library.
+# $Id: old-td_lib.mk,v 11.9 1993/04/26 15:36:49 dickey Exp $
+# common definitions for makefiles built over TD_LIB library.
 
 ####### (Environment) ##########################################################
-CM_LIB	= cm_library
+TD_LIB	= td_lib
 # TOP	= ../../.. -- must define
 
 B	= ../bin
-I	= $(TOP)/$(CM_LIB)/interface
-L	= $(TOP)/$(CM_LIB)/lib
+I	= $(TOP)/$(TD_LIB)/include
+L	= $(TOP)/$(TD_LIB)/lib
 
 GET	= checkout
 COPY	= cp -p
@@ -23,7 +23,7 @@ INSTALL_MAN = $(TOP)/install_man
 INCLUDES= -I. -I$I
 CPP_OPTS= $(DEFINES) $(INCLUDES)
 
-LIBS	= $L/$(CM_LIB).a
+LIBS	= $L/$(TD_LIB).a
 DATE	= echo '** '`date` >> $@
 
 LINTLIBS= -ltd
@@ -34,9 +34,9 @@ CLEAN	= *.[oai] *.lint *.bak *.log *.out *.tst .nfs* core
 DESTROY	=sh -c 'for i in *;do case $$i in RCS);; *) rm -f $$i;;esac;done;exit 0'
 RUN_TESTS=sh -c '$@.sh 2>&1 | tee -a $@.out'
 
-PTYPES_H =	$I/ptypes.h	$I/common.h
-CURSES_H =	$(PTYPES_H)	$I/cm_curses.h
-QSORT_H =	$(PTYPES_H)	$I/cm_qsort.h
+PTYPES_H =	$I/ptypes.h	$I/td_lib.h
+CURSES_H =	$(PTYPES_H)	$I/td_curse.h
+QSORT_H =	$(PTYPES_H)	$I/td_qsort.h
 RCSDEFS_H =	$(PTYPES_H)	$I/rcsdefs.h	$I/deltree.h
 SCCSDEFS_H =	$(PTYPES_H)	$I/sccsdefs.h
 

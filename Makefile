@@ -1,5 +1,5 @@
-# $Id: Makefile,v 11.6 1992/12/04 11:54:58 ste_cm Exp $
-# Top-level makefile for CM_TOOLS common library
+# $Id: Makefile,v 11.7 1993/04/26 16:35:55 dickey Exp $
+# Top-level makefile for TD_LIB common library
 
 ####### (Development) ##########################################################
 INSTALL_INC = ../install_inc
@@ -9,9 +9,9 @@ INSTALL_MAN = ../install_man
 PUT	= rm -f $@; cp -p $? $@
 TOP	= ..
 GET	= checkout
-THIS	= cm_library
+THIS	= td_lib
 
-I	= $(TOP)/interface
+I	= $(TOP)/include
 L	= $(TOP)/lib
 
 CLEAN	= *.[oai] *.bak *.log *.out *.tst .nfs* core
@@ -21,8 +21,8 @@ DESTROY	=sh -c 'for i in *;do case $$i in RCS);; *) rm -f $$i;;esac;done;exit 0'
 SOURCES	= Makefile descrip.mms README
 
 MFILES	=\
-	certificate/Makefile\
-	interface/Makefile\
+	certify/Makefile\
+	include/Makefile\
 	src/Makefile\
 	support/Makefile\
 	test/Makefile
@@ -30,16 +30,16 @@ MFILES	=\
 IT	=\
 	$I/acl.h\
 	$I/cmdch.h\
-	$I/common.h\
-	$I/cm_curses.h\
-	$I/cm_qsort.h\
-	$I/cm_scomp.h\
+	$I/$(THIS).h\
+	$I/td_curse.h\
+	$I/td_qsort.h\
+	$I/td_scomp.h\
+	$I/td_sheet.h\
 	$I/deltree.h\
-	$I/dyn_string.h\
+	$I/dyn_str.h\
 	$I/ptypes.h\
 	$I/rcsdefs.h\
 	$I/sccsdefs.h\
-	$I/spreadsheet.h\
 	$L/$(THIS).a
 
 ####### (Standard Productions) #################################################
@@ -51,18 +51,18 @@ all\
 clean\
 clobber\
 destroy\
-run_tests\
+run_test\
 sources\
 lincnt.out\
 lint.out::	$(MFILES)
 	cd support;	$(MAKE) $@
-	cd certificate;	$(MAKE) $@
-	cd interface;	$(MAKE) $@
+	cd certify;	$(MAKE) $@
+	cd include;	$(MAKE) $@
 	cd src;		$(MAKE) $@
 	cd test;	$(MAKE) $@
 
 lintlib::	$(MFILES)
-	cd interface;	$(MAKE) $@
+	cd include;	$(MAKE) $@
 
 all\
 sources::	$(SOURCES)
@@ -82,18 +82,18 @@ $(MFILES)\
 $(SOURCES):				; $(GET) $@
 lib:					; mkdir $@
 
-i=interface
+i=include
 $I/acl.h:		$i/acl.h	; $(PUT)
 $I/cmdch.h:		$i/cmdch.h	; $(PUT)
-$I/cm_curses.h:		$i/cm_curses.h	; $(PUT)
-$I/cm_qsort.h:		$i/cm_qsort.h	; $(PUT)
-$I/cm_scomp.h:		$i/cm_scomp.h	; $(PUT)
-$I/common.h:		$i/common.h	; $(PUT)
+$I/td_curse.h:		$i/td_curse.h	; $(PUT)
+$I/td_qsort.h:		$i/td_qsort.h	; $(PUT)
+$I/td_scomp.h:		$i/td_scomp.h	; $(PUT)
+$I/td_sheet.h:		$i/td_sheet.h	; $(PUT)
+$I/$(THIS).h:		$i/$(THIS).h	; $(PUT)
 $I/deltree.h:		$i/deltree.h	; $(PUT)
-$I/dyn_string.h:	$i/dyn_string.h	; $(PUT)
+$I/dyn_str.h:		$i/dyn_str.h	; $(PUT)
 $I/ptypes.h:		$i/ptypes.h	; $(PUT)
 $I/rcsdefs.h:		$i/rcsdefs.h	; $(PUT)
 $I/sccsdefs.h:		$i/sccsdefs.h	; $(PUT)
-$I/spreadsheet.h:	$i/spreadsheet.h; $(PUT)
 
 $L/$(THIS).a:	lib/$(THIS).a		; $(PUT); ranlib $@

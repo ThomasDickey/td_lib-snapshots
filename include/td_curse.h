@@ -1,7 +1,7 @@
-/* $Id: td_curse.h,v 11.2 1992/11/18 08:37:05 dickey Exp $ */
+/* $Id: td_curse.h,v 12.0 1993/04/26 15:27:21 ste_cm Rel $ */
 
 /*
- * CM_LIBRARY CURSES-related definitions
+ * TD_LIB CURSES-related definitions
  */
 
 #ifndef		_CM_CURSES_H

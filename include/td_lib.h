@@ -1,7 +1,7 @@
-/* $Id: td_lib.h,v 11.11 1992/12/21 09:53:52 dickey Exp $ */
+/* $Id: td_lib.h,v 12.0 1993/04/26 15:30:01 ste_cm Rel $ */
 
 /*
- * Combined lint-library/function prototype definitions for CM_TOOLS COMMON
+ * Combined lint-library/function prototype definitions for TD_LIB common
  * library.
  */
 
@@ -21,7 +21,7 @@
 	/* GENERIC-LIBRARY ******************************************** */
 
 #ifdef	CUR_PTYPES
-#include "cm_curses.h"
+#include "td_curse.h"
 #endif
 
 	/* abspath.c -------------------------------------------------- */
@@ -39,14 +39,14 @@
 			_nul
 #endif	/* unix */
 
-	/* access_mode.c ---------------------------------------------- */
+	/* acc_mode.c ------------------------------------------------- */
 	char *	access_mode(
 			_ar1(int,	mode)
 			)
 			_dcl(int,	mode)
 			_ret
 
-	/* add2fname.c ------------------------------------------------ */
+	/* add2fnam.c ------------------------------------------------- */
 	int	add2fname(
 			_arx(char *,	fname)
 			_ar1(char *,	suffix)
@@ -55,7 +55,7 @@
 			_dcl(char *,	suffix)
 			_ret
 
-	/* argv2file.c ------------------------------------------------ */
+	/* arg2file.c ------------------------------------------------- */
 	int	argv2file(
 			_arx(char **,	vec)
 			_arx(char *,	name)
@@ -201,7 +201,7 @@
 			_dcl(char *,	args)
 			_ret
 
-	/* file2argv.c ------------------------------------------------ */
+	/* file2arg.c ------------------------------------------------- */
 	int	file2argv(
 			_arx(char *,	name)
 			_ar1(char ***,	vec)
@@ -236,7 +236,7 @@
 			_dcl(char *,	name)
 			_ret
 
-	/* for_admin.c ------------------------------------------------ */
+	/* for_admn.c ------------------------------------------------- */
 	int	for_admin2(
 			_fnx(int,	func,	(_AR0))
 			_arx(int,	the_uid)
@@ -313,11 +313,11 @@
 			_dcl(int,	gid)
 			_ret
 
-	/* interactive.c ---------------------------------------------- */
+	/* interact.c ------------------------------------------------- */
 	int	interactive(_ar0)
 			_ret
 
-	/* is_subpath.c ----------------------------------------------- */
+	/* is_spath.c ------------------------------------------------- */
 	int	is_subpath(
 			_arx(char *,	ref)
 			_ar1(char *,	tst)
@@ -326,14 +326,14 @@
 			_dcl(char *,	tst)
 			_ret
 
-	/* istextfile.c ----------------------------------------------- */
+	/* istextfl.c ------------------------------------------------- */
 	int	istextfile(
 			_ar1(char *,	name)
 			)
 			_dcl(char *,	name)
 			_ret
 
-	/* list_by_cols.c --------------------------------------------- */
+	/* lsbycols.c ------------------------------------------------- */
 		list_by_cols(
 			_arx(char **,	listp)
 			_arx(int,	sizep)
@@ -435,7 +435,7 @@
 		oldzone(_ar0)
 			_nul
 
-	/* next_version.c --------------------------------------------- */
+	/* next_ver.c ------------------------------------------------- */
 		next_version(
 			_arx(char *,	dst)
 			_ar1(char *,	src)
@@ -561,7 +561,7 @@
 			_ret
 
 #ifdef	unix
-	/* saves_uid.c ------------------------------------------------ */
+	/* savesuid.c ------------------------------------------------- */
 	int	saves_uid(_ar0)
 			_nul
 
@@ -615,7 +615,7 @@
 			_dcl(char *,	args)
 			_nul
 
-	/* show_uids.c ------------------------------------------------ */
+	/* showuids.c ------------------------------------------------- */
 	void	show_uids(
 			_ar1(FILE *,	fp)
 			)
@@ -631,7 +631,7 @@
 			_dcl(STAT *,	sb)
 			_ret
 
-	/* stat_file.c ------------------------------------------------ */
+	/* stat_fil.c ------------------------------------------------- */
 	int	stat_file(
 			_arx(char *,	path)
 			_ar1(STAT *,	sb)
@@ -825,7 +825,7 @@
 			_dcl(int,	wild)
 			_ret
 
-	/* view_file.c ------------------------------------------------ */
+	/* viewfile.c ------------------------------------------------- */
 #ifdef	unix
 	int	view_file(
 			_arx(char *,	fname)

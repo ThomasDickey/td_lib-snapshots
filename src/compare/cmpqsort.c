@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: cmpqsort.c,v 11.1 1992/11/18 08:09:36 dickey Exp $";
+static	char	Id[] = "$Id: cmpqsort.c,v 12.0 1993/04/26 16:08:51 ste_cm Rel $";
 #endif
 
 /*
@@ -16,7 +16,7 @@ static	char	Id[] = "$Id: cmpqsort.c,v 11.1 1992/11/18 08:09:36 dickey Exp $";
  *		and with the user-specified access.
  */
 
-#include	"cm_qsort.h"
+#include	"td_qsort.h"
 
 QSORT_FUNC(cmp_qsort)
 {

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rawgets.c,v 11.25 1992/11/20 14:13:14 dickey Exp $";
+static	char	Id[] = "$Id: rawgets.c,v 12.0 1993/04/26 16:17:42 ste_cm Rel $";
 #endif
 
 /*
@@ -59,7 +59,7 @@ static	char	Id[] = "$Id: rawgets.c,v 11.25 1992/11/20 14:13:14 dickey Exp $";
 #include	"ptypes.h"
 #include	<ctype.h>
 #include	"cmdch.h"
-#include	"dyn_string.h"
+#include	"dyn_str.h"
 
 #define	SHIFT	5
 
