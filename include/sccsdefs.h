@@ -1,4 +1,4 @@
-/* $Id: sccsdefs.h,v 9.0 1991/05/15 09:01:15 ste_cm Rel $ */
+/* $Id: sccsdefs.h,v 9.1 1991/09/17 08:09:45 dickey Exp $ */
 
 #ifndef	_SCCSDEFS_H_
 #define	_SCCSDEFS_H_
@@ -9,38 +9,38 @@
 
 	/* sccs_dir.c ------------------------------------------------- */
 	char *	sccs_dir()
-			_RET
+			_ret
 
 	/* sccslast.c ------------------------------------------------- */
 		sccslast(
-			_ARX(char *,	wd)
-			_ARX(char *,	n)
-			_ARX(char **,	v_)
-			_ARX(time_t *,	t_)
-			_AR1(char **,	l_)
+			_arx(char *,	wd)
+			_arx(char *,	n)
+			_arx(char **,	v_)
+			_arx(time_t *,	t_)
+			_ar1(char **,	l_)
 			)
-			_DCL(char *,	wd)
-			_DCL(char *,	n)
-			_DCL(char **,	v_)
-			_DCL(time_t *,	t_)
-			_DCL(char **,	l_)
-			_NUL
+			_dcl(char *,	wd)
+			_dcl(char *,	n)
+			_dcl(char **,	v_)
+			_dcl(time_t *,	t_)
+			_dcl(char **,	l_)
+			_nul
 
 	/* sccsname.c ------------------------------------------------- */
 	char *	sccs2name(
-			_ARX(char *,	name)
-			_AR1(int,	full)
+			_arx(char *,	name)
+			_ar1(int,	full)
 			)
-			_DCL(char *,	name)
-			_DCL(int,	full)
-			_RET
+			_dcl(char *,	name)
+			_dcl(int,	full)
+			_ret
 
 	char *	name2sccs(
-			_ARX(char *,	name)
-			_AR1(int,	full)
+			_arx(char *,	name)
+			_ar1(int,	full)
 			)
-			_DCL(char *,	name)
-			_DCL(int,	full)
-			_RET
+			_dcl(char *,	name)
+			_dcl(int,	full)
+			_ret
 
 #endif	/* _SCCSDEFS_H_ */

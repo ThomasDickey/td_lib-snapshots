@@ -1,10 +1,13 @@
-# $Id: Makefile,v 9.1 1991/07/23 10:01:32 dickey Exp $
+# $Id: Makefile,v 9.2 1991/09/17 07:39:22 dickey Exp $
 # Top-level makefile for CM_TOOLS common library
 #
 # $Log: Makefile,v $
-# Revision 9.1  1991/07/23 10:01:32  dickey
-# on SunOs, must ranlib archive after copying it
+# Revision 9.2  1991/09/17 07:39:22  dickey
+# added rule for 'deltree.h'
 #
+#	Revision 9.1  91/07/23  10:01:32  dickey
+#	on SunOs, must ranlib archive after copying it
+#	
 #	Revision 9.0  91/06/05  14:36:31  ste_cm
 #	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
 #	
@@ -29,6 +32,7 @@ FIRST	=\
 ALL	=\
 	$I/cmdch.h\
 	$I/common.h\
+	$I/deltree.h\
 	$I/ptypes.h\
 	$I/rcsdefs.h\
 	$I/sccsdefs.h\
@@ -64,6 +68,7 @@ lib:					; mkdir $@
 
 $I/cmdch.h:	interface/cmdch.h	; cd interface;	$(PUT)
 $I/common.h:	interface/common.h	; cd interface;	$(PUT)
+$I/deltree.h:	interface/deltree.h	; cd interface;	$(PUT)
 $I/ptypes.h:	interface/ptypes.h	; cd interface;	$(PUT)
 $I/rcsdefs.h:	interface/rcsdefs.h	; cd interface;	$(PUT)
 $I/sccsdefs.h:	interface/sccsdefs.h	; cd interface;	$(PUT)

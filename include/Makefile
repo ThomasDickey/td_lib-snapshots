@@ -1,4 +1,4 @@
-# $Id: Makefile,v 9.1 1991/09/09 07:38:16 dickey Exp $
+# $Id: Makefile,v 9.2 1991/09/17 07:35:47 dickey Exp $
 # make-file for CM_TOOLS common interface directory
 #
 ####### (Development) ##########################################################
@@ -14,6 +14,7 @@ H_SRC	=\
 	acl.h \
 	cmdch.h\
 	common.h\
+	deltree.h\
 	ptypes.h\
 	rcsdefs.h\
 	sccsdefs.h
@@ -36,4 +37,4 @@ lincnt.out:	$(H_SRC)	; lincnt $(H_SRC) >$@
 ####### (Details of Productions) ###############################################
 #
 $(SOURCES):		; $(GET) $@
-$L/$(LLIB).ln:	$(H_SRC) $(LLIB) ; - sh -c 'makellib -L$L $(LLIB) $(llib)'
+$L/$(LLIB).ln:	$(H_SRC) $(LLIB) ; - sh -c 'makellib -I. -L$L $(LLIB) $(llib)'

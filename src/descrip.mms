@@ -1,4 +1,4 @@
-# $Id: descrip.mms,v 9.2 1991/09/13 07:53:01 dickey Exp $
+# $Id: descrip.mms,v 9.3 1991/09/17 09:03:50 dickey Exp $
 # MMS-file for miscellaneous library routines	
 #
 ####### (Development) ##########################################################
@@ -54,6 +54,8 @@ LIBRARYMODULES = -
 	TRIMPATH, -
 	TXTALLOC, -
 	VECALLOC, -
+	VECEDIT, -
+	VECLEN, -
 	VERCMP, -
 	WALKTREE
 UNUSED_MODULES = -
@@ -199,6 +201,8 @@ C_SRC	=-
 	USERPROT.C -
 	VCS_FILE.C -
 	VECALLOC.C -
+	VECEDIT.C -
+	VECLEN.C -
 	VERCMP.C -
 	VIEW_FILE.C -
 	WALKTREE.C -

@@ -1,4 +1,4 @@
-# $Id: Makefile,v 9.4 1991/09/13 08:00:18 dickey Exp $
+# $Id: Makefile,v 9.5 1991/09/17 09:04:07 dickey Exp $
 # MAKE-file for miscellaneous library routines
 #
 ####### (Development) ##########################################################
@@ -104,6 +104,8 @@ CSRC	=\
 	userprot.c\
 	vcs_file.c\
 	vecalloc.c\
+	vecedit.c\
+	veclen.c\
 	vercmp.c\
 	view_file.c\
 	walktree.c\
@@ -202,6 +204,8 @@ OBJS	=\
 	userprot.o\
 	vcs_file.o\
 	vecalloc.o\
+	vecedit.o\
+	veclen.o\
 	vercmp.o\
 	view_file.o\
 	walktree.o\
@@ -234,19 +238,21 @@ archive: $(OBJS)
 	ar rv $A $(OBJS)
 	ranlib $A
 #
+RCSDEFS_H	= $I/rcsdefs.h	$I/deltree.h
+#
 $(OBJS):	$I/ptypes.h	$I/common.h
 cmdch.o:	$I/cmdch.h
 rawgets.o:	$I/cmdch.h
-rcsedit.o:	$I/rcsdefs.h
-rcskeys.o:	$I/rcsdefs.h
-rcslast.o:	$I/rcsdefs.h
-rcsload.o:	$I/rcsdefs.h
-rcslocks.o:	$I/rcsdefs.h
-rcsname.o:	$I/rcsdefs.h
+rcsedit.o:	$(RCSDEFS_H)
+rcskeys.o:	$(RCSDEFS_H)
+rcslast.o:	$(RCSDEFS_H)
+rcsload.o:	$(RCSDEFS_H)
+rcslocks.o:	$(RCSDEFS_H)
+rcsname.o:	$(RCSDEFS_H)
 rcspath.o:	$J/rcspath.h	; $(CC) -I$J -c $*.c
-rcspermit.o:	$I/rcsdefs.h
+rcspermit.o:	$(RCSDEFS_H)
 sccsname.o:	$I/sccsdefs.h
-vcs_file.o:	$I/rcsdefs.h
+vcs_file.o:	$(RCSDEFS_H)
 #
 ####### (Development) ##########################################################
 $(SOURCES):			; $(GET) $@

@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19910916
+MANIFEST for td_lib, version t19910917
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 Makefile                        top-level makefile for TD_LIB
@@ -10,6 +10,7 @@ include                         subdirectory
 include/Makefile                make-file for CM_TOOLS common interface directory
 include/acl.h                   defines ACL bits for apollo SR10.1
 include/cmdch.h                 
+include/deltree.h               delta-tree function interface
 include/llib-ltd                template for lint-library
 include/port2vms.h              interface for vms-porting functions
 include/ptypes.h                principal include-file for TD_LIB
@@ -63,6 +64,8 @@ src/memory/doalloc.c            wrapper for malloc/realloc/free (checks pointers
 src/memory/stralloc.c           portable replacement for 'strdup()'
 src/memory/txtalloc.c           maintain dictionary of string "constants"
 src/memory/vecalloc.c           allocate an array
+src/memory/vecedit.c            edits vectors of text a la 'diff -n'
+src/memory/veclen.c             computes length of a vector
 src/pathname                    subdirectory
 src/pathname/abspath.c          convert path to absolute form
 src/pathname/add2fnam.c         add suffix to a filename
