@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: cmv_last.c,v 12.2 1994/08/15 23:39:38 tom Exp $";
+static	char	Id[] = "$Id: cmv_last.c,v 12.3 1994/09/29 00:27:02 tom Exp $";
 #endif
 
 /*
@@ -7,11 +7,15 @@ static	char	Id[] = "$Id: cmv_last.c,v 12.2 1994/08/15 23:39:38 tom Exp $";
  * Author:	T.E.Dickey
  * Created:	02 Aug 1994, from 'sccslast.c'
  * Modified:
+ *		28 Sep 1994, CMVision encodes the file locks in the r-file.
  *		11 Aug 1994, CMVision encodes file modification time in the
  *			     change-comment.
  *
  * Function:	Lookup the last sccs-delta date, and its release.version number
- *		for directory-editor.
+ *		for directory-editor and similar utilities.
+ *
+ * FIXME:	This only knows how to scan SCCS files.  A CMVision archive may
+ *		also be an RCS file.
  */
 
 #define	CHR_PTYPES
@@ -28,16 +32,14 @@ static	char	Id[] = "$Id: cmv_last.c,v 12.2 1994/08/15 23:39:38 tom Exp $";
  *	\{number}\{comment}\^AO{uid}:G{gid}:P{protection}:M{modified}:
  */
 static
-void	trysccs (
+void	ScanSCCS (
 	_ARX(char *,	path)
 	_ARX(char **,	vers_)
-	_ARX(time_t *,	date_)
-	_AR1(char **,	lock_)
+	_AR1(time_t *,	date_)
 		)
 	_DCL(char *,	path)
 	_DCL(char **,	vers_)
 	_DCL(time_t *,	date_)
-	_DCL(char **,	lock_)
 {
 	auto	FILE	*fp = fopen(path, "r");
 	auto	int	gotten = 0;
@@ -50,14 +52,16 @@ void	trysccs (
 		newzone(5,0,FALSE);	/* interpret in EST5EDT */
 		while (fgets(bfr, sizeof(bfr), fp)) {
 			if (!gotten) {
-				if (strncmp(bfr, "\001h", 2))	break;
+				if (strncmp(bfr, "\001h", 2))
+					break;
 				gotten++;
 			}
 			if (!strncmp(bfr, "\001d D ", 4)) {
 				if (sscanf(bfr+4, "%s %d/%d/%d %d:%d:%d ",
-					ver,
-					&yy, &mm, &dd,
-					&hr, &mn, &sc) != 7)	break;
+						ver,
+						&yy, &mm, &dd,
+						&hr, &mn, &sc) != 7)
+					break;
 				if (strchr(ver, '.') != strrchr(ver, '.'))
 					continue;
 				*vers_ = txtalloc(ver);
@@ -76,20 +80,6 @@ void	trysccs (
 		}
 		FCLOSE(fp);
 		oldzone();		/* restore time-zone */
-	}
-
-	if (gotten) {
-		if ((s = fleaf(strcpy(bfr, path))) == NULL)
-			s = bfr;
-		*s = 'p';
-		if ((fp = fopen(bfr, "r")) != 0) {
-			if (fgets(bfr, sizeof(bfr), fp)) {
-				if (sscanf(bfr, "%d.%d %d.%d %s",
-					&yy, &mm, &dd, &hr, ver) == 5)
-					*lock_ = txtalloc(ver);
-			}
-			FCLOSE(fp);
-		}
 	}
 }
 
@@ -114,8 +104,17 @@ void	cmv_last (
 	*vers_ = "?";
 	*date_ = 0;
 
-	if (archive != 0)
-		trysccs(archive, vers_, date_, lock_);
+	if (archive != 0) {
+		char *lockedby;
+		char *revision;
+		ScanSCCS(archive, vers_, date_);
+		get_cmv_lock(working, path, &lockedby, &revision);
+		if (lockedby != 0)
+			*lock_ = lockedby;
+		/* FIXME: do we pick up correctly the version if a non-top
+		 * version is locked?
+		 */
+	}
 }
 
 #ifdef	TEST
