@@ -1,12 +1,12 @@
-# $Header: /users/source/archives/td_lib.vcs/support/RCS/td_lib.mms,v 2.0 1989/04/27 10:59:19 ste_cm Rel $
+# $Id: td_lib.mms,v 3.0 1989/08/28 09:22:59 ste_cm Rel $
 # MMS reusable rules for PORTUNIX, and programs built with it.
 #
 # $Log: td_lib.mms,v $
-# Revision 2.0  1989/04/27 10:59:19  ste_cm
-# BASELINE Mon Jun 12 09:07:53 EDT 1989
+# Revision 3.0  1989/08/28 09:22:59  ste_cm
+# BASELINE Fri Oct  6 15:23:19 EDT 1989 -- support:ada_pits_000(rel3)
 #
-#	Revision 1.3  89/04/27  10:59:19  dickey
-#	added TOOL_LIB (CM_TOOLS) variable
+#	Revision 2.1  89/08/28  09:22:59  dickey
+#	changed LIB_ARGS/LIB_DEPS around so I can link with shareable C libs
 #	
 #	Revision 1.2  89/04/25  09:10:03  dickey
 #	integration with CM_TOOLS's include-files
@@ -33,10 +33,13 @@ TEST_CC =	$(CC)/OBJECT=$(MMS$TARGET_NAME)/DEFINE="TEST" $(MMS$SOURCE)
 # libraries used here and by simple applications above:
 PORT_LIB=	PORTUNIX_ROOT:[LIB]PORT
 TOOL_LIB=	CM_TOOLS_ROOT:[LIB]COMMON
-SYS_LIB	=	SYS$LIBRARY:VAXCRTL		! C runtime library
 #
-LIB_ARGS=	$(PORT_LIB)/LIB,$(TOOL_LIB)/LIB,$(SYS_LIB)/LIB
-LIB_DEPS=	$(PORT_LIB).OLB,$(TOOL_LIB).OLB,$(SYS_LIB).OLB
+OPT_ARGS=	PORTUNIX_ROOT:[SUPPORT]LINK_OPTIONS.OPT
+OPT_DEPS=	$(OPT_ARGS),-
+		SYS$LIBRARY:VAXCRTLG.EXE
+#
+LIB_ARGS=	$(PORT_LIB)/LIB,$(TOOL_LIB)/LIB,$(OPT_ARGS)/OPT
+LIB_DEPS=	$(PORT_LIB).OLB,$(TOOL_LIB).OLB,$(OPT_DEPS)
 #
 # If the build succeeds, clean up the diagnostic files, purge stuff we don't
 # really need:

@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19890825
+MANIFEST for td_lib, version t19890828
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 Makefile                        top-level makefile for TD_LIB
@@ -132,6 +132,7 @@ src/unix/setmtime.c             set mtime/atime of a file
 src/unix/uid2s.c                convert user-id to string
 support                         subdirectory
 support/lib_top.mms             same as STANDARD_RULES, save that we generate lib-directory, rather than bin
+support/linkopts.opt            default link-options file for PORTUNIX
 support/prog_top.mms            VMS MMS include-file defining standard (module-level) rules.
 support/td_lib.mms              VMS MMS include-file defining PORTUNIX library-rules
 support/td_progs.mms            VMS MMS include-file defining program-generation rules above PORTUNIX
