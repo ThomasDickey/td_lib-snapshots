@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)newzone.c	1.3 88/06/13 09:29:47";
+static	char	sccs_id[] = "@(#)newzone.c	1.4 88/07/28 10:06:44";
 #endif	lint
 
 /*
@@ -7,6 +7,7 @@ static	char	sccs_id[] = "@(#)newzone.c	1.3 88/06/13 09:29:47";
  * Author:	T.E.Dickey
  * Created:	09 Jun 1988
  * Modified:
+ *		28 Jul 1988, ifdef for two types of gould.
  *
  * Function:	This module contains two procedures, 'newzone()' and
  *		'oldzone()'. The 'newzone()' procedure sets the current
@@ -138,7 +139,7 @@ int	match	= FALSE;	/* true iff we need no change */
 		environ[j] = stralloc(name);
 	}
 #endif	SYSTEM5
-#if	defined(apollo) || defined(gould) || defined(SYSTEM5)
+#if	defined(apollo) || defined(GOULD_NP1) || defined(SYSTEM5)
 	tzset();
 #endif
 }
