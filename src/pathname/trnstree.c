@@ -1,6 +1,6 @@
 #ifndef	lint
-static	char	Id[] = "$Id: trnstree.c,v 4.0 1989/10/06 14:40:35 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: trnstree.c,v 5.0 1991/05/20 17:17:36 ste_cm Rel $";
+#endif
 
 /*
  * Title:	transtree.c
@@ -23,11 +23,11 @@ static	char	Id[] = "$Id: trnstree.c,v 4.0 1989/10/06 14:40:35 ste_cm Rel $";
 #define	TELL_FILE(name)	TELL "%s => %s\n", TELL_(name))
 #define	TELL_DIR(name)	TELL "%s (directory) %s\n", TELL_(name));
 #define	TELL_SCAN(name)	TELL "%s scan directory %s\n", TELL_(name))
-#else	TEST
+#else
 #define	TELL_FILE(name)
 #define	TELL_SCAN(name)
 #define	TELL_DIR(name)
-#endif	TEST
+#endif
 
 
 transtree(oldname,func,recur)
@@ -45,7 +45,7 @@ int	recur;
 #ifdef	TEST
 	static	char		stack[]	= ". . . . . . . ";
 	auto	char		*nesting = &stack[sizeof(stack)-(recur*2)-1];
-#endif	TEST
+#endif
 
 	if (stat(oldname, &sb) < 0) {
 		errno = ENOENT;		/* bypass vms-bug */
@@ -63,7 +63,7 @@ int	recur;
 		if (vms_iswild(oldname))
 			newpath = oldname;
 		else
-#endif	vms
+#endif
 		if (chdir(DIR2PATH(oldname)) < 0) {
 			perror(oldname);
 			return;
@@ -75,7 +75,7 @@ int	recur;
 				(void)strcpy(newname, dp->d_name);
 #ifndef	vms
 				if (dotname(newname))	continue;
-#endif	vms
+#endif
 				if (lstat(newname, &sb) < 0) {
 					perror(newname);
 					continue;
@@ -119,4 +119,4 @@ char	*argv[];
 			transtree(s,do_file,recur);
 	}
 }
-#endif	TEST
+#endif

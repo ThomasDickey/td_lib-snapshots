@@ -1,6 +1,6 @@
 #ifndef	lint
-static	char	Id[] = "$Id: vms2name.c,v 4.0 1989/09/15 08:36:37 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: vms2name.c,v 4.1 1991/05/20 17:18:11 dickey Exp $";
+#endif
 
 /*
  * Title:	vms2name.c
@@ -275,4 +275,4 @@ char	*argv[];
 		dotest(sizeof(testv)/sizeof(testv[0]), testv);
 	}
 }
-#endif	TEST
+#endif

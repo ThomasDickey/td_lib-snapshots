@@ -1,5 +1,5 @@
 /*
- * $Id: port2vms.h,v 4.0 1990/06/26 10:11:13 ste_cm Rel $
+ * $Id: port2vms.h,v 5.0 1991/05/20 17:19:07 ste_cm Rel $
  *
  * VMS-definitions for supporting unix/vms port
  */
@@ -27,7 +27,7 @@ typedef	struct	timeval {
 #ifndef	getwd
 #define	getwd(p)	getcwd(p,sizeof(p)-2)	/* patch: ptypes.h (5.0) */
 extern	char		*getcwd();
-#endif	getwd
+#endif	/* getwd */
 
 #define	bzero(p,len)	memset(p,0,len)
 #define	bcopy(s,d,n)	memcpy(d,s,n)
@@ -42,7 +42,7 @@ extern	char		*getcwd();
 #endif
 		/* (try doing strings w/o descriptors!) */
 
-#else	unix
+#else	/* unix */
 
 #include	<sys/time.h>		/* defines 'struct timeval' */
 
@@ -51,7 +51,7 @@ extern	char		*getcwd();
 
 extern	char	*malloc();
 
-#endif	vms/unix
+#endif	/* vms/unix */
 
 /*
  * Library procedures for unix/vms compatability
@@ -136,7 +136,7 @@ int	s2uid(
 		_DCL(long *,		vms_time)
 		_DCL(time_t,		unix_time)
 		_NUL
-#endif	vms
+#endif	/* vms */
 
 	transtree(
 		_ARX(char *,		path)
@@ -208,20 +208,20 @@ time_t	zone2vms(
 #define	PATH2SYS(dst,src)	path2vms(dst,src)
 #define	SYS2NAME(dst,src)	vms2name(dst,src)
 #define	ZONE2SYS(n)		zone2vms(n)
-#else	unix
+#else	/* unix */
 #define	NAME2SYS(dst,src)	strcpy(dst,src)
 #define	PATH2SYS(dst,src)	strcpy(dst,src)
 #define	SYS2NAME(dst,src)	strcpy(dst,src)
 #define	ZONE2SYS(n)		((time_t)0)
-#endif	vms/unix
+#endif	/* vms/unix */
 
 /* conversions that assume native-system is VMS */
 #ifdef	vms
 #define	DIR2PATH(path)		dir2path(path)
 #define	PATH2DIR(path)		path2dir(path)
-#else	unix
+#else	/* unix */
 #define	DIR2PATH(path)		path
 #define	PATH2DIR(path)		path
-#endif	vms/unix
+#endif	/* vms/unix */
  
-#endif	_PORTUNIX_
+#endif	/* _PORTUNIX_ */

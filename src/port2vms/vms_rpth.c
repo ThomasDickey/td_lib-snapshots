@@ -1,15 +1,21 @@
 #ifndef	lint
-static	char	Id[] = "$Id: vms_rpth.c,v 4.0 1990/06/27 09:59:09 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: vms_rpth.c,v 5.0 1991/05/20 17:18:26 ste_cm Rel $";
+#endif
 
 /*
  * Title:	vms_relpath.c (convert VMS path to relative-form)
  * Author:	T.E.Dickey
  * Created:	26 Jun 1990
  * $Log: vms_rpth.c,v $
- * Revision 4.0  1990/06/27 09:59:09  ste_cm
- * BASELINE Tue Aug 14 16:27:44 1990
+ * Revision 5.0  1991/05/20 17:18:26  ste_cm
+ * BASELINE Tue Jun 11 16:44:53 1991 -- apollo sr10.3
  *
+ *		Revision 4.1  91/05/20  17:18:26  dickey
+ *		apollo sr10.3 cpp complains about endif-tags
+ *		
+ *		Revision 4.0  90/06/27  09:59:09  ste_cm
+ *		BASELINE Tue Aug 14 16:27:44 1990
+ *		
  *		Revision 3.2  90/06/27  09:59:09  dickey
  *		use 'strlcpy()' to ensure that all pathnames are lowercased
  *		
@@ -173,4 +179,4 @@ char	*argv[];
 	exit(SUCCESS);
 	/*NOTREACHED*/
 }
-#endif	TEST
+#endif

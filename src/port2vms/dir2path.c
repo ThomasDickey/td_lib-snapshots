@@ -1,6 +1,6 @@
 #ifndef	lint
-static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/port2vms/RCS/dir2path.c,v 4.0 1988/10/06 10:48:56 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: dir2path.c,v 5.0 1991/05/20 17:14:58 ste_cm Rel $";
+#endif
 
 /*
  * Title:	dir2path.c
@@ -66,4 +66,4 @@ char	*argv[];
 	for (j = 1; j < argc; j++)
 		printf("%s => %s\n", argv[j], dir2path(argv[j]));
 }
-#endif	TEST
+#endif

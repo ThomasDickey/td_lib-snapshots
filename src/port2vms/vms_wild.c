@@ -1,6 +1,6 @@
 #ifndef	lint
-static	char	Id[] = "$Id: vms_wild.c,v 4.0 1989/10/06 12:45:52 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: vms_wild.c,v 7.0 1991/05/20 17:18:16 ste_cm Rel $";
+#endif
 
 /*
  * Title:	vms_iswild.c (vms wildcard-test)

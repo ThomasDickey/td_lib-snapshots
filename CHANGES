@@ -1,3 +1,185 @@
+1991-05-20  dickey@software.org
+
+	* include/port2vms.h: apollo sr10.3 cpp complains about endif-tags
+
+1991-05-20  ste_cm@software.org
+
+	* include/port2vms.h:
+	BASELINE Tue Jun 11 16:44:53 1991 -- apollo sr10.3
+
+1991-05-20  dickey@software.org
+
+	* src/port2vms/zone2vms.c: apollo sr10.3 cpp complains about endif-tags
+
+1991-05-20  ste_cm@software.org
+
+	* src/port2vms/zone2vms.c:
+	BASELINE Tue Jun 11 16:44:53 1991 -- apollo sr10.3
+
+1991-05-20  dickey@software.org
+
+	* src/port2vms/vms_rpth.c: apollo sr10.3 cpp complains about endif-tags
+
+1991-05-20  ste_cm@software.org
+
+	* src/port2vms/vms_rpth.c:
+	BASELINE Tue Jun 11 16:44:53 1991 -- apollo sr10.3
+
+1991-05-20  dickey@software.org
+
+	* src/port2vms/vms_pthc.c: apollo sr10.3 cpp complains about endif-tags
+
+1991-05-20  ste_cm@software.org
+
+	* src/port2vms/vms_pthc.c:
+	BASELINE Tue Jun 11 16:44:53 1991 -- apollo sr10.3
+
+1991-05-20  dickey@software.org
+
+	* src/port2vms/vms_wild.c: apollo sr10.3 cpp complains about endif-tags
+
+1991-05-20  ste_cm@software.org
+
+	* src/port2vms/vms_wild.c:
+	BASELINE Mon Oct 21 13:09:39 1991 -- adapt to CM_TOOLS #10
+
+	* src/port2vms/vms_wild.c:
+	BASELINE Thu Jul 16 16:14:02 1992 -- CM_TOOLS #11
+
+	* src/port2vms/vms_wild.c:
+	BASELINE Tue Jun 11 16:44:53 1991 -- apollo sr10.3
+
+1991-05-20  dickey@software.org
+
+	* src/port2vms/vms2name.c, src/port2vms/utimes.c:
+	apollo sr10.3 cpp complains about endif-tags
+
+1991-05-20  ste_cm@software.org
+
+	* src/port2vms/utimes.c:
+	BASELINE Tue Jun 11 16:44:53 1991 -- apollo sr10.3
+
+1991-05-20  dickey@software.org
+
+	* src/port2vms/vms_dirs.c: apollo sr10.3 cpp complains about endif-tags
+
+1991-05-20  ste_cm@software.org
+
+	* src/port2vms/vms_dirs.c:
+	BASELINE Tue Jun 11 16:44:53 1991 -- apollo sr10.3
+
+1991-05-20  dickey@software.org
+
+	* src/port2vms/uid2s.c: apollo sr10.3 cpp complains about endif-tags
+
+1991-05-20  ste_cm@software.org
+
+	* src/port2vms/uid2s.c:
+	BASELINE Tue Jun 11 16:44:53 1991 -- apollo sr10.3
+
+1991-05-20  dickey@software.org
+
+	* src/pathname/trnstree.c: apollo sr10.3 cpp complains about endif-tags
+
+1991-05-20  ste_cm@software.org
+
+	* src/pathname/trnstree.c:
+	BASELINE Tue Jun 11 16:44:53 1991 -- apollo sr10.3
+
+1991-05-20  dickey@software.org
+
+	* src/port2vms/time2vms.c: apollo sr10.3 cpp complains about endif-tags
+
+1991-05-20  ste_cm@software.org
+
+	* src/port2vms/time2vms.c:
+	BASELINE Tue Jun 11 16:44:53 1991 -- apollo sr10.3
+
+1991-05-20  dickey@software.org
+
+	* src/port2vms/rmsio.c: apollo sr10.3 cpp complains about endif-tags
+
+1991-05-20  ste_cm@software.org
+
+	* src/port2vms/rmsio.c:
+	BASELINE Tue Jun 11 16:44:53 1991 -- apollo sr10.3
+
+1991-05-20  dickey@software.org
+
+	* src/port2vms/path2vms.c: apollo sr10.3 cpp complains about endif-tags
+
+1991-05-20  ste_cm@software.org
+
+	* src/port2vms/path2vms.c:
+	BASELINE Mon Oct 21 13:09:39 1991 -- adapt to CM_TOOLS #10
+
+	* src/port2vms/path2vms.c:
+	BASELINE Thu Jul 16 16:14:02 1992 -- CM_TOOLS #11
+
+	* src/port2vms/path2vms.c:
+	BASELINE Tue Jun 11 16:44:53 1991 -- apollo sr10.3
+
+1991-05-20  dickey@software.org
+
+	* src/port2vms/path2dir.c: apollo sr10.3 cpp complains about endif-tags
+
+1991-05-20  ste_cm@software.org
+
+	* src/port2vms/path2dir.c:
+	BASELINE Tue Jun 11 16:44:53 1991 -- apollo sr10.3
+
+1991-05-20  dickey@software.org
+
+	* src/port2vms/name2vms.c, src/process/getopt.c:
+	apollo sr10.3 cpp complains about endif-tags
+
+1991-05-20  ste_cm@software.org
+
+	* src/process/getopt.c:
+	BASELINE Mon Oct 21 13:09:39 1991 -- adapt to CM_TOOLS #10
+
+	* src/process/getopt.c:
+	BASELINE Thu Jul 16 16:14:02 1992 -- CM_TOOLS #11
+
+	* src/process/getopt.c:
+	BASELINE Tue Jun 11 16:44:53 1991 -- apollo sr10.3
+
+1991-05-20  dickey@software.org
+
+	* src/pathname/edittree.c: apollo sr10.3 cpp complains about endif-tags
+
+1991-05-20  ste_cm@software.org
+
+	* src/pathname/edittree.c:
+	BASELINE Tue Jun 11 16:44:53 1991 -- apollo sr10.3
+
+1991-05-20  dickey@software.org
+
+	* src/pathname/editfile.c: apollo sr10.3 cpp complains about endif-tags
+
+1991-05-20  ste_cm@software.org
+
+	* src/pathname/editfile.c:
+	BASELINE Tue Jun 11 16:44:53 1991 -- apollo sr10.3
+
+1991-05-20  dickey@software.org
+
+	* src/port2vms/dir2path.c: apollo sr10.3 cpp complains about endif-tags
+
+1991-05-20  ste_cm@software.org
+
+	* src/port2vms/dir2path.c:
+	BASELINE Tue Jun 11 16:44:53 1991 -- apollo sr10.3
+
+1991-05-20  dickey@software.org
+
+	* src/pathname/dlettree.c: apollo sr10.3 cpp complains about endif-tags
+
+1991-05-20  ste_cm@software.org
+
+	* src/pathname/dlettree.c:
+	BASELINE Tue Jun 11 16:44:53 1991 -- apollo sr10.3
+
 1991-05-15  dickey@software.org
 
 	* src/curses/rawgets.c: mods to compile under apollo sr10.3

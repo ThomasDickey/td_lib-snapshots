@@ -1,6 +1,6 @@
 #ifndef	lint
-static	char	Id[] = "$Id: zone2vms.c,v 4.0 1989/10/23 09:37:46 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: zone2vms.c,v 5.0 1991/05/20 17:18:32 ste_cm Rel $";
+#endif
 
 /*
  * Title:	zone2vms.c
@@ -68,4 +68,4 @@ main()
 		unix_time -= (DAY * 14);
 	}
 }
-#endif	TEST
+#endif

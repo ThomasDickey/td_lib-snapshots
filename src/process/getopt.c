@@ -1,6 +1,6 @@
 #ifndef	lint
-static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/process/RCS/getopt.c,v 4.0 1988/11/21 14:36:19 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: getopt.c,v 7.0 1991/05/20 17:16:27 ste_cm Rel $";
+#endif
 
 /*
  * SYSTEM5-like 'getopt()'

@@ -1,6 +1,6 @@
 #ifndef	lint
-static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/port2vms/RCS/time2vms.c,v 4.0 1988/11/30 13:41:43 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: time2vms.c,v 5.0 1991/05/20 17:17:22 ste_cm Rel $";
+#endif
 
 /*
  * Title:	time2vms.c
@@ -66,4 +66,4 @@ main()
 		unix_time -= 2 * MONTH;
 	}
 }
-#endif	TEST
+#endif

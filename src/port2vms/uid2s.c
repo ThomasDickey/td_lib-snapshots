@@ -1,15 +1,21 @@
 #ifndef	lint
-static	char	Id[] = "$Id: uid2s.c,v 4.0 1989/11/16 09:16:28 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: uid2s.c,v 5.0 1991/05/20 17:17:49 ste_cm Rel $";
+#endif
 
 /*
  * Title:	uid2s.c
  * Author:	T.E.Dickey
  * Created:	15 Dec 1988
  * $Log: uid2s.c,v $
- * Revision 4.0  1989/11/16 09:16:28  ste_cm
- * BASELINE Tue Aug 14 16:27:44 1990
+ * Revision 5.0  1991/05/20 17:17:49  ste_cm
+ * BASELINE Tue Jun 11 16:44:53 1991 -- apollo sr10.3
  *
+ *		Revision 4.1  91/05/20  17:17:49  dickey
+ *		apollo sr10.3 cpp complains about endif-tags
+ *		
+ *		Revision 4.0  89/11/16  09:16:28  ste_cm
+ *		BASELINE Tue Aug 14 16:27:44 1990
+ *		
  *		Revision 3.1  89/11/16  09:16:28  dickey
  *		rewrote, adding gid2s, s2gid, vms_uid2s functions
  *		
@@ -32,7 +38,7 @@ static	char	Id[] = "$Id: uid2s.c,v 4.0 1989/11/16 09:16:28 ste_cm Rel $";
 #include	<string.h>
 #ifdef	vms
 #include	<ssdef.h>
-#endif	vms
+#endif
 
 typedef	unsigned long	LID;
 
@@ -65,7 +71,7 @@ show(id)
 	sprintf(buffer, "%o,%o", _ID2GID(id), _ID2UID(id));
 	return (buffer);
 }
-#endif	TEST
+#endif
 
 static	build_vec()
 {
@@ -105,7 +111,7 @@ static	build_vec()
 			vec[j].name = stralloc(buffer);
 #ifdef	TEST
 printf("id = %s, name = %s\n", show(vec[j].id), vec[j].name);
-#endif	TEST
+#endif
 		}
 		if (st != SS$_NOSUCHID)
 			sys$finish_rdb(contxt);
@@ -248,4 +254,4 @@ char	*argv[];
 	}
 	exit(SUCCESS);
 }
-#endif	TEST
+#endif

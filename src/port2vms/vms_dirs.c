@@ -1,6 +1,6 @@
 #ifndef	lint
-static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/port2vms/RCS/vms_dirs.c,v 4.0 1989/04/25 07:59:34 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: vms_dirs.c,v 5.0 1991/05/20 17:17:59 ste_cm Rel $";
+#endif
 
 /*
  * Title:	unixdir.c
@@ -105,4 +105,4 @@ char	*argv[];
 		}
 	}
 }
-#endif	TEST
+#endif
