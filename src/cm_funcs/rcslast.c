@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)rcslast.c	1.1 88/05/18 13:34:42";
+static	char	sccs_id[] = "@(#)rcslast.c	1.2 88/05/23 06:39:32";
 #endif	lint
 
 /*
@@ -7,6 +7,7 @@ static	char	sccs_id[] = "@(#)rcslast.c	1.1 88/05/18 13:34:42";
  * Author:	T.E.Dickey
  * Created:	18 May 1988, from 'sccslast.c'
  * Modified:
+ *		23 May 1988, combined 'rel', 'ver' args.
  *
  * Function:	Lookup the last RCS-delta date, and its release.version number
  *		for directory-editor.
@@ -23,6 +24,7 @@ extern	char	*strcat(),
 
 extern	long	packdate();
 extern	long	sccszone();
+extern	char	*txtalloc();
 
 #ifndef	TRUE
 #define	TRUE	(1)
@@ -66,14 +68,14 @@ char	*s,
 #define	S_DATE	4	/* date <date>; <some text>	*/
 #define	S_EXIT	5
 
-static	tryRCS (path, rels_, vers_, date_)
+static	tryRCS (path, vers_, date_)
 char	*path;
-unsigned char *rels_, *vers_;
+char	**vers_;
 time_t	*date_;
 {
 FILE	*fp = fopen(path, "r");
 int	state = S_HEAD;
-int	rel, ver, yy, mm, dd, hr, mn, sc;
+int	yy, mm, dd, hr, mn, sc;
 char	vstring[BUFSIZ],
 	bfr[BUFSIZ],
 	*s;
@@ -86,10 +88,14 @@ char	vstring[BUFSIZ],
 			switch (state) {
 			case S_HEAD:
 				if (keyRCS(bfr, "head")) {
-					(void)strcpy(vstring, bfr);
-					if (sscanf(bfr, "%d.%d", &rel, &ver)
-						!= 2)
-						state = S_EXIT;
+					s = strcpy(vstring, bfr);
+					while (*s) {
+						if (!isdigit(*s) && *s != '.') {
+							state = S_EXIT;
+							break;
+						}
+						s++;
+					}
 					state++;
 				} else
 					state = S_EXIT;
@@ -114,8 +120,7 @@ char	vstring[BUFSIZ],
 				if (sscanf(bfr, "%d.%d.%d.%d.%d.%d",
 					&yy, &mm, &dd, &hr, &mn, &sc)
 					== 6) {
-					*rels_ = rel;
-					*vers_ = ver;
+					*vers_ = txtalloc(vstring);
 					*date_ = packdate (1900+yy, mm, dd, hr, mn, sc)
 						- sccszone();
 				}
@@ -129,10 +134,10 @@ char	vstring[BUFSIZ],
  *	main procedure							*
  ************************************************************************/
 
-rcslast (working, path, rels_, vers_, date_)
+rcslast (working, path, vers_, date_)
 char	*working;		/* working directory (absolute) */
 char	*path;			/* pathname to check (may be relative) */
-unsigned char *rels_, *vers_;
+char	**vers_;
 time_t	*date_;
 {
 char	name[BUFSIZ+1];
@@ -141,7 +146,7 @@ int	is_RCS,
 register char *s, *t;
 struct	stat	sbfr;
 
-	*rels_ = *vers_ = 0;
+	*vers_ = "?";
 	*date_ = 0;
 
 	/*
@@ -169,7 +174,7 @@ struct	stat	sbfr;
 	if (is_RCS			/* t => filename */
 	&&  ((len = strlen(t)) > LEN_S)
 	&&  !strcmp(t + len - LEN_S, SUFFIX) ) {
-		tryRCS(strcpy(name,path), rels_, vers_, date_);
+		tryRCS(strcpy(name,path), vers_, date_);
 		if (*date_) {		/* it was an ok RCS file */
 			/* look for checked-out file */
 			(void)strcat(strcpy(name+(t-path), "../"), t);
@@ -187,5 +192,5 @@ struct	stat	sbfr;
 	 */
 	(void)strcpy(name,  s = path);
 	(void)strcat(strcat(strcpy(&name[t-s],"RCS/"), t), SUFFIX);
-	tryRCS(name, rels_, vers_, date_);
+	tryRCS(name, vers_, date_);
 }
