@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)doalloc.c	1.2 86/10/07 12:08:36";
+static	char	sccs_id[] = "@(#)doalloc.c	1.3 86/10/14 08:50:18";
 #endif	lint
 
 /*
@@ -16,10 +16,17 @@ static	char	sccs_id[] = "@(#)doalloc.c	1.2 86/10/07 12:08:36";
  * Returns:	New pointer, unless procedure fails (then we simply exit).
  */
 
+#include	<syscap.h>
+
 #include	<stdio.h>
 extern	unsigned sleep();
 extern	char	*malloc (), *realloc ();
+
+#ifdef	SYS3_LLIB
+extern	int	exit();
+#else
 extern	void	exit();
+#endif
 
 char	*doalloc (oldp, amount)
 register char	*oldp;
@@ -32,7 +39,8 @@ register char	*newp = (oldp ? realloc(oldp, amount) : malloc(amount));
 		(void) fprintf (stderr, "Could not (re)allocate %d bytes\n", amount);
 		(void) fflush (stderr);
 		(void) sleep (3);
-		exit (1);
+		resetterm();
+		(void) exit (1);
 	}
 	return (newp);
 }
