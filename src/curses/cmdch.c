@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	01 Dec 1987 (broke out of 'ded.c')
  * Modified:
+ *		25 Sep 1996, fix for ANSI arrow-key decoding
  *		16 Dec 1995, integration with ncurses mouse-support.
  *		04 Jul 1994, mods for autoconf.
  *		18 Nov 1993, added xt_mouse support.
@@ -44,7 +45,7 @@
 #include	"td_curse.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: cmdch.c,v 12.21 1995/12/17 01:23:11 tom Exp $")
+MODULE_ID("$Id: cmdch.c,v 12.22 1996/09/25 14:30:28 tom Exp $")
 
 #define	ESC(c)	((c) == '\033')
 #define	END(s)	s[strlen(s)-1]
@@ -89,6 +90,7 @@ int	cmdch(
 	_AR1(int *,	cnt_))
 	_DCL(int *,	cnt_)
 {
+	register j = 0;
 	auto	int	c	= EOS,
 			done	= FALSE,
 			had_c	= 0,
@@ -130,7 +132,6 @@ int	cmdch(
 	}
 
 	while (!done) {
-		register j = 0;
 
 		c = getch();
 #if HAVE_KEYPAD
@@ -199,7 +200,7 @@ int	cmdch(
 		if (done)
 			break;
 #endif /* HAVE_KEYPAD */
-		if (iscntrl(c))
+		if (iscntrl(c) || j != 0)
 			i_blk[j++] = c;
 
 		if (ESC(c)) {	/* assume "standard" escapes */
@@ -251,7 +252,12 @@ int	cmdch(
 					else if_C('C')	c = KEY_RIGHT;
 					else if_C('D')	c = KEY_LEFT;
 					else {
-						beep();
+						if (END(i_blk) != 'O'
+					     	&&  END(i_blk) != '[') {
+							j = 0;
+							beep();
+						} else
+							j++; /* cannot skip */
 						done = FALSE;
 					}
 				} else
