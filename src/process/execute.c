@@ -1,57 +1,22 @@
 #ifndef	lint
-static	char	Id[] = "$Id: execute.c,v 9.0 1991/05/31 16:33:14 ste_cm Rel $";
+static	char	Id[] = "$Id: execute.c,v 9.1 1991/09/12 07:36:20 dickey Exp $";
 #endif
 
 /*
  * Title:	execute.c (execute a command, returning its status)
  * Author:	T.E.Dickey
  * Created:	21 May 1988
- * $Log: execute.c,v $
- * Revision 9.0  1991/05/31 16:33:14  ste_cm
- * BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
- *
- *		Revision 8.2  91/05/31  16:33:14  dickey
- *		lint (SunOs)
- *		
- *		Revision 8.1  91/05/15  13:16:14  dickey
- *		mods to compile under apollo sr10.3
- *		
- *		Revision 8.0  90/04/27  14:09:37  ste_cm
- *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
- *		
- *		Revision 7.0  90/04/27  14:09:37  ste_cm
- *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
- *		
- *		Revision 6.3  90/04/27  14:09:37  dickey
- *		for vms-port, handle escaped-spaces a la 'catarg()'.  This
- *		makes case8.com for CPROTO work correctly.
- *		
- *		Revision 6.2  90/04/26  16:26:06  dickey
- *		added ifdef'd code to make this work on VAX/VMS.
- *		added a test-driver.
- *		
- *		Revision 6.1  90/04/24  13:34:23  dickey
- *		flush stdout, stderr before forking to ensure that we don't
- *		get unnecessarily garbled output!
- *		
- *		Revision 6.0  88/08/30  07:10:36  ste_cm
- *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
- *		
- *		Revision 5.0  88/08/30  07:10:36  ste_cm
- *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
- *		
- *		Revision 4.0  88/08/30  07:10:36  ste_cm
- *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
- *		
- *		Revision 3.0  88/08/30  07:10:36  ste_cm
- *		BASELINE Mon Jun 19 13:27:01 EDT 1989
- *		
- *		Revision 2.0  88/08/30  07:10:36  ste_cm
- *		BASELINE Thu Apr  6 09:45:13 EDT 1989
- *		
- *		Revision 1.9  88/08/30  07:10:36  dickey
- *		sccs2rcs keywords
- *		
+ * Modified:
+ *		12 Sep 1991, removed redundant def for 'errno' (VMS C 3.2)
+ *		31 May 1991, lint (SunOs)
+ *		15 May 1991, mods to compile under apollo sr10.3
+ *		27 Apr 1990, for vms-port, handle escaped-spaces a la
+ *			     'catarg()'.  This makes case8.com for CPROTO work
+ *			     correctly.
+ *		26 Apr 1990, added ifdef'd code to make this work on VAX/VMS.
+ *			     added a test-driver.
+ *		24 Apr 1990, flush stdout, stderr before forking to ensure
+ *			     that we don't get unnecessarily garbled output!
  *		30 Aug 1988, reset 'errno' to ensure proper error reporting.
  *		18 Aug 1988, made wait-loop more explicit
  *		27 Jul 1988, on bsd4.x systems, use 'vfork()' and 'execvp()'.
@@ -69,7 +34,6 @@ static	char	Id[] = "$Id: execute.c,v 9.0 1991/05/31 16:33:14 ste_cm Rel $";
 #include	"ptypes.h"
 #include	<ctype.h>
 #include	<errno.h>
-extern	int	errno;
 
 #if	defined(SYSTEM5) && !defined(vms)
 #define	EXECV(c,v,e)	execvp(c,v)

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: for_user.c,v 9.2 1991/06/25 13:25:35 ste_cm Exp $";
+static	char	Id[] = "$Id: for_user.c,v 9.3 1991/09/12 07:35:57 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: for_user.c,v 9.2 1991/06/25 13:25:35 ste_cm Exp $";
  * Author:	T.E.Dickey
  * Created:	13 Sep 1988
  * Modified:
+ *		12 Sep 1991, removed redundant def for 'errno' (VMS C 3.2)
  *		25 Jun 1991, added entrypoint 'for_user2()'. Ensure that we
  *			     reset group-id, and properly set 'errno' when
  *			     we did not need to fork.
@@ -25,7 +26,6 @@ static	char	Id[] = "$Id: for_user.c,v 9.2 1991/06/25 13:25:35 ste_cm Exp $";
 #define	WAI_PTYPES
 #include	"ptypes.h"
 #include	<errno.h>
-extern	int	errno;
 
 for_user2(func, the_uid, the_gid)
 int	(*func)();

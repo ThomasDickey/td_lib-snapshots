@@ -1,11 +1,13 @@
 #ifndef	lint
-static	char	Id[] = "$Id: file2mem.c,v 9.0 1991/05/15 10:16:59 ste_cm Rel $";
+static	char	Id[] = "$Id: file2mem.c,v 9.1 1991/09/12 07:36:07 dickey Exp $";
 #endif
 
 /*
  * Title:	file2mem.c (file to argv-conversion)
  * Author:	T.E.Dickey
  * Created:	11 May 1989
+ * Modified:
+ *		12 Sep 1991, removed redundant def for 'errno' (VMS C 3.2)
  *
  * Function:	Reads a file into memory, returning a pointer to the result.
  *
@@ -20,7 +22,6 @@ static	char	Id[] = "$Id: file2mem.c,v 9.0 1991/05/15 10:16:59 ste_cm Rel $";
 #include "ptypes.h"
 #include <errno.h>
 extern	FILE	*tmpfile();
-extern	int	errno;			/* ...not always in <errno.h> */
 
 char	*
 file2mem(name)

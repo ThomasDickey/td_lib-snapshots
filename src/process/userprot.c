@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: userprot.c,v 9.1 1991/07/11 14:43:23 dickey Exp $";
+static	char	Id[] = "$Id: userprot.c,v 9.2 1991/09/12 08:00:55 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: userprot.c,v 9.1 1991/07/11 14:43:23 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	30 Aug 1988
  * Modified:
+ *		12 Sep 1991, removed redundant def for 'errno' (VMS C 3.2)
  *		11 Jul 1991, if effective-user is root, set ownership and act
  *			     within the current process.
  *		13 Sep 1988, rewrote using 'for_user()'
@@ -19,7 +20,7 @@ static	char	Id[] = "$Id: userprot.c,v 9.1 1991/07/11 14:43:23 dickey Exp $";
  */
 
 #include	"ptypes.h"
-extern	int	errno;
+#include	<errno.h>
 
 static	char	*upr_name;
 static	int	upr_mode;
