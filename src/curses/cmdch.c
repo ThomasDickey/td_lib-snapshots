@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: cmdch.c,v 5.0 1989/10/04 11:32:28 ste_cm Rel $";
+static	char	Id[] = "$Id: cmdch.c,v 5.1 1990/01/30 08:24:01 dickey Exp $";
 #endif	lint
 
 /*
@@ -7,9 +7,12 @@ static	char	Id[] = "$Id: cmdch.c,v 5.0 1989/10/04 11:32:28 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	01 Dec 1987 (broke out of 'ded.c')
  * $Log: cmdch.c,v $
- * Revision 5.0  1989/10/04 11:32:28  ste_cm
- * BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+ * Revision 5.1  1990/01/30 08:24:01  dickey
+ * permit explicit zero-count to be returned.  default is still 1.
  *
+ *		Revision 5.0  89/10/04  11:32:28  ste_cm
+ *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+ *		
  *		Revision 4.1  89/10/04  11:32:28  dickey
  *		apollo SR10.1 curses (like sun) has KD, KU, KR and KL data.
  *		don't ask for it twice!
@@ -63,6 +66,7 @@ int	*cnt_;
 {
 int	c,
 	done	= FALSE,
+	had_c	= 0,
 	count	= 0;
 char	i_blk[1024];
 static
@@ -130,13 +134,14 @@ char	*KU, *KD, *KR, *KL;
 				}
 			}
 		} else if ((cnt_ != 0) && isdigit(c)) {
+			had_c++;
 			count = (count * 10) + (c - '0');
 		} else
 			done = TRUE;
 	}
 
 	if (cnt_) {
-		*cnt_ = (count != 0) ? count : 1;
+		*cnt_ = (had_c != 0) ? count : 1;
 	}
 	return(c);
 }
