@@ -1,3 +1,18 @@
+1988-07-28  dickey@software.org
+
+	* src/cm_funcs/newzone.c:
+	GOULD_NP1 uses tzset, GOULD_PN doesn't define it...
+
+	* src/Makefile: for-loop with GET is redundant.
+
+	* src/Makefile: forgot '-f' option on clean/clobber.
+
+	* src/unix/gid2s.c: added "<none>" string for apollo SR9.7
+
+	* src/curses/rawterm.c:
+	added 'nonl()' to operations performed, since X-window's xterm does not
+	work properly otherwise.
+
 1988-07-27  dickey@software.org
 
 	* src/curses/padedit.c:

@@ -1,4 +1,4 @@
-# @(#)Makefile	1.30 88/07/27 13:08:05
+# @(#)Makefile	1.32 88/07/28 09:59:20
 # MAKE-file for miscellaneous library routines
 L=lib.a
 GET=sccsget
@@ -128,9 +128,9 @@ setmtime.o:	ptypes.h
 win2file.o:	ptypes.h
 #
 clean:
-	rm *.o *.out
+	rm -f *.o *.out *.ln
 clobber: clean
-	rm *.a
+	rm -f *.a
 destroy:
 	rm -f *
 #
@@ -138,11 +138,12 @@ install: all
 #
 LLIB\
 $(SRCS):
-	sh -c 'for i in $@;do $(GET) -s sccs/s.$$i;done'
+	$(GET) -s sccs/s.$@
 #
 lintit.sh\
 makellib.sh:
-	sh -c 'for i in $@;do $(GET) -s sccs/s.$$i;chmod +x $$i;done'
+	$(GET) -s sccs/s.$@
+	chmod +x $@
 #
 llib-ltd.ln:	makellib.sh LLIB
 	makellib.sh LLIB td
