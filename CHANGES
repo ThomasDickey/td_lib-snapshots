@@ -1,3 +1,10 @@
+1992-10-28  dickey@software.org
+
+	* src/cm_funcs/rcsperm.c: allow debug-trace of this module
+
+	* src/Makefile:
+	added some missing deps on RCSDEFS_H to rcssymbols.o & rcstime.o
+
 1992-10-27  dickey@software.org
 
 	* src/cm_funcs/rcstime.c:

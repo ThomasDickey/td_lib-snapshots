@@ -1,4 +1,4 @@
-# $Id: Makefile,v 11.7 1992/10/09 12:19:54 dickey Exp $
+# $Id: Makefile,v 11.8 1992/10/28 08:10:14 dickey Exp $
 # MAKE-file for miscellaneous library routines
 
 ####### (Environment) ##########################################################
@@ -291,6 +291,8 @@ $Z(rcsload.o)\
 $Z(rcslocks.o)\
 $Z(rcsname.o)\
 $Z(rcspermit.o)\
+$Z(rcssymbols.o)\
+$Z(rcstime.o)\
 $Z(samebranch.o)\
 $Z(vcs_file.o):	$(RCSDEFS_H)
 #
