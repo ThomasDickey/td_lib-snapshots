@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 9.11 1991/10/03 11:54:44 dickey Exp $ */
+/* $Id: td_lib.h,v 9.13 1991/10/11 16:26:04 dickey Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for CM_TOOLS COMMON
@@ -249,6 +249,23 @@
 			_ar1(char *,	name)
 			)
 			_dcl(char *,	name)
+			_ret
+
+	/* for_admin.c ------------------------------------------------ */
+	int	for_admin2(
+			_fnx(int,	func)
+			_arx(int,	the_uid)
+			_ar1(int,	the_gid)
+			)
+			_dcl(int,	(*func)())
+			_dcl(int,	the_uid)
+			_dcl(int,	the_gid)
+			_ret
+
+	int	for_admin(
+			_fn1(int,	func)
+			)
+			_dcl(int,	(*func)())
 			_ret
 
 	/* for_user.c ------------------------------------------------- */
@@ -513,6 +530,7 @@
 	/* rawterm.c -------------------------------------------------- */
 		rawterm(_ar0)
 			_nul
+#endif	/* CUR_PTYPES */
 
 	/* relpath.c -------------------------------------------------- */
 #ifdef	unix
@@ -528,6 +546,7 @@
 #endif	/* unix */
 
 	/* resizewin.c ------------------------------------------------ */
+#ifdef	CUR_PTYPES
 	int	resizewin(_ar0)
 			_ret
 #endif	/* CUR_PTYPES */
