@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)killchar.c	1.2 88/08/11 07:37:56";
+static	char	sccs_id[] = "@(#)killchar.c	1.3 88/08/12 10:04:51";
 #endif	lint
 
 /*
@@ -14,6 +14,7 @@ static	char	sccs_id[] = "@(#)killchar.c	1.2 88/08/11 07:37:56";
 #include <sgtty.h>
 
 #ifndef	SYSTEM5
+char
 killchar()
 {
 int	code	= '\177';

@@ -1,4 +1,4 @@
-/* @(#)ptypes.h	1.4 88/08/11 13:49:43 */
+/* @(#)ptypes.h	1.5 88/08/12 09:34:20 */
 
 /*
  * The definitions in this file cover simple cases of bsd4.x/system5 porting,
@@ -23,17 +23,17 @@
  * void in system5:
  */
 #ifdef	SYSTEM5
-#define	VOID	void
+#define	V_OR_I	void
 #else
-#define	VOID
+#define	V_OR_I
 #endif
 
-extern	VOID	_exit();
-extern	VOID	exit();
-extern	VOID	free();
-extern	VOID	perror();
-extern	VOID	qsort();
-extern	VOID	rewind();
+extern	V_OR_I	_exit();
+extern	V_OR_I	exit();
+extern	V_OR_I	free();
+extern	V_OR_I	perror();
+extern	V_OR_I	qsort();
+extern	V_OR_I	rewind();
 
 /*
  * Miscellaneous useful definitions for readability
