@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rawgets.c,v 11.9 1992/08/10 08:21:04 dickey Exp $";
+static	char	Id[] = "$Id: rawgets.c,v 11.10 1992/08/17 13:17:56 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: rawgets.c,v 11.9 1992/08/10 08:21:04 dickey Exp $";
  * Title:	rawgets.c (raw-mode 'gets()')
  * Created:	29 Sep 1987 (from 'fl.c')
  * Modified:
+ *		17 Aug 1992, if 'fast_q' is non-null, start edit in scroll-mode
  *		10 Aug 1992, allow window-arg to be null, for replaying scripts
  *			     to buffers that are not visible.
  *		06 Aug 1992, added command/logging arguments.
@@ -360,9 +361,10 @@ int	wrawgets (
 		dyn_init(&history, 1);
 
 	Prefix = pref;
+	wrap  = newline;
 	Imode = 1;
 	errs  = 0;
-	bbase = bfr;
+	bbase = tag = bfr;
 	shift = 0;
 
 	if (Z = win) {
@@ -372,17 +374,21 @@ int	wrawgets (
 		xlast = xbase + size;
 		if (xlast >= Z->_maxx)
 			xlast = Z->_maxx - 1;
+
+		if (!wrap)
+			while (strlen(bfr) > (shift + xlast - xbase))
+				shift += SHIFT;
+		if (fast_q)
+			ToggleMode();
+		else
+			ShowAll();
+
 	} else {
 		xbase =
 		ybase = 0;
 		xlast = 80;
 	}
 
-	if (!(wrap = newline))
-		while (strlen(bfr) > (shift + xlast - xbase))
-			shift += SHIFT;
-
-	ShowAt((tag = bfr) + shift);
 	tag += strlen(tag);
 	MoveTo(tag);			/* ...and end-of-string */
 
@@ -409,6 +415,8 @@ int	wrawgets (
 			count = 1;
 			c = cmdch(Imode ? (int *)0 : &count);
 		}
+		if (c == EOS)
+			continue;
 
 		/*
 		 * Record every character that we can infer.
@@ -443,12 +451,12 @@ int	wrawgets (
 		} else if (!Imode || !isascii(c)) {
 			/* process scroll-mode ops */
 
-			if (fast_q) {
-				if ((c == fast_q) || (c == 'q')) {
-					(void)strcpy(bfr, dyn_string(saved));
-					break;
-				}
+			if ((c == fast_q)
+			 || ((fast_q != EOS) && (c == 'q'))) {
+				(void)strcpy(bfr, dyn_string(saved));
+				break;
 			}
+
 			if (to_left(c)) {
 				if (tag > bfr) {
 				char	*s = tag;
