@@ -36,7 +36,7 @@
 
 #include	"td_curse.h"
 
-MODULE_ID("$Id: resizwin.c,v 12.16 1998/02/15 19:40:27 tom Exp $")
+MODULE_ID("$Id: resizwin.c,v 12.17 1998/02/19 15:19:50 tom Exp $")
 
 #if HAVE_RESIZETERM
 extern	WINDOW	*newscr;
@@ -56,7 +56,7 @@ int	resizewin(_AR0)
 		my_LINES = lc[0];
 		my_COLS  = lc[1];
 		if (my_LINES != LINES || my_COLS != COLS) {
-#if CURSES_LIKE_BSD && TYPE_CHTYPE_IS_SCALAR
+#if CURSES_LIKE_BSD && (TYPE_CHTYPE_IS_SCALAR || !HAVE_TYPE_CHTYPE)
 			wresize(stdscr, my_LINES, my_COLS);
 			wresize(curscr, my_LINES, my_COLS);
 			LINES = my_LINES;
