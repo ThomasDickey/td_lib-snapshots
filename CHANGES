@@ -1,3 +1,31 @@
+2003-04-25  dickey@invisible-island.net
+
+	* src/cm_funcs/modules: add cvslast
+
+	* include/rcsdefs.h: add cvslast()
+
+	* src/cm_funcs/cmv_dir.c, src/cm_funcs/rcs_dir.c, src/cm_funcs/sccs_dir.c:
+	add a check for the return-value of samehead(), which only
+	tells how many characters matched, not really whether the
+	entire reference parameter (the second one) was completely
+	matched.  This fixes a problem where I couldn't use link2rcs
+	to cross-link trees on the same disk as my sccs vault.
+
+	* src/pathname/abspath.c, src/pathname/fleaf.c, src/pathname/samehead.c:
+	use isSlash() rather than strchr(PATH_DELIMS) or isPath()
+
+	* include/td_lib.h: add prototype for samehead()
+
+	* src/cm_funcs/cmv_dir.c, src/cm_funcs/rcs_dir.c, src/cm_funcs/sccs_dir.c:
+	split-out samehead.c
+
+	* src/pathname/modules: split-out samehead.c from sccs_dir.c, etc.
+
+	* src/pathname/samehead.c: RCS_BASE
+
+	* aclocal.m4:
+	resync - my-autoconf uses version-number/timestamp on each macro now.
+
 2003-02-22  dickey@invisible-island.net
 
 	* config.sub, config.guess: resync from tin

@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t20030222
+MANIFEST for td_lib, version t20030425
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         restrictions on copying/using this software
@@ -153,6 +153,7 @@ src/pathname/pathcmp.c          compare pathnames, for sorting
 src/pathname/pathhead.c         obtain parent directory-name from path
 src/pathname/pathleaf.c         obtain basename (leaf) from pathname
 src/pathname/relpath.c          converts absolute-pathname to relative
+src/pathname/samehead.c         compare pathname prefix/head
 src/pathname/sameleaf.c         compare ends of pathnames
 src/pathname/stat_dir.c         stat, ensure path is directory
 src/pathname/stat_fil.c         stat, ensure path is file

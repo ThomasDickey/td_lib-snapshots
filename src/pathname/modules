@@ -28,6 +28,7 @@ pathcmp
 pathhead
 pathleaf
 relpath
+samehead
 sameleaf
 stat_dir
 stat_fil

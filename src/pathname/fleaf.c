@@ -14,7 +14,7 @@
 #define STR_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: fleaf.c,v 12.4 2001/05/15 00:59:20 tom Exp $")
+MODULE_ID("$Id: fleaf.c,v 12.5 2003/04/25 23:21:52 tom Exp $")
 
 char *	fleaf_delim(
 	_AR1(char *, path))
@@ -26,7 +26,7 @@ char *	fleaf_delim(
 #if	defined(vms) || defined(MSDOS)
 	register char *s = path + strlen(path);
 	while (s-- != path) {
-		if (strchr(PATH_DELIMS, *s) != 0)
+		if (isSlash(*s))
 			return s;
 	}
 	return 0;

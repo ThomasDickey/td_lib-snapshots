@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	02 Aug 1994, from 'sccs_dir.c'
  * Modified:
+ *		25 Apr 2003, split-out samehead.c, add check on return-value.
  *		21 Aug 1998, get_cmv_lock now returns binary-file mod-times.
  *		06 Jul 1995, mods to check for the level of the given
  *			     vault-directory
@@ -35,7 +36,7 @@
 #include "ptypes.h"
 #include "cmv_defs.h"
 
-MODULE_ID("$Id: cmv_dir.c,v 12.21 2002/07/03 13:04:43 tom Exp $")
+MODULE_ID("$Id: cmv_dir.c,v 12.23 2003/04/25 23:23:24 tom Exp $")
 
 /******************************************************************************/
 #ifdef	lint
@@ -532,35 +533,6 @@ void	Initialize(_AR0)
 }
 
 /******************************************************************************/
-/*patch:pathname?*/
-static
-/*
- * Compare two pathnames, returning the length of the matching portion,
- * limited to a pathname separator.  Note that 'strchr()' can use a null
- * character for the second argument.
- */
-#define	isPath(c)	(strchr(PATH_DELIMS,c) != 0)
-
-int	samehead(
-	_ARX(char *,	path1)
-	_AR1(char *,	path2)
-		)
-	_DCL(char *,	path1)
-	_DCL(char *,	path2)
-{
-	size_t	match = strlen(path2);
-	if (strlen(path1) >= match) {
-		if (strncmp(path1, path2, match)
-		 || !isPath(path1[match])) {
-			match = 0;
-		}
-	} else {
-		match = 0;
-	}
-	return match;
-}
-
-/******************************************************************************/
 
 /*
  * Skip backwards in the given substring to the previous path separator.  If
@@ -677,7 +649,8 @@ VAULTS *LookupVault(
 	for (p = VaultList; p != 0; p = p->next) {
 		for (q = p->working; q != 0; q = q->next) {
 			int	n;
-			if ((n = samehead(result, q->working)) > 0) {
+			if ((n = samehead(result, q->working)) > 0
+			  && n >= (int) strlen(q->working)) {
 				if (n > max_n) {
 					Debug((stderr, "..same:%s\n", q->working))
 					max_p = p;
@@ -694,7 +667,7 @@ VAULTS *LookupVault(
 			level++;
 		}
 		for (j = 0; (result[j] = result[j+max_n]) != EOS; j++)
-			if (isPath(result[j]))
+			if (isSlash(result[j]))
 				level++;;
 		Debug((stderr, "=>%s\n", result))
 	}

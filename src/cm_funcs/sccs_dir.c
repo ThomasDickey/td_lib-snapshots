@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	02 Sep 1988
  * Modified:
+ *		25 Apr 2003, split-out samehead.c, add check on return-value.
  *		26 Mar 2002, force paths to lowercase on cygwin.
  *		21 Jul 2000, mods to support checkup -o & $SCCS_VAULT
  *		30 Jun 2000, fix infinite loop if PATHLIST_SEP is found.
@@ -38,7 +39,7 @@
 #include "ptypes.h"
 #include "sccsdefs.h"
 
-MODULE_ID("$Id: sccs_dir.c,v 12.8 2002/03/26 19:04:38 tom Exp $")
+MODULE_ID("$Id: sccs_dir.c,v 12.10 2003/04/25 23:23:24 tom Exp $")
 
 #define	WORKING	struct	Working
 	WORKING	{
@@ -184,37 +185,6 @@ void	Initialize(_AR0)
 }
 
 /******************************************************************************/
-/*patch:pathname?*/
-static
-/*
- * Compare two pathnames, returning the length of the matching portion,
- * limited to a pathname separator.  Note that 'strchr()' can use a null
- * character for the second argument.
- */
-#define	isPath(c)	(strchr(PATH_DELIMS,c) != 0)
-
-int	samehead(
-	_ARX(char *,	path1)
-	_AR1(char *,	path2)
-		)
-	_DCL(char *,	path1)
-	_DCL(char *,	path2)
-{
-	int	match = 0;
-	register int	n;
-
-	for (n = 0; ; n++) {
-		if (isPath(path1[n]) && isPath(path2[n]))
-			match = n;
-		if (path1[n] == EOS || path2[n] == EOS)
-			break;
-		if (path1[n] != path2[n])
-			break;
-	}
-	return match;
-}
-
-/******************************************************************************/
 char *	sccs_dir(
 	_ARX(char *,	working_directory)
 	_AR1(char *,	filename)
@@ -254,7 +224,8 @@ char *	sccs_dir(
 		 * prior match is found.
 		 */
 		for (p = VaultList; p != 0; p = p->next) {
-			if ((n = samehead(temp, p->archive)) > 0) {
+			if ((n = samehead(temp, p->archive)) > 0
+			  && n >= (int) strlen(p->archive)) {
 				if (n > max_n) {
 					max_p = p;
 					max_q = p->working;
@@ -263,7 +234,8 @@ char *	sccs_dir(
 				}
 			}
 			for (q = p->working; q != 0; q = q->next) {
-				if ((n = samehead(temp, q->working)) > 0) {
+				if ((n = samehead(temp, q->working)) > 0
+				  && n >= (int) strlen(q->working)) {
 					if (n > max_n) {
 						max_p = p;
 						max_q = q;

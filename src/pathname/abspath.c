@@ -39,7 +39,7 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: abspath.c,v 12.10 2002/03/26 14:28:04 tom Exp $")
+MODULE_ID("$Id: abspath.c,v 12.11 2003/04/25 23:21:52 tom Exp $")
 
 #ifdef	apollo
 #ifdef	apollo_sr10
@@ -176,7 +176,7 @@ void	abshome(
 			register struct passwd *p;
 			char	user[MAXPATHLEN];
 			for (s = strcpy(user, d+1); *s != EOS; s++) {
-				if (strchr(PATH_DELIMS, *s) != 0) {
+				if (isSlash(*s)) {
 					*s++ = EOS;
 					break;
 				}
