@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19880913
+MANIFEST for td_lib, version t19880919
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 include                         subdirectory
@@ -57,6 +57,7 @@ src/pathname/name2s.c           convert filename to printable string
 src/pathname/pathcat.c          concatenate directory & filename
 src/pathname/pathhead.c         obtain parent directory-name from path
 src/pathname/pathleaf.c         obtain basename (leaf) from pathname
+src/pathname/sameleaf.c         compare ends of pathnames
 src/pathname/walktree.c         walk directory-tree, performing function
 src/pathname/which.c            locate file in $PATH
 src/process                     subdirectory

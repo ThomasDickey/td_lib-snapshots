@@ -1,4 +1,4 @@
-# @(#)Makefile	1.53 88/09/13 09:47:01
+# @(#)Makefile	1.54 88/09/19 07:37:23
 # MAKE-file for miscellaneous library routines
 #
 ####### (Development) ##########################################################
@@ -62,6 +62,7 @@ CSRC	=\
 	rcspath.c\
 	rcstemp.c\
 	resizewin.c\
+	sameleaf.c\
 	savewin.c\
 	sccs_dir.c\
 	sccslast.c\
@@ -132,6 +133,7 @@ OBJS	=\
 	rcspath.o\
 	rcstemp.o\
 	resizewin.o\
+	sameleaf.o\
 	savewin.o\
 	sccs_dir.o\
 	sccslast.o\
