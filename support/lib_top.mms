@@ -1,4 +1,4 @@
-# $Header: /users/source/archives/td_lib.vcs/support/RCS/lib_top.mms,v 7.0 1989/04/25 08:27:26 ste_cm Rel $
+# $Id: lib_top.mms,v 7.1 1992/11/04 07:19:22 dickey Exp $
 # MMS top-level reusable rules for PORTUNIX, and programs built with it.
 #
 .INCLUDE PORTUNIX_ROOT:[SUPPORT]LIBRARY_RULES

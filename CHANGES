@@ -1,3 +1,20 @@
+1992-11-04  dickey@software.org
+
+	* support/lib_top.mms: changed ident to "Id" from "Header"
+
+	* support/prog_top.mms, support/td_progs.mms:
+	removed Log-keyword (too verbose)
+
+1992-11-04  ste_cm@software.org
+
+	* support/td_progs.mms:
+	BASELINE Fri Apr 30 08:53:28 1993 -- TD_LIB split, VAX-shutdown
+
+1992-11-04  dickey@software.org
+
+	* support/td_lib.mms:
+	split out CM_LIBRARY from CM_TOOLS; use that instead
+
 1992-10-30  dickey@software.org
 
 	* include/td_lib.h: split out entrypoint 'gmt_offset()'
