@@ -1,3 +1,7 @@
+1989-10-03  dickey@software.org
+
+	* include/ptypes.h: added defs for getuid(), ..., getegid()
+
 1989-09-29  dickey@software.org
 
 	* src/pathname/edittree.c: corrected TEST-code for apollo SR10.1
