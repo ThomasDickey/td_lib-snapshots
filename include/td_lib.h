@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 12.18 1998/05/30 11:39:51 tom Exp $ */
+/* $Id: td_lib.h,v 12.19 1998/06/29 18:46:40 tom Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for TD_LIB common
@@ -282,9 +282,9 @@
 #define	fileblocks(sb)	(sb)->st_blocks
 #else
 	long	fileblocks(
-			_ar1(Stat_t *,	sb)
+			_ar1(const Stat_t *,	sb)
 			)
-			_dcl(Stat_t *,	sb)
+			_dcl(const Stat_t *,	sb)
 			_ret
 #endif
 #endif

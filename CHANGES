@@ -1,3 +1,15 @@
+1998-06-29  dickey@clark.net
+
+	* src/pathname/fileblox.c: use 'const' because dedsort.c is doing that.
+
+	* include/td_lib.h:
+	use 'const' in fileblocks() to get rid of warning for ded
+
+	* configure.in: check for term.h
+
+	* aclocal.m4:
+	tweaks for detecting putp and tigetstr functions, which are declared in term.h
+
 1998-05-30  dickey@clark.net
 
 	* src/cm_funcs/lastrev.c: g++
