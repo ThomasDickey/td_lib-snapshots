@@ -1,4 +1,4 @@
-/* @(#)llib-ltd	1.8 88/05/03 14:27:08 */
+/* @(#)llib-ltd	1.9 88/05/10 13:34:04 */
 /*LINTLIBRARY*/
 
 #include	<curses.h>
@@ -96,6 +96,10 @@ char	*stralloc(string) char *string; { return(0); }
 
 /* strclean.c --------------------------------------------------------- */
 int	strclean(string) char *string; { return(0); }
+
+/* txtalloc.c --------------------------------------------------------- */
+char	*txtalloc(string) char *string; { return(0); }
+	txtfree(string) char *string; { }
 
 /* uid2s.c ------------------------------------------------------------ */
 char	*uid2s(uid) { return(0); }

@@ -1,3 +1,32 @@
+1988-05-10  dickey@software.org
+
+	* src/memory/doalloc.c:
+	added some debugging hooks to (try to) find apollo malloc problem.
+
+	* include/llib-ltd: added 'txtalloc.c' module
+
+	* src/memory/txtalloc.c:
+	added 'txtfree()' entrypoint; removed ifdef for debug-code.
+
+	* src/memory/stralloc.c: route 'free' via 'dofree'.
+
+	* src/memory/stralloc.c: sccs2rcs keywords
+
+1988-05-10  ste_cm@software.org
+
+	* src/memory/stralloc.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+	* src/memory/stralloc.c: BASELINE Thu Apr  6 09:45:13 EDT 1989
+
+	* src/memory/stralloc.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
+1988-05-10  dickey@software.org
+
+	* src/memory/vecalloc.c: route 'free' calls via 'dofree'.
+
+	* src/curses/savewin.c: route all 'free' calls via 'dofree'
+
 1988-05-09  dickey@software.org
 
 	* src/curses/cmdch.c:

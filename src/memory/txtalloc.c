@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)txtalloc.c	1.1 88/04/29 08:58:56";
+static	char	sccs_id[] = "@(#)txtalloc.c	1.2 88/05/10 13:33:21";
 #endif	lint
 
 /*
@@ -7,6 +7,7 @@ static	char	sccs_id[] = "@(#)txtalloc.c	1.1 88/04/29 08:58:56";
  * Author:	T.E.Dickey
  * Created:	29 Apr 1988
  * Modified:
+ *		10 May 1988, added dummy 'txtfree()'
  *
  * Function:	Maintains a balanced binary tree of character strings.
  *		The algorithm is taken from "The Art of Computer Programming
@@ -34,12 +35,6 @@ typedef	struct	_node	{
 #define	LINK(a,p)	p->links[(a)>0]
 
 #define	new(c)		(c *)doalloc((char *)0, sizeof(c))
-
-#ifdef	DEBUG
-#define	else_ERROR(t)	if(t) printf("?? %s: %d\n", __FILE__, __LINE__);
-#else	DEBUG
-#define	else_ERROR(t)
-#endif	DEBUG
 
 static	NODE	head;
 
@@ -106,7 +101,6 @@ char	*value;
 					B(p) = (a < 0) ? -1 : 1;
 					p = LINK(a,p);
 				}
-				else_ERROR(p != q)
 			}
 
 				/* (A7:Balancing act) */
@@ -145,7 +139,6 @@ char	*value;
 
 					B(p) = 0;
 				}
-				else_ERROR(1)
 				/* A10:Finishing touch */
 				t->links[(s == RLINK(t))] = p;
 			}
@@ -153,6 +146,14 @@ char	*value;
 		}
 	}
 	return (value);
+}
+
+/*
+ * Dummy entry for consistency
+ */
+txtfree(p)
+char	*p;
+{
 }
 
 #ifdef	TEST

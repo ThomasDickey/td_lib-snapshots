@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)savewin.c	1.2 88/04/22 06:49:31";
+static	char	sccs_id[] = "@(#)savewin.c	1.3 88/05/10 12:20:03";
 #endif	lint
 
 /*
@@ -136,8 +136,8 @@ SAVE	*last;
 	if (saved) {
 		lastwin(redo,top);
 		last = saved->link;
-		free(saved->image);
-		free(saved);
+		dofree(saved->image);
+		dofree(saved);
 		saved = last;
 	}
 }
