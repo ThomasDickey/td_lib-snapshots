@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: vms_dirs.c,v 5.1 1991/10/18 15:36:56 dickey Exp $";
+static	char	Id[] = "$Id: vms_dirs.c,v 8.0 1991/10/21 15:08:02 ste_cm Rel $";
 #endif
 
 /*
@@ -19,8 +19,9 @@ static	char	Id[] = "$Id: vms_dirs.c,v 5.1 1991/10/18 15:36:56 dickey Exp $";
 #define	zesa	dirp->dd_esa
 
 DIR *
-opendir(filename)
-char	*filename;
+opendir(
+_AR1(char *,	filename))
+_DCL(char *,	filename)
 {
 	DIR	*dirp = calloc(1, sizeof(DIR));
 	long	status;
@@ -51,8 +52,9 @@ char	*filename;
 }
 
 struct direct *
-readdir(dirp)
-DIR	*dirp;
+readdir(
+_AR1(DIR *,	dirp))
+_DCL(DIR *,	dirp)
 {
 	if (sys$search(&zfab) == RMS$_NORMAL) {
 		zrsa[znam.nam$b_rsl] = '\0';
@@ -62,26 +64,36 @@ DIR	*dirp;
 }
 
 long
-telldir(dirp)
-DIR	*dirp;
+telldir(
+_AR1(DIR *,	dirp))
+_DCL(DIR *,	dirp)
 {
 	/* not implemented */
 }
 
-seekdir(dirp, loc)
-DIR	*dirp;
+void
+seekdir(
+_ARX(DIR *,	dirp)
+_AR1(long,	loc)
+	)
+_DCL(DIR *,	dirp)
+_DCL(long,	loc)
 {
 	/* not implemented */
 }
 
-rewinddir(dirp)
-DIR	*dirp;
+void
+rewinddir(
+_AR1(DIR *,	dirp))
+_DCL(DIR *,	dirp)
 {
 	/* not implemented */
 }
 
-closedir(dirp)
-DIR	*dirp;
+void
+closedir(
+_AR1(DIR *,	dirp))
+_DCL(DIR *,	dirp)
 {
 	cfree(dirp);
 }

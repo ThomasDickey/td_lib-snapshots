@@ -1,11 +1,13 @@
 #ifndef	lint
-static	char	Id[] = "$Id: time2vms.c,v 5.1 1991/10/18 15:49:16 dickey Exp $";
+static	char	Id[] = "$Id: time2vms.c,v 8.0 1991/10/21 15:02:34 ste_cm Rel $";
 #endif
 
 /*
  * Title:	time2vms.c
  * Author:	T.E.Dickey
  * Created:	29 Sep 1988
+ * Modified:
+ *		21 Oct 1991, converted to ANSI
  *
  * Function:	Converts a unix time (seconds since 1-jan-1970) to a vms
  *		64-bit time (100-nanosecond units since 17-nov-1858).
@@ -20,9 +22,13 @@ static	char	Id[] = "$Id: time2vms.c,v 5.1 1991/10/18 15:49:16 dickey Exp $";
 #define	DAY	(24*HOUR)
 #define	MONTH	(30*DAY)
 
-time2vms(vms_time, unix_time)
-long	vms_time[2];
-time_t	unix_time;
+void
+time2vms(
+_ARX(long *,	vms_time)
+_AR1(time_t,	unix_time)
+	)
+_DCL(long *,	vms_time)
+_DCL(time_t,	unix_time)
 {
 	static	long	scale	= VMS_SEC;
 	static	long	base	= 0;

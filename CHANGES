@@ -1,3 +1,46 @@
+1991-10-21  dickey@software.org
+
+	* src/port2vms/vms_dirs.c: port-to-vms
+
+1991-10-21  ste_cm@software.org
+
+	* src/port2vms/vms_dirs.c:
+	BASELINE Fri Apr 30 08:53:28 1993 -- TD_LIB split, VAX-shutdown
+
+	* src/port2vms/vms_dirs.c: BASELINE Mon Oct 21 15:09:40 1991
+
+	* src/port2vms/vms_dirs.c:
+	BASELINE Thu Jul 16 16:14:02 1992 -- CM_TOOLS #11
+
+1991-10-21  dickey@software.org
+
+	* src/port2vms/time2vms.c: port-to-vms
+
+1991-10-21  ste_cm@software.org
+
+	* src/port2vms/time2vms.c:
+	BASELINE Fri Apr 30 08:53:28 1993 -- TD_LIB split, VAX-shutdown
+
+	* src/port2vms/time2vms.c: BASELINE Mon Oct 21 15:09:40 1991
+
+	* src/port2vms/time2vms.c:
+	BASELINE Thu Jul 16 16:14:02 1992 -- CM_TOOLS #11
+
+1991-10-21  dickey@software.org
+
+	* include/ptypes.h: don't try to tell vms about its own prototypes
+
+	* include/ptypes.h:
+	oops: forgot that VAX/VMS does not define __STDC__, even
+	tho it supports prototypes (reintroduced PROTOTYPES definition
+	to accommodate this).
+
+	* Makefile: somehow, lost 'sources' at this level
+
+1991-10-21  ste_cm@software.org
+
+	* Makefile: BASELINE Mon Oct 21 09:26:09 1991 -- ANSI conversion; vcs
+
 1991-10-18  dickey@software.org
 
 	* src/port2vms/time2vms.c, src/port2vms/rmsio.c: use macro _MAIN

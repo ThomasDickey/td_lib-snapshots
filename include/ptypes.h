@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 9.9 1991/10/18 09:18:36 dickey Exp $ */
+/* $Id: ptypes.h,v 9.11 1991/10/21 09:42:28 dickey Exp $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -52,6 +52,14 @@ extern	char	*sprintf();
 #endif
 
 /*
+ * Definition which is true iff we use function-prototypes
+ */
+#undef	PROTOTYPES
+#if	defined(vms) || (defined(__STDC__) && !defined(LINTLIBRARY))
+#define	PROTOTYPES	1
+#endif
+
+/*
  * Definitions for files which are combined lint-library/function-prototype
  * declarations (e.g., "common.h"):
  */
@@ -65,7 +73,7 @@ extern	char	*sprintf();
 #define	_ret		{return(0);}
 #define	_nul		{}
 #else	/* !LINTLIBRARY */
-#ifdef	__STDC__	/* function prototypes */
+#if	PROTOTYPES	/* function prototypes */
 #define	_fn1(t,v)	t (*v)()
 #define	_fnx(t,v)	_fn1(t,v),
 #define	_ar0		void
@@ -74,7 +82,7 @@ extern	char	*sprintf();
 #define	_dcl(t,v)
 #define	_ret		;
 #define	_nul		;
-#else	/* !__STDC__	-- old-style declarations */
+#else	/* -- old-style declarations */
 #define	_fn1(t,v)
 #define	_fnx(t,v)
 #define	_ar0
@@ -83,13 +91,13 @@ extern	char	*sprintf();
 #define	_dcl(t,v)
 #define	_ret		;
 #define	_nul		;
-#endif	/* __STDC__ */
+#endif	/* PROTOTYPES */
 #endif	/* LINTLIBRARY */
 
 /*
  * Define special macros to represent the "..." ellipsis
  */
-#if	defined(__STDC__) && !defined(LINTLIBRARY)
+#if	PROTOTYPES
 #define	_DOTS	...
 #define	_CDOTS	,...
 #else
@@ -101,7 +109,7 @@ extern	char	*sprintf();
  * Macros to use with actual procedures to make them use prototypes if the
  * compiler supports it:
  */
-#ifdef	__STDC__
+#if	PROTOTYPES
 #define	_FN1(t,v)	t (*v)()
 #define	_AR1(t,v)	t v
 #define	_AR0		void
@@ -223,7 +231,7 @@ extern	char	*sprintf();
 /*
  * Useful external-definitions:
  */
-#ifndef	LINTLIBRARY
+#if	!defined(LINTLIBRARY) && !defined(vms)
 extern	V_OR_I	_exit(_ar1(int,code));
 extern	V_OR_I	exit(_ar1(int,code));
 extern	V_OR_I	qsort(
@@ -231,12 +239,10 @@ extern	V_OR_I	qsort(
 		_arx(size_t,	nel)
 		_arx(size_t,	width)
 		_fn1(int,	compar));
-#ifndef	vms
 extern	V_OR_I	free(_ar1(char *,s));
 extern	V_OR_P	calloc(_arx(size_t,nel) _ar1(size_t,size));
 extern	V_OR_P	malloc(_ar1(size_t,size));
 extern	V_OR_P	realloc(_arx(V_OR_P,ptr) _ar1(size_t,size));
-#endif	/* __STDC__ */
 #if	!defined(__STDC__) && !defined(apollo_sr10)
 extern	V_OR_I	perror(_ar1(char *,s));
 extern	V_OR_I	rewind(_ar1(FILE *,s));
@@ -256,7 +262,7 @@ extern	int	getopt(
 extern	char *	optarg;
 extern	int	optind;
 
-#endif	/* LINTLIBRARY */
+#endif	/* !LINTLIBRARY && !vms */
 
 #ifdef	unix
 #ifdef	apollo_sr10
