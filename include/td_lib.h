@@ -1,4 +1,4 @@
-/* $Header: /users/source/archives/td_lib.vcs/include/RCS/td_lib.h,v 2.2 1989/04/20 15:17:01 dickey Exp $ */
+/* $Header: /users/source/archives/td_lib.vcs/include/RCS/td_lib.h,v 2.3 1989/05/17 09:40:40 dickey Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for CM_TOOLS COMMON
@@ -188,6 +188,13 @@
 			_DCL(char ***,	vec)
 			_RET
 
+	/* file2mem.c ------------------------------------------------- */
+	char *	file2mem(
+			_AR1(char *,	name)
+			)
+			_DCL(char *,	name)
+			_RET
+
 	/* filecopy.c ------------------------------------------------- */
 #ifdef	unix
 	int	filecopy(
@@ -290,6 +297,17 @@
 			_DCL(int,	maxarg)
 			_DCL(char *,	dst)
 			_DCL(char *,	src)
+			_RET
+
+	/* mem2file.c ------------------------------------------------- */
+	int	mem2file(
+			_ARX(char *,	blob)
+			_ARX(char *,	name)
+			_AR1(char *,	mode)
+			)
+			_DCL(char *,	blob)
+			_DCL(char *,	name)
+			_DCL(char *,	mode)
 			_RET
 
 	/* modechar.c ------------------------------------------------- */
