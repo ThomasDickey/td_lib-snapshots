@@ -1,3 +1,11 @@
+1995-09-18  dickey@clark.net
+
+	* src/curses/bindkeys.c: draft (incomplete) of hashing
+
+	* src/curses/bindkeys.c: use MODULE_ID
+
+	* src/curses/keycode.c: RCS_BASE
+
 1995-09-16  dickey@clark.net
 
 	* configure.in, aclocal.m4:
