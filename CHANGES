@@ -1,3 +1,16 @@
+1991-12-11  dickey@software.org
+
+	* src/pathname/trnstree.c:
+	oops: forgot to re-stat the files when reiterating them after
+	the sort.
+
+1991-12-11  ste_cm@software.org
+
+	* src/pathname/trnstree.c:
+	BASELINE Thu Jul 16 16:14:02 1992 -- CM_TOOLS #11
+
+	* src/pathname/trnstree.c: BASELINE Wed Dec 11 08:06:31 1991
+
 1991-12-10  dickey@software.org
 
 	* src/pathname/trnstree.c:
