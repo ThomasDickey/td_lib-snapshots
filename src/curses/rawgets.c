@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: rawgets.c,v 12.3 1993/10/29 17:35:25 dickey Exp $";
+static	char	Id[] = "$Id: rawgets.c,v 12.4 1993/11/05 17:56:01 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: rawgets.c,v 12.3 1993/10/29 17:35:25 dickey Exp $";
  * Title:	rawgets.c (raw-mode 'gets()')
  * Created:	29 Sep 1987 (from 'fl.c')
  * Modified:
+ *		05 Nov 1993, absorb "cmdch.h" into "td_curse.h"
  *		29 Oct 1993, ifdef-ident
  *		28 Sep 1993, modified 'InsertAt()' to avoid reading past the
  *			     end of the 'at' string (makes Purify happy).
@@ -62,7 +63,6 @@ static	char	Id[] = "$Id: rawgets.c,v 12.3 1993/10/29 17:35:25 dickey Exp $";
 #include	"ptypes.h"
 #include	<ctype.h>
 #include	"td_curse.h"
-#include	"cmdch.h"
 #include	"dyn_str.h"
 
 #define	SHIFT	5

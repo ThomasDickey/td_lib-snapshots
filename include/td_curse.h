@@ -1,4 +1,4 @@
-/* $Id: td_curse.h,v 12.3 1993/11/01 20:07:59 dickey Exp $ */
+/* $Id: td_curse.h,v 12.4 1993/11/05 17:58:30 dickey Exp $ */
 
 /*
  * TD_LIB CURSES-related definitions
@@ -12,6 +12,17 @@
 #endif		/* _PTYPES_ */
 
 #include	<curses.h>
+
+/*
+ * definitions for 'cmdch()'
+ */
+#define	CTL(c)		(c&037)
+#define	ARO(c)		(CTL(c)|0200)
+
+#define	ARO_UP		ARO('U')
+#define	ARO_DOWN	ARO('D')
+#define	ARO_LEFT	ARO('L')
+#define	ARO_RIGHT	ARO('R')
 
 /*
  * note: System5 curses does not define the 'screen' structure
