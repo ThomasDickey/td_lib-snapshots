@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: win2file.c,v 12.5 1994/10/06 23:57:14 tom Exp $";
+static	char	Id[] = "$Id: win2file.c,v 12.6 1994/10/18 22:53:42 tom Exp $";
 #endif
 
 /*
@@ -43,22 +43,30 @@ static	char	Id[] = "$Id: win2file.c,v 12.5 1994/10/06 23:57:14 tom Exp $";
 #define A_ATTRIBUTES 0200
 #endif
 
+#ifndef A_ALTCHARSET
+#define A_ALTCHARSET 0
+#endif
+
+#ifndef A_CHARTEXT
+#define A_CHARTEXT   0xff
+#endif
+
+#ifndef A_STANDOUT
+#define A_STANDOUT   0200
+#endif
+
 static
-void	mark(
+void	MarkIt(
 	_ARX(WINDOW *,	win)
 	_ARX(int,	row)
-	_ARX(unsigned,	c)
-	_AR1(int,	bold)
+	_AR1(chtype,	c)
 		)
 	_DCL(WINDOW *,	win)
 	_DCL(int,	row)
-	_DCL(unsigned,	c)
-	_DCL(int,	bold)
+	_DCL(chtype,	c)
 {
 	(void)wmove(win, row + win->_begy, win->_begx);
-	if (bold)	(void)wstandout(win);
 	(void)waddch(win,c);
-	if (bold)	(void)wstandend(win);
 }
 
 void	win2fp(
@@ -75,7 +83,7 @@ void	win2fp(
 
 	register chtype	*s;
 	register int	j;
-	register unsigned k;
+	register chtype	k;
 	int	rows = wMaxY(win);
 
 	OUT "%sscreen saved at %s", *prefix ? prefix : "\f", ctime(&now));
@@ -89,11 +97,9 @@ void	win2fp(
 
 			/* animate this so user can see something */
 			k = *s;
-			mark(win, j, '*', 1);
+			MarkIt(win, j, A_STANDOUT | '*');
 			(void)wrefresh(win);
-			mark(win, j,
-				(k & ~A_ATTRIBUTES),
-				(k & A_ATTRIBUTES) != 0);
+			MarkIt(win, j, k);
 
 			/* find the last nonblank column */
 			while ((k = toascii(*s++)) != EOS) {
@@ -108,8 +114,8 @@ void	win2fp(
 				auto	int	bold;
 
 				k = *s;
-				bold = (k & A_ATTRIBUTES) != 0;
-				k &= ~A_ATTRIBUTES;
+				bold = (k & A_STANDOUT) != 0;
+				k &= (A_CHARTEXT|A_ALTCHARSET);
 
 #ifdef ACS_HLINE /* figure we've got the others */
 				if (k == ACS_HLINE)
@@ -137,8 +143,8 @@ void	win2fp(
 #endif
 				if (isprint(k)) {
 					if (bold)
-						OUT "%c\b", k);
-					OUT "%c", k);
+						OUT "%c\b", (int)k);
+					OUT "%c", (int)k);
 				} else
 					OUT "?");
 			}

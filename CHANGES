@@ -1,3 +1,8 @@
+1994-10-18  dickey@clark.net
+
+	* src/curses/win2file.c:
+	mods to handle alternate character-set (ncurses 1.8.5)
+
 1994-10-06  dickey@clark.net
 
 	* src/Makefile: propagate lint rule
