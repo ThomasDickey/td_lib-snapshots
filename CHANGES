@@ -1,3 +1,7 @@
+1998-04-27  dickey@clark.net
+
+	* configure.in: must test for seteuid for HP-UX's checkin
+
 1998-04-25  dickey@clark.net
 
 	* aclocal.m4: resync, from xterm/ncurses/lynx fixes
