@@ -1,3 +1,8 @@
+1988-04-28  dickey@software.org
+
+	* src/curses/rawgets.c:
+	added CTL/B & CTL/F movement to ends of buffer (matches new changes to ded).
+
 1988-04-27  dickey@software.org
 
 	* src/curses/rawgets.c:

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)rawgets.c	1.4 88/04/27 11:08:06";
+static	char	sccs_id[] = "@(#)rawgets.c	1.5 88/04/28 15:54:32";
 #endif	lint
 
 /*
@@ -7,6 +7,7 @@ static	char	sccs_id[] = "@(#)rawgets.c	1.4 88/04/27 11:08:06";
  * Title:	rawgets.c (raw-mode 'gets()')
  * Created:	29 Sep 1987 (from 'fl.c')
  * Modified:
+ *		28 Apr 1988, use CTL/B, CTL/F for inline movement
  *		27 Apr 1988, interfaced to 'cmdch()'.  General cleanup to fix
  *			     bugs in wraparound.
  *		24 Nov 1987, moved to my SPC library, use under 'curses'.
@@ -157,6 +158,22 @@ int	y,x;
 	move(y,x);
 }
 
+/*
+ * Move to end of the buffer
+ */
+static
+char *
+move_end(at,c)
+char	*at;
+{
+	if (c == CTL(B))	at = bbase;
+	else if (c == CTL(F))	at = bbase + strlen(bbase);
+	else			errs++;
+
+	if (!errs)		MoveTo(at);
+	return (at);
+}
+
 /************************************************************************
  *	main procedure							*
  ************************************************************************/
@@ -218,7 +235,8 @@ int	ec = erasechar(),
 					errs++;
 			} else if (c == ec || c == kc) {
 				tag = delete(tag,count);
-			} else	errs++;
+			} else
+				tag = move_end(tag,c);
 		} else {	/* process insert-mode ops */
 			if (c == ec) {
 				tag = delete(tag,1);
@@ -230,7 +248,8 @@ int	ec = erasechar(),
 				if (tag-bfr < size-3)
 					insert(tag++,c);
 				else	errs++;
-			} else	errs++;
+			} else
+				tag = move_end(tag,c);
 		}
 	}
 	refresh();
