@@ -1,5 +1,5 @@
 #ifndef	NO_IDENT
-static	char	Id[] = "$Id: cmv_dir.c,v 12.13 1995/03/14 00:18:58 tom Exp $";
+static	char	Id[] = "$Id: cmv_dir.c,v 12.14 1995/03/30 20:38:16 tom Exp $";
 #endif
 
 /*
@@ -165,6 +165,8 @@ void	read_s_curr(
 			if ((s = strchr(s, ';')) == 0)
 				continue;
 			(void)strcpy(external, s+1);
+			if ((s = strchr(external, ';')) != 0)
+				*s = EOS;
 			p = NewCmTree(pathcat(temp, archive, internal));
 			p->internal = NewInternal(parent, internal);
 			p->external = NewExternal(parent, external);

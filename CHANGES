@@ -1,3 +1,18 @@
+1995-03-30  dickey@clark.net
+
+	* src/curses/dumpwin.c: 'nother nit for ncurses
+
+	* include/td_curse.h:
+	added macros to (try to) cover up use of WINDOW struct's internal arrays
+
+	* src/curses/dumpwin.c: updates for ncurses 1.8.8
+
+	* src/curses/wresize.c: mods for ncurses 1.8.8 (temporarily disable)
+
+	* src/curses/win2file.c, src/curses/savewin.c: mods for ncurses 1.8.8
+
+	* src/cm_funcs/cmv_dir.c: fixed another spurious ';'
+
 1995-03-25  dickey@clark.net
 
 	* configure.in:
