@@ -1,10 +1,10 @@
-/* $Id: deltree.h,v 12.1 1994/06/25 14:16:23 tom Exp $ */
+/* $Id: deltree.h,v 12.2 1997/09/08 00:56:37 tom Exp $ */
 
 #ifndef	DELTREE_H
 #define	DELTREE_H
 
 #ifndef	_arx
-#include "ptypes.h"
+#include <ptypes.h>
 #endif
 
 /*

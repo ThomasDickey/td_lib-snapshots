@@ -1,3 +1,27 @@
+1997-09-08  dickey@clark.net
+
+	* aclocal.m4: first cut of macro to make src/*/makefiles
+
+	* src/sub_vars.in: RCS_BASE
+
+	* src/cm_funcs/makefile.in: moved the td_rules to the generating macro
+
+	* configure.in: first cut of macro to make src/*/makefiles
+
+	* src/cm_funcs/makefile.in: RCS_BASE
+
+	* makefile.in: kill off src/Makefile, test/Makefile
+
+	* src/cm_funcs/modules, test/makefile.in, src/makefile.in: RCS_BASE
+
+	* makefile.in: remove generated makefiles in subdirectories
+
+	* configure.in: generate makefiles in src, test directories
+
+	* aclocal.m4: add CF_MAKE_INCLUDE
+
+	* td_make.in: SET_MAKE macro
+
 1997-09-07  dickey@clark.net
 
 	* support/ins_hdr: RCS_BASE

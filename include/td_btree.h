@@ -1,4 +1,4 @@
-/* $Id: td_btree.h,v 12.4 1995/09/14 17:41:36 tom Exp $ */
+/* $Id: td_btree.h,v 12.5 1997/09/08 00:57:59 tom Exp $ */
 
 /*
  * TD_LIB binary-tree functions
@@ -8,7 +8,7 @@
 #define		TD_BTREE_H
 
 #ifndef		PTYPES_H
-#include	"ptypes.h"
+#include	<ptypes.h>
 #endif
 
 #define BI_NODE struct _bi_node

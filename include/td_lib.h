@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 12.16 1995/11/05 23:05:29 tom Exp $ */
+/* $Id: td_lib.h,v 12.17 1997/09/08 00:58:20 tom Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for TD_LIB common
@@ -8,7 +8,7 @@
 #ifndef		TD_LIB_H
 #define		TD_LIB_H
 #ifndef		PTYPES_H
-#include "ptypes.h"
+#include <ptypes.h>
 #endif		/* PTYPES_H */
 
 	/* MAIN-PROGRAM *********************************************** */
@@ -21,7 +21,7 @@
 	/* GENERIC-LIBRARY ******************************************** */
 
 #ifdef	CUR_PTYPES
-#include "td_curse.h"
+#include <td_curse.h>
 #endif
 
 	/* abspath.c -------------------------------------------------- */

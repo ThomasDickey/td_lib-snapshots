@@ -1,4 +1,4 @@
-/* $Id: td_curse.h,v 12.39 1995/12/16 00:08:56 tom Exp $ */
+/* $Id: td_curse.h,v 12.40 1997/09/08 00:58:04 tom Exp $ */
 
 /*
  * TD_LIB CURSES-related definitions
@@ -8,7 +8,7 @@
 #define		TD_CURSE_H
 
 #ifndef		PTYPES_H
-#include "ptypes.h"
+#include <ptypes.h>
 #endif		/* PTYPES_H */
 
 #ifdef sun	/* <termios.h> defines stuff in a different way :-( */

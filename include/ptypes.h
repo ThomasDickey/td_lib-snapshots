@@ -1,10 +1,10 @@
-/* $Id: ptypes.h,v 12.40 1997/09/07 22:28:07 tom Exp $ */
+/* $Id: ptypes.h,v 12.41 1997/09/08 00:57:11 tom Exp $ */
 
 #ifndef	PTYPES_H
 #define	PTYPES_H
 
 #if HAVE_CONFIG_H
-#include "td_config.h"
+#include <td_config.h>
 #endif
 
 /*
@@ -392,7 +392,7 @@ typedef	short	ino_t;
 #ifdef	DIR_PTYPES
 
 #ifdef	vms
-#  include	"unixdir.h"	/* get this from PORTUNIX */
+#  include	<unixdir.h>	/* get this from PORTUNIX */
 #else
 #  if defined(MSDOS)
 #    include <dir.h>

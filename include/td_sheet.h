@@ -1,4 +1,4 @@
-/* $Id: td_sheet.h,v 12.0 1993/04/26 15:29:50 ste_cm Rel $ */
+/* $Id: td_sheet.h,v 12.1 1997/09/08 00:58:49 tom Exp $ */
 
 /*
  * Functions for manipulating spreadsheet text which has been loaded into
@@ -7,8 +7,8 @@
 #ifndef	 _SPREADSHEET_H_
 #define	 _SPREADSHEET_H_
 
-#include "ptypes.h"
-#include "dyn_str.h"
+#include <ptypes.h>
+#include <dyn_str.h>
 
 		/* ***(field_of.c)*** */
 extern	void	field_uses_quotes(
