@@ -1,4 +1,4 @@
-/* $Id: rcsdefs.h,v 11.2 1992/10/26 07:45:22 dickey Exp $ */
+/* $Id: rcsdefs.h,v 11.3 1992/10/27 07:24:38 dickey Exp $ */
 
 #ifndef	_RCSDEFS_H_
 #define	_RCSDEFS_H_
@@ -112,11 +112,9 @@
 			_ret
 
 	void	rcsedit (
-			_arx(char *,	where)
 			_arx(char *,	old)
 			_ar1(char *,	new)
 			)
-			_dcl(char *,	where)
 			_dcl(char *,	old)
 			_dcl(char *,	new)
 			_nul
