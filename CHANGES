@@ -1,3 +1,18 @@
+1990-01-23  dickey@software.org
+
+	* src/curses/win2file.c:
+	limit columns to dump by 'maxx' member (needed for sun)
+
+1990-01-23  ste_cm@software.org
+
+	* src/curses/win2file.c: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/curses/win2file.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/curses/win2file.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
 1989-12-12  dickey@software.org
 
 	* src/pathname/file2arg.c, include/td_lib.h: lint (SunOs 4.0.3)
