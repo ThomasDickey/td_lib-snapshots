@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/curses/RCS/win2file.c,v 5.0 1989/08/03 14:54:57 ste_cm Rel $";
+static	char	Id[] = "$Id: win2file.c,v 8.0 1990/01/23 16:23:11 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,9 +7,21 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/curses/R
  * Author:	T.E.Dickey
  * Created:	07 Jun 1988
  * $Log: win2file.c,v $
- * Revision 5.0  1989/08/03 14:54:57  ste_cm
- * BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+ * Revision 8.0  1990/01/23 16:23:11  ste_cm
+ * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
  *
+ *		Revision 7.0  90/01/23  16:23:11  ste_cm
+ *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+ *		
+ *		Revision 6.0  90/01/23  16:23:11  ste_cm
+ *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+ *		
+ *		Revision 5.1  90/01/23  16:23:11  dickey
+ *		limit columns to dump by 'maxx' member (needed for sun)
+ *		
+ *		Revision 5.0  89/08/03  14:54:57  ste_cm
+ *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+ *		
  *		Revision 4.0  89/08/03  14:54:57  ste_cm
  *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
  *		
@@ -91,6 +103,8 @@ char	*prefix;
 
 			/* find the last nonblank column */
 			while (k = toascii(*s++)) {
+				if ((s - win->_y[j]) >= win->_maxx)
+					break;
 				if (!isspace(k))
 					t = s;
 			}
