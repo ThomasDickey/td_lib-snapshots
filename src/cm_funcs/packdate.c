@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	26 Mar 1986
  * Modified:
+ *		31 Dec 1999, move "1900" adjustment here.
  *		21 Aug 1998, Solaris 'daylight' value records only current
  *			     time, not (as documented) a side-effect of
  *			     localtime.  Use tm.tm_isdst instead.
@@ -37,7 +38,7 @@
 #define TIM_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: packdate.c,v 12.13 1998/08/21 15:22:16 tom Exp $")
+MODULE_ID("$Id: packdate.c,v 12.14 2000/01/01 01:28:49 tom Exp $")
 
 #define	LEAP(y)	(!(y&3))
 
@@ -105,6 +106,9 @@ long	packdate (
 static	int	m[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 /*			  jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec */
 
+	if (year < 200)
+		year += 1900;
+
 	sec += (MINUTE * min) + (HOUR * hour);
 	for (j = 1970; j < year; j++) {
 		sec += YEAR;
@@ -115,8 +119,9 @@ static	int	m[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 	}
 	if (mon > 2 && LEAP(year))	sec += DAY;
 	sec += (day-1) * DAY;
+	sec += gmt_offset(sec);
 
-	return (sec + gmt_offset(sec));
+	return sec;
 }
 
 /************************************************************************
@@ -147,8 +152,8 @@ _MAIN
 	printf("  gmtoff=%ld\n", tm.tm_gmtoff);
 #endif
 
-	then = packdate (tm.tm_year+1900, tm.tm_mon+1, tm.tm_mday,
-			tm.tm_hour,       tm.tm_min,   tm.tm_sec);
+	then = packdate (tm.tm_year, tm.tm_mon+1, tm.tm_mday,
+			tm.tm_hour,  tm.tm_min,   tm.tm_sec);
 	printf("Packed time: %s", ctime(&then));
 	exit(SUCCESS);
 	/*NOTREACHED*/

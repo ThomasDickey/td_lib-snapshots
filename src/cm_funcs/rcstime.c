@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	05 Feb 1992
  * Modified:
+ *		31 Dec 1999, generate 4-digit years for 2000+.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		28 Apr 1993, added RCS_TIMEZONE environment variable to
@@ -16,7 +17,7 @@
 #include "ptypes.h"
 #include "rcsdefs.h"
 
-MODULE_ID("$Id: rcstime.c,v 12.4 1994/05/23 22:49:36 tom Exp $")
+MODULE_ID("$Id: rcstime.c,v 12.5 2000/01/01 01:31:07 tom Exp $")
 
 #if	RCS_VERSION >= 5
 #define	RCS_ZONE(t)	gmt_offset(t)
@@ -37,7 +38,7 @@ time_t	rcs2time(
 	char	*s, *d;
 
 	if (sscanf(from, FMT_DATE, &year, &mon, &day, &hour, &min, &sec) == 6)
-		the_time = packdate(1900+year, mon, day, hour, min, sec);
+		the_time = packdate(year, mon, day, hour, min, sec);
 
 	/* Allow override to make RCS 4 and RCS 5 files look the same.  This is
 	 * really only for regression testing!
@@ -63,6 +64,10 @@ void	time2rcs(
 
 	from += RCS_ZONE(from);
 	t = localtime(&from);
+
+	if (t->tm_year >= 100 && t->tm_year < 200)
+		t->tm_year += 1900;
+
 	FORMAT(to, FMT_DATE,
 		t->tm_year, t->tm_mon + 1,
 		t->tm_mday, t->tm_hour,

@@ -1,3 +1,24 @@
+2000-01-01  dickey@clark.net
+
+	* src/curses/erasechr.c, src/curses/killchar.c: fix for bsd 4.4 curses
+
+1999-12-31  dickey@clark.net
+
+	* src/cm_funcs/cmv_last.c: move 1900's to packdate()
+
+	* src/cm_funcs/sccslast.c: move 1900's into packdate()
+
+	* src/cm_funcs/rcstime.c: generate 4-digit years for 2000+
+
+	* src/cm_funcs/packdate.c:
+	move adjustment from struct-tm for 1900 into packdate()
+
+	* include/rcsdefs.h: allow scanning of 4-digit years
+
+	* test/td_defns.mk: oops - my override didn't work anymore
+
+	* td_make.in: split-out CPP_CONFIG to make my override with -DTEST work
+
 1999-11-30  dickey@clark.net
 
 	* mkdirs.sh: OS/2 fix

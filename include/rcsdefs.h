@@ -1,4 +1,4 @@
-/* $Id: rcsdefs.h,v 12.4 1998/05/30 01:19:44 tom Exp $ */
+/* $Id: rcsdefs.h,v 12.5 2000/01/01 01:27:48 tom Exp $ */
 
 #ifndef	RCSDEFS_H
 #define	RCSDEFS_H
@@ -34,7 +34,8 @@
 #define	RCS_DIR		"RCS"
 #define	RCS_SUFFIX	",v"
 
-#define	FMT_DATE	"%02d.%02d.%02d.%02d.%02d.%02d"
+/* RCS uses 2-digit dates internally for files before 2000, 4-digits after */
+#define	FMT_DATE	"%d.%02d.%02d.%02d.%02d.%02d"
 
 #define NULL_FUNC (int (*)())0
 
