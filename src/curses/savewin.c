@@ -1,48 +1,17 @@
 #ifndef	lint
-static	char	Id[] = "$Id: savewin.c,v 9.0 1991/05/15 09:49:57 ste_cm Rel $";
+static	char	Id[] = "$Id: savewin.c,v 12.0 1991/10/03 11:09:13 ste_cm Rel $";
 #endif
 
 /*
  * Author:	T.E.Dickey
  * Title:	savewin.c (save/unsave curses window)
  * Created:	25 Mar 1988
- * $Log: savewin.c,v $
- * Revision 9.0  1991/05/15 09:49:57  ste_cm
- * BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
- *
- *		Revision 8.1  91/05/15  09:49:57  dickey
- *		apollo sr10.3 cpp complains about tag in #endif
- *		
- *		Revision 8.0  89/12/07  14:11:34  ste_cm
- *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
- *		
- *		Revision 7.0  89/12/07  14:11:34  ste_cm
- *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
- *		
- *		Revision 6.0  89/12/07  14:11:34  ste_cm
- *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
- *		
- *		Revision 5.1  89/12/07  14:11:34  dickey
- *		lint (SunOs 3.4)
- *		
- *		Revision 5.0  89/07/25  09:26:47  ste_cm
- *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
- *		
- *		Revision 4.0  89/07/25  09:26:47  ste_cm
- *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
- *		
- *		Revision 3.1  89/07/25  09:26:47  dickey
- *		recompiled with apollo SR10 -- mods for function prototypes
- *		
- *		Revision 3.0  88/08/11  07:16:55  ste_cm
- *		BASELINE Mon Jun 19 13:27:01 EDT 1989
- *		
- *		Revision 2.0  88/08/11  07:16:55  ste_cm
- *		BASELINE Thu Apr  6 09:45:13 EDT 1989
- *		
- *		Revision 1.6  88/08/11  07:16:55  dickey
- *		sccs2rcs keywords
- *		
+ * Modified:
+ *		03 Oct 1991, conversion to ANSI
+ *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
+ *		07 Dec 1989, lint (SunOs 3.4)
+ *		27 Jul 1989, recompiled with apollo SR10 -- mods for function
+ *			     prototypes
  *		10 Aug 1988, made this run on apollo sys5-environment (hack).
  *		22 Apr 1988, added 'top' arg to lastwin(), unsavewin().
  *		21 Apr 1988 (first version)
@@ -84,7 +53,9 @@ static	SAVE	*saved;
  * Force a character to be different
  */
 static
-newC(c)
+newC(
+_AR1(int,c))
+_DCL(int,c)
 {
 	c++;
 	if (!isprint(c))
@@ -98,7 +69,7 @@ newC(c)
 /*
  * Save a window on the stack.
  */
-savewin()
+savewin(_AR0)
 {
 register int row, col;
 SAVE	*last;
@@ -120,8 +91,12 @@ register int j = 0;
 /*
  * Restore the state of the last window saved on the stack.
  */
-lastwin(redo,top)
-int	redo,top;
+lastwin(
+_ARX(int,	redo)
+_AR1(int,	top)
+	)
+_DCL(int,	redo)
+_DCL(int,	top)
 {
 chtype	*t,
 	*z = saved->image + (top * COLS);
@@ -184,8 +159,12 @@ register int j, row;
 /*
  * Restore the last window, and pop it from the stack.
  */
-unsavewin(redo,top)
-int	redo,top;
+unsavewin(
+_ARX(int,	redo)
+_AR1(int,	top)
+	)
+_DCL(int,	redo)
+_DCL(int,	top)
 {
 SAVE	*last;
 	if (saved) {

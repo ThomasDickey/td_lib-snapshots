@@ -1,51 +1,21 @@
 #ifndef	lint
-static	char	Id[] = "$Id: sccslast.c,v 9.0 1991/05/15 09:50:19 ste_cm Rel $";
+static	char	Id[] = "$Id: sccslast.c,v 9.1 1991/10/03 11:09:50 dickey Exp $";
 #endif
 
 /*
  * Title:	sccslast.c (scan for last sccs date)
  * Author:	T.E.Dickey
  * Created:	20 Oct 1986
- * $Log: sccslast.c,v $
- * Revision 9.0  1991/05/15 09:50:19  ste_cm
- * BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
- *
- *		Revision 8.1  91/05/15  09:50:19  dickey
- *		apollo sr10.3 cpp complains about tag in #endif
- *		
- *		Revision 8.0  90/06/22  08:07:40  ste_cm
- *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
- *		
- *		Revision 7.1  90/06/22  08:07:40  dickey
- *		if we have successfully opened/scanned "s." file, try to do
- *		the same for the "p." file so that we can show lock-owners.
- *		
- *		Revision 7.0  89/08/17  13:12:18  ste_cm
- *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
- *		
- *		Revision 6.0  89/08/17  13:12:18  ste_cm
- *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
- *		
- *		Revision 5.0  89/08/17  13:12:18  ste_cm
- *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
- *		
- *		Revision 4.0  89/08/17  13:12:18  ste_cm
- *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
- *		
- *		Revision 3.1  89/08/17  13:12:18  dickey
- *		rewrote the code which computes the path of the working-file
- *		so that we don't use ".." unless necessary, so this works
- *		better with symbolic links.
- *		
- *		Revision 3.0  88/09/02  09:17:11  ste_cm
- *		BASELINE Mon Jun 19 13:27:01 EDT 1989
- *		
- *		Revision 2.0  88/09/02  09:17:11  ste_cm
- *		BASELINE Thu Apr  6 09:45:13 EDT 1989
- *		
- *		Revision 1.11  88/09/02  09:17:11  dickey
- *		sccs2rcs keywords
- *		
+ * Modified:
+ *		03 Oct 1991, conversion to ANSI
+ *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
+ *		22 Jun 1990, if we have successfully opened/scanned "s." file,
+ *			     try to do the same for the "p." file so that we can
+ *			     show lock-owners.
+ *		17 Aug 1989, rewrote the code which computes the path of the
+ *			     working-file so that we don't use ".." unless
+ *			     necessary, so this works better with symbolic
+ *			     links.
  *		02 Sep 1988, use 'sccs_dir()'
  *		30 Jun 1988, use 'newzone()' instead of 'sccszone()'.
  *		01 Jun 1988, use SCCS_DIR environment variable.
@@ -60,20 +30,23 @@ static	char	Id[] = "$Id: sccslast.c,v 9.0 1991/05/15 09:50:19 ste_cm Rel $";
 
 #define	STR_PTYPES
 #include	"ptypes.h"
+#include	"sccsdefs.h"
 #include	<ctype.h>
-extern	long	packdate();
-extern	char	*sccs_dir(),
-		*txtalloc();
 
 /*
  * Set the release.version and date values iff we find a legal sccs-file at
  * 'path[]'.
  */
-static	trysccs (path, vers_, date_, lock_)
-char	*path;
-char	**vers_;
-time_t	*date_;
-char	**lock_;
+static	trysccs (
+_ARX(char *,	path)
+_ARX(char **,	vers_)
+_ARX(time_t *,	date_)
+_AR1(char **,	lock_)
+	)
+_DCL(char *,	path)
+_DCL(char **,	vers_)
+_DCL(time_t *,	date_)
+_DCL(char **,	lock_)
 {
 	auto	FILE	*fp = fopen(path, "r");
 	auto	int	gotten = 0;
@@ -120,12 +93,18 @@ char	**lock_;
 	}
 }
 
-sccslast (working, path, vers_, date_, lock_)
-char	*working;		/* working directory (absolute) */
-char	*path;			/* pathname to check (may be relative) */
-char	**vers_;
-time_t	*date_;
-char	**lock_;
+sccslast (
+_ARX(char *,	working)	/* working directory (absolute) */
+_ARX(char *,	path)		/* pathname to check (may be relative) */
+_ARX(char **,	vers_)
+_ARX(time_t *,	date_)
+_AR1(char **,	lock_)
+	)
+_DCL(char *,	working)
+_DCL(char *,	path)
+_DCL(char **,	vers_)
+_DCL(time_t *,	date_)
+_DCL(char **,	lock_)
 {
 	auto	 char	name[BUFSIZ+1],
 			*dname = sccs_dir();

@@ -1,11 +1,13 @@
 #ifndef	lint
-static	char	Id[] = "$Id: lsbycols.c,v 9.0 1991/05/15 10:18:02 ste_cm Rel $";
+static	char	Id[] = "$Id: lsbycols.c,v 11.0 1991/10/03 14:54:12 ste_cm Rel $";
 #endif
 
 /*
  * Title:	list_by_cols.c
  * Author:	T.E.Dickey
  * Created:	17 Apr 1989
+ * Modified:
+ *		03 Oct 1991, converted to ANSI
  *
  * Function:	Given an array of structures whose first member is a pointer
  *		to a character-string, print the array of strings in columns
@@ -27,9 +29,14 @@ static	char	Id[] = "$Id: lsbycols.c,v 9.0 1991/05/15 10:18:02 ste_cm Rel $";
 #define	MAXCOL	80
 
 /*ARGSUSED*/
-list_by_cols(listp, sizep, num)
-char	**listp;
-int	sizep, num;
+list_by_cols(
+_ARX(char **,	listp)
+_ARX(int,	sizep)
+_AR1(int,	num)
+	)
+_DCL(char **,	listp)
+_DCL(int,	sizep)
+_DCL(int,	num)
 {
 	register int	j, k;
 	auto	 int	maxlen = 0,	/* length of widest column */
@@ -65,8 +72,7 @@ int	sizep, num;
 }
 
 #ifdef	TEST
-main(argc, argv)
-char	*argv[];
+_MAIN
 {
 	if (argc > 1)
 		list_by_cols(argv+1, sizeof(argv[0]), argc-1);
@@ -87,5 +93,7 @@ char	*argv[];
 				};
 		list_by_cols(tbl, sizeof(tbl[0]), sizeof(tbl)/sizeof(tbl[0]));
 	}
+	exit(SUCCESS);
+	/*NOTREACHED*/
 }
 #endif

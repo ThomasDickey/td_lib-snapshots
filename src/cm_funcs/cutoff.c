@@ -1,58 +1,26 @@
 #ifndef	lint
-static	char	Id[] = "$Id: cutoff.c,v 9.0 1991/05/15 10:00:59 ste_cm Rel $";
+static	char	Id[] = "$Id: cutoff.c,v 9.1 1991/10/03 16:15:04 dickey Exp $";
 #endif
 
 /*
  * Title:	cutoff.c (parse SCCS-style cutoff date)
  * Author:	T.E.Dickey
  * Created:	20 May 1988 (from 'sccsdate.c')
- * $Log: cutoff.c,v $
- * Revision 9.0  1991/05/15 10:00:59  ste_cm
- * BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
- *
- *		Revision 8.1  91/05/15  10:00:59  dickey
- *		apollo sr10.3 cpp complains about tag in #endif
- *		
- *		Revision 8.0  89/07/25  08:56:09  ste_cm
- *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
- *		
- *		Revision 7.0  89/07/25  08:56:09  ste_cm
- *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
- *		
- *		Revision 6.0  89/07/25  08:56:09  ste_cm
- *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
- *		
- *		Revision 5.0  89/07/25  08:56:09  ste_cm
- *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
- *		
- *		Revision 4.0  89/07/25  08:56:09  ste_cm
- *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
- *		
- *		Revision 3.1  89/07/25  08:56:09  dickey
- *		recompiled with apollo SR10 -- mods for function prototypes
- *		
- *		Revision 3.0  88/06/13  06:54:53  ste_cm
- *		BASELINE Mon Jun 19 13:27:01 EDT 1989
- *		
- *		Revision 2.0  88/06/13  06:54:53  ste_cm
- *		BASELINE Thu Apr  6 09:45:13 EDT 1989
- *		
- *		Revision 1.3  88/06/13  06:54:53  dickey
- *		sccs2rcs keywords
- *		
+ * Modified:
+ *		03 Oct 1991, converted to ANSI
+ *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
+ *		25 Jul 1989, recompiled with apollo SR10 -- mods for function
+ *			     prototypes
  *		13 Jun 1988, use 'newzone()'.
  *
  * Function:	Convert an SCCS-style cutoff date-string to unix time.  The
  *		string is read from the argument list using 'getopt()'.
  */
 
+#define	STR_PTYPES
 #include	"ptypes.h"
-
-#include	<stdio.h>
 #include	<ctype.h>
 #include	<time.h>
-extern	long	packdate();
-extern	char	*strcpy();
 
 extern	char	*optarg;	/* points to beginning of argument */
 extern	int	optind;
@@ -60,16 +28,20 @@ extern	int	optind;
 #define	Z(n)	twod(&bfr[n+n])
 
 static
-twod (s)
-char	*s;
+twod (
+_AR1(char *,	s))
+_DCL(char *,	s)
 {
 	return (10*(s[0]-'0') + s[1]-'0');
 }
 
 time_t
-cutoff (argc, argv)
-int	argc;
-char	**argv;
+cutoff (
+_ARX(int,	argc)
+_AR1(char **,	argv)
+	)
+_DCL(int,	argc)
+_DCL(char **,	argv)
 {
 time_t	date;
 char	bfr[80],

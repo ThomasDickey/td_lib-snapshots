@@ -1,50 +1,18 @@
 #ifndef	lint
-static	char	Id[] = "$Id: pathhead.c,v 9.0 1991/05/15 09:32:08 ste_cm Rel $";
+static	char	Id[] = "$Id: pathhead.c,v 10.0 1991/10/03 08:30:48 ste_cm Rel $";
 #endif
 
 /*
  * Title:	pathhead.c (obtain head from path)
  * Author:	T.E.Dickey
  * Created:	25 Aug 1988
- * $Log: pathhead.c,v $
- * Revision 9.0  1991/05/15 09:32:08  ste_cm
- * BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
- *
- *		Revision 8.1  91/05/15  09:32:08  dickey
- *		apollo sr10.3 cpp complains about tag in #endif
+ * Modified:
+ *		03 Oct 1991, conversion to ANSI
+ *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
+ *		01 Dec 1989, corrected handling of paths such as "name1/name2"
+ *			     which should evaluate to "name1".
+ *		04 Oct 1989, lint (apollo SR10.1)
  *		
- *		Revision 8.0  89/12/01  12:20:03  ste_cm
- *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
- *		
- *		Revision 7.0  89/12/01  12:20:03  ste_cm
- *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
- *		
- *		Revision 6.0  89/12/01  12:20:03  ste_cm
- *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
- *		
- *		Revision 5.1  89/12/01  12:20:03  dickey
- *		corrected handling of paths such as "name1/name2" which
- *		should evaluate to "name1".
- *		
- *		Revision 5.0  89/10/04  12:14:05  ste_cm
- *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
- *		
- *		Revision 4.1  89/10/04  12:14:05  dickey
- *		lint (apollo SR10.1)
- *		
- *		Revision 4.0  88/08/25  15:07:07  ste_cm
- *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
- *		
- *		Revision 3.0  88/08/25  15:07:07  ste_cm
- *		BASELINE Mon Jun 19 13:27:01 EDT 1989
- *		
- *		Revision 2.0  88/08/25  15:07:07  ste_cm
- *		BASELINE Thu Apr  6 09:45:13 EDT 1989
- *		
- *		Revision 1.2  88/08/25  15:07:07  dickey
- *		sccs2rcs keywords
- *		
- *
  * Function:	Returns the directory (relative is ok) from the given path.
  *
  *		This always returns a pointer to a static buffer which is
@@ -66,9 +34,12 @@ static	char	Id[] = "$Id: pathhead.c,v 9.0 1991/05/15 09:32:08 ste_cm Rel $";
 			||  ((sb_->st_mode & S_IFMT) != S_IFDIR))
 
 char *
-pathhead (path, sb_)
-char	*path;
-struct	stat	*sb_;
+pathhead (
+_ARX(char *,		path)
+_AR1(struct stat *,	sb_)
+	)
+_DCL(char *,		path)
+_DCL(struct stat *,	sb_)
 {
 	auto	int	trimmed	= 0;
 	struct	stat	sb;
@@ -102,8 +73,7 @@ struct	stat	*sb_;
 }
 
 #ifdef	TEST
-main(argc, argv)
-char	*argv[];
+_MAIN
 {
 	register int j;
 	for (j = 1; j < argc; j++)

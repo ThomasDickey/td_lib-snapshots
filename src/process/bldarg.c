@@ -1,41 +1,13 @@
 #ifndef	lint
-static	char	Id[] = "$Id: bldarg.c,v 9.0 1991/05/15 10:00:23 ste_cm Rel $";
+static	char	Id[] = "$Id: bldarg.c,v 12.0 1991/10/03 16:16:00 ste_cm Rel $";
 #endif
 
 /*
  * Title:	bldarg.c (build argv-array)
  * Created:	17 Dec 1985
- * $Log: bldarg.c,v $
- * Revision 9.0  1991/05/15 10:00:23  ste_cm
- * BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
- *
- *		Revision 8.1  91/05/15  10:00:23  dickey
- *		apollo sr10.3 cpp complains about tag in #endif
- *		
- *		Revision 8.0  88/07/29  10:47:47  ste_cm
- *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
- *		
- *		Revision 7.0  88/07/29  10:47:47  ste_cm
- *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
- *		
- *		Revision 6.0  88/07/29  10:47:47  ste_cm
- *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
- *		
- *		Revision 5.0  88/07/29  10:47:47  ste_cm
- *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
- *		
- *		Revision 4.0  88/07/29  10:47:47  ste_cm
- *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
- *		
- *		Revision 3.0  88/07/29  10:47:47  ste_cm
- *		BASELINE Mon Jun 19 13:27:01 EDT 1989
- *		
- *		Revision 2.0  88/07/29  10:47:47  ste_cm
- *		BASELINE Thu Apr  6 09:45:13 EDT 1989
- *		
- *		Revision 1.4  88/07/29  10:47:47  dickey
- *		sccs2rcs keywords
- *		
+ * Modified:
+ *		03 Oct 1991, converted to ANSI
+ *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
  *		29 Jul 1988, if the string has a trailing blank, don't put a
  *			     "" entry in vector!
  *		26 May 1988, accommodate changes in 'catarg()', which sets
@@ -62,11 +34,18 @@ static	char	Id[] = "$Id: bldarg.c,v 9.0 1991/05/15 10:00:23 ste_cm Rel $";
  *		We do not process quotes ' or "
  */
 
+#include	"ptypes.h"
 #include	<ctype.h>
 #define	blank(c)	(isascii(c) && isspace(c))
 
-bldarg (argc, argv, string)
-char	*argv[], *string;
+bldarg (
+_ARX(int,	argc)
+_ARX(char **,	argv)
+_AR1(char *,	string)
+	)
+_DCL(int,	argc)
+_DCL(char **,	argv)
+_DCL(char *,	string)
 {
 register int  j  = 0;
 register char *s = string;

@@ -1,51 +1,20 @@
 #ifndef	lint
-static	char	Id[] = "$Id: which.c,v 9.0 1991/05/15 09:58:56 ste_cm Rel $";
+static	char	Id[] = "$Id: which.c,v 10.0 1991/10/03 17:22:47 ste_cm Rel $";
 #endif
 
 /*
  * Title:	which.c (which-executable scanner)
  * Author:	T.E.Dickey
  * Created:	18 Nov 1987
- * $Log: which.c,v $
- * Revision 9.0  1991/05/15 09:58:56  ste_cm
- * BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
- *
- *		Revision 8.1  91/05/15  09:58:56  dickey
- *		apollo sr10.3 cpp complains about tag in #endif
- *		
- *		Revision 8.0  90/03/12  09:04:38  ste_cm
- *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
- *		
- *		Revision 7.0  90/03/12  09:04:38  ste_cm
- *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
- *		
- *		Revision 6.0  90/03/12  09:04:38  ste_cm
- *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
- *		
- *		Revision 5.3  90/03/12  09:04:38  dickey
- *		lint (apollo sr10.1)
- *		
- *		Revision 5.2  89/12/11  13:14:38  dickey
- *		lint
- *		
- *		Revision 5.1  89/12/11  09:39:19  dickey
- *		corrected handling to relative pathnames
- *		
- *		Revision 5.0  89/09/28  10:48:21  ste_cm
- *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
- *		
- *		Revision 4.3  89/09/28  10:48:21  dickey
- *		lint (apollo SR10.1)
- *		
- *		Revision 4.2  89/09/06  15:32:08  dickey
- *		use 'getwd()' definition from "ptypes.h"
- *		
- *		Revision 4.1  89/08/25  09:50:40  dickey
- *		force $PATH to be nonnull, in case this is invoked from a
- *		non-unix environment!
- *		
- *		Revision 4.0  88/05/16  13:17:20  ste_cm
- *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+ * Modified:
+ *		03 Oct 1991, converted to ANSI
+ *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
+ *		12 Mar 1990, lint (apollo sr10.1)
+ *		11 Dec 1989, lint.  Corrected handling to relative pathnames
+ *		28 Sep 1989, lint (apollo SR10.1)
+ *		06 Sep 1989, use 'getwd()' definition from "ptypes.h"
+ *		25 Aut 1989, force $PATH to be nonnull, in case this is invoked
+ *			     from a non-unix environment!
  *		
  * Function:	Perform scanning along the PATH environment variable to
  *		find the first instance of a file 'find' which is
@@ -60,12 +29,11 @@ static	char	Id[] = "$Id: which.c,v 9.0 1991/05/15 09:58:56 ste_cm Rel $";
 #define	ACC_PTYPES
 #define	STR_PTYPES
 #include	"ptypes.h"
-extern	char	*getenv();
-extern	char	*pathcat();
 
 static
-executable(name)
-char	*name;
+executable(
+_AR1(char *,	name))
+_DCL(char *,	name)
 {
 struct	stat	sb;
 	if (access(name, X_OK) >= 0) {
@@ -77,11 +45,16 @@ struct	stat	sb;
 	return(FALSE);
 }
 
-which(bfr, len, find, dot)
-char	*bfr;
-int	len;
-char	*find;
-char	*dot;
+which(
+_ARX(char *,	bfr)
+_ARX(int,	len)
+_ARX(char *,	find)
+_AR1(char *,	dot)
+	)
+_DCL(char *,	bfr)
+_DCL(int,	len)
+_DCL(char *,	find)
+_DCL(char *,	dot)
 {
 register char *s, *d;
 char	*path = getenv("PATH");
@@ -115,8 +88,7 @@ char	test[BUFSIZ];
 }
 
 #ifdef	TEST
-main(argc,argv)
-char	*argv[];
+_MAIN
 {
 int	j;
 char	bfr[BUFSIZ],

@@ -1,51 +1,20 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcsname.c,v 9.0 1991/05/15 09:41:26 ste_cm Rel $";
+static	char	Id[] = "$Id: rcsname.c,v 11.0 1991/10/03 08:46:17 ste_cm Rel $";
 #endif
 
 /*
  * Title:	rcsname.c (derive name of RCS file)
  * Author:	T.E.Dickey
  * Created:	27 May 1988
- * $Log: rcsname.c,v $
- * Revision 9.0  1991/05/15 09:41:26  ste_cm
- * BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
- *
- *		Revision 8.1  91/05/15  09:41:26  dickey
- *		apollo sr10.3 cpp complains about tag in #endif
- *		
- *		Revision 8.0  90/04/18  13:55:07  ste_cm
- *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
- *		
- *		Revision 7.0  90/04/18  13:55:07  ste_cm
- *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
- *		
- *		Revision 6.1  90/04/18  13:55:07  dickey
- *		added 'full' argument to 'rcs2name()' and 'name2rcs()' so we
- *		can force the conversion to preserve pathnames, rather than
- *		coercing the conversion toward the current directory.  Added
- *		to test-case also.
- *		
- *		Revision 6.0  89/10/04  12:14:54  ste_cm
- *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
- *		
- *		Revision 5.0  89/10/04  12:14:54  ste_cm
- *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
- *		
- *		Revision 4.1  89/10/04  12:14:54  dickey
- *		lint (apollo SR10.1)
- *		
- *		Revision 4.0  88/09/02  09:28:32  ste_cm
- *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
- *		
- *		Revision 3.0  88/09/02  09:28:32  ste_cm
- *		BASELINE Mon Jun 19 13:27:01 EDT 1989
- *		
- *		Revision 2.0  88/09/02  09:28:32  ste_cm
- *		BASELINE Thu Apr  6 09:45:13 EDT 1989
- *		
- *		Revision 1.4  88/09/02  09:28:32  dickey
- *		sccs2rcs keywords
- *		
+ * Modified:
+ *		03 Oct 1991, conversion to ANSI
+ *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
+ *		18 Apr 1990, added 'full' argument to 'rcs2name()' and
+ *			     'name2rcs()' so we can force the conversion to
+ *			     preserve pathnames, rather than coercing the
+ *			     conversion toward the current directory.  Added
+ *			     to test-case also.
+ *		04 Oct 1989, lint (apollo SR10.1)
  *		02 Sep 1988, use 'rcs_dir()'.
  *		05 Aug 1988, rewrote to provide bidirectional translation, to
  *			     make 'checkin' and 'checkout' more foolproof.
@@ -74,7 +43,6 @@ static	char	Id[] = "$Id: rcsname.c,v 9.0 1991/05/15 09:41:26 ste_cm Rel $";
 #include	"rcsdefs.h"
 
 #include	<ctype.h>
-extern	char	*rcs_dir();
 
 #define	LEN_SUFFIX	(sizeof(suffix)-1)
 
@@ -88,8 +56,9 @@ static	char	suffix[] = RCS_SUFFIX;
  * Returns TRUE if the name ends with RCS_SUFFIX.
  */
 static
-rcs_suffix(name)
-char	*name;
+rcs_suffix(
+_AR1(char *,	name))
+_DCL(char *,	name)
 {
 	int	len = strlen(name);
 	if (len >= LEN_SUFFIX)
@@ -99,8 +68,9 @@ char	*name;
 }
 
 static
-trim_leaf(name)
-char	*name;
+trim_leaf(
+_AR1(char *,	name))
+_DCL(char *,	name)
 {
 	register char *s = strrchr(name, '/');
 	if (s != 0) name = s;
@@ -109,8 +79,9 @@ char	*name;
 
 static
 char *
-leaf(name)
-char	*name;
+leaf(
+_AR1(char *,	name))
+_DCL(char *,	name)
 {
 	register char	*s = strrchr(name, '/');
 	return ((s != 0) ? s+1 : name);
@@ -125,9 +96,12 @@ char	*name;
  * of the working file.
  */
 char *
-rcs2name(name,full)
-char	*name;
-int	full;
+rcs2name(
+_ARX(char *,	name)
+_AR1(int,	full)
+	)
+_DCL(char *,	name)
+_DCL(int,	full)
 {
 	char	*s, *t;
 static	char	fname[BUFSIZ];
@@ -157,9 +131,12 @@ static	char	fname[BUFSIZ];
  * of the RCS-file.
  */
 char *
-name2rcs(name,full)
-char	*name;
-int	full;
+name2rcs(
+_ARX(char *,	name)
+_AR1(int,	full)
+	)
+_DCL(char *,	name)
+_DCL(int,	full)
 {
 static	char	fname[BUFSIZ];
 
@@ -186,8 +163,14 @@ static	char	fname[BUFSIZ];
 }
 
 #ifdef	TEST
-do_test(argc, argv, full)
-char	*argv[];
+do_test(
+_ARX(int,	argc)
+_ARX(char **,	argv)
+_AR1(int,	full)
+	)
+_DCL(int,	argc)
+_DCL(char **,	argv)
+_DCL(int,	full)
 {
 	int	j;
 	char	old[BUFSIZ], *new;
@@ -222,11 +205,10 @@ char	*argv[];
 	}
 }
 
-main(argc, argv)
-char	*argv[];
+_MAIN
 {
 	do_test(argc, argv, FALSE);
 	do_test(argc, argv, TRUE);
-	exit(0);
+	exit(SUCCESS);
 }
 #endif

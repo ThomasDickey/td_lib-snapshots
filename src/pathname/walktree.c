@@ -1,35 +1,19 @@
 #ifndef	lint
-static	char	Id[] = "$Id: walktree.c,v 9.0 1991/05/15 09:58:45 ste_cm Rel $";
+static	char	Id[] = "$Id: walktree.c,v 9.1 1991/10/03 16:30:52 dickey Exp $";
 #endif
 
 /*
  * Title:	walktree.c (link/directory tree)
  * Author:	T.E.Dickey
  * Created:	31 Aug 1988
- * $Log: walktree.c,v $
- * Revision 9.0  1991/05/15 09:58:45  ste_cm
- * BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
- *
+ * Modified:
+ *		03 Oct 1991, converted to ANSI
+ *		
  *		Revision 8.1  91/05/15  09:58:45  dickey
  *		apollo sr10.3 cpp complains about tag in #endif
  *		
- *		Revision 8.0  89/09/06  15:20:27  ste_cm
- *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
- *		
- *		Revision 7.0  89/09/06  15:20:27  ste_cm
- *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
- *		
- *		Revision 6.0  89/09/06  15:20:27  ste_cm
- *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
- *		
- *		Revision 5.0  89/09/06  15:20:27  ste_cm
- *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
- *		
  *		Revision 4.1  89/09/06  15:20:27  dickey
  *		use 'getwd()' definition from "ptypes.h"
- *		
- *		Revision 4.0  89/07/25  09:31:44  ste_cm
- *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
  *		
  * Function:	Given a pathname, this successively invokes a user-supplied
  *		function, with the following arguments:
@@ -67,7 +51,6 @@ static	char	Id[] = "$Id: walktree.c,v 9.0 1991/05/15 09:58:45 ste_cm Rel $";
 #define		DIR_PTYPES		/* include directory-stuff */
 #define		STR_PTYPES
 #include	"ptypes.h"
-extern	char	*txtalloc();
 
 /************************************************************************
  *	local definitions						*
@@ -85,8 +68,12 @@ typedef	char	*PTR;
  * Comparison routine for qsort.
  */
 static
-compare(p1, p2)
-char	**p1, **p2;
+compare(
+_ARX(char **,	p1)
+_AR1(char **,	p2)
+	)
+_DCL(char **,	p1)
+_DCL(char **,	p2)
 {
 	return (-strcmp(*p1, *p2));
 }
@@ -206,8 +193,7 @@ char	*type;
 	PRINTF("** total= %d\n", walktree((PTR)0, name,display,type,0));
 }
 
-main(argc, argv)
-char	*argv[];
+_MAIN
 {
 	register int j;
 	char	*opts = "wrx";

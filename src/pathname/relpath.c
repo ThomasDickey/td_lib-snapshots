@@ -1,29 +1,15 @@
 #ifndef	lint
-static	char	Id[] = "$Id: relpath.c,v 9.0 1991/05/15 09:46:58 ste_cm Rel $";
+static	char	Id[] = "$Id: relpath.c,v 10.0 1991/10/03 08:46:02 ste_cm Rel $";
 #endif
 
 /*
  * Title:	relpath.c (convert path to relative-form)
  * Author:	T.E.Dickey
  * Created:	07 Sep 1989
- * $Log: relpath.c,v $
- * Revision 9.0  1991/05/15 09:46:58  ste_cm
- * BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
- *
- *		Revision 8.1  91/05/15  09:46:58  dickey
- *		apollo sr10.3 cpp complains about tag in #endif
- *		
- *		Revision 8.0  90/03/12  09:03:48  ste_cm
- *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
- *		
- *		Revision 7.0  90/03/12  09:03:48  ste_cm
- *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
- *		
- *		Revision 6.0  90/03/12  09:03:48  ste_cm
- *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
- *		
- *		Revision 5.2  90/03/12  09:03:48  dickey
- *		lint (apollo sr10.1)
+ * Modified:
+ *		03 Oct 1991, conversion to ANSI
+ *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
+ *		12 Mar 1990, lint (apollo sr10.1)
  *		
  *
  * Function:	Converts a pathname from (presumably absolute form) to relative
@@ -34,10 +20,15 @@ static	char	Id[] = "$Id: relpath.c,v 9.0 1991/05/15 09:46:58 ste_cm Rel $";
 #include	"ptypes.h"
 
 char	*
-relpath(dst, cwd, src)
-char	*dst, *cwd, *src;
+relpath(
+_ARX(char *,	dst)
+_ARX(char *,	cwd)
+_AR1(char *,	src)
+	)
+_DCL(char *,	dst)
+_DCL(char *,	cwd)
+_DCL(char *,	src)
 {
-	extern	char	*pathcat();
 	auto	char	current[BUFSIZ];
 	auto	char	tmp[BUFSIZ];
 	auto	char	pre[BUFSIZ];
@@ -82,15 +73,15 @@ char	*dst, *cwd, *src;
 }
 
 #ifdef	TEST
-do_test(s)
-char	*s;
+do_test(
+_AR1(char *,	s))
+_DCL(char *,	s)
 {
 	auto	char	tmp[BUFSIZ];
 	printf("%s <= %s\n", relpath(tmp, (char *)0, s), s);
 }
 
-main(argc, argv)
-char	*argv[];
+_MAIN
 {
 	static	char	*tbl[] = {
 		"RCS"

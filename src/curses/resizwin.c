@@ -1,42 +1,14 @@
 #ifndef	lint
-static	char	Id[] = "$Id: resizwin.c,v 9.0 1991/05/15 09:48:03 ste_cm Rel $";
+static	char	Id[] = "$Id: resizwin.c,v 12.0 1991/10/03 08:12:19 ste_cm Rel $";
 #endif
 
 /*
  * Author:	T.E.Dickey
  * Title:	resizewin.c (change size of curses window)
  * Created:	21 Apr 1988
- * $Log: resizwin.c,v $
- * Revision 9.0  1991/05/15 09:48:03  ste_cm
- * BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
- *
- *		Revision 8.1  91/05/15  09:48:03  dickey
- *		apollo sr10.3 cpp complains about tag in #endif
- *		
- *		Revision 8.0  88/08/11  07:39:12  ste_cm
- *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
- *		
- *		Revision 7.0  88/08/11  07:39:12  ste_cm
- *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
- *		
- *		Revision 6.0  88/08/11  07:39:12  ste_cm
- *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
- *		
- *		Revision 5.0  88/08/11  07:39:12  ste_cm
- *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
- *		
- *		Revision 4.0  88/08/11  07:39:12  ste_cm
- *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
- *		
- *		Revision 3.0  88/08/11  07:39:12  ste_cm
- *		BASELINE Mon Jun 19 13:27:01 EDT 1989
- *		
- *		Revision 2.0  88/08/11  07:39:12  ste_cm
- *		BASELINE Thu Apr  6 09:45:13 EDT 1989
- *		
- *		Revision 1.9  88/08/11  07:39:12  dickey
- *		sccs2rcs keywords
- *		
+ * Modified:
+ *		03 Oct 1991, conversion to ANSI
+ *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
  *		27 Jul 1988, broke out 'scr_size()' so we can use it to control
  *			     'padedit()'.
  *		13 May 1988, oops: was using old COLS, not new my_COLS to
@@ -71,8 +43,9 @@ static	unsigned	size[2];
 #endif
 
 static
-doit(w)
-WINDOW	*w;
+doit(
+_AR1(WINDOW *,	w))
+_DCL(WINDOW *,	w)
 {
 register
 int	row;
@@ -118,7 +91,7 @@ int	row;
 	w->_maxy = my_LINES; if (w->_cury >= my_LINES) w->_cury = 0;
 }
 
-resizewin()
+resizewin(_AR0)
 {
 	int	lc[2];
 	if (scr_size(lc) >= 0) {

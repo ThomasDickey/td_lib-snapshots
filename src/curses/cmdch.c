@@ -1,52 +1,19 @@
 #ifndef	lint
-static	char	Id[] = "$Id: cmdch.c,v 9.0 1991/05/15 09:19:51 ste_cm Rel $";
+static	char	Id[] = "$Id: cmdch.c,v 11.0 1991/10/03 08:41:41 ste_cm Rel $";
 #endif
 
 /*
  * Title:	cmdch.c (command-character decoder)
  * Author:	T.E.Dickey
  * Created:	01 Dec 1987 (broke out of 'ded.c')
- * $Log: cmdch.c,v $
- * Revision 9.0  1991/05/15 09:19:51  ste_cm
- * BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
- *
- *		Revision 8.1  91/05/15  09:19:51  dickey
- *		apollo sr10.3 cpp complains about tag in #endif
- *		
- *		Revision 8.0  90/03/12  07:54:01  ste_cm
- *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
- *		
- *		Revision 7.0  90/03/12  07:54:01  ste_cm
- *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
- *		
- *		Revision 6.0  90/03/12  07:54:01  ste_cm
- *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
- *		
- *		Revision 5.2  90/03/12  07:54:01  dickey
- *		lint (apollo sr10.1)
- *		
- *		Revision 5.1  90/01/30  08:26:46  dickey
- *		permit explicit zero-count to be returned.  default is still 1.
- *		
- *		Revision 5.0  89/10/04  11:32:28  ste_cm
- *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
- *		
- *		Revision 4.1  89/10/04  11:32:28  dickey
- *		apollo SR10.1 curses (like sun) has KD, KU, KR and KL data.
- *		don't ask for it twice!
- *		
- *		Revision 4.0  88/08/11  07:13:14  ste_cm
- *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
- *		
- *		Revision 3.0  88/08/11  07:13:14  ste_cm
- *		BASELINE Mon Jun 19 13:27:01 EDT 1989
- *		
- *		Revision 2.0  88/08/11  07:13:14  ste_cm
- *		BASELINE Thu Apr  6 09:45:13 EDT 1989
- *		
- *		Revision 1.5  88/08/11  07:13:14  dickey
- *		sccs2rcs keywords
- *		
+ * Modified:
+ *		03 Oct 1991, conversion to ANSI
+ *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
+ *		12 Mar 1990, lint (apollo sr10.1)
+ *		30 Jan 1990, permit explicit zero-count to be returned. 
+ *			     Default is still 1.
+ *		04 Oct 1989, apollo SR10.1 curses (like sun) has KD, KU, KR and
+ *			     KL data.  Don't ask for it twice!
  *		09 May 1988, extended arrow-key comparison so this will match
  *			     ansi/vt100 & vt52 terminals better.
  *		27 Apr 1988, broke out "cmdch.h".
@@ -63,7 +30,6 @@ static	char	Id[] = "$Id: cmdch.c,v 9.0 1991/05/15 09:19:51 ste_cm Rel $";
 #include	"ptypes.h"
 #include	<ctype.h>
 #include	"cmdch.h"
-extern	char	*getenv();
 
 #define	ESC(c)	((c) == '\033')
 #define	END(s)	s[strlen(s)-1]
@@ -79,8 +45,9 @@ extern	char	*getenv();
 #endif
 
 int
-cmdch(cnt_)
-int	*cnt_;
+cmdch(
+_AR1(int *,	cnt_))
+_DCL(int *,	cnt_)
 {
 int	c,
 	done	= FALSE,

@@ -1,62 +1,29 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rawgets.c,v 9.0 1991/05/15 13:33:18 ste_cm Rel $";
+static	char	Id[] = "$Id: rawgets.c,v 11.0 1991/10/03 17:20:37 ste_cm Rel $";
 #endif
 
 /*
  * Author:	T.E.Dickey
  * Title:	rawgets.c (raw-mode 'gets()')
  * Created:	29 Sep 1987 (from 'fl.c')
- * $Log: rawgets.c,v $
- * Revision 9.0  1991/05/15 13:33:18  ste_cm
- * BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
- *
- *		Revision 8.1  91/05/15  13:33:18  dickey
- *		mods to compile under apollo sr10.3
- *		
- *		Revision 8.0  90/03/02  11:41:50  ste_cm
- *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
- *		
- *		Revision 7.0  90/03/02  11:41:50  ste_cm
- *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
- *		
- *		Revision 6.0  90/03/02  11:41:50  ste_cm
- *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
- *		
- *		Revision 5.1  90/03/02  11:41:50  dickey
- *		modified so that if this is invoked in no-wrap mode, and the
- *		output buffer is wider than the screen, we automatically
- *		scroll left/right.  also, permit arrow keys to work in
- *		non-insert mode.  finally, added a test-driver to exercise
- *		the code.
- *		
- *		Revision 5.0  89/10/04  11:58:21  ste_cm
- *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
- *		
- *		Revision 4.1  89/10/04  11:58:21  dickey
- *		lint (apollo SR10.1)
- *		
- *		Revision 4.0  89/08/03  10:54:01  ste_cm
- *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
- *		
- *		Revision 3.2  89/08/03  10:54:01  dickey
- *		broke into two procedures, 'rawgets()' and 'wrawgets()'.
- *		return the terminating character, allowing up/down arrow as
- *		one of these.  The 'wrawgets()' procedure operates solely in
- *		a specified window; made additional modifications to keep
- *		the wraparound and clearing under better control.
- *		
- *		Revision 3.1  89/07/25  09:17:09  dickey
- *		recompiled with apollo SR10 -- mods for function prototypes
- *		
- *		Revision 3.0  89/01/19  09:21:22  ste_cm
- *		BASELINE Mon Jun 19 13:27:01 EDT 1989
- *		
- *		Revision 2.0  89/01/19  09:21:22  ste_cm
- *		BASELINE Thu Apr  6 09:45:13 EDT 1989
- *		
- *		Revision 1.10  89/01/19  09:21:22  dickey
- *		sccs2rcs keywords
- *		
+ * Modified:
+ *		03 Oct 1991, converted to ANSI
+ *		15 May 1991, mods to compile under apollo sr10.3
+ *		02 Mar 1990, modified so that if this is invoked in no-wrap
+ *			     mode, and the output buffer is wider than the
+ *			     screen, we automatically scroll left/right.  Also,
+ *			     permit arrow keys to work in non-insert mode. 
+ *			     Finally, added a test-driver to exercise the code.
+ *		04 Oct 1989, lint (apollo SR10.1)
+ *		03 Aug 1989, broke into two procedures, 'rawgets()' and
+ *			     'wrawgets()'.  Return the terminating character,
+ *			     allowing up/down arrow as one of these.  The
+ *			     'wrawgets()' procedure operates solely in a
+ *			     specified window; made additional modifications to
+ *			     keep the wraparound and clearing under better
+ *			     control.
+ *		25 Jul 1989, recompiled with apollo SR10 -- mods for function
+ *			     prototypes
  *		19 Jan 1989, move to end of string when exiting.
  *		28 Apr 1988, use CTL/B, CTL/F for inline movement
  *		27 Apr 1988, interfaced to 'cmdch()'.  General cleanup to fix
@@ -100,7 +67,7 @@ static	char	*bbase;		/* 'bfr[]' copy */
  * use wclrtoeol(), since xlast may not be on the end.
  */
 static
-ClearIt()
+ClearIt(_AR0)
 {
 	register int	x;
 	for (x = Z->_curx; x < xlast; x++)
@@ -113,8 +80,9 @@ ClearIt()
  * string.
  */
 static
-MoveTo(new)
-char	*new;
+MoveTo(
+_AR1(char *,	new))
+_DCL(char *,	new)
 {
 register
 int	y = ybase,
@@ -148,8 +116,9 @@ int	y = ybase,
  * Repaint the string starting at a given position
  */
 static
-ShowAt(at)
-char	*at;
+ShowAt(
+_AR1(char *,	at))
+_DCL(char *,	at)
 {
 int	y,x, row, col, len, max;
 
@@ -172,8 +141,12 @@ int	y,x, row, col, len, max;
  * Insert a character in the screen and into 'bfr[]' at the given position.
  */
 static
-insert(at,c)
-char	*at;
+insert(
+_ARX(char *,	at)
+_AR1(int,	c)
+	)
+_DCL(char *,	at)
+_DCL(int,	c)
 {
 register int	d  = c;
 register char	*s = at;
@@ -191,8 +164,12 @@ register char	*s = at;
  */
 static
 char *
-delete(at,count)
-char	*at;
+delete(
+_ARX(char *,	at)
+_AR1(int,	count)
+	)
+_DCL(char *,	at)
+_DCL(int,	count)
 {
 	if (at > bbase) {
 	int	old, new, x;
@@ -227,7 +204,7 @@ char	*at;
  * calling this procedure.
  */
 static
-toggle()
+toggle(_AR0)
 {
 int	y,x;
 	Imode = !Imode;
@@ -242,8 +219,12 @@ int	y,x;
  */
 static
 char *
-move_end(at,c)
-char	*at;
+move_end(
+_ARX(char *,	at)
+_AR1(int,	c)
+	)
+_DCL(char *,	at)
+_DCL(int,	c)
 {
 	if (c == CTL('B'))	at = bbase;
 	else if (c == CTL('F'))	at = bbase + strlen(bbase);
@@ -257,11 +238,16 @@ char	*at;
  *	main procedure							*
  ************************************************************************/
 
-wrawgets (win, bfr,size,newline)
-WINDOW	*win;
-register char	*bfr;
-int	size;
-int	newline;
+wrawgets (
+_ARX(WINDOW *,	win)
+_ARX(char *,	bfr)
+_ARX(int,	size)
+_AR1(int,	newline)
+	)
+_DCL(WINDOW *,	win)
+_DCL(char *,	bfr)
+_DCL(int,	size)
+_DCL(int,	newline)
 {
 register char	*tag;
 register c;
@@ -368,8 +354,7 @@ int	newline;
  *	test procedure							*
  ************************************************************************/
 #ifdef	TEST
-main(argc, argv)
-char	*argv[];
+_MAIN
 {
 	register int	j	= 0;
 	auto	 int	wrap	= (argc > 1 && !strcmp(argv[1], "-w"));
