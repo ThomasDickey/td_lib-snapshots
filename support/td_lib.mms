@@ -1,18 +1,22 @@
-# $Header: /users/source/archives/td_lib.vcs/support/RCS/td_lib.mms,v 1.1 1989/04/13 10:52:07 dickey Exp $
+# $Header: /users/source/archives/td_lib.vcs/support/RCS/td_lib.mms,v 1.2 1989/04/25 08:23:50 dickey Exp $
 # MMS reusable rules for PORTUNIX, and programs built with it.
 #
 # $Log: td_lib.mms,v $
-# Revision 1.1  1989/04/13 10:52:07  dickey
-# Initial revision
+# Revision 1.2  1989/04/25 08:23:50  dickey
+# integration with CM_TOOLS's include-files
 #
+#	Revision 1.1  89/04/13  10:52:07  dickey
+#	Initial revision
+#	
 #
 # Define standard locations in the tree:
 I = PORTUNIX_ROOT:[INTERFACE]	! include-files from PORTUNIX
+J = CM_TOOLS_ROOT:[INTERFACE]	! include-files from CM_TOOLS
 B = COM:			! program-binaries for installation
 #
 # Override default for CFLAGS and LINKFLAGS to generate useful information
 # for debugging:
-INCLUDES=	$(I)
+INCLUDES=	$(I),$(J)
 CFLAGS =	/Diagnostics /Listing /Debug /OBJECT=$@ /Include=($(INCLUDES))
 LINKFLAGS =	/MAP/CROSS_REFERENCE/EXEC=$(MMS$TARGET_NAME).EXE
 #

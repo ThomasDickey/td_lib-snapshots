@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/port2vms/RCS/vms_dirs.c,v 1.1 1988/09/28 15:07:13 dickey Exp $";
+static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/port2vms/RCS/vms_dirs.c,v 4.0 1989/04/25 07:59:34 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -10,7 +10,8 @@ static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/port2vms/RC
  * Function:	This implements (in a crude way!) the unix-compatible directory
  *		scanning procedures.
  */
-#include	"unixdir.h"
+#define		DIR_PTYPES
+#include	"portunix.h"
 
 #define	zfab	dirp->dd_fab
 #define	znam	dirp->dd_nam
