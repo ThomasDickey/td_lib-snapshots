@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: win2file.c,v 12.4 1994/09/28 01:08:33 tom Exp $";
+static	char	Id[] = "$Id: win2file.c,v 12.5 1994/10/06 23:57:14 tom Exp $";
 #endif
 
 /*
@@ -75,7 +75,7 @@ void	win2fp(
 
 	register chtype	*s;
 	register int	j;
-	register int	k;
+	register unsigned k;
 	int	rows = wMaxY(win);
 
 	OUT "%sscreen saved at %s", *prefix ? prefix : "\f", ctime(&now));

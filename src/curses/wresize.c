@@ -1,5 +1,5 @@
 #ifndef	NO_IDENT
-static	char	*Id = "$Id: wresize.c,v 12.2 1994/07/23 13:26:58 tom Exp $";
+static	char	*Id = "$Id: wresize.c,v 12.3 1994/10/06 23:59:53 tom Exp $";
 #endif
 
 /*
@@ -16,7 +16,7 @@ static	char	*Id = "$Id: wresize.c,v 12.2 1994/07/23 13:26:58 tom Exp $";
 #include "td_curse.h"
 
 #ifdef	lint
-#define	_BODY(f,c)	static c *f(p,n) c *p; unsigned n; { return(0); }
+#define	_BODY(f,c)	static c *f(p,n) c *p; int n; { return(0); }
 /*ARGSUSED */		_BODY(pc_ALLOC,chtype *)
 /*ARGSUSED */		_BODY(c_ALLOC, chtype)
 /*ARGSUSED */		_BODY(s_ALLOC, short)

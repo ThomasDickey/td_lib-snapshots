@@ -1,3 +1,14 @@
+1994-10-06  dickey@clark.net
+
+	* src/Makefile: propagate lint rule
+
+	* include/port2vms.h, include/cmv_defs.h, src/port2vms/zone2vms.c: lint
+
+	* src/port2vms/zone2vms.c: use MODULE_ID
+
+	* src/pathname/acc_mode.c, src/curses/on_winch.c, src/curses/wresize.c, src/curses/win2file.c:
+	lint
+
 1994-10-05  dickey@clark.net
 
 	* configure.in: added test for getgroups

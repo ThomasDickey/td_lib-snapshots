@@ -1,7 +1,3 @@
-#ifndef NO_IDENT
-static	char	Id[] = "$Id: lastrev.c,v 12.3 1994/09/28 22:55:55 tom Exp $";
-#endif
-
 /*
  * Title:	lastrev.c (find last revision & date)
  * Author:	T.E.Dickey
@@ -16,6 +12,8 @@ static	char	Id[] = "$Id: lastrev.c,v 12.3 1994/09/28 22:55:55 tom Exp $";
 #include	"cmv_defs.h"
 #include	"rcsdefs.h"
 #include	"sccsdefs.h"
+
+MODULE_ID("$Id: lastrev.c,v 12.5 1994/10/06 00:02:27 tom Exp $")
 
 /*
  * This is driven by an environment variable, but ultimately should be done
@@ -90,7 +88,7 @@ void	lastrev(
 			LAST(sccslast);
 		}
 #endif
-#if defined(RCS_PATH) || defined(SCCS_PATH)
+#if defined(CMV_PATH) && (defined(RCS_PATH) || defined(SCCS_PATH))
 		if (try == TryCmVision) {
 			LAST(cmv_last);
 		}
