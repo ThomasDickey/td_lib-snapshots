@@ -1,4 +1,4 @@
-# $Id: Makefile,v 12.10 1994/11/06 21:54:00 tom Exp $
+# $Id: Makefile,v 12.11 1995/01/29 22:12:46 tom Exp $
 # Top-level makefile for TD_LIB common library
 
 ####### (Development) ##########################################################
@@ -23,7 +23,7 @@ MDEFN	= support/td_lib.mk
 
 CLEAN	= *.bak *.log *.out *.tst .nfs* core
 PURE	= stamp-* *.status $(I_CFG) $(MDEFN)
-DESTROY	=sh -c 'for i in *;do case $$i in RCS);; *) $(RM) $$i;;esac;done;exit 0'
+DESTROY	=$(SHELL) -c 'for i in *;do case $$i in RCS);; *) $(RM) $$i;;esac;done;exit 0'
 
 ####### (Standard Lists) #######################################################
 CONFIG_H=\
@@ -69,7 +69,7 @@ install::	lib $(I_CFG) $(MDEFN)
 clean\
 clobber \
 destroy ::	td_make.in
-	sh -c "if test ! -f $(MDEFN);\
+	$(SHELL) -c "if test ! -f $(MDEFN);\
 		then sed -es/@MAKE@/make/ td_make.in >$(MDEFN);\
 		fi"
 all\
@@ -129,11 +129,10 @@ configure:	$(CONFIG_H)		; autoconf
 # config.status might not change config.h
 $(I_CFG): stamp-h
 stamp-h: config.status
-	sh -c ./config.status
-	touch stamp-h
+	$(SHELL) -c ./config.status
 
 #? Makefile: Makefile.in config.status
 #? 	./config.status
 
 config.status: configure
-	sh -c "./config.status --recheck"
+	$(SHELL) -c "./config.status --recheck"
