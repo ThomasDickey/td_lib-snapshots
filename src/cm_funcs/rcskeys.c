@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs/RCS/rcskeys.c,v 2.0 1988/09/28 09:31:03 ste_cm Exp $";
+static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs/RCS/rcskeys.c,v 8.0 1989/04/20 12:36:00 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,9 +7,30 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs
  * Author:	T.E.Dickey
  * Created:	26 May 1988
  * $Log: rcskeys.c,v $
- * Revision 2.0  1988/09/28 09:31:03  ste_cm
- * BASELINE Thu Apr  6 09:45:13 EDT 1989
+ * Revision 8.0  1989/04/20 12:36:00  ste_cm
+ * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
  *
+ *		Revision 7.0  89/04/20  12:36:00  ste_cm
+ *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+ *		
+ *		Revision 6.0  89/04/20  12:36:00  ste_cm
+ *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+ *		
+ *		Revision 5.0  89/04/20  12:36:00  ste_cm
+ *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+ *		
+ *		Revision 4.0  89/04/20  12:36:00  ste_cm
+ *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+ *		
+ *		Revision 3.0  89/04/20  12:36:00  ste_cm
+ *		BASELINE Mon Jun 19 13:27:01 EDT 1989
+ *		
+ *		Revision 2.1  89/04/20  12:36:00  dickey
+ *		include "ptypes.h" before "rcsdefs.h" because of function-prototypes there.
+ *		
+ *		Revision 2.0  88/09/28  09:31:03  ste_cm
+ *		BASELINE Thu Apr  6 09:45:13 EDT 1989
+ *		
  *		Revision 1.4  88/09/28  09:31:03  dickey
  *		sccs2rcs keywords
  *		
@@ -25,6 +46,8 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs
  *		the "rcsdefs.h" file.
  */
 
+#define	STR_PTYPES
+#include	"ptypes.h"
 #include	"rcsdefs.h"
 #include	<ctype.h>
 

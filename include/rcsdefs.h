@@ -1,9 +1,12 @@
-/* $Header: /users/source/archives/td_lib.vcs/include/RCS/rcsdefs.h,v 2.0 1989/03/15 13:40:39 ste_cm Exp $ */
+/* $Header: /users/source/archives/td_lib.vcs/include/RCS/rcsdefs.h,v 6.0 1989/04/20 13:27:00 ste_cm Rel $ */
+
+#ifndef	_RCSDEFS_H_
+#define	_RCSDEFS_H_
 
 /*
  * State information for scanning RCS-file header
  */
-#define	S_HEAD		0	
+#define	S_HEAD		0
 #define	S_ACCESS	1
 #define	S_SYMBOLS	2
 #define	S_LOCKS		3
@@ -57,19 +60,162 @@ extern	RCSTREE *rcsload();
  * Useful external-definitions
  */
 extern	char *	getenv();
-extern	char *	name2rcs();
-extern	char *	rcs2name();
-extern	char *	rcs_dir();
-extern		rcsedit ();
-extern		rcsclose();
-extern	int	rcskeys();
-extern		rcslast();
-extern	char *	rcslocks();
-extern	int	rcsopen();
-extern	char *	rcsparse_num();
-extern	char *	rcsparse_id();
-extern	char *	rcsparse_str();
-extern	char *	rcspath();
-extern	char *	rcsread();
-extern	char *	rcstemp();
-extern		rcsunload();
+
+	/* rcs_debug.c ----------------------------------------------- */
+	int	rcs_debug()
+			_RET
+
+	/* rcs_dir.c ------------------------------------------------- */
+	char *	rcs_dir()
+			_RET
+
+	/* rcsedit.c ------------------------------------------------- */
+	int	rcsopen(
+			_ARX(char *,	name)
+			_AR1(int,	show)
+			)
+			_DCL(char *,	name)
+			_DCL(int,	show)
+			_RET
+
+	char *	rcsread(
+			_AR1(char *,	s)
+			)
+			_DCL(char *,	s)
+			_RET
+
+		rcsedit (
+			_ARX(char *,	where)
+			_ARX(char *,	old)
+			_AR1(char *,	new)
+			)
+			_DCL(char *,	where)
+			_DCL(char *,	old)
+			_DCL(char *,	new)
+			_NUL
+
+		rcsclose()
+			_NUL
+
+	char *	rcsparse_num(
+			_ARX(char *,	d)
+			_AR1(char *,	s)
+			)
+			_DCL(char *,	d)
+			_DCL(char *,	s)
+			_RET
+
+	char *	rcsparse_id(
+			_ARX(char *,	d)
+			_AR1(char *,	s)
+			)
+			_DCL(char *,	d)
+			_DCL(char *,	s)
+			_RET
+
+	char *	rcsparse_str(
+			_ARX(char *,	s)
+			_FN1(int,	f)
+			)
+			_DCL(char *,	s)
+			_DCL(int,	(*f)())
+			_RET
+
+	/* rcskeys.c ------------------------------------------------- */
+	int	rcskeys(
+			_AR1(char *,	s)
+			)
+			_DCL(char *,	s)
+			_RET
+
+	/* rcslast.c ------------------------------------------------- */
+		rcslast(
+			_ARX(char *,	wd)
+			_ARX(char *,	n)
+			_ARX(char **,	v_)
+			_ARX(time_t *,	t_)
+			_AR1(char **,	l_)
+			)
+			_DCL(char *,	wd)
+			_DCL(char *,	n)
+			_DCL(char **,	v_)
+			_DCL(time_t *,	t_)
+			_DCL(char **,	l_)
+			_NUL
+
+	/* rcsload.c ------------------------------------------------- */
+	RCSTREE *rcsload(
+			_ARX(char *,	name)
+			_AR1(int,	verbose)
+			)
+			_DCL(char *,	name)
+			_DCL(int,	verbose)
+			_RET
+
+		rcsunload(
+			_AR1(RCSTREE *,	p)
+			)
+			_DCL(RCSTREE *,	p)
+			_NUL
+
+	/* rcslocks.c ------------------------------------------------ */
+	char *	rcslocks(
+			_ARX(char *,	s)
+			_ARX(char *,	who)
+			_AR1(char *,	rev)
+			)
+			_DCL(char *,	s)
+			_DCL(char *,	who)
+			_DCL(char *,	rev)
+			_RET
+
+	/* rcsname.c -------------------------------------------------- */
+	char *	rcs2name(
+			_AR1(char *,	name)
+			)
+			_DCL(char *,	name)
+			_RET
+
+	char *	name2rcs(
+			_AR1(char *,	name)
+			)
+			_DCL(char *,	name)
+			_RET
+
+	/* rcspath.c -------------------------------------------------- */
+	char *	rcspath(
+			_AR1(char *,	name)
+			)
+			_DCL(char *,	name)
+			_RET
+
+	/* rcspermit.c ------------------------------------------------ */
+	int	rcspermit(
+			_ARX(char *,	path)
+			_AR1(char *,	base)
+			)
+			_DCL(char *,	path)
+			_DCL(char *,	base)
+			_RET
+
+	/* rcstemp.c -------------------------------------------------- */
+	char *	rcstemp(
+			_ARX(char *,	name)
+			_AR1(int,	copy)
+			)
+			_DCL(char *,	name)
+			_DCL(int,	copy)
+			_RET
+
+	/* vcs_file.c ------------------------------------------------- */
+	char *	vcs_file(
+			_ARX(char *,	path)
+			_ARX(char *,	name)
+			_AR1(int,	temp)
+			)
+			_DCL(char *,	path)
+			_DCL(char *,	name)
+			_DCL(int,	temp)
+			_RET
+
+#endif	_RCSDEFS_H_

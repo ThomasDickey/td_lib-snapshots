@@ -1,4 +1,4 @@
-/* $Header: /users/source/archives/td_lib.vcs/include/RCS/ptypes.h,v 2.0 1989/03/29 11:31:57 ste_cm Exp $ */
+/* $Header: /users/source/archives/td_lib.vcs/include/RCS/ptypes.h,v 2.2 1989/04/20 16:27:21 dickey Exp $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -31,17 +31,25 @@
 #define	LEN_QSORT	unsigned
 #define	LEN_READ	unsigned
 #else
+#ifdef	vms
+#define	V_OR_I		int
+#define	LEN_QSORT	int
+#define	LEN_READ	int
+#else	unix
 #define	V_OR_I
 #define	LEN_QSORT	int
 #define	LEN_READ	int
-#endif
+#endif	vms/unix
+#endif	SYSTEM5
 
 extern	V_OR_I	_exit();
 extern	V_OR_I	exit();
 extern	V_OR_I	free();
 extern	V_OR_I	perror();
 extern	V_OR_I	qsort();
+#ifndef	vms
 extern	V_OR_I	rewind();
+#endif
 
 /*
  * Miscellaneous useful definitions for readability
@@ -92,7 +100,11 @@ extern	char	*doalloc();
  * define macros so we can use the bsd4.x names:
  */
 #ifdef	DIR_PTYPES
+#ifdef	vms
+#include	"unixdir.h"	/* get this from PORTUNIX */
+#else	unix
 #include	<sys/dir.h>
+#endif	vms/unix
 #ifdef	SYSTEM5
 #define	DIR	FILE
 #define	opendir(n)	fopen(n,"r")
@@ -145,5 +157,37 @@ extern	char	killchar();
 extern	char	*strchr();
 extern	char	*strrchr();
 #endif	STR_PTYPES
+
+/*
+ * Definitions for files which are combined lint-library/function-prototype
+ * declarations (e.g., "common.h"):
+ */
+#if	defined(__STDC__) || defined(vms)
+#define	_FN1(t,v)	t (*v)()
+#define	_FNX(t,v)	_FN1(t,v),
+#define	_AR1(t,v)	t v
+#define	_ARX(t,v)	_AR1(t,v),
+#define	_DCL(t,v)
+#define	_RET		;
+#define	_NUL		;
+#else
+#ifdef	LINTLIBRARY
+#define	_FN1(t,v)	v
+#define	_FNX(t,v)	_FN1(t,v),
+#define	_AR1(t,v)	v
+#define	_ARX(t,v)	_AR1(t,v),
+#define	_DCL(t,v)	t v;
+#define	_RET		{return(0);}
+#define	_NUL		{}
+#else
+#define	_FN1(t,v)
+#define	_FNX(t,v)
+#define	_AR1(t,v)
+#define	_ARX(t,v)
+#define	_DCL(t,v)
+#define	_RET		;
+#define	_NUL		;
+#endif	LINTLIBRARY
+#endif	__STDC__
 
 #endif	_PTYPES_

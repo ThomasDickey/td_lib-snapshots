@@ -1,20 +1,16 @@
-# $Header: /users/source/archives/td_lib.vcs/src/RCS/Makefile,v 2.0 1989/03/29 11:41:11 ste_cm Exp $
+# $Header: /users/source/archives/td_lib.vcs/src/RCS/Makefile,v 2.2 1989/04/20 16:05:10 dickey Exp $
 # MAKE-file for miscellaneous library routines
 #
 # $Log: Makefile,v $
-# Revision 2.0  1989/03/29 11:41:11  ste_cm
-# BASELINE Thu Apr  6 09:45:13 EDT 1989
+# Revision 2.2  1989/04/20 16:05:10  dickey
+# added MMS script to controlled-sources.
 #
-#	Revision 1.63  89/03/29  11:41:11  dickey
-#	fixed lint for 'rcspath.c'
+#	Revision 2.1  89/04/20  12:34:27  dickey
+#	absorbed a bunch of library routines from MDIFF and PORTUNIX
 #	
-#	Revision 1.62  89/03/27  14:26:39  dickey
-#	use 'rcspath.h' include-file for 'rcspath.c' path-constant.
+#	Revision 2.0  89/03/29  11:41:11  ste_cm
+#	BASELINE Thu Apr  6 09:45:13 EDT 1989
 #	
-#	Revision 1.61  89/03/20  12:31:36  dickey
-#	converted to STE CM-format
-#	
-#
 ####### (Development) ##########################################################
 GET	= checkout
 #
@@ -46,6 +42,7 @@ CSRC	=\
 	dumpwin.c\
 	erasechar.c\
 	execute.c\
+	file2argv.c\
 	filecopy.c\
 	for_user.c\
 	fp2argv.c\
@@ -55,7 +52,9 @@ CSRC	=\
 	getuser.c\
 	gid2s.c\
 	killchar.c\
+	list_by_cols.c\
 	ltostr.c\
+	makeargv.c\
 	modechar.c\
 	name2s.c\
 	newzone.c\
@@ -87,10 +86,14 @@ CSRC	=\
 	scr_size.c\
 	setmtime.c\
 	stralloc.c\
+	strbcmp.c\
 	strclean.c\
 	strtrim.c\
+	strucmp.c\
+	strucpy.c\
 	s2gid.c\
 	s2uid.c\
+	trimpath.c\
 	txtalloc.c\
 	uid2s.c\
 	usercopy.c\
@@ -102,7 +105,7 @@ CSRC	=\
 	which.c\
 	win2file.c
 #
-SOURCES	= $(CSRC)
+SOURCES	= Makefile descrip.mms $(CSRC)
 #
 OBJS	=\
 	abspath.o\
@@ -122,6 +125,7 @@ OBJS	=\
 	dumpwin.o\
 	erasechar.o\
 	execute.o\
+	file2argv.o\
 	filecopy.o\
 	for_user.o\
 	fp2argv.o\
@@ -131,7 +135,9 @@ OBJS	=\
 	getuser.o\
 	gid2s.o\
 	killchar.o\
+	list_by_cols.o\
 	ltostr.o\
+	makeargv.o\
 	modechar.o\
 	name2s.o\
 	newzone.o\
@@ -163,10 +169,14 @@ OBJS	=\
 	scr_size.o\
 	setmtime.o\
 	stralloc.o\
+	strbcmp.o\
 	strclean.o\
 	strtrim.o\
+	strucmp.o\
+	strucpy.o\
 	s2gid.o\
 	s2uid.o\
+	trimpath.o\
 	txtalloc.o\
 	uid2s.o\
 	usercopy.o\
@@ -207,6 +217,7 @@ doalloc.o:	$I/ptypes.h
 dumpwin.o:	$I/ptypes.h
 erasechar.o:	$I/ptypes.h
 execute.o:	$I/ptypes.h
+file2argv.o:	$I/ptypes.h
 filecopy.o:	$I/ptypes.h
 for_user.o:	$I/ptypes.h
 fp2argv.o:	$I/ptypes.h
@@ -220,7 +231,7 @@ pathcmp.o:	$I/ptypes.h
 rawgets.o:	$I/ptypes.h	$I/cmdch.h
 rawterm.o:	$I/ptypes.h
 rcsedit.o:	$I/ptypes.h	$I/rcsdefs.h
-rcskeys.o:	$I/rcsdefs.h
+rcskeys.o:	$I/ptypes.h	$I/rcsdefs.h
 rcslast.o:	$I/ptypes.h	$I/rcsdefs.h
 rcsload.o:	$I/ptypes.h	$I/rcsdefs.h
 rcslocks.o:	$I/ptypes.h	$I/rcsdefs.h
@@ -231,6 +242,7 @@ resizewin.o:	$I/ptypes.h
 sccslast.o:	$I/ptypes.h
 setmtime.o:	$I/ptypes.h
 savewin.o:	$I/ptypes.h
+trimpath.o:	$I/ptypes.h
 uid2s.o:	$I/ptypes.h
 usercopy.o:	$I/ptypes.h
 userprot.o:	$I/ptypes.h
