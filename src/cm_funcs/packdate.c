@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)packdate.c	1.7 88/05/06 16:11:20";
+static	char	sccs_id[] = "@(#)packdate.c	1.8 88/05/24 07:37:03";
 #endif	lint
 
 /*
@@ -17,10 +17,11 @@ static	char	sccs_id[] = "@(#)packdate.c	1.7 88/05/06 16:11:20";
  */
 
 #include	"ptypes.h"
+#if	defined(apollo) || defined(SYSTEM5)
 #include	<time.h>
-#ifdef	gould
+#else
 #include	<sys/time.h>
-#endif	gould
+#endif
 extern	struct	tm	*localtime();
 
 #define	MINUTE	60
