@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: rawterm.c,v 12.3 1993/11/01 14:38:10 dickey Exp $";
+static	char	Id[] = "$Id: rawterm.c,v 12.4 1993/11/18 20:51:56 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,8 @@ static	char	Id[] = "$Id: rawterm.c,v 12.3 1993/11/01 14:38:10 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	24 Nov 1987
  * Modified:
+ *		18 Nov 1993, added entrypoint 'cookterm()' to allow xterm
+ *			     mouse control via this interface.
  *		01 Nov 1993, 'nonl()' doesn't work on HP/UX. Workaround with
  *			     gtty/stty calls.
  *		29 Oct 1993, ifdef-ident
@@ -24,6 +26,35 @@ static	char	Id[] = "$Id: rawterm.c,v 12.3 1993/11/01 14:38:10 dickey Exp $";
 
 #ifdef __hpux
 #include <sgtty.h>
+#endif
+
+#ifdef	NO_XTERM_MOUSE
+#define	enable_mouse()
+#define	disable_mouse()
+#else
+static	int	xterm_mouse(_AR0)
+{
+	return TRUE;	/* patch */
+}
+
+#define XTERM_ENABLE_TRACKING   "\033[?1000h"	/* normal tracking mode */
+#define XTERM_DISABLE_TRACKING  "\033[?1000l"
+
+#define	Puts(s) fputs(s, stdout); fflush(stdout)
+
+static	void	enable_mouse(_AR0)
+{
+	if (xterm_mouse) {
+		Puts(XTERM_ENABLE_TRACKING);
+	}
+}
+
+static	void	disable_mouse(_AR0)
+{
+	if (xterm_mouse) {
+		Puts(XTERM_ENABLE_TRACKING);
+	}
+}
 #endif
 
 /*
@@ -47,4 +78,14 @@ void	rawterm(_AR0)
 		stty(0, &sb);
 	}
 #endif
+	enable_mouse();
+}
+
+/*
+ * Set terminal back to out-of-curses state
+ */
+void	cookterm(_AR0)
+{
+	disable_mouse();
+	resetty();
 }

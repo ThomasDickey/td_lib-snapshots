@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: viewfile.c,v 12.2 1993/10/29 17:35:23 dickey Exp $";
+static	char	Id[] = "$Id: viewfile.c,v 12.3 1993/11/18 20:31:57 dickey Exp $";
 #endif
 
 /*
@@ -35,7 +35,7 @@ int	view_file(
 
 	if ((code = padedit(fname, readonly, editor)) < 0) {
 		/* give up: put it in the current process's window */
-		resetty();
+		cookterm();
 		code = execute(editor, fname);
 		rawterm();
 		touchwin(curscr);
