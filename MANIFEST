@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19970315
+MANIFEST for td_lib, version t19970907
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         restrictions on copying/using this software
@@ -23,6 +23,7 @@ include/acl.h                   defines ACL bits for apollo SR10.1
 include/cmv_defs.h              definitions for CmVision wrappers
 include/deltree.h               delta-tree function interface
 include/dyn_str.h               dynamic-strings interface
+include/headers                 list of headers, for install/deinstall
 include/llib-ltd                template for lint-library
 include/port2vms.h              interface for vms-porting functions
 include/ptypes.h                principal include-file for TD_LIB

@@ -1,4 +1,4 @@
-/* $Id: td_ext.h,v 12.12 1997/01/02 22:19:52 tom Exp $ */
+/* $Id: td_ext.h,v 12.13 1997/09/07 17:07:39 tom Exp $ */
 
 #ifndef	TD_EXT_H
 #define	TD_EXT_H
@@ -77,11 +77,6 @@
 
 #if	TIMEZONE_DECLARED
 extern	long	timezone;
-#endif
-
-#if	HAVE_SYS_ERRLIST
-extern	char	*sys_errlist[];
-extern	int	sys_nerr;
 #endif
 
 /******************************************************************************

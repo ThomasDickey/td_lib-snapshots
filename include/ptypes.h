@@ -1,10 +1,10 @@
-/* $Id: ptypes.h,v 12.38 1995/10/14 21:24:34 tom Exp $ */
+/* $Id: ptypes.h,v 12.40 1997/09/07 22:28:07 tom Exp $ */
 
 #ifndef	PTYPES_H
 #define	PTYPES_H
 
 #if HAVE_CONFIG_H
-#include "config.h"
+#include "td_config.h"
 #endif
 
 /*
@@ -432,7 +432,7 @@ static	struct	direct	dbfr;
 
 #include <errno.h>
 
-# if HAVE_SYS_ERRLIST
+# if DECL_SYS_ERRLIST
 extern char *sys_errlist[];
 extern int sys_nerr;
 # endif

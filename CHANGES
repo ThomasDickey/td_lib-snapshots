@@ -1,3 +1,77 @@
+1997-09-07  dickey@clark.net
+
+	* support/ins_hdr: RCS_BASE
+
+	* include/td_sheet.h, include/td_scomp.h, include/td_qsort.h, include/td_lib.h, include/td_curse.h, include/td_btree.h, include/ptypes.h, include/port2vms.h, include/dyn_str.h, include/deltree.h:
+	quoted-includes
+
+	* makefile.in: made a workable install rule
+
+	* src/td_defns.mk: archive name is libtd.a
+
+	* makefile.in: RCS_BASE
+
+	* mkdirs.sh: ident
+
+	* mkdirs.sh: RCS_BASE
+
+	* install-sh: space for dynix
+
+	* td_make.in: first cut of acmerge updates
+
+	* aclocal.m4: fixes for CFG_CACHE_CHECK, CF_DISABLE_ECHO
+
+	* include/Makefile: added td_btree.h and td_regex.h
+
+	* include/headers: added td_btree.h and td_regex.hg
+
+	* include/headers: RCS_BASE
+
+	* include/Makefile: add rule for 'headers'
+
+	* configure.in: generate top-level makefile
+
+	* aclocal.m4: add CF_DISABLE_ECHO
+
+	* include/ptypes.h: rename config.h to td_config.h
+
+	* aclocal.m4: cleanup
+
+	* td_make.in: make the library itself "libtd.a"
+
+	* aclocal.m4: add macros CF_OUTPUT_IF_CHANGED and CF_SED_CONFIG_H
+
+	* configure.in: simplify with CF_OUTPUT_IF_CHANGED and CF_SED_CONFIG_H
+
+	* aclocal.m4: more macros...
+
+	* configure.in: add CF_CHECK_CACHE, CF_ANSI_CC_CHECK
+
+	* aclocal.m4: add CF_GCC_ATTRIBUTES, CF_GCC_WARNINGS, CF_STRIP_G_OPT
+
+	* configure.in: use CF_GCC_ATTRIBUTES, CF_GCC_WARNINGS, CF_STRIP_G_OPT
+
+	* td_make.in: use EXTRA_CFLAGS rather than CC_OPT
+
+	* aclocal.m4: use CF_UPPER rather than CF_UPPERCASE
+
+	* aclocal.m4: first pass of acmerge: got all macros checked-in
+
+	* configure.in:
+	renamed some macros to avoid conflict when merging with tin/lynx/vile
+
+	* include/td_ext.h: remove redundant sys_errlist declaration
+
+	* include/ptypes.h: use DECL_SYS_ERRLIST rather than HAVE_SYS_ERRLIST
+
+	* aclocal.m4, configure.in: rename AC_FUNC_LSTAT to CF_FUNC_LSTAT
+
+	* td_make.in: rename td_XXX to cf_XXX
+
+	* aclocal.m4: rename td_XXX/TD_XXX to cf_XXX/TD_XXX
+
+	* configure.in: rename td_XXX/TD_XXX to cf_XXX/CF_XXX
+
 1997-03-15  dickey@clark.net
 
 	* src/curses/cmdch.c: fix an ifdef-conflict

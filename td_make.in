@@ -1,4 +1,4 @@
-# $Id: td_make.in,v 12.8 1995/07/30 19:29:31 tom Exp $
+# $Id: td_make.in,v 12.11 1997/09/07 19:38:32 tom Exp $
 # common definitions for makefiles built over TD_LIB library.
 
 ####### (Environment) ##########################################################
@@ -19,7 +19,7 @@ GET	= checkout
 COPY	= cp
 PUT	= $(RM) $@; $(COPY) $? $@
 
-MAKE	= @MAKE@ @td_cv_makeflags@
+MAKE	= @MAKE@ @cf_cv_makeflags@
 
 CC		= @CC@
 INSTALL		= @INSTALL@
@@ -27,7 +27,8 @@ INSTALL_PROGRAM	= @INSTALL_PROGRAM@
 INSTALL_DATA	= @INSTALL_DATA@
 RANLIB		= @RANLIB@
 
-CFLAGS		= @CC_OPTS@
+EXTRA_CFLAGS	= @EXTRA_CFLAGS@
+CFLAGS		= @CFLAGS@
 #LINK		= purify $(CC) $(CFLAGS)
 LINK		= $(CC) $(CFLAGS)
 
@@ -43,8 +44,8 @@ INCLUDES	= -I. -I$I @INCLUDES@
 DEFINES		= -DHAVE_CONFIG_H
 CPP_OPTS	= $(DEFINES) $(INCLUDES)
 
-LIB_DEPS	= $L/$(TD_LIB).a
-LIB_ARGS	= $L/$(TD_LIB).a @LIBS@
+LIB_DEPS	= $L/libtd.a
+LIB_ARGS	= -L$L -ltd @LIBS@
 DATE		= echo '** '`date` >> $@
 
 LINTLIBS	= -ltd @LIBS@
@@ -72,13 +73,13 @@ LINT_EACH = $(SHELL) -c 'for i in $?;do echo $$i:; $(LINT) $(LINTOPTS) $$i >>$@;
 
 .c.o:
 	@echo compile $<
-	@$(CC) $(CPP_OPTS) $(CFLAGS) -c $<
+	@$(CC) $(CPP_OPTS) $(CFLAGS) $(EXTRA_CFLAGS) -c $<
 .o.a:
 	@$(AR) $@ $*.o
 	-@$(RM) $*.o
 .c.a:
 	@echo compile $<
-	@$(CC) $(CPP_OPTS) $(CFLAGS) -c $<
+	@$(CC) $(CPP_OPTS) $(CFLAGS) $(EXTRA_CFLAGS) -c $<
 	@$(AR) $@ $*.o
 	-@$(RM) $*.o
 
@@ -88,7 +89,7 @@ LINT_EACH = $(SHELL) -c 'for i in $?;do echo $$i:; $(LINT) $(LINTOPTS) $$i >>$@;
 .c.proto:	; $(CPROTO) $(CPP_OPTS) $< >$@
 .c.lint:	; $(LINT) $(LINTOPTS) $< >$@
 
-.c.tst:		; $(CC) -o $@ -DTEST $(CFLAGS) $(CPP_OPTS) $< $Z $(LIB_ARGS)
+.c.tst:		; $(CC) -o $@ -DTEST $(CFLAGS) $(EXTRA_CFLAGS) $(CPP_OPTS) $< $Z $(LIB_ARGS)
 
 .SUFFIXES: .man .cat
 
