@@ -3,6 +3,16 @@
  * Author:	T.E.Dickey
  * Created:	02 Aug 1994, from 'sccs_dir.c'
  * Modified:
+ *		21 Aug 1998, get_cmv_lock now returns binary-file mod-times.
+ *		06 Jul 1995, mods to check for the level of the given
+ *			     vault-directory
+ *		14 Mar 1995, mods to support release-branches
+ *		18 Feb 1995, version-string ends with either space or semicolon
+ *		31 Jan 1995, lock-owner must be "?", not null
+ *		27 Jan 1995, quick fix for binary-file version parsing
+ *		05 Jan 1995, fix an infinite loop when parsing multiple archives
+ *		29 Sep 1994, automatically purge the cached r-curr only when
+ *			     the actual file changes.
  *		
  * Function:	Encapsulates the name of the CMV directory.
  *
@@ -25,7 +35,7 @@
 #include "ptypes.h"
 #include "cmv_defs.h"
 
-MODULE_ID("$Id: cmv_dir.c,v 12.18 1996/04/10 18:58:48 tom Exp $")
+MODULE_ID("$Id: cmv_dir.c,v 12.19 1998/08/21 13:10:27 tom Exp $")
 
 /******************************************************************************/
 #ifdef	lint
@@ -54,6 +64,7 @@ MODULE_ID("$Id: cmv_dir.c,v 12.18 1996/04/10 18:58:48 tom Exp $")
 	char	*external;	/* external file-leafname (e.g., Makefile) */
 	char	*lockedby;	/* name of lock-owner, if non-null */
 	char	*revision;	/* ...and current-revision number */
+	time_t	modtime;	/* modification, if binary */
 	};
 
 #define	CMTREE	struct	CmTree
@@ -246,6 +257,26 @@ CMTREE *FindInternalDir(
 	return 0;
 }
 
+/*
+ * Binary files are simply snapshots whose date is stored in the r-curr file.
+ */
+static time_t
+cmv_date _ONE(char *, src)
+{
+	time_t result = 0;
+
+	if (src != 0
+	 && (src = strchr(src, '\001')) != 0) {
+		int owner, group, prot;
+		long modtime;
+		if (sscanf(++src, "O%d:G%d:P%d:M%d:",
+			&owner, &group, &prot, &modtime) == 4)
+			result = modtime;
+	}
+
+	return result;
+}
+
 /******************************************************************************/
 /*
  * Read the entries in the r-curr file in the given directory, adding them to
@@ -314,14 +345,16 @@ void	read_r_curr(
 
 			p = typealloc(CMFILE);
 			p->lockedby = description;
+			p->modtime = 0;
 			/* some revision-fields, for binary files, contain
 			 * other info.
 			 */
 			if ((s = strpbrk(d, " ;")) != 0)
-				*s = EOS;
+				*s++ = EOS;
 			p->revision = txtalloc(d);
 			p->internal = txtalloc(internal);
 			p->external = NewExternal(parent, external);
+			p->modtime  = cmv_date(s);
 			p->next = parent->filelist;
 			parent->filelist = p;
 		}
@@ -739,18 +772,21 @@ void	get_cmv_lock (
 	_ARX(char *,	working_directory)
 	_ARX(char *,	filename)
 	_ARX(char **,	lockedby)
-	_AR1(char **,	revision)
+	_ARX(char **,	revision)
+	_AR1(time_t *,	modtime)
 		)
 	_DCL(char *,	working_directory)
 	_DCL(char *,	filename)
 	_DCL(char **,	lockedby)
 	_DCL(char **,	revision)
+	_DCL(time_t *,	modtime)
 {
 	auto	char	temp[MAXPATHLEN];
 	auto	VAULTS	*max_p = LookupVault(working_directory, filename, temp);
 
 	*lockedby =
 	*revision = "?";
+	*modtime = 0;
 	if (max_p != 0) {	/* we found a match */
 		CMTREE	*p;
 		CMFILE	*q;
@@ -759,6 +795,7 @@ void	get_cmv_lock (
 		 && (q = FindInternalFile(p, pathcat(temp, temp, pathleaf(filename)))) != 0) {
 			*lockedby = q->lockedby;
 			*revision = q->revision;
+			*modtime  = q->modtime;
 		}
 	}
 }

@@ -3,7 +3,15 @@
  * Author:	T.E.Dickey
  * Created:	26 Mar 1986
  * Modified:
- *		08 Apr 1996, IRIX 'timezone' doesn't include daylight-savings
+ *		21 Aug 1998, Solaris 'daylight' value records only current
+ *			     time, not (as documented) a side-effect of
+ *			     localtime.  Use tm.tm_isdst instead.
+ *		08 Apr 1996, IRIX 'timezone' doesn't include daylight-savings,
+ *			     use 'daylight' symbol.
+ *		14 Oct 1995, not all systems have 'gettimeofday()', and some
+ *			     that do (e.g., Solaris) do not implement the
+ *			     timezone parameter.  Use 'timezone' symbol for
+ *			     those.
  *		29 Oct 1993, ifdef-ident
  *		30 Oct 1992, added entrypoint 'gmt_offset()'
  *		03 Oct 1991, converted to ANSI
@@ -29,7 +37,7 @@
 #define TIM_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: packdate.c,v 12.12 1996/04/08 16:51:26 tom Exp $")
+MODULE_ID("$Id: packdate.c,v 12.13 1998/08/21 15:22:16 tom Exp $")
 
 #define	LEAP(y)	(!(y&3))
 
@@ -50,9 +58,6 @@ long	gmt_offset(
 
 #if	TIMEZONE_DECLARED
 	sec += timezone;
-#  if	DAYLIGHT_DECLARED
-	if (daylight)	sec -= HOUR;
-#  endif
 #else
 #  if	HAVE_TM_GMTOFF
 	sec -= tm.tm_gmtoff;
@@ -74,7 +79,7 @@ long	gmt_offset(
 	 * (in GMT seconds) would be bumped up an hour for daylight savings
 	 * time.
 	 */
-#if HAVE_TM_ISDST && !TIMEZONE_DECLARED && !HAVE_TM_GMTOFF
+#if HAVE_TM_ISDST && !HAVE_TM_GMTOFF
 	if (tm.tm_isdst)	sec -= HOUR;
 #endif
 	return sec;
