@@ -1,4 +1,4 @@
-/* $Header: /users/source/archives/td_lib.vcs/include/RCS/ptypes.h,v 2.7 1989/05/11 12:53:54 dickey Exp $ */
+/* $Header: /users/source/archives/td_lib.vcs/include/RCS/ptypes.h,v 3.0 1989/05/18 10:02:31 ste_cm Rel $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -150,7 +150,6 @@ extern	V_OR_I	rewind();
 #define	DOALLOC(p,t,n)	def_doalloc(p,n)
 #define	ALLOC(t,n)	def_alloc(n)
 #else	lint
-extern	char	*doalloc();
 #define	def_DOALLOC(t)
 #define	def_ALLOC(t)
 #define	DOALLOC(p,t,n)	(t *)doalloc((char *)p,sizeof(t)*(n))
@@ -158,6 +157,7 @@ extern	char	*doalloc();
 #endif	lint
 
 #ifndef	vms
+extern	char	*doalloc();
 extern	char	*malloc(), *realloc();
 #endif	vms
 

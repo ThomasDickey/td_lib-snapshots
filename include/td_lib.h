@@ -1,4 +1,4 @@
-/* $Header: /users/source/archives/td_lib.vcs/include/RCS/td_lib.h,v 2.3 1989/05/17 09:40:40 dickey Exp $ */
+/* $Header: /users/source/archives/td_lib.vcs/include/RCS/td_lib.h,v 2.5 1989/05/18 12:47:23 dickey Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for CM_TOOLS COMMON
@@ -26,6 +26,17 @@
 			_DCL(char *,	path)
 			_NUL
 #endif	unix
+
+	/* argv2file.c ------------------------------------------------ */
+	int	argv2file(
+			_ARX(char **,	vec)
+			_ARX(char *,	name)
+			_AR1(char *,	mode)
+			)
+			_DCL(char **,	vec)
+			_DCL(char *,	name)
+			_DCL(char *,	mode)
+			_RET
 
 	/* beep.c ----------------------------------------------------- */
 		beep()

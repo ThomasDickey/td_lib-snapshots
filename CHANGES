@@ -1,3 +1,33 @@
+1989-05-18  dickey@software.org
+
+	* include/td_lib.h: oops: typo in definition of argv2file
+
+	* src/pathname/arg2file.c: RCS_BASE
+
+1989-05-18  ste_cm@software.org
+
+	* src/pathname/arg2file.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+	* src/pathname/arg2file.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
+1989-05-18  dickey@software.org
+
+	* src/descrip.mms: added ARGV2FILE
+
+	* src/Makefile: added argv2file
+
+	* include/ptypes.h:
+	moved 'doalloc()' definition so we don't have to re-declare it
+
+1989-05-18  ste_cm@software.org
+
+	* include/ptypes.h: BASELINE Mon Jun 19 13:22:44 EDT 1989
+
+1989-05-18  dickey@software.org
+
+	* include/td_lib.h: added argv2file module
+
 1989-05-17  dickey@software.org
 
 	* src/descrip.mms: added file2mem and mem2file modules
