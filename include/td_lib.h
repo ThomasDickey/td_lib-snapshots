@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 8.1 1991/05/15 11:42:42 dickey Exp $ */
+/* $Id: td_lib.h,v 8.2 1991/05/24 08:48:06 dickey Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for CM_TOOLS COMMON
@@ -89,9 +89,9 @@
 	/* catchall.c ------------------------------------------------- */
 #ifdef	SIG_PTYPES
 		catchall (
-			_AR1(__sig_handler_t,	func)
+			_FN1(void *,	func)
 			)
-			_DCL(__sig_handler_t,	func)
+			_DCL(void,	(*func)())
 			_NUL
 #endif
 
