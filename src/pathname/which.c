@@ -30,18 +30,22 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: which.c,v 12.7 1998/05/30 16:20:32 tom Exp $")
+MODULE_ID("$Id: which.c,v 12.8 2000/01/17 17:46:51 tom Exp $")
+
+#ifdef MSDOS
+#define PROG_EXTS "PIF", "BAT", "EXE", "COM"
+#endif
+
+#if defined(__EMX__) || defined(__CYGWIN32__) || defined(__CYGWIN__)
+#define PROG_EXTS "EXE"
+#endif
 
 static
 int	executable(
 	_AR1(char *,	name))
 	_DCL(char *,	name)
 {
-#ifdef	unix
-	Stat_t	sb;
-	return (access(name, X_OK) >= 0) && (stat_file(name, &sb) >= 0);
-#endif
-#ifdef	MSDOS
+#ifdef	PROG_EXTS
 	char	*s = ftype(name);
 	char	*t = s;
 	int	ok = FALSE;
@@ -49,11 +53,12 @@ int	executable(
 
 	if (s == name || s[-1] != '.') {
 		*s++ = '.';
+		*s = EOS;
 	}
 	if (s == t) {		/* don't supply a suffix */
 		ok = (access(name, R_OK) >= 0);
 	} else {
-		static	char	*exectypes[] = { "PIF", "BAT", "EXE", "COM" };
+		static	char	*exectypes[] = { PROG_EXTS };
 		for (j = 0; j < SIZEOF(exectypes); j++) {
 			strcpy(s, exectypes[j]);
 			if (access(name, R_OK) >= 0) {
@@ -61,10 +66,11 @@ int	executable(
 				break;
 			}
 		}
-		if (!ok)
-			*t = EOS;
 	}
 	return ok;
+#else	/* unix */
+	Stat_t	sb;
+	return (access(name, X_OK) >= 0) && (stat_file(name, &sb) >= 0);
 #endif
 }
 
