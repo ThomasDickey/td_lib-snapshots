@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	18 Nov 1987
  * Modified:
+ *		10 Aug 1999, Solaris spells fifo's differently from old Apollo.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, converted to ANSI
@@ -19,7 +20,7 @@
 
 #include	"ptypes.h"
 
-MODULE_ID("$Id: modechar.c,v 12.4 1998/03/01 20:31:30 tom Exp $")
+MODULE_ID("$Id: modechar.c,v 12.5 1999/08/10 21:40:37 tom Exp $")
 
 #ifdef	apollo
 #define	S_IFFIFO	010000
@@ -49,6 +50,9 @@ int	modechar(
 #endif
 #ifdef	S_IFFIFO
 	case S_IFFIFO:	c = 'p';	break;
+#endif
+#ifdef	S_IFIFO
+	case S_IFIFO:	c = 'p';	break;
 #endif
 	default:	c = '?';
 	}
