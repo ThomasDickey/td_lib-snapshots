@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Id: aclocal.m4,v 12.112 1998/03/01 19:43:43 tom Exp $
+dnl $Id: aclocal.m4,v 12.113 1998/03/02 00:28:40 tom Exp $
 dnl vi:set ts=4:
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "CF_" to "AC_"
@@ -499,23 +499,6 @@ if test $cf_cv_have_lib_$1 = no ; then
 fi
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl Construct a search-list for a nonstandard library-file
-AC_DEFUN([CF_LIBRARY_PATH],
-[$1=""
-if test -d "$libdir"  ; then
-test "$libdir" != NONE           && $1="[$]$1 $libdir $libdir/$2"
-fi
-if test -d "$exec_prefix"; then
-test "$exec_prefix" != NONE      && $1="[$]$1 $exec_prefix/lib $exec_prefix/lib/$2"
-fi
-if test -d "$prefix"; then
-test "$prefix" != NONE           && \
-test "$prefix" != "$exec_prefix" && $1="[$]$1 $prefix/lib $prefix/lib/$2"
-fi
-test "$prefix" != /usr/local     && $1="[$]$1 /usr/local/lib /usr/local/lib/$2"
-test "$prefix" != /usr           && $1="[$]$1 /usr/lib /usr/lib/$2"
-])dnl
-dnl ---------------------------------------------------------------------------
 dnl A conventional existence-check for 'lstat' won't work with the Linux
 dnl version of gcc 2.7.0, since the symbol is defined only within <sys/stat.h>
 dnl as an inline function.
@@ -811,6 +794,33 @@ test "$prefix" != NONE           && $1="[$]$1 $prefix/include $prefix/include/$2
 fi
 test "$prefix" != /usr/local     && $1="[$]$1 /usr/local/include /usr/local/include/$2"
 test "$prefix" != /usr           && $1="[$]$1 /usr/include /usr/include/$2"
+])dnl
+dnl ---------------------------------------------------------------------------
+dnl Construct a search-list for a nonstandard library-file
+AC_DEFUN([CF_LIBRARY_PATH],
+[$1=""
+if test -d "$libdir"  ; then
+test "$libdir" != NONE           && $1="[$]$1 $libdir $libdir/$2"
+fi
+if test -d "$exec_prefix"; then
+test "$exec_prefix" != NONE      && $1="[$]$1 $exec_prefix/lib $exec_prefix/lib/$2"
+fi
+if test -d "$prefix"; then
+test "$prefix" != NONE           && \
+test "$prefix" != "$exec_prefix" && $1="[$]$1 $prefix/lib $prefix/lib/$2"
+fi
+test "$prefix" != /usr/local     && $1="[$]$1 /usr/local/lib /usr/local/lib/$2"
+test "$prefix" != /usr           && $1="[$]$1 /usr/lib /usr/lib/$2"
+])dnl
+dnl ---------------------------------------------------------------------------
+dnl Compute the library-prefix for the given host system
+dnl $1 = variable to set
+AC_DEFUN([CF_LIB_PREFIX],
+[
+	case $cf_cv_system_name in
+	os2)	$1=''     ;;
+	*)	$1='lib'  ;;
+	esac
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Some 'make' programs support $(MAKEFLAGS), some $(MFLAGS), to pass 'make'
@@ -1299,6 +1309,21 @@ if test -n "[$]cf_cv_$1"; then
 else
   AC_MSG_RESULT((not found))
 fi
+])dnl
+dnl ---------------------------------------------------------------------------
+dnl Derive the 'PROG_EXT' variable, used for porting executables to OS/2 EMX
+dnl and other quasi-Unix layers on PC's.
+AC_DEFUN([CF_PROG_EXT],[
+PROG_EXT=
+case $cf_cv_system_name in
+os2*) # (vi
+    # We make sure -Zexe is not used -- it would interfere with @PROG_EXT@
+    CFLAGS="$CFLAGS -Zmt -D__ST_MT_ERRNO__"
+    LDFLAGS=`echo "$LDFLAGS -Zmt -Zcrtdll" | sed "s/-Zexe//g"`
+    PROG_EXT=".exe"
+    ;;
+esac
+AC_SUBST(PROG_EXT)
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Tests for the ensemble of programs that are used in RCS, SCCS, VCS, CVS.
