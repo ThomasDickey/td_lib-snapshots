@@ -1,8 +1,9 @@
-# $Id: Makefile,v 12.2 1994/07/02 13:21:27 tom Exp $
+# $Id: Makefile,v 12.3 1995/01/28 21:10:25 tom Exp $
 # MAKE-file for comparison/sorting library routines
 
 ####### (Environment) ##########################################################
 include ../td_defns.mk
+include ../../support/td_lib.mk
 
 ####### (Standard Lists) #######################################################
 

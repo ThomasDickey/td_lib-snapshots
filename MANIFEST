@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19950127
+MANIFEST for td_lib, version t19950128
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         restrictions on copying/using this software
@@ -80,6 +80,7 @@ src/compare/m2comp.c            Miller/Myers difference algorithm
 src/compare/scomp.c             simple difference algorithm
 src/curses                      subdirectory
 src/curses/Makefile             makefile for td_lib/src/curses
+src/curses/addchnst.c           compatibility for 'waddchnstr()' function
 src/curses/beep.c               sound audible alarm
 src/curses/bindkeys.c           stub for 'bindkeys()'
 src/curses/blip.c               write 1 character to screen, bypassing curses

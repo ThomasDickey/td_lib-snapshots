@@ -1,5 +1,5 @@
 #ifndef	NO_IDENT
-static	char	Id[] = "$Id: cmv_dir.c,v 12.9 1995/01/27 11:46:18 tom Exp $";
+static	char	Id[] = "$Id: cmv_dir.c,v 12.10 1995/01/28 12:34:39 tom Exp $";
 #endif
 
 /*
@@ -576,8 +576,8 @@ void	get_cmv_lock (
 	auto	char	temp[MAXPATHLEN];
 	auto	VAULTS	*max_p = LookupVault(working_directory, filename, temp);
 
-	*lockedby = 0;
-	*revision = 0;
+	*lockedby =
+	*revision = "?";
 	if (max_p != 0) {	/* we found a match */
 		CMTREE	*p;
 		CMFILE	*q;

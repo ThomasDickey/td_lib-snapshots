@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.46 1995/01/26 11:59:04 tom Exp $
+dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.47 1995/01/28 16:33:34 tom Exp $
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "TD_" to "AC_"
 dnl ---------------------------------------------------------------------------
@@ -221,12 +221,11 @@ int main() {
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Tests for the presence of regcmp/regex functions (no include-file?)
-dnl Some systems (CLIX) use <pw.h> for this purpose.
-define([TD_REGCMP_FUNCS],
-[save_libs="$LIBS"
-AC_HAVE_LIBRARY(PW)
-AC_HAVE_HEADERS(pw.h libgen.h)
-AC_TEST_PROGRAM([
+dnl Some systems (CLIX) use <pw.h> for this purpose.  CLIX requires the -lPW,
+dnl but HPUX has only a broken version of that library, so we've got to
+dnl try the compile with/without the library.
+define([TD_REGCMP_LIBS],
+[AC_TEST_PROGRAM([
 #include <stdio.h>	/* need this for CLIX to define '__' macro */
 #if HAVE_PW_H
 #include <pw.h>		/* _must_ use prototype on CLIX */
@@ -244,7 +243,27 @@ int main() {
 	free(e);
 	exit(0);
 }
-], [AC_DEFINE(HAVE_REGCMP_FUNCS)], [LIBS="$save_libs"])
+], [td_have_regcmp_funcs=yes],
+   [td_have_regcmp_funcs=no])
+])dnl
+dnl ---------------------------------------------------------------------------
+dnl Test for the presence of regcmp/regex functions.
+define([TD_REGCMP_FUNCS],
+[
+AC_HAVE_HEADERS(pw.h libgen.h)
+TD_REGCMP_LIBS
+save_libs="$LIBS"
+if test $td_have_regcmp_funcs = no; then
+	AC_HAVE_LIBRARY(PW)
+	if test -n "${ac_have_lib}"; then
+		TD_REGCMP_LIBS
+	fi
+fi
+if test $td_have_regcmp_funcs = no; then
+	LIBS="$save_libs"
+else
+	AC_DEFINE(HAVE_REGCMP_FUNCS)
+fi
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Tests for the presence of re_comp/re_exec functions (no include-file?)

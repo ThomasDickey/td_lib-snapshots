@@ -1,8 +1,9 @@
-# $Id: Makefile,v 12.3 1994/08/21 19:42:49 tom Exp $
+# $Id: Makefile,v 12.4 1995/01/28 21:10:25 tom Exp $
 # MAKE-file for filename and I/O library routines
 
 ####### (Environment) ##########################################################
 include ../td_defns.mk
+include ../../support/td_lib.mk
 
 ####### (Standard Lists) #######################################################
 CSRC	=\

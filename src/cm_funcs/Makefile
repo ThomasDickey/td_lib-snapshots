@@ -1,8 +1,9 @@
-# $Id: Makefile,v 12.5 1994/11/06 21:58:16 tom Exp $
+# $Id: Makefile,v 12.6 1995/01/28 21:10:25 tom Exp $
 # MAKE-file for miscellaneous library routines
 
 ####### (Environment) ##########################################################
 include ../td_defns.mk
+include ../../support/td_lib.mk
 
 ####### (Standard Lists) #######################################################
 CSRC	=\
