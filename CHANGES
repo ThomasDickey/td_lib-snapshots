@@ -1,3 +1,7 @@
+1987-12-14  dickey@software.org
+
+	* src/curses/padedit.c: New file.
+
 1987-12-03  dickey@software.org
 
 	* include/llib-ltd, src/Makefile: added 'okpnum()'
