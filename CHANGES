@@ -1,3 +1,7 @@
+1994-05-24  dickey@clark.net
+
+	* configure.in: added tests for <regex.h>, etc.
+
 1994-05-23  dickey@clark.net
 
 	* configure.in: added test for 'rename()'
