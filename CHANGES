@@ -1,3 +1,13 @@
+1997-02-11  dickey@clark.net
+
+	* src/curses/resizwin.c: add fall-thru for SVr4-style resizing
+
+	* aclocal.m4: add test for gpm before ncurses
+
+1997-01-18  dickey@clark.net
+
+	* configure.in: add test for use_default_colors
+
 1997-01-04  dickey@clark.net
 
 	* aclocal.m4:

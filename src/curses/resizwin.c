@@ -35,7 +35,7 @@
 
 #include	"td_curse.h"
 
-MODULE_ID("$Id: resizwin.c,v 12.14 1995/09/04 19:58:52 tom Exp $")
+MODULE_ID("$Id: resizwin.c,v 12.15 1997/02/11 11:42:09 tom Exp $")
 
 #if HAVE_RESIZETERM
 extern	WINDOW	*newscr;
@@ -78,6 +78,12 @@ int	resizewin(_AR0)
 			dlog_comment("..., scr_size (%d, %d)\n", lc[0], lc[1]);
 			dlog_flush();
 #endif
+			/*
+			 * This might work
+			 */
+			endwin();
+			refresh();
+			return (TRUE);
 #endif
 #if CURSES_LIKE_NCURSES && HAVE_RESIZETERM
 			resizeterm(my_LINES, my_COLS);
