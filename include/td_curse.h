@@ -1,4 +1,4 @@
-/* $Id: td_curse.h,v 12.36 1995/10/14 15:28:40 tom Exp $ */
+/* $Id: td_curse.h,v 12.37 1995/10/20 10:55:47 tom Exp $ */
 
 /*
  * TD_LIB CURSES-related definitions
@@ -325,6 +325,10 @@ extern	XtermMouse xt_mouse;	/* state of XTerm-mouse */
 	int	killchar(_ar0)
 			_ret
 #endif
+
+	/* lnextchr.c ------------------------------------------------- */
+	int	lnext_char(_ar0)
+			_ret
 
 	/* on_winch.c ------------------------------------------------- */
 #ifdef SIG_PTYPES

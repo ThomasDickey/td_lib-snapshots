@@ -1,3 +1,11 @@
+1995-10-20  dickey@clark.net
+
+	* include/td_curse.h: added function lnext_char()
+
+	* src/curses/lnextchr.c: RCS_BASE
+
+	* src/curses/Makefile: added lnextchr.c
+
 1995-10-14  dickey@clark.net
 
 	* src/port2vms/Makefile: dummy 'ALL' breaks normal compiles...
