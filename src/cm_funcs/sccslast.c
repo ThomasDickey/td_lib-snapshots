@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	what[] = "$Id: sccslast.c,v 7.0 1989/08/17 13:12:18 ste_cm Rel $";
+static	char	Id[] = "$Id: sccslast.c,v 8.0 1990/06/22 08:07:40 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,9 +7,16 @@ static	char	what[] = "$Id: sccslast.c,v 7.0 1989/08/17 13:12:18 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	20 Oct 1986
  * $Log: sccslast.c,v $
- * Revision 7.0  1989/08/17 13:12:18  ste_cm
- * BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+ * Revision 8.0  1990/06/22 08:07:40  ste_cm
+ * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
  *
+ *		Revision 7.1  90/06/22  08:07:40  dickey
+ *		if we have successfully opened/scanned "s." file, try to do
+ *		the same for the "p." file so that we can show lock-owners.
+ *		
+ *		Revision 7.0  89/08/17  13:12:18  ste_cm
+ *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+ *		
  *		Revision 6.0  89/08/17  13:12:18  ste_cm
  *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
  *		
@@ -62,11 +69,14 @@ char	**vers_;
 time_t	*date_;
 char	**lock_;
 {
-FILE	*fp = fopen(path, "r");
-int	gotten = 0;
+	auto	FILE	*fp = fopen(path, "r");
+	auto	int	gotten = 0;
+	auto	char	bfr[BUFSIZ];
+	auto	char	*s;
+	auto	int	yy, mm, dd, hr, mn, sc;
+	auto	char	ver[80];
 
 	if (fp) {
-	char	bfr[BUFSIZ];
 		newzone(5,0,FALSE);	/* interpret in EST5EDT */
 		while (fgets(bfr, sizeof(bfr), fp)) {
 			if (!gotten) {
@@ -74,8 +84,6 @@ int	gotten = 0;
 				gotten++;
 			}
 			if (!strncmp(bfr, "\001d D ", 4)) {
-			int	yy, mm, dd, hr, mn, sc;
-			char	ver[80];
 				if (sscanf(bfr+4, "%s %d/%d/%d %d:%d:%d ",
 					ver,
 					&yy, &mm, &dd,
@@ -87,6 +95,22 @@ int	gotten = 0;
 		}
 		(void) fclose(fp);
 		oldzone();		/* restore time-zone */
+	}
+
+	if (gotten) {
+		if (s = strrchr(strcpy(bfr, path), '/'))
+			s++;
+		else
+			s = bfr;
+		*s = 'p';
+		if (fp = fopen(bfr, "r")) {
+			if (fgets(bfr, sizeof(bfr), fp)) {
+				if (sscanf(bfr, "%d.%d %d.%d %s",
+					&yy, &mm, &dd, &hr, ver) == 5)
+					*lock_ = txtalloc(ver);
+			}
+			(void) fclose(fp);
+		}
 	}
 }
 
