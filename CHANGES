@@ -1,3 +1,9 @@
+1991-06-03  dickey@software.org
+
+	* include/td_lib.h: corrected function-prototype for 'catchall()'
+
+	* src/Makefile: added rule for ".i"
+
 1991-05-31  dickey@software.org
 
 	* src/process/catchall.c: lint (SunOs)
