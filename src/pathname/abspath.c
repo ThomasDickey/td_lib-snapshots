@@ -1,14 +1,17 @@
 #ifndef	lint
-static	char	Id[] = "$Id: abspath.c,v 8.0 1990/04/24 16:40:29 ste_cm Rel $";
+static	char	Id[] = "$Id: abspath.c,v 8.1 1991/04/04 09:21:17 dickey Exp $";
 #endif	lint
 
 /*
  * Author:	T.E.Dickey
  * Created:	17 Sep 1987
  * $Log: abspath.c,v $
- * Revision 8.0  1990/04/24 16:40:29  ste_cm
- * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ * Revision 8.1  1991/04/04 09:21:17  dickey
+ * try to recover in case 'getwd()' fails.
  *
+ *		Revision 8.0  90/04/24  16:40:29  ste_cm
+ *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ *		
  *		Revision 7.0  90/04/24  16:40:29  ste_cm
  *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
  *		
@@ -192,8 +195,8 @@ char	*path;
 register char *s, *d = path;
 
 	if (nodelen < 0) {	/* 'getwd()' is expensive... */
-		(void)getwd(nodestr);
-		(void)denode(nodestr,nodestr,&nodelen);
+		if (getwd(nodestr))
+			(void)denode(nodestr,nodestr,&nodelen);
 	}
 
 	/*
@@ -240,16 +243,17 @@ register char *s, *d = path;
 #endif	apollo
 	} else if (*path) {
 	char	cwdpath[MAXPATHLEN];
-		d = getwd(cwdpath);
-		s = path;
-		if (*s == '.')
-			if (s[1] == '\0' || s[1] == '/')
-				s++;		/* absorb "." */
-		d += strlen(cwdpath);
-		if (d[-1] != '/')		/* add "/" iff we need it */
-			(void)strcat(d, "/");
-		(void)strcat(d, s);
-		(void)strcpy(path,denode(cwdpath, nodestr, (int *)0));
+		if (d = getwd(cwdpath)) {
+			s = path;
+			if (*s == '.')
+				if (s[1] == '\0' || s[1] == '/')
+					s++;	/* absorb "." */
+			d += strlen(cwdpath);
+			if (d[-1] != '/')	/* add "/" iff we need it */
+				(void)strcat(d, "/");
+			(void)strcat(d, s);
+			(void)strcpy(path,denode(cwdpath, nodestr, (int *)0));
+		}
 	}
 
 	/*
