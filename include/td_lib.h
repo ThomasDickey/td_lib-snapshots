@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 10.5 1992/02/07 08:21:08 dickey Exp $ */
+/* $Id: td_lib.h,v 10.6 1992/02/10 07:48:38 dickey Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for CM_TOOLS COMMON
@@ -145,7 +145,7 @@
 			_ret
 
 	/* denode.c --------------------------------------------------- */
-	char	*denode (
+	char *	denode (
 			_arx(char *,	path)
 			_arx(char *,	node)
 			_ar1(int *,	opt)
@@ -157,7 +157,7 @@
 #endif	/* unix */
 
 	/* dftenv.c --------------------------------------------------- */
-	char	*dftenv(
+	char *	dftenv(
 			_arx(char *,	value)
 			_ar1(char *,	name)
 			)
@@ -166,7 +166,7 @@
 			_ret
 
 	/* doalloc.c -------------------------------------------------- */
-	char	*doalloc(
+	char *	doalloc(
 			_arx(char *,	oldp)
 			_ar1(unsigned,	len)
 			)
@@ -219,8 +219,7 @@
 #ifdef	erasechar
 #undef	erasechar
 #endif	/* erasechar */
-		char	erasechar(
-			)
+	char	erasechar(_ar0)
 			_ret
 #endif	/* CUR_PTYPES */
 
@@ -315,7 +314,7 @@
 			_ret
 
 	/* ftype.c ---------------------------------------------------- */
-	char	*ftype(
+	char *	ftype(
 			_ar1(char *,	path)
 			)
 			_dcl(char *,	path)
@@ -323,23 +322,23 @@
 
 	/* ftype2.c --------------------------------------------------- */
 #ifdef	unix
-	char	*ftype2(
+	char *	ftype2(
 			_ar1(char *,	path)
 			)
 			_dcl(char *,	path)
 			_ret
 
 	/* gethome.c -------------------------------------------------- */
-	char	*gethome(_ar0)
+	char *	gethome(_ar0)
 			_ret
 
 	/* getuser.c -------------------------------------------------- */
-	char	*getuser(_ar0)
+	char *	getuser(_ar0)
 			_ret
 #endif	/* unix */
 
 	/* gid2s.c ---------------------------------------------------- */
-	char	*gid2s(
+	char *	gid2s(
 			_ar1(int,	gid)
 			)
 			_dcl(int,	gid)
@@ -377,7 +376,7 @@
 			_nul
 
 	/* ltostr.c --------------------------------------------------- */
-	char	*ltostr(
+	char *	ltostr(
 			_arx(char *,	bfr)
 			_arx(long,	value)
 			_ar1(int,	base)
@@ -703,7 +702,7 @@
 			_ret
 
 	/* stralloc.c ------------------------------------------------- */
-	char	*stralloc(
+	char *	stralloc(
 			_ar1(char *,	string)
 			)
 			_dcl(char *,	string)
@@ -729,6 +728,15 @@
 			_ar1(char *,	string)
 			)
 			_dcl(char *,	string)
+			_ret
+
+	/* strcount.c ------------------------------------------------- */
+	int	strcount(
+			_arx(char *,	s)
+			_ar1(int,	c)
+			)
+			_dcl(char *,	s)
+			_dcl(int,	c)
 			_ret
 
 	/* strtrim.c -------------------------------------------------- */
@@ -781,7 +789,7 @@
 			_nul
 
 	/* trimpath.c ------------------------------------------------- */
-	char	*trimpath(
+	char *	trimpath(
 			_arx(char *,	path)
 			_ar1(char *,	cwd)
 			)
@@ -790,7 +798,7 @@
 			_ret
 
 	/* txtalloc.c ------------------------------------------------- */
-	char	*txtalloc(
+	char *	txtalloc(
 			_ar1(char *,	string)
 			)
 			_dcl(char *,	string)
@@ -807,7 +815,7 @@
 	int	len_passwd;
 	char	**vec_passwd;
 #endif
-	char	*uid2s(
+	char *	uid2s(
 			_ar1(int,	uid)
 			)
 			_dcl(int,	uid)

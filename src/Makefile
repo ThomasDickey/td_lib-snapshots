@@ -1,4 +1,4 @@
-# $Id: Makefile,v 10.10 1992/02/07 15:03:55 dickey Exp $
+# $Id: Makefile,v 10.11 1992/02/10 07:50:04 dickey Exp $
 # MAKE-file for miscellaneous library routines
 #
 ####### (Development) ##########################################################
@@ -109,6 +109,7 @@ CSRC	=\
 	stralloc.c\
 	strbcmp.c\
 	strclean.c\
+	strcount.c\
 	strtrim.c\
 	strucmp.c\
 	strucpy.c\
@@ -225,6 +226,7 @@ OBJS	=\
 	stralloc.o\
 	strbcmp.o\
 	strclean.o\
+	strcount.o\
 	strtrim.o\
 	strucmp.o\
 	strucpy.o\

@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19920207
+MANIFEST for td_lib, version t19920210
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 Makefile                        top-level makefile for TD_LIB
@@ -154,6 +154,7 @@ src/string/lsbycols.c           list an array of character strings by columns
 src/string/ltostr.c             convert 'long' to a string
 src/string/strbcmp.c            compare two strings ignoring blanks a la "diff -b"
 src/string/strclean.c           "clean" string, removes unnecessary blanks
+src/string/strcount.c           counts instances of a char in a string
 src/string/strtrim.c            trim trailing whitespace from a string
 src/string/strucmp.c            compare two strings ignoring case
 src/string/strucpy.c            copy string, uppercasing it
