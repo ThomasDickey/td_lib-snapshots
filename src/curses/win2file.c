@@ -35,7 +35,7 @@
 #include	<ctype.h>
 #include	<time.h>
 
-MODULE_ID("$Id: win2file.c,v 12.12 1998/02/17 21:04:45 tom Exp $")
+MODULE_ID("$Id: win2file.c,v 12.13 1998/03/20 01:20:29 tom Exp $")
 
 #define	OUT	FPRINTF(fp,
 
@@ -49,6 +49,10 @@ MODULE_ID("$Id: win2file.c,v 12.12 1998/02/17 21:04:45 tom Exp $")
 
 #ifndef A_STANDOUT
 #define A_STANDOUT   0200
+#endif
+
+#if HAVE_TYPE_CCHAR_T
+#undef TYPE_CHTYPE_IS_SCALAR
 #endif
 
 #if TYPE_CHTYPE_IS_SCALAR || !HAVE_TYPE_CHTYPE

@@ -1,3 +1,16 @@
+1998-04-25  dickey@clark.net
+
+	* aclocal.m4: resync, from xterm/ncurses/lynx fixes
+
+1998-03-19  dickey@clark.net
+
+	* src/curses/win2file.c:
+	hack to build on OSF/1 4.0, where cchar_t is what we assume for chtype.
+
+	* aclocal.m4:
+	define _XOPEN_SOURCE_EXTENDED to pick up the extended curses functions
+	such as winnstr on OSF/1 4.0
+
 1998-03-01  dickey@clark.net
 
 	* configure.in: invoke CF_PROG_EXT, CF_LIB_PREFIX
