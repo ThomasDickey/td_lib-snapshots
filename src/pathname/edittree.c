@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: edittree.c,v 3.2 1989/09/29 16:58:07 dickey Exp $";
+static	char	Id[] = "$Id: edittree.c,v 4.0 1989/10/06 14:39:39 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -52,6 +52,7 @@ int	recur;
 	auto	struct stat	sb;
 	auto	char		newname[MAXPATHLEN];
 	auto	char		oldpath[MAXPATHLEN];
+	auto	char		*newpath;
 
 #ifdef	TEST
 	static	char		stack[]	= ". . . . . . . ";
@@ -71,12 +72,18 @@ int	recur;
 			perror("(getwd)");
 			return(0);
 		}
+		newpath = EDITDIR_ARG;
+#ifdef	vms
+		if (vms_iswild(oldname))
+			newpath = oldname;
+		else
+#endif	vms
 		if (chdir(DIR2PATH(oldname)) < 0) {
 			perror(oldname);
 			return(0);
 		}
 
-		if (dirp = opendir(EDITDIR_ARG)) {
+		if (dirp = opendir(newpath)) {
 			while (dp = readdir(dirp)) {
 				(void)strcpy(newname, dp->d_name);
 #ifndef	vms

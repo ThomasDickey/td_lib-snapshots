@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: trnstree.c,v 3.1 1989/09/29 15:00:39 dickey Exp $";
+static	char	Id[] = "$Id: trnstree.c,v 4.0 1989/10/06 14:40:35 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -16,6 +16,20 @@ static	char	Id[] = "$Id: trnstree.c,v 3.1 1989/09/29 15:00:39 dickey Exp $";
 #include	"portunix.h"
 #include	<errno.h>
 
+#define	TELL		fprintf(stderr,
+
+#ifdef	TEST
+#define	TELL_(s)	nesting,s
+#define	TELL_FILE(name)	TELL "%s => %s\n", TELL_(name))
+#define	TELL_DIR(name)	TELL "%s (directory) %s\n", TELL_(name));
+#define	TELL_SCAN(name)	TELL "%s scan directory %s\n", TELL_(name))
+#else	TEST
+#define	TELL_FILE(name)
+#define	TELL_SCAN(name)
+#define	TELL_DIR(name)
+#endif	TEST
+
+
 transtree(oldname,func,recur)
 char	*oldname;
 int	(*func)();
@@ -26,6 +40,12 @@ int	recur;
 	auto	struct stat	sb;
 	auto	char		newname[MAXPATHLEN];
 	auto	char		oldpath[MAXPATHLEN];
+	auto	char		*newpath;
+
+#ifdef	TEST
+	static	char		stack[]	= ". . . . . . . ";
+	auto	char		*nesting = &stack[sizeof(stack)-(recur*2)-1];
+#endif	TEST
 
 	if (stat(oldname, &sb) < 0) {
 		errno = ENOENT;		/* bypass vms-bug */
@@ -33,32 +53,70 @@ int	recur;
 	}
 
 	if (_OPENDIR(oldname,sb.st_mode)) {
-		if (dirp = opendir(oldname)) {
+		TELL_SCAN(oldname);
+		if (getwd(oldpath) == 0) {
+			perror("(getwd)");
+			return;
+		}
+		newpath = OPENDIR_ARG;
+#ifdef	vms
+		if (vms_iswild(oldname))
+			newpath = oldname;
+		else
+#endif	vms
+		if (chdir(DIR2PATH(oldname)) < 0) {
+			perror(oldname);
+			return;
+		}
+		TELL_DIR(DIR2PATH(oldname));
+
+		if (dirp = opendir(newpath)) {
 			while (dp = readdir(dirp)) {
 				(void)strcpy(newname, dp->d_name);
-				if (stat(newname, &sb) < 0) {
+#ifndef	vms
+				if (dotname(newname))	continue;
+#endif	vms
+				if (lstat(newname, &sb) < 0) {
 					perror(newname);
 					continue;
 				}
 				if (isDIR(sb.st_mode)) {
-					if (!recur)
-						continue;
-					if (getwd(oldpath)
-					&&  chdir(DIR2PATH(newname)) >= 0) {
-						transtree(
-							OPENDIR_ARG,
-							func,
-							recur+1);
-						(void)chdir(oldpath);
-					} else
-						perror(newname);
+					if (recur)
+						transtree(newname,func,recur+1);
 				} else if (isFILE(sb.st_mode)) {
+					TELL_FILE(newname);
 					(*func)(newname);
 				}
 			}
 			closedir(dirp);
 		}
+		(void)chdir(oldpath);
 	} else if (isFILE(sb.st_mode)) {
+		TELL_FILE(oldname);
 		(*func)(oldname);
 	}
 }
+
+#ifdef	TEST
+static
+do_file(name)
+char	*name;
+{
+}
+
+main(argc, argv)
+char	*argv[];
+{
+	register int	j;
+	auto	 char	*s;
+	auto	 int	recur = FALSE;
+
+	for (j = 1; j < argc; j++) {
+		if (*(s = argv[j]) == '-') {
+			if (*(++s) == 'r')
+				recur = TRUE;
+		} else
+			transtree(s,do_file,recur);
+	}
+}
+#endif	TEST

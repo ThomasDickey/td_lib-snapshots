@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19891004
+MANIFEST for td_lib, version t19891006
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 Makefile                        top-level makefile for TD_LIB
@@ -101,6 +101,7 @@ src/port2vms/uid2s.c            convert VMS uid/gid to string (cf: code in CM_TO
 src/port2vms/utimes.c           VMS hack to provide unix-compatible 'utimes()' function.
 src/port2vms/vms2name.c         convert VMS filename to unix format
 src/port2vms/vms_dirs.c         VMS hack to provide unix-style directory access
+src/port2vms/vms_wild.c         tests a filename for vms-wildcards
 src/port2vms/zone2vms.c         compute timezone adjustment for VMS/unix time conversion
 src/process                     subdirectory
 src/process/bldarg.c            build argc+argv array from string

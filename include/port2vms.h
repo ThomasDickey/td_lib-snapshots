@@ -1,5 +1,5 @@
 /*
- * $Id: port2vms.h,v 3.0 1989/09/18 07:56:50 ste_cm Rel $
+ * $Id: port2vms.h,v 3.1 1989/10/06 12:48:27 dickey Exp $
  *
  * VMS-definitions for supporting unix/vms port
  */
@@ -34,7 +34,7 @@ extern	char		*getcwd();
 #define	rmdir		remove
 #define	unlink		remove
 
-#define	_OPENDIR(s,m)	(isDIR(m) || strchr(s,'*') || strchr(s,'%'))
+#define	_OPENDIR(s,m)	(isDIR(m) || vms_iswild(s))
 #define	OPENDIR_ARG	"*.*;*"
 
 #ifndef		$DESCRIPTOR
@@ -156,6 +156,12 @@ char *	vms2name(
 		)
 		_DCL(char *,		dst)
 		_DCL(char *,		src)
+		_RET
+
+int	vms_iswild(
+		_AR1(char *,		name)
+		)
+		_DCL(char *,		name)
 		_RET
 
 time_t	zone2vms(

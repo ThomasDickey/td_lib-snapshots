@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: dlettree.c,v 3.2 1989/09/29 15:00:02 dickey Exp $";
+static	char	Id[] = "$Id: dlettree.c,v 4.0 1989/10/06 14:38:35 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -48,6 +48,7 @@ int	recur;
 	auto	struct stat	sb;
 	auto	char		newname[MAXPATHLEN];
 	auto	char		oldpath[MAXPATHLEN];
+	auto	char		*newpath;
 	auto	int		old_mode;
 	auto	int		ok	= TRUE;
 
@@ -68,13 +69,19 @@ int	recur;
 			fail("(getwd)");
 			return(0);
 		}
+		newpath = OPENDIR_ARG;
+#ifdef	vms
+		if (vms_iswild(oldname))
+			newpath = oldname;
+		else
+#endif	vms
 		if (chdir(DIR2PATH(oldname)) < 0) {
 			fail(oldname);
 			return(0);
 		}
 		old_mode = sb.st_mode;	/* save, so we know to delete-dir */
 
-		if (dirp = opendir(OPENDIR_ARG)) {
+		if (dirp = opendir(newpath)) {
 			while (dp = readdir(dirp)) {
 				(void)strcpy(newname, dp->d_name);
 #ifndef	vms

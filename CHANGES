@@ -1,3 +1,49 @@
+1989-10-06  dickey@software.org
+
+	* src/pathname/trnstree.c:
+	mods to make this handle vms-wildcards properly
+
+1989-10-06  ste_cm@software.org
+
+	* src/pathname/trnstree.c: BASELINE Tue Aug 14 16:27:44 1990
+
+1989-10-06  dickey@software.org
+
+	* src/pathname/edittree.c:
+	mods to make this handle vms-wildcards properly
+
+1989-10-06  ste_cm@software.org
+
+	* src/pathname/edittree.c: BASELINE Tue Aug 14 16:27:44 1990
+
+1989-10-06  dickey@software.org
+
+	* src/pathname/dlettree.c:
+	mods to make this handle vms-wildcards properly
+
+1989-10-06  ste_cm@software.org
+
+	* src/pathname/dlettree.c: BASELINE Tue Aug 14 16:27:44 1990
+
+1989-10-06  dickey@software.org
+
+	* include/port2vms.h: added 'vms_iswild()' procedure
+
+	* src/port2vms/vms_wild.c: RCS_BASE
+
+1989-10-06  ste_cm@software.org
+
+	* src/port2vms/vms_wild.c: BASELINE Tue Aug 14 16:27:44 1990
+
+1989-10-06  dickey@software.org
+
+	* src/pathname/trnstree.c:
+	added a test-driver & borrowed code from 'deletetree()' so this works
+	properly on unix (wasn't saving/restoring directory properly).
+
+	* src/pathname/edittree.c, src/pathname/dlettree.c:
+	on vms, don't try to chdir if we are looking at a wildcard
+
 1989-10-04  dickey@software.org
 
 	* include/acl.h: corrected is_EXTENDED_ACL macro
