@@ -1,3 +1,10 @@
+2001-08-28  dickey@invisible-island.net
+
+	* aclocal.m4: fix for ncurses/term.h
+	fix for SHELL in CF_MAKEFLAGS
+
+	* configure.in: add check for ncurses/term.h
+
 2001-07-15  dickey@clark.net
 
 	* src/curses/dumpwin.c:
