@@ -1,3 +1,37 @@
+1994-07-01  dickey@clark.net
+
+	* include/td_ext.h: added strerror, memmove, sys_errlist, timezone
+
+	* aclocal.m4: added TD_SYS_ERRLIST
+	modified TD_HAVE_FUNCS to do the second compile only if the first succeeds
+
+	* configure.in:
+	added logic to get _data_ tests for 'timezone' and 'sys_errlist[]'
+
+	* src/cm_funcs/packdate.c:
+	use different autoconf symbol, TIMEZONE_DECLARED
+
+	* src/descrip.mms: added MEMMOVE, STRERROR
+
+	* src/Makefile: added memmove, strerror
+
+	* src/string/strerror.c: HAVE_SYS_NERR was a little redundant (I hope)
+
+	* src/memory/memmove.c: RCS_BASE
+
+	* src/memory/memmove.c: use MODULE_ID
+
+	* configure.in: added 'memmove()', 'strerror()' tests
+
+	* src/sheet/field_of.c: split out 'memmove.c'
+
+	* src/sheet/field_of.c: use MODULE_ID
+
+	* src/string/strerror.c: RCS_BASE
+
+	* include/ptypes.h:
+	moved definitions for exit-status past all includes, just in case
+
 1994-06-30  dickey@clark.net
 
 	* src/curses/rawgets.c: allow CTL/N and CTL/P as down/up arrows

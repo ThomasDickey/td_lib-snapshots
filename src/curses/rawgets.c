@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: rawgets.c,v 12.8 1994/06/30 23:05:02 tom Exp $";
+static	char	Id[] = "$Id: rawgets.c,v 12.9 1994/07/01 00:45:49 tom Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: rawgets.c,v 12.8 1994/06/30 23:05:02 tom Exp $";
  * Title:	rawgets.c (raw-mode 'gets()')
  * Created:	29 Sep 1987 (from 'fl.c')
  * Modified:
+ *		30 Jun 1994, added CTL/P, CTL/N as synonyms for up/down arrows
  *		28 Jun 1994, modified for window-resizing.
  *		30 May 1994, always allow backspace as an erase-character.
  *		24 Nov 1993, added xterm-mouse support.
@@ -74,6 +75,8 @@ static	char	Id[] = "$Id: rawgets.c,v 12.8 1994/06/30 23:05:02 tom Exp $";
 #define	to_toggle(c)	((c) == '\t')
 #define	to_literal(c)	((c) == CTL('V'))
 #define	to_home(c)	(((c) == CTL('B')))
+#define	to_up(c)	(((c) == CTL('P')) || ((c) == ARO_UP))
+#define	to_down(c)	(((c) == CTL('N')) || ((c) == ARO_DOWN))
 #define	to_left(c)	(((c) == '\b') || ((c) == ARO_LEFT))
 #define	to_right(c)	(((c) == '\f') || ((c) == ARO_RIGHT))
 #define	to_end(c)	(((c) == CTL('F')))
@@ -578,8 +581,14 @@ int	wrawgets (
 					(void)waddch(Z,'\n');
 				break;
 			}
-			if ((c == ARO_DOWN) || (c == ARO_UP))
+			if (to_up(c)) {
+				c = ARO_UP;
 				break;
+			}
+			if (to_down(c)) {
+				c = ARO_DOWN;
+				break;
+			}
 
 			if (to_toggle(c)) {
 				ToggleMode();

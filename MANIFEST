@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19940630
+MANIFEST for td_lib, version t19940701
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         restrictions on copying/using this software
@@ -90,6 +90,7 @@ src                             subdirectory
 src/descrip.mms                 VMS build script for td_lib/src
 src/memory                      subdirectory
 src/memory/doalloc.c            wrapper for malloc/realloc/free (checks pointers)
+src/memory/memmove.c            fallback for 'memmove()'
 src/memory/stralloc.c           portable replacement for 'strdup()'
 src/memory/txtalloc.c           maintain dictionary of string "constants"
 src/memory/vecalloc.c           allocate an array
@@ -184,6 +185,7 @@ src/string/ltostr.c             convert 'long' to a string
 src/string/strbcmp.c            compare two strings ignoring blanks a la "diff -b"
 src/string/strclean.c           "clean" string, removes unnecessary blanks
 src/string/strcount.c           counts instances of a char in a string
+src/string/strerror.c           replacement for 'strerror()'
 src/string/strtrim.c            trim trailing whitespace from a string
 src/string/strucmp.c            compare two strings ignoring case
 src/string/strucpy.c            copy string, uppercasing it
