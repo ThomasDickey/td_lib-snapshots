@@ -1,11 +1,12 @@
 #ifndef	lint
-static	char	Id[] = "$Id: abspath.c,v 11.0 1992/02/18 10:57:55 ste_cm Rel $";
+static	char	Id[] = "$Id: abspath.c,v 11.1 1992/11/13 10:18:54 dickey Exp $";
 #endif
 
 /*
  * Author:	T.E.Dickey
  * Created:	17 Sep 1987
  * Modified:
+ *		13 Nov 1992, removed redundant 'index' macro.
  *		04 Oct 1991, conversion to ANSI
  *		22 Jul 1991, moved MAXPATHLEN def to "ptypes.h"
  *		04 Apr 1991, try to recover in case 'getwd()' fails.
@@ -37,13 +38,11 @@ static	char	Id[] = "$Id: abspath.c,v 11.0 1992/02/18 10:57:55 ste_cm Rel $";
 #include	"ptypes.h"
 #ifdef	apollo
 #ifdef	apollo_sr10
-#define	index	Index
 #ifdef	lint
 #define	const
 #endif
 #include	<apollo/base.h>
 #include	<apollo/name.h>
-#undef	index	/* fix for sys5-lint */
 #else	/* !apollo_sr10 */
 #include	</sys/ins/base.ins.c>
 #include	</sys/ins/name.ins.c>
