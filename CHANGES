@@ -1,3 +1,17 @@
+1993-12-04  dickey@software.org
+
+	* src/pathname/which.c: port to MS-DOS
+
+	* src/process/execute.c: port to MS-DOS (actually TurboC)
+
+	* src/process/getopt.c: ifdefs
+
+	* include/port2vms.h: ifdefs, TurboC clean-compile
+
+	* src/pathname/abspath.c: port to MS-DOS
+
+	* src/pathname/abspath.c: use MODULE_ID
+
 1993-12-02  dickey@software.org
 
 	* src/pathname/abspath.c: corrected isSlash mod for "~"
