@@ -1,3 +1,28 @@
+1988-05-16  dickey@software.org
+
+	* src/pathname/abspath.c: getcwd/getwd porting.
+
+	* include/llib-ltd: ported to gould.
+
+	* src/pathname/which.c:
+	ported to gould; found I needed 'abspath()' call.
+
+	* src/pathname/which.c: sccs2rcs keywords
+
+1988-05-16  ste_cm@software.org
+
+	* src/pathname/which.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+	* src/pathname/which.c: BASELINE Thu Apr  6 09:45:13 EDT 1989
+
+	* src/pathname/which.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
+1988-05-16  dickey@software.org
+
+	* src/memory/txtalloc.c:
+	folded 'stralloc()' call into 'doalloc()': less time, memory.
+
 1988-05-13  dickey@software.org
 
 	* src/curses/resizwin.c:

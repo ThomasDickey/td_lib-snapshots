@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)txtalloc.c	1.2 88/05/10 13:33:21";
+static	char	sccs_id[] = "@(#)txtalloc.c	1.3 88/05/16 06:36:35";
 #endif	lint
 
 /*
@@ -7,6 +7,7 @@ static	char	sccs_id[] = "@(#)txtalloc.c	1.2 88/05/10 13:33:21";
  * Author:	T.E.Dickey
  * Created:	29 Apr 1988
  * Modified:
+ *		16 May 1988, perform a single 'doalloc()' call for each node
  *		10 May 1988, added dummy 'txtfree()'
  *
  * Function:	Maintains a balanced binary tree of character strings.
@@ -14,13 +15,13 @@ static	char	sccs_id[] = "@(#)txtalloc.c	1.2 88/05/10 13:33:21";
  *		-- Volume 3 -- Sorting and Searching", by Donald Knuth.
  */
 
+extern	char	*strcpy();
 extern	char	*doalloc();
-extern	char	*stralloc();
 
 typedef	struct	_node	{
-	int		balance;
 	struct	_node	*links[2];
-	char		*value;
+	char		balance;	/* holds 0, -1, +1 */
+	char		value[1];
 	} NODE;
 
 #define	llink	links[0]
@@ -34,8 +35,6 @@ typedef	struct	_node	{
 
 #define	LINK(a,p)	p->links[(a)>0]
 
-#define	new(c)		(c *)doalloc((char *)0, sizeof(c))
-
 static	NODE	head;
 
 static
@@ -44,8 +43,8 @@ insert(text)
 char	*text;
 {
 register
-NODE	*p = new(NODE);
-	KEY(p)   = stralloc(text);
+NODE	*p = (NODE *)doalloc((char *)0, sizeof(NODE) + strlen(text));
+	(void)strcpy(KEY(p),text);
 	LLINK(p) =
 	RLINK(p) = 0;
 	B(p)     = 0;
@@ -151,6 +150,7 @@ char	*value;
 /*
  * Dummy entry for consistency
  */
+/*ARGSUSED*/
 txtfree(p)
 char	*p;
 {
