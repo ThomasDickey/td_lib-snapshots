@@ -28,7 +28,7 @@
 #include	"td_curse.h"
 #include	<time.h>
 
-MODULE_ID("$Id: dumpwin.c,v 12.18 2000/10/19 01:20:40 tom Exp $")
+MODULE_ID("$Id: dumpwin.c,v 12.19 2001/07/15 16:00:50 tom Exp $")
 
 #define	OUT	FPRINTF
 
@@ -105,14 +105,19 @@ void	dumpwin(
 		OUT(fp, "   _leave:   %#x\n", w->flags & __LEAVEOK);
 		OUT(fp, "   _scroll:  %#x\n", w->flags & __SCROLLOK);
 #endif
-
+#ifndef CURSES_LIKE_UNKNOWN
 		OUT(fp, "   _y @ %p\n", &(CursesLine(w,0)));
+#endif
 		for (j = 0; j < wMaxY(w); j++) {
 			char *data;
+#ifdef CURSES_LIKE_UNKNOWN
+			OUT(fp, "%8d) \"", j);
+#else
 			OUT(fp, "%8d) [%3d,%3d] %p: \"",
 				j,
 				CursesFirstCh(w,j),
 				CursesLastCh(w,j), CursesLine(w,j));
+#endif
 			if ((data = line_data(w,j)) != 0) {
 				for (k = 0; k < wMaxX(w); k++)
 					dumpchr(fp, data[k]);
