@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19880601
+MANIFEST for td_lib, version t19880607
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 include                         subdirectory
@@ -28,6 +28,7 @@ src/curses/rawgets.c            read a string via curses in raw mode (allow edit
 src/curses/rawterm.c            set terminal to raw (cooked) mode
 src/curses/resizwin.c           change size of curses window
 src/curses/savewin.c            save/unsave curses window
+src/curses/win2file.c           dump curses window to file
 src/memory                      subdirectory
 src/memory/doalloc.c            wrapper for malloc/realloc/free (checks pointers)
 src/memory/stralloc.c           portable replacement for 'strdup()'
@@ -44,6 +45,7 @@ src/process                     subdirectory
 src/process/bldarg.c            build argc+argv array from string
 src/process/catarg.c            concatenate argument (cf: bldarg)
 src/process/execute.c           portable 'system()' call
+src/process/gethome.c           get $HOME path
 src/process/getuser.c           get user name
 src/string                      subdirectory
 src/string/dotcmp.c             compare dot-separated strings

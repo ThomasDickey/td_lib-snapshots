@@ -1,4 +1,4 @@
-# @(#)Makefile	1.23 88/06/01 09:58:43
+# @(#)Makefile	1.24 88/06/07 06:19:15
 # MAKE-file for miscellaneous library routines
 L=lib.a
 #
@@ -21,6 +21,7 @@ OBJS	=\
 	erasechar.o\
 	execute.o\
 	flushall.o\
+	gethome.o\
 	getuser.o\
 	gid2s.o\
 	killchar.o\
@@ -48,7 +49,8 @@ OBJS	=\
 	txtalloc.o\
 	uid2s.o\
 	vecalloc.o\
-	which.o
+	which.o\
+	win2file.o
 #
 all:	$L\
 	llib-ltd.ln
@@ -70,6 +72,7 @@ rcsname.o:	rcsdefs.h
 sccszone.o:	ptypes.h
 set2est.o:	ptypes.h
 setmtime.o:	ptypes.h
+win2file.o:	ptypes.h
 #
 clean:
 	rm *.o
