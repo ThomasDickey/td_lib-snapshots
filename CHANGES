@@ -1,3 +1,12 @@
+1992-04-09  dickey@software.org
+
+	* src/curses/padedit.c: show filename as part of xterm-title
+
+1992-04-09  ste_cm@software.org
+
+	* src/curses/padedit.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
 1992-04-03  dickey@software.org
 
 	* include/dyn_str.h: added 'dyn_copy()'

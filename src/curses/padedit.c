@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: padedit.c,v 10.0 1991/10/18 11:08:32 ste_cm Rel $";
+static	char	Id[] = "$Id: padedit.c,v 11.0 1992/04/09 07:32:10 ste_cm Rel $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: padedit.c,v 10.0 1991/10/18 11:08:32 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	14 Dec 1987
  * Modified:
+ *		09 Apr 1992, show filename in xterm-title.
  *		04 Oct 1991, conversion to ANSI
  *		12 Sep 1991, removed redundant def for 'errno' (VMS C 3.2)
  *		09 Sep 1991, lint (apollo SR10.3)
@@ -51,12 +52,12 @@ static	char	Id[] = "$Id: padedit.c,v 10.0 1991/10/18 11:08:32 ste_cm Rel $";
 #endif
 
 #ifdef	apollo
-apollo_edit(
-_ARX(char *,	name)
-_AR1(int,	readonly)
-	)
-_DCL(char *,	name)
-_DCL(int,	readonly)
+int	apollo_edit(
+	_ARX(char *,	name)
+	_AR1(int,	readonly)
+		)
+	_DCL(char *,	name)
+	_DCL(int,	readonly)
 {
 #ifdef	apollo_sr10
 	name_$pname_t		in_name;
@@ -125,12 +126,12 @@ _DCL(int,	readonly)
  * Spawn a process which is detached from the current one.
  */
 static
-spawn(
-_ARX(char *,	cmd)
-_AR1(char **,	argv)
-	)
-_DCL(char *,	cmd)
-_DCL(char **,	argv)
+int	spawn(
+	_ARX(char *,	cmd)
+	_AR1(char **,	argv)
+		)
+	_DCL(char *,	cmd)
+	_DCL(char **,	argv)
 {
 	int	pid;
 #ifdef	TEST
@@ -165,14 +166,14 @@ _DCL(char **,	argv)
 	return (-1);
 }
 
-padedit(
-_ARX(char *,	name)
-_ARX(int,	readonly)
-_AR1(char *,	editor)
-	)
-_DCL(char *,	name)
-_DCL(int,	readonly)
-_DCL(char *,	editor)
+int	padedit(
+	_ARX(char *,	name)
+	_ARX(int,	readonly)
+	_AR1(char *,	editor)
+		)
+	_DCL(char *,	name)
+	_DCL(int,	readonly)
+	_DCL(char *,	editor)
 {
 	int	lc[2];
 	int	code = scr_size(lc);
@@ -185,21 +186,27 @@ _DCL(char *,	editor)
 	if (code == 0) {
 		char	*display;
 		char	*argv[20];
-		int	argc	= 0;
+		int	argc;
 
-		char	wd[BUFSIZ],
-			xt[BUFSIZ];
+		char	wd[MAXPATHLEN],
+			xt[MAXPATHLEN],
+			the_title[BUFSIZ];
 
 		if (getwd(wd) == 0)
 			return (-1);
 		if (which(xt, sizeof(xt), "xterm", wd) <= 0)
 			return (-1);
 
+		FORMAT(the_title, "%s:%s", readonly ? "view" : "edit", name);
+
+		argc = 0;
 		argv[argc++] = xt;
 		if (display = getenv("DISPLAY")) {
 			argv[argc++] = "-display";
 			argv[argc++] = display;
 		}
+		argv[argc++] = "-title";
+		argv[argc++] = the_title;
 		argv[argc++] = "-e";
 		argv[argc++] = editor;
 		argv[argc++] = name;
@@ -221,6 +228,7 @@ _DCL(char *,	editor)
 }
 
 #ifdef	TEST
+/*ARGSUSED*/
 _MAIN
 {
 	register int j;
