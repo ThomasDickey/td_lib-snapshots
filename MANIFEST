@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19880428
+MANIFEST for td_lib, version t19880429
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 include                         subdirectory
@@ -25,6 +25,7 @@ src/curses/savewin.c            save/unsave curses window
 src/memory                      subdirectory
 src/memory/doalloc.c            wrapper for malloc/realloc/free (checks pointers)
 src/memory/stralloc.c           portable replacement for 'strdup()'
+src/memory/txtalloc.c           maintain dictionary of string "constants"
 src/memory/vecalloc.c           allocate an array
 src/pathname                    subdirectory
 src/pathname/abspath.c          convert path to absolute form
