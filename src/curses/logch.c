@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	06 Aug 1992, from ded/dlog.c
  * Modified:
+ *		15 Feb 1998, added home/end/ppage/npage codes.
  *		16 Dec 1995, added mouse codes.
  *		05 Nov 1993, absorb "cmdch.h" into "td_curse.h"
  *		29 Oct 1993, ifdef-ident
@@ -12,11 +13,12 @@
  */
 
 #define	STR_PTYPES
-#include	"ptypes.h"
-#include	"td_curse.h"
+#include	<ptypes.h>
+#include	<td_curse.h>
+
 #include	<ctype.h>
 
-MODULE_ID("$Id: logch.c,v 12.7 1995/12/16 13:44:33 tom Exp $")
+MODULE_ID("$Id: logch.c,v 12.8 1998/02/16 00:16:39 tom Exp $")
 
 #define	CONVERT(base,p,n)	n = (base * n) + (*p++ - '0')
 
@@ -63,6 +65,10 @@ int	decode_logch(
 		case 'D':	c = KEY_DOWN;		break;
 		case 'L':	c = KEY_LEFT;		break;
 		case 'R':	c = KEY_RIGHT;		break;
+		case '^':	c = KEY_HOME;		break;
+		case '$':	c = KEY_END;		break;
+		case 'P':	c = KEY_PPAGE;		break;
+		case 'N':	c = KEY_NPAGE;		break;
 #ifndef NO_XTERM_MOUSE
 		case 'M':
 			c = KEY_MOUSE;
@@ -140,6 +146,10 @@ void	encode_logch(
 		case KEY_DOWN:	FORMAT(s, "\\D");	break;
 		case KEY_LEFT:	FORMAT(s, "\\L");	break;
 		case KEY_RIGHT:	FORMAT(s, "\\R");	break;
+		case KEY_HOME:	FORMAT(s, "\\^");	break;
+		case KEY_END:	FORMAT(s, "\\$");	break;
+		case KEY_PPAGE:	FORMAT(s, "\\P");	break;
+		case KEY_NPAGE:	FORMAT(s, "\\N");	break;
 		default:	FORMAT(s, "\\%03o", c);	break;
 #ifndef NO_XTERM_MOUSE
 		case KEY_MOUSE:

@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	01 Dec 1987 (broke out of 'ded.c')
  * Modified:
+ *		15 Feb 1998, add home/end/ppage/npage keys.
  *		25 Sep 1996, fix for ANSI arrow-key decoding
  *		16 Dec 1995, integration with ncurses mouse-support.
  *		04 Jul 1994, mods for autoconf.
@@ -45,7 +46,7 @@
 #include	"td_curse.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: cmdch.c,v 12.24 1997/03/15 21:58:00 tom Exp $")
+MODULE_ID("$Id: cmdch.c,v 12.25 1998/02/16 00:12:51 tom Exp $")
 
 #define	ESC(c)	((c) == '\033')
 #define	END(s)	s[strlen(s)-1]
@@ -100,7 +101,9 @@ int	cmdch(
 #if !HAVE_KEYPAD
 # if !HAVE_TCAP_CURSOR
 	static	char	*KU, *KD, *KR, *KL;
+	static	char	*KH, *KE;
 # endif
+	static	char	*KP, *KN;	/* not generally in BSD curses */
 	static	int	ansi	= FALSE;
 #endif	/* HAVE_KEYPAD */
 #if NCURSES_MOUSE_VERSION && !NO_XTERM_MOUSE
@@ -110,17 +113,21 @@ int	cmdch(
 	if (!init) {
 		init = TRUE;
 #if !HAVE_KEYPAD
-# if !HAVE_TCAP_CURSOR
 		{
 		static	char	o_blk[1024], *a_ = o_blk;
 			if (tgetent(i_blk,getenv("TERM")) <= 0)
 				failed("cmdch/tgetent");
+# if !HAVE_TCAP_CURSOR
 			KD = tgetstr("kd", &a_);
 			KU = tgetstr("ku", &a_);
 			KR = tgetstr("kr", &a_);
 			KL = tgetstr("kl", &a_);
-		}
+			KH = tgetstr("kh", &a_);
+			KE = tgetstr("ke", &a_);
 # endif
+			KP = tgetstr("kP", &a_);
+			KN = tgetstr("kN", &a_);
+		}
 		if (KD && KU && KR && KL) {
 			if (ESC(*KD) && ESC(*KU) && ESC(*KR) && ESC(*KL))
 				ansi	=  END(KU) == 'A'
@@ -192,6 +199,10 @@ int	cmdch(
 			done = TRUE;
 			break;
 #endif
+		case KEY_HOME:			/* FALLTHRU */
+		case KEY_END:			/* FALLTHRU */
+		case KEY_PPAGE:			/* FALLTHRU */
+		case KEY_NPAGE:			/* FALLTHRU */
 		case KEY_UP:			/* FALLTHRU */
 		case KEY_DOWN:			/* FALLTHRU */
 		case KEY_LEFT:			/* FALLTHRU */
@@ -218,6 +229,10 @@ int	cmdch(
 			else if	(EQL(KD))	c = KEY_DOWN;
 			else if	(EQL(KL))	c = KEY_LEFT;
 			else if	(EQL(KR))	c = KEY_RIGHT;
+			else if	(EQL(KH))	c = KEY_HOME;
+			else if	(EQL(KE))	c = KEY_END;
+			else if	(EQL(KP))	c = KEY_PPAGE;
+			else if	(EQL(KN))	c = KEY_NPAGE;
 			else
 #endif /* !HAVE_KEYPAD */
 			if (j > 1) {	/* extended escapes */
