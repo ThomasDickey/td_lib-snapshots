@@ -1,54 +1,19 @@
 #ifndef	lint
-static	char	Id[] = "$Id: abspath.c,v 9.0 1991/05/15 10:15:23 ste_cm Rel $";
+static	char	Id[] = "$Id: abspath.c,v 9.1 1991/07/22 13:28:55 dickey Exp $";
 #endif
 
 /*
  * Author:	T.E.Dickey
  * Created:	17 Sep 1987
- * $Log: abspath.c,v $
- * Revision 9.0  1991/05/15 10:15:23  ste_cm
- * BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
- *
- *		Revision 8.2  91/05/15  10:15:23  dickey
- *		apollo sr10.3 cpp complains about tag in #endif
- *		
- *		Revision 8.1  91/04/04  09:21:17  dickey
- *		try to recover in case 'getwd()' fails.
- *		
- *		Revision 8.0  90/04/24  16:40:29  ste_cm
- *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
- *		
- *		Revision 7.0  90/04/24  16:40:29  ste_cm
- *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
- *		
- *		Revision 6.1  90/04/24  16:40:29  dickey
- *		added entrypoint 'abshome()', which we use when tilde-expansion
- *		is sufficient.
- *		
- *		Revision 6.0  90/03/12  09:07:33  ste_cm
- *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
- *		
- *		Revision 5.3  90/03/12  09:07:33  dickey
- *		lint (apollo sr10.1)
- *		
- *		Revision 5.2  89/12/08  09:02:46  dickey
- *		apollo sr10.1 provides get-name call with correct char-case
- *		
- *		Revision 5.1  89/12/08  08:45:32  dickey
- *		added a set of default-cases for test-driver
- *		
- *		Revision 5.0  89/09/06  15:17:52  ste_cm
- *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
- *		
- *		Revision 4.1  89/09/06  15:17:52  dickey
- *		use "ptypes.h" to consolidate definitions
- *		
- *		Revision 4.0  88/09/09  07:56:04  ste_cm
- *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
- *		
- *		Revision 1.9  88/09/09  07:56:04  dickey
- *		sccs2rcs keywords
- *		
+ * Modified:
+ *		22 Jul 1991, moved MAXPATHLEN def to "ptypes.h"
+ *		04 Apr 1991, try to recover in case 'getwd()' fails.
+ *		24 Apr 1990, added entrypoint 'abshome()', which we use when
+ *			     tilde-expansion is sufficient.
+ *		08 Dec 1989, apollo sr10.1 provides get-name call with correct
+ *			     char-case.  Added a set of default-cases for test-
+ *			     driver.
+ *		06 Sep 1989, use "ptypes.h" to consolidate definitions
  *		09 Sep 1988, corrected case in which current directory ends in
  *			     "/".
  *		16 May 1988, 'getcwd()' is not as portable as 'getwd()'.
@@ -84,8 +49,6 @@ static	char	Id[] = "$Id: abspath.c,v 9.0 1991/05/15 10:15:23 ste_cm Rel $";
 
 #include	<pwd.h>
 extern	char	*getenv();
-
-#define	MAXPATHLEN	BUFSIZ
 
 #ifdef	apollo
 #define	TOP	2			/* permit 2 leading /'s */

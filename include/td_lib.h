@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 9.2 1991/06/25 11:46:12 dickey Exp $ */
+/* $Id: td_lib.h,v 9.4 1991/07/22 13:54:37 dickey Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for CM_TOOLS COMMON
@@ -589,6 +589,28 @@
 #endif	/* unix */
 
 	/* shoarg.c --------------------------------------------------- */
+	char 	*bldcmd (
+			_ARX(char *,	dst)
+			_ARX(char *,	src)
+			_AR1(size_t,	len)
+			)
+			_DCL(char *,	dst)
+			_DCL(char *,	src)
+			_DCL(size_t,	len)
+			_RET
+
+	char 	*bldcmd2 (
+			_ARX(char *,	dst)
+			_ARX(char *,	src1)
+			_ARX(char *,	src2)
+			_AR1(size_t,	len)
+			)
+			_DCL(char *,	dst)
+			_DCL(char *,	src1)
+			_DCL(char *,	src2)
+			_DCL(size_t,	len)
+			_RET
+
 		shoarg (
 			_ARX(FILE *,	fp)
 			_ARX(char *,	command)

@@ -1,3 +1,25 @@
+1991-07-22  dickey@software.org
+
+	* src/curses/blip.c: lint
+
+	* src/process/shoarg.c: oops: forgot to change format in 'shoarg()'
+
+	* src/process/shoarg.c: clear buffer in 'bldcmd()' initially
+
+	* include/td_lib.h:
+	oops: left 'len' argument out of 'bldcmd()' and 'bldcmd2()'
+
+	* include/td_lib.h:
+	added entrypoints 'bldcmd()' and 'bldcmd2()' to "shoarg.c" module
+
+	* src/pathname/abspath.c: moved MAXPATHLEN definition to "ptypes.h"
+
+	* include/ptypes.h: added definitions for MAXPATHLEN and FFLUSH
+
+	* src/process/shoarg.c: added entrypoints 'bldcmd()' and 'bldcmd2()'
+
+	* src/pathname/name2s.c: allow space as a normal filename-character
+
 1991-07-11  dickey@software.org
 
 	* src/process/userprot.c:
