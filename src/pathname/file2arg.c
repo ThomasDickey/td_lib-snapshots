@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: file2arg.c,v 5.1 1989/12/12 09:14:27 dickey Exp $";
+static	char	Id[] = "$Id: file2arg.c,v 8.0 1990/03/05 08:35:56 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,9 +7,21 @@ static	char	Id[] = "$Id: file2arg.c,v 5.1 1989/12/12 09:14:27 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	06 Apr 1989
  * $Log: file2arg.c,v $
- * Revision 5.1  1989/12/12 09:14:27  dickey
- * lint (SunOs 4.0.3)
+ * Revision 8.0  1990/03/05 08:35:56  ste_cm
+ * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
  *
+ *		Revision 7.0  90/03/05  08:35:56  ste_cm
+ *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+ *		
+ *		Revision 6.0  90/03/05  08:35:56  ste_cm
+ *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+ *		
+ *		Revision 5.2  90/03/05  08:35:56  dickey
+ *		lint
+ *		
+ *		Revision 5.1  89/12/12  09:14:27  dickey
+ *		lint (SunOs 4.0.3)
+ *		
  *
  * Function:	Reads a file and converts it to an argv-style array of pointers
  *		to strings.
@@ -28,9 +40,6 @@ static	char	Id[] = "$Id: file2arg.c,v 5.1 1989/12/12 09:14:27 dickey Exp $";
  */
 
 #include "ptypes.h"
-#include <errno.h>
-extern	FILE	*tmpfile();
-extern	int	errno;			/* ...not always in <errno.h> */
 extern	char	*file2mem();
 extern	char	**vecalloc();
 

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs/RCS/rcsedit.c,v 5.0 1989/07/25 09:19:55 ste_cm Rel $";
+static	char	*Id = "$Id: rcsedit.c,v 5.1 1990/03/05 10:45:26 dickey Exp $";
 #endif	lint
 
 /*
@@ -7,9 +7,12 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs
  * Author:	T.E.Dickey
  * Created:	26 May 1988
  * $Log: rcsedit.c,v $
- * Revision 5.0  1989/07/25 09:19:55  ste_cm
- * BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+ * Revision 5.1  1990/03/05 10:45:26  dickey
+ * port to sun3 (os3.4)
  *
+ *		Revision 5.0  89/07/25  09:19:55  ste_cm
+ *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+ *		
  *		Revision 4.0  89/07/25  09:19:55  ste_cm
  *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
  *		
@@ -43,7 +46,6 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs
 
 #include	<string.h>
 #include	<ctype.h>
-extern	FILE	*tmpfile();
 extern	char	*name2rcs();
 extern	char	*strchr();
 
@@ -53,6 +55,7 @@ extern	char	*strchr();
 static	FILE	*fpS, *fpT;
 static	char	fname[BUFSIZ];
 static	char	buffer[BUFSIZ];
+static	char	tmp_name[L_tmpnam];
 static	int	fmode;		/* original protection of file */
 static	int	changed;	/* set if caller changed file */
 static	int	lines;		/* total # of records written to temp-file */
@@ -118,9 +121,11 @@ int	show;
 	&&	(fpS = fopen(fname, "r")) ) {
 		fmode	= sb.st_mode & 0555;
 			/* retain protection for copyback */
-		if (!fpT)
-			fpT = tmpfile();
-		rewind(fpT);
+		FORMAT(tmp_name, "%s/rcsedit%d", P_tmpdir, getpid());
+		if (!(fpT = fopen(tmp_name, "w+"))) {
+			perror(tmp_name);
+			return(FALSE);
+		}
 		return (TRUE);
 	}
 	VERBOSE("?? Cannot open \"%s\"\n", fname);
@@ -207,6 +212,11 @@ rcsclose()
 			perror("rename");
 	} else
 		(void)fclose(fpS);
+	if (fpT != 0) {
+		FCLOSE(fpT);
+		(void)unlink(tmp_name);
+		fpT = 0;
+	}
 }
 
 /************************************************************************
