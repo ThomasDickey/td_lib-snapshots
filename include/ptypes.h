@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 12.8 1993/10/29 20:19:00 dickey Exp $ */
+/* $Id: ptypes.h,v 12.9 1993/11/29 00:05:36 dickey Exp $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -13,6 +13,7 @@
  *	ACC_PTYPES	<sys/file.h>
  *	CHR_PTYPES	<ctype.h>
  *	DIR_PTYPES	<dirent.h>
+ *	OPN_PTYPES	<fcntl.h>
  *	PWD_PTYPES	<pwd.h>
  *	SIG_PTYPES	<signal.h>
  *	STR_PTYPES	<string.h>
@@ -35,6 +36,7 @@
 #define	isLINK(mode)	((mode & S_IFMT) == S_IFLNK)
 #endif
 
+	/* known special systems */
 #ifndef	P_tmpdir
 #define	P_tmpdir	"/usr/tmp"
 #ifdef	L_tmpnam
@@ -60,10 +62,48 @@
 #endif
 #endif
 
+#if	defined(__TURBOC__) && !defined(MSDOS)
+#define	MSDOS
+#endif
+
+	/* types that aren't always defined */
+#ifdef	MSDOS
+typedef	long	off_t;
+typedef	short	dev_t;
+typedef	short	ino_t;
+#endif
+
+#ifdef	vms
+#define	PATHLIST_SEP ','
+#define PATH_DELIMS  ":[]"
+#define isSlash(c)   not_implemented
+#endif
+
+#ifdef	MSDOS
+#define PATHLIST_SEP ';'
+#define PATH_DELIMS  "\\/"
+#define PATH_SLASH   '\\'
+#define isSlash(c)   ((c) == PATH_SLASH || (c) == '/')
+#endif
+
+#ifndef	PATHLIST_SEP
+#define	PATHLIST_SEP ':'
+#define PATH_DELIMS  "/"
+#define PATH_SLASH   '/'
+#define	isSlash(c)   ((c) == PATH_SLASH)
+#endif
+
 #ifdef	__hpux
 #define	SYSTEM5
 #define	HAS_STDLIB 1
 #define HAS_UNISTD 1
+#endif
+
+#ifdef	MSDOS
+#undef  SYSTEM5
+#define	HAS_STDLIB 1
+#define HAS_UNISTD 0
+#include <io.h>		/* for 'chmod()' */
 #endif
 
 #ifndef HAS_STDLIB
@@ -112,7 +152,7 @@
  * Definition which is true iff we use function-prototypes
  */
 #undef	PROTOTYPES
-#if	defined(vms) || (defined(__STDC__) && !defined(LINTLIBRARY))
+#if	defined(vms) || defined(__TURBOC__) || (defined(__STDC__) && !defined(LINTLIBRARY))
 #define	PROTOTYPES	1
 #endif
 
@@ -241,7 +281,7 @@
 #define	V_OR_I2		V_OR_I
 #endif
 
-#ifdef	__STDC__
+#if	defined(__STDC__) || defined(__TURBOC__)
 #define	V_OR_P		void *
 #else
 #define	V_OR_P		char *
@@ -252,9 +292,9 @@
  ******************************************************************************/
 #ifndef	LINTLIBRARY
 
-#if	defined(SYSTEM5) || defined(vms)
+#if	defined(SYSTEM5) || defined(vms) || defined(__TURBOC__)
 #define	getwd(p)	getcwd(p,sizeof(p)-2)
-#if	!defined(__hpux)
+#if	!defined(__hpux) && !defined(__TURBOC__)
 extern	char	*getcwd(_ar1(char *,p));
 #endif
 #else	/* !SYSTEM5 */
@@ -277,7 +317,7 @@ extern	long	strtol(
 		_arx(char **,	d)
 		_ar1(int,	base));
 #endif
-#ifndef	vms
+#if	!defined(vms) && !defined(__TURBOC__)
 #if	!defined(apollo_sr10) && !defined(__hpux)
 extern	V_OR_I2	perror (_ar1(char *,s));
 extern	V_OR_I	rewind (_ar1(FILE *,s));
@@ -412,16 +452,20 @@ extern	int	vfork	(void);
  * Define symbols used in 'access()' function                                 *
  ******************************************************************************/
 #ifdef	ACC_PTYPES
-#ifdef	vms
-#define	F_OK	0	/* file-exists */
-#define	X_OK	1	/* executable */
-#define	W_OK	2	/* writeable */
-#define	R_OK	4	/* readable */
-#else	/* unix */
+#ifdef	unix
 #ifndef	SYSTEM5
 #include	<sys/file.h>
 #endif	/* SYSTEM5 */
 #endif	/* vms/unix */
+#ifdef	MSDOS
+#include <io.h>
+#endif
+#ifndef F_OK
+#define	F_OK	0	/* file-exists */
+#define	X_OK	1	/* executable */
+#define	W_OK	2	/* writeable */
+#define	R_OK	4	/* readable */
+#endif
 #endif	/* ACC_PTYPES */
 
 /******************************************************************************
@@ -469,6 +513,10 @@ extern	int	toupper(int);
 #define	direct	dirent
 #endif
 
+#ifdef	MSDOS
+#include	<dir.h>		/* for 'chdir()' */
+#endif
+
 #ifdef	OLD_SYSTEM5		/* Sys5.4 has readdir */
 #define	DIR	FILE
 #define	opendir(n)	fopen(n,"r")
@@ -486,10 +534,30 @@ static	struct	direct	dbfr;
 #endif	/* DIR_PTYPES */
 
 /******************************************************************************
+ * defines externals used in low-level I/O routines                           *
+ ******************************************************************************/
+#ifdef	OPN_PTYPES
+
+#ifdef	MSDOS
+#include <fcntl.h>
+#endif
+
+#ifdef	unix
+#ifdef	SYSTEM5
+#include <sys/fcntl.h>
+#else
+#include <sys/file.h>
+#endif
+#endif
+
+#endif	/* OPN_PTYPES */
+
+/******************************************************************************
  * defines externals used in password-file routines                           *
  ******************************************************************************/
 #ifdef	PWD_PTYPES
 
+#ifndef MSDOS
 #include <pwd.h>
 
 #if	!defined(__hpux)
@@ -501,6 +569,7 @@ extern	V_OR_I		setpwent(_ar0);
 extern	V_OR_I		endpwent(_ar0);
 #endif
 
+#endif	/* MSDOS */
 #endif	/* PWD_PTYPES */
 
 /******************************************************************************
@@ -544,6 +613,10 @@ extern	V_OR_I		endpwent(_ar0);
 # define SIG_IGN	(SIG_T (*)(SIGNAL_ARGS))1
 #endif
 
+#ifndef	NSIG		/* e.g., MSDOS */
+#define NSIG 32		/* (a guess?) */
+#endif
+
 #endif	/* SIG_PTYPES */
 
 /******************************************************************************
@@ -552,11 +625,11 @@ extern	V_OR_I		endpwent(_ar0);
 #ifdef	STR_PTYPES
 #ifndef LINTLIBRARY
 #include	<string.h>
-#if	!defined(SYSTEM5) && !defined(vms) && !defined(apollo) && !defined(sun)
+#if	!defined(SYSTEM5) && !defined(vms) && !defined(apollo) && !defined(sun) && !defined(__TURBOC__)
 #define	strchr	index
 #define	strrchr	rindex
 #endif	/* SYSTEM5 */
-#if	!defined(__hpux)
+#if	!defined(__hpux) && !defined(__TURBOC__)
 extern	char *	strchr (_arx(char *,s) _ar1(int,c));
 extern	char *	strrchr(_arx(char *,s) _ar1(int,c));
 extern	char *	strtok (_arx(char *,s) _ar1(char *,t));
@@ -568,6 +641,7 @@ extern	char *	strtok (_arx(char *,s) _ar1(char *,t));
  * defines the argument-type for "wait()"                                     *
  ******************************************************************************/
 #ifdef	WAI_PTYPES
+#ifndef	MSDOS
 #ifdef	vms
 #include <processes.h>
 #else
@@ -597,6 +671,7 @@ extern	char *	strtok (_arx(char *,s) _ar1(char *,t));
 #define	W_RETCODE(status)	(status.w_retcode)
 #endif	/* SYSTEM5/!SYSTEM5 */
 
+#endif	/* MSDOS */
 #endif	/* WAI_PTYPES */
 
 /******************************************************************************
@@ -606,11 +681,11 @@ extern	char *	strtok (_arx(char *,s) _ar1(char *,t));
 #include <td_lib.h>
 
 #ifndef	lint
-extern	void	main(_arx(int,argc) _arx(char **,argv) _ar1(char **,envp));
+extern	void	main(_arx(int,argc) _ar1(char **,argv));
 #endif	/* lint */
 #define	_MAIN\
-	void	main(_ARX(int,argc) _ARX(char **,argv) _AR1(char **,envp))\
-		     _DCL(int,argc) _DCL(char **,argv) _DCL(char **,envp)
+	void	main(_ARX(int,argc) _AR1(char **,argv))\
+		     _DCL(int,argc) _DCL(char **,argv)
 
 #endif	/* LINTLIBRARY */
 
