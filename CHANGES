@@ -1,3 +1,9 @@
+1997-01-02  dickey@clark.net
+
+	* include/td_ext.h: realpath()
+
+	* configure.in: forgot to change --with-prototypes internal variable
+
 1996-12-27  dickey@clark.net
 
 	* aclocal.m4: add TD_VARARGS
