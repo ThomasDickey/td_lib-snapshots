@@ -1,4 +1,4 @@
-# $Id: descrip.mms,v 12.3 1994/06/27 23:13:46 tom Exp $
+# $Id: descrip.mms,v 12.4 1994/07/02 00:22:17 tom Exp $
 # MMS-file for miscellaneous library routines	
 #
 ####### (Development) ##########################################################
@@ -95,6 +95,7 @@ UNUSED_MODULES = -
 	INTERACT,		# unix filesystem -
 	KILLCHAR, 		# curses -
 	LOGCH, 			# curses/ded -
+	MEMMOVE,		# memory -
 	NAME2S,			# unix-style names only -
 	NEWZONE,		# unix environment -
 	ON_WINCH,		# catch SIGWINCH -
@@ -130,6 +131,7 @@ UNUSED_MODULES = -
 	SCCSNAME,		# sccs (unix-only) -
 	SCR_SIZE,		# curses/apollo/termcap -
 	SETMTIME,		# utime() call -
+	STRERROR,		# strerror() call -
 	TRACK_WD,		# unix-style 'getwd()' -
 	UID2S,			# PORTUNIX -
 	USERCOPY, 		# uses FOR_USER -
@@ -196,6 +198,7 @@ C_SRC	=-
 	M2COMP.C -
 	MAKEARGV.C -
 	MEM2FILE.C -
+	MEMMOVE.C -
 	MODECHAR.C -
 	NEXT_VER.C -
 	NAME2S.C -
@@ -246,6 +249,7 @@ C_SRC	=-
 	STRBCMP.C -
 	STRCLEAN.C -
 	STRCOUNT.C -
+	STRERROR.C -
 	STRTRIM.C -
 	STRUCMP.C -
 	STRUCPY.C -

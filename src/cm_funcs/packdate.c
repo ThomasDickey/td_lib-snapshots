@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: packdate.c,v 12.6 1994/05/23 23:40:37 tom Exp $";
+static	char	Id[] = "$Id: packdate.c,v 12.7 1994/07/02 00:24:25 tom Exp $";
 #endif
 
 /*
@@ -49,7 +49,7 @@ long	gmt_offset(
 	 */
 	tm = *localtime(&t);
 
-#if	HAVE_TIMEZONE
+#if	TIMEZONE_DECLARED
 	sec += timezone;
 #else
 #  if	HAVE_TM_GMTOFF
@@ -62,7 +62,7 @@ long	gmt_offset(
 		sec += (tz.tz_minuteswest * MINUTE);
 	}
 #  endif
-#endif	/* HAVE_TIMEZONE */
+#endif	/* TIMEZONE_DECLARED */
 
 	/*
 	 * Check to see if the local-time display for a given clock-time

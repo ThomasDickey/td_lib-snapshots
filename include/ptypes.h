@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 12.23 1994/07/01 23:43:34 tom Exp $ */
+/* $Id: ptypes.h,v 12.26 1994/07/02 21:43:28 tom Exp $ */
 
 #ifndef	PTYPES_H
 #define	PTYPES_H
@@ -346,19 +346,26 @@ typedef	short	ino_t;
 #ifdef	CHR_PTYPES
 #include <ctype.h>
 
-#if defined(tolower) || defined(sun) || defined(linux)
-#define LowerMacro(c) tolower(c)
-#define UpperMacro(c) toupper(c)
+#if STDC_HEADERS || HAVE_TOLOWER
+# define LowerMacro(c) tolower(c)
+# define UpperMacro(c) toupper(c)
+#else
+# if defined(_tolower)
+#  define LowerMacro(c) _tolower(c)
+#  define UpperMacro(c) _toupper(c)
+# endif
 #endif
 
-#if defined(_tolower) && !defined(LowerMacro)
-#define LowerMacro(c) _tolower(c)
-#define UpperMacro(c) _toupper(c)
-#endif
-
-#ifndef LowerCase
+#if STDC_HEADERS
+#define LowerCase(c) c = LowerMacro(c)
+#define UpperCase(c) c = UpperMacro(c)
+#else
 #define LowerCase(c) if (isascii(c) && isupper(c)) c = LowerMacro(c)
 #define UpperCase(c) if (isascii(c) && islower(c)) c = UpperMacro(c)
+#endif
+
+#ifndef isascii
+#define	isascii(c) (!(c & ~0x7f))	/* e.g., 7-bit ASCII */
 #endif
 
 #endif	/* CHR_PTYPES */
@@ -583,15 +590,15 @@ extern	int	main(_arx(int,argc) _ar1(char **,argv));
 #ifndef	EXIT_FAILURE
 # ifdef	vms
 #  include	<stsdef.h>
-#  define	SUCCESS	(STS$M_INHIB_MSG | STS$K_SUCCESS)
-#  define	FAIL	(STS$M_INHIB_MSG | STS$K_ERROR)
+#  define	EXIT_SUCCESS	(STS$M_INHIB_MSG | STS$K_SUCCESS)
+#  define	EXIT_FAILURE	(STS$M_INHIB_MSG | STS$K_ERROR)
 # else	/* unix */
-#  define	SUCCESS	(0)		/* if no error */
-#  define	FAIL	(1)		/* if any error */
+#  define	EXIT_SUCCESS	(0)		/* if no error */
+#  define	EXIT_FAILURE	(1)		/* if any error */
 # endif	/* vms/unix */
-# define EXIT_FAILURE FAIL
-# define EXIT_SUCCESS SUCCESS
 #endif
 
+#define FAIL    EXIT_FAILURE
+#define SUCCESS EXIT_SUCCESS
 
 #endif	/* PTYPES_H */

@@ -1,4 +1,4 @@
-00115/00000      => dummy.txt 	Wed Nov 18 11:09:16 1992
+00115/00000      => ../dummy.txt 	Wed Nov 18 06:09:16 1992
     1	#ifndef	lint
     2	static	char	Id[] = "@Id: file2argv.c,v 11.0 91/10/03 08:47:45 ste_cm Rel @";
     3	#endif
@@ -114,8 +114,8 @@
   113		/*NOTREACHED*/
   114	}
   115	#endif
-% diff dummy.txt 
-00002/00034  dummy.txt => dummy2.txt 	Wed Nov 18 14:57:34 1992
+% diff ../dummy.txt 
+00002/00034  ../dummy.txt => ../dummy2.txt 	Wed Nov 18 09:57:34 1992
     1	#ifndef	lint
     2	static	char	Id[] = "@Id: file2argv.c,v 11.0 91/10/03 08:47:45 ste_cm Rel @";
     3	#endif
@@ -199,4 +199,4 @@
    81		p[0] = blob;
    82		return (lines);
    83	}
-% diff dummy2.txt 
+% diff ../dummy2.txt 
