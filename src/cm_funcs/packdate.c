@@ -3,6 +3,8 @@
  * Author:	T.E.Dickey
  * Created:	26 Mar 1986
  * Modified:
+ *		21 Apr 2002, if mktime() is available, use that.  For instance
+ *			     cygwin uses 1974 for zero-time.
  *		16 Apr 2002, reorder ifdef's, preferring tm_gmtoff (BSD) over
  *			     timezone, to work with older Linux's.
  *		11 Jul 2001, undef timezone, which is (mis)defined in U/Win's
@@ -41,7 +43,7 @@
 #define TIM_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: packdate.c,v 12.17 2002/04/16 12:49:11 tom Exp $")
+MODULE_ID("$Id: packdate.c,v 12.18 2002/04/21 15:22:31 tom Exp $")
 
 #define	LEAP(y)	(!(y&3))
 
@@ -108,6 +110,18 @@ long	packdate (
 	_DCL(int,	 min)
 	_DCL(int,	 s)
 {
+#if HAVE_MKTIME
+	time_t sec;
+	struct tm tm;
+	tm.tm_year = year;
+	tm.tm_mon = mon - 1;
+	tm.tm_mday = day;
+	tm.tm_hour = hour;
+	tm.tm_min = min;
+	tm.tm_sec = s;
+	tm.tm_isdst = -1;
+	sec = mktime(&tm);
+#else
 	auto	time_t	sec = s;
 	register int	j;
 static	int	m[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
@@ -127,7 +141,7 @@ static	int	m[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 	if (mon > 2 && LEAP(year))	sec += DAY;
 	sec += (day-1) * DAY;
 	sec += gmt_offset(sec);
-
+#endif
 	return sec;
 }
 

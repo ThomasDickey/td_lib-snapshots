@@ -1,3 +1,11 @@
+2002-04-21  dickey@invisible-island.net
+
+	* src/cm_funcs/packdate.c: use mktime() if available.
+
+	* include/td_ext.h: add prototype for mktime()
+
+	* configure.in: add check for mktime()
+
 2002-04-16  dickey@invisible-island.net
 
 	* aclocal.m4: add CF_GNU_SOURCE (needed for Debian unstable).
