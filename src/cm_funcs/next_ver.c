@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: next_ver.c,v 10.0 1991/10/17 07:53:33 ste_cm Rel $";
+static	char	Id[] = "$Id: next_ver.c,v 12.0 1992/01/21 10:31:40 ste_cm Rel $";
 #endif
 
 /*
@@ -8,9 +8,7 @@ static	char	Id[] = "$Id: next_ver.c,v 10.0 1991/10/17 07:53:33 ste_cm Rel $";
  * Created:	01 Oct 1991
  * Modified:
  *
- * Function:	Invoke RCS checkin 'ci', then modify the last delta-date of the
- *		corresponding RCS-file to be the same as the modification date
- *
+ * Function:	Compute the next version number along a branch.
  */
 
 #define		STR_PTYPES
