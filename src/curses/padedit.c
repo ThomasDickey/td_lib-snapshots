@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: padedit.c,v 5.0 1989/09/06 15:49:36 ste_cm Rel $";
+static	char	Id[] = "$Id: padedit.c,v 8.0 1989/12/07 14:24:32 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,9 +7,21 @@ static	char	Id[] = "$Id: padedit.c,v 5.0 1989/09/06 15:49:36 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	14 Dec 1987
  * $Log: padedit.c,v $
- * Revision 5.0  1989/09/06 15:49:36  ste_cm
- * BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+ * Revision 8.0  1989/12/07 14:24:32  ste_cm
+ * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
  *
+ *		Revision 7.0  89/12/07  14:24:32  ste_cm
+ *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+ *		
+ *		Revision 6.0  89/12/07  14:24:32  ste_cm
+ *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+ *		
+ *		Revision 5.1  89/12/07  14:24:32  dickey
+ *		lint (SunOs 3.4)
+ *		
+ *		Revision 5.0  89/09/06  15:49:36  ste_cm
+ *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+ *		
  *		Revision 4.1  89/09/06  15:49:36  dickey
  *		use getwd definition from "ptypes.h"
  *		
@@ -47,6 +59,10 @@ static	char	Id[] = "$Id: padedit.c,v 5.0 1989/09/06 15:49:36 ste_cm Rel $";
 #include	"/sys/ins/pad.ins.c"
 #include	"/sys/ins/streams.ins.c"
 #endif	apollo
+
+#ifndef	SYSTEM5
+#include	<sys/wait.h>
+#endif
 
 #ifdef	apollo
 apollo_edit(name, readonly)
@@ -93,20 +109,27 @@ char	*cmd;
 char	*argv[];
 {
 	extern	int	errno;
-	int	pid, status;
+	int	pid;
 #ifdef	TEST
 	int	debug	= 0;
 #define	DEBUG(s,a)	if (debug) printf(s,a)
 #else	TEST
 #define	DEBUG(s,a)
 #endif	TEST
-#define	ERRNO	((status >> 8) & 0xff)
+
+#ifdef	SYSTEM5
+int	status;
+#define	W_RETCODE	((status >> 8) & 0xff)
+#else	SYSTEM5
+union	wait	status;
+#define	W_RETCODE	status.w_retcode
+#endif	SYSTEM5
 
 	if ((pid = fork()) > 0) {
 		DEBUG("spawn-1st (pid= %d)\n", pid);
 		while (wait(&status) >= 0);
 		DEBUG("spawn-1st (status= %#x)\n", status);
-		if (errno = ERRNO)
+		if (errno = W_RETCODE)
 			return (-1);
 		return (0);
 	} else if (pid == 0) {

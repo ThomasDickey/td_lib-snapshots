@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/string/RCS/lsbycols.c,v 5.0 1989/04/20 13:53:19 ste_cm Rel $";
+static	char	Id[] = "$Id: lsbycols.c,v 5.1 1989/12/07 14:06:51 dickey Exp $";
 #endif	lint
 
 /*
@@ -16,8 +16,8 @@ static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/string/RCS/
  *		num	- number of items in the array
  */
 
-#include <stdio.h>
-#include <string.h>
+#define	STR_PTYPES
+#include "ptypes.h"
 
 #ifdef	lint
 #define	LIST(n)	(*(listp + n))		/* close enough to fool lint */
@@ -48,17 +48,17 @@ char	**listp;
 		for (k = 0; k < cols; k++) {
 			if ((this = j + (k * rows)) >= num) {
 				if (k != 0)
-					printf("\n");
+					PRINTF("\n");
 				break;
 			}
 			if (k != 0)
-				printf("%*s", gap, " ");
+				PRINTF("%*s", gap, " ");
 			if ((this + rows >= num)
 			||  (k == cols - 1)) {
-				printf("%s\n", LIST(this));
+				PRINTF("%s\n", LIST(this));
 				break;
 			} else
-				printf("%-*s", maxlen, LIST(this));
+				PRINTF("%-*s", maxlen, LIST(this));
 		}
 	}
 }

@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 5.2 1989/10/31 09:20:55 dickey Exp $ */
+/* $Id: ptypes.h,v 5.3 1989/12/07 13:46:35 dickey Exp $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -17,9 +17,13 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-#ifndef	S_IFSOCK
+#ifdef	S_IFSOCK
+#if	S_IFSOCK == S_IFLNK
+#define	SYSTEM5		/* apollo sr10.x sys5 */
+#endif
+#else			/* no sockets, assume bsd4.x */
 #define	SYSTEM5
-#endif	S_IFSOCK
+#endif
 
 #ifndef	S_IFLNK
 #define	lstat	stat
@@ -28,9 +32,12 @@
 #ifdef	SYSTEM5
 #define	getwd(p)	getcwd(p,sizeof(p)-2)
 extern	char	*getcwd();
-#else	!SYSTEM5
+#else	/* !SYSTEM5 */
 extern	char	*getwd();
-#endif	S_IFSOCK
+#ifdef	unix		/* bsd4.x on SunOs? */
+extern	char	*sprintf();
+#endif
+#endif
 
 /*
  * Definitions for files which are combined lint-library/function-prototype

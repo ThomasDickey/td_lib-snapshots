@@ -1,3 +1,99 @@
+1989-12-07  dickey@software.org
+
+	* src/cm_funcs/rcstemp.c: lint (SunOs 3.4, Apollo SR10.1)
+
+1989-12-07  ste_cm@software.org
+
+	* src/cm_funcs/rcstemp.c: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/cm_funcs/rcstemp.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/cm_funcs/rcstemp.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1989-12-07  dickey@software.org
+
+	* src/cm_funcs/rcslocks.c: lint (Apollo SR10.1)
+
+1989-12-07  ste_cm@software.org
+
+	* src/cm_funcs/rcslocks.c:
+	BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/cm_funcs/rcslocks.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/cm_funcs/rcslocks.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1989-12-07  dickey@software.org
+
+	* src/process/catarg.c: lint (Apollo SR10.1)
+
+1989-12-07  ste_cm@software.org
+
+	* src/process/catarg.c: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/process/catarg.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/process/catarg.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1989-12-07  dickey@software.org
+
+	* src/Makefile:
+	added 'lint2.out' rule, which is less sensitive to command-length
+	than 'lint.out' (though much slower!)
+
+	* src/curses/padedit.c: lint (SunOs 3.4)
+
+1989-12-07  ste_cm@software.org
+
+	* src/curses/padedit.c: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/curses/padedit.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/curses/padedit.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1989-12-07  dickey@software.org
+
+	* src/curses/savewin.c: lint (SunOs 3.4)
+
+1989-12-07  ste_cm@software.org
+
+	* src/curses/savewin.c: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/curses/savewin.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/curses/savewin.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1989-12-07  dickey@software.org
+
+	* src/process/revert.c: lint (SunOs 3.4)
+
+1989-12-07  ste_cm@software.org
+
+	* src/process/revert.c: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/process/revert.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/process/revert.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1989-12-07  dickey@software.org
+
+	* src/string/lsbycols.c: lint (SunOs 3.4)
+
+	* include/ptypes.h: lint 'sprintf()' calls on SunOs.
+	corrected ifdef for SYSTEM5 on apollo SR10.1
+
 1989-12-06  dickey@software.org
 
 	* src/pathname/pathcat.c: 'fname' argument may be empty (cf: link2rcs).

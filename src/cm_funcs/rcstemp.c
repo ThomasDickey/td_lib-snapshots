@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcstemp.c,v 5.1 1989/10/31 13:25:20 dickey Exp $";
+static	char	Id[] = "$Id: rcstemp.c,v 8.0 1989/12/07 15:21:19 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,10 +7,22 @@ static	char	Id[] = "$Id: rcstemp.c,v 5.1 1989/10/31 13:25:20 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	25 Aug 1988
  * $Log: rcstemp.c,v $
- * Revision 5.1  1989/10/31 13:25:20  dickey
- * account for present setting of 'umask'; use chown to force
- * the group of the created-directory
+ * Revision 8.0  1989/12/07 15:21:19  ste_cm
+ * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
  *
+ *		Revision 7.0  89/12/07  15:21:19  ste_cm
+ *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+ *		
+ *		Revision 6.0  89/12/07  15:21:19  ste_cm
+ *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+ *		
+ *		Revision 5.2  89/12/07  15:21:19  dickey
+ *		lint (SunOs 3.4, Apollo SR10.1)
+ *		
+ *		Revision 5.1  89/10/31  13:32:06  dickey
+ *		account for present setting of 'umask'; use chown to force
+ *		the group of the created-directory
+ *		
  *		Revision 5.0  89/10/04  13:09:32  ste_cm
  *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
  *		
@@ -61,7 +73,7 @@ extern	char	*uid2s();
 extern	char	*pathcat();
 extern	char	*pathleaf();
 
-#define	DEBUG	if (rcs_debug()) printf
+#define	DEBUG	if (rcs_debug()) PRINTF
 
 char *
 rcstemp(working, copy)
@@ -82,7 +94,7 @@ char	*working;
 				failed(tf);
 				/*NOTREACHED*/
 			}
-			if (chown(tf, geteuid(), getegid()) < 0){
+			if (chown(tf, (int)geteuid(), (int)getegid()) < 0){
 				failed("chown");
 				/*NOTREACHED*/
 			}

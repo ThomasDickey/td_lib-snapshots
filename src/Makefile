@@ -1,10 +1,14 @@
-# $Id: Makefile,v 5.0 1989/10/26 08:54:17 ste_cm Rel $
+# $Id: Makefile,v 5.1 1989/12/07 14:33:37 dickey Exp $
 # MAKE-file for miscellaneous library routines
 #
 # $Log: Makefile,v $
-# Revision 5.0  1989/10/26 08:54:17  ste_cm
-# BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+# Revision 5.1  1989/12/07 14:33:37  dickey
+# added 'lint2.out' rule, which is less sensitive to command-length
+# than 'lint.out' (though much slower!)
 #
+#	Revision 5.0  89/10/26  08:54:17  ste_cm
+#	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+#	
 #	Revision 4.7  89/10/26  08:54:17  dickey
 #	added TRACK_WD module
 #	
@@ -268,4 +272,8 @@ vcs_file.o:	$I/rcsdefs.h
 ####### (Development) ##########################################################
 $(SOURCES):			; $(GET) $@
 lint.out:	$(CSRC)		; $(DATE); tdlint $(LINTOPT) $? >>$@
+lint2.out:	$(CSRC)
+	$(DATE)
+	sh -c 'for i in $?;do echo $$i: | tee -a $@;\
+		tdlint $(LINTOPT) $$i >>$@;done'
 lincnt.out:	$(CSRC)		; $(DATE); lincnt $(CSRC) >>$@
