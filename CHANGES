@@ -1,3 +1,13 @@
+1991-06-04  dickey@software.org
+
+	* src/port2vms/name2vms.c:
+	make this "work" on SunOs, where ctype.h is different
+
+1991-06-04  ste_cm@software.org
+
+	* src/port2vms/name2vms.c:
+	BASELINE Tue Jun 11 16:44:53 1991 -- apollo sr10.3
+
 1991-06-03  dickey@software.org
 
 	* include/td_lib.h: corrected function-prototype for 'catchall()'
