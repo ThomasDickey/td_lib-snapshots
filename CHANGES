@@ -1,3 +1,17 @@
+1988-04-21  dickey@software.org
+
+	* src/curses/resizwin.c: New file.
+
+	* src/curses/dumpwin.c:
+	added tag & timestamp; show more information (still don't know what firstch is)
+
+	* src/curses/savewin.c: New file.
+
+	* include/llib-ltd: added 'savewin', 'dumpwin', 'dumpchr' modules
+
+	* src/Makefile:
+	added 'dumpchr', 'dumpwin', 'resizewin', 'savewin' modules
+
 1988-04-20  dickey@software.org
 
 	* src/curses/dumpchr.c: New file.
