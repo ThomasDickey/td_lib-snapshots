@@ -1,3 +1,15 @@
+1994-07-26  dickey@clark.net
+
+	* src/curses/resizwin.c:
+	simplified so I don't try to resize SYS5_CURSES (yet)
+
+	* include/td_qsort.h: don't test ANSI_QSORT (too vague)
+
+	* include/td_ext.h:
+	always prototype 'getwd()' if we've got it (to get char * value)
+
+	* src/curses/on_winch.c: corrected prototype def for 'catch_winch()'
+
 1994-07-23  dickey@clark.net
 
 	* src/curses/scr_size.c:
