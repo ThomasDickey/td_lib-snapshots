@@ -1,3 +1,34 @@
+1991-10-07  dickey@software.org
+
+	* src/cm_funcs/rcsload.c:
+	added some of the code (for main-trunk) to build versions of
+	loaded text using 'vecedit()'
+
+	* src/cm_funcs/rcsload.c:
+	modified code which loads file-contents so that we keep the
+	trailing newlines, for consistency with 'vecedit()' and
+	'file2argv()'
+
+	* include/rcsdefs.h:
+	added definition of 'RCS_VERSION' to use in 'checkin'
+
+1991-10-07  ste_cm@software.org
+
+	* include/rcsdefs.h:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+1991-10-07  dickey@software.org
+
+	* src/process/catchall.c: completed conversion to ANSI
+
+1991-10-07  ste_cm@software.org
+
+	* src/process/catchall.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+	* src/process/catchall.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
 1991-10-04  dickey@software.org
 
 	* test/Makefile: lint
