@@ -1,28 +1,27 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)cmdch.c	1.1 87/12/02 08:47:33";
+static	char	sccs_id[] = "@(#)cmdch.c	1.2 88/04/27 07:29:38";
 #endif	lint
 
 /*
  * Title:	cmdch.c (command-character decoder)
  * Author:	T.E.Dickey
  * Created:	01 Dec 1987 (broke out of 'ded.c')
+ * Modified:
+ *		27 Apr 1988, broke out "cmdch.h".
  *
  * Function:	Read a command-character.  If 'cnt_' is set, permit a
  *		repeat-count to be associated with the command.
  *
- *		The arrow keys are decoded into mnemonic control-keys:
- *			CTL(L) = left
- *			CTL(R) = right
- *			CTL(U) = up
- *			CTL(D) = down
+ *		The arrow keys are decoded into mnemonic control-keys
+ *		(see "cmdch.h").
  */
 
 #include	<curses.h>
 #include	<ctype.h>
+#include	"cmdch.h"
 extern	char	*getenv(),
 		*tgetstr();
 
-#define	CTL(c)	('c'&037)
 #define	EQL(s)	(!strcmp(i_blk,((s)?(s):"")))
 
 int
@@ -62,10 +61,10 @@ char	*KU, *KD, *KR, *KL;
 		if (j) {
 			i_blk[j] = '\0';
 			done	= TRUE;
-			if	(EQL(KU))	c = CTL(u);
-			else if	(EQL(KD))	c = CTL(d);
-			else if	(EQL(KL))	c = CTL(l);
-			else if	(EQL(KR))	c = CTL(r);
+			if	(EQL(KU))	c = ARO_UP;
+			else if	(EQL(KD))	c = ARO_DOWN;
+			else if	(EQL(KL))	c = ARO_LEFT;
+			else if	(EQL(KR))	c = ARO_RIGHT;
 			else if (EQL(HO))	c = 'H';
 			else if (j > 1)		{ beep(); done = FALSE; }
 		} else if ((cnt_ != 0) && isdigit(c)) {

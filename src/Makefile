@@ -1,4 +1,4 @@
-# @(#)Makefile	1.8 88/04/21 07:35:56
+# @(#)Makefile	1.9 88/04/27 07:33:21
 # MAKE-file for miscellaneous library routines
 L=lib.a
 #
@@ -40,6 +40,9 @@ $L:	$(OBJS)
 #
 $L:
 	ar rv $L $?
+#
+cmdch.o:	cmdch.h
+rawgets.o:	cmdch.h
 #
 clean:
 	rm *.o
