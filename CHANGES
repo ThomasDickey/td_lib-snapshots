@@ -1,3 +1,22 @@
+1989-10-31  dickey@software.org
+
+	* src/cm_funcs/rcstemp.c:
+	account for present setting of 'umask'; use chown to force
+	the group of the created-directory
+
+	* include/ptypes.h, src/process/catchall.c:
+	recompiled on sun3 (release 4.0.x)
+
+1989-10-31  ste_cm@software.org
+
+	* src/process/catchall.c: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/process/catchall.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/process/catchall.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
 1989-10-30  dickey@software.org
 
 	* include/ptypes.h: still tinkering with uid_t, gid_t types
