@@ -1,12 +1,31 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)execute.c	1.7 88/08/18 07:02:18";
+static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/process/RCS/execute.c,v 6.0 1988/08/30 07:10:36 ste_cm Rel $";
 #endif	lint
 
 /*
  * Title:	execute.c (execute a command, returning its status)
  * Author:	T.E.Dickey
  * Created:	21 May 1988
- * Modified:
+ * $Log: execute.c,v $
+ * Revision 6.0  1988/08/30 07:10:36  ste_cm
+ * BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+ *
+ *		Revision 5.0  88/08/30  07:10:36  ste_cm
+ *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+ *		
+ *		Revision 4.0  88/08/30  07:10:36  ste_cm
+ *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+ *		
+ *		Revision 3.0  88/08/30  07:10:36  ste_cm
+ *		BASELINE Mon Jun 19 13:27:01 EDT 1989
+ *		
+ *		Revision 2.0  88/08/30  07:10:36  ste_cm
+ *		BASELINE Thu Apr  6 09:45:13 EDT 1989
+ *		
+ *		Revision 1.9  88/08/30  07:10:36  dickey
+ *		sccs2rcs keywords
+ *		
+ *		30 Aug 1988, reset 'errno' to ensure proper error reporting.
  *		18 Aug 1988, made wait-loop more explicit
  *		27 Jul 1988, on bsd4.x systems, use 'vfork()' and 'execvp()'.
  *			     This is much faster (one the order of a second on
@@ -90,11 +109,13 @@ union	wait	status;
 		while ((count = wait(&status)) != pid) {
 			if ((count < 0) || (errno == ECHILD))
 				break;
+			errno = 0;
 		}
 		if (errno = W_RETCODE)
 			return (-1);
 		return (0);
 	} else if (pid == 0) {
+		errno = 0;
 		(void)EXECV(what, myargv, environ);
 		(void)_exit(errno);	/* just in case exec-failed */
 		/*NOTREACHED*/

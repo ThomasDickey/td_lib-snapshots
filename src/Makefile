@@ -1,4 +1,4 @@
-# @(#)Makefile	1.43 88/08/25 16:05:55
+# @(#)Makefile	1.46 88/08/30 15:22:35
 # MAKE-file for miscellaneous library routines
 #
 ####### (Development) ##########################################################
@@ -33,6 +33,7 @@ CSRC	=\
 	erasechar.c\
 	execute.c\
 	fexists.c\
+	filecopy.c\
 	flushall.c\
 	fp2argv.c\
 	gethome.c\
@@ -68,6 +69,8 @@ CSRC	=\
 	s2uid.c\
 	txtalloc.c\
 	uid2s.c\
+	usercopy.c\
+	userprot.c\
 	vecalloc.c\
 	which.c\
 	win2file.c
@@ -95,6 +98,7 @@ OBJS	=\
 	erasechar.o\
 	execute.o\
 	fexists.o\
+	filecopy.o\
 	flushall.o\
 	fp2argv.o\
 	gethome.o\
@@ -130,6 +134,8 @@ OBJS	=\
 	s2uid.o\
 	txtalloc.o\
 	uid2s.o\
+	usercopy.o\
+	userprot.o\
 	vecalloc.o\
 	which.o\
 	win2file.o
@@ -161,6 +167,7 @@ dumpwin.o:	ptypes.h
 erasechar.o:	ptypes.h
 execute.o:	ptypes.h
 fp2argv.o:	ptypes.h
+filecopy.o:	ptypes.h
 gid2s.o:	ptypes.h
 killchar.o:	ptypes.h
 name2s.o:	ptypes.h
@@ -178,6 +185,8 @@ resizewin.o:	ptypes.h
 setmtime.o:	ptypes.h
 savewin.o:	ptypes.h
 uid2s.o:	ptypes.h
+usercopy.o:	ptypes.h
+userprot.o:	ptypes.h
 win2file.o:	ptypes.h
 #
 ####### (Development) ##########################################################

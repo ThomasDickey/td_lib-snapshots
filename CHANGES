@@ -1,3 +1,50 @@
+1988-08-30  dickey@software.org
+
+	* src/pathname/filecopy.c:
+	fixed mode of resulting file; apollo changes 0444 in create to 0644!
+
+	* src/process/userprot.c: New file.
+
+	* include/llib-ltd, src/Makefile: added 'userprot.c' module.
+
+	* src/Makefile: added module 'filecopy.c'
+
+	* src/process/usercopy.c:
+	broke out the file-copy part (with arguments) as 'filecopy()'.
+
+	* src/pathname/filecopy.c: New file.
+
+	* include/llib-ltd:
+	added module 'filecopy.c'; modified 'rcstemp()' and 'usercopy()' to use it.
+
+	* src/cm_funcs/rcstemp.c:
+	use 'filecopy()' to make a temp-file owned by the setuid process if needed.
+
+	* include/llib-ltd: added 'usercopy.c' module.
+
+	* src/process/usercopy.c: New file.
+
+	* src/Makefile: added 'usercopy.c' module.
+
+	* src/process/execute.c: reset 'errno' to make cleaner error reporting.
+
+	* src/process/execute.c: sccs2rcs keywords
+
+1988-08-30  ste_cm@software.org
+
+	* src/process/execute.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/process/execute.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+	* src/process/execute.c: BASELINE Thu Apr  6 09:45:13 EDT 1989
+
+	* src/process/execute.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
+	* src/process/execute.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
 1988-08-25  dickey@software.org
 
 	* src/cm_funcs/rcstemp.c: New file.
