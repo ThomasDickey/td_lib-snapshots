@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19921123
+MANIFEST for td_lib, version t19921124
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         restrictions on copying/using this software
@@ -204,6 +204,7 @@ test/cm_funcs/packdate.ref      test result for packdate.sh
 test/cm_funcs/packdate.sh       test-script for packdate
 test/cm_funcs/rcsargpr.ref      test-result
 test/cm_funcs/rcsargpr.sh       test-script for rcsargpr
+test/cm_funcs/rcsload.ref       reference for 'rcsload.sh'
 test/cm_funcs/rcsload.sh        test-script for rcsload
 test/cm_funcs/rcsname.ref       test result
 test/cm_funcs/rcsname.sh        test-script for rcsname

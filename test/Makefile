@@ -1,4 +1,4 @@
-# $Id: Makefile,v 11.9 1992/11/20 13:52:36 dickey Exp $
+# $Id: Makefile,v 11.10 1992/11/24 10:31:02 dickey Exp $
 # make-file for CM_TOOLS common/test library
 
 ####### (Development) ##########################################################
@@ -124,7 +124,7 @@ SCRIPTS	= \
 C_SRC	= \
 	test_scomp.c
 
-SOURCES	= Makefile descrip.mms README $(C_SRC) $(SCRIPTS) $(REF_FILES)
+SOURCES	= Makefile descrip.mms README $(C_SRC) $(SCRIPTS) $(REF_FILES) $(DATA_FILES)
 
 PROGS	=\
 	abspath\
@@ -184,7 +184,7 @@ clean:				; rm -f $(CLEAN)
 clobber:	clean		; rm -f $(ALL)
 destroy:			; $(DESTROY)
 sources:	$(SOURCES)
-run_tests:	$(PROGS)	; $(RUN_TESTS)
+run_tests:	$(SOURCES) $(PROGS) ; $(RUN_TESTS)
 lint.out:
 lincnt.out:
 

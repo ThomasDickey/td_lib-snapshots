@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcsload.c,v 11.7 1992/11/19 09:13:19 dickey Exp $";
+static	char	Id[] = "$Id: rcsload.c,v 12.0 1992/11/24 15:18:44 ste_cm Rel $";
 #endif
 
 /*
@@ -506,7 +506,7 @@ _DCL(char *,	revision)
 	FILE	*fp;
 
 	strcat(strcpy(temp, "/usr/tmp/"), name);
-	printf("compare(%s) %s\n", temp, revision);
+	PRINTF("compare(%s) %s\n", temp, revision);
 	(void)unlink(temp);
 
 	if (!(fp = fopen(temp, "w")))

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: abspath.c,v 11.2 1992/11/17 12:49:39 dickey Exp $";
+static	char	Id[] = "$Id: abspath.c,v 12.0 1992/11/24 12:42:01 ste_cm Rel $";
 #endif
 
 /*
@@ -40,7 +40,10 @@ static	char	Id[] = "$Id: abspath.c,v 11.2 1992/11/17 12:49:39 dickey Exp $";
 #ifdef	apollo_sr10
 #ifdef	lint
 #define	const
+#ifndef	index
+#define	index	Index
 #endif
+#endif	/* lint */
 #include	<apollo/base.h>
 #include	<apollo/name.h>
 #else	/* !apollo_sr10 */
@@ -312,10 +315,10 @@ _MAIN
 				,"../."
 				,"./.."
 				,"/"
-#ifdef	apollo
+				,"/tmp"
+#ifdef	apollo			/* put these on the end */
 				,"`node_data"
 #endif
-				,"/tmp"
 				};
 		do_test(SIZEOF(tbl), tbl);
 	}

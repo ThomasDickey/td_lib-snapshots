@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id: s2uid.sh,v 11.2 1992/11/18 13:34:18 dickey Exp $
+# $Id: s2uid.sh,v 12.0 1992/11/24 11:04:27 ste_cm Rel $
 #
 OUT=s2uid.tmp
 SED=/tmp/sed$$
@@ -13,8 +13,11 @@ rm -f $OUT
 echo '** scanning /etc/passwd' >$OUT
 while read name number
 do
-	echo $name >>$ARG
-	echo $name '=>' $number >>$REF
+	if test "$name" != "+"
+	then
+		echo $name >>$ARG
+		echo $name '=>' $number >>$REF
+	fi
 done <$SED
 #
 echo '** scanned /etc/passwd' >$OUT

@@ -1,9 +1,10 @@
-# $Id: Makefile,v 11.11 1992/11/19 15:11:58 dickey Exp $
+# $Id: Makefile,v 11.13 1992/11/24 12:40:52 dickey Exp $
 # MAKE-file for miscellaneous library routines
 
 ####### (Environment) ##########################################################
 TOP	= ../..
 include ../support/cm_library.mk
+LINTLIBS = -ltd -lcurses -ltermcap -lapollo
 
 RCS_PATH= `which rcs | sed -e s+/rcs$$+/+`
 

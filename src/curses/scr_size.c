@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: scr_size.c,v 11.0 1991/10/03 08:44:21 ste_cm Rel $";
+static	char	Id[] = "$Id: scr_size.c,v 12.0 1992/11/24 10:06:49 ste_cm Rel $";
 #endif
 
 /*
@@ -103,11 +103,11 @@ _MAIN
 	int	code;
 
 	if ((code = scr_size(lc)) >= 0) {
-		fprintf(stderr, "%s %d lines, %d columns\n",
+		FPRINTF(stderr, "%s %d lines, %d columns\n",
 			code ? "Termcap" : "Size:",
 			lc[0], lc[1]);
 	} else
-		fprintf(stderr, "?? cannot determine screen size\n");
+		FPRINTF(stderr, "?? cannot determine screen size\n");
 	if (code <= 0)
 		sleep(3);	/* in case we were in a pad */
 	exit(SUCCESS);

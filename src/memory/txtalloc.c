@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: txtalloc.c,v 11.2 1992/11/17 13:13:38 dickey Exp $";
+static	char	Id[] = "$Id: txtalloc.c,v 12.0 1992/11/24 15:47:08 ste_cm Rel $";
 #endif
 
 /*
@@ -170,7 +170,7 @@ void	txtfree(
 
 /******************************************************************************/
 static
-NODE *	free_NODE(
+void	free_NODE(
 	_AR1(NODE *,	p))
 	_DCL(NODE *,	p)
 {
@@ -179,7 +179,6 @@ NODE *	free_NODE(
 		free_NODE(p->rlink);
 		dofree((char *)p);
 	}
-	return 0;
 }
 
 void	free_txtalloc(_AR0)

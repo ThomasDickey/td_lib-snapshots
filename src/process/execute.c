@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: execute.c,v 11.1 1992/11/19 08:27:40 dickey Exp $";
+static	char	Id[] = "$Id: execute.c,v 12.0 1992/11/24 10:05:58 ste_cm Rel $";
 #endif
 
 /*
@@ -159,8 +159,8 @@ int	count	= 3,		/* minimum needed for 'bldarg()' */
 	dump_exec(what,myargv);
 #endif
 
-	(void)fflush(stdout);
-	(void)fflush(stderr);
+	FFLUSH(stdout);
+	FFLUSH(stderr);
 	if ((pid = fork()) > 0) {
 		while ((count = wait(ARG_WAIT(status))) != pid) {
 			if ((count < 0) || (errno == ECHILD))
@@ -198,16 +198,16 @@ _DCL(char *,	verb)
 _DCL(char **,	args)
 {
 	register int	j;
-	fprintf(stderr, "-> %s\n", verb);
+	FPRINTF(stderr, "-> %s\n", verb);
 	for (j = 0; args[j] != 0; j++)
-		fprintf(stderr, "%d) %s\n", j, args[j]);
+		FPRINTF(stderr, "%d) %s\n", j, args[j]);
 }
 
 _MAIN
 {
 	register int	j;
 
-	fprintf(stderr, "-> %s\n", argv[0]);
+	FPRINTF(stderr, "-> %s\n", argv[0]);
 
 	if (argc > 1) {
 		char	*verb = argv[1];
@@ -216,13 +216,13 @@ _MAIN
 		*parms = EOS;
 		for (j = 2; j < argc; j++)
 			catarg(parms, argv[j]);
-		fprintf(stderr, "%% %s %s\n", verb, parms);
+		FPRINTF(stderr, "%% %s %s\n", verb, parms);
 		if (execute(verb, parms) >= 0)
 			exit(SUCCESS);
 		perror(verb);
 		exit(FAIL);
 	}
-	fprintf(stderr, "? expected verb+parms\n");
+	FPRINTF(stderr, "? expected verb+parms\n");
 	exit(FAIL);
 	/*NOTREACHED*/
 }

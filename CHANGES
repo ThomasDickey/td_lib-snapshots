@@ -1,3 +1,179 @@
+1992-11-24  dickey@software.org
+
+	* src/memory/txtalloc.c: lint
+
+1992-11-24  ste_cm@software.org
+
+	* src/memory/txtalloc.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1992-11-24  dickey@software.org
+
+	* src/process/walkback.c: lint
+
+1992-11-24  ste_cm@software.org
+
+	* src/process/walkback.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1992-11-24  dickey@software.org
+
+	* src/memory/txtalloc.c: lint
+
+	* test/pathname/walktree.ref: added test-cases for m2comp, scomp
+
+	* src/pathname/name2s.c: make the test-driver portable
+
+1992-11-24  ste_cm@software.org
+
+	* src/pathname/name2s.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1992-11-24  dickey@software.org
+
+	* test/cm_funcs/rcsload.ref: oops: got some nulls into it...
+
+1992-11-24  ste_cm@software.org
+
+	* test/cm_funcs/rcsload.ref:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-24  dickey@software.org
+
+	* src/cm_funcs/rcsload.c: lint
+
+1992-11-24  ste_cm@software.org
+
+	* src/cm_funcs/rcsload.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1992-11-24  dickey@software.org
+
+	* src/cm_funcs/rcsedit.c: corrected trace-format
+
+1992-11-24  ste_cm@software.org
+
+	* src/cm_funcs/rcsedit.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1992-11-24  dickey@software.org
+
+	* test/process/walkback.ref: make this portable between apollo/sun
+
+1992-11-24  ste_cm@software.org
+
+	* test/process/walkback.ref:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-24  dickey@software.org
+
+	* test/process/walkback.sh:
+	make the test-result simply the number of successful walkbacks
+
+1992-11-24  ste_cm@software.org
+
+	* test/process/walkback.sh:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-24  dickey@software.org
+
+	* src/process/walkback.c: implemented a crude core-dump/traceback
+
+	* test/process/execute.sh:
+	filter /usr/bin to /bin so this works ok on SunOs 
+
+1992-11-24  ste_cm@software.org
+
+	* test/process/execute.sh:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-24  dickey@software.org
+
+	* test/unix/gid2s.sh: mods to work with SunOs 4.1.1
+
+1992-11-24  ste_cm@software.org
+
+	* test/unix/gid2s.sh:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-24  dickey@software.org
+
+	* src/cm_funcs/newzone.c: local copy of 'putenv()' was unnecessary
+	this obscured the fact that on SunOs I had not invoked 'tzset()'
+
+1992-11-24  ste_cm@software.org
+
+	* src/cm_funcs/newzone.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1992-11-24  dickey@software.org
+
+	* src/pathname/abspath.c: lint
+
+1992-11-24  ste_cm@software.org
+
+	* src/pathname/abspath.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1992-11-24  dickey@software.org
+
+	* src/Makefile: lint against apollo (hah!)
+
+	* src/pathname/pathcmp.c: mods to port on SunOs
+
+1992-11-24  ste_cm@software.org
+
+	* src/pathname/pathcmp.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1992-11-24  dickey@software.org
+
+	* test/unix/s2uid.sh: SunOs passwd file may contain "+" for default
+
+1992-11-24  ste_cm@software.org
+
+	* test/unix/s2uid.sh:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-24  dickey@software.org
+
+	* test/unix/uid2s.sh:
+	filter out uid's 0-9 for SunOs (which has multiple names mapped to root)
+
+1992-11-24  ste_cm@software.org
+
+	* test/unix/uid2s.sh:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-24  dickey@software.org
+
+	* test/pathname/abspath.ref: port to SunOs
+
+	* src/pathname/abspath.c: juggled test-case for port to SunOs
+
+	* test/Makefile:
+	oops: forgot to specify that I make sources when running tests
+
+	* src/Makefile, src/curses/scr_size.c: lint
+
+1992-11-24  ste_cm@software.org
+
+	* src/curses/scr_size.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1992-11-24  dickey@software.org
+
+	* src/process/execute.c: lint
+
+1992-11-24  ste_cm@software.org
+
+	* src/process/execute.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1992-11-24  dickey@software.org
+
+	* src/process/walkback.c: lint
+
 1992-11-23  dickey@software.org
 
 	* src/process/for_user.c, src/process/for_admn.c:

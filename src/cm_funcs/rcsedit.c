@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	*Id = "$Id: rcsedit.c,v 11.7 1992/11/19 09:42:17 dickey Exp $";
+static	char	*Id = "$Id: rcsedit.c,v 12.0 1992/11/24 14:43:26 ste_cm Rel $";
 #endif
 
 /*
@@ -70,7 +70,7 @@ void	Show(
 	if ((RCS_DEBUG > 1) && text != 0 && verbose) {
 		FFLUSH(stdout);
 		FFLUSH(stderr);
-		PRINTF("%s %d%c%s%s",
+		PRINTF("%s %d%s%s",
 			tag,
 			changes,
 			in_string ? "\"\t" : "\t",
