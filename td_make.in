@@ -1,18 +1,20 @@
-# $Id: td_make.in,v 12.17 1997/09/12 23:10:05 tom Exp $
+# $Id: td_make.in,v 12.18 1997/09/13 00:15:42 tom Exp $
 # common definitions for makefiles built over TD_LIB library.
 
 SHELL	= /bin/sh
 @SET_MAKE@
 
 ####### (Environment) ##########################################################
-# TOP	= ../../.. -- must define
-TD_LIB	= $(TOP)/lib
-TD_INC	= $(TOP)/include
+prefix		= @prefix@
+exec_prefix	= @exec_prefix@
 
-AR	= ar crv
-RM	= rm -f
-LINT	= @LINT@
-CTAGS	= dotags
+TD_LIB		= @TOP_SRCDIR@/lib
+TD_INC		= @TOP_SRCDIR@/include
+
+AR		= ar crv
+RM		= rm -f
+LINT		= @LINT@
+CTAGS		= dotags
 
 CC		= @CC@
 CPP		= @CPP@
@@ -26,9 +28,6 @@ EXTRA_CFLAGS	= @EXTRA_CFLAGS@
 CFLAGS		= @CFLAGS@
 #LINK		= purify $(CC) $(CFLAGS)
 LINK		= $(CC) $(CFLAGS)
-
-prefix		= @prefix@
-exec_prefix	= @exec_prefix@
 
 INSTALL_BIN	= $(exec_prefix)/bin
 INSTALL_LIB	= $(exec_prefix)/lib

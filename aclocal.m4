@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.102 1997/09/12 23:09:42 tom Exp $
+dnl $Id: aclocal.m4,v 12.105 1997/09/13 14:01:11 tom Exp $
 dnl vi:set ts=4:
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "CF_" to "AC_"
@@ -475,7 +475,8 @@ test $cf_cv_decl_localzone = yes && AC_DEFINE(LOCALZONE_DECLARED)
 AC_MSG_CHECKING(for timezone declared)
 AC_CACHE_VAL(cf_cv_decl_timezone,[
 	AC_TRY_COMPILE($cf_decl,
-		[long x = timezone],
+		[long x = timezone;
+		 timezone = x],
 		[cf_cv_decl_timezone=yes],
 		[cf_cv_decl_timezone=no])])
 AC_MSG_RESULT($cf_cv_decl_timezone)
@@ -1066,6 +1067,95 @@ AC_MSG_RESULT($cf_cv_type_size_t)
 test $cf_cv_type_size_t = no && AC_DEFINE(size_t, unsigned)
 ])dnl
 dnl ---------------------------------------------------------------------------
+dnl Append predefined lists to $2/makefile, given a path to a directory that
+dnl has a 'modules' file in $1.
+dnl
+dnl The library is named $Z, to avoid problems with parentheses.
+AC_DEFUN([CF_SRC_MAKEFILE],
+[
+cf_mod=$1/$2/modules
+cf_out=$2/makefile
+if test -f $cf_mod ; then
+${AWK-awk} <$cf_mod >>$cf_out '
+BEGIN	{
+		found = 0;
+	}
+	{
+		if ( found == 0 )
+		{
+			printf "\nCSRC="
+			found = 1;
+		}
+		printf " \\\n\t%s.c", [$]1
+	}
+END	{
+		print ""
+	}
+'
+	if test $cf_cv_ar_rules = yes ; then
+${AWK-awk} <$cf_mod >>$cf_out '
+BEGIN	{
+		found = 0;
+	}
+	{
+		if ( found == 0 )
+		{
+			printf "\nOBJS="
+			found = 1;
+		}
+		printf " \\\n\t$Z(%s.o)", [$]1
+	}
+END	{
+		print ""
+	}
+'
+	else
+${AWK-awk} <$cf_mod >>$cf_out '
+BEGIN	{
+		found = 0;
+	}
+	{
+		if ( found == 0 )
+		{
+			printf "\nOBJS="
+			found = 1;
+		}
+		printf " \\\n\t%s.o", [$]1
+	}
+END	{
+		print ""
+	}
+'
+	fi
+ifelse($3,,,[
+	cat >>$cf_out <<CF_EOF
+
+
+${make_include_left}$3${make_include_right}
+CF_EOF
+])
+test -f $1/$2/makefile.2nd && \
+    cat $1/$2/makefile.2nd >>$2/makefile
+
+	if test $cf_cv_ar_rules = yes ; then
+cat >>$cf_out <<CF_EOF
+
+\$Z:	\$(OBJS)
+	\$(RANLIB) \$Z
+CF_EOF
+	else
+cat >>$cf_out <<CF_EOF
+
+\$Z:	\$(OBJS)
+	\$(AR) \$Z \$(OBJS)
+	\$(RANLIB) \$Z
+CF_EOF
+	fi
+fi
+test -f $1/$2/makefile.end && \
+    cat $1/$2/makefile.end >>$2/makefile
+])dnl
+dnl ---------------------------------------------------------------------------
 dnl Test if the <sys/stat.h> 'stat' struct defines 'st_blocks' member.
 dnl If not, assume it's some non-BSD system.
 AC_DEFUN([CF_STAT_ST_BLOCKS],
@@ -1323,79 +1413,12 @@ dnl
 dnl Also, make a series of "cd XXX && make" statements, which is understood by
 dnl all "make -n" commands.
 dnl
-dnl The library is named $Z, to avoid problems with parentheses.
 AC_DEFUN([CF_TD_SRC_MAKEFILES],
 [
-for p in $cf_cv_src_modules
+for cf_src in $cf_cv_src_modules
 do
-	q=$srcdir/src/$p/modules
-	cf_out=src/$p/makefile
-	if test -f $q ; then
-${AWK-awk} <$q >>$cf_out '
-BEGIN	{
-		found = 0;
-	}
-	{
-		if ( found == 0 )
-		{
-			printf "\nCSRC="
-			found = 1;
-		}
-		printf " \\\n\t%s.c", [$]1
-	}
-'
-	if test $cf_cv_ar_rules = yes ; then
-${AWK-awk} <$q >>$cf_out '
-BEGIN	{
-		found = 0;
-	}
-	{
-		if ( found == 0 )
-		{
-			printf "\nOBJS="
-			found = 1;
-		}
-		printf " \\\n\t$Z(%s.o)", [$]1
-	}
-'
-	else
-${AWK-awk} <$q >>$cf_out '
-BEGIN	{
-		found = 0;
-	}
-	{
-		if ( found == 0 )
-		{
-			printf "\nOBJS="
-			found = 1;
-		}
-		printf " \\\n\t%s.o", [$]1
-	}
-'
-	fi
-	cat >>$cf_out <<CF_EOF
-
-
-${make_include_left}../td_rules.mk${make_include_right}
-CF_EOF
-	echo "	cd $p &&	\$(MAKE) \$(MAKE_OPTS) \[$]@" >>src/makefile
-
-	if test $cf_cv_ar_rules = yes ; then
-cat >>$cf_out <<CF_EOF
-
-\$Z:	\$(OBJS)
-	\$(RANLIB) \$Z
-CF_EOF
-	else
-cat >>$cf_out <<CF_EOF
-
-\$Z:	\$(OBJS)
-	\$(AR) \$Z \$(OBJS)
-	\$(RANLIB) \$Z
-CF_EOF
-	fi
-
-	fi
+	CF_SRC_MAKEFILE($srcdir,src/$cf_src,../td_rules.mk)
+	echo "	cd $cf_src &&	\$(MAKE) \$(MAKE_OPTS) \[$]@" >>src/makefile
 done
 test -f $srcdir/src/makefile.end && \
     cat $srcdir/src/makefile.end >>src/makefile
@@ -1516,6 +1539,12 @@ do
 done
 ])
 AC_MSG_RESULT($cf_cv_test_modules)
+])dnl
+dnl ---------------------------------------------------------------------------
+dnl Make an absolute symbol for the top of the configuration.
+AC_DEFUN([CF_TOP_SRCDIR],
+[TOP_SRCDIR=`cd $srcdir;pwd`
+AC_SUBST(TOP_SRCDIR)
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Make an uppercase version of a variable
