@@ -1,3 +1,10 @@
+2000-01-09  dickey@clark.net
+
+	* aclocal.m4: various minor fixes from tin and ncurses
+
+	* src/cm_funcs/sccslast.c:
+	fix for Solaris after Y2K fix (uses "00" for 2000).
+
 2000-01-04  dickey@clark.net
 
 	* src/cm_funcs/sccslast.c:
