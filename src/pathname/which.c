@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: which.c,v 5.0 1989/09/28 10:48:21 ste_cm Rel $";
+static	char	Id[] = "$Id: which.c,v 5.2 1989/12/11 13:13:11 dickey Exp $";
 #endif	lint
 
 /*
@@ -7,9 +7,15 @@ static	char	Id[] = "$Id: which.c,v 5.0 1989/09/28 10:48:21 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	18 Nov 1987
  * $Log: which.c,v $
- * Revision 5.0  1989/09/28 10:48:21  ste_cm
- * BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+ * Revision 5.2  1989/12/11 13:13:11  dickey
+ * lint
  *
+ *		Revision 5.1  89/12/11  09:39:19  dickey
+ *		corrected handling to relative pathnames
+ *		
+ *		Revision 5.0  89/09/28  10:48:21  ste_cm
+ *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+ *		
  *		Revision 4.3  89/09/28  10:48:21  dickey
  *		lint (apollo SR10.1)
  *		
@@ -33,16 +39,18 @@ static	char	Id[] = "$Id: which.c,v 5.0 1989/09/28 10:48:21 ste_cm Rel $";
  * Bugs:	Does not look at csh-aliases.
  */
 
+#define	ACC_PTYPES
 #define	STR_PTYPES
 #include	"ptypes.h"
 extern	char	*getenv();
+extern	char	*pathcat();
 
 static
 executable(name)
 char	*name;
 {
 struct	stat	sb;
-	if (access(name, 1) >= 0) {
+	if (access(name, X_OK) >= 0) {
 		if (stat(name, &sb) >= 0) {
 			if ((sb.st_mode & S_IFMT) == S_IFREG)
 				return(TRUE);
@@ -65,8 +73,9 @@ char	test[BUFSIZ];
 	s = path;
 	*test = *bfr = EOS;
 
-	if ((*find == '/') && executable(find)) {
-		(void)strcpy(test, find);
+	if (strchr(find,'/') != 0) {
+		if (executable(find))
+			(void)pathcat(test, dot, find);
 	} else while (*s) {
 		for (d = s; (*d != EOS) && (*d != ':'); d++);
 		if ((d == s) || !strncmp(s, ".", d-s))
