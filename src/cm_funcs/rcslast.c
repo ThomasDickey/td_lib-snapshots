@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcslast.c,v 11.0 1992/02/07 15:15:24 ste_cm Rel $";
+static	char	Id[] = "$Id: rcslast.c,v 11.1 1992/10/29 08:28:15 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: rcslast.c,v 11.0 1992/02/07 15:15:24 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	18 May 1988, from 'sccslast.c'
  * Modified:
+ *		29 Oct 1992, use 'rcsedit.c'
  *		07 Feb 1992, use 'rcs2time()'
  *		03 Oct 1991, conversion to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
@@ -29,70 +30,36 @@ static	char	Id[] = "$Id: rcslast.c,v 11.0 1992/02/07 15:15:24 ste_cm Rel $";
 #define	STR_PTYPES
 #include	"ptypes.h"
 #include	<ctype.h>
+#include	<time.h>
 #include	"rcsdefs.h"
 
-#define	SKIP(s)	while (isspace(*s)) s++;
-#define	COPY(name)\
-		SKIP(s);\
-		while (*s && !isspace(*s))		*name++ = *s++;\
-		*name = EOS;
-
-static	FILE	*rfp;
-static	char	bfr[BUFSIZ];
-
 /*
- * Read the current line and parse for keywords, which are in quasi-free format,
- * separated by semicolons.
+ * Returns the modification date of the given file, or 0 if not found
  */
-static
-parse(
-_ARX(char *,	key)
-_AR1(char *,	arg)
-	)
-_DCL(char *,	key)
-_DCL(char *,	arg)
+static	/* patch */
+time_t	filedate(
+	_AR1(char *,	path))
+	_DCL(char *,	path)
 {
-register
-char	*mark, *s;
-
-	while (*bfr == EOS || *bfr == '\n')
-		if (fgets(bfr, sizeof(bfr), rfp) == 0)
-			return (FALSE);
-	if (mark = strchr(s = bfr, ';')) {
-		*mark++ = EOS;
-		while (isspace(*mark))			mark++;
-	} else
-		mark = s + strlen(s);
-
-	COPY(key);
-	COPY(arg);
-	for (s = bfr; *s++ = *mark++;);
-	return (TRUE);
+	STAT	sb;
+	if (stat(path, &sb) >= 0)
+		return sb.st_mtime;
+	return 0;
 }
 
 /*
- * Parse the lock-argument to obtain the locker's name and the locked version.
- * patch: this looks only for the first lock.
+ * Debugging-trace for dates
  */
 static
-parse2(
-_ARX(char *,	arg)
-_ARX(char *,	locker)
-_AR1(char *,	version)
-	)
-_DCL(char *,	arg)
-_DCL(char *,	locker)
-_DCL(char *,	version)
+void	ShowDate(
+	_ARX(char *,	tag)
+	_AR1(time_t,	t)
+		)
+	_DCL(char *,	tag)
+	_DCL(time_t,	t)
 {
-register char *s;
-
-	if (s = strchr(arg, ':')) {
-		*s++ = EOS;
-		SKIP(s);
-		COPY(version);
-		s = arg;
-		COPY(locker);
-	}
+	char	*s = (t != 0) ? ctime(&t) : "<none>\n";
+	PRINTF("++   %s: %s", tag, s);
 }
 
 /*
@@ -100,54 +67,87 @@ register char *s;
  * 'path[]'.  We scan for the following:
  */
 static
-tryRCS (
-_ARX(char *,	path)
-_ARX(char **,	vers_)
-_ARX(time_t *,	date_)
-_AR1(char **,	lock_)
-	)
-_DCL(char *,	path)
-_DCL(char **,	vers_)
-_DCL(time_t *,	date_)
-_DCL(char **,	lock_)
+void	tryRCS (
+	_ARX(char *,	path)
+	_ARX(char **,	vers_)
+	_ARX(time_t *,	date_)
+	_AR1(char **,	lock_)
+		)
+	_DCL(char *,	path)
+	_DCL(char **,	vers_)
+	_DCL(time_t *,	date_)
+	_DCL(char **,	lock_)
 {
-int	finish	= FALSE,
-	skip	= FALSE;
-char	key[BUFSIZ],
-	arg[BUFSIZ],
-	lstring[BUFSIZ],
-	vstring[BUFSIZ];
+	int	finish	= FALSE,
+		skip	= FALSE,
+		code	= S_FAIL;
+	char	*s	= 0,
+		user[BUFSIZ],
+		key[BUFSIZ],
+		arg[BUFSIZ],
+		lstring[BUFSIZ],
+		vstring[BUFSIZ];
 
-	if (rfp = fopen(path, "r")) {
+	if (rcsopen(path, RCS_DEBUG, TRUE)) {
+
+		(void)strcpy (user, uid2s((int)getuid()));
 		(void)strcpy(lstring, strcpy(vstring, "?"));
-		*bfr = EOS;			/* initialize scanner */
-		while (!finish && parse(key, arg)) {
-			switch (rcskeys(key)) {
+
+		while (!finish && (s = rcsread(s, code))) {
+			s = rcsparse_id(key, s);
+
+			switch (code = rcskeys(key)) {
 			case S_HEAD:
-				if (rcskeys(strcpy(vstring, arg)) != S_VERS)
+				/*
+				 * Get the tip-version in case no lock is found
+				 */
+				s = rcsparse_id(vstring, s);
+				if (rcskeys(vstring) != S_VERS)
 					finish = TRUE;
 				break;
-			case S_COMMENT:
-				*bfr = EOS;	/* force new-scan */
-				break;
 			case S_LOCKS:
-				parse2(arg, lstring, vstring);
+				/*
+				 * Look for any lock by current user, or any
+				 * lock if the current user has none.
+				 */
+				while ((s != 0) && (*s != ';')) {
+					register char *p;
+					s = rcsparse_id(key, s);
+					if (!(p = strchr(key, ':')))
+						break;
+					*p = EOS;
+					if (!strcmp(key, user)
+					 ||  strcmp(lstring, user)) {
+						(void)strcpy(lstring, key);
+						(void)strcpy(vstring, p+1);
+					}
+					*p = ':';
+				}
 				break;
 			case S_VERS:
 				skip = strcmp(key, vstring);
 				break;
 			case S_DATE:
-				if (skip)	break;
-				*date_ = rcs2time(arg);
-				*lock_ = txtalloc(lstring);
-				*vers_ = txtalloc(vstring);
-				finish = TRUE;
+				if (!skip) {
+					s = rcsparse_id(arg, s);
+					*date_ = rcs2time(arg);
+					*lock_ = txtalloc(lstring);
+					*vers_ = txtalloc(vstring);
+					finish = TRUE;
+				}
 				break;
 			case S_DESC:
+			case S_LOG:
+			case S_TEXT:
 				finish = TRUE;
 			}
 		}
-		(void) fclose(rfp);
+		rcsclose();
+		if (RCS_DEBUG) {
+			PRINTF("++ rcslast %s %s\n", *lock_, *vers_);
+			ShowDate("lockrev", *date_);
+			ShowDate("working", filedate(path));
+		}
 	}
 }
 
@@ -174,7 +174,6 @@ _DCL(char **,	lock_)
 			is_RCS,
 			len;
 	register char	*s, *t;
-	struct	 stat	sbfr;
 
 	*lock_ =
 	*vers_ = "?";
@@ -220,9 +219,7 @@ _DCL(char **,	lock_)
 				(void)strcat(strcpy(name, "../"), t);
 			name[strlen(name) - len_s] = EOS; /* trim suffix */
 
-			*date_ = 0;	/* use actual modification-date! */
-			if (stat(name, &sbfr) >= 0)
-				*date_ = sbfr.st_mtime;
+			*date_ = filedate(name);
 			return;
 		}
 	}
