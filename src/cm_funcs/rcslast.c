@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcslast.c,v 11.1 1992/10/29 08:28:15 dickey Exp $";
+static	char	Id[] = "$Id: rcslast.c,v 12.0 1993/02/01 15:33:27 ste_cm Rel $";
 #endif
 
 /*
@@ -7,6 +7,8 @@ static	char	Id[] = "$Id: rcslast.c,v 11.1 1992/10/29 08:28:15 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	18 May 1988, from 'sccslast.c'
  * Modified:
+ *		01 Feb 1993, last change did not properly parse user:id from
+ *			     S_LOCKS case.
  *		29 Oct 1992, use 'rcsedit.c'
  *		07 Feb 1992, use 'rcs2time()'
  *		03 Oct 1991, conversion to ANSI
@@ -111,17 +113,15 @@ void	tryRCS (
 				 * lock if the current user has none.
 				 */
 				while ((s != 0) && (*s != ';')) {
-					register char *p;
 					s = rcsparse_id(key, s);
-					if (!(p = strchr(key, ':')))
+					if (*s != ':')
 						break;
-					*p = EOS;
+					s = rcsparse_id(arg, s+1);
 					if (!strcmp(key, user)
 					 ||  strcmp(lstring, user)) {
 						(void)strcpy(lstring, key);
-						(void)strcpy(vstring, p+1);
+						(void)strcpy(vstring, arg);
 					}
-					*p = ':';
 				}
 				break;
 			case S_VERS:
