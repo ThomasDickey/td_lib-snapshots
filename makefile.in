@@ -1,4 +1,4 @@
-# $Id: makefile.in,v 12.12 1997/09/14 23:01:28 tom Exp $
+# $Id: makefile.in,v 12.13 1997/09/16 10:08:08 tom Exp $
 # Top-level makefile for TD_LIB common library
 
 SHELL		= /bin/sh
@@ -110,3 +110,4 @@ $(bindir) \
 $(my_incdir) \
 $(libdir) \
 lib:					; $(srcdir)/mkdirs.sh $@
+$(SOURCES):
