@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: pathcat.c,v 5.0 1989/10/04 12:12:08 ste_cm Rel $";
+static	char	Id[] = "$Id: pathcat.c,v 6.0 1989/12/06 08:52:49 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,9 +7,15 @@ static	char	Id[] = "$Id: pathcat.c,v 5.0 1989/10/04 12:12:08 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	12 Sep 1988
  * $Log: pathcat.c,v $
- * Revision 5.0  1989/10/04 12:12:08  ste_cm
- * BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+ * Revision 6.0  1989/12/06 08:52:49  ste_cm
+ * BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
  *
+ *		Revision 5.1  89/12/06  08:52:49  dickey
+ *		'fname' argument may be empty (cf: link2rcs).
+ *		
+ *		Revision 5.0  89/10/04  12:12:08  ste_cm
+ *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+ *		
  *		Revision 4.1  89/10/04  12:12:08  dickey
  *		lint (apollo SR10.1)
  *		
@@ -45,6 +51,11 @@ char	*dst, *dname, *fname;
 
 	if (*fname == '/')
 		return (strcpy(dst, fname));
+	else if (*fname == EOS) {
+		if (dst != dname)
+			(void)strcpy(dst, dname);
+		return (dst);
+	}
 	(void)strcpy(tmp, dname);
 	if ((s = strrchr(tmp, '/')) && (!strcmp(s, "/")))
 		*s = '\0';		/* trim excess '/' */
