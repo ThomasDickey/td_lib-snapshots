@@ -1,3 +1,9 @@
+2005-01-01  dickey@invisible-island.net
+
+	* config.sub: update to 2004/11/30
+
+	* config.guess: update to 2004/11/12
+
 2004-09-16  dickey@invisible-island.net
 
 	* aclocal.m4: resync - miscellaneous fixes from lynx, xterm and cdk
