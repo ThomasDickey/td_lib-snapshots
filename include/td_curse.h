@@ -1,4 +1,4 @@
-/* $Id: td_curse.h,v 12.15 1994/06/27 23:08:28 tom Exp $ */
+/* $Id: td_curse.h,v 12.16 1994/06/30 22:57:39 tom Exp $ */
 
 /*
  * TD_LIB CURSES-related definitions
@@ -164,6 +164,12 @@ extern	int	wrefresh	(WINDOW *);
 #  endif
 #endif
 	/* rawgets.c -------------------------------------------------- */
+#ifdef SIG_PTYPES
+#  if SIGWINCH
+extern	int	x_rawgets;	/* position, for use when resizing */
+extern	int	y_rawgets;
+#  endif
+#endif
 	int	wrawgets (
 			_arx(WINDOW *,	win)
 			_arx(char *,	buffer)

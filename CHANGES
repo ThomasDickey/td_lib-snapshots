@@ -1,3 +1,19 @@
+1994-06-30  dickey@clark.net
+
+	* src/curses/rawgets.c: allow CTL/N and CTL/P as down/up arrows
+
+	* src/curses/rawgets.c:
+	renamed xbase,ybase to x_rawgets,y_rawgets and made them externs, for
+	use in resizing windows
+
+	* include/td_curse.h: added x_rawgets, y_rawgets
+
+1994-06-29  dickey@clark.net
+
+	* src/curses/rawgets.c:
+	got this to (more or less) handle window-resizing, except that the origin
+	that the caller uses may shift (unknown to this module).
+
 1994-06-27  dickey@clark.net
 
 	* src/curses/on_winch.c: made this work

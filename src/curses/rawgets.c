@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: rawgets.c,v 12.6 1994/05/30 22:41:13 tom Exp $";
+static	char	Id[] = "$Id: rawgets.c,v 12.8 1994/06/30 23:05:02 tom Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: rawgets.c,v 12.6 1994/05/30 22:41:13 tom Exp $";
  * Title:	rawgets.c (raw-mode 'gets()')
  * Created:	29 Sep 1987 (from 'fl.c')
  * Modified:
+ *		28 Jun 1994, modified for window-resizing.
  *		30 May 1994, always allow backspace as an erase-character.
  *		24 Nov 1993, added xterm-mouse support.
  *		05 Nov 1993, absorb "cmdch.h" into "td_curse.h"
@@ -61,6 +62,7 @@ static	char	Id[] = "$Id: rawgets.c,v 12.6 1994/05/30 22:41:13 tom Exp $";
  *		On normal exit, the user provides a newline, which is echoed.
  */
 
+#define		SIG_PTYPES	/* to pick up SIGWINCH, and 'on_winch()' */
 #define		STR_PTYPES
 #include	"ptypes.h"
 #include	<ctype.h>
@@ -76,19 +78,29 @@ static	char	Id[] = "$Id: rawgets.c,v 12.6 1994/05/30 22:41:13 tom Exp $";
 #define	to_right(c)	(((c) == '\f') || ((c) == ARO_RIGHT))
 #define	to_end(c)	(((c) == CTL('F')))
 
-static	void	MoveTo(_ar1(char *,new));
-static	void	ShowAt(_ar1(char *,at));
+/*
+ * Keep the base-position of 'bfr[]' visible, so that when resizing the
+ * window, the calling application can move the 'rawgets()' display area.
+ */
+	int	x_rawgets, y_rawgets;
+
+/*
+ * Private functions/variables
+ */
+static	void	MoveTo(_ar1(char *, new));
+static	void	ShowAt(_ar1(char *, at));
 
 static	WINDOW	*Z;		/* window we use in this module */
 static	char	**Prefix;	/* insert/scrolling prefix, if any */
 static	DYN	*history;	/* record of keystrokes if logging active */
-static	int	xbase,	ybase,	/* base-position of 'bfr[]' */
-		xlast,		/* last usable column in screen */
+static	int	xlast,		/* last usable column in screen */
 		shift,		/* amount shifted in no-wrap mode */
 		wrap,		/* if we echo newline, assume wrappable */
 		errs,		/* flag for error/illegal char */
 		Imode;		/* insert:1, scroll:0 */
 static	char	*bbase;		/* 'bfr[]' copy */
+static	char	*CurIns;	/* current insertion position */
+static	int	FieldLen;	/* limit before truncation or wrap */
 
 /*
  * Clear the remainder of the current line to the 'xlast' position.  Don't
@@ -111,7 +123,7 @@ static
 void	ShowAll(_AR0)
 {
 	if (Z) {
-		(void)wmove(Z, ybase, xbase);
+		(void)wmove(Z, y_rawgets, x_rawgets);
 		ShowAt(bbase+shift);
 	}
 }
@@ -128,8 +140,8 @@ void	MoveTo(
 {
 	if (Z) {
 		register char	*s;
-		register int	y = ybase,
-				x = xbase;
+		register int	y = y_rawgets,
+				x = x_rawgets;
 		auto	 int	original = shift;
 
 		for (s = bbase, shift = 0; *s != EOS && s != new; s++) {
@@ -148,7 +160,7 @@ void	MoveTo(
 		if (shift != original)
 			ShowAll();
 
-		(void)wmove(Z,y,x);
+		(void)wmove(Z, y, x);
 	}
 }
 
@@ -167,12 +179,12 @@ char *	MoveFrom(
 {
 	if (Z) {
 		register char	*s;
-		register int	y = ybase,
-				x = xbase;
+		register int	y = y_rawgets,
+				x = x_rawgets;
 
-		if (row < ybase) {
-			row = ybase;
-			col = xbase;
+		if (row < y_rawgets) {
+			row = y_rawgets;
+			col = x_rawgets;
 		}
 
 		for (s = bbase; *s != EOS; s++) {
@@ -205,7 +217,7 @@ void	ShowAt(
 	_DCL(char *,	at)
 {
 	if (Z) {
-		register int	y,x, row, col, len, max;
+		register int	y, x, row, col, len, max;
 
 		getyx(Z, y, x);
 		for (row = y, col = x; *at && (row < Z->_maxy); row++) {
@@ -228,7 +240,7 @@ void	ShowAt(
 			if (!wrap)	break;
 		}
 		ClearIt();
-		(void)wmove(Z,y,x);
+		(void)wmove(Z, y, x);
 	}
 }
 
@@ -290,11 +302,11 @@ char *	DeleteBefore(
 			getyx(Z, new, x);
 
 			while (old > new) {
-				(void)wmove(Z,old,0);
+				(void)wmove(Z, old, 0);
 				ClearIt();
 				old--;
 			}
-			(void)wmove(Z,new,x);
+			(void)wmove(Z, new, x);
 		}
 	} else
 		errs++;
@@ -341,7 +353,7 @@ void	ShowPrefix(_AR0)
 		register char	*prefix = Prefix[Imode];
 
 		(void)wstandend(Z);
-		(void)wmove(Z, ybase, (int)(xbase-strlen(prefix)));
+		(void)wmove(Z, y_rawgets, (int)(x_rawgets-strlen(prefix)));
 		while (*prefix)
 			(void)waddch(Z,(chtype)(*prefix++));
 	}
@@ -358,9 +370,9 @@ void	ToggleMode(_AR0)
 	Imode = !Imode;
 
 	if (Z) {
-		register int	y,x;
+		register int	y, x;
 
-		getyx(Z,y,x);
+		getyx(Z, y, x);
 		ShowPrefix();
 
 		if (!wrap) {
@@ -369,9 +381,38 @@ void	ToggleMode(_AR0)
 			ShowAll();
 		}
 
-		(void)wmove(Z,y,x);
+		(void)wmove(Z, y, x);
 	}
 }
+
+/*
+ * This function is invoked after a window-resizing signal is received, while
+ * waiting for input.  Repaint the buffer in case the window-width impacts its
+ * layout.
+ */
+#ifdef	SIGWINCH
+static
+void	Redisplay (_AR0)
+{
+	WINDOW	*win = Z;
+	if (win == 0)
+		win = stdscr;
+	(void) wmove(win, y_rawgets, x_rawgets);
+	if (wrap) {
+		xlast = x_rawgets + FieldLen;
+		if (xlast >= Z->_maxx)
+			xlast = Z->_maxx - 1;
+		(void) wclrtobot(win);
+		(void) wmove(win, y_rawgets, x_rawgets);
+	} else {
+		xlast = COLS;
+	}
+	ShowPrefix();
+	ShowAt(bbase);
+	MoveTo(CurIns);
+	(void) wrefresh(win);
+}
+#endif
 
 /************************************************************************
  *	main procedure							*
@@ -402,7 +443,6 @@ int	wrawgets (
 	_DCL(char **,	command)
 	_DCL(int,	logging)
 {
-	register char	*tag;
 	register int	c,
 			EraseChar = erasechar(),
 			EraseWord = eraseword(),
@@ -414,18 +454,19 @@ int	wrawgets (
 	if (logging)
 		dyn_init(&history, 1);
 
+	FieldLen = field_len;
 	Prefix = pref;
 	wrap  = newline;
 	Imode = 1;
 	errs  = 0;
-	bbase = tag = bfr;
+	bbase = CurIns = bfr;
 	shift = 0;
 
 	if ((Z = win) != 0) {
-		getyx(Z,ybase,xbase);	/* get my initial position */
+		getyx(Z, y_rawgets, x_rawgets);	/* get my initial position */
 		ShowPrefix();
-		(void)wmove(Z,ybase,xbase);
-		xlast = xbase + field_len;
+		(void)wmove(Z, y_rawgets, x_rawgets);
+		xlast = x_rawgets + FieldLen;
 		if (xlast >= Z->_maxx)
 			xlast = Z->_maxx - 1;
 
@@ -439,16 +480,16 @@ int	wrawgets (
 			ShowAll();
 
 	} else {
-		xbase =
-		ybase = 0;
-		xlast = 80;
+		x_rawgets =
+		y_rawgets = 0;
+		xlast = COLS;
 	}
 
 	/* set editing-position to initial column */
-	if ((count = strlen(tag)) < first_col)
+	if ((count = strlen(CurIns)) < first_col)
 		first_col = count;
-	tag += first_col;
-	MoveTo(tag);
+	CurIns += first_col;
+	MoveTo(CurIns);
 
 	for (;;) {
 		if (errs) {
@@ -469,14 +510,18 @@ int	wrawgets (
 				}
 				*command = s;
 			}
+			on_winch(Redisplay);
 			c = decode_logch(command, (int *)0);
 			if ((literal = to_literal(c)) == TRUE)
 				c = decode_logch(command, (int *)0);
+			on_winch((void(*)(_AR0))0);
 		} else {
 			if (Z)
 				(void)wrefresh(Z);
 			count = 1;
+			on_winch(Redisplay);
 			c = cmdch(Imode ? (int *)0 : &count);
+			on_winch((void(*)(_AR0))0);
 			log_count = (count != 1);
 
 			if ((literal = to_literal(c)) == TRUE)
@@ -508,7 +553,7 @@ int	wrawgets (
 		if (c == ARO_MOUSE) {
 			if (xt_mouse.released) {
 				if (xt_mouse.button == 1) {
-					tag = MoveFrom(xt_mouse.row,
+					CurIns = MoveFrom(xt_mouse.row,
 						       xt_mouse.col);
 				} else {
 					errs++;
@@ -556,8 +601,8 @@ int	wrawgets (
 		 */
 		if (literal || (Imode && isprint(c))) {
 			while (count-- > 0) {
-				if (tag-bfr < buffer_len)
-					InsertAt(tag++, c);
+				if (CurIns-bfr < buffer_len)
+					InsertAt(CurIns++, c);
 				else {
 					errs++;
 					break;
@@ -567,39 +612,39 @@ int	wrawgets (
 		}
 
 		if ((c == EraseChar) || (c == '\b')) {
-			tag = DeleteBefore(tag,count);
+			CurIns = DeleteBefore(CurIns, count);
 		} else if (c == EraseWord) {
-			tag = DeleteWordBefore(tag,count);
+			CurIns = DeleteWordBefore(CurIns, count);
 		} else if (c == EraseLine) {
 			if (Imode) {
 				count = strlen(bfr);
 				(void)DeleteBefore(bfr+count, count);
 				break;
 			} else
-				tag = DeleteBefore(tag, tag - bfr);
+				CurIns = DeleteBefore(CurIns, CurIns - bfr);
 
 		} else if (to_left(c)) {
-			if (tag > bfr) {
-				register char	*s = tag;
+			if (CurIns > bfr) {
+				register char	*s = CurIns;
 				while (count-- > 0)
 					if (--s == bfr)
 						break;
-				MoveTo(tag = s);
+				MoveTo(CurIns = s);
 			} else
 				errs++;
 		} else if (to_right(c)) {
-			if (*tag != EOS) {
-				register char	*s = tag;
+			if (*CurIns != EOS) {
+				register char	*s = CurIns;
 				while (count-- > 0)
 					if (*(++s) == EOS)
 						break;
-				MoveTo(tag = s);
+				MoveTo(CurIns = s);
 			} else
 				errs++;
 		} else if (to_home(c)) {
-			MoveTo(tag = bbase);
+			MoveTo(CurIns = bbase);
 		} else if (to_end(c)) {
-			MoveTo(tag = bbase + strlen(bbase));
+			MoveTo(CurIns = bbase + strlen(bbase));
 		} else
 			errs++;
 
@@ -642,13 +687,13 @@ _MAIN
 		(void)strcat(bfr, "abcdefghijklmnopqrstuvwxyz.");
 		(void)sprintf(bfr + strlen(bfr), "%d ", j++);
 	}
-	move(0,0);
+	move(0, 0);
 	printw("You will be prompted at each line, until the buffer is empty");
 	j = 1;
 	for (;;) {
-		move(j,0);
+		move(j, 0);
 		clrtobot();
-		move(j,0);
+		move(j, 0);
 		printw("%05d> ", j);
 		rawgets(bfr, pref, sizeof(bfr),
 			COLS/2, strlen(bfr), TRUE,
