@@ -3,7 +3,7 @@
  * Title:	rawgets.c (raw-mode 'gets()')
  * Created:	29 Sep 1987 (from 'fl.c')
  * Modified:
- *		02 Nov 1995, mods to display on 80th column.
+ *		04 Nov 1995, mods to display on 80th column.
  *		03 Sep 1995, make this work with bsd4.4 curses
  *		19 Jul 1994, adjustment for ncurses _max[xy] bug.
  *		16 Jul 1994, explicitly call for reverse-video if Sys5-curses.
@@ -70,7 +70,7 @@
 #include	"td_curse.h"
 #include	"dyn_str.h"
 
-MODULE_ID("$Id: rawgets.c,v 12.18 1995/11/03 01:32:05 tom Exp $")
+MODULE_ID("$Id: rawgets.c,v 12.20 1995/11/05 21:20:42 tom Exp $")
 
 #define	SHIFT	5
 
@@ -105,7 +105,7 @@ MODULE_ID("$Id: rawgets.c,v 12.18 1995/11/03 01:32:05 tom Exp $")
 /*
  * Private functions/variables
  */
-static	void	MoveTo(_ar1(char *, new));
+static	void	MoveTo(_ar1(char *, at));
 static	void	ShowAt(_ar1(char *, at));
 
 static	WINDOW	*Z;		/* window we use in this module */
@@ -133,7 +133,7 @@ void	ClearIt(_AR0)
 
 		if (highlighted)			NoHighlight(Z);
 		getyx(Z, y, x);
-		for (; x < xlast; x++)			(void)waddch(Z,' ');
+		while (++x <= xlast)			(void)waddch(Z,' ');
 		if (highlighted)			Highlight(Z);
 	}
 }
@@ -154,8 +154,8 @@ void	ShowAll(_AR0)
  */
 static
 void	MoveTo(
-	_AR1(char *,	new))
-	_DCL(char *,	new)
+	_AR1(char *,	at))
+	_DCL(char *,	at)
 {
 	if (Z) {
 		register char	*s;
@@ -163,7 +163,7 @@ void	MoveTo(
 				x = x_rawgets;
 		auto	 int	original = shift;
 
-		for (s = bbase, shift = 0; *s != EOS && s != new; s++) {
+		for (s = bbase, shift = 0; *s != EOS && s != at; s++) {
 			if (!isprint(*s))
 				x++;
 			if (++x >= xlast) {
@@ -176,6 +176,12 @@ void	MoveTo(
 				}
 			}
 		}
+		/* Control characters that are before the left shift-margin
+		 * don't count in the adjustment
+		 */
+		for (s = bbase; s-bbase < shift; s++)
+			if (!isprint(*s))
+				x--;
 		if (shift != original)
 			ShowAll();
 
@@ -236,20 +242,22 @@ void	ShowAt(
 	_DCL(char *,	at)
 {
 	if (Z) {
-		register int	y, x, row, col, len, max;
+		register int	y, x, row, col, len, cnt;
 		auto	int	margin = wMaxY(Z);
 
 		getyx(Z, y, x);
 		for (row = y, col = x; (*at != EOS) && (row < margin); row++) {
 			(void)wmove(Z, row, col);
 			len = strlen(at);
-			max = xlast - col;
-			if (len > max)	len = max;
+			cnt = xlast - col;
 			while (len-- > 0) {
 				register chtype	c = *at++ & 0xff;
+				if (cnt-- <= 0)
+					break;
 				if (!isprint(c)) {
+					x++;
 					(void)waddch(Z, '^');
-					if (len-- <= 0)
+					if (cnt-- <= 0)
 						break;
 					if (c == '\177')
 						c = '?';
@@ -258,8 +266,14 @@ void	ShowAt(
 				}
 				(void)waddch(Z, c);
 			}
+			if (!wrap) {
+				if (len > 0 || cnt <= 0) {
+					(void)wmove(Z, y, x);
+					return;
+				}
+				break;
+			}
 			col = 0;
-			if (!wrap)	break;
 		}
 		ClearIt();
 		(void)wmove(Z, y, x);
@@ -306,8 +320,14 @@ char *	DeleteBefore(
 	if (at > bbase) {
 		register char	*d = at,
 				*s = at;
-		register int	old, new, x;
+		register int	old = 0, new_y, x;
 
+		if (Z) {
+			if (wrap) {
+				MoveTo(at+strlen(at));
+				getyx(Z, old, x);
+			}
+		}
 		while (count-- > 0) {
 			at--;
 			if (--d == bbase)
@@ -318,17 +338,19 @@ char *	DeleteBefore(
 			/*EMPTY*/;
 
 		if (Z) {
-			getyx(Z, old, x);
+			if (wrap) {
+				MoveTo(at+strlen(at));
+				getyx(Z, new_y, x);
+
+				while (old >= new_y) {
+					(void)wmove(Z, new_y, x);
+					ClearIt();
+					new_y++;
+					x = 0;
+				}
+			}
 			MoveTo(at);
 			ShowAt(at);
-			getyx(Z, new, x);
-
-			while (old > new) {
-				(void)wmove(Z, old, 0);
-				ClearIt();
-				old--;
-			}
-			(void)wmove(Z, new, x);
 		}
 	} else
 		errs++;
@@ -427,7 +449,7 @@ void	Redisplay (_AR0)
 		(void) wclrtobot(win);
 		(void) wmove(win, y_rawgets, x_rawgets);
 	} else {
-		xlast = COLS;
+		xlast = wMaxX(Z);
 	}
 	ShowPrefix();
 	ShowAt(bbase);
@@ -504,7 +526,7 @@ int	wrawgets (
 	} else {
 		x_rawgets =
 		y_rawgets = 0;
-		xlast = COLS;
+		xlast = wMaxX(Z);
 	}
 
 	/* set editing-position to initial column */

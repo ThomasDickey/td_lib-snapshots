@@ -3,6 +3,8 @@
  * Author:	T.E.Dickey
  * Created:	12 Sep 1988
  * Modified:
+ *		05 Nov 1995, added 'pathcat2()' entrypoint for instances where
+ *			     we don't want to expand tilde.
  *		29 Oct 1993, ifdef-ident
  *		28 Jan 1992, 'dname' may be empty.
  *		03 Oct 1991, conversion to ANSI
@@ -22,22 +24,21 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: pathcat.c,v 12.4 1993/11/27 17:01:20 tom Exp $")
+MODULE_ID("$Id: pathcat.c,v 12.5 1995/11/05 23:04:37 tom Exp $")
 
-char *
-pathcat(
-_ARX(char *,	dst)
-_ARX(char *,	dname)
-_AR1(char *,	fname)
-	)
-_DCL(char *,	dst)
-_DCL(char *,	dname)
-_DCL(char *,	fname)
+char *	pathcat2(
+	_ARX(char *,	dst)
+	_ARX(char *,	dname)
+	_AR1(char *,	fname)
+		)
+	_DCL(char *,	dst)
+	_DCL(char *,	dname)
+	_DCL(char *,	fname)
 {
-	auto	char	tmp[BUFSIZ],
+	auto	char	tmp[MAXPATHLEN],
 			*s;
 
-	if (isSlash(*fname) || *fname == '~' || !dname || !*dname)
+	if (isSlash(*fname) || !dname || !*dname)
 		return (strcpy(dst, fname));
 	else if (*fname == EOS) {
 		if (dst != dname)
@@ -51,4 +52,18 @@ _DCL(char *,	fname)
 	*s++ = PATH_SLASH;
 	(void)strcpy(s, fname);
 	return (strcpy(dst, tmp));
+}
+
+char *	pathcat(
+	_ARX(char *,	dst)
+	_ARX(char *,	dname)
+	_AR1(char *,	fname)
+		)
+	_DCL(char *,	dst)
+	_DCL(char *,	dname)
+	_DCL(char *,	fname)
+{
+	if (*fname == '~')
+		return (strcpy(dst, fname));
+	return pathcat2(dst, dname, fname);
 }

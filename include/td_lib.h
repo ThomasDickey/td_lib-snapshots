@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 12.15 1995/10/14 15:05:17 tom Exp $ */
+/* $Id: td_lib.h,v 12.16 1995/11/05 23:05:29 tom Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for TD_LIB common
@@ -584,6 +584,16 @@ extern	int	localzone;
 
 	/* pathcat.c -------------------------------------------------- */
 #if	defined(unix) || defined(MSDOS)
+	char *	pathcat2(
+			_arx(char *,	dst)
+			_arx(char *,	p)
+			_ar1(char *,	n)
+			)
+			_dcl(char *,	dst)
+			_dcl(char *,	p)
+			_dcl(char *,	n)
+			_ret
+
 	char *	pathcat(
 			_arx(char *,	dst)
 			_arx(char *,	p)
