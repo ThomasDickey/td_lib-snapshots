@@ -1,12 +1,9 @@
-#ifndef	NO_IDENT
-static	char	Id[] = "$Id: dlettree.c,v 8.2 1993/12/01 19:38:10 tom Exp $";
-#endif
-
 /*
  * Title:	deletetree.c
  * Author:	T.E.Dickey
  * Created:	17 Nov 1988
  * Modified:
+ *		21 Aug 1994, sort entries, for better testability.
  *		01 Dec 1993, ifdefs.
  *		22 Sep 1993, gcc warnings
  *		20 Nov 1992, use prototypes
@@ -22,26 +19,34 @@ static	char	Id[] = "$Id: dlettree.c,v 8.2 1993/12/01 19:38:10 tom Exp $";
  */
 
 #define		DIR_PTYPES
+#define		ERR_PTYPES
 #define		STR_PTYPES
-#include	"portunix.h"
-#include	<errno.h>
+#include	"port2vms.h"
+#include	"td_qsort.h"
 
-#define	TELL		FPRINTF(stderr,
+MODULE_ID("$Id: dlettree.c,v 12.5 1994/08/21 22:12:58 tom Exp $")
+
+typedef	char	*PTR;
+	/*ARGSUSED*/
+	def_DOALLOC(PTR)
+
+#define	CHUNK	127	/* 1 less than a power of 2 */
+#define	v_ALLOC(v,n,s)	v = DOALLOC(v, PTR, ((++n)|CHUNK)+1);\
+			v[n-1] = txtalloc(s)
 
 #ifdef	TEST
 #define	fail		perror
 #define	TELL_(s)	changes,nesting,s
-#define	TELL_FILE(name)	TELL "%d\t%s => %s\n", TELL_(name))
-#define	TELL_DIR(name)	TELL "%d\t%s (directory) %s\n", TELL_(name));
-#define	TELL_SCAN(name)	TELL "%d\t%s scan directory %s\n", TELL_(name))
-static	int	deletedir   (_AR1(char *,s))	_DCL(char *,s) { return 1;}
-static	int	deletefile  (_AR1(char *,s))	_DCL(char *,s) { return 1;}
+#define	TELL_FILE(name)	FPRINTF(stderr, "%d\t%s => %s\n", TELL_(name))
+#define	TELL_DIR(name)	FPRINTF(stderr, "%d\t%s (directory) %s\n", TELL_(name));
+#define	TELL_SCAN(name)	FPRINTF(stderr, "%d\t%s scan directory %s\n", TELL_(name))
+	int	deletedir   (_AR1(char *,s))	_DCL(char *,s) { return 1;}
+	int	deletefile  (_AR1(char *,s))	_DCL(char *,s) { return 1;}
 #else
 #define	TELL_FILE(name)
 #define	TELL_SCAN(name)
 #define	TELL_DIR(name)
 #endif
-
 
 int	deletetree(
 	_ARX(char *,	oldname)
@@ -51,13 +56,15 @@ int	deletetree(
 	_DCL(int,	recur)
 {
 	auto	DIR	*dirp;
-	auto	DIRENT	*dp;
+	auto	DirentT	*dp;
 	auto	int	changes = 0;
-	auto	STAT	sb;
+	auto	Stat_t	sb;
 	auto	char	newname[MAXPATHLEN];
 	auto	char	oldpath[MAXPATHLEN];
 	auto	char	*newpath;
 	auto	int	old_mode;
+	auto	unsigned num;
+	auto	PTR	*vec;
 	auto	int	ok	= TRUE;
 
 #ifdef	TEST
@@ -90,33 +97,43 @@ int	deletetree(
 		old_mode = sb.st_mode;	/* save, so we know to delete-dir */
 
 		if ((dirp = opendir(newpath)) != NULL) {
+			num = 0;
+			vec = 0;
 			while ((dp = readdir(dirp)) != NULL) {
 				(void)strcpy(newname, dp->d_name);
 #ifndef	vms
 				if (dotname(newname))	continue;
 #endif
-				if (lstat(newname, &sb) < 0) {
-					fail(newname);
-					continue;
-				}
-				if (isDIR(sb.st_mode)) {
-					auto	int	k;
-					if (!recur)
-						continue;
-					if ((k = deletetree(newname,recur+1))
-							>= 0)
-						changes += k;
-					else
-						ok = FALSE;
-				} else {	/* file, link, etc. */
-					TELL_FILE(newname);
-					if (deletefile(newname))
-						changes++;
-					else
-						ok = FALSE;
-				}
+				v_ALLOC(vec,num,newname);
 			}
 			closedir(dirp);
+			if (num) {
+				qsort((PTR)vec, (LEN_QSORT)num,
+					sizeof(PTR), cmp_qsort);
+				while (num-- != 0) {
+					if (lstat(vec[num], &sb) < 0) {
+						fail(vec[num]);
+						continue;
+					}
+					if (isDIR(sb.st_mode)) {
+						auto	int	k;
+						if (!recur)
+							continue;
+						if ((k = deletetree(vec[num],recur+1))
+								>= 0)
+							changes += k;
+						else
+							ok = FALSE;
+					} else {	/* file, link, etc. */
+						TELL_FILE(vec[num]);
+						if (deletefile(vec[num]))
+							changes++;
+						else
+							ok = FALSE;
+					}
+				}
+				dofree((PTR)vec);
+			}
 		}
 		(void)chdir(oldpath);
 		if (ok && isDIR(old_mode)) {

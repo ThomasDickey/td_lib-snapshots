@@ -1,14 +1,15 @@
-# $Id: td_lib.mms,v 8.0 1993/04/28 14:13:42 ste_cm Rel $
-# MMS reusable rules for PORTUNIX, and programs built with it.
+# $Id: td_lib.mms,v 12.1 1994/08/21 23:02:07 tom Exp $
+# MMS reusable rules for TD_LIB, and programs built with it.
 #
+# (originally named LIBRARY_RULES.MMS)
+
 # Define standard locations in the tree:
-I = PORTUNIX_ROOT:[INCLUDE]	! include-files from PORTUNIX
-J = TD_LIB_ROOT:[INCLUDE]	! include-files from TD_LIB
+I = TD_LIB_ROOT:[INCLUDE]	! include-files from TD_LIB
 B = COM:			! program-binaries for installation
 #
 # Override default for CFLAGS and LINKFLAGS to generate useful information
 # for debugging:
-INCLUDES=	$(I),$(J)
+INCLUDES=	$(I)
 CFLAGS =	/Diagnostics /Listing /Debug-
 		/OBJECT=$@ /Include=($(INCLUDES)) /G_FLOAT
 LINKFLAGS =	/MAP/CROSS_REFERENCE/EXEC=$(MMS$TARGET_NAME).EXE
@@ -18,15 +19,14 @@ TEST_CC =	$(CC)/OBJECT=$(MMS$TARGET_NAME)/DEFINE="TEST" $(MMS$SOURCE)
 #
 # Define macros useful for specifying dependencies and arguments for the
 # libraries used here and by simple applications above:
-PORT_LIB=	PORTUNIX_ROOT:[LIB]PORT
 TOOL_LIB=	TD_LIB_ROOT:[LIB]TD_LIB
 #
-OPT_ARGS=	PORTUNIX_ROOT:[SUPPORT]LINK_OPTIONS.OPT
+OPT_ARGS=	TD_LIB_ROOT:[SUPPORT]LINK_OPTIONS.OPT
 OPT_DEPS=	$(OPT_ARGS),-
 		SYS$LIBRARY:VAXCRTLG.EXE
 #
-LIB_ARGS=	$(PORT_LIB)/LIB,$(TOOL_LIB)/LIB,$(OPT_ARGS)/OPT
-LIB_DEPS=	$(PORT_LIB).OLB,$(TOOL_LIB).OLB,$(OPT_DEPS)
+LIB_ARGS=	$(TOOL_LIB)/LIB,$(OPT_ARGS)/OPT
+LIB_DEPS=	$(TOOL_LIB).OLB,$(OPT_DEPS)
 #
 # If the build succeeds, clean up the diagnostic files, purge stuff we don't
 # really need:

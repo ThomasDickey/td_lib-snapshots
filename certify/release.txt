@@ -1,4 +1,4 @@
-$Id: release.txt,v 12.2 1994/07/02 11:57:53 tom Exp $
+$Id: release.txt,v 12.3 1994/08/21 22:54:59 tom Exp $
 
 --------------------------------------------------------------------------------
 
@@ -7,6 +7,10 @@ Version 13.0:
 Ports:
 	HP/UX (Addressed gcc 2.4.5 warnings.)
 	Linux (Slackware 0.99.15)
+
+Absorbed library PORTUNIX; for consistency and portability renamed
+	portunix.h to port2vms.h
+	unixdir.h to vms_dirs.h
 
 Version 12.0:
 ------------

@@ -1,4 +1,4 @@
-# $Id: Makefile,v 12.2 1994/07/16 20:11:01 tom Exp $
+# $Id: Makefile,v 12.3 1994/08/21 21:48:29 tom Exp $
 # make-file for TD_LIB common/test library
 
 ####### (Development) ##########################################################
@@ -8,6 +8,9 @@ include ../td_defns.mk
 ####### (Standard Lists) #######################################################
 REF_FILES = \
 	abspath.ref \
+	dlettree.ref \
+	editfile.ref \
+	edittree.ref \
 	file2arg.ref \
 	file2mem.ref \
 	filecopy.ref \
@@ -19,12 +22,16 @@ REF_FILES = \
 	relpath.ref \
 	sameleaf.ref \
 	trimpath.ref \
+	trnstree.ref \
 	walktree.ref \
 	which.ref
 
 SCRIPTS	= \
 	run_test.sh \
 	abspath.sh \
+	dlettree.sh \
+	editfile.sh \
+	edittree.sh \
 	file2arg.sh \
 	file2mem.sh \
 	filecopy.sh \
@@ -36,6 +43,7 @@ SCRIPTS	= \
 	relpath.sh \
 	sameleaf.sh \
 	trimpath.sh \
+	trnstree.sh \
 	walktree.sh \
 	which.sh
 
@@ -45,6 +53,9 @@ SOURCES	= Makefile $(C_SRC) $(SCRIPTS) $(REF_FILES) $(DATA_FILES)
 
 PROGS	= \
 	abspath \
+	dlettree \
+	editfile \
+	edittree \
 	file2arg \
 	file2mem \
 	fileblox \
@@ -57,6 +68,7 @@ PROGS	= \
 	relpath \
 	sameleaf \
 	trimpath \
+	trnstree \
 	walktree \
 	which
 
@@ -68,6 +80,9 @@ include ../td_rules.mk
 # rules to make SunOs 'make' "work" with VPATH
 
 abspath.c \
+dlettree.c \
+editfile.c \
+edittree.c \
 file2arg.c \
 file2mem.c \
 fileblox.c \
@@ -80,5 +95,6 @@ pathleaf.c \
 relpath.c \
 sameleaf.c \
 trimpath.c \
+trnstree.c \
 walktree.c \
 which.c :

@@ -1,2 +1,2 @@
-# $Id: descrip.mms,v 12.1 1989/04/25 08:28:30 tom Exp $
-.INCLUDE PORTUNIX_ROOT:[SUPPORT]TOP_LIB_RULES
+# $Id: descrip.mms,v 12.2 1994/08/21 23:27:56 tom Exp $
+.INCLUDE [.SUPPORT]LIB_TOP

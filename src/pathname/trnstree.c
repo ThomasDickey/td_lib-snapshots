@@ -1,7 +1,3 @@
-#ifndef	NO_IDENT
-static	char	Id[] = "$Id: trnstree.c,v 8.2 1993/12/01 19:45:12 tom Exp $";
-#endif
-
 /*
  * Title:	transtree.c
  * Author:	T.E.Dickey
@@ -21,10 +17,12 @@ static	char	Id[] = "$Id: trnstree.c,v 8.2 1993/12/01 19:45:12 tom Exp $";
  */
 
 #define		DIR_PTYPES
+#define		ERR_PTYPES
 #define		STR_PTYPES
-#include	"portunix.h"
+#include	"port2vms.h"
 #include	"td_qsort.h"
-#include	<errno.h>
+
+MODULE_ID("$Id: trnstree.c,v 12.2 1994/08/21 19:36:36 tom Exp $")
 
 typedef	char	*PTR;
 	/*ARGSUSED*/
@@ -34,13 +32,11 @@ typedef	char	*PTR;
 #define	v_ALLOC(v,n,s)	v = DOALLOC(v, PTR, ((++n)|CHUNK)+1);\
 			v[n-1] = txtalloc(s)
 
-#define	TELL		fprintf(stderr,
-
 #ifdef	TEST
 #define	TELL_(s)	nesting,s
-#define	TELL_FILE(name)	TELL "%s => %s\n", TELL_(name))
-#define	TELL_DIR(name)	TELL "%s (directory) %s\n", TELL_(name));
-#define	TELL_SCAN(name)	TELL "%s scan directory %s\n", TELL_(name))
+#define	TELL_FILE(name)	FPRINTF(stderr, "%s => %s\n", TELL_(name))
+#define	TELL_DIR(name)	FPRINTF(stderr, "%s (directory) %s\n", TELL_(name));
+#define	TELL_SCAN(name)	FPRINTF(stderr, "%s scan directory %s\n", TELL_(name))
 #else
 #define	TELL_FILE(name)
 #define	TELL_SCAN(name)
@@ -60,7 +56,7 @@ typedef	char	*PTR;
 /*ARGSUSED*/
 void	transtree(
 	_ARX(char *,	oldname)
-	_FNX(int,	func,	(_ARX(char *,name) _AR1(STAT *,s)))
+	_FNX(int,	func,	(_ARX(char *,name) _AR1(Stat_t *,s)))
 	_ARX(int,	recur)
 	_AR1(int,	links)
 		)
@@ -70,8 +66,8 @@ void	transtree(
 	_DCL(int,	links)
 {
 	auto	DIR	*dirp;
-	auto	DIRENT	*dp;
-	auto	STAT	sb;
+	auto	DirentT	*dp;
+	auto	Stat_t	sb;
 	auto	unsigned num;
 	auto	PTR	*vec;
 	auto	char	newname[MAXPATHLEN];
@@ -150,10 +146,10 @@ void	transtree(
 static
 int	do_file(
 	_ARX(char *,	name)
-	_AR1(STAT *,	sb)
+	_AR1(Stat_t *,	sb)
 		)
 	_DCL(char *,	name)
-	_DCL(STAT *,	sb)
+	_DCL(Stat_t *,	sb)
 {
 	return 1;
 }

@@ -1,12 +1,12 @@
-** edit "../test/library_rules.tst" => TMP
+** edit "../pathname/lib_top.tst" => TMP
 ** 1 change(s) made
-** edit "../test/program_rules.tst" => TMP
+** edit "../pathname/prog_top.tst" => TMP
 ** 1 change(s) made
-** edit "../test/standard_rules.tst" => TMP
+** edit "../pathname/td_lib.tst" => TMP
 ** 1 change(s) made
-** edit "../test/top_lib_rules.tst" => TMP
+** edit "../pathname/td_progs.tst" => TMP
 ** 1 change(s) made
-ok:library_rules
-ok:program_rules
-ok:standard_rules
-ok:top_lib_rules
+ok:lib_top
+ok:prog_top
+ok:td_lib
+ok:td_progs

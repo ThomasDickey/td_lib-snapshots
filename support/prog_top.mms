@@ -1,7 +1,9 @@
-# $Id: prog_top.mms,v 8.0 1993/04/27 16:42:51 ste_cm Rel $
+# $Id: prog_top.mms,v 12.1 1994/08/21 23:13:48 tom Exp $
 # MMS top-level reusable rules for PORTUNIX, and programs built with it.
 #
-.INCLUDE PORTUNIX_ROOT:[SUPPORT]LIBRARY_RULES
+# (originally named STANDARD_RULES.MMS)
+
+.INCLUDE TD_LIB_ROOT:[SUPPORT]TD_LIB
 
 MFILES	=-
 	[.src]descrip.mms

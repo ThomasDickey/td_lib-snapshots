@@ -1,4 +1,4 @@
-# $Id: Makefile,v 12.2 1994/07/14 01:46:43 tom Exp $
+# $Id: Makefile,v 12.3 1994/08/21 19:42:49 tom Exp $
 # MAKE-file for filename and I/O library routines
 
 ####### (Environment) ##########################################################
@@ -12,7 +12,10 @@ CSRC	=\
 	arg2file.c \
 	copyback.c \
 	denode.c \
+	dlettree.c \
 	dotname.c \
+	editfile.c \
+	edittree.c \
 	file2arg.c \
 	file2mem.c \
 	fileblox.c \
@@ -37,6 +40,7 @@ CSRC	=\
 	stat_fil.c \
 	track_wd.c \
 	trimpath.c \
+	trnstree.c \
 	walktree.c \
 	which.c
 
@@ -49,7 +53,10 @@ OBJS	=\
 	$Z(arg2file.o) \
 	$Z(copyback.o) \
 	$Z(denode.o) \
+	$Z(dlettree.o) \
 	$Z(dotname.o) \
+	$Z(editfile.o) \
+	$Z(edittree.o) \
 	$Z(file2arg.o) \
 	$Z(file2mem.o) \
 	$Z(fileblox.o) \
@@ -74,8 +81,13 @@ OBJS	=\
 	$Z(stat_fil.o) \
 	$Z(track_wd.o) \
 	$Z(trimpath.o) \
+	$Z(trnstree.o) \
 	$Z(walktree.o) \
 	$Z(which.o)
 
 ####### (Standard Productions) #################################################
 include ../td_rules.mk
+
+$Z(dlettree.o) \
+$Z(edittree.o) \
+$Z(trnstree.o) : $I/port2vms.h

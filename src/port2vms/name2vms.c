@@ -1,5 +1,5 @@
 #ifndef	NO_IDENT
-static	char	Id[] = "$Id: name2vms.c,v 8.2 1993/12/01 19:39:18 tom Exp $";
+static	char	Id[] = "$Id: name2vms.c,v 12.1 1994/08/21 18:39:51 tom Exp $";
 #endif
 
 /*
@@ -29,7 +29,7 @@ static	char	Id[] = "$Id: name2vms.c,v 8.2 1993/12/01 19:39:18 tom Exp $";
 
 #define	CHR_PTYPES
 #define	STR_PTYPES
-#include	"portunix.h"
+#include	"port2vms.h"
 
 static	int	leaf_dot;   /* counts dots found in a particular leaf */
 

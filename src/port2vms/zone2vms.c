@@ -1,5 +1,5 @@
 #ifndef	NO_IDENT
-static	char	Id[] = "$Id: zone2vms.c,v 8.1 1993/12/01 19:55:24 tom Exp $";
+static	char	Id[] = "$Id: zone2vms.c,v 12.2 1994/08/21 18:57:08 tom Exp $";
 #endif
 
 /*
@@ -19,9 +19,8 @@ static	char	Id[] = "$Id: zone2vms.c,v 8.1 1993/12/01 19:55:24 tom Exp $";
  *		00:00 and 02:00!
  */
 
-#include	"portunix.h"
+#include	"port2vms.h"
 
-#ifdef	vms
 #define	MIN	60
 #define	HOUR	(60*MIN)
 #define	DAY	(24*HOUR)
@@ -62,7 +61,9 @@ time_t	zone2vms(
 /*ARGSUSED*/
 _MAIN
 {
+#ifdef vms
 	extern	char	*ctime();
+#endif
 	auto	time_t	unix_time = 722271384/* time(0) for Nov 20, 1992 */,
 			real_time;
 	register int	j;
@@ -76,5 +77,3 @@ _MAIN
 	/*NOTREACHED*/
 }
 #endif	/* TEST */
-
-#endif	/* vms */

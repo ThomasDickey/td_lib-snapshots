@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 12.9 1994/07/15 23:22:42 tom Exp $ */
+/* $Id: td_lib.h,v 12.10 1994/08/21 19:25:03 tom Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for TD_LIB common
@@ -158,6 +158,21 @@
 			_dcl(char *,	name)
 			_ret
 
+	/* dlettree.c ------------------------------------------------- */
+#ifndef	LINTLIBRARY
+	extern	void	fail      (_ar1(char *,text));
+	extern	int	deletefile(_ar1(char *,name));
+	extern	int	deletedir (_ar1(char *,name));
+#endif
+
+	int	deletetree(
+			_arx(char *,		path)
+			_ar1(int,		recur)
+			)
+			_dcl(char *,		path)
+			_dcl(int,		recur)
+			_ret
+
 	/* doalloc.c -------------------------------------------------- */
 	char *	doalloc(
 			_arx(char *,	oldp)
@@ -200,6 +215,32 @@
 			_dcl(FILE *,	fp)
 			_dcl(int,	c)
 			_nul
+
+	/* editfile.c ------------------------------------------------- */
+	int	editfile(
+			_arx(char *,		name)
+			_fnx(int,		func,
+				(_ARX(FILE*,o) _ARX(FILE*,i) _AR1(Stat_t*,s)))
+			_ar1(Stat_t *,		sb)
+			)
+			_dcl(char *,		name)
+			_dcl(int,		(*func)())
+			_dcl(Stat_t *,		sb)
+			_ret
+
+	/* edittree.c ------------------------------------------------- */
+	int	edittree(
+			_arx(char *,		name)
+			_fnx(int,		func,
+				(_ARX(FILE*,o) _ARX(FILE*,i) _AR1(Stat_t*,s)))
+			_arx(int,		recur)
+			_ar1(int,		links)
+			)
+			_dcl(char *,		name)
+			_dcl(int,		(*func)())
+			_dcl(int,		recur)
+			_dcl(int,		links)
+			_ret
 
 	/* execute.c -------------------------------------------------- */
 	int	execute(
@@ -771,6 +812,20 @@ extern	int	localzone;
 			_ar1(char *,	path)
 			)
 			_dcl(char *,	path)
+			_nul
+
+	/* transtree.c ------------------------------------------------ */
+	void	transtree(
+			_arx(char *,		path)
+			_fnx(int,		func,
+				(_ARX(char*,n) _AR1(Stat_t*,s)))
+			_arx(int,		recur)
+			_ar1(int,		links)
+			)
+			_dcl(char *,		path)
+			_dcl(int,		(*func)())
+			_dcl(int,		recur)
+			_dcl(int,		links)
 			_nul
 
 	/* trimpath.c ------------------------------------------------- */

@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: stat_dir.c,v 12.2 1994/05/21 20:18:44 tom Exp $";
-#endif
-
 /*
  * Title:	stat_dir.c
  * Author:	T.E.Dickey
@@ -14,8 +10,10 @@ static	char	Id[] = "$Id: stat_dir.c,v 12.2 1994/05/21 20:18:44 tom Exp $";
  *		error-code if not.
  */
 
+#define	ERR_PTYPES
 #include "ptypes.h"
-#include <errno.h>
+
+MODULE_ID("$Id: stat_dir.c,v 12.4 1994/08/21 19:31:45 tom Exp $")
 
 int
 stat_dir(

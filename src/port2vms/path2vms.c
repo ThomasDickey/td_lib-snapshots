@@ -1,7 +1,3 @@
-#ifndef	NO_IDENT
-static	char	Id[] = "$Id: path2vms.c,v 8.1 1993/12/01 19:39:50 tom Exp $";
-#endif
-
 /*
  * Title:	path2vms.c
  * Author:	T.E.Dickey
@@ -16,7 +12,9 @@ static	char	Id[] = "$Id: path2vms.c,v 8.1 1993/12/01 19:39:50 tom Exp $";
  */
 
 #define		STR_PTYPES
-#include	"portunix.h"
+#include	"port2vms.h"
+
+MODULE_ID("$Id: path2vms.c,v 12.2 1994/08/21 18:39:51 tom Exp $")
 
 char *	path2vms(
 	_ARX(char *,	dst)
