@@ -1,11 +1,8 @@
-/* @(#)llib-ltd	1.30 88/08/10 12:11:29 */
+/* @(#)llib-ltd	1.31 88/08/11 09:35:34 */
 /*LINTLIBRARY*/
 
-#include	<curses.h>
-#include	<sys/types.h>
-#ifndef	S_IFSOCK
-struct	screen	{ int dummy; };		/* ...so that sys5 curses lints */
-#endif
+#define	CUR_PTYPES
+#include	"ptypes.h"
 
 /* MAIN-PROGRAM ******************************************************* */
 	failed(s) char *s; { }		/* fatal-error exit */
@@ -20,6 +17,9 @@ struct	screen	{ int dummy; };		/* ...so that sys5 curses lints */
 
 /* bldarg.c ----------------------------------------------------------- */
 	bldarg (argc, argv, string) char *argv[], *string; { }
+
+/* blip.c ------------------------------------------------------------- */
+	blip(c) { }
 
 /* catarg.c ----------------------------------------------------------- */
 	catarg (dst, src) char *dst, *src; { }

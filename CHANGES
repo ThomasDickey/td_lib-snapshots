@@ -1,3 +1,168 @@
+1988-08-11  dickey@software.org
+
+	* include/ptypes.h:
+	rewrote this so that it covers the bulk of changes between system5 and
+	bsd4.x environments for my tools (casts, directory-procedures and curses).
+
+	* include/llib-ltd:
+	added "blip.c" module, use "ptypes.h" for portability.
+
+	* src/Makefile:
+	added "blip.c" module; use "ptypes.h" where portability is a problem.
+
+	* src/curses/beep.c: disable in System5 environment.
+
+	* src/curses/beep.c: sccs2rcs keywords
+
+1988-08-11  ste_cm@software.org
+
+	* src/curses/beep.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/curses/beep.c: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/curses/beep.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/curses/beep.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+	* src/curses/beep.c: BASELINE Thu Apr  6 09:45:13 EDT 1989
+
+	* src/curses/beep.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
+	* src/curses/beep.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1988-08-11  dickey@software.org
+
+	* src/curses/blip.c: New file.
+
+	* src/curses/win2file.c: lint in apollo sys5 environment.
+
+	* src/curses/win2file.c: sccs2rcs keywords
+
+1988-08-11  ste_cm@software.org
+
+	* src/curses/win2file.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+	* src/curses/win2file.c: BASELINE Thu Apr  6 09:45:13 EDT 1989
+
+1988-08-11  dickey@software.org
+
+	* src/curses/padedit.c:
+	use "ptypes.h" for lint in apollo sys5 environment.
+
+	* src/curses/rawterm.c: lint/compile in apollo sys5 environment.
+
+	* src/curses/rawterm.c: sccs2rcs keywords
+
+1988-08-11  ste_cm@software.org
+
+	* src/curses/rawterm.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/curses/rawterm.c: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/curses/rawterm.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/curses/rawterm.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+	* src/curses/rawterm.c: BASELINE Thu Apr  6 09:45:13 EDT 1989
+
+	* src/curses/rawterm.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
+	* src/curses/rawterm.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1988-08-11  dickey@software.org
+
+	* src/cm_funcs/rcsedit.c, src/pathname/copyback.c, src/curses/resizwin.c:
+	lint/compile in apollo sys5 environment.
+
+	* src/curses/resizwin.c: sccs2rcs keywords
+
+1988-08-11  ste_cm@software.org
+
+	* src/curses/resizwin.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/curses/resizwin.c: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/curses/resizwin.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/curses/resizwin.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+	* src/curses/resizwin.c: BASELINE Thu Apr  6 09:45:13 EDT 1989
+
+	* src/curses/resizwin.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
+	* src/curses/resizwin.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1988-08-11  dickey@software.org
+
+	* src/curses/killchar.c, src/curses/erasechr.c:
+	disable in System5 environment.
+
+	* src/unix/uid2s.c: absorbed some defs into "ptypes.h"
+
+	* src/curses/savewin.c: lint/compile in apollo sys5 environment.
+
+	* src/curses/savewin.c: sccs2rcs keywords
+
+1988-08-11  ste_cm@software.org
+
+	* src/curses/savewin.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+	* src/curses/savewin.c: BASELINE Thu Apr  6 09:45:13 EDT 1989
+
+1988-08-11  dickey@software.org
+
+	* src/curses/rawgets.c, src/curses/dumpwin.c:
+	lint/compile in apollo sys5 environment.
+
+	* src/curses/dumpwin.c: sccs2rcs keywords
+
+1988-08-11  ste_cm@software.org
+
+	* src/curses/dumpwin.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/curses/dumpwin.c: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/curses/dumpwin.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/curses/dumpwin.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+	* src/curses/dumpwin.c: BASELINE Thu Apr  6 09:45:13 EDT 1989
+
+	* src/curses/dumpwin.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
+	* src/curses/dumpwin.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1988-08-11  dickey@software.org
+
+	* src/curses/cmdch.c: lint/compile in apollo sys5 environment.
+
+	* src/curses/cmdch.c: sccs2rcs keywords
+
+1988-08-11  ste_cm@software.org
+
+	* src/curses/cmdch.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+	* src/curses/cmdch.c: BASELINE Thu Apr  6 09:45:13 EDT 1989
+
+	* src/curses/cmdch.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
 1988-08-10  dickey@software.org
 
 	* src/cm_funcs/packdate.c:

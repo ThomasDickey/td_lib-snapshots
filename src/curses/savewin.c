@@ -1,12 +1,22 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)savewin.c	1.4 88/05/17 09:25:22";
+static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/curses/RCS/savewin.c,v 3.0 1988/08/11 07:16:55 ste_cm Rel $";
 #endif	lint
 
 /*
  * Author:	T.E.Dickey
  * Title:	savewin.c (save/unsave curses window)
  * Created:	25 Mar 1988
- * Modified:
+ * $Log: savewin.c,v $
+ * Revision 3.0  1988/08/11 07:16:55  ste_cm
+ * BASELINE Mon Jun 19 13:27:01 EDT 1989
+ *
+ *		Revision 2.0  88/08/11  07:16:55  ste_cm
+ *		BASELINE Thu Apr  6 09:45:13 EDT 1989
+ *		
+ *		Revision 1.6  88/08/11  07:16:55  dickey
+ *		sccs2rcs keywords
+ *		
+ *		10 Aug 1988, made this run on apollo sys5-environment (hack).
  *		22 Apr 1988, added 'top' arg to lastwin(), unsavewin().
  *		21 Apr 1988 (first version)
  *
@@ -17,13 +27,10 @@ static	char	sccs_id[] = "@(#)savewin.c	1.4 88/05/17 09:25:22";
  *		the screen-image characters.  When we do an 'addstr()' with
  *		this bit set, it retains highlighting.
  */
-#include	<curses.h>
-#include	<ctype.h>
-extern	char	*doalloc();
 
-#ifndef	SYSTEM5
-typedef char	chtype;		/* sys5-curses data-type */
-#endif	SYSTEM5
+#define		CUR_PTYPES
+#include	"ptypes.h"
+#include	<ctype.h>
 
 typedef	struct	_save {
 	struct	_save	*link;
@@ -37,11 +44,15 @@ static	SAVE	*saved;
 #define	unhighlight(c)	((c) & 0177)
 
 #ifdef	lint
-#define	ALLOC(n,c)	(c *)0
+#define	_BODY(f,c)	static c *f(n) unsigned n; { return(0); }
+/*ARGSUSED */		_BODY(S_ALLOC, SAVE)
+/*ARGSUSED */		_BODY(c_ALLOC, chtype)
 #else	lint
-#define	ALLOC(n,c)	(c *)doalloc((char *)0, (n) * sizeof(c))
+#define	S_ALLOC(n)	ALLOC(SAVE,n)
+#define	c_ALLOC(n)	ALLOC(chtype,n)
 #endif	lint
 
+#ifndef	SYSTEM5
 /*
  * Force a character to be different
  */
@@ -55,6 +66,7 @@ newC(c)
 		c = '.';
 	return (c);
 }
+#endif	SYSTEM5
 
 /*
  * Save a window on the stack.
@@ -66,8 +78,8 @@ SAVE	*last;
 register int j = 0;
 
 	last         = saved;
-	saved        = ALLOC(1, SAVE);
-	saved->image = ALLOC(LINES * COLS, chtype);
+	saved        = S_ALLOC(1);
+	saved->image = c_ALLOC((unsigned)(LINES * COLS));
 	saved->link  = last;
 	getyx(stdscr, saved->y, saved->x);
 
@@ -83,7 +95,7 @@ register int j = 0;
  */
 lastwin(redo,top)
 {
-chtype	*s, *t,
+chtype	*t,
 	*z = saved->image + (top * COLS);
 char	bfr[BUFSIZ];
 register int j, row;
@@ -91,35 +103,44 @@ register int j, row;
 	if (saved) {
 
 		if (redo) {
+#ifdef	SYSTEM5
+			touchwin(stdscr);
+			clear();
+			refresh();
+#else	SYSTEM5
 			/* "touch" cursor position */
 			wmove(stdscr, LINES, COLS);
 			wmove(curscr, LINES, COLS);
 
 			/* do "touch" pass first to avoid clrtoeol bug */
 			for (row = top, t = z; row < LINES; row++) {
+				chtype	*s;
+
 				/* retrieve saved-image */
 				for (j = 0; j < COLS; bfr[j++] = *t++);
-				bfr[j] = '\0';
+				bfr[j] = EOS;
 
 				/*
 				 * Change curses' window state
 				 * ...leaving last column alone because of
 				 * wrap-forward bug!
 				 */
-				for (s = stdscr->_y[row], j = 0; s[j+1]; j++)
+#define	FOR_ROW(w,row)	for (s = w->_y[row], j = 0; (s != 0) && s[j+1]; j++)
+				FOR_ROW(stdscr,row)
 					s[j] = newC(bfr[j]);
-				for (s = curscr->_y[row], j = 0; s[j+1]; j++)
+				FOR_ROW(curscr,row)
 					s[j] = newC(newC(bfr[j]));
 			}
+#endif	SYSTEM5
 		}
 
 		for (row = top, t = z; row < LINES; row++) {
 
 			/* retrieve saved-image */
 			for (j = 0; j < COLS; bfr[j++] = *t++);
-			bfr[j] = '\0';
+			bfr[j] = EOS;
 			while ((--j >= 0) && (bfr[j] == ' '))
-				bfr[j] = '\0';
+				bfr[j] = EOS;
 
 			/* ...and then restore it */
 			move(row,0);
@@ -141,7 +162,7 @@ SAVE	*last;
 	if (saved) {
 		lastwin(redo,top);
 		last = saved->link;
-		dofree(saved->image);
+		dofree((char *)saved->image);
 		dofree((char *)saved);
 		saved = last;
 	}
