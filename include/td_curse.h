@@ -1,15 +1,15 @@
-/* $Id: td_curse.h,v 12.12 1994/05/30 23:11:34 tom Exp $ */
+/* $Id: td_curse.h,v 12.14 1994/06/25 14:15:08 tom Exp $ */
 
 /*
  * TD_LIB CURSES-related definitions
  */
 
-#ifndef		_TD_CURSE_H
-#define		_TD_CURSE_H
+#ifndef		TD_CURSE_H
+#define		TD_CURSE_H
 
-#ifndef		_PTYPES_
+#ifndef		PTYPES_H
 #include "ptypes.h"
-#endif		/* _PTYPES_ */
+#endif		/* PTYPES_H */
 
 #ifdef USE_NCURSES
 #  include	<ncurses/ncurses.h>
@@ -250,4 +250,4 @@ extern	int	wrefresh	(WINDOW *);
 			_dcl(int,	row)
 			_nul
 
-#endif		/* _TD_CURSE_H */
+#endif	/* TD_CURSE_H */

@@ -1,0 +1,100 @@
+source ~/.vilerc
+
+; If the current line contains the string "ARGS(", pick up the word before
+; that, and assume it's the name of the function that I'm ifdef'ing for
+; autoconf, using the symbols
+;	HAVE_<func>
+;	NEED_<func>.
+30 store-macro
+	beginning-of-line
+	set-variable %found 0
+	set-variable %line $line
+	~if &sin $line "ARGS("
+		search-forward "ARGS("
+		back-word
+		~while &seq $identifier ""
+			forward-character-to-eol
+		~endwhile
+		set-variable %l_func $identifier
+		set-variable %u_func &upp %l_func
+		set-variable %if_before &cat "#if HAVE_" &cat %u_func &cat " && NEED_" %u_func
+		set-variable %if_after &cat "#endif /* HAVE_" &cat %u_func " */"
+		beginning-of-line
+		~if $curline &gtr 1
+			back-line
+			set-variable %line $line
+			down-line
+			~if &seq %line %if_before
+				set-variable %found 2
+				~return
+			~endif
+		~endif
+		set-variable %found 1
+	~else
+		write-message "[Did not find ARGS macro.]"
+	~endif
+~endm
+
+; Ifdef one instance
+31 store-macro
+	execute-macro-30
+	~if &equ 1 %found
+		; FIXME: must cat variable with null-string to make it string
+		; FIXME: I get a spurious blank that I have to delete-til
+		insert-string &cat %if_before ""
+		delete-til beginning-of-line
+		end-of-line
+		insert-string &cat "" &cat %if_after ""
+		back-line
+		end-of-line
+		write-message &cat "[Done ifdef'ing function " &cat %l_func "]"
+	~else
+		~if &equ 2 %found
+			write-message "[Already ifdef'd.]"
+		~endif
+	~endif
+~endm
+bind-key execute-macro-31 ^X-i
+
+; Ifdef the entire file
+32 store-macro
+	beginning-of-file
+	set nowrapscan
+	~while 1
+		end-of-line
+		search-forward "ARGS("
+		execute-macro-31
+	~endif
+	~endwhile
+~endm
+bind-key execute-macro-32 ^X-I
+
+; Un-ifdef one instance
+33 store-macro
+	execute-macro-30
+	~if &equ 2 %found
+		down-line
+		~if &seq $line %if_after
+			delete-lines-til end-of-line
+			2 back-line
+			delete-lines-til end-of-line
+			write-message "remove bracketing ifdefs"
+			~return
+		~endif
+	~endif
+	write-message "cannot remove bracketing ifdefs"
+~endm
+bind-key execute-macro-33 ^X-d
+
+; Un-ifdef the entire file
+34 store-macro
+	beginning-of-file
+	set nowrapscan
+	~while 1
+		end-of-line
+		search-forward "ARGS("
+		execute-macro-33
+	~endif
+	~endwhile
+~endm
+bind-key execute-macro-34 ^X-D

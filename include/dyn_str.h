@@ -1,9 +1,10 @@
-/* $Id: dyn_str.h,v 12.0 1992/07/24 13:02:42 ste_cm Rel $
+/* $Id: dyn_str.h,v 12.1 1994/06/25 14:15:54 tom Exp $
  *
  *	Functions which manage dynamic-strings.
  */
-#ifndef	_DYN_STRING_H_
-#define	_DYN_STRING_H_
+
+#ifndef	DYN_STR_H
+#define	DYN_STR_H
 
 #ifndef	_arx
 #include "ptypes.h"
@@ -100,4 +101,4 @@ typedef	struct	{
 		_dcl(DYN *,	p)
 		_ret
 
-#endif	/* _DYN_STRING_H_ */
+#endif	/* DYN_STR_H */

@@ -1,11 +1,11 @@
-/* $Id: td_regex.h,v 12.1 1994/05/30 00:47:55 tom Exp $ */
+/* $Id: td_regex.h,v 12.2 1994/06/25 14:14:22 tom Exp $ */
 
 /*
  * SYSTEM5/BSD4.x differences between native regular-expression handling:
  */
 
-#ifndef		_TD_REGEX_H
-#define		_TD_REGEX_H
+#ifndef		TD_REGEX_H
+#define		TD_REGEX_H
 
 #undef REGEX_T
 
@@ -56,4 +56,4 @@
 #  define BAD_REGEX(expr)		dedmsg(gbl, "illegal expression")
 #endif
 
-#endif	/* _TD_REGEX_H */
+#endif	/* TD_REGEX_H */

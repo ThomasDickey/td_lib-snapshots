@@ -1,9 +1,9 @@
-/* $Id: ptypes.h,v 12.19 1994/05/31 00:31:23 tom Exp $ */
+/* $Id: ptypes.h,v 12.22 1994/06/25 22:03:57 tom Exp $ */
 
-#ifndef	_PTYPES_
-#define	_PTYPES_
+#ifndef	PTYPES_H
+#define	PTYPES_H
 
-#ifdef unix
+#if HAVE_CONFIG_H
 #include "config.h"
 #endif
 
@@ -178,6 +178,15 @@ typedef	short	ino_t;
 #endif	/* LINTLIBRARY */
 
 /*
+ * The ARGS() macro is used for general extern-prototypes
+ */
+#if	PROTOTYPES
+#define	ARGS(p) p
+#else
+#define	ARGS(p) ()
+#endif
+
+/*
  * Define special macros to represent the "..." ellipsis
  */
 #if	PROTOTYPES
@@ -273,136 +282,6 @@ typedef	short	ino_t;
 #define	V_OR_P		char *
 #endif
 
-/******************************************************************************
- * Useful external-definitions                                                *
- ******************************************************************************/
-#ifndef	LINTLIBRARY
-
-#if	defined(SYSTEM5) || defined(vms) || defined(__TURBOC__)
-#define	getwd(p)	getcwd(p,sizeof(p)-2)
-#if	!(defined(__hpux) || defined(linux) || defined(__svr4__) || defined(__TURBOC__))
-extern	char	*getcwd(_arx(char *,p, _ar1(size_t,n)));
-#endif
-#else	/* !SYSTEM5 */
-extern	char	*getwd(_ar1(char *,p));
-#if	defined(unix) && !(defined(apollo) || defined(__GNUC__) || defined(__hpux) || defined(__CLCC__)) /* bsd4.x on SunOs? */
-extern	char	*sprintf(_arx(char *,fmt) _DOTS);
-#endif
-#endif
-
-#if	!HAVE_STDLIB_H
-extern	V_OR_I	_exit(_ar1(int,code));
-extern	V_OR_I2	exit(_ar1(int,code));
-extern	V_OR_I	free(_ar1(char *,s));
-extern	V_OR_P	calloc(_arx(size_t,nel) _ar1(size_t,size));
-extern	V_OR_P	malloc(_ar1(size_t,size));
-extern	V_OR_P	realloc(_arx(V_OR_P,ptr) _ar1(size_t,size));
-extern	char *	getenv (_ar1(char *,s));
-extern	long	strtol(
-		_arx(char *,	s)
-		_arx(char **,	d)
-		_ar1(int,	base));
-#endif
-#if	!(defined(vms) || defined(__TURBOC__))
-#if	!(defined(apollo_sr10) || defined(__hpux) || defined(linux) || defined(__svr4__) || defined(__CLCC__))
-extern	V_OR_I2	perror (_ar1(const char *,s));
-extern	V_OR_I	rewind (_ar1(FILE *,s));
-#endif
-
-extern	int	mkstemp(_ar1(char *,s));
-extern	char *	mktemp (_ar1(char *,s));
-extern	time_t	time   (_ar1(time_t *,t));
-
-#endif	/* !vms */
-
-#if	!(defined(__hpux) || defined(linux) || defined(__svr4__))
-extern	FILE	*popen(_arx(char *,name) _ar1(char *,mode));
-
-extern	int	getopt(
-		_arx(int,	argc)
-		_arx(char **,	argv)
-		_ar1(char *,	opts));
-extern	char *	optarg;
-extern	int	optind;
-#endif
-
-#if	HAVE_LTOSTR
-#define	ltostr	td_ltostr	/* rename my version */
-#endif
-
-#ifdef	unix
-#ifdef	apollo_sr10
-extern	uid_t	getuid(), geteuid();
-extern	gid_t	getgid(), getegid();
-#endif
-
-/*
- * Common definitions that aren't declared properly
- */
-#if defined(__GNUC__) && defined(sun)
-extern	int	_filbuf	(FILE *);
-extern	int	_flsbuf	(int, FILE *);
-extern	void	bzero	(char *, int);
-extern	int	creat	(const char *, mode_t);
-extern	int	fclose	(FILE *);
-extern	int	fflush	(FILE *);
-extern	int	fgetc	(FILE *);
-#ifndef __svr4__
-extern	int	fork	(void);
-extern	int	fprintf (FILE *, char *, ...);
-#endif	/* __svr4__ */
-extern	int	fputc	(int, FILE *);
-#ifndef __svr4__
-extern	int	fputs	(char *, FILE *);
-extern	int	fread	(char *, int, int, FILE *);
-extern	int	fscanf	(FILE *, char *, ...);
-extern	int	fseek	(FILE *, long, int);
-extern	int	fwrite	(char *, int, int, FILE *);
-#endif	/* __svr4__ */
-extern	int	setegid	(gid_t);
-extern	int	setlinebuf(FILE *);
-extern	int	setruid	(uid_t);
-extern	int	setrgid	(uid_t);
-#ifndef __svr4__
-extern	int	ioctl	(int, int, caddr_t);
-extern	int	lstat	(char *, Stat_t *);
-#endif	/* __svr4__ */
-extern	int	open	(const char *, int, ...);
-extern	int	pclose	(FILE *);
-#ifndef __svr4__
-extern	int	printf	(char *, ...);
-#endif	/* __svr4__ */
-extern	int	putenv	(char *);
-#ifndef __svr4__
-extern	int	puts	(char *);
-extern	int	readlink(char *, char *, int);
-extern	int	rename	(char *, char *);
-extern	int	sscanf	(char *, ...);
-#endif	/* __svr4__ */
-extern	void	setbuf	(FILE *, char *);
-#ifndef __svr4__
-extern	int	symlink	(char *, char *);
-extern	int	system	(char *);
-#endif	/* __svr4__ */
-extern	int	tgetent	(char *, char *);
-extern	int	tgetnum	(char *);
-extern	int	ungetc	(int, FILE *);
-#ifndef __svr4__
-extern	int	vfork	(void);
-#endif	/* __svr4__ */
-#endif
-
-#if	defined(sun) && !defined(__svr4__)	/* missing from <stdlib.h> */
-extern	long	strtol(
-		_arx(char *,	s)
-		_arx(char **,	d)
-		_ar1(int,	base));
-#endif
-
-#endif	/* unix */
-
-#endif	/* !LINTLIBRARY */
-
 /*
  * Miscellaneous useful definitions for readability
  */
@@ -479,11 +358,6 @@ extern	long	strtol(
 #ifdef	CHR_PTYPES
 #include <ctype.h>
 
-#if defined(__GNUC__) && defined(sun)
-extern	int	tolower(int);
-extern	int	toupper(int);
-#endif
-
 #if defined(tolower) || defined(sun) || defined(linux)
 #define LowerMacro(c) tolower(c)
 #define UpperMacro(c) toupper(c)
@@ -536,7 +410,7 @@ static	struct	direct	dbfr;
 # endif			/* MSDOS/unix */
 #endif			/* vms/MSDOS/unix */
 
-#define	Dirent_t struct	direct
+#define	DirentT struct	direct
 
 #endif	/* DIR_PTYPES */
 
@@ -562,16 +436,6 @@ static	struct	direct	dbfr;
 
 #if HAVE_PWD_H
 #include <pwd.h>
-
-#if	!(defined(__hpux) || defined(linux) || defined(__svr4__))
-extern	struct passwd *	getpwnam(_ar1(char *,name));
-extern	struct passwd *	getpwuid(_ar1(int,uid));
-
-extern	struct passwd *	getpwent(_ar0);
-extern	V_OR_I		setpwent(_ar0);
-extern	V_OR_I		endpwent(_ar0);
-#endif
-
 #endif	/* HAVE_PWD_H */
 
 #endif	/* PWD_PTYPES */
@@ -641,12 +505,6 @@ extern	V_OR_I		endpwent(_ar0);
 /* memory.h and strings.h conflict on some systems.  */
 #endif /* not STDC_HEADERS and not HAVE_STRING_H */
 
-#if	!defined(LINTLIBRARY) && !STDC_HEADERS
-extern	char *	strchr (_arx(const char *,s) _ar1(int,c));
-extern	char *	strrchr(_arx(const char *,s) _ar1(int,c));
-extern	char *	strtok (_arx(char *,s) _ar1(const char *,t));
-#endif
-
 #endif	/* STR_PTYPES */
 
 /******************************************************************************
@@ -689,28 +547,24 @@ extern	long	timezone;
 #include <sys/wait.h>
 #endif
 
-#undef	ARG_WAIT
-#undef	DCL_WAIT
+#if WAIT_USES_UNION
+# define	WAIT_ARG_TYPE	union wait
+#else
+# define	WAIT_ARG_TYPE	int
+#endif
 
-#if	defined(sun) || defined(apollo_sr10) || defined(SYSTEM5)
 #define	ARG_WAIT(status)	((int *)&status)
-#endif
-#ifdef	SYSTEM5
 #define	DCL_WAIT(status)	int status
-#endif
 
-#ifndef	ARG_WAIT
-#define	ARG_WAIT(status)	((union wait *)&status)
+#ifdef WEXITSTATUS
+# define	W_RETCODE(status)	WEXITSTATUS(status)
+#else
+# if WAIT_USES_UNION
+#  define	W_RETCODE(status)	(status.w_retcode)
+# else
+#  define	W_RETCODE(status)	((status >> 8) & 0xff)
+# endif
 #endif
-#ifndef	DCL_WAIT
-#define	DCL_WAIT(status)	union wait status
-#endif
-
-#ifdef	SYSTEM5
-#define	W_RETCODE(status)	((status >> 8) & 0xff)
-#else	/* !SYSTEM5 */
-#define	W_RETCODE(status)	(status.w_retcode)
-#endif	/* SYSTEM5/!SYSTEM5 */
 
 #endif	/* WAI_PTYPES */
 
@@ -718,6 +572,7 @@ extern	long	timezone;
  * Definitions of procedures in TD_LIB common library                         *
  ******************************************************************************/
 #ifndef	LINTLIBRARY
+#include <td_ext.h>
 #include <td_lib.h>
 
 #ifndef	lint
@@ -734,4 +589,4 @@ extern	int	main(_arx(int,argc) _ar1(char **,argv));
 #define	MAXPATHLEN	256
 #endif
 
-#endif	/* _PTYPES_ */
+#endif	/* PTYPES_H */
