@@ -1,4 +1,4 @@
-# $Id: descrip.mms,v 10.9 1992/02/07 15:03:55 dickey Exp $
+# $Id: descrip.mms,v 10.10 1992/02/10 07:50:04 dickey Exp $
 # MMS-file for miscellaneous library routines	
 #
 ####### (Development) ##########################################################
@@ -58,6 +58,7 @@ LIBRARYMODULES = -
 	STRALLOC, -
 	STRBCMP, -
 	STRCLEAN, -
+	STRCOUNT, -
 	STRTRIM, -
 	STRUCMP, -
 	STRUCPY, -
@@ -221,6 +222,7 @@ C_SRC	=-
 	STRALLOC.C -
 	STRBCMP.C -
 	STRCLEAN.C -
+	STRCOUNT.C -
 	STRTRIM.C -
 	STRUCMP.C -
 	STRUCPY.C -
@@ -335,6 +337,7 @@ STAT_DIR.obj :		$(PTYPES_H)
 STAT_FILE.obj :		$(PTYPES_H)
 STRALLOC.obj :		$(PTYPES_H)
 STRCLEAN.obj :		$(PTYPES_H)
+STRCOUNT.obj :		$(PTYPES_H)
 STRUCPY.obj :		$(PTYPES_H)
 STRWCMP.obj :		$(PTYPES_H)
 TRIMPATH.obj :		$(PTYPES_H)

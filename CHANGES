@@ -1,3 +1,24 @@
+1992-02-10  dickey@software.org
+
+	* src/string/dyn_cata.c: suppress calls if argument is empty
+
+	* src/descrip.mms: added 'strcount'
+
+	* src/Makefile: added 'strcount.c'
+
+	* include/td_lib.h: added 'strcount'
+	tidy up some whitespace
+
+	* src/string/strcount.c: RCS_BASE
+
+1992-02-10  ste_cm@software.org
+
+	* src/string/strcount.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+	* src/string/strcount.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
 1992-02-07  dickey@software.org
 
 	* src/process/interact.c: lint
