@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: cutoff.c,v 10.2 1992/02/17 15:28:23 dickey Exp $";
+static	char	Id[] = "$Id: cutoff.c,v 10.4 1992/06/30 07:46:25 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,8 @@ static	char	Id[] = "$Id: cutoff.c,v 10.2 1992/02/17 15:28:23 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	20 May 1988 (from 'sccsdate.c')
  * Modified:
+ *		30 Jun 1992, 'optind' should always be index of most recent
+ *			     argv-entry parsed.
  *		08 Jan 1992, allow year to be given as "xx", "19xx" or "20xx";
  *		03 Oct 1991, converted to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
@@ -77,8 +79,8 @@ _DCL(char **,	argv)
 				s++;
 			else {
 				if (optind < argc) {
-					if (isdigit(*argv[optind]))
-						s = argv[optind++];
+					if (isdigit(*argv[optind+1]))
+						s = argv[++optind];
 					else
 						break;
 				} else
@@ -91,3 +93,23 @@ _DCL(char **,	argv)
 	oldzone();		/* restore original timezone */
 	return (date);
 }
+
+#ifdef	TEST
+_MAIN
+{
+	time_t	it;
+	register int	j;
+	while ((j = getopt(argc, argv, "c:")) != EOF)
+		switch (j) {
+		case 'c':
+			it = cutoff(argc, argv);
+			PRINTF("=>%s", ctime(&it));
+			break;
+		default:
+			FPRINTF(stderr, "expecting -c option\n");
+			exit(FAIL);
+		}
+	exit(SUCCESS);
+	/*NOTREACHED*/
+}
+#endif
