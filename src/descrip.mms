@@ -1,4 +1,4 @@
-# $Header: /users/source/archives/td_lib.vcs/src/RCS/descrip.mms,v 2.2 1989/04/26 13:03:00 dickey Exp $
+# $Header: /users/source/archives/td_lib.vcs/src/RCS/descrip.mms,v 2.3 1989/04/27 07:20:39 dickey Exp $
 # MMS-file for miscellaneous library routines	
 #
 ####### (Development) ##########################################################
@@ -24,6 +24,7 @@ LIBRARYMODULES = -
 	DOTCMP, -
 	DOTNAME, -
 	DUMPCHR, -
+	FAILED, -
 	FILE2ARGV, -
 	FP2ARGV, -
 	LIST_BY_COLS, -
@@ -113,6 +114,7 @@ C_SRC	=-
 	DUMPWIN.C -
 	ERASECHAR.C -
 	EXECUTE.C -
+	FAILED.C -
 	FILE2ARGV.C -
 	FILECOPY.C -
 	FOR_USER.C -
@@ -214,6 +216,7 @@ DOALLOC.OBJ :		$(PTYPES_H)
 dumpwin.obj :		$(PTYPES_H)
 erasechar.obj :		$(PTYPES_H)
 execute.obj :		$(PTYPES_H)
+failed.obj :		$(PTYPES_H)
 filecopy.obj :		$(PTYPES_H)
 for_user.obj :		$(PTYPES_H)
 fp2argv.obj :		$(PTYPES_H)
