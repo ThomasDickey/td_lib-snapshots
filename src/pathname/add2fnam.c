@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RCS/add2fnam.c,v 2.1 1989/06/05 13:23:41 dickey Exp $";
+static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RCS/add2fnam.c,v 2.2 1989/06/08 15:09:44 dickey Exp $";
 #endif	lint
 
 /*
@@ -26,7 +26,7 @@ char	*name, *suffix;
 		auto	char	version[256];
 		(void)strcpy(version, s);
 		*s = EOS;
-		if (add2fname(name, suffix))
+		if (add2fname(name, suffix)) {
 			(void)strcat(name, version);
 			return (TRUE);
 		} else {

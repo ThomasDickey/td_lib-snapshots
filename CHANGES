@@ -1,3 +1,21 @@
+1989-06-08  dickey@software.org
+
+	* src/pathname/add2fnam.c: corrected typo in vms-version
+
+	* Makefile: corrected 'destroy' rule
+
+1989-06-08  ste_cm@software.org
+
+	* Makefile: BASELINE Mon Jun 19 13:20:43 EDT 1989
+
+1989-06-08  dickey@software.org
+
+	* include/Makefile: corrections to 'clean' & 'destroy' rules
+
+1989-06-08  ste_cm@software.org
+
+	* include/Makefile: BASELINE Mon Jun 19 13:22:44 EDT 1989
+
 1989-06-05  dickey@software.org
 
 	* src/descrip.mms: added ADD2FNAME module
