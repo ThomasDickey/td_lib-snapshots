@@ -1,4 +1,4 @@
-/* @(#)ptypes.h	1.5 88/08/12 09:34:20 */
+/* @(#)ptypes.h	1.6 88/08/15 07:00:13 */
 
 /*
  * The definitions in this file cover simple cases of bsd4.x/system5 porting,
@@ -20,12 +20,17 @@
 
 /*
  * Declare functions which are int (or implicit) in some systems, but explicitly
- * void in system5:
+ * void in system5.  Also, declare nuisance-types which are unsigned/int,
+ * depending on the system:
  */
 #ifdef	SYSTEM5
 #define	V_OR_I	void
+#define	LEN_QSORT	unsigned
+#define	LEN_READ	unsigned
 #else
 #define	V_OR_I
+#define	LEN_QSORT	int
+#define	LEN_READ	int
 #endif
 
 extern	V_OR_I	_exit();

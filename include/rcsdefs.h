@@ -1,4 +1,4 @@
-/* @(#)rcsdefs.h	1.1 88/05/26 13:39:48 */
+/* @(#)rcsdefs.h	1.2 88/08/15 06:54:12 */
 
 /*
  * State information for scanning RCS-file header
@@ -18,6 +18,14 @@
 
 #define	S_DESC		10
 #define	S_FAIL		999
+
+#ifndef	CI_PATH
+#define	CI_PATH		"ci"
+#endif	CI_PATH
+
+#ifndef	CO_PATH
+#define	CO_PATH		"co"
+#endif	CO_PATH
 
 #define	RCS_DIR		"RCS"
 #define	RCS_SUFFIX	",v"
