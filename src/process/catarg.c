@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/process/RCS/catarg.c,v 5.0 1989/02/27 11:13:47 ste_cm Rel $";
+static	char	Id[] = "$Id: catarg.c,v 8.0 1989/12/07 15:18:51 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,9 +7,21 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/process/
  * Author:	T.E.Dickey
  * Created:	26 May 1988
  * $Log: catarg.c,v $
- * Revision 5.0  1989/02/27 11:13:47  ste_cm
- * BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+ * Revision 8.0  1989/12/07 15:18:51  ste_cm
+ * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
  *
+ *		Revision 7.0  89/12/07  15:18:51  ste_cm
+ *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+ *		
+ *		Revision 6.0  89/12/07  15:18:51  ste_cm
+ *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+ *		
+ *		Revision 5.1  89/12/07  15:18:51  dickey
+ *		lint (Apollo SR10.1)
+ *		
+ *		Revision 5.0  89/02/27  11:13:47  ste_cm
+ *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+ *		
  *		Revision 4.0  89/02/27  11:13:47  ste_cm
  *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
  *		
@@ -30,8 +42,9 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/process/
  *		they can be passed through via 'blarg()'.
  */
 
+#define	STR_PTYPES
+#include	"ptypes.h"
 #include	<ctype.h>
-extern	char	*strcpy();
 
 catarg(dst, src)
 char	*dst, *src;
