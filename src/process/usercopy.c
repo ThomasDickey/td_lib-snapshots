@@ -16,9 +16,9 @@
 
 #include	"ptypes.h"
 
-MODULE_ID("$Id: usercopy.c,v 12.4 1993/11/27 14:05:34 tom Exp $")
+MODULE_ID("$Id: usercopy.c,v 12.5 2001/05/15 00:57:58 tom Exp $")
 
-#ifdef	unix
+#ifdef	SYS_UNIX
 
 static	char	*ucp_src,
 		*ucp_dst;
@@ -51,4 +51,4 @@ _MAIN
 }
 #endif	/* TEST */
 
-#endif	/* unix */
+#endif	/* SYS_UNIX */

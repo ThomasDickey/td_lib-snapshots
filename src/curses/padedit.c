@@ -38,9 +38,9 @@
 #include	"ptypes.h"
 #include	<errno.h>
 
-MODULE_ID("$Id: padedit.c,v 12.5 1993/11/26 22:12:34 tom Exp $")
+MODULE_ID("$Id: padedit.c,v 12.6 2001/05/15 01:00:08 tom Exp $")
 
-#ifdef	unix
+#ifdef	SYS_UNIX
 
 #ifdef	apollo
 #ifdef	apollo_sr10
@@ -254,4 +254,4 @@ _MAIN
 }
 #endif	/* TEST */
 
-#endif	/* unix */
+#endif	/* SYS_UNIX */

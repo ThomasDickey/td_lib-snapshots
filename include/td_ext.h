@@ -1,4 +1,4 @@
-/* $Id: td_ext.h,v 12.14 1998/05/30 01:27:50 tom Exp $ */
+/* $Id: td_ext.h,v 12.15 2001/05/15 00:57:04 tom Exp $ */
 
 #ifndef	TD_EXT_H
 #define	TD_EXT_H
@@ -41,7 +41,7 @@ extern "C" {
 #define	LEN_QSORT	int
 #define	LEN_READ	int
 #define	LEN_FREAD	size_t
-#else	/* unix */
+#else	/* SYS_UNIX */
 #define	LEN_QSORT	int
 #define	LEN_READ	int
 #if	defined(__STDC__) || defined(apollo)
@@ -49,7 +49,7 @@ extern "C" {
 #else
 #define	LEN_FREAD	int
 #endif	/* apollo */
-#endif	/* vms/unix */
+#endif	/* vms/SYS_UNIX */
 #endif	/* SYSTEM5 */
 
 #if	defined(sun) && !defined(V_OR_I)

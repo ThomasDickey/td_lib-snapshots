@@ -39,7 +39,7 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: abspath.c,v 12.8 2000/11/02 01:25:16 tom Exp $")
+MODULE_ID("$Id: abspath.c,v 12.9 2001/05/15 00:59:52 tom Exp $")
 
 #ifdef	apollo
 #ifdef	apollo_sr10
@@ -71,7 +71,7 @@ static	void	do_test(
 
 static	char	slash[] = {PATH_SLASH, EOS};		/* "/"   */
 
-#ifdef	unix
+#ifdef	SYS_UNIX
 static	char	nodestr[MAXPATHLEN];	/* will hold nodename, if any */
 static	int	nodelen = -1;
 #endif
@@ -152,7 +152,7 @@ void	precat(
 /************************************************************************
  *	main procedures							*
  ************************************************************************/
-#if	defined(unix) || defined(MSDOS)
+#if	defined(SYS_UNIX) || defined(MSDOS)
 void	abshome(
 	_AR1(char *,	path))
 	_DCL(char *,	path)
@@ -200,12 +200,12 @@ void	abspath(
 	char	*base	= path;
 	register char *s, *d = base;
 
-#ifdef	unix
+#ifdef	SYS_UNIX
 	if (nodelen < 0) {	/* 'getwd()' is expensive... */
 		if (getwd(nodestr))
 			(void)denode(nodestr,nodestr,&nodelen);
 	}
-#endif	/* unix */
+#endif	/* SYS_UNIX */
 
 	/*
 	 * Check for references to someone's home directory in csh-style.
@@ -236,7 +236,7 @@ void	abspath(
 	/*
 	 * Strip altos-style nodename prefix, if applicable
 	 */
-#ifdef	unix
+#ifdef	SYS_UNIX
 	if (nodelen > 0) {
 		if (strcmp(d, nodestr)) {
 			if (d != (s = denode(d, nodestr, (int *)0)))

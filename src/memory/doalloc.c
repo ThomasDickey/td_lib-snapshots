@@ -26,7 +26,7 @@
 
 #include	"ptypes.h"
 
-MODULE_ID("$Id: doalloc.c,v 12.5 1994/07/02 18:00:08 tom Exp $")
+MODULE_ID("$Id: doalloc.c,v 12.6 2001/05/15 00:59:54 tom Exp $")
 
 static	long	count_alloc,
 		count_freed;
@@ -40,7 +40,7 @@ void	fail_alloc(
 	_DCL(char *,	ptr)
 {
 	PRINTF("%s: %p\n", msg, ptr);
-#ifdef	unix
+#ifdef	SYS_UNIX
 	walkback((char *)0);
 #endif
 	FFLUSH(stdout);

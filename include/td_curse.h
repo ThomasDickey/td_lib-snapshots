@@ -1,4 +1,4 @@
-/* $Id: td_curse.h,v 12.45 2001/04/15 16:37:10 tom Exp $ */
+/* $Id: td_curse.h,v 12.46 2001/05/15 01:23:29 tom Exp $ */
 
 /*
  * TD_LIB CURSES-related definitions
@@ -396,7 +396,7 @@ extern	int	y_rawgets;
 			_arx(int,	field_len)
 			_arx(int,	first_col)
 			_arx(int,	first_mode)
-			_arx(int,	newline)
+			_arx(int,	new_line)
 			_arx(int,	fast_q)
 			_arx(char **,	command)
 			_ar1(int,	logging)
@@ -408,7 +408,7 @@ extern	int	y_rawgets;
 			_dcl(int,	field_len)
 			_dcl(int,	first_col)
 			_dcl(int,	first_mode)
-			_dcl(int,	newline)
+			_dcl(int,	new_line)
 			_dcl(int,	fast_q)
 			_dcl(char **,	command)
 			_dcl(int,	logging)

@@ -24,7 +24,7 @@
 #include	"port2vms.h"
 #include	"td_qsort.h"
 
-MODULE_ID("$Id: dlettree.c,v 12.5 1994/08/21 22:12:58 tom Exp $")
+MODULE_ID("$Id: dlettree.c,v 12.6 2001/05/15 00:59:36 tom Exp $")
 
 typedef	char	*PTR;
 	/*ARGSUSED*/
@@ -180,9 +180,9 @@ _MAIN
 					"?",
 #ifdef	vms
 					"[-]", "-r", "[-]"
-#else	/* unix */
+#else	/* SYS_UNIX */
 					"..",  "-r", ".."
-#endif	/* vms/unix */
+#endif	/* vms/SYS_UNIX */
 					};
 		do_test(SIZEOF(tbl), tbl);
 	}

@@ -23,7 +23,7 @@
 #define	SIG_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: catchall.c,v 12.5 1998/05/30 10:54:36 tom Exp $")
+MODULE_ID("$Id: catchall.c,v 12.6 2001/05/15 00:59:08 tom Exp $")
 
 void	catchall(
 	_FN1(SIG_T,	catchsig,	(SIGNAL_ARGS)))
@@ -34,7 +34,7 @@ void	catchall(
 	static	char	sigs[] = {
 				SIGINT
 				,SIGTERM
-#ifdef unix
+#ifdef SYS_UNIX
 				,SIGHUP
 				,SIGQUIT
 				,SIGPIPE

@@ -19,9 +19,9 @@
 
 #include	"td_curse.h"
 
-MODULE_ID("$Id: viewfile.c,v 12.5 1993/11/27 14:04:24 tom Exp $")
+MODULE_ID("$Id: viewfile.c,v 12.6 2001/05/15 01:00:00 tom Exp $")
 
-#ifdef	unix
+#ifdef	SYS_UNIX
 
 int	view_file(
 	_ARX(char *,	fname)
@@ -44,4 +44,4 @@ int	view_file(
 	return (code);
 }
 
-#endif	/* unix */
+#endif	/* SYS_UNIX */

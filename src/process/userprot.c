@@ -21,9 +21,9 @@
 #include	"ptypes.h"
 #include	<errno.h>
 
-MODULE_ID("$Id: userprot.c,v 12.6 1995/04/22 21:09:55 tom Exp $")
+MODULE_ID("$Id: userprot.c,v 12.7 2001/05/15 00:57:56 tom Exp $")
 
-#ifdef	unix
+#ifdef	SYS_UNIX
 
 static	char	*upr_name;
 static	mode_t	upr_mode;
@@ -57,4 +57,4 @@ int	userprot(
 	return (for_user(upr_func));
 }
 
-#endif	/* unix */
+#endif	/* SYS_UNIX */

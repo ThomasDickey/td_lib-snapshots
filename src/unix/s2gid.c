@@ -15,9 +15,9 @@
 
 #include	"ptypes.h"
 
-MODULE_ID("$Id: s2gid.c,v 12.4 1993/11/26 22:27:46 tom Exp $")
+MODULE_ID("$Id: s2gid.c,v 12.5 2001/05/15 00:57:46 tom Exp $")
 
-#ifdef	unix
+#ifdef	SYS_UNIX
 #include	<grp.h>
 
 int	s2gid(
@@ -36,4 +36,4 @@ int	s2gid(
 	}
 	return ((int)val);
 }
-#endif	/* unix */
+#endif	/* SYS_UNIX */

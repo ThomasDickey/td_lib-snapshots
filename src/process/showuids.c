@@ -12,9 +12,9 @@
 
 #include "ptypes.h"
 
-MODULE_ID("$Id: showuids.c,v 12.3 1993/11/27 14:03:02 tom Exp $")
+MODULE_ID("$Id: showuids.c,v 12.4 2001/05/15 00:58:26 tom Exp $")
 
-#ifdef	unix
+#ifdef	SYS_UNIX
 void
 show_uids(
 _AR1(FILE *,	fp))
@@ -31,4 +31,4 @@ _DCL(FILE *,	fp)
 	FPRINTF(fp, "\n");
 }
 
-#endif	/* unix */
+#endif	/* SYS_UNIX */

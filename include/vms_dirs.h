@@ -1,5 +1,5 @@
 /*
- * $Id: vms_dirs.h,v 12.1 1994/08/21 17:59:48 tom Exp $
+ * $Id: vms_dirs.h,v 12.2 2001/05/15 00:56:52 tom Exp $
  *
  * VMS definitions to interface to unix-like DIRECTORY(3) procedures.
  */
@@ -31,9 +31,9 @@ typedef	struct	_dirdesc {
 	struct	NAM	dd_nam;
 	char		dd_esa[NAM$C_MAXRSS];	/* expanded: SYS$PARSE */
 	} DIR;
-#else	unix
+#else	/* SYS_UNIX */
 #include <sys/dir.h>
-#endif	vms/unix
+#endif	/* vms/SYS_UNIX */
 
 extern	DIR *		opendir(
 			_ar1(char *,	filename)

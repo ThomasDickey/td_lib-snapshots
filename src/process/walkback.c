@@ -14,9 +14,9 @@
 #include	"ptypes.h"
 #include	<errno.h>
 
-MODULE_ID("$Id: walkback.c,v 12.5 1993/11/26 22:30:38 tom Exp $")
+MODULE_ID("$Id: walkback.c,v 12.6 2001/05/15 00:57:52 tom Exp $")
 
-#ifdef	unix
+#ifdef	SYS_UNIX
 
 #ifdef	apollo
 static
@@ -50,7 +50,7 @@ void	walkback(
 		PRINTF("WALKBACK %d\n", ++count);
 
 	if (program) {
-#if	defined(unix) && !defined(apollo)
+#if	defined(SYS_UNIX) && !defined(apollo)
 		char	dot[MAXPATHLEN],
 			bfr[256];
 		(void)getwd(dot);
@@ -60,7 +60,7 @@ void	walkback(
 	} else {	/* do the actual walkback */
 #ifdef	vms
 		*((char *)0) = 0;	/* patch */
-#else	/* unix ? */
+#else	/* SYS_UNIX ? */
 #ifdef	apollo
 		static	char	*first	= "\"walkback\"",
 				*last	= "\"unix_$main\"";
@@ -106,7 +106,7 @@ void	walkback(
 			(void)unlink(core);
 		}
 #endif	/* apollo */
-#endif	/* vms/unix */
+#endif	/* vms/SYS_UNIX */
 	}
 }
 
@@ -126,4 +126,4 @@ _MAIN
 }
 #endif	/* TEST */
 
-#endif	/* unix */
+#endif	/* SYS_UNIX */

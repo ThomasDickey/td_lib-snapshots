@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 12.46 2000/12/24 22:21:14 tom Exp $ */
+/* $Id: ptypes.h,v 12.47 2001/05/15 00:57:28 tom Exp $ */
 
 #ifndef	PTYPES_H
 #define	PTYPES_H
@@ -112,8 +112,8 @@ typedef	short	ino_t;
 #define	SYSTEM5
 #endif
 
-#if	!defined(MSDOS) && !defined(vms) && !defined(unix)
-#define	unix		/* it's close enough for me */
+#if	!defined(MSDOS) && !defined(vms)
+#define	SYS_UNIX		/* it's close enough for me */
 #endif
 
 #ifdef	MSDOS
@@ -254,7 +254,7 @@ typedef	short	ino_t;
 #define	LEN_QSORT	int
 #define	LEN_READ	int
 #define	LEN_FREAD	size_t
-#else	/* unix */
+#else	/* SYS_UNIX */
 #define	LEN_QSORT	int
 #define	LEN_READ	int
 #if	defined(__STDC__) || defined(apollo)
@@ -262,7 +262,7 @@ typedef	short	ino_t;
 #else
 #define	LEN_FREAD	int
 #endif	/* apollo */
-#endif	/* vms/unix */
+#endif	/* vms/SYS_UNIX */
 #endif	/* SYSTEM5 */
 
 #if	defined(sun) && !defined(V_OR_I)
@@ -339,11 +339,11 @@ typedef	short	ino_t;
  ******************************************************************************/
 #ifdef	ACC_PTYPES
 
-#ifdef	unix
+#ifdef	SYS_UNIX
 #  if HAVE_SYS_FILE_H
 #    include	<sys/file.h>
 #  endif
-#endif	/* vms/unix */
+#endif	/* vms/SYS_UNIX */
 
 #ifdef	MSDOS
 #  include <io.h>
@@ -424,8 +424,8 @@ typedef	short	ino_t;
 						: (struct direct *)0)
 #            define	closedir(fp)	FCLOSE(fp)
 static	struct	direct	dbfr;
-#          endif		/* MSDOS/unix */
-#        endif			/* vms/MSDOS/unix */
+#          endif		/* MSDOS/SYS_UNIX */
+#        endif			/* vms/MSDOS/SYS_UNIX */
 #      endif			/* NDIR/... */
 #    endif			/* SYS_DIR/... */
 #  endif			/* SYS_NDIR/... */
@@ -687,10 +687,10 @@ extern	int	main(_arx(int,argc) _ar1(char **,argv));
 #  include	<stsdef.h>
 #  define	EXIT_SUCCESS	(STS$M_INHIB_MSG | STS$K_SUCCESS)
 #  define	EXIT_FAILURE	(STS$M_INHIB_MSG | STS$K_ERROR)
-# else	/* unix */
+# else	/* SYS_UNIX */
 #  define	EXIT_SUCCESS	(0)		/* if no error */
 #  define	EXIT_FAILURE	(1)		/* if any error */
-# endif	/* vms/unix */
+# endif	/* vms/SYS_UNIX */
 #endif
 
 #define FAIL    EXIT_FAILURE

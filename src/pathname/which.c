@@ -30,7 +30,7 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: which.c,v 12.8 2000/01/17 17:46:51 tom Exp $")
+MODULE_ID("$Id: which.c,v 12.9 2001/05/15 00:59:14 tom Exp $")
 
 #ifdef MSDOS
 #define PROG_EXTS "PIF", "BAT", "EXE", "COM"
@@ -68,7 +68,7 @@ int	executable(
 		}
 	}
 	return ok;
-#else	/* unix */
+#else	/* SYS_UNIX */
 	Stat_t	sb;
 	return (access(name, X_OK) >= 0) && (stat_file(name, &sb) >= 0);
 #endif

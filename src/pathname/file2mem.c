@@ -23,7 +23,7 @@
 #include "ptypes.h"
 extern	FILE	*tmpfile(_ar0);
 
-MODULE_ID("$Id: file2mem.c,v 12.6 1994/08/21 19:31:29 tom Exp $")
+MODULE_ID("$Id: file2mem.c,v 12.7 2001/05/15 00:59:26 tom Exp $")
 
 char	*
 file2mem(
@@ -61,9 +61,9 @@ _DCL(char *,	name)
 #ifdef	vms
 		/* on vms, 'stat()' returns size in terms of blocks */
 		expected = length & ~511;
-#else	/* unix */
+#else	/* SYS_UNIX */
 		expected = length;
-#endif	/* vms/unix */
+#endif	/* vms/SYS_UNIX */
 
 		if ((fp = fopen(name, "r")) == 0)
 			return (0);

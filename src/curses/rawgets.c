@@ -71,7 +71,7 @@
 #include	"td_curse.h"
 #include	"dyn_str.h"
 
-MODULE_ID("$Id: rawgets.c,v 12.22 1996/02/05 15:48:48 tom Exp $")
+MODULE_ID("$Id: rawgets.c,v 12.23 2001/05/15 01:50:48 tom Exp $")
 
 #define	SHIFT	5
 
@@ -474,7 +474,7 @@ int	wrawgets (
 	_ARX(int,	field_len)	/* maximum length of display-field */
 	_ARX(int,	first_col)	/* initial column for editing */
 	_ARX(int,	first_mode)	/* initial insert/scroll mode */
-	_ARX(int,	newline)	/* force newline-echo on completion */
+	_ARX(int,	new_line)	/* force newline-echo on completion */
 	_ARX(int,	fast_q)		/* nonnull: extra quit character */
 	_ARX(char **,	command)	/* nonnull: read inputs */
 	_AR1(int,	logging)	/* nonnull: write inputs */
@@ -486,7 +486,7 @@ int	wrawgets (
 	_DCL(int,	field_len)
 	_DCL(int,	first_col)
 	_DCL(int,	first_mode)
-	_DCL(int,	newline)
+	_DCL(int,	new_line)
 	_DCL(int,	fast_q)
 	_DCL(char **,	command)
 	_DCL(int,	logging)
@@ -504,7 +504,7 @@ int	wrawgets (
 
 	FieldLen = field_len;
 	Prefix = pref;
-	wrap  = newline;
+	wrap  = new_line;
 	Imode = 1;
 	errs  = 0;
 	bbase = CurIns = bfr;
@@ -622,7 +622,7 @@ int	wrawgets (
 				c = '\n';
 			if (c == '\n') {
 				MoveTo(bbase + strlen(bbase));
-				if (Z && newline)
+				if (Z && new_line)
 					(void)waddch(Z,'\n');
 				break;
 			}

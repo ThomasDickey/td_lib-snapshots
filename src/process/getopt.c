@@ -10,11 +10,11 @@
 #define	STR_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: getopt.c,v 12.2 1994/08/21 21:43:23 tom Exp $")
+MODULE_ID("$Id: getopt.c,v 12.3 2001/05/15 00:58:48 tom Exp $")
 
 #if !HAVE_GETOPT
 
-#ifdef	unix
+#ifdef	SYS_UNIX
 #define ERR(s, c)	if(opterr){\
 	char	bfr[BUFSIZ]; register char *p = bfr;\
 	p += strlen(strcat(strcpy(bfr,argv[0]), s));\

@@ -16,7 +16,7 @@
 #define	STR_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: add2fnam.c,v 12.4 1993/11/27 16:11:44 tom Exp $")
+MODULE_ID("$Id: add2fnam.c,v 12.5 2001/05/15 00:59:40 tom Exp $")
 
 int	add2fname(
 	_ARX(char *,	name)
@@ -41,10 +41,10 @@ int	add2fname(
 			return (FALSE);
 		}
 	}
-#else	/* unix or MSDOS */
+#else	/* SYS_UNIX or MSDOS */
 	if ((s = fleaf(name)) != 0)
 		name = s;
-#endif	/* vms/unix */
+#endif	/* SYS_UNIX/unix */
 	if (strlen(name) > strlen(suffix)
 	&&  !strcmp(name+strlen(name)-strlen(suffix), suffix))
 		return (FALSE);
