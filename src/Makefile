@@ -1,4 +1,4 @@
-# @(#)Makefile	1.9 88/04/27 07:33:21
+# @(#)Makefile	1.10 88/04/29 09:00:06
 # MAKE-file for miscellaneous library routines
 L=lib.a
 #
@@ -30,6 +30,7 @@ OBJS	=\
 	strclean.o\
 	s2gid.o\
 	s2uid.o\
+	txtalloc.o\
 	uid2s.o\
 	vecalloc.o\
 	which.o

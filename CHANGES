@@ -1,3 +1,9 @@
+1988-04-29  dickey@software.org
+
+	* src/Makefile: added 'txtalloc.c' module.
+
+	* src/memory/txtalloc.c: New file.
+
 1988-04-28  dickey@software.org
 
 	* src/curses/rawgets.c:
