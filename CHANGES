@@ -1,3 +1,9 @@
+1992-08-07  dickey@software.org
+
+	* test/Makefile, Makefile: use:common.mk
+
+	* src/curses/rawgets.c: got rid of direct reference to 'stdscr'
+
 1992-08-06  dickey@software.org
 
 	* src/curses/rawgets.c:

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rawgets.c,v 11.6 1992/08/06 12:33:22 dickey Exp $";
+static	char	Id[] = "$Id: rawgets.c,v 11.7 1992/08/07 07:04:54 dickey Exp $";
 #endif
 
 /*
@@ -258,13 +258,13 @@ void	ToggleMode(_AR0)
 
 	Imode = !Imode;
 	getyx(Z,y,x);
-	standend();
+	wstandend(Z);
 	(void)wmove(Z,ybase,xbase-2);
 	(void)waddch(Z,Imode ? ':' : '^');
 
 	if (!wrap) {
 		if (!Imode)
-			standout();
+			wstandout(Z);
 		ShowAll();
 	}
 
@@ -446,7 +446,7 @@ int	wrawgets (
 		}
 	}
 	if (!wrap && !Imode) {
-		standend();
+		wstandend(Z);
 		ShowAll();
 	}
 	(void)wrefresh(Z);
