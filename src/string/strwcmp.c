@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	*Id = "$Id: strwcmp.c,v 11.0 1991/10/04 07:45:26 ste_cm Rel $";
+static	char	*Id = "$Id: strwcmp.c,v 12.0 1992/11/17 12:54:50 ste_cm Rel $";
 #endif
 
 /*
@@ -46,7 +46,6 @@ _DCL(char *,	name)
 }
 
 #ifdef	TEST
-#define	SIZEOF(v)	(sizeof(v)/sizeof(v[0]))
 default_test(_AR0)
 {
 	static	char	*names[] = {

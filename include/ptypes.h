@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 11.5 1992/09/02 15:50:46 dickey Exp $ */
+/* $Id: ptypes.h,v 11.7 1992/11/17 13:52:00 dickey Exp $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -72,8 +72,8 @@ extern	char	*sprintf();
  * declarations (e.g., "common.h"):
  */
 #ifdef	LINTLIBRARY
-#define	_fn1(t,v)	v
-#define	_fnx(t,v)	_fn1(t,v),
+#define	_fn1(t,v,a)	v
+#define	_fnx(t,v,a)	_fn1(t,v,a),
 #define	_ar0
 #define	_ar1(t,v)	v
 #define	_arx(t,v)	_ar1(t,v),
@@ -82,8 +82,8 @@ extern	char	*sprintf();
 #define	_nul		{}
 #else	/* !LINTLIBRARY */
 #if	PROTOTYPES	/* function prototypes */
-#define	_fn1(t,v)	t (*v)()
-#define	_fnx(t,v)	_fn1(t,v),
+#define	_fn1(t,v,a)	t (*v)a
+#define	_fnx(t,v,a)	_fn1(t,v,a),
 #define	_ar0		void
 #define	_ar1(t,v)	t v
 #define	_arx(t,v)	_ar1(t,v),
@@ -91,8 +91,8 @@ extern	char	*sprintf();
 #define	_ret		;
 #define	_nul		;
 #else	/* -- old-style declarations */
-#define	_fn1(t,v)
-#define	_fnx(t,v)
+#define	_fn1(t,v,a)
+#define	_fnx(t,v,a)
 #define	_ar0
 #define	_ar1(t,v)
 #define	_arx(t,v)
@@ -118,18 +118,18 @@ extern	char	*sprintf();
  * compiler supports it:
  */
 #if	PROTOTYPES
-#define	_FN1(t,v)	t (*v)()
+#define	_FN1(t,v,a)	t (*v)a
 #define	_AR1(t,v)	t v
 #define	_AR0		void
 #define	_DCL(t,v)
 #else
-#define	_FN1(t,v)	v
+#define	_FN1(t,v,a)	v
 #define	_AR1(t,v)	v
 #define	_AR0
 #define	_DCL(t,v)	t v;
 #endif
 
-#define	_FNX(t,v)	_FN1(t,v),
+#define	_FNX(t,v,a)	_FN1(t,v,a),
 #define	_ARX(t,v)	_AR1(t,v),
 
 /*
@@ -264,7 +264,7 @@ extern	V_OR_I	qsort(
 		_arx(V_OR_P,	base)
 		_arx(size_t,	nel)
 		_arx(size_t,	width)
-		_fn1(int,	compar));
+		_fn1(int,	compar,	(_ARX(V_OR_P,a) _AR1(V_OR_P,b))));
 extern	V_OR_I	free(_ar1(char *,s));
 extern	V_OR_P	calloc(_arx(size_t,nel) _ar1(size_t,size));
 extern	V_OR_P	malloc(_ar1(size_t,size));
@@ -313,6 +313,8 @@ typedef	int	gid_t;
 #endif	/* TRUE */
 
 #define	EOS	'\0'
+
+#define	SIZEOF(v)	(sizeof(v)/sizeof(v[0]))
 
 #ifndef	MAXPATHLEN
 #define	MAXPATHLEN	256

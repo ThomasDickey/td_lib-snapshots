@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: walktree.c,v 11.0 1992/02/07 15:27:56 ste_cm Rel $";
+static	char	Id[] = "$Id: walktree.c,v 11.2 1992/11/17 15:24:19 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: walktree.c,v 11.0 1992/02/07 15:27:56 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	31 Aug 1988
  * Modified:
+ *		17 Nov 1992, modified _FNX macro.
  *		05 Feb 1992, missed prototype on main-function
  *		03 Oct 1991, converted to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
@@ -65,13 +66,17 @@ typedef	char	*PTR;
  * Comparison routine for qsort.
  */
 static
-compare(
-_ARX(char **,	p1)
-_AR1(char **,	p2)
-	)
-_DCL(char **,	p1)
-_DCL(char **,	p2)
+int	compare(
+	_ARX(V_OR_P,	q1)
+	_AR1(V_OR_P,	q2)
+		)
+	_DCL(char **,	p1)
+	_DCL(char **,	p2)
 {
+#ifdef	__STDC__
+	register char **p1 = (char **)q1;
+	register char **p2 = (char **)q2;
+#endif
 	return (-strcmp(*p1, *p2));
 }
 
@@ -83,24 +88,24 @@ _DCL(char **,	p2)
  * Given a name in the current directory, see what it is.  If it is a directory,
  * nest to a new level.
  */
-walktree(
-_ARX(char *,	path)
-_ARX(char *,	name)
-_FNX(int,	func)
-_ARX(char *,	type)
-_AR1(int,	level)
-	)
-_DCL(char *,	path)
-_DCL(char *,	name)
-_DCL(int,	(*func)())
-_DCL(char *,	type)
-_DCL(int,	level)
+int	walktree(
+	_ARX(char *,	path)
+	_ARX(char *,	name)
+	_FNX(int,	func,	(WALK_FUNC_ARGS))
+	_ARX(char *,	type)
+	_AR1(int,	level)
+		)
+	_DCL(char *,	path)
+	_DCL(char *,	name)
+	_DCL(int,	(*func)())
+	_DCL(char *,	type)
+	_DCL(int,	level)
 {
 	int	total	= 0,
 		ok_acc	= -1,
 		mode	= 0;
-	struct	stat	sb,
-			*sb_	= &sb;
+	STAT	sb,
+		*sb_	= &sb;
 	register unsigned num;
 	PTR		*vec;
 	char		old_wd[BUFSIZ];

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	*Id = "$Id: samebr.c,v 11.1 1992/08/03 14:26:40 dickey Exp $";
+static	char	*Id = "$Id: samebr.c,v 12.0 1992/11/17 12:53:36 ste_cm Rel $";
 #endif
 
 /*
@@ -88,8 +88,8 @@ _MAIN
 		for (j = 1; j < argc; j++)
 			do_test(argv[1], argv[j]);
 	else
-		for (j = 0; j < sizeof(tbl)/sizeof(tbl[0]); j++)
-			for (k = 0; k < sizeof(tbl)/sizeof(tbl[0]); k++)
+		for (j = 0; j < SIZEOF(tbl); j++)
+			for (k = 0; k < SIZEOF(tbl); k++)
 				do_test(tbl[j], tbl[k]);
 	exit(SUCCESS);
 }

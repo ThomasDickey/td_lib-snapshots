@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: lsbycols.c,v 11.0 1991/10/03 14:54:12 ste_cm Rel $";
+static	char	Id[] = "$Id: lsbycols.c,v 12.0 1992/11/17 12:50:29 ste_cm Rel $";
 #endif
 
 /*
@@ -91,7 +91,7 @@ _MAIN
 				"e_potato",
 				"f-xxx"
 				};
-		list_by_cols(tbl, sizeof(tbl[0]), sizeof(tbl)/sizeof(tbl[0]));
+		list_by_cols(tbl, sizeof(tbl[0]), SIZEOF(tbl));
 	}
 	exit(SUCCESS);
 	/*NOTREACHED*/

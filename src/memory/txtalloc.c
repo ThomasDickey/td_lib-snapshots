@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: txtalloc.c,v 11.1 1992/11/16 12:06:32 dickey Exp $";
+static	char	Id[] = "$Id: txtalloc.c,v 11.2 1992/11/17 13:13:38 dickey Exp $";
 #endif
 
 /*
@@ -161,9 +161,9 @@ char	*value;
  * Dummy entry for consistency
  */
 /*ARGSUSED*/
-txtfree(
-_AR1(char *,	p))
-_DCL(char *,	p)
+void	txtfree(
+	_AR1(char *,	p))
+	_DCL(char *,	p)
 {
 	/* patch */
 }

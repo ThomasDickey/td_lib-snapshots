@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19921116
+MANIFEST for td_lib, version t19921117
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         restrictions on copying/using this software
@@ -54,6 +54,8 @@ src/cm_funcs/vcs_file.c         encapsulates name of directory-level RCS permiss
 src/cm_funcs/vercmp.c           compare version-strings
 src/compare                     subdirectory
 src/compare/diffload.c          load delta-tree from difference of files
+src/compare/m2comp.c            Miller/Myers difference algorithm
+src/compare/scomp.c             simple difference algorithm
 src/curses                      subdirectory
 src/curses/beep.c               sound audible alarm
 src/curses/blip.c               write 1 character to screen, bypassing curses
