@@ -1,3 +1,10 @@
+1992-09-03  dickey@software.org
+
+	* src/curses/rawgets.c:
+	if we are in 'wrap/newline' mode, initially clear the rest
+	of the screen; need to do this because I may be scrolling
+	thru history for 'ded'.
+
 1992-09-02  dickey@software.org
 
 	* src/compare/diffload.c, src/cm_funcs/rcstemp.c, src/process/revert.c:
