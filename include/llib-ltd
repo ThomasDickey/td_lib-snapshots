@@ -1,4 +1,4 @@
-/* @(#)llib-ltd	1.23 88/06/07 06:20:00 */
+/* @(#)llib-ltd	1.24 88/06/09 13:45:16 */
 /*LINTLIBRARY*/
 
 #include	<curses.h>
@@ -87,6 +87,11 @@ char	*ltostr(bfr, value, base) char *bfr; long value; { return(0); }
 
 /* modechar.c --------------------------------------------------------- */
 int	modechar(mode) unsigned mode; { return(0); }
+
+/* newzone.c ---------------------------------------------------------- */
+int	localzone;
+	newzone(hours, minutes, apres) { }
+	oldzone() { }
 
 /* okpnum.c ----------------------------------------------------------- */
 int	okpnum (number) char *number; { return (0); }

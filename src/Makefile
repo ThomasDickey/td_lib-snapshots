@@ -1,4 +1,4 @@
-# @(#)Makefile	1.24 88/06/07 06:19:15
+# @(#)Makefile	1.25 88/06/09 13:42:45
 # MAKE-file for miscellaneous library routines
 L=lib.a
 #
@@ -27,6 +27,7 @@ OBJS	=\
 	killchar.o\
 	ltostr.o\
 	modechar.o\
+	newzone.o\
 	okpnum.o\
 	packdate.o\
 	padedit.o\
@@ -63,6 +64,7 @@ $L:
 adj2est.o:	ptypes.h
 cmdch.o:	cmdch.h
 cutoff.o:	ptypes.h
+newzone.o:	ptypes.h
 packdate.o:	ptypes.h
 rawgets.o:	cmdch.h
 rcslast.o:	rcsdefs.h
@@ -78,8 +80,10 @@ clean:
 	rm *.o
 clobber: clean
 	rm *.a
+destroy:
+	rm -f *
 #
-install:
+install: all
 #
 llib-ltd.ln:	LLIB
 	makellib.sh LLIB td

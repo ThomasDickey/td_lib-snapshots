@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19880607
+MANIFEST for td_lib, version t19880609
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 include                         subdirectory
@@ -10,6 +10,7 @@ src                             subdirectory
 src/Makefile                    makefile for td_lib/src
 src/cm_funcs                    subdirectory
 src/cm_funcs/cutoff.c           SCCS-style cutoff date parsing
+src/cm_funcs/newzone.c          set new timezone
 src/cm_funcs/packdate.c         pack numbers to make UNIX date
 src/cm_funcs/rcsedit.c          edit RCS archive-file
 src/cm_funcs/rcskeys.c          decode RCS keywords
