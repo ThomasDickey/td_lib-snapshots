@@ -1,10 +1,14 @@
-# $Header: /users/source/archives/td_lib.vcs/src/RCS/Makefile,v 2.3 1989/04/27 07:19:41 dickey Exp $
+# $Header: /users/source/archives/td_lib.vcs/src/RCS/Makefile,v 2.4 1989/05/11 15:32:12 dickey Exp $
 # MAKE-file for miscellaneous library routines
 #
 # $Log: Makefile,v $
-# Revision 2.3  1989/04/27 07:19:41  dickey
-# added 'failed.c' to simplify use of this library
+# Revision 2.4  1989/05/11 15:32:12  dickey
+# added file2mem & mem2file modules.  added ptypes.h-dependency for
+# catchall.c; revised destroy-rule.
 #
+#	Revision 2.3  89/04/27  11:22:49  dickey
+#	added 'failed.c' to simplify use of this library
+#	
 #	Revision 2.2  89/04/20  16:09:45  dickey
 #	added MMS script to controlled-sources.
 #	
@@ -47,6 +51,7 @@ CSRC	=\
 	execute.c\
 	failed.c\
 	file2argv.c\
+	file2mem.c\
 	filecopy.c\
 	for_user.c\
 	fp2argv.c\
@@ -59,6 +64,7 @@ CSRC	=\
 	list_by_cols.c\
 	ltostr.c\
 	makeargv.c\
+	mem2file.c\
 	modechar.c\
 	name2s.c\
 	newzone.c\
@@ -131,6 +137,7 @@ OBJS	=\
 	execute.o\
 	failed.o\
 	file2argv.o\
+	file2mem.o\
 	filecopy.o\
 	for_user.o\
 	fp2argv.o\
@@ -143,6 +150,7 @@ OBJS	=\
 	list_by_cols.o\
 	ltostr.o\
 	makeargv.o\
+	mem2file.o\
 	modechar.o\
 	name2s.o\
 	newzone.o\
@@ -200,7 +208,8 @@ all:		$(ALL)
 #
 clean:				; rm -f *.o *.out *.ln
 clobber:	clean		; rm -f $(ALL)
-destroy:			; rm -f *
+destroy:
+	sh -c 'for i in *;do case $$i in RCS);; *) rm -f $$i;;esac;done'
 sources:	$(SOURCES)
 #
 install: all
@@ -215,6 +224,7 @@ archive: $(OBJS)
 	ar rv $A $(OBJS)
 #
 beep.o:		$I/ptypes.h
+catchall.o:	$I/ptypes.h
 cmdch.o:	$I/ptypes.h	$I/cmdch.h
 copyback.o:	$I/ptypes.h
 cutoff.o:	$I/ptypes.h
@@ -224,11 +234,13 @@ erasechar.o:	$I/ptypes.h
 execute.o:	$I/ptypes.h
 failed.o:	$I/ptypes.h
 file2argv.o:	$I/ptypes.h
+file2mem.o:	$I/ptypes.h
 filecopy.o:	$I/ptypes.h
 for_user.o:	$I/ptypes.h
 fp2argv.o:	$I/ptypes.h
 gid2s.o:	$I/ptypes.h
 killchar.o:	$I/ptypes.h
+mem2file.o:	$I/ptypes.h
 name2s.o:	$I/ptypes.h
 newzone.o:	$I/ptypes.h
 packdate.o:	$I/ptypes.h

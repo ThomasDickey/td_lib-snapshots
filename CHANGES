@@ -1,3 +1,49 @@
+1989-05-11  dickey@software.org
+
+	* src/Makefile:
+	added file2mem & mem2file modules.  added ptypes.h-dependency for
+	catchall.c; revised destroy-rule.
+
+	* include/ptypes.h:
+	compiled CM_TOOLS on the sun/sparc; needed a hack for 'signal()' -- SIGS_T.
+	also, fold in some code using "portunix.h" by moving malloc/realloc def here
+
+	* src/pathname/file2arg.c: broke out code for 'file2mem.c'
+
+	* src/pathname/modechar.c:
+	show fifo's as "p"; added hack for apollo to ensure this works.
+
+1989-05-11  ste_cm@software.org
+
+	* src/pathname/modechar.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+1989-05-11  dickey@software.org
+
+	* src/pathname/trimpath.c: lint
+
+1989-05-11  ste_cm@software.org
+
+	* src/pathname/trimpath.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/pathname/trimpath.c:
+	BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/pathname/trimpath.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/pathname/trimpath.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+	* src/pathname/trimpath.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
+	* src/pathname/trimpath.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1989-05-11  dickey@software.org
+
+	* src/pathname/file2mem.c: RCS_BASE
+
 1989-05-10  dickey@software.org
 
 	* src/process/catchall.c: compiled on sun/sparc

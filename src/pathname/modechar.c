@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RCS/modechar.c,v 2.1 1989/04/20 16:03:07 dickey Exp $";
+static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RCS/modechar.c,v 3.0 1989/05/11 12:52:20 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,21 +7,27 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname
  * Author:	T.E.Dickey
  * Created:	18 Nov 1987
  * $Log: modechar.c,v $
- * Revision 2.1  1989/04/20 16:03:07  dickey
- * port to VMS
+ * Revision 3.0  1989/05/11 12:52:20  ste_cm
+ * BASELINE Mon Jun 19 13:27:01 EDT 1989
  *
+ *		Revision 2.2  89/05/11  12:52:20  dickey
+ *		show fifo's as "p"; added hack for apollo to ensure this works.
+ *		
+ *		Revision 2.1  89/04/20  16:03:07  dickey
+ *		port to VMS
+ *		
  *		Revision 2.0  87/11/24  13:43:43  ste_cm
  *		BASELINE Thu Apr  6 09:45:13 EDT 1989
  *		
- *		Revision 1.3  87/11/24  13:43:43  dickey
- *		sccs2rcs keywords
- *		
- *
  * Function:	Translate file-mode to obtain the basic type-character
  *		(e.g., the first character shown by "ls -l").
  */
 #include	<sys/types.h>
 #include	<sys/stat.h>
+
+#ifdef	apollo
+#define	S_IFFIFO	010000
+#endif
 
 modechar(mode)
 unsigned mode;
@@ -38,6 +44,9 @@ register int	c;
 #ifdef	S_IFLNK
 	case S_IFLNK:	c = 'l';	break;
 #endif	S_IFLNK
+#ifdef	S_IFFIFO
+	case S_IFFIFO:	c = 'p';	break;
+#endif
 	default:	c = '?';
 	}
 	return(c);

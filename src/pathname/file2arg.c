@@ -1,9 +1,9 @@
 #ifndef	lint
-static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RCS/file2arg.c,v 2.1 1989/04/12 15:16:16 dickey Exp $";
+static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RCS/file2arg.c,v 2.2 1989/05/11 12:52:42 dickey Exp $";
 #endif	lint
 
 /*
- * Title:	file2argc.c (file to argv-conversion)
+ * Title:	file2argv.c (file to argv-conversion)
  * Author:	T.E.Dickey
  * Created:	06 Apr 1989
  *
@@ -23,20 +23,11 @@ static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RC
  *		The newline character ends each (except possibly the last) line.
  */
 
-#ifdef	vms
-#include "portunix.h"
-#else	unix
-#include <stdio.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-extern	char	*malloc();
-extern	char	*realloc();
-#define	SUCCESS	0
-#endif	vms/unix
-
+#include "ptypes.h"
 #include <errno.h>
 extern	FILE	*tmpfile();
 extern	int	errno;			/* ...not always in <errno.h> */
+extern	char	*file2mem();
 
 #define	AVG_LINE	25		/* nominal line-length */
 #define	AMOUNT(n)	(unsigned)(n)
@@ -45,10 +36,7 @@ file2argv(name, vec)
 char	*name;
 char	***vec;
 {
-	auto	 struct stat sb;
-	auto	 FILE	*fp;
 	auto	 int	j,
-			expected,	/* expected file-size */
 			length,
 			newlines,	/* number of newlines found */
 			lines;		/* number of newlines found */
@@ -56,76 +44,13 @@ char	***vec;
 	register char	*s, *d;
 
 	*vec = 0;	/* in case we find an error */
-
-	if (!strcmp(name, "-")) {
-		if (!(fp = tmpfile()))
-			return (-1);
-		length = 0;
-		while ((j = getchar()) != EOF) {
-			length++;
-			(void)fputc(j, fp);
-			if (ferror(fp)) {
-				(void)fclose(fp);
-				return (-1);
-			}
-		}
-		expected = length;
-		(void)rewind(fp);
-	} else {
-		/*
-		 * Determine how large the file is, and allocate enough space
-		 * to read it in a single chunk.  Assume a nominal line-size
-		 * so that we will cut the average time on realloc.
-		 */
-		if (stat(name, &sb) < 0)
-			return (-1);
-		if ((sb.st_mode & S_IFMT) != S_IFREG) {
-			errno = EISDIR;
-			return (-1);
-		}
-		length = sb.st_size;
-#ifdef	vms
-		/* on vms, 'stat()' returns size in terms of blocks */
-		expected = length & ~511;
-#else	unix
-		expected = length;
-#endif	vms/unix
-
-		if (!(fp = fopen(name, "r")))
-			return (-1);
-	}
-
-	/*
-	 * We now have a file-pointer open on a file of known length, which
-	 * we can read into memory using a single 'malloc()'
-	 */
-	blob = malloc(AMOUNT(length + (length / AVG_LINE) + 2));
-	if (blob == 0) {
-		(void)fclose(fp);
+	if (!(blob = file2mem(name)))
 		return (-1);
-	}
-	errno = 0;		/* in case system does not flag actual err */
-	length = fread(blob, sizeof(char), length, fp);
-	(void)fclose(fp);
-
-	/*
-	 * Ensure that we read the entire file.
-	 */
-	if (length < expected) {
-		if (!errno)	errno = EFBIG;
-		return (-1);
-	}
-
-	/*
-	 * Count the number of lines in the file.  Note that the last
-	 * "line" may not really have a newline.
-	 */
-	blob[length]   =
-	blob[length+1] = '\0';
 
 	for (s = blob, lines = 0; *s; ++s)
 		if (*s == '\n')
 			lines++;
+	length   = s - blob;
 	newlines = lines;
 	if (length > 0 && blob[length-1] != '\n')
 		lines++;
