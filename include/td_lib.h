@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 11.3 1992/08/06 11:46:16 dickey Exp $ */
+/* $Id: td_lib.h,v 11.4 1992/08/10 07:57:31 dickey Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for CM_TOOLS COMMON
@@ -557,7 +557,8 @@
 #ifdef	CUR_PTYPES
 	int	wrawgets (
 			_arx(WINDOW *,	win)
-			_arx(char *,	bfr)
+			_arx(char *,	buffer)
+			_arx(char **,	prefix)
 			_arx(int,	size)
 			_arx(int,	newline)
 			_arx(int,	fast_q)
@@ -565,7 +566,8 @@
 			_ar1(int,	logging)
 			)
 			_dcl(WINDOW *,	win)
-			_dcl(char *,	bfr)
+			_dcl(char *,	buffer)
+			_dcl(char **,	prefix)
 			_dcl(int,	size)
 			_dcl(int,	newline)
 			_dcl(int,	fast_q)
@@ -576,8 +578,8 @@
 	char *	rawgets_log(_ar0)
 			_ret
 
-#define		 rawgets(bfr, size, newline, fast_q, command, logging) \
-	wrawgets(stdscr, bfr, size, newline, fast_q, command, logging)
+#define		 rawgets(bfr, pref, size, newline, fast_q, command, logging) \
+	wrawgets(stdscr, bfr, pref, size, newline, fast_q, command, logging)
 
 	/* rawterm.c -------------------------------------------------- */
 		rawterm(_ar0)
