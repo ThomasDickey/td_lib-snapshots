@@ -1,3 +1,9 @@
+1994-09-29  dickey@clark.net
+
+	* src/cm_funcs/cmv_dir.c:
+	consolidated some logic so that this (should) automatically purge the
+	directory's copy of r-curr only when the r-curr file changes.
+
 1994-09-28  dickey@clark.net
 
 	* src/cm_funcs/cmv_dir.c: implemented 'purge_cmv_dir()'

@@ -1,4 +1,4 @@
-/* $Id: cmv_defs.h,v 12.2 1994/08/03 13:01:22 tom Exp $ */
+/* $Id: cmv_defs.h,v 12.3 1994/09/29 00:00:51 tom Exp $ */
 
 #ifndef	CMV_DEFS_H
 #define	CMV_DEFS_H
@@ -35,6 +35,26 @@
 			_ret
 
 	char *	cmv_file(
+			_arx(char *,	working_dir)
+			_ar1(char *,	pathname)
+			)
+			_dcl(char *,	working_dir)
+			_dcl(char *,	pathname)
+			_ret
+
+	void	get_cmv_lock(
+			_arx(char *,	working_dir)
+			_arx(char *,	pathname)
+			_arx(char **,	lockedby)
+			_ar1(char **,	revision)
+			)
+			_dcl(char *,	working_dir)
+			_dcl(char *,	pathname)
+			_dcl(char *,	lockedby)
+			_dcl(char *,	revision)
+			_nul
+
+	void	purge_cmv_dir(
 			_arx(char *,	working_dir)
 			_ar1(char *,	pathname)
 			)

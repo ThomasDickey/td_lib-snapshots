@@ -1,5 +1,5 @@
 #ifndef	NO_IDENT
-static	char	Id[] = "$Id: cmv_dir.c,v 12.4 1994/09/28 23:36:59 tom Exp $";
+static	char	Id[] = "$Id: cmv_dir.c,v 12.7 1994/09/29 22:39:01 tom Exp $";
 #endif
 
 /*
@@ -23,8 +23,8 @@ static	char	Id[] = "$Id: cmv_dir.c,v 12.4 1994/09/28 23:36:59 tom Exp $";
  *		We assume that the caller doesn't modify our return value;
  *		this lets us use 'txtalloc()'.
  *
- * To do:	Allow parts of the tree to be marked obsolete so they can be
- *		rescanned.
+ * FIXME:	this doesn't seem to pick up filenames at the top-level
+ * FIXME:	this doesn't seem to handle multiple vaults
  */
 
 #define	STR_PTYPES
@@ -63,6 +63,7 @@ static	char	Id[] = "$Id: cmv_dir.c,v 12.4 1994/09/28 23:36:59 tom Exp $";
 	char	*internal;	/* internal leaf-name */
 	char	*external;	/* external leaf-name */
 	char	*fullpath;
+	long	marktime;	/* ...from reading r-curr */
 	};
 
 #define	VAULTS	struct	Vaults
@@ -76,6 +77,8 @@ static	char	Id[] = "$Id: cmv_dir.c,v 12.4 1994/09/28 23:36:59 tom Exp $";
 static	int	initialized;
 static	char	*CmvVault;
 static	VAULTS	*VaultList;
+
+static	void	Initialize(_ar0);
 
 /******************************************************************************/
 
@@ -95,6 +98,7 @@ CMTREE *NewCmTree(
 	p->fullpath = txtalloc(pathname);
 	p->internal =
 	p->external = txtalloc("");
+	p->marktime = 0;
 	return p;
 }
 
@@ -181,11 +185,9 @@ void	read_s_curr(
  */
 static
 CMTREE *FindInternalDir(
-	_ARX(VAULTS *,	vault)
 	_ARX(CMTREE *,	parent)
 	_AR1(char *,	external)
 		)
-	_DCL(VAULTS *,	vault)
 	_DCL(CMTREE *,	parent)
 	_DCL(char *,	external)
 {
@@ -193,6 +195,8 @@ CMTREE *FindInternalDir(
 	size_t	len1 = strlen(external);
 	size_t	len2;
 
+	if (len1 == 0)
+		return parent;
 	p = parent->children;
 	if (p == 0) {
 		read_s_curr(parent->fullpath, parent);
@@ -206,7 +210,7 @@ CMTREE *FindInternalDir(
 		if (len2 <= len1
 		 && !strncmp(p->external, external, len2)
 		 && (external[len2] == PATH_SLASH)) {
-			return FindInternalDir(vault, p, external);
+			return FindInternalDir(p, external);
 		}
 		p = p->siblings;
 	}
@@ -233,8 +237,23 @@ void	read_r_curr(
 	char	temp[BUFSIZ];
 	FILE	*fp;
 	CMFILE	*p;
+	Stat_t	sb;
 
-	if ((fp = fopen(pathcat(temp, parent->fullpath, "r-curr"), "r")) != 0) {
+	if (stat(pathcat(temp, parent->fullpath, "r-curr"), &sb) < 0)
+		return;
+	if (parent->marktime == sb.st_mtime)
+		return;
+	parent->marktime = sb.st_mtime;
+
+	/* discard the previous contents of the cache */
+	while (parent->filelist != 0) {
+		p = parent->filelist;
+		parent->filelist = p->next;
+		/* the members are all 'txtalloc()' heap: don't free */
+		dofree((char *)p);
+	}
+
+	if ((fp = fopen(temp, "r")) != 0) {
 		while (fgets(temp, sizeof(temp), fp) != 0) {
 			char	*external;
 			char	*internal;
@@ -437,6 +456,11 @@ VAULTS *LookupVault(
 	WORKING	*q;
 	int	max_n = 0;
 
+	if (!initialized)
+		Initialize();
+	if (CmvVault == 0 || filename == 0)
+		return 0;
+
 	/*
 	 * If we're given the name of a file, compute its directory.  If we're
 	 * given a directory name, use it.
@@ -482,27 +506,19 @@ char *	cmv_dir(
 	_DCL(char *,	filename)
 {
 	auto	char	*name	= 0;
+	auto	char	temp[MAXPATHLEN];
+	auto	VAULTS	*max_p = LookupVault(working_directory, filename, temp);
 
-	if (!initialized)
-		Initialize();
+	if (max_p != 0) {	/* we found a match */
+		char	archive[MAXPATHLEN];
+		CMTREE	*it = FindInternalDir(max_p->cmtree, temp);
 
-	if (filename != 0 && CmvVault != 0) {
-		char	temp[MAXPATHLEN];
-		VAULTS	*max_p;
-
-		max_p = LookupVault(working_directory, filename, temp);
-		if (max_p != 0) {	/* we found a match */
-			char	archive[MAXPATHLEN];
-			CMTREE	*it;
-
-			it = FindInternalDir(max_p, max_p->cmtree, temp);
-			if (it != 0) {
-				(void)pathcat(
-					archive,
-					strcpy(archive, max_p->archive),
-					it->internal);
-				name = txtalloc(archive);
-			}
+		if (it != 0) {
+			(void)pathcat(
+				archive,
+				strcpy(archive, max_p->archive),
+				it->internal);
+			name = txtalloc(archive);
 		}
 	}
 
@@ -518,35 +534,77 @@ char *	cmv_file (
 	_DCL(char *,	filename)
 {
 	auto	char	*name	= 0;
+	auto	char	temp[MAXPATHLEN];
+	auto	VAULTS	*max_p = LookupVault(working_directory, filename, temp);
 
-	if (!initialized)
-		Initialize();
+	if (max_p != 0) {	/* we found a match */
+		char	archive[MAXPATHLEN];
+		CMTREE	*p;
+		CMFILE	*q;
 
-	if (filename != 0 && CmvVault != 0) {
-		char	temp[MAXPATHLEN];
-		VAULTS	*max_p;
-
-		max_p = LookupVault(working_directory, filename, temp);
-		if (max_p != 0) {	/* we found a match */
-			char	archive[MAXPATHLEN];
-			CMTREE	*p;
-			CMFILE	*q;
-
-			if ((p = FindInternalDir(max_p, max_p->cmtree, temp)) != 0
-			 && (q = FindInternalFile(p, pathcat(temp, temp, pathleaf(filename)))) != 0) {
-				(void)pathcat(
+		if ((p = FindInternalDir(max_p->cmtree, temp)) != 0
+		 && (q = FindInternalFile(p, pathcat(temp, temp, pathleaf(filename)))) != 0) {
+			(void)pathcat(
+				archive,
+				pathcat(
 					archive,
-					pathcat(
-						archive,
-						strcpy(archive, max_p->archive),
-						p->internal),
-					pathleaf(q->internal));
-				name = txtalloc(archive);
-			}
+					strcpy(archive, max_p->archive),
+					p->internal),
+				pathleaf(q->internal));
+			name = txtalloc(archive);
 		}
 	}
 
 	return (name);
+}
+
+/******************************************************************************/
+void	get_cmv_lock (
+	_ARX(char *,	working_directory)
+	_ARX(char *,	filename)
+	_ARX(char **,	lockedby)
+	_AR1(char **,	revision)
+		)
+	_DCL(char *,	working_directory)
+	_DCL(char *,	filename)
+	_DCL(char **,	lockedby)
+	_DCL(char **,	revision)
+{
+	auto	char	temp[MAXPATHLEN];
+	auto	VAULTS	*max_p = LookupVault(working_directory, filename, temp);
+
+	*lockedby = 0;
+	*revision = 0;
+	if (max_p != 0) {	/* we found a match */
+		CMTREE	*p;
+		CMFILE	*q;
+
+		if ((p = FindInternalDir(max_p->cmtree, temp)) != 0
+		 && (q = FindInternalFile(p, pathcat(temp, temp, pathleaf(filename)))) != 0) {
+			*lockedby = q->lockedby;
+			*revision = q->revision;
+		}
+	}
+}
+
+/******************************************************************************/
+void	purge_cmv_dir(
+	_ARX(char *,	working_directory)
+	_AR1(char *,	filename)
+		)
+	_DCL(char *,	working_directory)
+	_DCL(char *,	filename)
+{
+	auto	char	temp[MAXPATHLEN];
+	auto	VAULTS	*max_p = LookupVault(working_directory, filename, temp);
+
+	if (max_p != 0) {	/* we found a match */
+		CMTREE	*it = FindInternalDir(max_p->cmtree, temp);
+
+		if (it != 0) {
+			read_r_curr(it);
+		}
+	}
 }
 
 /******************************************************************************/
