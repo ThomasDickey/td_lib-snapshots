@@ -1,17 +1,19 @@
 #ifndef	lint
-static	char	*Id = "$Id: acc_mode.c,v 10.3 1992/02/07 14:43:29 dickey Exp $";
+static	char	*Id = "$Id: acc_mode.c,v 12.0 1992/02/17 15:27:44 ste_cm Rel $";
 #endif
 
 /*
  * Title:	access_mode.c
  * Author:	T.E.Dickey
  * Created:	07 Feb 1992
+ * Modified:
  *
  * Function:	converts the mode-argument to 'access()' into a printable
  *		string.
  */
 
 #define	ACC_PTYPES
+#define	STR_PTYPES
 #include "ptypes.h"
 
 char *

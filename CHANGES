@@ -1,3 +1,39 @@
+1992-02-17  dickey@software.org
+
+	* src/cm_funcs/cutoff.c, src/pathname/acc_mode.c: lint
+
+1992-02-17  ste_cm@software.org
+
+	* src/pathname/acc_mode.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+	* src/pathname/acc_mode.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1992-02-17  dickey@software.org
+
+	* certify/Makefile: RCS_BASE
+
+	* include/td_lib.h: added 'is_subpath.c'
+
+1992-02-17  ste_cm@software.org
+
+	* include/td_lib.h: BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1992-02-17  dickey@software.org
+
+	* src/Makefile, src/descrip.mms: added module 'is_subpath'
+
+	* src/pathname/is_spath.c: RCS_BASE
+
+1992-02-17  ste_cm@software.org
+
+	* src/pathname/is_spath.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+	* src/pathname/is_spath.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
 1992-02-11  dickey@software.org
 
 	* src/cm_funcs/rcssymbs.c: allow underscores in symbols

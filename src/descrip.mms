@@ -1,4 +1,4 @@
-# $Id: descrip.mms,v 10.10 1992/02/10 07:50:04 dickey Exp $
+# $Id: descrip.mms,v 10.11 1992/02/17 14:48:27 dickey Exp $
 # MMS-file for miscellaneous library routines	
 #
 ####### (Development) ##########################################################
@@ -40,6 +40,7 @@ LIBRARYMODULES = -
 	FILESIZE, -
 	FP2ARGV, -
 	FTYPE, -
+	IS_SUBPATH, -
 	ISTEXTFILE, -
 	LIST_BY_COLS, -
 	LTOSTR, -
@@ -169,6 +170,7 @@ C_SRC	=-
 	GETHOME.C -
 	GETUSER.C -
 	GID2S.C -
+	IS_SUBPATH.C -
 	INTERACTIVE.C -
 	ISTEXTFILE.C -
 	KILLCHAR.C -
@@ -304,6 +306,7 @@ FP2ARGV.obj :		$(PTYPES_H)
 FTYPE.obj :		$(PTYPES_H)
 FTYPE2.obj :		$(PTYPES_H)
 GID2S.obj :		$(PTYPES_H)
+IS_SUBPATH.obj :	$(PTYPES_H)
 ISTEXTFILE.obj :	$(PTYPES_H)
 KILLCHAR.obj :		$(PTYPES_H)
 LIST_BY_COLS.obj :	$(PTYPES_H)
