@@ -1,13 +1,13 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/memory/RCS/doalloc.c,v 2.0 1988/08/10 12:19:33 ste_cm Exp $";
+static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/memory/RCS/doalloc.c,v 2.1 1989/04/24 16:39:59 dickey Exp $";
 #endif	lint
 
 /*
  * Author:	T.E.Dickey
  * Created:	09 Jan 1986
  * $Log: doalloc.c,v $
- * Revision 2.0  1988/08/10 12:19:33  ste_cm
- * BASELINE Thu Apr  6 09:45:13 EDT 1989
+ * Revision 2.1  1989/04/24 16:39:59  dickey
+ * ifdef'd for port to vms
  *
  *		Revision 1.9  88/08/10  12:19:33  dickey
  *		sccs2rcs keywords
@@ -25,10 +25,11 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/memory/R
  */
 
 #include	"ptypes.h"
+#ifndef	vms
 extern	char	*malloc (), *realloc ();
+#endif	vms
 
 #ifdef	DEBUG
-#include	<stdio.h>
 static	FILE	*log;
 static	char	*allocated[DEBUG];
 static	int	used;

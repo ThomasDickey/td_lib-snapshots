@@ -1,11 +1,14 @@
 #ifndef	lint
-static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RCS/editfile.c,v 1.1 1988/10/05 16:24:02 dickey Exp $";
+static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RCS/editfile.c,v 4.0 1989/04/24 15:40:45 ste_cm Rel $";
 #endif	lint
 
 /*
  * Title:	editfile.c
  * Author:	T.E.Dickey
  * Created:	03 Oct 1988
+ * Modified:
+ *		24 Apr 1989, port to unix using 'mktemp()'
+ *
  * Function:	Invokes a single-line editing function on a file.  If no changes
  *		are made to the file, we discard the new file and keep the old.
  *
@@ -13,11 +16,18 @@ static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RC
  *		having to delete the old one first.  On unix we must copy to
  *		another name first.
  */
+
+#define		STR_PTYPES
 #include	"portunix.h"
-#include	<stdio.h>
-#include	<string.h>
 
 #define	TELL	fprintf(stderr,
+
+#ifdef	vms
+#define	NEWVER(name)	(name)
+#else	unix
+extern	char	*mktemp();
+#define	NEWVER(name)	mktemp(name)
+#endif	vms/unix
 
 editfile(oldname,func)
 char	*oldname;
@@ -26,18 +36,18 @@ int	(*func)();
 	auto	FILE	*ifp = fopen(oldname, "r");
 	auto	FILE	*ofp;
 	auto	int	changes = 0;
-	auto	char	newname[MAXPATHLEN];
 #ifdef	vms
+	auto	char	newname[MAXPATHLEN];
 	auto	char	*s;
 	(void)strcpy(newname, oldname);
 	if (s = strrchr(newname, ';'))	s[1] = '\0';
 	else				(void)strcat(newname, ";");
-#else
-	(void)strcat(newname, "$");	/* fake a unique name */
-#endif	vms
+#else	unix
+	static	char	newname[] = "fileXXXXXX";
+#endif	vms/unix
 
 	if ((ifp != 0)
-	&&  (ofp = fopen(newname, "w"))) {
+	&&  (ofp = fopen(NEWVER(newname), "w")) ) {
 		TELL "** edit \"%s\" => \"%s\"\n", oldname, newname);
 		changes += (*func)(ofp, ifp);
 		(void)fclose(ifp);
@@ -48,8 +58,12 @@ int	(*func)();
 		}
 #ifndef	vms
 		else {
-			if (link(newname, oldname) >= 0)
+			if (rename(newname, oldname) >= 0)
 				(void)unlink(newname);
+			else {
+				perror(newname);
+				return(0);
+			}
 		}
 #endif	vms
 		if (changes > 0) {
@@ -66,7 +80,10 @@ FILE	*ofp, *ifp;
 {
 	char	buffer[BUFSIZ];
 	while (fgets(buffer, sizeof(buffer), ifp))
-		fputs(buffer, ofp);
+		if (fputs(buffer, ofp) < 0) {
+			perror("do_copy");
+			return (0);
+		}
 	return (1);
 }
 

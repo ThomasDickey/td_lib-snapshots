@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/port2vms/RCS/vms2name.c,v 1.1 1989/04/13 09:04:37 dickey Exp $";
+static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/port2vms/RCS/vms2name.c,v 1.2 1989/04/24 16:01:21 dickey Exp $";
 #endif	lint
 
 /*
@@ -32,7 +32,7 @@ static	struct	{
 		char	*name;	/* lowercase string to check for */
 	} uc_names[] = {
 		1,	"makefile",
-		256,	"readme",
+		6,	"readme",
 		256,	"read.me",
 		256,	"copyright"
 	};
@@ -147,7 +147,7 @@ char	*dst, *src;
 	}
 
 	if (!strncmp(s, "readme.", 7))
-		uc_len = strlen(s);
+		uc_len = 6;
 	for (j = 0; j < sizeof(uc_names)/sizeof(uc_names[0]); j++) {
 		if (!strcmp(s, uc_names[j].name)) {
 			uc_len = uc_names[j].len;
