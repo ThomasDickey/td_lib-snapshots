@@ -1,3 +1,14 @@
+1989-05-25  dickey@software.org
+
+	* src/port2vms/vms2name.c:
+	mods to handle relative pathnames, including "[]" and "[-.name]" cases.
+	lowercase entire pathname (except for special leaf-cases) to ensure
+	consistency.
+
+1989-05-25  ste_cm@software.org
+
+	* src/port2vms/vms2name.c: BASELINE Mon Jun 12 08:56:43 EDT 1989
+
 1989-05-18  dickey@software.org
 
 	* include/td_lib.h: oops: typo in definition of argv2file
