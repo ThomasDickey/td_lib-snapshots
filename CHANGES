@@ -1,3 +1,20 @@
+2001-05-19  dickey@clark.net
+
+	* config.sub, config.guess: resync: autoconf 2.50
+
+2001-05-14  dickey@clark.net
+
+	* src/curses/rawgets.c:
+	rename 'newline' to 'new_line' to work with U/Win curses
+
+	* include/td_lib.h: rename 'unix' to 'SYS_UNIX' since U/Win complains
+
+	* include/td_curse.h:
+	rename 'newline' to 'new_line', to work with U/Win curses
+
+	* src/curses/blip.c, src/curses/padedit.c, src/curses/scr_size.c, src/curses/viewfile.c, src/memory/doalloc.c, src/pathname/abspath.c, src/pathname/add2fnam.c, src/pathname/dlettree.c, src/pathname/editfile.c, src/pathname/edittree.c, src/pathname/file2mem.c, src/pathname/fileblox.c, src/pathname/fleaf.c, src/pathname/ftype2.c, src/pathname/which.c, src/port2vms/vms_rpth.c, src/process/catchall.c, src/process/execute.c, src/process/for_admn.c, src/process/for_user.c, src/process/gethome.c, src/process/getopt.c, src/process/getuser.c, src/process/revert.c, src/process/showuids.c, src/process/usercopy.c, src/process/userprot.c, src/process/walkback.c, src/unix/s2gid.c, src/unix/s2uid.c, include/port2vms.h, include/ptypes.h, include/td_ext.h, include/vms_dirs.h:
+	rename 'unix' to 'SYS_UNIX' since U/Win complains
+
 2001-04-15  dickey@clark.net
 
 	* aclocal.m4:

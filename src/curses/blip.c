@@ -13,7 +13,7 @@
 
 #include	"ptypes.h"
 
-MODULE_ID("$Id: blip.c,v 12.4 1993/11/27 22:06:20 tom Exp $")
+MODULE_ID("$Id: blip.c,v 12.5 2001/05/15 01:00:14 tom Exp $")
 
 void blip(
 _AR1(int,	c))
@@ -23,7 +23,7 @@ _DCL(int,	c)
 	if (fp == 0) {
 		if (stderr != 0 && isatty(fileno(stderr)))
 			fp = stderr;
-#ifdef	unix
+#ifdef	SYS_UNIX
 		else
 			fp = fopen("/dev/tty", "w");
 #endif

@@ -14,9 +14,9 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: ftype2.c,v 12.3 1993/11/27 16:14:28 tom Exp $")
+MODULE_ID("$Id: ftype2.c,v 12.4 2001/05/15 00:59:16 tom Exp $")
 
-#ifdef	unix
+#ifdef	SYS_UNIX
 char *
 ftype2(
 _AR1(char *,	path))
@@ -31,4 +31,4 @@ _DCL(char *,	path)
 		t = s + strlen(s);
 	return (t);
 }
-#endif	/* unix */
+#endif	/* SYS_UNIX */

@@ -14,13 +14,13 @@
 #define STR_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: fleaf.c,v 12.3 1993/11/30 13:34:40 tom Exp $")
+MODULE_ID("$Id: fleaf.c,v 12.4 2001/05/15 00:59:20 tom Exp $")
 
 char *	fleaf_delim(
 	_AR1(char *, path))
 	_DCL(char *, path)
 {
-#ifdef	unix
+#ifdef	SYS_UNIX
 	return strrchr(path, '/');
 #endif
 #if	defined(vms) || defined(MSDOS)

@@ -1,5 +1,5 @@
 /*
- * $Id: port2vms.h,v 12.7 1997/09/08 00:56:47 tom Exp $
+ * $Id: port2vms.h,v 12.8 2001/05/15 00:57:40 tom Exp $
  *
  * VMS-definitions for supporting unix/vms port
  */
@@ -35,13 +35,13 @@ typedef	struct	timeval {
 /*#endif*/
 		/* (try doing strings w/o descriptors!) */
 
-#else	/* unix or MSDOS */
+#else	/* SYS_UNIX or MSDOS */
 
 #define	_OPENDIR(s,m)	(isDIR(m))
 #define	OPENDIR_ARG	"."
 #define	EDITDIR_ARG	"."
 
-#endif	/* vms/unix/MSDOS */
+#endif	/* vms/SYS_UNIX/MSDOS */
 
 extern	char *	dir2path(
 		_ar1(char *,		src)
@@ -199,20 +199,20 @@ extern	time_t	zone2vms(
 #define	PATH2SYS(dst,src)	path2vms(dst,src)
 #define	SYS2NAME(dst,src)	vms2name(dst,src)
 #define	ZONE2SYS(n)		zone2vms(n)
-#else	/* unix */
+#else	/* SYS_UNIX */
 #define	NAME2SYS(dst,src)	strcpy(dst,src)
 #define	PATH2SYS(dst,src)	strcpy(dst,src)
 #define	SYS2NAME(dst,src)	strcpy(dst,src)
 #define	ZONE2SYS(n)		((time_t)0)
-#endif	/* vms/unix */
+#endif	/* vms/SYS_UNIX */
 
 /* conversions that assume native-system is VMS */
 #ifdef	vms
 #define	DIR2PATH(path)		dir2path(path)
 #define	PATH2DIR(path)		path2dir(path)
-#else	/* unix */
+#else	/* SYS_UNIX */
 #define	DIR2PATH(path)		path
 #define	PATH2DIR(path)		path
-#endif	/* vms/unix */
+#endif	/* vms/SYS_UNIX */
  
 #endif	/* PORT2VMS_H */

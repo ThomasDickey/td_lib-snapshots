@@ -22,9 +22,9 @@
 #include	"ptypes.h"
 #include	<errno.h>
 
-MODULE_ID("$Id: for_admn.c,v 12.5 2000/06/30 10:38:59 tom Exp $")
+MODULE_ID("$Id: for_admn.c,v 12.6 2001/05/15 00:59:02 tom Exp $")
 
-#ifdef	unix
+#ifdef	SYS_UNIX
 int	for_admin2(
 	_FNX(int,	func,	(_AR0))
 	_ARX(int,	the_uid)
@@ -79,4 +79,4 @@ int	for_admin(
 	return for_admin2(func, (int)geteuid(), (int)getegid());
 }
 
-#endif	/* unix */
+#endif	/* SYS_UNIX */

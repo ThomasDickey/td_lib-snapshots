@@ -18,7 +18,7 @@
 #define	STR_PTYPES
 #include	"port2vms.h"
 
-MODULE_ID("$Id: vms_rpth.c,v 12.3 2000/12/02 18:05:06 tom Exp $")
+MODULE_ID("$Id: vms_rpth.c,v 12.4 2001/05/15 00:59:10 tom Exp $")
 
 static
 char *	after_leaf(
@@ -51,7 +51,7 @@ char *	vms_relpath(
 	src = strlwrcpy(source, src);	/* dst may be the same as src */
 	if (cwd == 0) {		/* if cwd not given, get the actual path */
 		cwd = getwd(current);
-#ifdef	unix
+#ifdef	SYS_UNIX
 		cwd = name2vms(current, strcat(cwd, "/"));
 #endif
 	} else

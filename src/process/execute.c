@@ -38,7 +38,7 @@
 #include	"ptypes.h"
 #include	<errno.h>
 
-MODULE_ID("$Id: execute.c,v 12.8 2000/12/24 22:18:20 tom Exp $")
+MODULE_ID("$Id: execute.c,v 12.9 2001/05/15 00:59:04 tom Exp $")
 
 #ifdef	vms
 #  include	<descrip.h>
@@ -129,7 +129,7 @@ int	execute(
 	errno = EVMSERR;	/* can't do much better than that! */
 
 #endif	/* vms */
-#ifdef	unix
+#ifdef	SYS_UNIX
 	static	char	**myargv;	/* argument vector for 'bldarg()' */
 #if HAVE_EXECVP
 	auto	char	*what;
@@ -194,7 +194,7 @@ int	execute(
 		/*NOTREACHED*/
 	}
 	return (0);
-#endif	/* unix */
+#endif	/* SYS_UNIX */
 	/*
 	 * TurboC 3.0 for MS-DOS doesn't have 'fork()' or 'wait()', but it
 	 * does provide a similar construct that lets us get the child's

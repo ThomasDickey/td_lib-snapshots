@@ -17,9 +17,9 @@
 
 #include	"ptypes.h"
 
-MODULE_ID("$Id: revert.c,v 12.3 1993/11/26 22:24:28 tom Exp $")
+MODULE_ID("$Id: revert.c,v 12.4 2001/05/15 00:58:42 tom Exp $")
 
-#ifdef	unix
+#ifdef	SYS_UNIX
 
 #define	TELL	if (msg) FPRINTF(stderr,
 
@@ -47,4 +47,4 @@ _DCL(char *,	msg)
 		TELL "** reason: %s\n", msg);
 	return changed;
 }
-#endif	/* unix */
+#endif	/* SYS_UNIX */

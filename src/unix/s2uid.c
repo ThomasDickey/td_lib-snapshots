@@ -19,9 +19,9 @@
 #define	STR_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: s2uid.c,v 12.4 1993/11/26 22:27:44 tom Exp $")
+MODULE_ID("$Id: s2uid.c,v 12.5 2001/05/15 00:57:44 tom Exp $")
 
-#ifdef	unix
+#ifdef	SYS_UNIX
 
 #ifdef	apollo_sr10
 	/*
@@ -81,4 +81,4 @@ _MAIN
 }
 #endif	/* TEST */
 
-#endif	/* unix */
+#endif	/* SYS_UNIX */

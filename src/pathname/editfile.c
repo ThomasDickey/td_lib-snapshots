@@ -22,13 +22,13 @@
 #define		STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: editfile.c,v 12.3 1994/08/21 22:37:58 tom Exp $")
+MODULE_ID("$Id: editfile.c,v 12.4 2001/05/15 00:59:32 tom Exp $")
 
 #ifdef	vms
 #define	NEWVER(name)	(name)
-#else	/* unix */
+#else	/* SYS_UNIX */
 #define	NEWVER(name)	mktemp(name)
-#endif	/* vms/unix */
+#endif	/* vms/SYS_UNIX */
 
 int	editfile(
 	_ARX(char *,	oldname)
@@ -48,10 +48,10 @@ int	editfile(
 	(void)strcpy(newname, oldname);
 	if (s = strrchr(newname, ';'))	s[1] = '\0';
 	else				(void)strcat(newname, ";");
-#else	/* unix */
+#else	/* SYS_UNIX */
 	char	newname[MAXPATHLEN];
 	(void)strcpy(newname, "fileXXXXXX");
-#endif	/* vms/unix */
+#endif	/* vms/SYS_UNIX */
 
 	if ((ifp != 0)
 	&&  (ofp = fopen(NEWVER(newname), "w")) != 0) {

@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 12.20 2000/12/02 18:05:10 tom Exp $ */
+/* $Id: td_lib.h,v 12.21 2001/05/15 01:36:37 tom Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for TD_LIB common
@@ -25,7 +25,7 @@
 #endif
 
 	/* abspath.c -------------------------------------------------- */
-#if	defined(unix) || defined(MSDOS)
+#if	defined(SYS_UNIX) || defined(MSDOS)
 	void	abshome(
 			_ar1(char *,	path)
 			)
@@ -37,7 +37,7 @@
 			)
 			_dcl(char *,	path)
 			_nul
-#endif	/* unix or MSDOS */
+#endif	/* SYS_UNIX or MSDOS */
 
 	/* acc_mode.c ------------------------------------------------- */
 	char *	access_mode(
@@ -117,16 +117,16 @@
 			_arx(FILE *,	fp)
 			_arx(char *,	name)
 			_arx(int,	mode)
-			_ar1(int,	lines)
+			_ar1(int,	lines_to_copy)
 			)
 			_dcl(FILE *,	fp)
 			_dcl(char *,	name)
 			_dcl(int,	mode)
-			_dcl(int,	lines)
+			_dcl(int,	lines_to_copy)
 			_ret
 
 	/* cutoff.c --------------------------------------------------- */
-#ifdef	unix
+#ifdef	SYS_UNIX
 	time_t	cutoff(
 			_arx(int,	argc)
 			_ar1(char **,	argv)
@@ -134,10 +134,10 @@
 			_dcl(int,	argc)
 			_dcl(char **,	argv)
 			_ret
-#endif	/* unix */
+#endif	/* SYS_UNIX */
 
 	/* denode.c --------------------------------------------------- */
-#if	defined(unix) || defined(MSDOS)
+#if	defined(SYS_UNIX) || defined(MSDOS)
 	char *	denode (
 			_arx(char *,	path)
 			_arx(char *,	node)
@@ -147,7 +147,7 @@
 			_dcl(char *,	node)
 			_dcl(int *,	opt)
 			_ret
-#endif	/* unix */
+#endif	/* SYS_UNIX */
 
 	/* dftenv.c --------------------------------------------------- */
 	char *	dftenv(
@@ -277,7 +277,7 @@
 			_ret
 
 	/* fileblox.c ------------------------------------------------- */
-#if	defined(unix)
+#if	defined(SYS_UNIX)
 #if	STAT_HAS_ST_BLOCKS
 #define	fileblocks(sb)	(sb)->st_blocks
 #else
@@ -290,7 +290,7 @@
 #endif
 
 	/* filecopy.c ------------------------------------------------- */
-#if	defined(unix) || defined(MSDOS)
+#if	defined(SYS_UNIX) || defined(MSDOS)
 	int	filecopy(
 			_arx(char *,	src)
 			_arx(char *,	dst)
@@ -307,7 +307,7 @@
 			)
 			_dcl(char *,	name)
 			_ret
-#endif	/* unix or MSDOS */
+#endif	/* SYS_UNIX or MSDOS */
 
 	/* fleaf.c ---------------------------------------------------- */
 	char *	fleaf_delim(
@@ -329,7 +329,7 @@
 			_ret
 
 	/* for_admn.c ------------------------------------------------- */
-#ifdef	unix
+#ifdef	SYS_UNIX
 	int	for_admin2(
 			_fnx(int,	func,	(_AR0))
 			_arx(int,	the_uid)
@@ -362,7 +362,7 @@
 			)
 			_dcl(void,	(*func)())
 			_ret
-#endif	/* unix */
+#endif	/* SYS_UNIX */
 
 	/* fp2argv.c -------------------------------------------------- */
 	int	fp2argv(
@@ -383,7 +383,7 @@
 			_ret
 
 	/* ftype2.c --------------------------------------------------- */
-#ifdef	unix
+#ifdef	SYS_UNIX
 	char *	ftype2(
 			_ar1(char *,	path)
 			)
@@ -397,7 +397,7 @@
 	/* getuser.c -------------------------------------------------- */
 	char *	getuser(_ar0)
 			_ret
-#endif	/* unix */
+#endif	/* SYS_UNIX */
 
 	/* gid2s.c ---------------------------------------------------- */
 	char *	gid2s(
@@ -407,7 +407,7 @@
 			_ret
 
 	/* in_group.c ------------------------------------------------- */
-#ifdef unix
+#ifdef SYS_UNIX
 	int	in_group(
 			_ar1(int,	gid)
 			)
@@ -521,7 +521,7 @@
 			_ret
 
 	/* newzone.c -------------------------------------------------- */
-#ifdef	unix
+#ifdef	SYS_UNIX
 extern	int	localzone;
 
 	void	newzone(
@@ -536,7 +536,7 @@ extern	int	localzone;
 
 	void	oldzone(_ar0)
 			_nul
-#endif	/* unix */
+#endif	/* SYS_UNIX */
 	/* next_ver.c ------------------------------------------------- */
 	void	next_version(
 			_arx(char *,	dst)
@@ -570,7 +570,7 @@ extern	int	localzone;
 			_ret
 
 	/* padedit.c -------------------------------------------------- */
-#ifdef	unix
+#ifdef	SYS_UNIX
 	int	padedit(
 			_arx(char *,	name)
 			_arx(int,	readonly)
@@ -580,10 +580,10 @@ extern	int	localzone;
 			_dcl(int,	readonly)
 			_dcl(char *,	editor)
 			_ret
-#endif	/* unix */
+#endif	/* SYS_UNIX */
 
 	/* pathcat.c -------------------------------------------------- */
-#if	defined(unix) || defined(MSDOS)
+#if	defined(SYS_UNIX) || defined(MSDOS)
 	char *	pathcat2(
 			_arx(char *,	dst)
 			_arx(char *,	p)
@@ -639,10 +639,10 @@ extern	int	localzone;
 			_dcl(char *,	cwd)
 			_dcl(char *,	src)
 			_ret
-#endif	/* unix or MSDOS */
+#endif	/* SYS_UNIX or MSDOS */
 
 	/* revert.c --------------------------------------------------- */
-#ifdef	unix
+#ifdef	SYS_UNIX
 	int	revert(
 			_ar1(char *,	msg)
 			)
@@ -662,7 +662,7 @@ extern	int	localzone;
 			)
 			_dcl(char *,	s)
 			_ret
-#endif	/* unix */
+#endif	/* SYS_UNIX */
 
 	/* sameleaf.c ------------------------------------------------- */
 	int	sameleaf(
@@ -674,7 +674,7 @@ extern	int	localzone;
 			_ret
 
 	/* savesuid.c ------------------------------------------------- */
-#ifdef	unix
+#ifdef	SYS_UNIX
 	int	saves_uid(_ar0)
 			_ret
 
@@ -684,7 +684,7 @@ extern	int	localzone;
 			)
 			_dcl(int *,	lc)
 			_ret
-#endif	/* unix */
+#endif	/* SYS_UNIX */
 
 	/* setmtime.c ------------------------------------------------- */
 	int	setmtime(
@@ -902,7 +902,7 @@ extern	int	localzone;
 			_ret
 
 	/* usercopy.c ------------------------------------------------- */
-#ifdef	unix
+#ifdef	SYS_UNIX
 	int	usercopy(
 			_arx(char *,	src)
 			_ar1(char *,	dst)
@@ -921,7 +921,7 @@ extern	int	localzone;
 			_dcl(int,	mode)
 			_dcl(time_t,	mtime)
 			_ret
-#endif	/* unix */
+#endif	/* SYS_UNIX */
 
 	/* vecalloc.c ------------------------------------------------- */
 	char	**vecalloc(
@@ -964,7 +964,7 @@ extern	int	localzone;
 			_ret
 
 	/* viewfile.c ------------------------------------------------- */
-#ifdef	unix
+#ifdef	SYS_UNIX
 	int	view_file(
 			_arx(char *,	fname)
 			_ar1(int,	readonly)
@@ -972,19 +972,19 @@ extern	int	localzone;
 			_dcl(char *,	fname)
 			_dcl(int,	readonly)
 			_ret
-#endif	/* unix */
+#endif	/* SYS_UNIX */
 
 	/* walkback.c ------------------------------------------------- */
-#ifdef	unix
+#ifdef	SYS_UNIX
 	void	walkback(
 			_ar1(char *,	program)
 			)
 			_dcl(char *,	program)
 			_nul
-#endif	/* unix */
+#endif	/* SYS_UNIX */
 
 	/* walktree.c ------------------------------------------------- */
-#if	defined(unix) || defined(MSDOS)
+#if	defined(SYS_UNIX) || defined(MSDOS)
 
 #define	WALK_FUNC_ARGS	\
 			_ARX(char *,	path)\
@@ -1026,6 +1026,6 @@ extern	int	localzone;
 			_dcl(char *,	find)
 			_dcl(char *,	dot)
 			_ret
-#endif	/* unix */
+#endif	/* SYS_UNIX */
 
 #endif	/* TD_LIB_H */

@@ -15,9 +15,9 @@
 #define ERR_PTYPES
 #include <ptypes.h>
 
-MODULE_ID("$Id: fileblox.c,v 12.6 1998/06/29 18:46:42 tom Exp $")
+MODULE_ID("$Id: fileblox.c,v 12.7 2001/05/15 00:59:22 tom Exp $")
 
-#ifdef unix
+#ifdef SYS_UNIX
 #if !STAT_HAS_ST_BLOCKS
 
 #ifdef __hpux	/* incompatible def */
@@ -55,7 +55,7 @@ long	fileblocks (
 	return (blocks);
 }
 #endif /* !STAT_HAS_ST_BLOCKS */
-#endif	/* unix */
+#endif	/* SYS_UNIX */
 
 #ifdef	TEST
 static
