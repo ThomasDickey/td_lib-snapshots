@@ -1,4 +1,4 @@
-/* $Header: /users/source/archives/td_lib.vcs/include/RCS/ptypes.h,v 2.6 1989/04/26 07:41:33 dickey Exp $ */
+/* $Header: /users/source/archives/td_lib.vcs/include/RCS/ptypes.h,v 2.7 1989/05/11 12:53:54 dickey Exp $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -98,6 +98,13 @@
 #endif	vms/unix
 #endif	SYSTEM5
 
+/* the type of return-value from "signal()" */
+#ifdef	sparc
+#define	SIGS_T		void
+#else
+#define	SIGS_T		int
+#endif
+
 extern	V_OR_I	_exit();
 extern	V_OR_I	exit();
 #ifndef	vms
@@ -149,6 +156,10 @@ extern	char	*doalloc();
 #define	DOALLOC(p,t,n)	(t *)doalloc((char *)p,sizeof(t)*(n))
 #define	ALLOC(t,n)	DOALLOC(0,t,n)
 #endif	lint
+
+#ifndef	vms
+extern	char	*malloc(), *realloc();
+#endif	vms
 
 /*
  * System5 does not provide the directory manipulation procedures in bsd4.x;

@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19890510
+MANIFEST for td_lib, version t19890511
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 Makefile                        top-level makefile for TD_LIB
@@ -65,6 +65,7 @@ src/pathname/dotname.c          test for "." or ".." names
 src/pathname/editfile.c         VMS/unix edit tree-of-files
 src/pathname/edittree.c         VMS/unix edit-tree-of-files
 src/pathname/file2arg.c         load a text-file to memory in 'argv[]' format, returning the number of lines
+src/pathname/file2mem.c         code from 'file2argv.c' which loads a file to blob-string in memory
 src/pathname/filecopy.c         copy a file
 src/pathname/fp2argv.c          file-pointer to argv-list
 src/pathname/ftype.c            finds filename's suffix

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RCS/trimpath.c,v 2.1 1989/04/17 11:26:50 dickey Exp $";
+static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RCS/trimpath.c,v 8.0 1989/05/11 12:35:56 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -22,7 +22,7 @@ trimpath(path,cwd)
 char	*path;
 char	*cwd;
 {
-	register char *s, *d = path;
+	register char *s, *d;
 
 	/*
 	 * Convert this to an absolute path somehow
