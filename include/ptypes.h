@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 8.1 1991/05/15 13:06:04 dickey Exp $ */
+/* $Id: ptypes.h,v 8.3 1991/05/31 17:28:45 dickey Exp $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -124,15 +124,46 @@ extern	char	*sprintf();
 #endif	/* vms/unix */
 #endif	/* SYSTEM5 */
 
+/*
+ * defines the argument-type for "wait()"
+ */
+#ifdef	WAI_PTYPES
+#include <sys/wait.h>
+
+#undef	ARG_WAIT
+#undef	DCL_WAIT
+
+#if	defined(apollo_sr10) || defined(SYSTEM5)
+#define	ARG_WAIT(status)	((int *)&status)
+#endif
+#ifdef	SYSTEM5
+#define	DCL_WAIT(status)	int status
+#endif
+
+#ifndef	ARG_WAIT
+#define	ARG_WAIT(status)	((union wait *)&status)
+#endif
+#ifndef	DCL_WAIT
+#define	DCL_WAIT(status)	union wait status
+#endif
+
+#ifdef	SYSTEM5
+#define	W_RETCODE(status)	((status >> 8) & 0xff)
+#else	/* !SYSTEM5 */
+#define	W_RETCODE(status)	(status.w_retcode)
+#endif	/* SYSTEM5/!SYSTEM5 */
+
+#endif	/* WAI_PTYPES */
+
+/*
+ * defines the type of return-value from "signal()"
+ */
 #ifdef	SIG_PTYPES
 #include <signal.h>
-/* defines the type of return-value from "signal()" */
-#ifdef	apollo
-#ifndef	__SIG_HANDLER_T
-typedef	int	(__sig_handler_t)();	/* pre sr10.3 */
-#endif
-#else	/* !apollo */
-typedef	void	(__sig_handler_t)();
+#if	defined(apollo) && !defined(__SIG_HANDLER_T)
+#define	DCL_SIGNAL(func)	int	(*func)()
+#else
+#define	DCL_SIGNAL(func)	void	(*func)()
 #endif
 #endif	/* SIG_PTYPES */
 

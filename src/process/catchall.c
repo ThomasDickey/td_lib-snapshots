@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: catchall.c,v 8.1 1991/05/15 11:40:22 dickey Exp $";
+static	char	Id[] = "$Id: catchall.c,v 9.0 1991/05/31 17:28:51 ste_cm Rel $";
 #endif
 
 /*
@@ -7,9 +7,15 @@ static	char	Id[] = "$Id: catchall.c,v 8.1 1991/05/15 11:40:22 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	13 Sep 1988
  * $Log: catchall.c,v $
- * Revision 8.1  1991/05/15 11:40:22  dickey
- * mods to compile under apollo sr10.3
+ * Revision 9.0  1991/05/31 17:28:51  ste_cm
+ * BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
  *
+ *		Revision 8.2  91/05/31  17:28:51  dickey
+ *		lint (SunOs)
+ *		
+ *		Revision 8.1  91/05/15  11:40:22  dickey
+ *		mods to compile under apollo sr10.3
+ *		
  *		Revision 8.0  89/10/31  09:19:52  ste_cm
  *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
  *		
@@ -51,10 +57,10 @@ static	char	Id[] = "$Id: catchall.c,v 8.1 1991/05/15 11:40:22 dickey Exp $";
 #include "ptypes.h"
 
 catchall(catchsig)
-__sig_handler_t	catchsig;
+DCL_SIGNAL(catchsig);
 {
 #define	SAVE(j)	save[j].func
-	static	struct	{ __sig_handler_t *func; } save[NSIG+1];
+	static	struct	{ DCL_SIGNAL(func); } save[NSIG+1];
 	static	char	sigs[] = {
 				SIGINT,
 				SIGHUP,

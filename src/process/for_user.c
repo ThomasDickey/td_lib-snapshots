@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: for_user.c,v 8.1 1991/05/15 13:23:14 dickey Exp $";
+static	char	Id[] = "$Id: for_user.c,v 9.0 1991/05/31 16:36:08 ste_cm Rel $";
 #endif
 
 /*
@@ -7,9 +7,15 @@ static	char	Id[] = "$Id: for_user.c,v 8.1 1991/05/15 13:23:14 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	13 Sep 1988
  * $Log: for_user.c,v $
- * Revision 8.1  1991/05/15 13:23:14  dickey
- * mods to compile under apollo sr10.3
+ * Revision 9.0  1991/05/31 16:36:08  ste_cm
+ * BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
  *
+ *		Revision 8.2  91/05/31  16:36:08  dickey
+ *		lint (SunOs)
+ *		
+ *		Revision 8.1  91/05/15  13:23:14  dickey
+ *		mods to compile under apollo sr10.3
+ *		
  *		Revision 8.0  89/03/31  15:22:36  ste_cm
  *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
  *		
@@ -47,13 +53,12 @@ static	char	Id[] = "$Id: for_user.c,v 8.1 1991/05/15 13:23:14 dickey Exp $";
  * Returns:	-1 if an error was found; sets 'errno'.
  */
 
+#define	WAI_PTYPES
 #include	"ptypes.h"
 #include	<errno.h>
 extern	int	errno;
 
-#ifdef	SYSTEM5
-#else	/* !SYSTEM5 */
-#include	<sys/wait.h>
+#ifndef	SYSTEM5
 #define	fork		vfork
 #endif
 
@@ -63,13 +68,7 @@ int	(*func)();
 	register int	count,
 			pid;
 
-#ifdef	SYSTEM5
-	int		status;
-#define	W_RETCODE	((status >> 8) & 0xff)
-#else	/* !SYSTEM5 */
-	union	wait	status;
-#define	W_RETCODE	status.w_retcode
-#endif
+	DCL_WAIT(status);
 
 	if (getuid() == geteuid()) {
 		(void)(*func)();	/* invoke the special function */
@@ -77,12 +76,12 @@ int	(*func)();
 	}
 
 	if ((pid = fork()) > 0) {
-		while ((count = wait((int *)&status)) != pid) {
+		while ((count = wait(ARG_WAIT(status))) != pid) {
 			if ((count < 0) || (errno == ECHILD))
 				break;
 			errno = 0;
 		}
-		if (errno = W_RETCODE)
+		if (errno = W_RETCODE(status))
 			return (-1);
 		return (0);
 	} else if (pid == 0) {

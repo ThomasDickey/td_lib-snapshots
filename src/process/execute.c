@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: execute.c,v 8.1 1991/05/15 13:16:14 dickey Exp $";
+static	char	Id[] = "$Id: execute.c,v 9.0 1991/05/31 16:33:14 ste_cm Rel $";
 #endif
 
 /*
@@ -7,9 +7,15 @@ static	char	Id[] = "$Id: execute.c,v 8.1 1991/05/15 13:16:14 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	21 May 1988
  * $Log: execute.c,v $
- * Revision 8.1  1991/05/15 13:16:14  dickey
- * mods to compile under apollo sr10.3
+ * Revision 9.0  1991/05/31 16:33:14  ste_cm
+ * BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
  *
+ *		Revision 8.2  91/05/31  16:33:14  dickey
+ *		lint (SunOs)
+ *		
+ *		Revision 8.1  91/05/15  13:16:14  dickey
+ *		mods to compile under apollo sr10.3
+ *		
  *		Revision 8.0  90/04/27  14:09:37  ste_cm
  *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
  *		
@@ -59,6 +65,7 @@ static	char	Id[] = "$Id: execute.c,v 8.1 1991/05/15 13:16:14 dickey Exp $";
  */
 
 #define	STR_PTYPES
+#define	WAI_PTYPES
 #include	"ptypes.h"
 #include	<ctype.h>
 #include	<errno.h>
@@ -72,7 +79,6 @@ extern	int	errno;
 #include	<unixlib.h>
 #include	<processes.h>
 #else	/* bsd4.x */
-#include	<sys/wait.h>
 extern	char	**environ;
 #endif
 #define	fork		vfork
@@ -150,14 +156,7 @@ char	what[BUFSIZ];
 int	count	= 3,		/* minimum needed for 'bldarg()' */
 	pid;
 
-#ifdef	SYSTEM5
-int	status;
-#define	W_RETCODE	((status >> 8) & 0xff)
-#else	/* !SYSTEM5 */
-union	wait	status;
-#define	W_RETCODE	status.w_retcode
-#endif	/* SYSTEM5/!SYSTEM5 */
-
+	DCL_WAIT(status);
 
 	/* Split the command-string into an argv-like structure suitable for
 	 * the 'execv()' procedure:
@@ -194,12 +193,12 @@ union	wait	status;
 	(void)fflush(stdout);
 	(void)fflush(stderr);
 	if ((pid = fork()) > 0) {
-		while ((count = wait((int *)&status)) != pid) {
+		while ((count = wait(ARG_WAIT(status))) != pid) {
 			if ((count < 0) || (errno == ECHILD))
 				break;
 			errno = 0;
 		}
-		if (errno = W_RETCODE)
+		if (errno = W_RETCODE(status))
 			return (-1);
 		return (0);
 	} else if (pid == 0) {

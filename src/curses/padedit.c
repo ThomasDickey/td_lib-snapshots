@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: padedit.c,v 8.1 1991/05/15 13:23:44 dickey Exp $";
+static	char	Id[] = "$Id: padedit.c,v 8.2 1991/05/31 16:37:16 dickey Exp $";
 #endif
 
 /*
@@ -7,9 +7,12 @@ static	char	Id[] = "$Id: padedit.c,v 8.1 1991/05/15 13:23:44 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	14 Dec 1987
  * $Log: padedit.c,v $
- * Revision 8.1  1991/05/15 13:23:44  dickey
- * mods to compile under apollo sr10.3
+ * Revision 8.2  1991/05/31 16:37:16  dickey
+ * lint (SunOS)
  *
+ *		Revision 8.1  91/05/15  13:23:44  dickey
+ *		mods to compile under apollo sr10.3
+ *		
  *		Revision 8.0  89/12/07  14:24:32  ste_cm
  *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
  *		
@@ -55,16 +58,13 @@ static	char	Id[] = "$Id: padedit.c,v 8.1 1991/05/15 13:23:44 dickey Exp $";
  */
 
 #define	STR_PTYPES
+#define	WAI_PTYPES
 #include	"ptypes.h"
 #ifdef	apollo
 #include	"/sys/ins/base.ins.c"
 #include	"/sys/ins/error.ins.c"
 #include	"/sys/ins/pad.ins.c"
 #include	"/sys/ins/streams.ins.c"
-#endif
-
-#ifndef	SYSTEM5
-#include	<sys/wait.h>
 #endif
 
 #ifdef	apollo
@@ -120,19 +120,13 @@ char	*argv[];
 #define	DEBUG(s,a)
 #endif	/* TEST */
 
-#ifdef	SYSTEM5
-int	status;
-#define	W_RETCODE	((status >> 8) & 0xff)
-#else	/* SYSTEM5 */
-union	wait	status;
-#define	W_RETCODE	status.w_retcode
-#endif	/* SYSTEM5 */
+	DCL_WAIT(status);
 
 	if ((pid = fork()) > 0) {
 		DEBUG("spawn-1st (pid= %d)\n", pid);
-		while (wait((int *)&status) >= 0);
+		while (wait(ARG_WAIT(status)) >= 0);
 		DEBUG("spawn-1st (status= %#x)\n", status);
-		if (errno = W_RETCODE)
+		if (errno = W_RETCODE(status))
 			return (-1);
 		return (0);
 	} else if (pid == 0) {
