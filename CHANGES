@@ -1,3 +1,40 @@
+1989-08-03  dickey@software.org
+
+	* include/td_lib.h: added entrypoint 'win2fp()'.
+	added return-value to 'win2file()'.
+
+	* src/curses/win2file.c:
+	rewrote to add entrypoint 'win2fp()', which writes to an
+	already-open file-pointer.  Also, for the new entrypoint,
+	added a "prefix" argument which is prepended to each line
+	of the dumped window.
+
+1989-08-03  ste_cm@software.org
+
+	* src/curses/win2file.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/curses/win2file.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
+1989-08-03  dickey@software.org
+
+	* src/curses/rawgets.c:
+	broke into two procedures, 'rawgets()' and 'wrawgets()'.
+	return the terminating character, allowing up/down arrow as
+	one of these.  The 'wrawgets()' procedure operates solely in
+	a specified window; made additional modifications to keep
+	the wraparound and clearing under better control.
+
+1989-08-03  ste_cm@software.org
+
+	* src/curses/rawgets.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
+1989-08-03  dickey@software.org
+
+	* include/td_lib.h: added definition for 'wrawgets()'
+
 1989-07-31  dickey@software.org
 
 	* include/port2vms.h: hacked-in 'wgetch()' module

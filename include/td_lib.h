@@ -1,4 +1,4 @@
-/* $Header: /users/source/archives/td_lib.vcs/include/RCS/td_lib.h,v 3.0 1989/06/05 13:21:31 ste_cm Rel $ */
+/* $Header: /users/source/archives/td_lib.vcs/include/RCS/td_lib.h,v 3.2 1989/08/03 14:56:40 dickey Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for CM_TOOLS COMMON
@@ -436,7 +436,19 @@
 
 	/* rawgets.c -------------------------------------------------- */
 #ifdef	CUR_PTYPES
-		rawgets (
+	int	wrawgets (
+			_ARX(WINDOW *,	win)
+			_ARX(char *,	bfr)
+			_ARX(int,	size)
+			_AR1(int,	newline)
+			)
+			_DCL(WINDOW *,	win)
+			_DCL(char *,	bfr)
+			_DCL(int,	size)
+			_DCL(int,	newline)
+			_RET
+
+	int	rawgets (
 			_ARX(char *,	bfr)
 			_ARX(int,	size)
 			_AR1(int,	newline)
@@ -444,7 +456,7 @@
 			_DCL(char *,	bfr)
 			_DCL(int,	size)
 			_DCL(int,	newline)
-			_NUL
+			_RET
 
 	/* rawterm.c -------------------------------------------------- */
 		rawterm()
@@ -707,11 +719,21 @@
 
 	/* win2file.c ------------------------------------------------- */
 #ifdef	CUR_PTYPES
-	win2file(
+	win2fp(
+			_ARX(WINDOW *,	win)
+			_ARX(FILE *,	fp)
+			_AR1(char *,	prefix)
+			)
+			_DCL(WINDOW *,	win)
+			_DCL(FILE *,	fp)
+			_DCL(char *,	prefix)
+			_NUL
+
+int	win2file(
 			_ARX(WINDOW *,	win)
 			_AR1(char *,	file)
 			)
 			_DCL(WINDOW *,	win)
 			_DCL(char *,	file)
-			_NUL
+			_RET
 #endif	CUR_PTYPES

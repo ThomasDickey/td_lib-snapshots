@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/curses/RCS/rawgets.c,v 3.1 1989/07/25 09:17:09 dickey Exp $";
+static	char	what[] = "$Id: rawgets.c,v 4.0 1989/08/03 10:54:01 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,9 +7,19 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/curses/R
  * Title:	rawgets.c (raw-mode 'gets()')
  * Created:	29 Sep 1987 (from 'fl.c')
  * $Log: rawgets.c,v $
- * Revision 3.1  1989/07/25 09:17:09  dickey
- * recompiled with apollo SR10 -- mods for function prototypes
+ * Revision 4.0  1989/08/03 10:54:01  ste_cm
+ * BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
  *
+ *		Revision 3.2  89/08/03  10:54:01  dickey
+ *		broke into two procedures, 'rawgets()' and 'wrawgets()'.
+ *		return the terminating character, allowing up/down arrow as
+ *		one of these.  The 'wrawgets()' procedure operates solely in
+ *		a specified window; made additional modifications to keep
+ *		the wraparound and clearing under better control.
+ *		
+ *		Revision 3.1  89/07/25  09:17:09  dickey
+ *		recompiled with apollo SR10 -- mods for function prototypes
+ *		
  *		Revision 3.0  89/01/19  09:21:22  ste_cm
  *		BASELINE Mon Jun 19 13:27:01 EDT 1989
  *		
@@ -45,13 +55,25 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/curses/R
 #include	<ctype.h>
 #include	"cmdch.h"
 
-#define	WRAP	(COLS-1)
-
+static	WINDOW	*Z;		/* window we use in this module */
 static	int	xbase,	ybase,	/* base-position of 'bfr[]' */
+		xlast,		/* last usable column in screen */
 		wrap,		/* if we echo newline, assume wrappable */
 		errs,		/* flag for error/illegal command */
 		Imode;
 static	char	*bbase;		/* 'bfr[]' copy */
+
+/*
+ * Clear the remainder of the current line to the 'xlast' position.  Don't
+ * use wclrtoeol(), since xlast may not be on the end.
+ */
+static
+ClearIt()
+{
+	register int	x;
+	for (x = Z->_curx; x < xlast; x++)
+		(void)waddch(Z,' ');
+}
 
 /*
  * Position the cursor at the given index in the string.  This permits us to
@@ -67,7 +89,7 @@ int	y = ybase,
 	x = xbase,
 	z = new-bbase;
 	while (z-- > 0) {
-		if (++x >= WRAP) {
+		if (++x >= xlast) {
 			if (wrap) {
 				x = 0;
 				y++;
@@ -77,7 +99,7 @@ int	y = ybase,
 			}
 		}
 	}
-	move(y,x);
+	(void)wmove(Z,y,x);
 }
 
 /*
@@ -89,19 +111,19 @@ char	*at;
 {
 int	y,x, row, col, len, max;
 
-	getyx(stdscr, y, x);
-	for (row = y, col = x; *at && (row < LINES); row++) {
-		move(row, col);
+	getyx(Z, y, x);
+	for (row = y, col = x; *at && (row < Z->_maxy); row++) {
+		(void)wmove(Z, row, col);
 		len = strlen(at);
-		max = WRAP - col;
+		max = xlast - col;
 		if (len > max)	len = max;
-		(void)printw("%.*s", len, at);
+		(void)wprintw(Z,"%.*s", len, at);
 		at += len;
 		col = 0;
 		if (!wrap)	break;
 	}
-	clrtoeol();
-	move(y,x);
+	ClearIt();
+	(void)wmove(Z,y,x);
 }
 
 /*
@@ -142,17 +164,17 @@ char	*at;
 		}
 		while (*d++ = *s++);
 
-		getyx(stdscr, old, x);
+		getyx(Z, old, x);
 		MoveTo(at);
 		ShowAt(at);
 
-		getyx(stdscr, new, x);
+		getyx(Z, new, x);
 		while (old > new) {
-			move(old,0);
-			clrtoeol();
+			(void)wmove(Z,old,0);
+			ClearIt();
 			old--;
 		}
-		move(new,x);
+		(void)wmove(Z,new,x);
 	} else errs++;
 	return(at);
 }
@@ -167,10 +189,10 @@ toggle()
 {
 int	y,x;
 	Imode = !Imode;
-	getyx(stdscr,y,x);
-	move(ybase,xbase-2);
-	addch(Imode ? ':' : '^');
-	move(y,x);
+	getyx(Z,y,x);
+	(void)wmove(Z,ybase,xbase-2);
+	(void)waddch(Z,Imode ? ':' : '^');
+	(void)wmove(Z,y,x);
 }
 
 /*
@@ -193,7 +215,8 @@ char	*at;
  *	main procedure							*
  ************************************************************************/
 
-rawgets (bfr,size,newline)
+wrawgets (win, bfr,size,newline)
+WINDOW	*win;
 register char	*bfr;
 int	size;
 int	newline;
@@ -204,15 +227,21 @@ int	ec = erasechar(),
 	kc = killchar(),
 	count;
 
+	Z = win;
 	Imode = 1;
 	errs  = 0;
 	bbase = bfr;
-	getyx(stdscr,ybase,xbase);	/* get my initial position */
+	getyx(Z,ybase,xbase);		/* get my initial position */
+	xlast = xbase + size;
+	if (xlast >= Z->_maxx)
+		xlast = Z->_maxx - 1;
 	if (!(wrap  = newline)) {
-		if (WRAP - xbase < size)
-			size = WRAP - xbase;
+		if (xlast - xbase < size)
+			size = xlast - xbase;
 		bfr[size-1] = '\0';	/* ...permit initial display/move */
 	}
+	if (xbase + size < xlast)
+		xlast = xbase + size;
 
 	ShowAt(tag = bfr);
 	tag += strlen(tag);
@@ -223,13 +252,24 @@ int	ec = erasechar(),
 			errs = 0;
 			beep();
 		} else
-			refresh();
+			(void)wrefresh(Z);
 		c = cmdch(Imode ? (int *)0 : &count);
+
+		/*
+		 * We return only one of three types of thing:
+		 *	up/down arrow,
+		 *	kill-character
+		 *	or return/newline
+		 * so that we can interlock this with a history-mechanism.
+		 */
 		if (c == '\n' || c == '\r') {
 			(void)move_end(tag,CTL(F));
-			if (newline) addch('\n');
+			if (newline) (void)waddch(Z,'\n');
 			break;
 		}
+		if (c == ARO_DOWN || c == ARO_UP)
+			break;
+
 		if (c == '\t') {
 			toggle();
 		} else if (!Imode) {	/* process scroll-mode ops */
@@ -270,5 +310,14 @@ int	ec = erasechar(),
 				tag = move_end(tag,c);
 		}
 	}
-	refresh();
+	(void)wrefresh(Z);
+	return (c);	/* returns character which terminated this call */
+}
+
+rawgets (bfr,size,newline)
+char	*bfr;
+int	size;
+int	newline;
+{
+	return (wrawgets (stdscr, bfr,size,newline));
 }
