@@ -1,4 +1,4 @@
-# $Id: Makefile,v 12.2 1994/07/15 09:17:16 tom Exp $
+# $Id: Makefile,v 12.3 1994/08/02 18:44:46 tom Exp $
 # MAKE-file for miscellaneous library routines
 
 ####### (Environment) ##########################################################
@@ -6,6 +6,7 @@ include ../td_defns.mk
 
 ####### (Standard Lists) #######################################################
 CSRC	=\
+	cmv_dir.c \
 	cutoff.c \
 	newzone.c \
 	next_ver.c \
@@ -36,6 +37,8 @@ CSRC	=\
 SOURCES	= Makefile descrip.mms $(CSRC)
 
 OBJS	=\
+	$Z(cmv_dir.o) \
+	$Z(cmv_last.o) \
 	$Z(cutoff.o) \
 	$Z(newzone.o) \
 	$Z(next_ver.o) \
@@ -69,6 +72,9 @@ ALL	= $Z
 include ../td_rules.mk
 
 ####### (Details of Productions) ###############################################
+$Z(cmv_dir.o)\
+$Z(cmv_last.o): $(PTYPES_H) $I/cmv_defs.h
+
 $Z(rcsargpr.o)\
 $Z(rcsedit.o)\
 $Z(rcskeys.o)\
