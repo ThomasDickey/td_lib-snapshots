@@ -1,4 +1,4 @@
-# $Id: Makefile,v 11.2 1992/10/16 12:25:20 dickey Exp $
+# $Id: Makefile,v 11.3 1992/12/04 11:53:08 ste_cm Exp $
 # make-file for CM_LIBRARY support directory
 
 ####### (Development) ##########################################################
@@ -10,7 +10,8 @@ GET	= checkout
 SOURCES	= Makefile cm_library.mk
 
 ####### (Standard Productions) #################################################
-all:	sources $(ALL)
+all\
+run_tests:	$(SOURCES) $(ALL)
 clean:			; rm -f *.out
 clobber:	clean	; rm -f $(ALL)
 destroy:		# will get here last

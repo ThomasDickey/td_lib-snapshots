@@ -1,4 +1,4 @@
-# $Id: Makefile,v 11.13 1992/11/24 12:40:52 dickey Exp $
+# $Id: Makefile,v 11.14 1992/12/04 11:49:26 ste_cm Exp $
 # MAKE-file for miscellaneous library routines
 
 ####### (Environment) ##########################################################
@@ -267,7 +267,8 @@ ALL	= $Z rcspath.h
 
 ####### (Standard Productions) #################################################
 all\
-install:	sources $(ALL)
+run_tests\
+install:	$(SOURCES) $(ALL)
 
 clean:				; rm -f $(CLEAN)
 clobber:	clean		; rm -f $(ALL)

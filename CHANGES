@@ -1,3 +1,32 @@
+1992-12-04  ste_cm@software.org
+
+	* test/pathname/walktree.ref: filtered out RCS
+
+	* src/pathname/walktree.c:
+	filter RCS out of test-driver because it is not always readable
+
+	* test/Makefile: make sources for 'run_tests'
+
+	* test/Makefile: must make sources for run_tests rule
+
+	* Makefile:
+	added some include files: acl.h, cm_curses.h, cm_qsort.h, cm_scomp.h
+	added 'run_tests' rule
+
+	* support/Makefile: allow 'run_tests'
+
+	* include/Makefile: added 'run_tests' & 'install' rules
+
+	* src/Makefile: added 'run_tests'
+
+	* Makefile: forgot to make sources at this level for 'all'
+
+1992-12-04  dickey@software.org
+
+	* src/curses/padedit.c:
+	use 'makeargv()' to allow the caller to pack options onto
+	the 'editor' parameter
+
 1992-12-01  dickey@software.org
 
 	* include/ptypes.h: added DIRENT definition
