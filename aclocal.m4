@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.37 1994/07/16 19:19:02 tom Exp $
+dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.39 1994/07/23 18:32:58 tom Exp $
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "TD_" to "AC_"
 dnl ---------------------------------------------------------------------------
@@ -71,6 +71,42 @@ if test -n "[$]$1"; then
   done
   AC_DEFINE_UNQUOTED($1,[\"$]$1[\"])
 fi
+])dnl
+dnl ---------------------------------------------------------------------------
+dnl	Adds to the include-path
+dnl
+dnl	Autoconf 1.11 should have provided a way to add include path options to
+dnl	the cpp-tests.
+dnl
+define([TD_INCLUDE_PATH],
+[
+for p in $1
+do
+	if test -d $p
+	then
+		AC_VERBOSE(adding $p to include-path)
+		INCLUDES="$INCLUDES -I$p"
+		ac_cpp="${ac_cpp} -I$p"
+		CFLAGS="$CFLAGS -I$p"
+	fi
+done
+])dnl
+dnl ---------------------------------------------------------------------------
+dnl	Adds to the library-path
+dnl
+dnl	Some machines have trouble with multiple -L options.
+dnl
+define([TD_LIBRARY_PATH],
+[
+for p in $1
+do
+	if test -d $p
+	then
+		AC_VERBOSE(adding $p to library-path)
+		LIBS="$LIBS -L$p"
+		CFLAGS="$CFLAGS -L$p"
+	fi
+done
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl	Combines AC_HAVE_FUNCS logic with additional test from Kevin Buettner
@@ -185,8 +221,11 @@ int main() {
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Tests for the presence of regcmp/regex functions (no include-file?)
+dnl Some systems (CLIX) use <pw.h> for this purpose.
 define([TD_REGCMP_FUNCS],
-[AC_TEST_PROGRAM([
+[save_libs="$LIBS"
+AC_HAVE_LIBRARY(gen, [LIBS="$LIBS -lPW"])
+AC_TEST_PROGRAM([
 int main() {
 	char *e;
 	char *p = "foo";
@@ -197,7 +236,7 @@ int main() {
 	free(e);
 	exit(0);
 }
-], [AC_DEFINE(HAVE_REGCMP_FUNCS)])
+], [AC_DEFINE(HAVE_REGCMP_FUNCS)], [LIBS="$save_libs"])
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Tests for the presence of re_comp/re_exec functions (no include-file?)
@@ -331,12 +370,17 @@ dnl	There's a free version of SYSV curses called 'ncurses'.  If we've got
 dnl	that, configure for it instead of the BSD curses.
 dnl
 dnl	On SunOS, we may have both BSD and SYS5 curses (the latter under /5lib
-dnl	and /5include).  I don't have a test case for that yet (94/7/4).
+dnl	and /5include).
 dnl
 define([TD_CURSES_LIBS],
 [
 AC_PROVIDE([$0])
 td_save_LIBS="${LIBS}"
+if test -d /usr/5lib -a -d /usr/5include
+then
+	TD_INCLUDE_PATH(/usr/5include)
+	TD_LIBRARY_PATH(/usr/5lib)
+fi
 AC_HAVE_LIBRARY(curses)
 td_have_keypad=yes
 case "$DEFS" in
@@ -357,19 +401,8 @@ then
 	*HAVE_LIBNCURSES*)
 		# Linux installs NCURSES's include files in a separate
 		# directory to avoid confusion with the native curses.
-		#
-		# Autoconf 1.11 should have provided a way to add include path
-		# options to the cpp-tests.
-		if test -d /usr/include/ncurses
-		then
-			INCLUDES="$INCLUDES -I/usr/include/ncurses"
-			td_cpp="${ac_cpp}"
-			ac_cpp="${ac_cpp} $INCLUDES"
-			CFLAGS="$CFLAGS -I/usr/include/ncurses"
-			AC_HAVE_HEADERS(ncurses.h)
-		else
-			AC_HAVE_HEADERS(ncurses.h)
-		fi
+		TD_INCLUDE_PATH(/usr/include/ncurses)
+		AC_HAVE_HEADERS(ncurses.h)
 		;;
 	*)
 		LIBS="${td_save2LIBS}"

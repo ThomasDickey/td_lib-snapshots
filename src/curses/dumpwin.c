@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: dumpwin.c,v 12.8 1994/07/22 23:50:06 tom Exp $";
+static	char	Id[] = "$Id: dumpwin.c,v 12.9 1994/07/23 13:29:47 tom Exp $";
 #endif
 
 /*
@@ -58,6 +58,10 @@ void	dumpwin(
 		OUT(fp, "   _maxy:%d, _maxx:%d\n", w->_maxy, w->_maxx);
 		OUT(fp, "   _begy:%d, _begx:%d\n", w->_begy, w->_begx);
 
+#if HAVE_LIBNCURSES
+		OUT(fp, "   _region %d..%d\n",     w->_regtop, w->_regbottom);
+		OUT(fp, "   _pary:%d  _parx:%d\n", w->_pary, w->_parx);
+#endif
 #if !SYS5_CURSES
 		OUT(fp, "   _orig:    %p\n", w->_orig);
 		OUT(fp, "   _nextp:   %p\n", w->_nextp);

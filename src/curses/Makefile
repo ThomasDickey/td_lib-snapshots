@@ -1,4 +1,4 @@
-# $Id: Makefile,v 12.2 1994/07/16 16:53:39 tom Exp $
+# $Id: Makefile,v 12.3 1994/07/23 00:25:05 tom Exp $
 # MAKE-file for miscellaneous library routines
 
 ####### (Environment) ##########################################################
@@ -26,7 +26,8 @@ CSRC	=\
 	scr_size.c \
 	viewfile.c \
 	win2file.c \
-	wrepaint.c
+	wrepaint.c \
+	wresize.c
 
 SOURCES	= Makefile descrip.mms $(CSRC)
 
@@ -50,7 +51,8 @@ OBJS	=\
 	$Z(scr_size.o) \
 	$Z(viewfile.o) \
 	$Z(win2file.o) \
-	$Z(wrepaint.o)
+	$Z(wrepaint.o) \
+	$Z(wresize.o)
 
 ####### (Standard Productions) #################################################
 include ../td_rules.mk
@@ -70,6 +72,7 @@ $Z(resizwin.o)\
 $Z(savewin.o)\
 $Z(viewfile.o)\
 $Z(win2file.o)\
-$Z(wrepaint.o):	$(CURSES_H)
+$Z(wrepaint.o)\
+$Z(wresize.o):	$(CURSES_H)
 
 $Z(rawgets.o): $I/dyn_str.h
