@@ -1,11 +1,25 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)abspath.c	1.7 88/08/10 12:57:22";
+static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RCS/abspath.c,v 4.0 1988/09/09 07:56:04 ste_cm Rel $";
 #endif	lint
 
 /*
  * Author:	T.E.Dickey
  * Created:	17 Sep 1987
- * Modified:
+ * $Log: abspath.c,v $
+ * Revision 4.0  1988/09/09 07:56:04  ste_cm
+ * BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+ *
+ *		Revision 3.0  88/09/09  07:56:04  ste_cm
+ *		BASELINE Mon Jun 19 13:27:01 EDT 1989
+ *		
+ *		Revision 2.0  88/09/09  07:56:04  ste_cm
+ *		BASELINE Thu Apr  6 09:45:13 EDT 1989
+ *		
+ *		Revision 1.9  88/09/09  07:56:04  dickey
+ *		sccs2rcs keywords
+ *		
+ *		09 Sep 1988, corrected case in which current directory ends in
+ *			     "/".
  *		16 May 1988, 'getcwd()' is not as portable as 'getwd()'.
  *		05 May 1988, make "/tmp" translate ok on Apollo (must provide
  *			     missing node-name).  Also, translate csh-like "~".
@@ -187,12 +201,15 @@ register char *s, *d = path;
 #endif	apollo
 	} else if (*path) {
 	char	cwdpath[MAXPATHLEN];
-		(void)getwd(cwdpath);
+		d = getwd(cwdpath);
 		s = path;
 		if (*s == '.')
 			if (s[1] == '\0' || s[1] == '/')
 				s++;		/* absorb "." */
-		(void)strcat(strcat(cwdpath, "/"), s);
+		d += strlen(cwdpath);
+		if (d[-1] != '/')		/* add "/" iff we need it */
+			(void)strcat(d, "/");
+		(void)strcat(d, s);
 		(void)strcpy(path,denode(cwdpath, nodestr, (int *)0));
 	}
 

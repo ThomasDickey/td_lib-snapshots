@@ -1,4 +1,4 @@
-/* @(#)rcsdefs.h	1.5 88/08/19 13:26:03 */
+/* @(#)rcsdefs.h	1.6 88/09/09 09:36:59 */
 
 /*
  * State information for scanning RCS-file header
@@ -22,14 +22,6 @@
 
 #define	S_FAIL		999
 
-#ifndef	CI_PATH
-#define	CI_PATH		"ci"
-#endif	CI_PATH
-
-#ifndef	CO_PATH
-#define	CO_PATH		"co"
-#endif	CO_PATH
-
 #define	RCS_DIR		"RCS"
 #define	RCS_SUFFIX	",v"
 
@@ -51,4 +43,25 @@ typedef	struct	{
 		int	num_added;	/* lines added		*/
 		int	num_deleted;	/* lines deleted	*/
 	} RCSTREE;
+extern	RCSTREE *rcsload();
 #endif	S_IFMT
+
+/*
+ * Useful external-definitions
+ */
+extern	char *	name2rcs();
+extern	char *	rcs2name();
+extern	char *	rcs_dir();
+extern		rcsedit ();
+extern		rcsclose();
+extern	int	rcskeys();
+extern		rcslast();
+extern	char *	rcslocks();
+extern	int	rcsopen();
+extern	char *	rcsparse_num();
+extern	char *	rcsparse_id();
+extern	char *	rcsparse_str();
+extern	char *	rcspath();
+extern	char *	rcsread();
+extern	char *	rcstemp();
+extern		rcsunload();

@@ -1,4 +1,4 @@
-/* @(#)llib-ltd	1.42 88/09/02 08:54:48 */
+/* @(#)llib-ltd	1.43 88/09/09 09:31:40 */
 /*LINTLIBRARY*/
 
 #define	CUR_PTYPES
@@ -143,6 +143,9 @@ char *	rcslocks(s, who, rev) char *s, *who, *rev; { return(0); }
 /* rcsname.c ---------------------------------------------------------- */
 char *	rcs2name(name) char *name; { return(0); }
 char *	name2rcs(name) char *name; { return(0); }
+
+/* rcspath.c ---------------------------------------------------------- */
+char *	rcspath(name) char *name; { return(0); }
 
 /* rcstemp.c ---------------------------------------------------------- */
 char *	rcstemp(name,copy) char *name; { return(0); }
