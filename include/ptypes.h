@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 12.33 1994/07/29 19:31:52 tom Exp $ */
+/* $Id: ptypes.h,v 12.34 1994/12/16 19:57:49 tom Exp $ */
 
 #ifndef	PTYPES_H
 #define	PTYPES_H
@@ -149,6 +149,7 @@ typedef	short	ino_t;
 #if	defined(vms) || defined(__TURBOC__) || (defined(__STDC__) && !defined(LINTLIBRARY))
 #define	PROTOTYPES	1
 #endif
+/*FIXME: make a test for prototypes */
 
 /*
  * Definitions for files which are combined lint-library/function-prototype
@@ -487,8 +488,10 @@ extern int sys_nerr;
 #if SIG_IGN_REDEFINEABLE
 # undef  SIG_DFL
 # undef  SIG_IGN
+# undef  SIG_ERR
 # define SIG_DFL	((RETSIGTYPE (*)(SIGNAL_ARGS))0)
 # define SIG_IGN	((RETSIGTYPE (*)(SIGNAL_ARGS))1)
+# define SIG_ERR	((RETSIGTYPE (*)(SIGNAL_ARGS))-1)
 #endif
 
 #ifndef	NSIG		/* e.g., MSDOS */
@@ -577,8 +580,8 @@ extern	long	timezone;
 #      include <sgtty.h>		/* for stty/gtty functions */
 #      define USING_SGTTY_H 1
 #      define TermioT struct sgttyb
-#      define GetTerminal gtty(0, p)
-#      define SetTerminal stty(0, p)
+#      define GetTerminal(p) gtty(0, p)
+#      define SetTerminal(p) stty(0, p)
 #    endif
 #  endif
 #endif

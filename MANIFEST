@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19941215
+MANIFEST for td_lib, version t19941216
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         restrictions on copying/using this software
@@ -349,6 +349,7 @@ test/port2dos/run_test.sh       general test script
 test/port2vms                   subdirectory
 test/port2vms/Makefile          makefile for td_lib/test/port2vms
 test/port2vms/README            description of test/port2vms
+test/port2vms/descrip.mms       VMS build-script for test/port2vms
 test/port2vms/dir2path.ref      reference for 'dir2path'
 test/port2vms/dir2path.sh       test script for dir2path
 test/port2vms/name2vms.ref      reference for 'name2vms'

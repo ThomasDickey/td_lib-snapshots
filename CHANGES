@@ -1,3 +1,18 @@
+1994-12-16  dickey@clark.net
+
+	* test/port2vms/descrip.mms: RCS_BASE
+
+	* include/ptypes.h: added quiet SIG_ERR
+	wrong # of args in GetTerminal/SetTerminal
+
+	* src/curses/rawterm.c: syntax errors
+
+	* src/curses/rawterm.c: use MODULE_ID
+
+	* configure.in:
+	first cut of splitting warning-related prototypes from the ones
+	used only for driving ifdefs
+
 1994-12-15  dickey@clark.net
 
 	* include/td_curse.h: added def for 'beep()'
