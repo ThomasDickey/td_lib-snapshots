@@ -1,3 +1,9 @@
+1998-02-18  dickey@clark.net
+
+	* include/headers: dropped acl.h, since it is apollo-specific
+
+	* configure.in: trim off leading dot as special-case
+
 1998-02-17  dickey@clark.net
 
 	* src/curses/cmdch.c:
