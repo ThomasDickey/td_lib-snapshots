@@ -1,3 +1,19 @@
+1997-09-10  dickey@clark.net
+
+	* src/td_rules.mk, aclocal.m4: first cut of FreeBSD port
+
+	* configure.in: fix environment for CF_MAKE_AR_RULES
+
+	* aclocal.m4: first cut of test for .c.a rules
+
+	* configure.in: add test for .c.a rules
+
+	* support/rem_hdr: RCS_BASE
+
+	* test/makefile.in: generate the subdir actions
+
+	* test/td_rules.mms, test/td_defns.mms: RCS_BASE
+
 1997-09-09  dickey@clark.net
 
 	* test/unix/modules, test/string/modules, test/process/modules, test/port2vms/modules, test/pathname/modules, test/memory/modules, test/curses/modules:

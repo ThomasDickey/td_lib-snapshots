@@ -1,7 +1,7 @@
-# $Id: makefile.in,v 12.2 1997/09/09 22:19:12 tom Exp $
-# make-file for TD_LIB common/test library
+# $Id: makefile.in,v 12.3 1997/09/10 22:52:57 tom Exp $
+# MAKE-file for miscellaneous library routines
 
-####### (Development) ##########################################################
+####### (Environment) ##########################################################
 TOP	= ../..
 @make_include_left@../support/td_lib.mk@make_include_right@
 
@@ -13,31 +13,20 @@ DATA_FILES = \
 	dummy4.txt
 
 MFILES = \
-	td_defns.mk \
-	td_rules.mk
+	makefile.in	descrip.mms \
+	td_defns.mk	td_defns.mms \
+	td_rules.mk	td_rules.mms
 
 SOURCES	= README $(DATA_FILES) $(MFILES)
 
 ####### (Standard Productions) #################################################
-all  \
+all ::		$(SOURCES)
+
+all \
 clean \
 clobber \
-destroy \
-sources \
+distclean \
 programs \
-run_test ::	$(SOURCES)
-	cd cm_funcs &&	$(MAKE) $@
-	cd compare &&	$(MAKE) $@
-	cd curses &&	$(MAKE) $@
-	cd memory &&	$(MAKE) $@
-	cd pathname &&	$(MAKE) $@
-	cd port2dos &&	$(MAKE) $@
-	cd port2vms &&	$(MAKE) $@
-	cd process &&	$(MAKE) $@
-	cd sheet &&	$(MAKE) $@
-	cd string &&	$(MAKE) $@
-	cd unix &&	$(MAKE) $@
-
-clean ::			; -$(RM) $(CLEAN) *.tmp *.pure*
-destroy ::			; $(DESTROY)
-lint.out:
+lint.out \
+run_test \
+install ::	$(SOURCES)

@@ -1,4 +1,4 @@
-# $Id: makefile.in,v 12.5 1997/09/09 10:11:12 tom Exp $
+# $Id: makefile.in,v 12.6 1997/09/10 00:15:47 tom Exp $
 # Top-level makefile for TD_LIB common library
 
 ####### (Development) ##########################################################
@@ -55,15 +55,13 @@ lintlib\
 install::	lib $(I_CFG) $(MDEFN)
 
 clean\
-clobber \
-destroy ::	td_make.in
+clobber ::	td_make.in
 	$(SHELL) -c "if test ! -f $(MDEFN);\
 		then sed -e's/^MAKE.*/MAKE=make/' td_make.in >$(MDEFN);\
 		fi"
 all\
 clean\
 clobber\
-destroy\
 run_test\
 sources\
 lint.out ::	$(MFILES)
@@ -81,15 +79,14 @@ sources ::	$(SOURCES)
 
 clean \
 clobber ::			; $(RM) $(CLEAN)
-clobber \
-destroy ::			; $(RM) -r lib
-destroy ::			; cd support && $(DESTROY)
-destroy ::			; $(DESTROY)
+clobber ::			; $(RM) -r lib
 
 distclean:	clobber
-	cd src &&	$(MAKE) $@
-	cd test &&	$(MAKE) $@
-	$(RM) $(PURE) makefile src/makefile test/makefile
+	- cd src &&	$(MAKE) $@
+	- cd test &&	$(MAKE) $@
+	- $(RM) $(PURE)
+	- $(RM) config.log config.cache config.status
+	- $(RM) makefile */makefile
 
 install::	all $(my_incdir) $(libdir)
 	$(srcdir)/support/ins_hdr "$(INSTALL_DATA)" $(my_incdir) $(I_LIST)
