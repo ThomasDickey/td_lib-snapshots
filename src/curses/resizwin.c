@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)resizewin.c	1.5 88/05/13 12:20:54";
+static	char	sccs_id[] = "@(#)resizewin.c	1.6 88/05/17 14:00:11";
 #endif	lint
 
 /*
@@ -38,7 +38,12 @@ static	short	size[2];
 
 #define	my_LINES	size[0]
 #define	my_COLS		size[1]
+
+#ifdef	lint
+#define	ALLOC(p,c,n)	p = (p+n)
+#else	lint
 #define	ALLOC(p,c,n)	p = (c *)doalloc((char *)p, (unsigned)((n) * sizeof(c)))
+#endif	lint
 
 static
 doit(w)
@@ -92,11 +97,19 @@ int	row;
 resizewin()
 {
 #ifdef	apollo
-long	id	= ios_$stdout;
-long	st	= 0;
+extern	void	vte_$inq_screen_size();
+stream_$id_t	id	= ios_$stdout;
+status_$t	st;
 
-	vte_$inq_screen_size(&id, size, &st);
-	if (st == status_$ok) {
+struct	{
+	short	height;
+	short	width;
+	} screen_size;
+
+	vte_$inq_screen_size(&id, &screen_size, &st);
+	if (st.all == status_$ok) {
+		size[0] = screen_size.height;
+		size[1] = screen_size.width;
 		if (my_LINES != LINES || my_COLS != COLS) {
 			doit(stdscr);
 			doit(curscr);

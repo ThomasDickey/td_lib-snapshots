@@ -1,12 +1,24 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)txtalloc.c	1.3 88/05/16 06:36:35";
+static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/memory/RCS/txtalloc.c,v 4.0 1988/05/17 09:23:59 ste_cm Rel $";
 #endif	lint
 
 /*
  * Title:	txtalloc.c (text-allocator)
  * Author:	T.E.Dickey
  * Created:	29 Apr 1988
- * Modified:
+ * $Log: txtalloc.c,v $
+ * Revision 4.0  1988/05/17 09:23:59  ste_cm
+ * BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+ *
+ *		Revision 3.0  88/05/17  09:23:59  ste_cm
+ *		BASELINE Mon Jun 19 13:27:01 EDT 1989
+ *		
+ *		Revision 2.0  88/05/17  09:23:59  ste_cm
+ *		BASELINE Thu Apr  6 09:45:13 EDT 1989
+ *		
+ *		Revision 1.5  88/05/17  09:23:59  dickey
+ *		sccs2rcs keywords
+ *		
  *		16 May 1988, perform a single 'doalloc()' call for each node
  *		10 May 1988, added dummy 'txtfree()'
  *
@@ -35,15 +47,21 @@ typedef	struct	_node	{
 
 #define	LINK(a,p)	p->links[(a)>0]
 
+#ifdef	lint
+#define	DOALLOC(c,n)	(c *)0
+#else	lint
+#define	DOALLOC(c,n)	(c *)doalloc((char *)0, (n)*sizeof(c))
+#endif	lint
+
 static	NODE	head;
 
 static
 NODE *
-insert(text)
+new_NODE(text)
 char	*text;
 {
 register
-NODE	*p = (NODE *)doalloc((char *)0, sizeof(NODE) + strlen(text));
+NODE	*p = DOALLOC(NODE, sizeof(NODE) + strlen(text));
 	(void)strcpy(KEY(p),text);
 	LLINK(p) =
 	RLINK(p) = 0;
@@ -67,7 +85,7 @@ int	a;
 char	*value;
 
 	if (p == 0) {
-		RLINK(t) = p = insert(text);
+		RLINK(t) = p = new_NODE(text);
 		return (KEY(p));
 	}
 				/* (A2:Compare) */
@@ -82,7 +100,7 @@ char	*value;
 			/* ...continue comparing */
 		} else {
 			/* (A5:Insert) */
-			LINK(a,p) = q = insert(text);
+			LINK(a,p) = q = new_NODE(text);
 			value = KEY(q);
 
 			/* (A6:Adjust balance factors) */

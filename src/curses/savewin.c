@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)savewin.c	1.3 88/05/10 12:20:03";
+static	char	sccs_id[] = "@(#)savewin.c	1.4 88/05/17 09:25:22";
 #endif	lint
 
 /*
@@ -36,6 +36,12 @@ static	SAVE	*saved;
 #define	highlighted(c)	((c) & 0200)
 #define	unhighlight(c)	((c) & 0177)
 
+#ifdef	lint
+#define	ALLOC(n,c)	(c *)0
+#else	lint
+#define	ALLOC(n,c)	(c *)doalloc((char *)0, (n) * sizeof(c))
+#endif	lint
+
 /*
  * Force a character to be different
  */
@@ -59,7 +65,6 @@ register int row, col;
 SAVE	*last;
 register int j = 0;
 
-#define	ALLOC(n,c)	(c *)doalloc((char *)0, (n) * sizeof(c))
 	last         = saved;
 	saved        = ALLOC(1, SAVE);
 	saved->image = ALLOC(LINES * COLS, chtype);
@@ -137,7 +142,7 @@ SAVE	*last;
 		lastwin(redo,top);
 		last = saved->link;
 		dofree(saved->image);
-		dofree(saved);
+		dofree((char *)saved);
 		saved = last;
 	}
 }

@@ -1,11 +1,18 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)sccslast.c	1.3 87/09/30 11:16:04";
+static	char	sccs_id[] = "@(#)sccslast.c	1.4 88/05/17 12:20:01";
 #endif	lint
 
 /*
+ * Title:	sccslast.c (scan for last sccs date)
+ * Author:	T.E.Dickey
  * Created:	20 Oct 1986
+ * Modified:
+ *		17 May 1988, lint.
+ *		30 Sep 1987, if file is sccs-file, determine the data of the
+ *			     corresponding checked-out file.
+ *
  * Function:	Lookup the last sccs-delta date, and its release.version number
- *		for 'fl'.
+ *		for directory-editor.
  */
 
 #include	<stdio.h>
@@ -62,7 +69,7 @@ unsigned char *rels_, *vers_;
 time_t	*date_;
 {
 char	name[MAXPATH+1];
-int	is_sccs	= 0;
+int	is_sccs;
 register char *s, *t;
 struct	stat	sbfr;
 
@@ -102,7 +109,8 @@ struct	stat	sbfr;
 		*t = xx;
 		trysccs(name, rels_, vers_, date_);
 		if (*date_) {		/* it was an ok sccs file */
-			(void)sprintf(&name[t-path], "../%s", t+2);
+			/* look for checked-out file */
+			(void)strcat(strcpy(name+(t-path), "../"), t+2);
 			*date_ = 0;	/* use actual modification-date! */
 			if (stat(name, &sbfr) >= 0)
 				*date_ = sbfr.st_mtime;
