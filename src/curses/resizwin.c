@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)resizewin.c	1.4 88/05/11 10:33:07";
+static	char	sccs_id[] = "@(#)resizewin.c	1.5 88/05/13 12:20:54";
 #endif	lint
 
 /*
@@ -7,6 +7,8 @@ static	char	sccs_id[] = "@(#)resizewin.c	1.4 88/05/11 10:33:07";
  * Title:	resizewin.c (change size of curses window)
  * Created:	21 Apr 1988
  * Modified:
+ *		13 May 1988, oops: was using old COLS, not new my_COLS to
+ *			     reallocate row-strings.
  *		11 May 1988, reallocate firstch/lastch arrays (did not know what
  *			     they were til looking at curses source).
  *
@@ -45,6 +47,7 @@ WINDOW	*w;
 register
 int	row;
 
+
 	/*
 	 * If the number of lines has changed, adjust the size of the overall
 	 * vector:
@@ -70,7 +73,7 @@ int	row;
 		end	= my_COLS;
 
 		if (my_COLS != begin) {
-			w->_y[row] = ALLOC(s, chtype, COLS+1);
+			w->_y[row] = ALLOC(s, chtype, my_COLS+1);
 			s[end] = 0;
 			while (end-- > begin)
 				s[end] = ' ';
