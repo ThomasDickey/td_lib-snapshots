@@ -1,3 +1,28 @@
+1993-04-28  dickey@software.org
+
+	* src/cm_funcs/rcstime.c:
+	use environment variable RCS_TIMEZONE so I can override
+	RCS 5's use of gmt-offset for regression-testing of my
+	rcs utilities.
+
+1993-04-28  ste_cm@software.org
+
+	* src/cm_funcs/rcstime.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1993-04-28  dickey@software.org
+
+	* support/td_lib.mms: shortened-filenames
+
+1993-04-28  ste_cm@software.org
+
+	* support/td_lib.mms:
+	BASELINE Fri Apr 30 08:53:28 1993 -- TD_LIB split, VAX-shutdown
+
+1993-04-28  dickey@software.org
+
+	* src/pathname/edittree.c, src/pathname/trnstree.c: shortened-filenames
+
 1993-04-27  dickey@software.org
 
 	* support/lib_top.mms: shortened-filenames

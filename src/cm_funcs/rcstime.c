@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	*Id = "$Id: rcstime.c,v 11.2 1992/10/30 07:15:28 dickey Exp $";
+static	char	*Id = "$Id: rcstime.c,v 12.0 1993/04/28 15:39:58 ste_cm Rel $";
 #endif
 
 /*
@@ -7,6 +7,8 @@ static	char	*Id = "$Id: rcstime.c,v 11.2 1992/10/30 07:15:28 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	05 Feb 1992
  * Modified:
+ *		28 Apr 1993, added RCS_TIMEZONE environment variable to
+ *			     simplify regression tests of rcshist.
  *		30 Oct 1992, RCS version 5 uses GMT, not local-time
  *
  * Function:	converts to/from string/time_t values for RCS archives.
@@ -30,12 +32,21 @@ time_t	rcs2time(
 	_DCL(char *,	from)
 {
 	time_t	the_time = 0;
+	long	the_offset;
 	int	year, mon, day, hour, min, sec;
+	char	*s, *d;
 
 	if (sscanf(from, FMT_DATE, &year, &mon, &day, &hour, &min, &sec) == 6)
 		the_time = packdate(1900+year, mon, day, hour, min, sec);
 
-	return the_time - RCS_ZONE(the_time);
+	/* Allow override to make RCS 4 and RCS 5 files look the same.  This is
+	 * really only for regression testing!
+	 */
+	if (s = getenv("RCS_TIMEZONE"))
+		the_offset = strtol(s, &d, 0);
+	else
+		the_offset = RCS_ZONE(the_time);
+	return the_time - the_offset;
 }
 
 /*
