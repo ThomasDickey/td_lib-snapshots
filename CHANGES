@@ -1,3 +1,30 @@
+1995-07-06  dickey@clark.net
+
+	* src/cm_funcs/cmv_dir.c:
+	mods to check for the level of the given vault-directory
+
+	* src/curses/cmdch.c: fix for ncurses arrow-keys
+	workaround for ncurses bug in intrflush vs rawterm
+
+	* src/curses/scr_size.c: make this work on hpux, solaris
+
+	* src/curses/scr_size.c: use MODULE_ID
+
+	* src/curses/resizwin.c:
+	rephrased so that hpux doesn't get in the way of ncurses
+
+1995-07-05  dickey@clark.net
+
+	* include/td_curse.h:
+	change interface of wresize to match what I did for ncurses
+
+	* configure.in: check for wresize, typeahead
+
+	* aclocal.m4: mods to pick up /usr/local/include/ncurses
+
+	* src/curses/wresize.c:
+	quick hack to make this compile with ncurse's resizeterm
+
 1995-07-04  dickey@clark.net
 
 	* src/curses/resizwin.c: moved wresize calls into resizeterm

@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: cmdch.c,v 12.13 1995/04/06 23:36:43 tom Exp $";
+static	char	Id[] = "$Id: cmdch.c,v 12.14 1995/07/06 17:33:56 tom Exp $";
 #endif
 
 /*
@@ -104,6 +104,7 @@ int	cmdch(
      		intrflush(stdscr, FALSE);
 # endif
 		keypad(stdscr,TRUE);
+		rawterm();
 #else
 # if !HAVE_TCAP_CURSOR
 		{
@@ -157,6 +158,8 @@ int	cmdch(
 		case KEY_LEFT:	c = ARO_LEFT;	done = TRUE;	break;
 		case KEY_RIGHT:	c = ARO_RIGHT;	done = TRUE;	break;
 		}
+		if (done)
+			break;
 #endif /* HAVE_KEYPAD */
 		if (iscntrl(c))
 			i_blk[j++] = c;

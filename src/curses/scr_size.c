@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: scr_size.c,v 12.4 1994/07/24 01:15:57 tom Exp $";
-#endif
-
 /*
  * Author:	T.E.Dickey
  * Title:	scr_size.c (obtain screen size)
@@ -31,8 +27,11 @@ static	char	Id[] = "$Id: scr_size.c,v 12.4 1994/07/24 01:15:57 tom Exp $";
  *		an Apollo screen).
  */
 
+#define	TRM_PTYPES
 #include "ptypes.h"
 #include "td_curse.h"
+
+MODULE_ID("$Id: scr_size.c,v 12.6 1995/07/06 14:03:48 tom Exp $")
 
 #ifdef	apollo
 #  ifdef	apollo_sr10
@@ -93,14 +92,17 @@ int	scr_size(
 #endif	/* apollo */
 
 #ifdef TIOCGWINSZ	/* SunOS 4.x */
-	if (ioctl (0, TIOCGWINSZ, (caddr_t)&size) == 0) {
+	if (ioctl (fileno(stdin), TIOCGWINSZ, (caddr_t)&size) == 0)
+	{
 		if ((int)(size.ws_row) > 0)
 			my_LINES = size.ws_row;
 		if ((int)(size.ws_col) > 0)
 			my_COLS = size.ws_col;
 		return (0);
-	} else
+	}
+	else
 #ifdef	__svr4__
+	{
 		/*
 		 * Testing on ClarkNet's machine:
 		 *	SunOS explorer 5.3 Generic_Patch sun4m sparc
@@ -110,15 +112,17 @@ int	scr_size(
 		 * Solaris until I can refine the bug -- T.Dickey 94/7/23.
 		 */
 		return (-1);
+	}
 #endif	/* __svr4__ */
-#endif	/* TIOCGWINS */
+#endif	/* TIOCGWINSZ */
 
 	/*
 	 * If we can get the size from termcap, let's believe it.
 	 * patch: There doesn't seem to be any way we can get window-resizing
 	 * info under X11.2 on Apollo SR9.7
 	 */
-	if (tgetent(i_blk,getenv("TERM")) >= 0) {
+	if (tgetent(i_blk,getenv("TERM")) >= 0)
+	{
 		if ((my_LINES = tgetnum("li")) < 0) my_LINES = 24 - sr10_bug;
 		if ((my_COLS  = tgetnum("co")) < 0) my_COLS  = 80 - sr10_bug;
 #if sr10_bug
