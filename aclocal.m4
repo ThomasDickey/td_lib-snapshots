@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.45 1995/01/06 01:39:19 tom Exp $
+dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.46 1995/01/26 11:59:04 tom Exp $
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "TD_" to "AC_"
 dnl ---------------------------------------------------------------------------
@@ -408,6 +408,8 @@ case "$DEFS" in
 	td_have_keypad=no)
 	;;
 esac
+AC_WITH(ncurses,
+[
 if test $td_have_keypad = no
 then
 	td_save2LIBS="${LIBS}"
@@ -434,6 +436,7 @@ then
 		;;
 	esac
 fi
+],[AC_HAVE_LIBRARY(termcap)])
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Test for non-Posix prototype for 'signal()'
