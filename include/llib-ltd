@@ -1,4 +1,4 @@
-/* @(#)llib-ltd	1.37 88/08/25 16:06:22 */
+/* @(#)llib-ltd	1.40 88/08/30 15:23:19 */
 /*LINTLIBRARY*/
 
 #define	CUR_PTYPES
@@ -70,6 +70,9 @@ time_t	fexists(name, opt) char *name; { return(0); }
 
 /* flushall.c --------------------------------------------------------- */
 	flushall(fd) { }
+
+/* filecopy.c --------------------------------------------------------- */
+int	filecopy(src, dst, copy) char *src, *dst; { return(0); }
 
 /* fp2argv.c ---------------------------------------------------------- */
 int	fp2argv(fp, argv_) FILE *fp; char ***argv_; { return(0); }
@@ -151,7 +154,7 @@ char *	rcs2name(name) char *name; { return(0); }
 char *	name2rcs(name) char *name; { return(0); }
 
 /* rcstemp.c ---------------------------------------------------------- */
-char *	rcstemp(name) char *name; { return(0); }
+char *	rcstemp(name,copy) char *name; { return(0); }
 
 /* resizewin.c -------------------------------------------------------- */
 int	resizewin() { return(0); }
@@ -192,6 +195,12 @@ char	*txtalloc(string) char *string; { return(0); }
 
 /* uid2s.c ------------------------------------------------------------ */
 char	*uid2s(uid) { return(0); }
+
+/* usercopy.c --------------------------------------------------------- */
+int	usercopy(s, d) char *s, *d; { return(0); }
+
+/* userprot.c --------------------------------------------------------- */
+int	userprot(name, mode, mtime) char *name; time_t mtime; { return(0); }
 
 /* vecalloc.c --------------------------------------------------------- */
 char	**vecalloc(len) unsigned len; { return(0); }
