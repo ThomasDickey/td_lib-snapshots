@@ -1,3 +1,33 @@
+2003-07-02  dickey@invisible-island.net
+
+	* src/curses/cmdch.c: add a check for KEY_RESIZE
+
+	* src/curses/resizwin.c:
+	tracked a problem with ded not handling sigwinch to this module, which was
+	looking for CURSES_LIKE_NCURSES - but my configure check for that doesn't
+	always match ncurses anymore since struct ldat is opaque.  Settle for
+	checking if both resizeterm and wresize are available.  This might work with
+	NetBSD curses, which has copied those two functions.
+
+	* aclocal.m4: add CF_GCC_VERSION
+
+	* include/td_curse.h:
+	change check for macros getmaxx() ... getbegy() to feature-checks HAVE_xxx
+	since that is needed for NetBSD curses.
+
+	* configure.in:
+	add checks for getbegx(), getbegy(), getmaxx() and getmaxy() which are macros
+	for most versions of curses except for NetBSD which provides functions only.
+
+	* include/td_curse.h:
+	add fallback definitions for wBegX() and wBegY(), needed with netbsd curses
+	since it isn't like BSD 4.4 curses any more.
+
+2003-06-10  dickey@invisible-island.net
+
+	* aclocal.m4:
+	resync (fix for -Winline with gcc 3.3, fix for CSSC search path on Debian 3.0)
+
 2003-06-02  dickey@invisible-island.net
 
 	* config.sub: 2003-05-24 (tin)

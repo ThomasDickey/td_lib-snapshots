@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Id: aclocal.m4,v 12.149 2003/04/25 22:11:11 tom Exp $
+dnl $Id: aclocal.m4,v 12.151 2003/07/02 21:26:12 tom Exp $
 dnl vi:set ts=4:
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "CF_" to "AC_"
@@ -369,7 +369,7 @@ if test $cf_cv_chtype_decl = yes ; then
 fi
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_CURSES_CPPFLAGS version: 6 updated: 2002/10/27 18:21:42
+dnl CF_CURSES_CPPFLAGS version: 7 updated: 2003/06/06 00:48:41
 dnl ------------------
 dnl Look for the curses headers.
 AC_DEFUN([CF_CURSES_CPPFLAGS],[
@@ -388,7 +388,7 @@ sunos3*|sunos4*)
 	;;
 esac
 ])
-test "$cf_cv_curses_incdir" != no && CPPFLAGS="$CPPFLAGS $cf_cv_curses_incdir"
+test "$cf_cv_curses_incdir" != no && CPPFLAGS="$cf_cv_curses_incdir $CPPFLAGS"
 
 AC_CACHE_CHECK(if we have identified curses headers,cf_cv_ncurses_header,[
 cf_cv_ncurses_header=none
@@ -930,7 +930,21 @@ rm -rf conftest*
 fi
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_GCC_WARNINGS version: 12 updated: 2002/11/23 16:02:49
+dnl CF_GCC_VERSION version: 2 updated: 2003/05/24 15:01:41
+dnl --------------
+dnl Find version of gcc
+AC_DEFUN([CF_GCC_VERSION],[
+AC_REQUIRE([AC_PROG_CC])
+GCC_VERSION=none
+if test "$GCC" = yes ; then
+	AC_MSG_CHECKING(version of $CC)
+	GCC_VERSION="`${CC} --version|head -1 | sed -e 's/^[[^0-9.]]*//' -e 's/[[^0-9.]].*//'`"
+	test -z "$GCC_VERSION" && GCC_VERSION=unknown
+	AC_MSG_RESULT($GCC_VERSION)
+fi
+])dnl
+dnl ---------------------------------------------------------------------------
+dnl CF_GCC_WARNINGS version: 14 updated: 2003/05/24 15:03:15
 dnl ---------------
 dnl Check if the compiler supports useful warning options.  There's a few that
 dnl we don't use, simply because they're too noisy:
@@ -938,11 +952,13 @@ dnl
 dnl	-Wconversion (useful in older versions of gcc, but not in gcc 2.7.x)
 dnl	-Wredundant-decls (system headers make this too noisy)
 dnl	-Wtraditional (combines too many unrelated messages, only a few useful)
-dnl	-Wwrite-strings (too noisy, but should review occasionally)
+dnl	-Wwrite-strings (too noisy, but should review occasionally).  This
+dnl		is enabled for ncurses using "--enable-const".
 dnl	-pedantic
 dnl
 AC_DEFUN([CF_GCC_WARNINGS],
 [
+AC_REQUIRE([CF_GCC_VERSION])
 if ( test "$GCC" = yes || test "$GXX" = yes )
 then
 	cat > conftest.$ac_ext <<EOF
@@ -970,8 +986,19 @@ EOF
 		CFLAGS="$cf_save_CFLAGS $EXTRA_CFLAGS -$cf_opt"
 		if AC_TRY_EVAL(ac_compile); then
 			test -n "$verbose" && AC_MSG_RESULT(... -$cf_opt)
+			case $cf_opt in #(vi
+			Wcast-qual) #(vi
+				CPPFLAGS="$CPPFLAGS -DXTSTRINGDEFINES"
+				;;
+			Winline) #(vi
+				case $GCC_VERSION in
+				3.3*)
+					CF_VERBOSE(feature is broken in gcc $GCC_VERSION)
+					continue;;
+				esac
+				;;
+			esac
 			EXTRA_CFLAGS="$EXTRA_CFLAGS -$cf_opt"
-			test "$cf_opt" = Wcast-qual && EXTRA_CFLAGS="$EXTRA_CFLAGS -DXTSTRINGDEFINES"
 		fi
 	done
 	rm -f conftest*
@@ -1085,6 +1112,8 @@ make an error
 test "$cf_cv_gnu_source" = yes && CPPFLAGS="$CPPFLAGS -D_GNU_SOURCE"
 ])dnl
 dnl ---------------------------------------------------------------------------
+dnl CF_HAVE_FUNCS version: 5 updated: 2003/02/02 19:21:05
+dnl -------------
 dnl	Combines AC_HAVE_FUNCS logic with additional test from Kevin Buettner
 dnl	that checks to see if we need a prototype for the given function.
 dnl
@@ -1833,7 +1862,7 @@ AC_SUBST(PROG_EXT)
 test -n "$PROG_EXT" && AC_DEFINE_UNQUOTED(PROG_EXT,"$PROG_EXT")
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_RCS_SCCS version: 3 updated: 2002/04/16 10:33:29
+dnl CF_RCS_SCCS version: 4 updated: 2003/06/10 20:35:36
 dnl -----------
 dnl Tests for the ensemble of programs that are used in RCS, SCCS, VCS, CVS.
 dnl We'll have to assume that the related utilities all reside in the same
@@ -1841,8 +1870,10 @@ dnl directory.
 AC_DEFUN([CF_RCS_SCCS],
 [
 cf_rcs_sccs_path="$PATH"
+PATH="/usr/local/lib/cssc:$PATH"
 PATH="/usr/local/libexec/cssc:$PATH"
 PATH="/usr/libexec/cssc:$PATH"
+PATH="/usr/lib/cssc:$PATH"
 CF_PROGRAM_PREFIX(RCS_PATH, rcs)
 CF_PROGRAM_PREFIX(SCCS_PATH, admin)dnl the SCCS tool
 CF_PROGRAM_PREFIX(VCS_PATH, vcs)dnl VCS is my RCS application
@@ -2588,20 +2619,23 @@ AC_ARG_WITH(curses-dir,
 	[cf_cv_curses_dir=no])
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_WITH_WARNINGS version: 3 updated: 2002/12/21 19:51:02
+dnl CF_WITH_WARNINGS version: 4 updated: 2003/05/24 15:01:41
 dnl ----------------
 dnl Combine the checks for gcc features into a configure-script option
 AC_DEFUN([CF_WITH_WARNINGS],
 [
+if ( test "$GCC" = yes || test "$GXX" = yes )
+then
 AC_MSG_CHECKING(if you want to check for gcc warnings)
 AC_ARG_WITH(warnings,
-	[  --with-warnings         turn on gcc warnings, for debugging],
+	[  --with-warnings         test: turn on gcc warnings],
 	[cf_opt_with_warnings=$withval],
 	[cf_opt_with_warnings=no])
 AC_MSG_RESULT($cf_opt_with_warnings)
 if test "$cf_opt_with_warnings" != no ; then
 	CF_GCC_ATTRIBUTES
 	CF_GCC_WARNINGS
+fi
 fi
 ])dnl
 dnl ---------------------------------------------------------------------------

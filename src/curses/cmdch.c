@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	01 Dec 1987 (broke out of 'ded.c')
  * Modified:
+ *		03 Jul 2003, check for KEY_RESIZE makes ncurses sigwinch work
  *		15 Feb 1998, add home/end/ppage/npage keys.
  *		25 Sep 1996, fix for ANSI arrow-key decoding
  *		16 Dec 1995, integration with ncurses mouse-support.
@@ -46,7 +47,7 @@
 #include	"td_curse.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: cmdch.c,v 12.29 2002/07/05 12:39:18 tom Exp $")
+MODULE_ID("$Id: cmdch.c,v 12.30 2003/07/02 22:57:14 tom Exp $")
 
 #define	ESC(c)	((c) == '\033')
 #define	END(s)	s[strlen(s)-1]
@@ -215,6 +216,10 @@ int	cmdch(
 			xt_mouse.released = TRUE;
 			done = TRUE;
 			break;
+#endif
+#ifdef KEY_RESIZE
+		case KEY_RESIZE:
+			break;			/* eat this for sigwinch */
 #endif
 		case KEY_HOME:			/* FALLTHRU */
 		case KEY_END:			/* FALLTHRU */
