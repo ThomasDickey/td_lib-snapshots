@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: resizwin.c,v 12.6 1994/09/22 21:32:02 tom Exp $";
+static	char	Id[] = "$Id: resizwin.c,v 12.7 1995/02/11 19:21:04 tom Exp $";
 #endif
 
 /*
@@ -53,12 +53,25 @@ int	resizewin(_AR0)
 	lc[0] = LINES;
 	lc[1] = COLS;
 	if (scr_size(lc) >= 0) {
+#ifdef TEST_RESIZE
 		dlog_comment("resizewin called\n");
 		dlog_comment("..., LINES %d, COLS %d\n", LINES, COLS);
 		dlog_comment("..., scr_size (%d, %d)\n", lc[0], lc[1]);
 		dlog_flush();
+#else
+		my_LINES = lc[0];
+		my_COLS  = lc[1];
+		if (my_LINES != LINES || my_COLS != COLS) {
+			/* FIXME: if HP/UX curses does the resizing already,
+			 * how do we detect it?
+			 */
+		dlog_comment("resizewin returns true\n");
+			return TRUE;
+		}
+#endif
 	}
-	return	TRUE;	/* HP/UX curses does the resizing already */
+	dlog_comment("resizewin returns false\n");
+	return	FALSE;
 #else	/* !__hpux */
 
 	lc[0] = LINES;

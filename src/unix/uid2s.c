@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: uid2s.c,v 12.3 1993/11/26 22:27:44 dickey Exp $";
+static	char	Id[] = "$Id: uid2s.c,v 12.4 1995/02/11 19:21:05 tom Exp $";
 #endif
 
 /*
@@ -110,7 +110,7 @@ int	uid;
 		define_uid2s(uid, p->pw_name);
 	else {
 		auto	char	bfr[80];
-		(void)ltostr(bfr, (long)uid, 0);
+		(void)l2str(bfr, (long)uid, 0);
 		unknown_uid	/* try to recover! */
 		define_uid2s(uid, bfr);
 	}

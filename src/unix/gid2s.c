@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: gid2s.c,v 12.3 1993/11/26 22:03:58 dickey Exp $";
+static	char	Id[] = "$Id: gid2s.c,v 12.4 1995/02/11 19:21:05 tom Exp $";
 #endif
 
 /*
@@ -77,7 +77,7 @@ _DCL(int,	gid)
 		define_gid2s(gid, p->gr_name);
 	else {
 		auto	char	bfr[80];
-		(void)ltostr(bfr, (long)gid, 0);
+		(void)l2str(bfr, (long)gid, 0);
 		define_gid2s(gid, bfr);
 	}
 	return (gid2s(gid));

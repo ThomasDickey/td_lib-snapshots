@@ -1,4 +1,4 @@
-/* $Id: td_regex.h,v 12.9 1994/11/04 21:17:42 tom Exp $ */
+/* $Id: td_regex.h,v 12.10 1995/02/11 19:21:04 tom Exp $ */
 
 /*
  * SYSTEM5/BSD4.x differences between native regular-expression handling:
@@ -21,7 +21,7 @@
 #  include <regexpr.h>
 #  define REGEX_T char *
 #  define OLD_REGEX(expr)		free(&expr)
-#  define NEW_REGEX(expr,pattern)	((expr = compile(pattern, NULL, NULL)) != 0)
+#  define NEW_REGEX(expr,pattern)	((expr = compile(pattern, (char *)0, (char *)0)) != 0)
 #  define GOT_REGEX(expr,string)	(step(string, expr) != 0)
 #endif
 
