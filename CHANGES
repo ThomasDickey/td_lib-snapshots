@@ -1,3 +1,12 @@
+1992-12-22  dickey@software.org
+
+	* src/curses/padedit.c: reset process group
+
+1992-12-22  ste_cm@software.org
+
+	* src/curses/padedit.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
 1992-12-21  dickey@software.org
 
 	* src/cm_funcs/rcstemp.c:

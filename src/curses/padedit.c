@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: padedit.c,v 11.1 1992/12/04 09:16:30 dickey Exp $";
+static	char	Id[] = "$Id: padedit.c,v 12.0 1992/12/22 11:46:54 ste_cm Rel $";
 #endif
 
 /*
@@ -7,6 +7,8 @@ static	char	Id[] = "$Id: padedit.c,v 11.1 1992/12/04 09:16:30 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	14 Dec 1987
  * Modified:
+ *		22 Dec 1992, reset process-group on SunOs to avoid having
+ *			     signals kill the spawned xterms.
  *		04 Dec 1992, split 'editor' param in case it has options.
  *		09 Apr 1992, show filename in xterm-title.
  *		04 Oct 1991, conversion to ANSI
@@ -159,6 +161,9 @@ int	spawn(
 			/*NOTREACHED*/
 		} else if (pid == 0) {
 			DEBUG("** exec'ing process\r\n",0);
+#ifdef	sun
+			setsid();
+#endif
 			(void)execvp(cmd, argv);
 			(void)_exit(errno);	/* just in case exec-failed */
 			/*NOTREACHED*/
