@@ -1,25 +1,15 @@
-# $Id: Makefile,v 11.2 1992/08/03 14:29:30 dickey Exp $
+# $Id: Makefile,v 11.3 1992/08/05 13:50:33 dickey Exp $
 # MAKE-file for miscellaneous library routines
 
 ####### (Environment) ##########################################################
-THIS	= common
-
-GET	= checkout
+include ../../common.mk
 
 ####### (Command-line Options) #################################################
-I	= ../interface
-J	= ../../../interface
 
-INCLUDES= -I$I
-CPP_OPTS= $(DEFINES) $(INCLUDES)
-#CFLAGS  =
-
-DATE	= echo '****'`date` >> $@
-LINTOPT	= $(CPP_OPTS) -I$J -ltd -lcurses -lapollo
-LIBS	= -lcurses -ltermcap
 
 ####### (Standard Lists) #######################################################
-Z	= ../lib/lib.a
+Z	= $L/$(THAT).a
+
 CSRC	=\
 	abspath.c\
 	access_mode.c\
@@ -261,20 +251,18 @@ OBJS	=\
 	$Z(which.o)\
 	$Z(win2file.o)\
 	$Z(wrepaint.o)
-#
+
 ALL	= $Z
-#
+
 ####### (Standard Productions) #################################################
-all:		sources $(ALL)
-#
-clean:				; rm -f core *.o *.out *.ln *.lint *.tst *.bak
+all\
+install:	sources $(ALL)
+
+clean:				; rm -f $(CLEAN)
 clobber:	clean		; rm -f $(ALL)
-destroy:
-	sh -c 'for i in *;do case $$i in RCS);; *) rm -f $$i;;esac;done;exit 0'
+destroy:			; $(DESTROY)
 sources:	$(SOURCES)
-#
-install: all
-#
+
 ####### (Details of Productions) ###############################################
 $Z:	$(OBJS)
 	ranlib $Z
@@ -284,7 +272,7 @@ $Z:	$(OBJS)
 RCSDEFS_H	= $I/rcsdefs.h	$I/deltree.h
 SCCSDEFS_H	= $I/sccsdefs.h
 #
-$(OBJS):	$I/ptypes.h	$I/$(THIS).h
+$(OBJS):	$I/ptypes.h	$I/$(THAT).h
 
 $Z(cmdch.o)\
 $Z(rawgets.o):	$I/cmdch.h
@@ -327,18 +315,3 @@ lint.out:	$(CSRC)
 		tdlint $(LINTOPT) $$i >>$@;done'
 
 lincnt.out:	$(CSRC)		; $(DATE); lincnt $(CSRC) >>$@
-#
-.SUFFIXES:
-.SUFFIXES: .c .o .a .lint .tst .i
-.c.a:
-	@echo compile $<
-	@$(CC) $(CFLAGS) $(CPP_OPTS) -c $*.c
-	@ar rv $@ $*.o
-	@rm -f $*.o
-.c.lint:
-	tdlint $(LINTOPT) $< >$@
-.c.tst:
-	$(CC) -o $@ -DTEST $(CFLAGS) $(CPP_OPTS) $< $Z $(LIBS)
-	rm -f $*.o
-.c.o:	; $(CC) $(CFLAGS) $(CPP_OPTS) -c $<
-.c.i:	; $(CC) -E -C $(CPP_OPTS) $< >$@
