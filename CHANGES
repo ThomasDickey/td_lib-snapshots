@@ -1,3 +1,9 @@
+1987-12-02  dickey@software.org
+
+	* src/Makefile: added clean/clobber
+
+	* src/curses/cmdch.c: New file.
+
 1987-12-01  dickey@software.org
 
 	* src/Makefile: added some modules to support 'ded' + 'ftree'.

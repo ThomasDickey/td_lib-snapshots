@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19871201
+MANIFEST for td_lib, version t19871202
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 include                         subdirectory
@@ -9,6 +9,7 @@ src/cm_funcs                    subdirectory
 src/cm_funcs/packdate.c         pack numbers to make UNIX date
 src/cm_funcs/sccslast.c         scan for last SCCS date & version
 src/curses                      subdirectory
+src/curses/cmdch.c              command-character decoder
 src/curses/rawgets.c            read a string via curses in raw mode (allow edits)
 src/curses/rawterm.c            set terminal to raw (cooked) mode
 src/memory                      subdirectory
