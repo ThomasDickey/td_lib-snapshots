@@ -43,7 +43,7 @@
 #include	"td_curse.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: cmdch.c,v 12.18 1995/10/14 16:35:36 tom Exp $")
+MODULE_ID("$Id: cmdch.c,v 12.19 1995/10/31 23:19:58 tom Exp $")
 
 #define	ESC(c)	((c) == '\033')
 #define	END(s)	s[strlen(s)-1]
@@ -149,6 +149,11 @@ int	cmdch(
 #ifdef KEY_BACKSPACE
 #if KEY_BACKSPACE != '\b'
 		case KEY_BACKSPACE: c = '\b';	done = TRUE;	break;
+#endif
+#endif
+#ifdef KEY_ENTER
+#if KEY_ENTER != '\n'
+		case KEY_ENTER: c = '\n';	done = TRUE;	break;
 #endif
 #endif
 		case KEY_UP:			/* FALLTHRU */
