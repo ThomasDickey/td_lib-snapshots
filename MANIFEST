@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19890227
+MANIFEST for td_lib, version t19890302
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 include                         subdirectory
@@ -69,6 +69,7 @@ src/pathname/walktree.c         walk directory-tree, performing function
 src/pathname/which.c            locate file in $PATH
 src/port2vms                    subdirectory
 src/port2vms/dir2path.c         VMS directory/pathname conversion
+src/port2vms/name2vms.c         convert unix filename to VMS format
 src/port2vms/path2dir.c         convert VMS pathname to directory
 src/port2vms/path2vms.c         convert unix pathname (directory!) to VMS format
 src/port2vms/rmsio.c            VMS equivalent to system-level (open, close, read, write) unix I/O
