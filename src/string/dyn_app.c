@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	*Id = "$Id: dyn_app.c,v 10.2 1992/02/07 11:05:00 dickey Exp $";
+static	char	*Id = "$Id: dyn_app.c,v 11.0 1992/02/28 15:07:51 ste_cm Rel $";
 #endif
 
 /*
@@ -21,11 +21,12 @@ _AR1(char *,	s)
 _DCL(DYN *,	p)
 _DCL(char *,	s)
 {
-	size_t	new	= strlen(s);
+	if (s != 0) {
+		size_t	new	= strlen(s);
 
-	p = dyn_alloc(p, dyn_length(p) + new + 1);
-	(void)strcpy(p->text + p->cur_length, s);
-	p->cur_length += new;
-
+		p = dyn_alloc(p, dyn_length(p) + new + 1);
+		(void)strcpy(p->text + p->cur_length, s);
+		p->cur_length += new;
+	}
 	return p;
 }
