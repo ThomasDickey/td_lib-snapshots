@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19880930
+MANIFEST for td_lib, version t19881005
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 include                         subdirectory
@@ -48,6 +48,7 @@ src/pathname/abspath.c          convert path to absolute form
 src/pathname/copyback.c         copy file back from a temp-file
 src/pathname/denode.c           strip leading node-name from path
 src/pathname/dotname.c          test for "." or ".." names
+src/pathname/editfile.c         VMS/unix edit tree-of-files
 src/pathname/filecopy.c         copy a file
 src/pathname/fp2argv.c          file-pointer to argv-list
 src/pathname/ftype.c            finds filename's suffix
@@ -78,6 +79,7 @@ src/string                      subdirectory
 src/string/dotcmp.c             compare dot-separated strings
 src/string/ltostr.c             convert 'long' to a string
 src/string/strclean.c           "clean" string, removes unnecessary blanks
+src/string/strucmp.c            compare two strings ignoring case
 src/unix                        subdirectory
 src/unix/gid2s.c                convert group-id to string
 src/unix/s2gid.c                convert string to group-id
