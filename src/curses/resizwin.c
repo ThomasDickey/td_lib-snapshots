@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: resizwin.c,v 12.7 1995/02/11 19:21:04 tom Exp $";
+static	char	Id[] = "$Id: resizwin.c,v 12.8 1995/04/01 14:36:39 tom Exp $";
 #endif
 
 /*
@@ -37,7 +37,7 @@ static	char	Id[] = "$Id: resizwin.c,v 12.7 1995/02/11 19:21:04 tom Exp $";
 
 #include	"td_curse.h"
 
-#if HAVE_LIBNCURSES
+#if HAVE_RESIZETERM
 extern	WINDOW	*newscr;
 #endif
 
@@ -81,7 +81,7 @@ int	resizewin(_AR0)
 		my_COLS  = lc[1];
 		if (my_LINES != LINES || my_COLS != COLS) {
 #if SYS5_CURSES
-#if HAVE_LIBNCURSES
+#if HAVE_RESIZETERM	/* ncurses extension */
 			wresize(stdscr, my_LINES, my_COLS);
 			wresize(curscr, my_LINES, my_COLS);
 			wresize(newscr, my_LINES, my_COLS);
