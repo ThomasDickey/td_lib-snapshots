@@ -1,3 +1,18 @@
+1989-04-26  dickey@software.org
+
+	* src/descrip.mms: forgot some modules in the list
+
+	* include/port2vms.h: added bracketing _PORTUNIX_ ifdef
+
+1989-04-26  ste_cm@software.org
+
+	* include/port2vms.h: BASELINE Mon Jun 12 08:53:03 EDT 1989
+
+1989-04-26  dickey@software.org
+
+	* include/ptypes.h: added FNC_PTYPES and PROTOTYPES symbols.
+	if prototypes are available, force their inclusion
+
 1989-04-25  dickey@software.org
 
 	* Makefile: added common.h to install-list

@@ -1,4 +1,4 @@
-/* $Header: /users/source/archives/td_lib.vcs/include/RCS/ptypes.h,v 2.5 1989/04/25 08:08:27 dickey Exp $ */
+/* $Header: /users/source/archives/td_lib.vcs/include/RCS/ptypes.h,v 2.6 1989/04/26 07:41:33 dickey Exp $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -29,15 +29,6 @@
  * Definitions for files which are combined lint-library/function-prototype
  * declarations (e.g., "common.h"):
  */
-#if	defined(__STDC__) || defined(vms)
-#define	_FN1(t,v)	t (*v)()
-#define	_FNX(t,v)	_FN1(t,v),
-#define	_AR1(t,v)	t v
-#define	_ARX(t,v)	_AR1(t,v),
-#define	_DCL(t,v)
-#define	_RET		;
-#define	_NUL		;
-#else
 #ifdef	LINTLIBRARY
 #define	_FN1(t,v)	v
 #define	_FNX(t,v)	_FN1(t,v),
@@ -46,7 +37,23 @@
 #define	_DCL(t,v)	t v;
 #define	_RET		{return(0);}
 #define	_NUL		{}
-#else
+#else	!LINTLIBRARY
+#ifdef	vms
+#define	PROTOTYPES
+#endif	vms
+#ifdef	__STDC__
+#define	PROTOTYPES
+#endif	__STDC__
+#ifdef	PROTOTYPES	/* function prototypes */
+#define	FNC_PTYPES
+#define	_FN1(t,v)	t (*v)()
+#define	_FNX(t,v)	_FN1(t,v),
+#define	_AR1(t,v)	t v
+#define	_ARX(t,v)	_AR1(t,v),
+#define	_DCL(t,v)
+#define	_RET		;
+#define	_NUL		;
+#else	!PROTOTYPES	/* old-style declarations */
 #define	_FN1(t,v)
 #define	_FNX(t,v)
 #define	_AR1(t,v)
@@ -54,8 +61,8 @@
 #define	_DCL(t,v)
 #define	_RET		;
 #define	_NUL		;
+#endif	PROTOTYPES
 #endif	LINTLIBRARY
-#endif	__STDC__
 
 /*
  * Declare argument for 'exit()' and '_exit()':
@@ -205,5 +212,12 @@ extern	char	killchar();
 extern	char	*strchr();
 extern	char	*strrchr();
 #endif	STR_PTYPES
+
+/*
+ * Definitions of procedures in CM_TOOLS common library
+ */
+#ifdef	FNC_PTYPES
+#include "common.h"
+#endif	FNC_PTYPES
 
 #endif	_PTYPES_

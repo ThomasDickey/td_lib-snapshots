@@ -1,4 +1,4 @@
-# $Header: /users/source/archives/td_lib.vcs/src/RCS/descrip.mms,v 2.1 1989/04/20 15:15:59 dickey Exp $
+# $Header: /users/source/archives/td_lib.vcs/src/RCS/descrip.mms,v 2.2 1989/04/26 13:03:00 dickey Exp $
 # MMS-file for miscellaneous library routines	
 #
 ####### (Development) ##########################################################
@@ -34,8 +34,12 @@ LIBRARYMODULES = -
 	PATHLEAF, -
 	SAMELEAF -
 	STRALLOC, -
+	STRBCMP, -
 	STRCLEAN, -
 	STRTRIM, -
+	STRUCMP, -
+	STRUCPY, -
+	TRIMPATH, -
 	TXTALLOC, -
 	VECALLOC, -
 	VERCMP, -
@@ -234,6 +238,7 @@ resizewin.obj :		$(PTYPES_H)
 sccslast.obj :		$(PTYPES_H)
 setmtime.obj :		$(PTYPES_H)
 savewin.obj :		$(PTYPES_H)
+trimpath.obj :		$(PTYPES_H)
 uid2s.obj :		$(PTYPES_H)
 usercopy.obj :		$(PTYPES_H)
 userprot.obj :		$(PTYPES_H)
