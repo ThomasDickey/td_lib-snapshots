@@ -1,13 +1,15 @@
-# @(#)Makefile	1.16 88/05/19 08:24:59
+# @(#)Makefile	1.17 88/05/21 10:24:42
 # MAKE-file for miscellaneous library routines
 L=lib.a
 #
 OBJS	=\
 	abspath.o\
+	adj2est.o\
 	beep.o\
 	bldarg.o\
 	closeall.o\
 	cmdch.o\
+	cutoff.o\
 	denode.o\
 	doalloc.o\
 	dotcmp.o\
@@ -15,6 +17,7 @@ OBJS	=\
 	dumpchr.o\
 	dumpwin.o\
 	erasechar.o\
+	execute.o\
 	flushall.o\
 	gid2s.o\
 	killchar.o\
@@ -30,6 +33,8 @@ OBJS	=\
 	savewin.o\
 	sccslast.o\
 	sccszone.o\
+	set2est.o\
+	setmtime.o\
 	stralloc.o\
 	strclean.o\
 	s2gid.o\
@@ -47,7 +52,12 @@ $L:
 	ar rv $L $?
 	ranlib $L
 #
+adj2est.o:	ptypes.h
 cmdch.o:	cmdch.h
+cutoff.o:	ptypes.h
+packdate.o:	ptypes.h
+set2est.o:	ptypes.h
+setmtime.o:	ptypes.h
 rawgets.o:	cmdch.h
 #
 clean:
@@ -59,4 +69,4 @@ llib-ltd.ln:	LLIB
 	makellib.sh LLIB td
 #
 lint.out:	llib-ltd.ln
-	tdlint -lcurses -ltd -lapollo -DNO_SCCS_ID *.c >lint.out
+	lintit.sh *.c >lint.out

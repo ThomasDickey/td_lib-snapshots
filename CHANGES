@@ -1,3 +1,14 @@
+1988-05-21  dickey@software.org
+
+	* include/llib-ltd: added arg to 'adj2est()'.
+
+	* src/process/execute.c: New file.
+
+	* include/llib-ltd:
+	added modules to deal with time-modifications for SCCS/RCS utilities.
+
+	* src/Makefile: more modules, for SCCS/RCS utilities
+
 1988-05-20  dickey@software.org
 
 	* src/unix/setmtime.c: New file.
