@@ -1,5 +1,5 @@
-#ifndef	lint
-static	char	Id[] = "$Id: logch.c,v 12.1 1993/09/21 18:54:04 dickey Exp $";
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: logch.c,v 12.2 1993/10/29 17:35:25 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: logch.c,v 12.1 1993/09/21 18:54:04 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	06 Aug 1992, from ded/dlog.c
  * Modified:
+ *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *
  * Function:	Decode/encode log-file characters (e.g., for 'ded').

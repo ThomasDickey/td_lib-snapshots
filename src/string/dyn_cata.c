@@ -1,11 +1,9 @@
-#ifndef	lint
-static	char	*Id = "$Id: dyn_cata.c,v 12.0 1993/04/26 16:17:43 ste_cm Rel $";
-#endif
-
 /*
  * Title:	dyn_catarg.c
  * Author:	T.E.Dickey
  * Created:	07 Feb 1992
+ * Modified:
+ *		29 Oct 1993, ifdef-ident
  *
  * Function:	provides dynamic-string interface to 'catarg()'.
  */
@@ -13,6 +11,8 @@ static	char	*Id = "$Id: dyn_cata.c,v 12.0 1993/04/26 16:17:43 ste_cm Rel $";
 #define	STR_PTYPES
 #include "ptypes.h"
 #include "dyn_str.h"
+
+MODULE_ID("$Id: dyn_cata.c,v 12.2 1993/10/29 17:35:22 tom Exp $")
 
 #define	EMPTY(s)	((s == 0) || (*s == EOS))
 

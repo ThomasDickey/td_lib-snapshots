@@ -1,5 +1,5 @@
-#ifndef	lint
-static	char	*Id = "$Id: field_of.c,v 12.1 1993/09/21 18:54:04 dickey Exp $";
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: field_of.c,v 12.2 1993/10/29 17:35:26 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	*Id = "$Id: field_of.c,v 12.1 1993/09/21 18:54:04 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	03 Feb 1992
  * Modified:
+ *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		24 Jul 1992, use dynamic-strings.
  *		17 Jul 1992, port to Apollo SR10.2 (no 'memmove()')

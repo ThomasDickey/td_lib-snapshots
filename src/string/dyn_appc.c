@@ -1,11 +1,9 @@
-#ifndef	lint
-static	char	*Id = "$Id: dyn_appc.c,v 12.0 1993/04/26 16:17:43 ste_cm Rel $";
-#endif
-
 /*
  * Title:	dyn_append_c.c
  * Author:	T.E.Dickey
  * Created:	24 Jul 1992
+ * Modified:
+ *		29 Oct 1993, ifdef-ident
  *
  * Function:	appends a character to a dynamic-string.
  */
@@ -13,6 +11,8 @@ static	char	*Id = "$Id: dyn_appc.c,v 12.0 1993/04/26 16:17:43 ste_cm Rel $";
 #define	STR_PTYPES
 #include "ptypes.h"
 #include "dyn_str.h"
+
+MODULE_ID("$Id: dyn_appc.c,v 12.2 1993/10/29 17:35:22 tom Exp $")
 
 DYN *	dyn_append_c(
 	_ARX(DYN *,	p)

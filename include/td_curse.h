@@ -1,4 +1,4 @@
-/* $Id: td_curse.h,v 12.1 1993/09/21 17:23:54 dickey Exp $ */
+/* $Id: td_curse.h,v 12.2 1993/10/29 17:53:35 dickey Exp $ */
 
 /*
  * TD_LIB CURSES-related definitions
@@ -11,22 +11,28 @@
 #include "ptypes.h"
 #endif		/* _PTYPES_ */
 
+#include	<curses.h>
+
 /*
  * note: System5 curses does not define the 'screen' structure
  */
 #ifdef	SYSTEM5
-struct	screen	{ int dummy; };
-#else	/* SYSTEM5 */
-typedef char	chtype;		/* sys5-curses data-type */
-#ifndef	erasechar
-extern	int	erasechar(_ar0);
-#endif	/* erasechar */
-#ifndef	killchar
-extern	int	killchar(_ar0);
-#endif	/* killchar */
+# ifdef	lint
+	struct	screen	{ int dummy; };
+# endif
+#else
+	typedef	char	chtype;		/* sys5-curses data-type */
+# ifndef erasechar
+	extern	int	erasechar(_ar0); */
+# endif
+# ifndef killchar
+	extern	int	killchar(_ar0); */
+# endif
 #endif	/* SYSTEM5 */
 
-#include	<curses.h>
+#if !defined(__hpux)	/* defined in <curses.h> */
+extern	char	*tgetstr(_arx(char *,n) _ar1(char **,p));
+#endif
 
 #if defined(__GNUC__) && defined(sun)
 extern	int	stty		(int, struct sgttyb *);
@@ -72,8 +78,10 @@ extern	int	wrefresh	(WINDOW *);
 #endif
 
 	/* beep.c ----------------------------------------------------- */
+#if	!defined(SYSTEM5)
 	void	beep(_ar0)
 			_nul
+#endif
 
 	/* blip.c ----------------------------------------------------- */
 	void	blip(
@@ -99,20 +107,24 @@ extern	int	wrefresh	(WINDOW *);
 			_nul
 
 	/* erasechar.c ------------------------------------------------ */
+#if	!defined(SYSTEM5)
 #ifdef	erasechar
 #undef	erasechar
 #endif	/* erasechar */
 	int	erasechar(_ar0)
 			_ret
+#endif
 	int	eraseword(_ar0)
 			_ret
 
 	/* killchar.c ------------------------------------------------- */
+#if	!defined(SYSTEM5)
 #ifdef	killchar
 #undef	killchar
 #endif	/* killchar */
 	int	killchar(_ar0)
 			_ret
+#endif
 
 	/* rawgets.c -------------------------------------------------- */
 	int	wrawgets (

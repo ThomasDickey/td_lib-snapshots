@@ -1,5 +1,5 @@
-#ifndef	lint
-static	char	Id[] = "$Id: s2gid.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: s2gid.c,v 12.2 1993/10/29 18:46:28 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: s2gid.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	16 Nov 1987
  * Modified:
+ *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, conversion to ANSI
  *		15 May 1991,
@@ -27,7 +28,6 @@ int	s2gid(
 	long	val = strtol(s, &d, 0);
 
 	if (*d) {
-		extern	 struct	group	*getgrnam(_ar1(char *,name));	/* cf: apollo sys5 */
 		register struct	group	*p;
 
 		if ((p = getgrnam(s)) != 0)

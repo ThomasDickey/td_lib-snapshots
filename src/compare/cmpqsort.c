@@ -1,5 +1,5 @@
-#ifndef	lint
-static	char	Id[] = "$Id: cmpqsort.c,v 12.0 1993/04/26 16:08:51 ste_cm Rel $";
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: cmpqsort.c,v 12.1 1993/10/29 17:35:27 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: cmpqsort.c,v 12.0 1993/04/26 16:08:51 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	18 Nov 1992, from 'walktree.c'
  * Modified:
+ *		29 Oct 1993, ifdef-ident
  *		
  * Function:	Given a pathname, this successively invokes a user-supplied
  *

@@ -1,11 +1,9 @@
-#ifndef	lint
-static	char	*Id = "$Id: dyn_str.c,v 12.0 1993/04/26 16:18:06 ste_cm Rel $";
-#endif
-
 /*
  * Title:	dyn_string.c
  * Author:	T.E.Dickey
  * Created:	07 Feb 1992
+ * Modified:
+ *		29 Oct 1993, ifdef-ident
  *
  * Function:	manages dynamic strings.  These are used for constructing
  *		arbitrarily long strings, especially for argument-lists to
@@ -14,6 +12,8 @@ static	char	*Id = "$Id: dyn_str.c,v 12.0 1993/04/26 16:18:06 ste_cm Rel $";
 
 #include "ptypes.h"
 #include "dyn_str.h"
+
+MODULE_ID("$Id: dyn_str.c,v 12.2 1993/10/29 17:35:23 tom Exp $")
 
 #define	def_alloc	DYN_ALLOC
 

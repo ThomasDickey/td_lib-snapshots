@@ -1,5 +1,5 @@
-#ifndef	lint
-static	char	Id[] = "$Id: diffload.c,v 12.1 1993/09/21 18:54:05 dickey Exp $";
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: diffload.c,v 12.2 1993/10/29 17:35:27 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: diffload.c,v 12.1 1993/09/21 18:54:05 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	25 Feb 1992
  * Modified:
+ *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *
  * Function:	Loads one or more files and returns an array of DELTREE
@@ -65,8 +66,6 @@ _DCL(char *,	name2)
 {
 	static	char	*verb = "diff -n ";
 	static	DYN	*cmd;
-
-	extern	FILE	*popen(_arx(char *,name) _ar1(char *,mode));
 
 	auto	FILE	*pp;
 	auto	char	tmp1[MAXPATHLEN*2 + 1];

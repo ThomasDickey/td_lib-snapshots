@@ -1,11 +1,13 @@
-#ifndef	lint
-static	char	*Id = "$Id: rcsargpr.c,v 12.0 1992/02/06 16:04:17 ste_cm Rel $";
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: rcsargpr.c,v 12.1 1993/10/29 17:35:23 dickey Exp $";
 #endif
 
 /*
  * Title:	rcsargpair.c
  * Author:	T.E.Dickey
  * Created:	05 Feb 1992
+ * Modified:
+ *		29 Oct 1993, ifdef-ident
  *
  * Function:	Parses argument-lists of working and/or archive names for rcs-
  *		based tools.

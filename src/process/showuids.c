@@ -1,11 +1,13 @@
-#ifndef	lint
-static	char	*Id = "$Id: showuids.c,v 12.0 1993/04/29 10:15:57 ste_cm Rel $";
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: showuids.c,v 12.1 1993/10/29 17:35:23 dickey Exp $";
 #endif
 
 /*
  * Title:	show_uids.c
  * Author:	T.E.Dickey
  * Created:	07 Feb 1992
+ * Modified:
+ *		29 Oct 1993, ifdef-ident
  *
  * Function:	prints the real/effective uid+gid in both numeric and symbolic
  *		form to the given file-pointer.  This is used in debug-traces

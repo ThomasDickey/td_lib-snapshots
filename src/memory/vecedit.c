@@ -1,12 +1,9 @@
-#ifndef	lint
-static	char	*Id = "$Id: vecedit.c,v 12.1 1993/09/21 18:54:02 dickey Exp $";
-#endif
-
 /*
  * Title:	vecedit.c
  * Author:	T.E.Dickey
  * Created:	16 Sep 1991
  * Modified:
+ *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		10 Oct 1991, corrected off-by-one error in 'e_at' variable.
  *
@@ -19,6 +16,8 @@ static	char	*Id = "$Id: vecedit.c,v 12.1 1993/09/21 18:54:02 dickey Exp $";
  */
 
 #include <ptypes.h>
+
+MODULE_ID("$Id: vecedit.c,v 12.3 1993/10/29 17:35:23 tom Exp $")
 
 char **
 vecedit(

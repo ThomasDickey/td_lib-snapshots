@@ -1,12 +1,9 @@
-#ifndef	lint
-static	char	Id[] = "$Id: cutoff.c,v 12.1 1993/09/21 18:54:05 dickey Exp $";
-#endif
-
 /*
  * Title:	cutoff.c (parse SCCS-style cutoff date)
  * Author:	T.E.Dickey
  * Created:	20 May 1988 (from 'sccsdate.c')
  * Modified:
+ *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		16 Jul 1992, 'optind' should always be index past most recent
  *			     argv-entry parsed.
@@ -25,6 +22,8 @@ static	char	Id[] = "$Id: cutoff.c,v 12.1 1993/09/21 18:54:05 dickey Exp $";
 #include	<ptypes.h>
 #include	<ctype.h>
 #include	<time.h>
+
+MODULE_ID("$Id: cutoff.c,v 12.3 1993/10/29 17:35:27 tom Exp $")
 
 #define	Z(n)	twod(&bfr[n+n])
 

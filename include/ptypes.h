@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 12.6 1993/09/28 12:55:18 dickey Exp $ */
+/* $Id: ptypes.h,v 12.8 1993/10/29 20:19:00 dickey Exp $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -60,6 +60,12 @@
 #endif
 #endif
 
+#ifdef	__hpux
+#define	SYSTEM5
+#define	HAS_STDLIB 1
+#define HAS_UNISTD 1
+#endif
+
 #ifndef HAS_STDLIB
 #if defined(sun) || defined(vms)
 #define	HAS_STDLIB 1
@@ -83,6 +89,24 @@
 #ifndef	S_IFLNK
 #define	lstat	stat
 #endif	/* S_IFLNK */
+
+/*
+ * Define a symbol that is true iff we have an ANSI c-preprocessor (i.e., does
+ * token substitution with '#').
+ */
+#undef	ANSI_CPP
+
+#if defined(apollo) && (defined(__STDCPP__) || defined(__GNUC__))
+# define ANSI_CPP 1
+#endif
+
+#ifndef ANSI_CPP
+# if defined(__STDC__)
+#  define ANSI_CPP 1
+# else
+#  define ANSI_CPP 0
+# endif
+#endif
 
 /*
  * Definition which is true iff we use function-prototypes
@@ -182,6 +206,7 @@
 #define	V_OR_I		void
 #define	LEN_QSORT	unsigned
 #define	LEN_READ	unsigned
+#define	LEN_FREAD	size_t
 #else
 #ifdef	vms
 #define	V_OR_I		void
@@ -229,10 +254,12 @@
 
 #if	defined(SYSTEM5) || defined(vms)
 #define	getwd(p)	getcwd(p,sizeof(p)-2)
-extern	char	*getcwd();
+#if	!defined(__hpux)
+extern	char	*getcwd(_ar1(char *,p));
+#endif
 #else	/* !SYSTEM5 */
 extern	char	*getwd(_ar1(char *,p));
-#if	defined(unix) && !defined(apollo) && !defined(__GNUC__)	/* bsd4.x on SunOs? */
+#if	defined(unix) && !defined(apollo) && !defined(__GNUC__)	&& !defined(__hpux) /* bsd4.x on SunOs? */
 extern	char	*sprintf(_arx(char *,fmt) _DOTS);
 #endif
 #endif
@@ -244,23 +271,26 @@ extern	V_OR_I	free(_ar1(char *,s));
 extern	V_OR_P	calloc(_arx(size_t,nel) _ar1(size_t,size));
 extern	V_OR_P	malloc(_ar1(size_t,size));
 extern	V_OR_P	realloc(_arx(V_OR_P,ptr) _ar1(size_t,size));
-#endif
-#ifndef	vms
-#if	!defined(apollo_sr10)
-extern	V_OR_I2	perror (_ar1(char *,s));
-extern	V_OR_I	rewind (_ar1(FILE *,s));
-#endif
-
 extern	char *	getenv (_ar1(char *,s));
-extern	int	mkstemp(_ar1(char *,s));
-extern	char *	mktemp (_ar1(char *,s));
 extern	long	strtol(
 		_arx(char *,	s)
 		_arx(char **,	d)
 		_ar1(int,	base));
+#endif
+#ifndef	vms
+#if	!defined(apollo_sr10) && !defined(__hpux)
+extern	V_OR_I2	perror (_ar1(char *,s));
+extern	V_OR_I	rewind (_ar1(FILE *,s));
+#endif
+
+extern	int	mkstemp(_ar1(char *,s));
+extern	char *	mktemp (_ar1(char *,s));
 extern	time_t	time   (_ar1(time_t *,t));
 
 #endif	/* !vms */
+
+#if	!defined(__hpux)
+extern	FILE	*popen(_arx(char *,name) _ar1(char *,mode));
 
 extern	int	getopt(
 		_arx(int,	argc)
@@ -268,13 +298,18 @@ extern	int	getopt(
 		_ar1(char *,	opts));
 extern	char *	optarg;
 extern	int	optind;
+#endif
+
+#if	defined(__hpux)
+#define	ltostr	td_ltostr
+#endif
 
 #ifdef	unix
 #ifdef	apollo_sr10
 extern	uid_t	getuid(), geteuid();
 extern	gid_t	getgid(), getegid();
 #else
-#if	!defined(NBBY)
+#if	!defined(NBBY) && !defined(__hpux)
 typedef	int	uid_t;
 typedef	int	gid_t;
 #endif	/* SunOs 3.5 (fixed in SunOs 4.0) */
@@ -422,16 +457,19 @@ extern	int	toupper(int);
  * define macros so we can use the bsd4.x names:                              *
  ******************************************************************************/
 #ifdef	DIR_PTYPES
+
 #ifdef	vms
 #include	"unixdir.h"	/* get this from PORTUNIX */
 #else	/* unix */
-#ifdef	sun			/* SunOs 4.1 */
+
+#if	defined(apollo)
+#include	<sys/dir.h>
+#else				/* SunOS, HPUX */
 #include	<dirent.h>
 #define	direct	dirent
-#else				/* apollo & other old bsd's */
-#include	<sys/dir.h>
 #endif
-#ifdef	SYSTEM5
+
+#ifdef	OLD_SYSTEM5		/* Sys5.4 has readdir */
 #define	DIR	FILE
 #define	opendir(n)	fopen(n,"r")
 #define	readdir(fp)	(fread(&dbfr, sizeof(dbfr), 1, fp)\
@@ -439,9 +477,12 @@ extern	int	toupper(int);
 				: (struct direct *)0)
 #define	closedir(fp)	FCLOSE(fp)
 static	struct	direct	dbfr;
-#endif	/* SYSTEM5 */
+#endif	/* OLD_SYSTEM5 */
+
 #endif	/* vms/unix */
+
 #define	DIRENT	struct	direct
+
 #endif	/* DIR_PTYPES */
 
 /******************************************************************************
@@ -451,12 +492,14 @@ static	struct	direct	dbfr;
 
 #include <pwd.h>
 
+#if	!defined(__hpux)
 extern	struct passwd *	getpwnam(_ar1(char *,name));
 extern	struct passwd *	getpwuid(_ar1(int,uid));
 
 extern	struct passwd *	getpwent(_ar0);
 extern	V_OR_I		setpwent(_ar0);
 extern	V_OR_I		endpwent(_ar0);
+#endif
 
 #endif	/* PWD_PTYPES */
 
@@ -513,9 +556,11 @@ extern	V_OR_I		endpwent(_ar0);
 #define	strchr	index
 #define	strrchr	rindex
 #endif	/* SYSTEM5 */
+#if	!defined(__hpux)
 extern	char *	strchr (_arx(char *,s) _ar1(int,c));
 extern	char *	strrchr(_arx(char *,s) _ar1(int,c));
 extern	char *	strtok (_arx(char *,s) _ar1(char *,t));
+#endif
 #endif
 #endif	/* STR_PTYPES */
 

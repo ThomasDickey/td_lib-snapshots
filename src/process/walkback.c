@@ -1,11 +1,12 @@
-#ifndef	lint
-static	char	Id[] = "$Id: walkback.c,v 12.2 1993/09/27 17:06:55 dickey Exp $";
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: walkback.c,v 12.3 1993/10/29 17:35:23 dickey Exp $";
 #endif
 
 /*
  * Author:	T.E.Dickey
  * Created:	18 Nov 1992, from 'doalloc.c'
  * Modified:
+ *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		20 Nov 1992, added test-driver.
  *

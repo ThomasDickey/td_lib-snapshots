@@ -1,5 +1,5 @@
-#ifndef	lint
-static	char	*Id = "$Id: acc_mode.c,v 12.0 1992/02/17 15:27:44 ste_cm Rel $";
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: acc_mode.c,v 12.1 1993/10/29 17:35:27 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	*Id = "$Id: acc_mode.c,v 12.0 1992/02/17 15:27:44 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	07 Feb 1992
  * Modified:
+ *		29 Oct 1993, ifdef-ident
  *
  * Function:	converts the mode-argument to 'access()' into a printable
  *		string.

@@ -1,12 +1,9 @@
-#ifndef	lint
-static	char	Id[] = "$Id: failed.c,v 12.1 1993/09/21 18:54:04 dickey Exp $";
-#endif
-
 /*
  * Title:	failed.c (generic exit from program)
  * Author:	T.E.Dickey
  * Created:	27 Apr 1989
  * Modified:
+ *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, converted to ANSI
  *
@@ -20,6 +17,8 @@ static	char	Id[] = "$Id: failed.c,v 12.1 1993/09/21 18:54:04 dickey Exp $";
  */
 
 #include "ptypes.h"
+
+MODULE_ID("$Id: failed.c,v 12.3 1993/10/29 17:35:26 tom Exp $")
 
 void	failed(
 	_AR1(char *,	s))

@@ -1,5 +1,5 @@
-#ifndef	lint
-static	char	Id[] = "$Id: sccslast.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: sccslast.c,v 12.2 1993/10/29 17:35:24 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: sccslast.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	20 Oct 1986
  * Modified:
+ *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		18 Oct 1991, look only for tip-version, not for "last" version
  *		03 Oct 1991, conversion to ANSI

@@ -1,11 +1,9 @@
-#ifndef	lint
-static	char	*Id = "$Id: veclen.c,v 12.0 1991/09/17 09:03:32 ste_cm Rel $";
-#endif
-
 /*
  * Title:	veclen.c (vector-length)
  * Author:	T.E.Dickey
  * Created:	16 Sep 1991
+ * Modified:
+ *		29 Oct 1993, ifdef-ident
  *
  * Function:	Computes the length of a list of vectors (e.g., pointers to
  *		strings) which is terminated by a null-pointer.
@@ -14,6 +12,8 @@ static	char	*Id = "$Id: veclen.c,v 12.0 1991/09/17 09:03:32 ste_cm Rel $";
  */
 
 #include <ptypes.h>
+
+MODULE_ID("$Id: veclen.c,v 12.2 1993/10/29 17:35:23 tom Exp $")
 
 int
 veclen(

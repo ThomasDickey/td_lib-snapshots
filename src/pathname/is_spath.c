@@ -1,5 +1,5 @@
-#ifndef	lint
-static	char	Id[] = "$Id: is_spath.c,v 12.0 1992/02/17 14:47:27 ste_cm Rel $";
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: is_spath.c,v 12.1 1993/10/29 17:35:25 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: is_spath.c,v 12.0 1992/02/17 14:47:27 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	17 Feb 1992
  * Modified:
+ *		29 Oct 1993, ifdef-ident
  *
  * Function:	Tests a pathname to see if it is a sub-path of the other.
  *

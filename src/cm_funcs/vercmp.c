@@ -1,5 +1,5 @@
-#ifndef	lint
-static	char	Id[] = "$Id: vercmp.c,v 12.2 1993/09/21 19:43:23 dickey Exp $";
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: vercmp.c,v 12.4 1993/10/29 20:19:47 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: vercmp.c,v 12.2 1993/09/21 19:43:23 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	14 Dec 1988 (from 'dotcmp()')
  * Modified:
+ *		29 Oct 1993, ifdef-ident; port to HP/UX.
  *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, converted to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
@@ -84,7 +85,7 @@ QSORT_FUNC(compare)
 }
 
 #define	EQL(c)		((c > 0) ? ">" : ((c < 0) ? "<" : "="))
-#if	defined(__STDCPP__) || defined(__GNUC__)
+#if	ANSI_CPP
 #define	DO_TEST(a,b)	j = vercmp(#a, #b,  wild);\
 			PRINTF("%s\t%s %s \t(%d)\n", #a,  EQL(j), #b,  j)
 #else

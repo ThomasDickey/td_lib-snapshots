@@ -1,4 +1,4 @@
-/* $Id: td_qsort.h,v 12.0 1993/04/29 13:38:24 ste_cm Rel $ */
+/* $Id: td_qsort.h,v 12.1 1993/10/29 15:55:38 dickey Exp $ */
 #ifndef	_CM_QSORT_H
 #define	_CM_QSORT_H
 
@@ -29,9 +29,11 @@
 
 #if	defined(__STDC__) || defined(vms)
 #define	QSORT_CAST(s,d)	register QSORT_DST d = (QSORT_DST) s;
-#define	QSORT_FUNC_ARGS(p1,p2)	_ARX(V_OR_P,   q1) _AR1(V_OR_P,   q2)
+#define QSORT_dst const V_OR_P
+#define	QSORT_FUNC_ARGS(p1,p2)	_ARX(QSORT_dst,q1) _AR1(QSORT_dst,q2)
 #else
 #define	QSORT_CAST(s,d)
+#define QSORT_dst QSORT_DST
 #define	QSORT_FUNC_ARGS(p1,p2)	_ARX(QSORT_DST,p1) _AR1(QSORT_DST,p2)
 #endif
 
@@ -52,8 +54,8 @@ extern	V_OR_I	qsort(
 #endif
 
 extern	int	cmp_qsort(
-		_arx(V_OR_P,	a)
-		_ar1(V_OR_P,	b)
+		_arx(QSORT_dst,	a)
+		_ar1(QSORT_dst,	b)
 		)
 		_dcl(QSORT_DST,	a)
 		_dcl(QSORT_DST,	b)

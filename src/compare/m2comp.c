@@ -1,12 +1,9 @@
-#ifndef	lint
-static	char	Id[] = "$Id: m2comp.c,v 12.2 1993/09/23 13:34:33 dickey Exp $";
-#endif
-
 /*
  * Title:	m2comp.c
  * Author:	T.E.Dickey (from MDIFF program)
  * Created:	05 Jul 1989
  * Modified:
+ *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		13 Nov 1992, to chunk the allocations of array cells, reducing
  *			     overhead.  Corrected logic that freed cells (had
@@ -21,6 +18,8 @@ static	char	Id[] = "$Id: m2comp.c,v 12.2 1993/09/23 13:34:33 dickey Exp $";
 #define	STR_PTYPES
 #define	SCOMP	m2comp			/* name of this module */
 #include "td_scomp.h"
+
+MODULE_ID("$Id: m2comp.c,v 12.4 1993/10/29 17:35:25 tom Exp $")
 
 #define	INSERT	1
 #define	DELETE	2

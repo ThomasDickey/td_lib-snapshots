@@ -1,12 +1,9 @@
-#ifndef	lint
-static	char	Id[] = "$Id: rcs_dir.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
-#endif
-
 /*
  * Title:	rcs_dir.c (returns name of RCS-directory)
  * Author:	T.E.Dickey
  * Created:	02 Sep 1988
  * Modified:
+ *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, converted to ANSI
  *		
@@ -20,6 +17,8 @@ static	char	Id[] = "$Id: rcs_dir.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
 
 #include "ptypes.h"
 #include "rcsdefs.h"
+
+MODULE_ID("$Id: rcs_dir.c,v 12.3 1993/10/29 17:35:25 tom Exp $")
 
 char *
 rcs_dir(_AR0)
