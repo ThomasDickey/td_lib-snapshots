@@ -1,3 +1,16 @@
+1995-07-03  dickey@clark.net
+
+	* src/curses/resizwin.c:
+	refresh curscr to force screen update in ncurses
+
+	* src/curses/wresize.c: corrected ncurses' first/last change
+
+1995-07-01  dickey@clark.net
+
+	* src/curses/resizwin.c: I don't seem to need savewin with ncurses
+
+	* src/curses/wresize.c: made this "work" with ncurses 1.9.3
+
 1995-06-06  dickey@clark.net
 
 	* aclocal.m4: corrected quoting for 'tr' command
