@@ -1,4 +1,4 @@
-# $Id: Makefile,v 9.4 1991/10/18 12:29:12 dickey Exp $
+# $Id: Makefile,v 10.0 1991/10/21 09:17:30 ste_cm Rel $
 # Top-level makefile for CM_TOOLS common library
 
 ####### (Development) ##########################################################
@@ -41,6 +41,8 @@ lint.out::	$(MFILES)
 	cd interface;	$(MAKE) $@
 	cd src;		$(MAKE) $@
 	cd test;	$(MAKE) $@
+
+sources::	$(SOURCES)
 
 clobber\
 destroy::
