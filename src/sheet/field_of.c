@@ -1,11 +1,13 @@
 #ifndef	lint
-static	char	*Id = "$Id: field_of.c,v 10.6 1992/02/04 08:03:44 dickey Exp $";
+static	char	*Id = "$Id: field_of.c,v 10.7 1992/06/24 07:54:16 dickey Exp $";
 #endif
 
 /*
  * Title:	field_of.c
  * Author:	T.E.Dickey
  * Created:	03 Feb 1992
+ * Modified:
+ *		24 Jun 1992, port to SunOs (no 'memmove()')
  *
  * Function:	insert/extract field in comma-separated list a la spreadsheet
  *
@@ -23,6 +25,35 @@ static	int	opt_Blanks;
 
 #define	COMMA		','
 #define	isquote(c)	(c == '"' || c == '\'')
+
+#ifdef	sun
+static
+char *	memmove(
+	_ARX(char *,	s1)
+	_ARX(char *,	s2)
+	_AR1(size_t,	n)
+		)
+	_DCL(char *,	s1)
+	_DCL(char *,	s2)
+	_DCL(size_t,	n)
+{
+	if (n != 0) {
+		if ((s1+n > s2) && (s2+n > s1)) {
+			static	char	*buffer;
+			static	unsigned length;
+			register int	j;
+			if (length < n)
+				buffer = doalloc(buffer, length = n);
+			for (j = 0; j < n; j++)
+				buffer[j] = s2[j];
+			s2 = buffer;
+		}
+		while (n-- != 0)
+			s1[n] = s2[n];
+	}
+	return s1;
+}
+#endif
 
 /*
  * Looks to see if we must quote a field.
