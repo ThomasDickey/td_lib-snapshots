@@ -1,3 +1,33 @@
+1989-08-28  dickey@software.org
+
+	* support/linkopts.opt: RCS_BASE
+
+1989-08-28  ste_cm@software.org
+
+	* support/linkopts.opt:
+	BASELINE Fri Oct  6 15:23:19 EDT 1989 -- support:ada_pits_000(rel3)
+
+	* support/linkopts.opt:
+	BASELINE Mon Oct 21 13:09:39 1991 -- adapt to CM_TOOLS #10
+
+	* support/linkopts.opt:
+	BASELINE Thu Jul 16 16:14:02 1992 -- CM_TOOLS #11
+
+	* support/linkopts.opt: BASELINE Tue Aug 14 16:27:44 1990
+
+	* support/linkopts.opt:
+	BASELINE Tue Jun 11 16:44:53 1991 -- apollo sr10.3
+
+1989-08-28  dickey@software.org
+
+	* support/td_lib.mms:
+	changed LIB_ARGS/LIB_DEPS around so I can link with shareable C libs
+
+1989-08-28  ste_cm@software.org
+
+	* support/td_lib.mms:
+	BASELINE Fri Oct  6 15:23:19 EDT 1989 -- support:ada_pits_000(rel3)
+
 1989-08-25  dickey@software.org
 
 	* src/Makefile: added ptypes.h dependency to which.o
