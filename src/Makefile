@@ -1,10 +1,16 @@
-# $Id: Makefile,v 4.6 1989/10/24 11:48:43 dickey Exp $
+# $Id: Makefile,v 5.0 1989/10/26 08:54:17 ste_cm Rel $
 # MAKE-file for miscellaneous library routines
 #
 # $Log: Makefile,v $
-# Revision 4.6  1989/10/24 11:48:43  dickey
-# added module 'istextfile.c'
+# Revision 5.0  1989/10/26 08:54:17  ste_cm
+# BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
 #
+#	Revision 4.7  89/10/26  08:54:17  dickey
+#	added TRACK_WD module
+#	
+#	Revision 4.6  89/10/24  11:48:43  dickey
+#	added module 'istextfile.c'
+#	
 #	Revision 4.5  89/10/04  12:13:16  dickey
 #	made "ptypes.h" and "common.h" dependencies for all objects (most
 #	needed it anyway).
@@ -114,6 +120,7 @@ CSRC	=\
 	strucpy.c\
 	s2gid.c\
 	s2uid.c\
+	track_wd.c\
 	trimpath.c\
 	txtalloc.c\
 	uid2s.c\
@@ -207,6 +214,7 @@ OBJS	=\
 	strucpy.o\
 	s2gid.o\
 	s2uid.o\
+	track_wd.o\
 	trimpath.o\
 	txtalloc.o\
 	uid2s.o\

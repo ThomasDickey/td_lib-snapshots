@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 4.3 1989/10/03 13:15:14 dickey Exp $ */
+/* $Id: ptypes.h,v 5.0 1989/10/26 11:12:35 ste_cm Rel $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -126,8 +126,13 @@ extern	V_OR_I	rewind();
 #endif
 
 #ifdef	unix
+#if	defined(apollo) && defined(__STDC__)
 extern	uid_t	getuid(), geteuid();
 extern	gid_t	getgid(), getegid();
+#else
+typedef	int	uid_t;
+typedef	int	gid_t;
+#endif
 #endif	unix
 
 /*

@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19891024
+MANIFEST for td_lib, version t19891026
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 Makefile                        top-level makefile for TD_LIB
@@ -87,6 +87,7 @@ src/pathname/pathhead.c         obtain parent directory-name from path
 src/pathname/pathleaf.c         obtain basename (leaf) from pathname
 src/pathname/relpath.c          converts absolute-pathname to relative
 src/pathname/sameleaf.c         compare ends of pathnames
+src/pathname/track_wd.c         tracks working directory for baseline, rcsput, rcsget utilities
 src/pathname/trimpath.c         trim excess punctuation from a standard unix-style pathname (cf: abspath)
 src/pathname/trnstree.c         translate (producing new output-files) tree-of-files
 src/pathname/walktree.c         walk directory-tree, performing function
