@@ -1,3 +1,10 @@
+1993-11-19  dickey@software.org
+
+	* src/curses/cmdch.c:
+	added mouse-support, including button press/release and double-clicking
+
+	* include/td_curse.h: definitions for mouse-support
+
 1993-11-18  dickey@software.org
 
 	* src/curses/rawterm.c:

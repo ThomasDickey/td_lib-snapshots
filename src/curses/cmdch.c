@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: cmdch.c,v 12.3 1993/11/05 17:56:02 dickey Exp $";
+static	char	Id[] = "$Id: cmdch.c,v 12.4 1993/11/19 21:07:56 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: cmdch.c,v 12.3 1993/11/05 17:56:02 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	01 Dec 1987 (broke out of 'ded.c')
  * Modified:
+ *		18 Nov 1993, added xt_mouse support.
  *		05 Nov 1993, absorb "cmdch.h" into "td_curse.h"
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
@@ -48,6 +49,33 @@ static	char	Id[] = "$Id: cmdch.c,v 12.3 1993/11/05 17:56:02 dickey Exp $";
 
 #ifdef	SYSTEM5
 #undef	HAS_CURSOR	/* patch: want to use 'keypad()' */
+#endif
+
+#ifndef	NO_XTERM_MOUSE
+#include <sys/time.h>
+
+#define XtermPos() (getch() - 041)	/* 0..COLS-1 or 0..LINES-1 */
+
+static	int	double_click (_AR0)
+{
+	static	struct	timeval	last_time;
+	auto	struct	timeval	this_time;
+	auto	struct	timezone this_zone;
+	register int	event = FALSE;
+	register long	diff;
+
+	(void) gettimeofday(&this_time, this_zone);
+
+	diff = this_time.tv_sec - last_time.tv_sec;
+	if (diff <= 1) {
+		diff *= 1000000L;
+		diff += (this_time.tv_usec - last_time.tv_usec);
+		event = diff < 1000000L;
+	}
+
+	last_time = this_time;
+	return event;
+}
 #endif
 
 int	cmdch(
@@ -106,6 +134,31 @@ int	cmdch(
 			else if	(EQL(KL))	c = ARO_LEFT;
 			else if	(EQL(KR))	c = ARO_RIGHT;
 			else if (j > 1) {	/* extended escapes */
+#ifndef	NO_XTERM_MOUSE
+				/* patch: should test for xterm_mouse */
+				if (!strncmp(i_blk, "\033[M", 3)) {
+					auto	int	the_button;
+					static	int	last_row = -1;
+					static	int	last_col = -1;
+
+					c = ARO_MOUSE;
+					the_button   = (getch() & 3) + 1;
+					xt_mouse.col = XtermPos();
+					xt_mouse.row = XtermPos();
+					if (the_button > 3) {
+						xt_mouse.released = TRUE;
+					} else {
+						xt_mouse.pressed  = TRUE;
+						xt_mouse.released = FALSE;
+						xt_mouse.button   = the_button;
+						xt_mouse.dbl_clik = double_click()
+							&& (last_row == xt_mouse.row)
+							&& (last_col == xt_mouse.col);
+						last_row = xt_mouse.row;
+						last_col = xt_mouse.col;
+					}
+				} else
+#endif
 				if (ansi) {
 					j--;
 					if_C('A')	c = ARO_UP;
