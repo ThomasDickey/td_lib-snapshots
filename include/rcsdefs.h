@@ -1,4 +1,4 @@
-/* $Id: rcsdefs.h,v 12.7 2002/07/05 11:14:36 tom Exp $ */
+/* $Id: rcsdefs.h,v 12.8 2003/04/26 00:13:58 tom Exp $ */
 
 #ifndef	RCSDEFS_H
 #define	RCSDEFS_H
@@ -299,5 +299,23 @@ typedef	void	(*RcsparseStr)(
 			_dcl(char *,	name)
 			_dcl(int,	temp)
 			_ret
+
+#ifdef CVS_PATH
+	/* cvslast.c -------------------------------------------------- */
+	void	cvslast(
+			_arx(char *,	wd)
+			_arx(char *,	n)
+			_arx(char **,	v_)
+			_arx(time_t *,	t_)
+			_ar1(char **,	l_)
+			)
+			_dcl(char *,	wd)
+			_dcl(char *,	n)
+			_dcl(char **,	v_)
+			_dcl(time_t *,	t_)
+			_dcl(char **,	l_)
+			_nul
+
+#endif
 
 #endif	/* RCSDEFS_H */

@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	03 Aug 1994, from 'dedscan.c'
  * Modified:
+ *		25 Apr 2003, add cvslast().
  *		30 May 1998, compile with g++
  *		15 Feb 1998, guard against use of non-configured modules.
  *
@@ -15,7 +16,7 @@
 #include	"rcsdefs.h"
 #include	"sccsdefs.h"
 
-MODULE_ID("$Id: lastrev.c,v 12.8 2000/12/02 18:05:08 tom Exp $")
+MODULE_ID("$Id: lastrev.c,v 12.9 2003/04/26 10:47:26 tom Exp $")
 
 #if defined(CMV_PATH) && !(defined(RCS_PATH) || defined(SCCS_PATH))
 #undef CMV_PATH
@@ -26,7 +27,7 @@ MODULE_ID("$Id: lastrev.c,v 12.8 2000/12/02 18:05:08 tom Exp $")
  * via ".dedrc"
  */
 #if	defined(RCS_PATH) || defined(SCCS_PATH)
-typedef	enum TrySCCS { DontTry, TrySccs, TryRcs, TryCmVision } TRY;
+typedef	enum TrySCCS { DontTry, TrySccs, TryRcs, TryCvs, TryCmVision } TRY;
 
 #define MAX_ORDER 10
 
@@ -49,6 +50,9 @@ static	TRY	try_order(
 #ifdef SCCS_PATH
 			(void)strcat(temp, ",sccs");
 #endif
+#ifdef CVS_PATH
+			(void)strcat(temp, ",cvs");
+#endif
 		}
 		while ((s = strtok(env, ",")) != 0) {
 			if (!strcmp(s, "rcs")) {
@@ -57,6 +61,8 @@ static	TRY	try_order(
 				vec_order[num_order++] = TrySccs;
 			} else if (!strcmp(s, "cmv")) {
 				vec_order[num_order++] = TryCmVision;
+			} else if (!strcmp(s, "cvs")) {
+				vec_order[num_order++] = TryCvs;
 			}
 			env = 0;
 			if (num_order + 1 >= MAX_ORDER)
@@ -101,6 +107,11 @@ void	lastrev(
 #ifdef	CMV_PATH
 		if (tried == TryCmVision) {
 			LAST(cmv_last);
+		}
+#endif
+#ifdef	CVS_PATH
+		if (tried == TryCvs) {
+			LAST(cvslast);
 		}
 #endif
 		if (*time_ptr != 0

@@ -1,3 +1,12 @@
+2003-04-26  dickey@invisible-island.net
+
+	* src/cm_funcs/cvslast.c:
+	fix timezone of timestamps (it looked harder than it really was)
+
+	* src/cm_funcs/cvslast.c: RCS_BASE
+
+	* src/cm_funcs/lastrev.c: add cvslast
+
 2003-04-25  dickey@invisible-island.net
 
 	* src/cm_funcs/modules: add cvslast
