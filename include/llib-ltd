@@ -1,4 +1,4 @@
-/* @(#)llib-ltd	1.15 88/05/19 08:24:39 */
+/* @(#)llib-ltd	1.17 88/05/21 12:06:32 */
 /*LINTLIBRARY*/
 
 #include	<curses.h>
@@ -12,6 +12,9 @@
 /* abspath.c ---------------------------------------------------------- */
 	abspath(path) char *path; { }
 
+/* adj2est.c ---------------------------------------------------------- */
+time_t	adj2est(bug1) { return(0); }
+
 /* beep.c ------------------------------------------------------------- */
 	beep() { }
 
@@ -23,6 +26,9 @@
 
 /* cmdch.c ------------------------------------------------------------ */
 int	cmdch(cntp) int *cntp; { return(0); }
+
+/* cutoff.c ----------------------------------------------------------- */
+time_t	cutoff(argc, argv) char *argv[]; { return(0); }
 
 /* denode.c ----------------------------------------------------------- */
 char	*denode (path, node, opt) char *path, *node; int *opt; { return(0); }
@@ -48,6 +54,9 @@ int	dotname (path) char *path; { return(0); }
 #undef	erasechar
 #endif	erasechar
 int	erasechar() { return(0); }
+
+/* execute.c ---------------------------------------------------------- */
+int	execute(verb, args) char *verb, *args; { return(0); }
 
 /* flushall.c --------------------------------------------------------- */
 	flushall(fd) { }
@@ -105,6 +114,12 @@ int	s2uid(s) char	*s; { return (0); }
 
 /* sccszone.c --------------------------------------------------------- */
 long	sccszone() { return(0); }
+
+/* set2est.c ---------------------------------------------------------- */
+	set2est() { }
+
+/* setmtime.c --------------------------------------------------------- */
+int	setmtime(name, mtime) char *name; time_t mtime; { return(0); }
 
 /* stralloc.c --------------------------------------------------------- */
 char	*stralloc(string) char *string; { return(0); }
