@@ -1,4 +1,4 @@
-/* @(#)llib-ltd	1.52 89/03/15 13:42:18 */
+/* $Header: /users/source/archives/td_lib.vcs/include/RCS/llib-ltd,v 2.0 1989/03/16 08:44:58 ste_cm Exp $ */
 /*LINTLIBRARY*/
 
 #define	CUR_PTYPES
@@ -117,6 +117,9 @@ int	padedit(name, readonly, editor) char *name, *editor; { return(0); }
 
 /* pathcat.c ---------------------------------------------------------- */
 char *	pathcat(dst, p, n) char *dst, *p, *n; { return(0); }
+
+/* pathcmp.c ---------------------------------------------------------- */
+int	pathcmp(p1, p2) char *p1, *p2; { return(0); }
 
 /* pathhead.c --------------------------------------------------------- */
 char *	pathhead(path, s) char *path; struct stat *s; { return(0); }
