@@ -1,12 +1,22 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)rawgets.c	1.8 88/08/17 09:43:14";
+static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/curses/RCS/rawgets.c,v 3.0 1989/01/19 09:21:22 ste_cm Rel $";
 #endif	lint
 
 /*
  * Author:	T.E.Dickey
  * Title:	rawgets.c (raw-mode 'gets()')
  * Created:	29 Sep 1987 (from 'fl.c')
- * Modified:
+ * $Log: rawgets.c,v $
+ * Revision 3.0  1989/01/19 09:21:22  ste_cm
+ * BASELINE Mon Jun 19 13:27:01 EDT 1989
+ *
+ *		Revision 2.0  89/01/19  09:21:22  ste_cm
+ *		BASELINE Thu Apr  6 09:45:13 EDT 1989
+ *		
+ *		Revision 1.10  89/01/19  09:21:22  dickey
+ *		sccs2rcs keywords
+ *		
+ *		19 Jan 1989, move to end of string when exiting.
  *		28 Apr 1988, use CTL/B, CTL/F for inline movement
  *		27 Apr 1988, interfaced to 'cmdch()'.  General cleanup to fix
  *			     bugs in wraparound.
@@ -211,6 +221,7 @@ int	ec = erasechar(),
 			refresh();
 		c = cmdch(Imode ? (int *)0 : &count);
 		if (c == '\n' || c == '\r') {
+			(void)move_end(tag,CTL(F));
 			if (newline) addch('\n');
 			break;
 		}
