@@ -1,4 +1,4 @@
-/* $Id: td_regex.h,v 12.8 1994/08/01 23:00:13 tom Exp $ */
+/* $Id: td_regex.h,v 12.9 1994/11/04 21:17:42 tom Exp $ */
 
 /*
  * SYSTEM5/BSD4.x differences between native regular-expression handling:
@@ -41,8 +41,8 @@
 #  endif
 #  define REGEX_T char *
 #  define OLD_REGEX(expr)		if (expr) free(expr)
-#  define NEW_REGEX(expr,pattern)	((expr = regcmp(pattern,0)) != 0)
-#  define GOT_REGEX(expr,string)	(regex(expr, string, 0) != 0)
+#  define NEW_REGEX(expr,pattern)	((expr = regcmp(pattern, (char *)0)) != 0)
+#  define GOT_REGEX(expr,string)	(regex(expr, string,  (char *)0) != 0)
 #endif
 
 #if HAVE_RE_COMP_FUNCS && !defined(REGEX_T) /* probably BSD4.x */
