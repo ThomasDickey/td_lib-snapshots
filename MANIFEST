@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19941106
+MANIFEST for td_lib, version t19941112
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         restrictions on copying/using this software
@@ -178,6 +178,7 @@ src/process/bldarg.c            build argc+argv array from string
 src/process/catarg.c            concatenate argument (cf: bldarg)
 src/process/catchall.c          catch all signals
 src/process/descrip.mms         mms file for td_lib/src/process
+src/process/egress.c            test like 'access()' for effective user
 src/process/execute.c           portable 'system()' call
 src/process/failed.c            fatal-error exit, normally in main-program
 src/process/for_admn.c          mirror of 'for_user()', runs a function as the effective user
@@ -185,6 +186,7 @@ src/process/for_user.c          carry out function for set-uid user
 src/process/gethome.c           get $HOME path
 src/process/getopt.c            'getopt()', for systems that don't have it
 src/process/getuser.c           get user name
+src/process/in_group.c          test if a group is in the user's access-group list
 src/process/interact.c          tests if a process is running interactively by attempting to open /dev/tty
 src/process/makeargv.c          make quick (nonstandard) argv-list list from a string
 src/process/revert.c            reset/disable setuid mode

@@ -1,4 +1,4 @@
-# $Id: descrip.mms,v 12.2 1994/07/02 15:37:07 tom Exp $
+# $Id: descrip.mms,v 12.4 1994/11/12 22:37:59 tom Exp $
 # MMS-file for miscellaneous library routines	
 
 ####### (Development) ##########################################################
@@ -17,10 +17,12 @@ LIBRARYMODULES = \
 	WALKBACK
 
 UNUSED_MODULES = -
+	EGRESS,			# unix process -
 	FOR_ADMN, 		# only for setuid programs -
 	FOR_USER, 		# only for setuid programs -
 	GETHOME, 		# unix-passwd -
 	GETUSER, 		# unix-passwd -
+	IN_GROUP,		# unix process -
 	INTERACT,		# unix filesystem -
 	REVERT,			# unix setuid -
 	SAVESUID,		# unix -
@@ -38,6 +40,7 @@ C_SRC	= \
 	for_user.c \
 	gethome.c \
 	getuser.c \
+	in_group.c \
 	interact.c \
 	makeargv.c \
 	revert.c \

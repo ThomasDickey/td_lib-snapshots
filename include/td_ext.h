@@ -1,4 +1,4 @@
-/* $Id: td_ext.h,v 12.7 1994/07/26 13:53:52 tom Exp $ */
+/* $Id: td_ext.h,v 12.8 1994/11/12 21:50:26 tom Exp $ */
 
 #ifndef	TD_EXT_H
 #define	TD_EXT_H
@@ -173,6 +173,10 @@ extern	V_OR_I         endgrent ARGS((void));
 #endif /* HAVE_ENDGRENT */
 
 #endif	/* HAVE_GRP_H */
+
+#if HAVE_GETGROUPS && NEED_GETGROUPS
+extern	int getgroups ARGS((int size, gid_t *list));
+#endif /* HAVE_GETGROUPS */
 
 #endif	/* GRP_PTYPES */
 
