@@ -1,3 +1,19 @@
+2000-01-24  dickey@clark.net
+
+	* aclocal.m4: resync with my-autoconf
+
+	* configure.in:
+	don't need LIB_PREFIX variable anymore (it's inside CF_LIB_PREFIX)
+
+	* configure.in:
+	add more fallbacks for DEFAULT_EDITOR and DEFAULT_BROWSE
+
+	* include/ptypes.h:
+	add fallback for O_BINARY (for OS/2 EMX and Cygwin ports)
+	add #undef for _DOTS (Cygwin).
+	revise DIR_PTYPES as per autoconf advice, making dirent.h the preferred one,
+	and adding NAMLEN() macro.
+
 2000-01-17  dickey@clark.net
 
 	* src/td_defns.mk:

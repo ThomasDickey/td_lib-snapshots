@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 12.42 1997/09/11 15:22:33 tom Exp $ */
+/* $Id: ptypes.h,v 12.43 2000/01/24 11:33:50 tom Exp $ */
 
 #ifndef	PTYPES_H
 #define	PTYPES_H
@@ -205,6 +205,8 @@ typedef	short	ino_t;
 /*
  * Define special macros to represent the "..." ellipsis
  */
+#undef _DOTS		/* similar usage in Cygwin */
+
 #if	PROTOTYPES
 #define	_DOTS	...
 #define	_CDOTS	,...
@@ -391,37 +393,41 @@ typedef	short	ino_t;
  ******************************************************************************/
 #ifdef	DIR_PTYPES
 
-#ifdef	vms
-#  include	<unixdir.h>	/* get this from PORTUNIX */
+#if defined(HAVE_DIRENT_H)
+#  include	<dirent.h>
+#  define NAMLEN(dirent) strlen((dirent)->d_name)
 #else
-#  if defined(MSDOS)
-#    include <dir.h>
-#  else	/* unix */
-#    if defined(HAVE_DIRENT_H)
-#      include	<dirent.h>
-#      define	direct	dirent	/* so <sys/dir.h> looks like <dirent.h> */
-#      define   d_namlen d_reclen
+#  define dirent direct
+#  define NAMLEN(dirent) ((dirent)->d_namlen)
+#  if defined(HAVE_SYS_NDIR_H)
+#    include	<sys/ndir.h>
+#    if defined(HAVE_SYS_DIR_H)
+#      include	<sys/dir.h>
 #    else
-#      if defined(HAVE_SYS_DIR_H)
-#        include	<sys/dir.h>
+#      if defined(HAVE_NDIR_H)
+#        include	<ndir.h>
 #      else
-#        if defined(HAVE_SYS_NDIR_H)
-#          include	<sys/ndir.h>
-#        else			/* ...must be an antique unix clone */
-#          define	DIR	FILE
-#          define	opendir(n)	fopen(n,"r")
-#          define	readdir(fp)	(fread(&dbfr, sizeof(dbfr), 1, fp)\
+#        if defined(vms) || defined(VMS)
+#          include <unixdir.h>	/* get this from PORTUNIX */
+#        else
+#          if defined(MSDOS)
+#            include <dir.h>
+#          else			/* ...must be an antique unix clone */
+#            define	DIR	FILE
+#            define	opendir(n)	fopen(n,"r")
+#            define	readdir(fp)	(fread(&dbfr, sizeof(dbfr), 1, fp)\
 						? &dbfr\
 						: (struct direct *)0)
-#          define	closedir(fp)	FCLOSE(fp)
+#            define	closedir(fp)	FCLOSE(fp)
 static	struct	direct	dbfr;
-#       endif		/* SYSNDIR/... */
-#     endif		/* SYSDIR/... */
-#   endif		/* DIRENT/... */
-# endif			/* MSDOS/unix */
-#endif			/* vms/MSDOS/unix */
+#          endif		/* MSDOS/unix */
+#        endif			/* vms/MSDOS/unix */
+#      endif			/* NDIR/... */
+#    endif			/* SYS_DIR/... */
+#  endif			/* SYS_NDIR/... */
+#endif				/* DIRENT/... */
 
-#define	DirentT struct	direct
+#define	DirentT struct	dirent
 
 #endif	/* DIR_PTYPES */
 
@@ -461,6 +467,10 @@ extern int sys_nerr;
 #  if HAVE_SYS_FCNTL_H
 #    include <sys/fcntl.h>
 #  endif
+#endif
+
+#ifndef O_BINARY
+#define O_BINARY 0	/* nonstandard, used in OS/2 EMX and Cygwin */
 #endif
 
 #endif	/* OPN_PTYPES */

@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Id: aclocal.m4,v 12.123 2000/01/09 20:06:45 tom Exp $
+dnl $Id: aclocal.m4,v 12.124 2000/01/24 11:39:14 tom Exp $
 dnl vi:set ts=4:
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "CF_" to "AC_"
@@ -155,27 +155,6 @@ ifelse($3,,[    :]dnl
 ])dnl
   ])])dnl
 dnl ---------------------------------------------------------------------------
-dnl Test if curses defines 'cchar_t' (usually a 'long' type for SysV curses).
-AC_DEFUN([CF_CURSES_CCHAR_T],
-[
-AC_CACHE_CHECK(for cchar_t typedef,cf_cv_cchar_t_decl,[
-	AC_TRY_COMPILE([#include <curses.h>],
-		[cchar_t foo],
-		[cf_cv_cchar_t_decl=yes],
-		[cf_cv_cchar_t_decl=no])])
-if test $cf_cv_cchar_t_decl = yes ; then
-	AC_DEFINE(HAVE_TYPE_CCHAR_T)
-	AC_CACHE_CHECK(if cchar_t is scalar or struct,cf_cv_cchar_t_type,[
-		AC_TRY_COMPILE([#include <curses.h>],
-			[cchar_t foo; long x = foo],
-			[cf_cv_cchar_t_type=scalar],
-			[cf_cv_cchar_t_type=struct])])
-	if test $cf_cv_cchar_t_type = scalar ; then
-		AC_DEFINE(TYPE_CCHAR_T_IS_SCALAR)
-	fi
-fi
-])dnl
-dnl ---------------------------------------------------------------------------
 dnl Check if we're accidentally using a cache from a different machine.
 dnl Derive the system name, as a check for reusing the autoconf cache.
 dnl
@@ -217,7 +196,7 @@ AC_DEFUN([CF_CHECK_ERRNO],
 AC_MSG_CHECKING(if external $1 is declared)
 AC_CACHE_VAL(cf_cv_dcl_$1,[
     AC_TRY_COMPILE([
-#if HAVE_STDLIB_H
+#ifdef HAVE_STDLIB_H
 #include <stdlib.h>
 #endif
 #include <stdio.h>
@@ -282,6 +261,27 @@ if	test $cf_cv_REGEX_H = no && \
 	test $cf_cv_REGEXPR_H = no && \
 	test $cf_cv_RE_COMP_func = no ; then
 	CF_REGCMP_FUNCS
+fi
+])dnl
+dnl ---------------------------------------------------------------------------
+dnl Test if curses defines 'cchar_t' (usually a 'long' type for SysV curses).
+AC_DEFUN([CF_CURSES_CCHAR_T],
+[
+AC_CACHE_CHECK(for cchar_t typedef,cf_cv_cchar_t_decl,[
+	AC_TRY_COMPILE([#include <curses.h>],
+		[cchar_t foo],
+		[cf_cv_cchar_t_decl=yes],
+		[cf_cv_cchar_t_decl=no])])
+if test $cf_cv_cchar_t_decl = yes ; then
+	AC_DEFINE(HAVE_TYPE_CCHAR_T)
+	AC_CACHE_CHECK(if cchar_t is scalar or struct,cf_cv_cchar_t_type,[
+		AC_TRY_COMPILE([#include <curses.h>],
+			[cchar_t foo; long x = foo],
+			[cf_cv_cchar_t_type=scalar],
+			[cf_cv_cchar_t_type=struct])])
+	if test $cf_cv_cchar_t_type = scalar ; then
+		AC_DEFINE(TYPE_CCHAR_T_IS_SCALAR)
+	fi
 fi
 ])dnl
 dnl ---------------------------------------------------------------------------
@@ -881,10 +881,10 @@ dnl $1 = variable to set
 AC_DEFUN([CF_LIB_PREFIX],
 [
 	case $cf_cv_system_name in
-	os2)	$1=''     ;;
-	*)	$1='lib'  ;;
+	os2)	LIB_PREFIX=''     ;;
+	*)	LIB_PREFIX='lib'  ;;
 	esac
-	LIB_PREFIX=[$]$1
+ifelse($1,,,[$1=$LIB_PREFIX])
 	AC_SUBST(LIB_PREFIX)
 ])dnl
 dnl ---------------------------------------------------------------------------
@@ -1561,7 +1561,7 @@ AC_MSG_CHECKING(for size_t in <sys/types.h> or <stdio.h>)
 AC_CACHE_VAL(cf_cv_type_size_t,[
 	AC_TRY_COMPILE([
 #include <sys/types.h>
-#if STDC_HEADERS
+#ifdef STDC_HEADERS
 #include <stdlib.h>
 #include <stddef.h>
 #endif
