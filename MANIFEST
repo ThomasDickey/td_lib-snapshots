@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19880901
+MANIFEST for td_lib, version t19880902
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 include                         subdirectory
@@ -12,6 +12,7 @@ src/cm_funcs                    subdirectory
 src/cm_funcs/cutoff.c           SCCS-style cutoff date parsing
 src/cm_funcs/newzone.c          set new timezone
 src/cm_funcs/packdate.c         pack numbers to make UNIX date
+src/cm_funcs/rcs_dir.c          returns name of RCS-directory
 src/cm_funcs/rcsedit.c          edit RCS archive-file
 src/cm_funcs/rcskeys.c          decode RCS keywords
 src/cm_funcs/rcslast.c          scan for last RCS date & version
@@ -19,6 +20,7 @@ src/cm_funcs/rcsload.c          load delta-tree for an RCS file
 src/cm_funcs/rcslocks.c         RCS lock-parsing
 src/cm_funcs/rcsname.c          derive RCS working/archive filenames
 src/cm_funcs/rcstemp.c          create temp-file for setuid operations
+src/cm_funcs/sccs_dir.c         returns name of SCCS directory
 src/cm_funcs/sccslast.c         scan for last SCCS date & version
 src/curses                      subdirectory
 src/curses/beep.c               sound audible alarm
