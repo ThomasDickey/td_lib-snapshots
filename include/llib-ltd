@@ -1,10 +1,34 @@
-/* @(#)llib-ltd	1.1 87/11/24 13:42:45 */
+/* @(#)llib-ltd	1.2 87/12/01 08:13:54 */
 /*LINTLIBRARY*/
 
 #include	<sys/types.h>
 
+/* MAIN-PROGRAM ******************************************************* */
+	failed(s) char *s; { }		/* fatal-error exit */
+
+/* RQR-MODULE ********************************************************* */
+int	rqr_open(filename) char *filename; { return(0); }
+int	rqr_head(number, title) char *number, *title; { return (0); }
+int	rqr_read(bfr) char *bfr; { return(0); }
+	rqr_close() { }
+	rqr_debug(level) { }
+
+/* GENERIC-LIBRARY **************************************************** */
+
 /* bldarg.c ----------------------------------------------------------- */
 	bldarg (argc, argv, string) char *argv[], *string; { }
+
+/* closeall.c --------------------------------------------------------- */
+	closeall(fd) { }
+
+/* cmdch.c ------------------------------------------------------------ */
+int	cmdch(cntp) int *cntp; { return(0); }
+
+/* doalloc.c ---------------------------------------------------------- */
+char	*doalloc(oldp,len) char *oldp; unsigned len; { return(0); }
+
+/* flushall.c --------------------------------------------------------- */
+	flushall(fd) { }
 
 /* gid2s.c ------------------------------------------------------------ */
 
@@ -34,11 +58,19 @@ int	s2uid(s) char	*s; { return (0); }
 /* sccszone.c --------------------------------------------------------- */
 long	sccszone() { return(0); }
 
+/* stralloc.c --------------------------------------------------------- */
+char	*stralloc(string) char *string; { return(0); }
+	strfree(string) char *string; { }
+
 /* strclean.c --------------------------------------------------------- */
-int	strclean(string) char	*string; { return(0); }
+int	strclean(string) char *string; { return(0); }
 
 /* uid2s.c ------------------------------------------------------------ */
 char	*uid2s(uid) { return(0); }
+
+/* vecalloc.c --------------------------------------------------------- */
+char	**vecalloc(len) unsigned len; { return(0); }
+	vecfree(v) char **v; { }
 
 /* which.c ------------------------------------------------------------ */
 int	which(bfr, len, find, dot) char	*bfr, *find, *dot; { return(0); }
