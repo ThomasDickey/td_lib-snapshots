@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.65 1995/07/30 19:33:41 tom Exp $
+dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.66 1995/08/15 13:50:13 tom Exp $
 dnl vi:set ts=4:
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "TD_" to "AC_"
@@ -280,8 +280,8 @@ if test ".$td_result" != ".no"; then
 	# warnings into errors.  Of course, _this_ assumes that the config is
 	# otherwise ok.
 AC_TRY_LINK([#undef ${td_func}],[${td_func}();],[
-if test $WithPrototypes = yes; then
-	td_result=undeclared
+if test $WithPrototypes != yes; then
+	td_result=yes
 elif test $WithWarnings = yes; then
 	if test $ac_cv_prog_gcc = yes; then
 		CFLAGS="$CFLAGS -Werror"

@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: rawgets.c,v 12.14 1995/07/30 17:55:04 tom Exp $";
+static	char	Id[] = "$Id: rawgets.c,v 12.15 1995/08/07 00:45:48 tom Exp $";
 #endif
 
 /*
@@ -74,6 +74,11 @@ static	char	Id[] = "$Id: rawgets.c,v 12.14 1995/07/30 17:55:04 tom Exp $";
 
 #define	SHIFT	5
 
+#ifndef KEY_MIN
+#define KEY_MIN 256
+#endif
+
+#define is_special(c)	((c) >= KEY_MIN)
 #define	to_toggle(c)	((c) == '\t')
 #define	to_literal(c)	((c) == CTL('V'))
 #define	to_home(c)	(((c) == CTL('B')))
@@ -619,7 +624,7 @@ int	wrawgets (
 		 * Normally we insert/edit only printing characters.
 		 * In literal-mode, we can insert any ascii character.
 		 */
-		if (literal || (Imode && isprint(c))) {
+		if (literal || (Imode && !is_special(c) && isprint(c))) {
 			while (count-- > 0) {
 				if (CurIns-bfr < buffer_len)
 					InsertAt(CurIns++, c);

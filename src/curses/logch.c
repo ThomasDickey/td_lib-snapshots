@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: logch.c,v 12.4 1995/07/30 17:54:37 tom Exp $";
-#endif
-
 /*
  * Title:	logch.c
  * Author:	T.E.Dickey
@@ -18,6 +14,8 @@ static	char	Id[] = "$Id: logch.c,v 12.4 1995/07/30 17:54:37 tom Exp $";
 #include	"ptypes.h"
 #include	"td_curse.h"
 #include	<ctype.h>
+
+MODULE_ID("$Id: logch.c,v 12.6 1995/08/07 00:44:26 tom Exp $")
 
 #define	CONVERT(base,p,n)	n = (base * n) + (*p++ - '0')
 
@@ -92,7 +90,6 @@ void	encode_logch(
 	register char	*s = buffer;
 
 	*s = EOS;
-	c &= 0xff;
 
 	if (count_)
 		FORMAT(s + strlen(s), "%d", *count_);
@@ -100,7 +97,7 @@ void	encode_logch(
 
 	if (c == '\\')
 		FORMAT(s, "\\\\");
-	else if (isascii(c) && isgraph(c))
+	else if (c < 256 && isascii(c) && isgraph(c))
 		FORMAT(s, "%c", c);
 	else switch (c) {
 		case '\b':	FORMAT(s, "\\b");	break;
