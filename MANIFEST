@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19890412
+MANIFEST for td_lib, version t19890413
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 Makefile                        top-level makefile for TD_LIB
@@ -83,6 +83,7 @@ src/port2vms/rmsio.c            VMS equivalent to system-level (open, close, rea
 src/port2vms/time2vms.c         convert unix time to VMS format
 src/port2vms/uid2s.c            convert VMS uid/gid to string (cf: code in CM_TOOLS)
 src/port2vms/utimes.c           VMS hack to provide unix-compatible 'utimes()' function.
+src/port2vms/vms2name.c         convert VMS filename to unix format
 src/port2vms/vms_dirs.c         VMS hack to provide unix-style directory access
 src/port2vms/zone2vms.c         compute timezone adjustment for VMS/unix time conversion
 src/process                     subdirectory
@@ -113,3 +114,5 @@ src/unix/setmtime.c             set mtime/atime of a file
 src/unix/uid2s.c                convert user-id to string
 support                         subdirectory
 support/prog_top.mms            VMS MMS include-file defining standard (module-level) rules.
+support/td_lib.mms              VMS MMS include-file defining PORTUNIX library-rules
+support/td_progs.mms            VMS MMS include-file defining program-generation rules above PORTUNIX
