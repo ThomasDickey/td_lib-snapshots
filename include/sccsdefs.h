@@ -1,4 +1,4 @@
-/* $Id: sccsdefs.h,v 12.8 2000/01/04 14:48:18 tom Exp $ */
+/* $Id: sccsdefs.h,v 12.9 2002/03/19 13:17:27 tom Exp $ */
 
 #ifndef	SCCSDEFS_H
 #define	SCCSDEFS_H
@@ -6,7 +6,7 @@
 #define	SCCS_DIR	"SCCS"
 #define	SCCS_PREFIX	"s."
 
-#if !HAVE_LONG_FILE_NAMES || defined(CMV_PATH)
+#if !HAVE_LONG_FILE_NAMES
 #define S_FILES_14 1
 #else
 #define S_FILES_14 0
