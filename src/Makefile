@@ -1,10 +1,16 @@
-# $Id: Makefile,v 3.2 1989/08/22 09:33:56 dickey Exp $
+# $Id: Makefile,v 4.0 1989/08/23 13:49:43 ste_cm Rel $
 # MAKE-file for miscellaneous library routines
 #
 # $Log: Makefile,v $
-# Revision 3.2  1989/08/22 09:33:56  dickey
-# corrected 'destroy' rule
+# Revision 4.0  1989/08/23 13:49:43  ste_cm
+# BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
 #
+#	Revision 3.3  89/08/23  13:49:43  dickey
+#	added 'view_file.c'
+#	
+#	Revision 3.2  89/08/22  09:33:56  dickey
+#	corrected 'destroy' rule
+#	
 #	Revision 3.1  89/08/08  14:00:54  dickey
 #	added module 'dftenv'
 #	
@@ -107,6 +113,7 @@ CSRC	=\
 	vcs_file.c\
 	vecalloc.c\
 	vercmp.c\
+	view_file.c\
 	walktree.c\
 	which.c\
 	win2file.c
@@ -196,6 +203,7 @@ OBJS	=\
 	vcs_file.o\
 	vecalloc.o\
 	vercmp.o\
+	view_file.o\
 	walktree.o\
 	which.o\
 	win2file.o
@@ -266,6 +274,7 @@ uid2s.o:	$I/ptypes.h
 usercopy.o:	$I/ptypes.h
 userprot.o:	$I/ptypes.h
 vcs_file.o:	$I/ptypes.h	$I/rcsdefs.h
+view_file.o:	$I/ptypes.h
 walktree.o:	$I/ptypes.h
 win2file.o:	$I/ptypes.h
 #

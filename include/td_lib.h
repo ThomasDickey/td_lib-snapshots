@@ -1,4 +1,4 @@
-/* $Header: /users/source/archives/td_lib.vcs/include/RCS/td_lib.h,v 3.3 1989/08/08 13:55:35 dickey Exp $ */
+/* $Id: td_lib.h,v 4.0 1989/08/23 14:09:06 ste_cm Rel $ */
 
 /*
  * Combined lint-library/function prototype definitions for CM_TOOLS COMMON
@@ -695,6 +695,17 @@
 			_DCL(char *,	s2)
 			_DCL(int,	wild)
 			_RET
+
+	/* view_file.c ------------------------------------------------ */
+#ifdef	unix
+	int	view_file(
+			_ARX(char *,	fname)
+			_AR1(int,	readonly)
+			)
+			_DCL(char *,	fname)
+			_DCL(int,	readonly)
+			_RET
+#endif	unix
 
 	/* walktree.c ------------------------------------------------- */
 #ifdef	unix
