@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	*Id = "$Id: rcsedit.c,v 9.5 1991/10/04 14:12:49 dickey Exp $";
+static	char	*Id = "$Id: rcsedit.c,v 10.0 1991/10/22 09:41:12 ste_cm Rel $";
 #endif
 
 /*
@@ -7,6 +7,8 @@ static	char	*Id = "$Id: rcsedit.c,v 9.5 1991/10/04 14:12:49 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	26 May 1988
  * Modified:
+ *		22 Oct 1991, broke logic of 'rcs_close()' on 6-sep (must always
+ *			     cleanup after writing the tempfile mode) -- fixed.
  *		04 Oct 1991, conversion to ANSI
  *		13 Sep 1991, corrected rcsparse_str -- was not passing spaces
  *			     back to caller.
@@ -41,12 +43,27 @@ static	FILE	*fpS, *fpT;
 static	char	fname[MAXPATHLEN];
 static	char	buffer[BUFSIZ];
 static	char	tmp_name[MAXPATHLEN];
-static	int	changed;	/* set if caller changed file */
+static	int	changes;	/* set if caller changed file */
 static	int	verbose;	/* set if we show informational messages */
 
 /************************************************************************
  *	local procedures						*
  ************************************************************************/
+
+static
+Show(
+_ARX(char *,	tag)
+_AR1(char *,	text)
+	)
+_DCL(char *,	tag)
+_DCL(char *,	text)
+{
+	if ((RCS_DEBUG > 1) && text != 0 && verbose) {
+		FFLUSH(stdout);
+		FFLUSH(stderr);
+		PRINTF("%s %d\t%s", tag, changes, text);
+	}
+}
 
 static
 dir_access(_AR0)
@@ -98,16 +115,28 @@ static
 char *
 readit(_AR0)
 {
-	return (fgets(buffer, sizeof(buffer), fpS));
+	char	*p = fgets(buffer, sizeof(buffer), fpS);
+	Show("<", p);
+	return p;
 }
 
 static
 writeit(_AR0)
 {
 	if (*buffer != EOS && fpT != 0) {
+		Show(">", buffer);
 		fputs(buffer, fpT);
 	}
 	*buffer = EOS;
+}
+
+static
+closeit(_AR0)
+{
+	if (fpT != 0) {
+		FCLOSE(fpT);
+		fpT = 0;
+	}
 }
 
 /************************************************************************
@@ -131,7 +160,7 @@ _DCL(int,	readonly)
 
 	(void)strcpy(fname, name);
 	fpT     = 0;
-	changed	= FALSE;
+	changes	= 0;
 	verbose	= show;
 	VERBOSE("++ rcs-%s(%s)\n", readonly ? "scan" : "edit", fname);
 	if (	(stat(fname, &sb) >= 0)
@@ -152,6 +181,7 @@ _DCL(int,	readonly)
 			perror(tmp_name);
 			return(FALSE);
 		}
+		VERBOSE(".. opened \"%s\", copy \"%s\"\n", fname, tmp_name);
 		return (TRUE);
 	}
 	VERBOSE("?? Cannot open \"%s\"\n", fname);
@@ -211,7 +241,7 @@ char	tmp[BUFSIZ];
 
 	(void)strcpy(tmp, where + len);
 	(void)strcat(strcpy(where, new), tmp);
-	changed = TRUE;
+	changes++;
 }
 
 /*
@@ -221,26 +251,24 @@ char	tmp[BUFSIZ];
  */
 rcsclose(_AR0)
 {
-	writeit();
-	if (changed) {
-		if (fpT != 0) {
-			while (readit())
-				writeit();
-			FCLOSE(fpT);
+	if (fpT != 0) {
+		if (changes) {
+			do writeit();
+			while (readit());
+			closeit();
 			if (rename(tmp_name, fname) < 0) {
 				perror("rename");
 				(void)unlink(tmp_name);
+				exit(FAIL);
 			}
-		} else if (RCS_DEBUG)
-			FPRINTF(stderr, "?? changes lost (readonly)\n");
-	} else {
-		if (fpT != 0) {
-			FCLOSE(fpT);
-			(void)unlink(tmp_name);
-		}
-	}
+		} else
+			closeit();
+	} else if (changes && RCS_DEBUG)
+		FPRINTF(stderr, "?? %d change(s) lost (readonly)\n", changes);
+
 	FCLOSE(fpS);
-	fpT = 0;
+	fpS = 0;
+	*buffer = EOS;
 }
 
 /************************************************************************

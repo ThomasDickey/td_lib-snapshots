@@ -1,3 +1,32 @@
+1991-10-22  dickey@software.org
+
+	* src/cm_funcs/rcstemp.c:
+	unlink the file before trying to copy to it (just in case
+	there was a readonly-file there, that 'filecopy()' cannot
+	overwrite).  also, adjusted debug-traces.
+
+1991-10-22  ste_cm@software.org
+
+	* src/cm_funcs/rcstemp.c: BASELINE Tue Oct 22 12:30:55 1991
+
+1991-10-22  dickey@software.org
+
+	* src/cm_funcs/rcsedit.c:
+	it is still ok to not copy the remainder of the file if no
+	changes are made (I was looking for a bug that actually was
+	in 'checkin.c')
+
+1991-10-22  ste_cm@software.org
+
+	* src/cm_funcs/rcsedit.c: BASELINE Tue Oct 22 10:13:44 1991
+
+1991-10-22  dickey@software.org
+
+	* src/cm_funcs/rcsedit.c:
+	ensure that if we opened a temp-file, that we copy the rest
+	of the input on 'rcs_close()' -- even if no changes were
+	found.
+
 1991-10-21  dickey@software.org
 
 	* src/port2vms/vms_dirs.c: port-to-vms
