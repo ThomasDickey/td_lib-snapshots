@@ -3,6 +3,10 @@
  * Author:	T.E.Dickey
  * Created:	26 Mar 1986
  * Modified:
+ *		16 Apr 2002, reorder ifdef's, preferring tm_gmtoff (BSD) over
+ *			     timezone, to work with older Linux's.
+ *		11 Jul 2001, undef timezone, which is (mis)defined in U/Win's
+ *			     time.h for some macro
  *		31 Dec 1999, move "1900" adjustment here.
  *		21 Aug 1998, Solaris 'daylight' value records only current
  *			     time, not (as documented) a side-effect of
@@ -23,7 +27,6 @@
  *			     working properly.
  *		25 Jul 1989, recompiled with apollo SR10 -- mods for function
  *			     prototypes
- *		
  *		06 May 1988, port to gould
  *		01 Feb 1988, ooops: wrong computation for leapyear.
  *		24 Nov 1987, made to run on BSD4.2 (as opposed to SYSTEM5).
@@ -38,7 +41,7 @@
 #define TIM_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: packdate.c,v 12.15 2001/07/11 20:21:22 tom Exp $")
+MODULE_ID("$Id: packdate.c,v 12.17 2002/04/16 12:49:11 tom Exp $")
 
 #define	LEAP(y)	(!(y&3))
 
@@ -61,13 +64,13 @@ long	gmt_offset(
 	 */
 	tm = *localtime(&t);
 
-#if	TIMEZONE_DECLARED
+#if HAVE_TM_GMTOFF
+	sec -= tm.tm_gmtoff;
+#else /* UNIX */
+#if TIMEZONE_DECLARED
 	sec += timezone;
 #else
-#  if	HAVE_TM_GMTOFF
-	sec -= tm.tm_gmtoff;
-#  else	/* UNIX */
-#    if HAVE_GETTIMEOFDAY
+#if HAVE_GETTIMEOFDAY
 	{
 	struct	timeval	t2;
 	struct	timezone tz;
@@ -75,9 +78,7 @@ long	gmt_offset(
 		sec += (tz.tz_minuteswest * MINUTE);
 	}
 #else
-#    endif
-#  endif
-#endif	/* TIMEZONE_DECLARED */
+#endif
 
 	/*
 	 * Check to see if the local-time display for a given clock-time
@@ -87,6 +88,8 @@ long	gmt_offset(
 #if HAVE_TM_ISDST && !HAVE_TM_GMTOFF
 	if (tm.tm_isdst)	sec -= HOUR;
 #endif
+#endif
+#endif	/* TIMEZONE_DECLARED */
 	return sec;
 }
 
@@ -148,12 +151,17 @@ _MAIN
 	printf("  year  =%d\n",  tm.tm_year);
 	printf("  wday  =%d\n",  tm.tm_wday);
 	printf("  yday  =%d\n",  tm.tm_yday);
+#if HAVE_TM_ISDST
 	printf("  isdst =%d\n",  tm.tm_isdst);
+#endif
 #if HAVE_TM_ZONE
 	printf("  zone  =%s\n",  tm.tm_zone);
 #endif
 #if HAVE_TM_GMTOFF
 	printf("  gmtoff=%ld\n", tm.tm_gmtoff);
+#endif
+#if HAVE_TIMEZONE
+	printf("timezone=%ld\n", timezone);
 #endif
 
 	then = packdate (tm.tm_year, tm.tm_mon+1, tm.tm_mday,
