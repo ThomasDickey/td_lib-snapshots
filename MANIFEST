@@ -1,9 +1,10 @@
-MANIFEST for td_lib, version t19881214
+MANIFEST for td_lib, version t19890112
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 include                         subdirectory
 include/cmdch.h                 
 include/llib-ltd                template for lint-library
+include/port2vms.h              interface for vms-porting functions
 include/ptypes.h                principal include-file for TD_LIB
 include/rcsdefs.h               interface for rcs functions
 include/vms_dirs.h              VMS unix-style directory-interface definitions
@@ -63,6 +64,7 @@ src/pathname/pathcat.c          concatenate directory & filename
 src/pathname/pathhead.c         obtain parent directory-name from path
 src/pathname/pathleaf.c         obtain basename (leaf) from pathname
 src/pathname/sameleaf.c         compare ends of pathnames
+src/pathname/trnstree.c         translate (producing new output-files) tree-of-files
 src/pathname/walktree.c         walk directory-tree, performing function
 src/pathname/which.c            locate file in $PATH
 src/port2vms                    subdirectory
