@@ -1,3 +1,11 @@
+1993-09-28  dickey@software.org
+
+	* src/curses/rawgets.c:
+	modified 'InsertAt()' to fix a Purify warning (I was reading past the end
+	of the string as I was rippling through an insertion).
+
+	* include/ptypes.h: added "_one" macro, from 'ded', for symmetry
+
 1993-09-27  dickey@software.org
 
 	* include/ptypes.h: I don't want to define NO_LEAKS at all...
