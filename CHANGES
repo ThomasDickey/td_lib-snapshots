@@ -1,3 +1,12 @@
+1993-05-03  dickey@software.org
+
+	* support/linkopts.opt:
+	Added definition for GNULIB so I can easily link with BISON or FLEX output.
+
+1993-05-03  ste_cm@software.org
+
+	* support/linkopts.opt: BASELINE Mon May  3 13:44:35 1993
+
 1993-04-30  dickey@software.org
 
 	* include/ptypes.h:

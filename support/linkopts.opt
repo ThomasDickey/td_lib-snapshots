@@ -1,3 +1,6 @@
-! $Id: linkopts.opt,v 7.0 1989/08/28 14:16:57 ste_cm Rel $
+! $Id: linkopts.opt,v 8.0 1993/05/03 13:42:56 ste_cm Rel $
+!
+! Link with GNU library (for bison & flex applications)
+tools$$library:gnulib/lib
 ! Link with shareable C-runtime library
 sys$library:vaxcrtlg.exe/share
