@@ -1,3 +1,15 @@
+1991-06-25  ste_cm@software.org
+
+	* src/process/for_user.c:
+	don't complain if we cannot set-group, since this should
+	fail only if we cannot setuid-root.
+
+1991-06-25  dickey@software.org
+
+	* include/td_lib.h: added entrypoint 'for_user2()' to 'for_user.c'
+
+	* src/process/for_user.c: rewrote, added entrypoint 'for_user2()'
+
 1991-06-20  dickey@software.org
 
 	* src/cm_funcs/rcspath.c:
