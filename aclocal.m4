@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Id: aclocal.m4,v 12.133 2001/07/15 15:56:01 tom Exp $
+dnl $Id: aclocal.m4,v 12.134 2001/08/28 23:06:41 tom Exp $
 dnl vi:set ts=4:
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "CF_" to "AC_"
@@ -398,8 +398,12 @@ do
 char * XCursesProgramName = "test";
 #else
 #include <${cf_cv_ncurses_header-curses.h}>
+#if defined(NCURSES_VERSION) && defined(HAVE_NCURSES_TERM_H)
+#include <ncurses/term.h>
+#else
 #ifdef HAVE_TERM_H
 #include <term.h>
+#endif
 #endif
 #endif],
 			[
@@ -1014,6 +1018,7 @@ AC_CACHE_VAL(cf_cv_makeflags,[
 	for cf_option in '-$(MAKEFLAGS)' '$(MFLAGS)'
 	do
 		cat >cf_makeflags.tmp <<CF_EOF
+SHELL = /bin/sh
 all :
 	@ echo '.$cf_option'
 CF_EOF
