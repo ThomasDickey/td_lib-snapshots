@@ -1,3 +1,26 @@
+1987-11-24  dickey@software.org
+
+	* src/pathname/modechar.c: lint, sccs-id
+
+	* src/pathname/modechar.c: sccs2rcs keywords
+
+1987-11-24  ste_cm@software.org
+
+	* src/pathname/modechar.c: BASELINE Thu Apr  6 09:45:13 EDT 1989
+
+1987-11-24  dickey@software.org
+
+	* include/llib-ltd: New file.
+
+	* src/Makefile:
+	added routines (from SCOPE) for sccs-support, some adaptation to BSD4.2
+
+	* src/unix/s2uid.c, src/unix/s2gid.c: lint, sccs-id
+
+	* src/curses/rawgets.c: compiled under curses/BSD4.2 (not tested)
+
+	* src/curses/rawterm.c: New file.
+
 1987-11-23  dickey@software.org
 
 	* src/pathname/abspath.c:
