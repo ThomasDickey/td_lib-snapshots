@@ -1,4 +1,4 @@
-/* $Id: rcsdefs.h,v 10.2 1992/02/06 07:50:43 dickey Exp $ */
+/* $Id: rcsdefs.h,v 11.0 1992/02/07 15:05:35 ste_cm Rel $ */
 
 #ifndef	_RCSDEFS_H_
 #define	_RCSDEFS_H_
@@ -229,6 +229,17 @@
 			_dcl(char *,	base)
 			_ret
 
+	/* rcssymbols.c ---------------------------------------------- */
+	char *	rcssymbols(
+			_arx(char *,	s)
+			_arx(char *,	dst)
+			_ar1(char *,	src)
+			)
+			_dcl(char *,	s)
+			_dcl(char *,	dst)
+			_dcl(char *,	src)
+			_ret
+
 	/* rcstemp.c -------------------------------------------------- */
 	char *	rcstemp(
 			_arx(char *,	name)
@@ -236,6 +247,21 @@
 			)
 			_dcl(char *,	name)
 			_dcl(int,	copy)
+			_ret
+
+	/* rcstime.c -------------------------------------------------- */
+	void	time2rcs(
+			_arx(char *,	buffer)
+			_ar1(time_t,	when)
+			)
+			_dcl(char *,	buffer)
+			_dcl(time_t,	when)
+			_nul
+
+	time_t	rcs2time(
+			_ar1(char *,	buffer)
+			)
+			_dcl(char *,	buffer)
 			_ret
 
 	/* vcs_file.c ------------------------------------------------- */

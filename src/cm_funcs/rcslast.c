@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcslast.c,v 10.0 1991/10/03 08:26:50 ste_cm Rel $";
+static	char	Id[] = "$Id: rcslast.c,v 11.0 1992/02/07 15:15:24 ste_cm Rel $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: rcslast.c,v 10.0 1991/10/03 08:26:50 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	18 May 1988, from 'sccslast.c'
  * Modified:
+ *		07 Feb 1992, use 'rcs2time()'
  *		03 Oct 1991, conversion to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
  *		26 Oct 1989, ensure that version, locker are set to "?" if not-
@@ -110,7 +111,6 @@ _DCL(char **,	vers_)
 _DCL(time_t *,	date_)
 _DCL(char **,	lock_)
 {
-int	yy, mm, dd, hr, mn, sc;
 int	finish	= FALSE,
 	skip	= FALSE;
 char	key[BUFSIZ],
@@ -119,7 +119,6 @@ char	key[BUFSIZ],
 	vstring[BUFSIZ];
 
 	if (rfp = fopen(path, "r")) {
-		newzone(5,0,FALSE);		/* interpret in EST5EDT */
 		(void)strcpy(lstring, strcpy(vstring, "?"));
 		*bfr = EOS;			/* initialize scanner */
 		while (!finish && parse(key, arg)) {
@@ -139,21 +138,16 @@ char	key[BUFSIZ],
 				break;
 			case S_DATE:
 				if (skip)	break;
-				if (sscanf(arg, FMT_DATE,
-					&yy, &mm, &dd, &hr, &mn, &sc)
-					== 6) {
-					*lock_ = txtalloc(lstring);
-					*vers_ = txtalloc(vstring);
-					*date_ = packdate (1900+yy, mm, dd, hr, mn, sc);
-					finish = TRUE;
-				}
+				*date_ = rcs2time(arg);
+				*lock_ = txtalloc(lstring);
+				*vers_ = txtalloc(vstring);
+				finish = TRUE;
 				break;
 			case S_DESC:
 				finish = TRUE;
 			}
 		}
 		(void) fclose(rfp);
-		oldzone();		/* restore time-zone */
 	}
 }
 

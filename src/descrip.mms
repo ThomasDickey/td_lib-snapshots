@@ -1,4 +1,4 @@
-# $Id: descrip.mms,v 10.5 1992/02/06 08:43:10 dickey Exp $
+# $Id: descrip.mms,v 10.9 1992/02/07 15:03:55 dickey Exp $
 # MMS-file for miscellaneous library routines	
 #
 ####### (Development) ##########################################################
@@ -14,6 +14,7 @@ TEST_CC =	$(CC) $(CFLAGS) /DEFINE="TEST" $(MMS$SOURCE)
 #
 ####### (Standard Lists) #######################################################
 LIBRARYMODULES = -
+	ACCESS_MODE, -
 	ADD2FNAME, -
 	ARGV2FILE, -
 	BEEP, -
@@ -28,6 +29,9 @@ LIBRARYMODULES = -
 	DOTCMP, -
 	DOTNAME, -
 	DUMPCHR, -
+	DYN_APPEND, -
+	DYN_CATARG, -
+	DYN_STRING, -
 	EXECUTE, -
 	FAILED, -
 	FIELD_OF, -
@@ -47,6 +51,7 @@ LIBRARYMODULES = -
 	PATHLEAF, -
 	SAMELEAF, -
 	SHOARG, -
+	SHOW_UIDS, -
 	SS_FIELD, -
 	STAT_DIR, -
 	STAT_FILE, -
@@ -99,7 +104,9 @@ UNUSED_MODULES = -
 	RCSNAME,		# rcs (unix-only) -
 	RCSPATH,		# rcs (unix-only) -
 	RCSPERMIT,		# rcs (unix-only) -
+	RCSSYMBOLS,		# rcs (unix-only) -
 	RCSTEMP,		# rcs (unix-only) -
+	RCSTIME,		# rcs (unix-only) -
 	RELPATH,		# unix-style 'getwd()' -
 	RESIZEWIN,		# curses (apollo) -
 	REVERT,			# unix setuid -
@@ -123,6 +130,7 @@ UNUSED_MODULES = -
 #
 C_SRC	=-
 	ABSPATH.C -
+	ACCESS_MODE.C -
 	ADD2FNAME.C -
 	ARGV2FILE.C -
 	BEEP.C -
@@ -141,6 +149,9 @@ C_SRC	=-
 	DOTNAME.C -
 	DUMPCHR.C -
 	DUMPWIN.C -
+	DYN_APPEND.C -
+	DYN_CATARG.C -
+	DYN_STRING.C -
 	ERASECHAR.C -
 	EXECUTE.C -
 	FAILED.C -
@@ -187,7 +198,9 @@ C_SRC	=-
 	RCSNAME.C -
 	RCSPATH.C -
 	RCSPERMIT.C -
+	RCSSYMBOLS.C -
 	RCSTEMP.C -
+	RCSTIME.C -
 	RELPATH.C -
 	RESIZEWIN.C -
 	REVERT.C -
@@ -201,6 +214,7 @@ C_SRC	=-
 	SCR_SIZE.C -
 	SETMTIME.C -
 	SHOARG.C -
+	SHOW_UIDS.C -
 	SS_FIELD.C -
 	STAT_DIR.C -
 	STAT_FILE.C -
@@ -261,6 +275,7 @@ INSTALL :
 ! Dependencies to archive are done by default rules, e.g.,
 !'$(A)(UNIXDIR) :	UNIXDIR.OBJ
 $(A)($(LIBRARYMODULES)) : $(PTYPES_H)
+ACCESS_MODE.obj :	$(PTYPES_H)
 ADD2FNAME.obj :		$(PTYPES_H)
 ARGV2FILE.obj :		$(PTYPES_H)
 BEEP.obj :		$(PTYPES_H)
@@ -271,6 +286,9 @@ COPYBACK.obj :		$(PTYPES_H)
 CUTOFF.obj :		$(PTYPES_H)
 DOALLOC.OBJ :		$(PTYPES_H)
 DUMPWIN.obj :		$(PTYPES_H)
+DYN_APPEND.obj :	$(PTYPES_H)
+DYN_CATARG.obj :	$(PTYPES_H)
+DYN_STRING.obj :	$(PTYPES_H)
 ERASECHAR.obj :		$(PTYPES_H)
 EXECUTE.obj :		$(PTYPES_H)
 FAILED.obj :		$(PTYPES_H)
@@ -312,6 +330,7 @@ SAVEWIN.obj :		$(PTYPES_H)
 SCCSLAST.obj :		$(PTYPES_H)
 SETMTIME.obj :		$(PTYPES_H)
 SHOARG.obj :		$(PTYPES_H)
+SHOW_UIDS.obj :		$(PTYPES_H)
 STAT_DIR.obj :		$(PTYPES_H)
 STAT_FILE.obj :		$(PTYPES_H)
 STRALLOC.obj :		$(PTYPES_H)

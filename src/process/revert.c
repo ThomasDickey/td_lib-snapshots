@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: revert.c,v 10.0 1991/10/03 08:10:57 ste_cm Rel $";
+static	char	Id[] = "$Id: revert.c,v 11.0 1992/02/07 07:50:22 ste_cm Rel $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: revert.c,v 10.0 1991/10/03 08:10:57 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	08 Mar 1989
  * Modified:
+ *		07 Feb 1992, make this return true iff a change is made.
  *		03 Oct 1991, conversion to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
  *		07 Dec 1989, lint (SunOs 3.4)
@@ -21,6 +22,7 @@ static	char	Id[] = "$Id: revert.c,v 10.0 1991/10/03 08:10:57 ste_cm Rel $";
 
 #define	TELL	if (msg) FPRINTF(stderr,
 
+int
 revert(
 _AR1(char *,	msg))
 _DCL(char *,	msg)
@@ -42,4 +44,5 @@ _DCL(char *,	msg)
 	}
 	if (changed)
 		TELL "** reason: %s\n", msg);
+	return changed;
 }

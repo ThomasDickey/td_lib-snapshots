@@ -1,4 +1,4 @@
-# $Id: Makefile,v 10.6 1992/02/06 08:23:17 dickey Exp $
+# $Id: Makefile,v 10.10 1992/02/07 15:03:55 dickey Exp $
 # MAKE-file for miscellaneous library routines
 #
 ####### (Development) ##########################################################
@@ -20,6 +20,7 @@ LIBS	= -lcurses -ltermcap
 A	= ../lib/lib.a
 CSRC	=\
 	abspath.c\
+	access_mode.c\
 	add2fname.c\
 	argv2file.c\
 	beep.c\
@@ -38,6 +39,9 @@ CSRC	=\
 	dotname.c\
 	dumpchr.c\
 	dumpwin.c\
+	dyn_append.c\
+	dyn_catarg.c\
+	dyn_string.c\
 	erasechar.c\
 	execute.c\
 	failed.c\
@@ -84,7 +88,9 @@ CSRC	=\
 	rcsname.c\
 	rcspath.c\
 	rcspermit.c\
+	rcssymbols.c\
 	rcstemp.c\
+	rcstime.c\
 	relpath.c\
 	resizewin.c\
 	revert.c\
@@ -96,6 +102,7 @@ CSRC	=\
 	scr_size.c\
 	setmtime.c\
 	shoarg.c\
+	show_uids.c\
 	ss_field.c\
 	stat_dir.c\
 	stat_file.c\
@@ -129,6 +136,7 @@ SOURCES	= Makefile descrip.mms $(CSRC)
 #
 OBJS	=\
 	abspath.o\
+	access_mode.o\
 	add2fname.o\
 	argv2file.o\
 	beep.o\
@@ -147,6 +155,9 @@ OBJS	=\
 	dotname.o\
 	dumpchr.o\
 	dumpwin.o\
+	dyn_append.o\
+	dyn_catarg.o\
+	dyn_string.o\
 	erasechar.o\
 	execute.o\
 	failed.o\
@@ -193,7 +204,9 @@ OBJS	=\
 	rcsname.o\
 	rcspath.o\
 	rcspermit.o\
+	rcssymbols.o\
 	rcstemp.o\
+	rcstime.o\
 	relpath.o\
 	resizewin.o\
 	revert.o\
@@ -205,6 +218,7 @@ OBJS	=\
 	scr_size.o\
 	setmtime.o\
 	shoarg.o\
+	show_uids.o\
 	ss_field.o\
 	stat_dir.o\
 	stat_file.o\

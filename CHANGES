@@ -1,3 +1,134 @@
+1992-02-07  dickey@software.org
+
+	* src/process/interact.c: lint
+
+1992-02-07  ste_cm@software.org
+
+	* src/process/interact.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+	* src/process/interact.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1992-02-07  dickey@software.org
+
+	* src/pathname/walktree.c: lint
+
+1992-02-07  ste_cm@software.org
+
+	* src/pathname/walktree.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1992-02-07  dickey@software.org
+
+	* src/cm_funcs/rcsload.c: use 'rcs2time()'
+
+1992-02-07  ste_cm@software.org
+
+	* src/cm_funcs/rcsload.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1992-02-07  dickey@software.org
+
+	* src/cm_funcs/rcslast.c: use 'rcs2time()'
+
+1992-02-07  ste_cm@software.org
+
+	* src/cm_funcs/rcslast.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1992-02-07  dickey@software.org
+
+	* include/rcsdefs.h: added new module 'rcstime'
+
+1992-02-07  ste_cm@software.org
+
+	* include/rcsdefs.h: BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1992-02-07  dickey@software.org
+
+	* src/Makefile, src/descrip.mms: added module 'rcstime'
+
+	* src/cm_funcs/rcstime.c: RCS_BASE
+
+1992-02-07  ste_cm@software.org
+
+	* src/cm_funcs/rcstime.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1992-02-07  dickey@software.org
+
+	* src/pathname/acc_mode.c: oops: wrong logical operator
+
+	* src/cm_funcs/rcssymbs.c: corrected comparison for update
+
+	* src/pathname/acc_mode.c: make this more readable
+
+	* src/Makefile, src/descrip.mms: added 'rcssymbols.c'
+
+	* src/cm_funcs/rcssymbs.c: RCS_BASE
+
+	* include/rcsdefs.h: added 'rcssymbols.c'
+
+	* src/string/dyn_str.c: corrected return-type from 'dyn_length()'
+
+1992-02-07  ste_cm@software.org
+
+	* src/string/dyn_str.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1992-02-07  dickey@software.org
+
+	* include/dyn_str.h: corrected return-type from 'dyn_length()'
+
+	* src/string/dyn_cata.c, src/string/dyn_app.c: corrections!
+
+	* include/dyn_str.h: added defs so longer names aren't ugly
+
+	* src/string/dyn_str.c:
+	changed 'dyn_clear()' to 'dyn_init()', which is simpler to
+	use
+
+	* include/dyn_str.h:
+	changed 'dyn_clear()' to 'dyn_init()' for simplicity
+
+	* src/Makefile: added 'dyn_append', 'dyn_catarg', 'dyn_string'
+
+	* src/descrip.mms: added 'dyn_append', 'dyn_catarg','dyn_string'
+
+	* src/string/dyn_app.c, src/string/dyn_cata.c: RCS_BASE
+
+	* include/dyn_str.h: forgot data-args for 'dyn_catarg()'
+
+	* src/string/dyn_str.c: RCS_BASE
+
+	* include/dyn_str.h: tweaks for 'dyn_free()'
+
+	* include/td_lib.h, src/Makefile, src/descrip.mms:
+	added 'access_mode' and 'show_uids'
+
+	* src/process/showuids.c: RCS_BASE
+
+1992-02-07  ste_cm@software.org
+
+	* src/process/showuids.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1992-02-07  dickey@software.org
+
+	* src/pathname/acc_mode.c: RCS_BASE
+
+	* include/td_lib.h: make 'revert()' return a value
+
+	* src/process/revert.c:
+	make 'revert()' return true iff change was made, so I can
+	make control debug-print.
+
+1992-02-07  ste_cm@software.org
+
+	* src/process/revert.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
 1992-02-06  dickey@software.org
 
 	* src/cm_funcs/rcsargpr.c:

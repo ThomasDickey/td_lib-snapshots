@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcsload.c,v 10.1 1992/01/08 12:29:50 dickey Exp $";
+static	char	Id[] = "$Id: rcsload.c,v 11.0 1992/02/07 15:16:02 ste_cm Rel $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: rcsload.c,v 10.1 1992/01/08 12:29:50 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	19 Aug 1988
  * Modified:
+ *		07 Feb 1992, use 'rcs2time()'
  *		17 Oct 1991, added logic for computing versions of loaded text
  *			     along branches.
  *		10 Oct 1991, got this to compute versions of loaded text on the
@@ -223,28 +224,6 @@ _DCL(int,	code)
 }
 
 /*
- * Parse a date
- */
-static
-time_t
-eat_date(
-_AR1(char *,	arg))
-_DCL(char *,	arg)
-{
-	time_t	value = 0;
-	int	yd, md, dd, ht, mt, st;
-
-	if (sscanf(arg, FMT_DATE,
-		&yd, &md, &dd, &ht, &mt, &st) == 6) {
-		newzone(5,0,FALSE);
-		value = packdate(1900+yd, md,dd, ht,mt,st);
-		oldzone();
-	} else
-		PRINTF("?? date \"%s\"\n", arg);
-	return value;
-}
-
-/*
  * Returns the (string) revision of which the delta is a branch.  If it is not
  * a branch, return a null pointer.
  */
@@ -413,7 +392,7 @@ _DCL(int,	verbose)
 			break;
 		case S_DATE:
 			s = rcsparse_num(tmp, s);
-			new.tstamp = eat_date(tmp);
+			new.tstamp = rcs2time(tmp);
 			break;
 		case S_AUTHOR:
 			s = rcsparse_id(tmp, s);
