@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: trimpath.c,v 12.4 1993/12/02 15:44:34 dickey Exp $";
-#endif
-
 /*
  * Title:	trimpath.c
  * Author:	T.E.Dickey
@@ -21,6 +17,8 @@ static	char	Id[] = "$Id: trimpath.c,v 12.4 1993/12/02 15:44:34 dickey Exp $";
 
 #define	STR_PTYPES
 #include	"ptypes.h"
+
+MODULE_ID("$Id: trimpath.c,v 12.5 1993/12/02 15:44:34 tom Exp $")
 
 char *	trimpath(
 	_ARX(char *,	path)

@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: pathleaf.c,v 12.3 1993/11/27 16:24:16 dickey Exp $";
-#endif
-
 /*
  * Title:	pathleaf.c (obtain leaf from path)
  * Author:	T.E.Dickey
@@ -27,6 +23,8 @@ static	char	Id[] = "$Id: pathleaf.c,v 12.3 1993/11/27 16:24:16 dickey Exp $";
 
 #define	STR_PTYPES
 #include	"ptypes.h"
+
+MODULE_ID("$Id: pathleaf.c,v 12.4 1993/11/27 16:24:16 tom Exp $")
 
 char *
 pathleaf (

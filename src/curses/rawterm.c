@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: rawterm.c,v 12.17 1994/12/16 14:15:22 tom Exp $";
-#endif
-
 /*
  * Title:	rawterm.c (set terminal to raw mode)
  * Author:	T.E.Dickey
@@ -30,6 +26,8 @@ static	char	Id[] = "$Id: rawterm.c,v 12.17 1994/12/16 14:15:22 tom Exp $";
 #define STR_PTYPES	/* <string.h> */
 #define TRM_PTYPES	/* <termios.h> */
 #include	"td_curse.h"
+
+MODULE_ID("$Id: rawterm.c,v 12.18 1994/12/16 14:15:22 tom Exp $")
 
 TermioT	original_tty;
 TermioT	modified_tty;

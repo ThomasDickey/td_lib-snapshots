@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: beep.c,v 12.6 1994/05/23 22:24:59 tom Exp $";
-#endif
-
 /*
  * Title:	beep.c (sound audible alarm)
  * Author:	T.E.Dickey
@@ -17,6 +13,8 @@ static	char	Id[] = "$Id: beep.c,v 12.6 1994/05/23 22:24:59 tom Exp $";
  */
 
 #include	"td_curse.h"
+
+MODULE_ID("$Id: beep.c,v 12.7 1994/05/23 22:24:59 tom Exp $")
 
 #if !HAVE_BEEP
 void	beep(_AR0)

@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: modechar.c,v 12.2 1993/10/29 17:35:25 dickey Exp $";
-#endif
-
 /*
  * Title:	modechar.c (mode/char convert)
  * Author:	T.E.Dickey
@@ -22,6 +18,8 @@ static	char	Id[] = "$Id: modechar.c,v 12.2 1993/10/29 17:35:25 dickey Exp $";
  */
 
 #include	"ptypes.h"
+
+MODULE_ID("$Id: modechar.c,v 12.3 1993/10/29 17:35:25 tom Exp $")
 
 #ifdef	apollo
 #define	S_IFFIFO	010000

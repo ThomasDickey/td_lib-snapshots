@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: diffload.c,v 12.4 1994/07/02 17:46:41 tom Exp $";
-#endif
-
 /*
  * Title:	diffload.c (load delta-tree from difference of files)
  * Author:	T.E.Dickey
@@ -21,6 +17,8 @@ static	char	Id[] = "$Id: diffload.c,v 12.4 1994/07/02 17:46:41 tom Exp $";
 #include	"dyn_str.h"
 #include	<ctype.h>
 #include	<time.h>
+
+MODULE_ID("$Id: diffload.c,v 12.5 1994/07/02 17:46:41 tom Exp $")
 
 #ifdef	TEST
 #define	DEBUG(s) PRINTF s;

@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: strbcmp.c,v 12.2 1993/10/29 17:35:24 dickey Exp $";
-#endif
-
 /*
  * Title:	strbcmp.c (string-blank-compare)
  * Author:	T.E.Dickey
@@ -22,6 +18,8 @@ static	char	Id[] = "$Id: strbcmp.c,v 12.2 1993/10/29 17:35:24 dickey Exp $";
 
 #include	<ptypes.h>
 #include	<ctype.h>
+
+MODULE_ID("$Id: strbcmp.c,v 12.3 1993/10/29 17:35:24 tom Exp $")
 
 #define	SKIP(p)	while (isspace(*p))	p++;
 

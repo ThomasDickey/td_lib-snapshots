@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: rcstime.c,v 12.3 1994/05/23 22:49:36 tom Exp $";
-#endif
-
 /*
  * Title:	rcstime.c
  * Author:	T.E.Dickey
@@ -19,6 +15,8 @@ static	char	Id[] = "$Id: rcstime.c,v 12.3 1994/05/23 22:49:36 tom Exp $";
 #define TIM_PTYPES
 #include "ptypes.h"
 #include "rcsdefs.h"
+
+MODULE_ID("$Id: rcstime.c,v 12.4 1994/05/23 22:49:36 tom Exp $")
 
 #if	RCS_VERSION >= 5
 #define	RCS_ZONE(t)	gmt_offset(t)

@@ -1,7 +1,3 @@
-#ifndef	NO_IDENT
-static	char	Id[] = "$Id: vms_dirs.c,v 12.1 1994/08/21 18:39:51 tom Exp $";
-#endif
-
 /*
  * Title:	unixdir.c
  * Author:	T.E.Dickey
@@ -14,6 +10,8 @@ static	char	Id[] = "$Id: vms_dirs.c,v 12.1 1994/08/21 18:39:51 tom Exp $";
  */
 #define		DIR_PTYPES
 #include	"port2vms.h"
+
+MODULE_ID("$Id: vms_dirs.c,v 12.2 1994/08/21 18:39:51 tom Exp $")
 
 #ifdef	vms
 #define	zfab	dirp->dd_fab

@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: catchall.c,v 12.3 1993/11/26 13:28:40 dickey Exp $";
-#endif
-
 /*
  * Title:	catchall.c (catch all signals)
  * Author:	T.E.Dickey
@@ -26,6 +22,8 @@ static	char	Id[] = "$Id: catchall.c,v 12.3 1993/11/26 13:28:40 dickey Exp $";
 
 #define	SIG_PTYPES
 #include "ptypes.h"
+
+MODULE_ID("$Id: catchall.c,v 12.4 1993/11/26 13:28:40 tom Exp $")
 
 void	catchall(
 	_FN1(SIG_T,	catchsig,	(SIGNAL_ARGS)))

@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: strucpy.c,v 12.2 1993/10/29 17:35:23 dickey Exp $";
-#endif
-
 /*
  * Title:	strucpy.c (string-copy, uppercase)
  * Author:	T.E.Dickey
@@ -21,6 +17,8 @@ static	char	Id[] = "$Id: strucpy.c,v 12.2 1993/10/29 17:35:23 dickey Exp $";
 
 #define CHR_PTYPES
 #include "ptypes.h"
+
+MODULE_ID("$Id: strucpy.c,v 12.3 1993/10/29 17:35:23 tom Exp $")
 
 /*
  * Copy string, converting to uppercase

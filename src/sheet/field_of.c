@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: field_of.c,v 12.3 1994/07/01 23:54:04 tom Exp $";
-#endif
-
 /*
  * Title:	field_of.c
  * Author:	T.E.Dickey
@@ -23,6 +19,8 @@ static	char	Id[] = "$Id: field_of.c,v 12.3 1994/07/01 23:54:04 tom Exp $";
 #define	STR_PTYPES
 #include "td_sheet.h"
 #include <ctype.h>
+
+MODULE_ID("$Id: field_of.c,v 12.4 1994/07/01 23:54:04 tom Exp $")
 
 static	int	opt_Blanks;
 

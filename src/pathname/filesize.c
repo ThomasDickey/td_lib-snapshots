@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: filesize.c,v 12.2 1994/05/21 20:17:19 tom Exp $";
-#endif
-
 /*
  * Title:	filesize.c
  * Author:	T.E.Dickey
@@ -15,6 +11,8 @@ static	char	Id[] = "$Id: filesize.c,v 12.2 1994/05/21 20:17:19 tom Exp $";
  */
 
 #include "ptypes.h"
+
+MODULE_ID("$Id: filesize.c,v 12.3 1994/05/21 20:17:19 tom Exp $")
 
 off_t
 filesize(

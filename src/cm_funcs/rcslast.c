@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: rcslast.c,v 12.5 1994/05/21 20:18:44 tom Exp $";
-#endif
-
 /*
  * Title:	rcslast.c (scan for last RCS date)
  * Author:	T.E.Dickey
@@ -36,6 +32,8 @@ static	char	Id[] = "$Id: rcslast.c,v 12.5 1994/05/21 20:18:44 tom Exp $";
 #include	<ctype.h>
 #include	<time.h>
 #include	"rcsdefs.h"
+
+MODULE_ID("$Id: rcslast.c,v 12.6 1994/05/21 20:18:44 tom Exp $")
 
 /*
  * Returns the modification date of the given file, or 0 if not found

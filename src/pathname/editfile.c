@@ -1,7 +1,3 @@
-#ifndef	NO_IDENT
-static	char	Id[] = "$Id: editfile.c,v 12.2 1994/08/21 22:37:58 tom Exp $";
-#endif
-
 /*
  * Title:	editfile.c
  * Author:	T.E.Dickey
@@ -25,6 +21,8 @@ static	char	Id[] = "$Id: editfile.c,v 12.2 1994/08/21 22:37:58 tom Exp $";
 
 #define		STR_PTYPES
 #include	"ptypes.h"
+
+MODULE_ID("$Id: editfile.c,v 12.3 1994/08/21 22:37:58 tom Exp $")
 
 #ifdef	vms
 #define	NEWVER(name)	(name)

@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: rcssymbs.c,v 12.2 1993/10/29 17:35:24 dickey Exp $";
-#endif
-
 /*
  * Title:	rcssymbols.c (RCS symbols-parsing)
  * Author:	T.E.Dickey
@@ -27,6 +23,8 @@ static	char	Id[] = "$Id: rcssymbs.c,v 12.2 1993/10/29 17:35:24 dickey Exp $";
 #include "ptypes.h"
 #include "rcsdefs.h"
 #include <ctype.h>
+
+MODULE_ID("$Id: rcssymbs.c,v 12.3 1993/10/29 17:35:24 tom Exp $")
 
 #define	isname(c)	(isalnum(c) || (c == '_'))
 

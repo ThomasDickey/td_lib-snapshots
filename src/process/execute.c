@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: execute.c,v 12.6 1994/05/30 21:19:52 tom Exp $";
-#endif
-
 /*
  * Title:	execute.c (execute a command, returning its status)
  * Author:	T.E.Dickey
@@ -40,6 +36,8 @@ static	char	Id[] = "$Id: execute.c,v 12.6 1994/05/30 21:19:52 tom Exp $";
 #include	"ptypes.h"
 #include	<ctype.h>
 #include	<errno.h>
+
+MODULE_ID("$Id: execute.c,v 12.7 1994/05/30 21:19:52 tom Exp $")
 
 #ifdef	vms
 #  include	<descrip.h>

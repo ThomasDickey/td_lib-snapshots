@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: pathcat.c,v 12.3 1993/11/27 17:01:20 dickey Exp $";
-#endif
-
 /*
  * Title:	pathcat.c (path concatenation)
  * Author:	T.E.Dickey
@@ -25,6 +21,8 @@ static	char	Id[] = "$Id: pathcat.c,v 12.3 1993/11/27 17:01:20 dickey Exp $";
 
 #define	STR_PTYPES
 #include	"ptypes.h"
+
+MODULE_ID("$Id: pathcat.c,v 12.4 1993/11/27 17:01:20 tom Exp $")
 
 char *
 pathcat(

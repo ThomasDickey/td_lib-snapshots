@@ -1,7 +1,3 @@
-#ifndef	NO_IDENT
-static	char	Id[] = "$Id: dumptty.c,v 12.1 1994/07/16 18:34:23 tom Exp $";
-#endif
-
 /*
  * Title:	dumptty.c (dump tty settings to file)
  * Author:	T.E.Dickey
@@ -15,6 +11,8 @@ static	char	Id[] = "$Id: dumptty.c,v 12.1 1994/07/16 18:34:23 tom Exp $";
  */
 #define TRM_PTYPES	/* <termios.h> */
 #include <td_curse.h>
+
+MODULE_ID("$Id: dumptty.c,v 12.2 1994/07/16 18:34:23 tom Exp $")
 
 #define	CONTRAST(msg,f) Contrast(msg, (long)(tst.f), (long)(ref.f))
 #define	SHOWMASK(t,m)   ShowMasks(t, SIZEOF(t), m)

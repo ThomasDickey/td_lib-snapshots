@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: rcsedit.c,v 12.5 1994/07/11 01:27:54 tom Exp $";
-#endif
-
 /*
  * Title:	rcsedit.c (edit RCS file)
  * Author:	T.E.Dickey
@@ -41,6 +37,8 @@ static	char	Id[] = "$Id: rcsedit.c,v 12.5 1994/07/11 01:27:54 tom Exp $";
 #include	"ptypes.h"
 #include	"rcsdefs.h"
 #include	<ctype.h>
+
+MODULE_ID("$Id: rcsedit.c,v 12.6 1994/07/11 01:27:54 tom Exp $")
 
 /* local definitions */
 #define	VERBOSE	if (verbose) PRINTF
