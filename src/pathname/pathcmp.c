@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: pathcmp.c,v 10.1 1992/05/12 14:56:34 dickey Exp $";
+static	char	Id[] = "$Id: pathcmp.c,v 11.0 1992/05/15 16:56:44 ste_cm Rel $";
 #endif
 
 /*
@@ -72,7 +72,7 @@ _DCL(char *,	p2)
 		} else
 			break;
 	}
-	return (EQ);
+	return (*p1 - *p2);
 }
 
 #ifdef	TEST
