@@ -1,3 +1,14 @@
+2003-11-07  dickey@invisible-island.net
+
+	* aclocal.m4: workaround for HPUX 11.23
+
+	* aclocal.m4:
+	add CF_XOPEN_SOURCE, so there's a place to prop up HPUX builds with a
+	"-D_HPUX_SOURCE" definition.
+
+	* configure.in:
+	use CF_XOPEN_SOURCE rather than CF_GNU_SOURCE (HPUX's a worse case)
+
 2003-11-06  dickey@invisible-island.net
 
 	* aclocal.m4:
