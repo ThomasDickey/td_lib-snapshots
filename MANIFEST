@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19920206
+MANIFEST for td_lib, version t19920207
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 Makefile                        top-level makefile for TD_LIB
@@ -38,7 +38,9 @@ src/cm_funcs/rcslocks.c         RCS lock-parsing
 src/cm_funcs/rcsname.c          derive RCS working/archive filenames
 src/cm_funcs/rcspath.c          RCS utility to pathname
 src/cm_funcs/rcsperm.c          directory-level RCS permissions
+src/cm_funcs/rcssymbs.c         RCS symbols-parsing
 src/cm_funcs/rcstemp.c          create temp-file for setuid operations
+src/cm_funcs/rcstime.c          encapsulates how to encode/decode archive-times
 src/cm_funcs/sccs_dir.c         returns name of SCCS directory
 src/cm_funcs/sccslast.c         scan for last SCCS date & version
 src/cm_funcs/sccsname.c         SCCS working/archive name translation (like 'rcsname.c').
@@ -72,6 +74,7 @@ src/memory/vecedit.c            edits vectors of text a la 'diff -n'
 src/memory/veclen.c             computes length of a vector
 src/pathname                    subdirectory
 src/pathname/abspath.c          convert path to absolute form
+src/pathname/acc_mode.c         shows mode-argument for 'access()' in readable-form
 src/pathname/add2fnam.c         add suffix to a filename
 src/pathname/arg2file.c         write an argv-style (null-terminated vector of pointers to strings) to a file
 src/pathname/copyback.c         copy file back from a temp-file
@@ -134,6 +137,7 @@ src/process/interact.c          tests if a process is running interactively by a
 src/process/makeargv.c          make quick (nonstandard) argv-list list from a string
 src/process/revert.c            reset/disable setuid mode
 src/process/shoarg.c            shows arguments built with 'catarg()'
+src/process/showuids.c          shows uid+gid, for traces
 src/process/usercopy.c          copy file for set-uid user
 src/process/userprot.c          set file protection for set-uid user
 src/sheet                       subdirectory
@@ -143,6 +147,9 @@ src/sheet/ss_field.c            insert/extract data in "spreadsheet" table
 src/string                      subdirectory
 src/string/dftenv.c             returns 'getenv()' with a default (non-null) value
 src/string/dotcmp.c             compare dot-separated strings
+src/string/dyn_app.c            append to a dynamic-string
+src/string/dyn_cata.c           dyn-string interface to 'catarg()'
+src/string/dyn_str.c            module for managing dynamic-strings
 src/string/lsbycols.c           list an array of character strings by columns
 src/string/ltostr.c             convert 'long' to a string
 src/string/strbcmp.c            compare two strings ignoring blanks a la "diff -b"

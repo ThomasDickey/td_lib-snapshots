@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 10.3 1992/02/06 08:29:56 dickey Exp $ */
+/* $Id: td_lib.h,v 10.5 1992/02/07 08:21:08 dickey Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for CM_TOOLS COMMON
@@ -34,6 +34,13 @@
 			_dcl(char *,	path)
 			_nul
 #endif	/* unix */
+
+	/* access_mode.c ---------------------------------------------- */
+	char *	access_mode(
+			_ar1(int,	mode)
+			)
+			_dcl(int,	mode)
+			_ret
 
 	/* add2fname.c ------------------------------------------------ */
 	int	add2fname(
@@ -567,11 +574,11 @@
 
 	/* revert.c --------------------------------------------------- */
 #ifdef	unix
-		revert(
+	int	revert(
 			_ar1(char *,	msg)
 			)
 			_dcl(char *,	msg)
-			_nul
+			_ret
 
 	/* s2gid.c ---------------------------------------------------- */
 	int	s2gid(
@@ -668,6 +675,13 @@
 			_dcl(FILE *,	fp)
 			_dcl(char *,	command)
 			_dcl(char *,	args)
+			_nul
+
+	/* show_uids.c ------------------------------------------------ */
+	void	show_uids(
+			_ar1(FILE *,	fp)
+			)
+			_dcl(FILE *,	fp)
 			_nul
 
 	/* stat_dir.c ------------------------------------------------- */

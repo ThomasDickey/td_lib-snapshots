@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	*Id = "$Id: interact.c,v 10.1 1992/02/04 13:10:41 dickey Exp $";
+static	char	*Id = "$Id: interact.c,v 12.0 1992/02/07 15:29:15 ste_cm Rel $";
 #endif
 
 /*
@@ -22,7 +22,7 @@ interactive(_AR0)
 	if (!init) {
 		init = TRUE;
 		if ((opened_tty = open("/dev/tty", 0)) >= 0)
-			close(opened_tty);
+			(void)close(opened_tty);
 	}
 	return opened_tty >= 0;
 }

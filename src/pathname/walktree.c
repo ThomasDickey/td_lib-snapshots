@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: walktree.c,v 10.1 1992/02/05 15:33:56 dickey Exp $";
+static	char	Id[] = "$Id: walktree.c,v 11.0 1992/02/07 15:27:56 ste_cm Rel $";
 #endif
 
 /*
@@ -88,7 +88,7 @@ _ARX(char *,	path)
 _ARX(char *,	name)
 _FNX(int,	func)
 _ARX(char *,	type)
-_ARX(int,	level)
+_AR1(int,	level)
 	)
 _DCL(char *,	path)
 _DCL(char *,	name)

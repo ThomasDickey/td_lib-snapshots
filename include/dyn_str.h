@@ -1,4 +1,4 @@
-/* $Id: dyn_str.h,v 10.1 1992/02/06 15:53:48 dickey Exp $
+/* $Id: dyn_str.h,v 10.6 1992/02/07 11:15:15 dickey Exp $
  *
  *	Functions which manage dynamic-strings.
  */
@@ -11,9 +11,13 @@
 
 typedef	struct	{
 	char	*text;
-	int	cur_length,
+	size_t	cur_length,
 		max_length;
 	} DYN;
+
+#define	APPEND	(void) dyn_append
+#define	CATARG	(void) dyn_catarg
+#define	CATARG2	(void) dyn_catarg2
 
 	/* dyn_append.c ----------------------------------------------- */
 	DYN *	dyn_append(
@@ -26,15 +30,21 @@ typedef	struct	{
 
 	/* dyn_catarg.c ----------------------------------------------- */
 	DYN *	dyn_catarg(
-		_ar1(DYN *,	p)
+		_arx(DYN *,	p)
+		_ar1(char *,	arg)
 		)
 		_dcl(DYN *,	p)
+		_dcl(char *,	arg)
 		_ret
 
 	DYN *	dyn_catarg2(
-		_ar1(DYN *,	p)
+		_arx(DYN *,	p)
+		_arx(char *,	opt)
+		_ar1(char *,	value)
 		)
 		_dcl(DYN *,	p)
+		_dcl(char *,	opt)
+		_dcl(char *,	value)
 		_ret
 
 	/* dyn_string.c ----------------------------------------------- */
@@ -47,15 +57,17 @@ typedef	struct	{
 		_ret
 
 	DYN *	dyn_free(
-		_ar1(DYN **,	p)
-		)
-		_dcl(DYN **,	p)
-		_ret
-
-	void	dyn_clear(
 		_ar1(DYN *,	p)
 		)
 		_dcl(DYN *,	p)
+		_ret
+
+	void	dyn_init(
+		_arx(DYN **,	p)
+		_ar1(size_t,	len)
+		)
+		_dcl(DYN **,	p)
+		_dcl(size_t,	len)
 		_nul
 
 	char *	dyn_string(
@@ -64,7 +76,7 @@ typedef	struct	{
 		_dcl(DYN *,	p)
 		_ret
 
-	int	dyn_length(
+	size_t	dyn_length(
 		_ar1(DYN *,	p)
 		)
 		_dcl(DYN *,	p)
