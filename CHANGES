@@ -1,3 +1,12 @@
+1991-07-10  dickey@software.org
+
+	* src/cm_funcs/rcsedit.c:
+	eliminate redundant file-copying by writing directly to a
+	file in the RCS-directory if we have permissions (otherwise,
+	to a temp-file).  In the latter case, we expect that the
+	renaming operation will fail and be reported iff the caller
+	changes the file.
+
 1991-07-01  dickey@software.org
 
 	* src/Makefile: corrected include-path for 'rscpath.o'
