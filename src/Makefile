@@ -1,4 +1,4 @@
-# @(#)Makefile	1.54 88/09/19 07:37:23
+# @(#)Makefile	1.55 88/12/14 11:18:04
 # MAKE-file for miscellaneous library routines
 #
 ####### (Development) ##########################################################
@@ -77,6 +77,7 @@ CSRC	=\
 	usercopy.c\
 	userprot.c\
 	vecalloc.c\
+	vercmp.c\
 	walktree.c\
 	which.c\
 	win2file.c
@@ -148,6 +149,7 @@ OBJS	=\
 	usercopy.o\
 	userprot.o\
 	vecalloc.o\
+	vercmp.o\
 	walktree.o\
 	which.o\
 	win2file.o
