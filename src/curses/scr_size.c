@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: scr_size.c,v 12.3 1994/06/27 00:15:08 tom Exp $";
+static	char	Id[] = "$Id: scr_size.c,v 12.4 1994/07/24 01:15:57 tom Exp $";
 #endif
 
 /*
@@ -92,7 +92,7 @@ int	scr_size(
 	}
 #endif	/* apollo */
 
-#ifdef TIOCGWINSZ
+#ifdef TIOCGWINSZ	/* SunOS 4.x */
 	if (ioctl (0, TIOCGWINSZ, (caddr_t)&size) == 0) {
 		if ((int)(size.ws_row) > 0)
 			my_LINES = size.ws_row;
@@ -100,7 +100,18 @@ int	scr_size(
 			my_COLS = size.ws_col;
 		return (0);
 	} else
-#endif
+#ifdef	__svr4__
+		/*
+		 * Testing on ClarkNet's machine:
+		 *	SunOS explorer 5.3 Generic_Patch sun4m sparc
+		 * I found that if I tried to use the termcap functions, that
+		 * they clobber the standard input used by curses.  So this
+		 * error-return is designed to avoid the termcap code on
+		 * Solaris until I can refine the bug -- T.Dickey 94/7/23.
+		 */
+		return (-1);
+#endif	/* __svr4__ */
+#endif	/* TIOCGWINS */
 
 	/*
 	 * If we can get the size from termcap, let's believe it.

@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: resizwin.c,v 12.3 1994/07/23 11:58:41 tom Exp $";
+static	char	Id[] = "$Id: resizwin.c,v 12.5 1994/07/26 19:08:50 tom Exp $";
 #endif
 
 /*
@@ -63,21 +63,17 @@ int	resizewin(_AR0)
 		my_COLS  = lc[1];
 		if (my_LINES != LINES || my_COLS != COLS) {
 #if SYS5_CURSES
+#if HAVE_LIBNCURSES
 			wresize(stdscr, my_LINES, my_COLS);
 			wresize(curscr, my_LINES, my_COLS);
-#if HAVE_LIBNCURSES
 			wresize(newscr, my_LINES, my_COLS);
 			resizeterm(my_LINES, my_COLS);
-#else
-			dlog_comment("resizewin called\n");
-			dlog_comment("... was %dx%d\n", LINES, COLS);
-			dlog_comment("... now %dx%d\n", my_LINES, my_COLS);
-			dlog_flush();
-			LINES = my_LINES;
-			COLS  = my_COLS;
-#endif
 			savewin();
 			unsavewin(TRUE,0);
+			return (TRUE);
+#else
+			return (FALSE);	/* probably doesn't work */
+#endif
 #else	/* BSD curses */
 			wresize(stdscr, my_LINES, my_COLS);
 			wresize(curscr, my_LINES, my_COLS);
@@ -85,11 +81,9 @@ int	resizewin(_AR0)
 			COLS  = my_COLS;
 			savewin();
 			unsavewin(TRUE,0);
-#endif
 			return (TRUE);
+#endif
 		}
-	} else {
-		beep();	/* couldn't get the screen size! */
 	}
 	return (FALSE);
 #endif	/* __hpux/!__hpux */

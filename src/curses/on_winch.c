@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: on_winch.c,v 12.3 1994/07/23 12:42:51 tom Exp $";
+static	char	Id[] = "$Id: on_winch.c,v 12.4 1994/07/26 13:52:28 tom Exp $";
 #endif
 
 /*
@@ -34,7 +34,7 @@ static	char	Id[] = "$Id: on_winch.c,v 12.3 1994/07/23 12:42:51 tom Exp $";
 
 /*ARGSUSED*/def_ALLOC(ON_WINCH)
 
-static	RETSIGTYPE catch_winch (SIGNAL_ARGS);
+static	RETSIGTYPE catch_winch (SIGNAL_args);
 
 static	DCL_SIGNAL(saved_winch);
 static	ON_WINCH	*list;

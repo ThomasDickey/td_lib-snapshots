@@ -1,4 +1,4 @@
-/* $Id: td_qsort.h,v 12.4 1994/06/25 14:14:37 tom Exp $ */
+/* $Id: td_qsort.h,v 12.5 1994/07/26 18:56:10 tom Exp $ */
 
 #ifndef	TD_QSORT_H
 #define	TD_QSORT_H
@@ -47,8 +47,8 @@
 		     QSORT_FUNC_DCLS(p1,p2)
 
 #ifndef	LINTLIBRARY
-#if	!ANSI_QSORT
-extern	V_OR_I	qsort(
+#if	HAVE_QSORT && NEED_QSORT
+extern	void	qsort(
 		_arx(V_OR_P,	base)
 		_arx(size_t,	nel)
 		_arx(size_t,	width)

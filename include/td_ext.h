@@ -1,4 +1,4 @@
-/* $Id: td_ext.h,v 12.6 1994/07/16 15:14:08 tom Exp $ */
+/* $Id: td_ext.h,v 12.7 1994/07/26 13:53:52 tom Exp $ */
 
 #ifndef	TD_EXT_H
 #define	TD_EXT_H
@@ -385,7 +385,7 @@ extern	int	getopt   ARGS((int argc, char * const *argv, const char *opts));
 extern	char *	optarg;
 extern	int	optind;
 
-#if HAVE_GETWD && NEED_GETWD
+#if HAVE_GETWD /*&& NEED_GETWD*/
 extern	char *	getwd    ARGS((char *p));
 #endif /* HAVE_GETWD */
 #ifdef	TIM_PTYPES
