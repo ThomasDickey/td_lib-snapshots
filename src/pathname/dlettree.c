@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RCS/dlettree.c,v 2.0 1989/04/24 14:08:48 ste_cm Rel $";
+static	char	Id[] = "$Id: dlettree.c,v 3.0 1989/09/15 08:39:09 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -20,7 +20,6 @@ static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RC
 #define		STR_PTYPES
 #include	"portunix.h"
 #include	<errno.h>
-extern	char	*getcwd();
 
 #define	TELL		fprintf(stderr,
 
@@ -62,8 +61,8 @@ char	*oldname;
 
 	if (_OPENDIR(oldname,sb.st_mode)) {
 		TELL_SCAN(oldname);
-		if (getcwd(oldpath,sizeof(oldpath)-2) == 0) {
-			fail("(getcwd)");
+		if (getwd(oldpath) == 0) {
+			fail("(getwd)");
 			return(0);
 		}
 		if (chdir(DIR2PATH(oldname)) < 0) {

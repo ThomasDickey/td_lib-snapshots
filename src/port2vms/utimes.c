@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/port2vms/RCS/utimes.c,v 2.0 1988/11/30 13:42:24 ste_cm Rel $";
+static	char	Id[] = "$Id: utimes.c,v 4.0 1989/09/15 11:35:15 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -16,7 +16,7 @@ static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/port2vms/RC
 #include	"portunix.h"
 #include	<rms.h>
 #include	<iodef.h>
-#include	<stsdef.h>
+#include	<errno.h>
 
 #include	<fibdef.h>
 #include	<atrdef.h>
@@ -26,7 +26,8 @@ static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/port2vms/RC
 
 #define	sys(f)	status = f;\
 		if (!$VMS_STATUS_SUCCESS(status)) {\
-			c$$translate(status);\
+			errno = EVMSERR;\
+			vaxc$errno = status;\
 			return(-1);\
 		}
 

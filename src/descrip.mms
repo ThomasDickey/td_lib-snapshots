@@ -1,4 +1,4 @@
-# $Header: /users/source/archives/td_lib.vcs/src/RCS/descrip.mms,v 4.3 1989/09/14 15:01:21 dickey Exp $
+# $Header: /users/source/archives/td_lib.vcs/src/RCS/descrip.mms,v 4.4 1989/09/15 09:06:15 dickey Exp $
 # MMS-file for miscellaneous library routines	
 #
 ####### (Development) ##########################################################
@@ -99,9 +99,9 @@ UNUSED_MODULES = -
 	USERCOPY 		# uses FOR_USER -
 	USERPROT 		# uses FOR_USER -
 	VCS_FILE,		# rcs (unix-only) -
-	VIEW_FILE,		# curses/unix
+	VIEW_FILE,		# curses/unix -
 	WHICH,			# unix-style PATH-variable -
-	WIN2FILE,		# curses
+	WIN2FILE,		# curses -
 	WREPAINT		# curses
 #
 C_SRC	=-

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/port2vms/RCS/rmsio.c,v 2.0 1989/02/22 13:42:57 ste_cm Rel $";
+static	char	Id[] = "$Id: rmsio.c,v 4.0 1989/09/15 11:39:01 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -25,6 +25,9 @@ static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/port2vms/RC
 #include	<ssdef.h>
 #include	"portunix.h"
 #include	<ctype.h>
+#include	<errno.h>
+
+#define	c$$translate(sts)	errno = EVMSERR; vaxc$errno = sts
 
 #define	REG	register
 

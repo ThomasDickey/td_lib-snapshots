@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RCS/edittree.c,v 2.0 1989/04/24 16:05:57 ste_cm Rel $";
+static	char	Id[] = "$Id: edittree.c,v 3.0 1989/09/15 08:39:14 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -19,7 +19,6 @@ static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RC
 #define	STR_PTYPES
 #include	"portunix.h"
 #include	<errno.h>
-extern	char	*getcwd();
 
 #define	isDIR(m)	((m & S_IFMT) == S_IFDIR)
 #define	isFILE(m)	((m & S_IFMT) == S_IFREG)
@@ -67,8 +66,8 @@ int	(*func)();
 	if (_OPENDIR(oldname,sb.st_mode)) {
 		TELL_DIR(oldname);
 
-		if (getcwd(oldpath,sizeof(oldpath)-2) == 0) {
-			perror("(getcwd)");
+		if (getwd(oldpath) == 0) {
+			perror("(getwd)");
 			return(0);
 		}
 		if (chdir(DIR2PATH(oldname)) < 0) {
