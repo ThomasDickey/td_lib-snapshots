@@ -1,4 +1,4 @@
-/* $Id: td_curse.h,v 12.20 1994/07/16 16:55:00 tom Exp $ */
+/* $Id: td_curse.h,v 12.21 1994/07/20 22:34:36 tom Exp $ */
 
 /*
  * TD_LIB CURSES-related definitions
@@ -36,12 +36,22 @@
  * The SYS5_CURSES definition is used only for places where we must assume,
  * rather than provide an explicit test.  Some implementations will break this
  * assumption.
+ *
+ * On MS-DOS, I've used PDCurses 2.x, which is derived from NCurses.
  */
 #if defined(MSDOS) || HAVE_KEYPAD || HAVE_NCURSES_H
 #define SYS5_CURSES 1
 #else
 #define SYS5_CURSES 0
 #endif
+
+/*----------------------------------------------------------------------------*/
+/*
+ * The SYS5 clone "ncurses" 1.8.5 has an off-by-one error in the computation of
+ * the _maxy/_maxx values.  These macros are used to hide this bug.
+ */
+#define	wMaxX(w)	(((w)->_maxx) + (COLS  - stdscr->_maxx))
+#define	wMaxY(w)	(((w)->_maxy) + (LINES - stdscr->_maxy))
 
 /*----------------------------------------------------------------------------*/
 #ifdef MSDOS

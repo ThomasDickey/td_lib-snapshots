@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: wrepaint.c,v 12.4 1994/05/23 23:12:57 tom Exp $";
+static	char	Id[] = "$Id: wrepaint.c,v 12.5 1994/07/20 22:29:07 tom Exp $";
 #endif
 
 /*
@@ -57,13 +57,13 @@ void	wrepaint(
 #else
 	auto	int	min_row = win->_begy,
 			min_col = win->_begx,
-			max_col = win->_maxx + min_col - 1;
+			max_col = wMaxX(win) + min_col - 1;
 	register int	col, c;
 
 	while (row < LINES) {
 		chtype	*y_data = win->_y[row-min_row];
 		win->_firstch[row] = 0;
-		win->_lastch [row] = win->_maxx - 1;
+		win->_lastch [row] = wMaxX(win) - 1;
 		for (col = min_col; col < max_col; col++) {
 			if ((c = y_data[col-min_col]) == '~')
 				c = '?';

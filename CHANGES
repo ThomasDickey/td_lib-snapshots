@@ -1,3 +1,13 @@
+1994-07-20  dickey@clark.net
+
+	* src/curses/rawgets.c: hide ncurses bug in a macro
+
+	* include/td_curse.h:
+	added wMaxX/wMaxY to hide off-by-one ncurses incompatibility
+
+	* src/curses/win2file.c, src/curses/wrepaint.c:
+	hide ncurses bug in a macro
+
 1994-07-19  dickey@clark.net
 
 	* src/curses/bindkeys.c: still just notes

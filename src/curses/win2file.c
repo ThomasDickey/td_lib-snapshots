@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: win2file.c,v 12.2 1993/10/29 18:39:17 dickey Exp $";
+static	char	Id[] = "$Id: win2file.c,v 12.3 1994/07/20 22:32:10 tom Exp $";
 #endif
 
 /*
@@ -72,12 +72,13 @@ void	win2fp(
 	register chtype	*s;
 	register int	j;
 	register int	k;
+	int	rows = wMaxY(win);
 
 	OUT "%sscreen saved at %s", *prefix ? prefix : "\f", ctime(&now));
 	OUT "%s----------------\n", prefix);
 
 	getyx(win, y, x);
-	for (j = 0; j < win->_maxy; j++) {
+	for (j = 0; j < rows; j++) {
 		OUT "%s", prefix);
 		if ((s = win->_y[j]) != NULL) {
 			auto	chtype	*t = s;
@@ -90,7 +91,7 @@ void	win2fp(
 
 			/* find the last nonblank column */
 			while ((k = toascii(*s++)) != EOS) {
-				if ((s - win->_y[j]) >= win->_maxx)
+				if ((s - win->_y[j]) >= wMaxX(win))
 					break;
 				if (!isspace(k))
 					t = s;
