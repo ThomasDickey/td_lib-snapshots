@@ -2,6 +2,7 @@
  * Author:	T.E.Dickey
  * Created:	17 Sep 1987
  * Modified:
+ *		01 Nov 2000, modified to work with OS/2 EMX.
  *		10 Jan 1996, corrected handling of "~foo/bar/bar" in abshome.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
@@ -38,7 +39,7 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: abspath.c,v 12.7 1996/01/11 01:03:00 tom Exp $")
+MODULE_ID("$Id: abspath.c,v 12.8 2000/11/02 01:25:16 tom Exp $")
 
 #ifdef	apollo
 #ifdef	apollo_sr10
@@ -214,7 +215,7 @@ void	abspath(
 	/*
 	 * Skip DOS-style device
 	 */
-#ifdef	MSDOS
+#if defined(MSDOS) || defined(__EMX__)
 	if (isalpha(*base) && base[1] == ':') {
 		path += 2;
 		d = path;
@@ -274,11 +275,11 @@ void	abspath(
 			if (!isSlash(d[-1]))	/* add slash iff we need it */
 				(void)strcat(d, slash);
 			(void)strcat(d, s);
-#ifdef	unix
-			(void)strcpy(base, denode(cwdpath, nodestr, (int *)0));
-#else	/* MSDOS */
+#if defined(MSDOS) || defined(__EMX__)
 			(void)strcpy(base, cwdpath);
-#endif	/* unix or MSDOS */
+#else
+			(void)strcpy(base, denode(cwdpath, nodestr, (int *)0));
+#endif	/* MSDOS */
 		}
 	}
 
