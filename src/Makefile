@@ -1,4 +1,4 @@
-# @(#)Makefile	1.27 88/06/30 06:43:39
+# @(#)Makefile	1.28 88/07/18 07:33:34
 # MAKE-file for miscellaneous library routines
 L=lib.a
 GET=sccsget
@@ -21,6 +21,7 @@ SRCS	=\
 	erasechar.c\
 	execute.c\
 	flushall.c\
+	fp2argv.c\
 	gethome.c\
 	getuser.c\
 	gid2s.c\
@@ -69,6 +70,7 @@ OBJS	=\
 	erasechar.o\
 	execute.o\
 	flushall.o\
+	fp2argv.o\
 	gethome.o\
 	getuser.o\
 	gid2s.o\

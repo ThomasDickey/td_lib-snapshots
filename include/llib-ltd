@@ -1,4 +1,4 @@
-/* @(#)llib-ltd	1.25 88/06/13 09:37:27 */
+/* @(#)llib-ltd	1.26 88/07/18 07:41:59 */
 /*LINTLIBRARY*/
 
 #include	<curses.h>
@@ -63,6 +63,9 @@ int	execute(verb, args) char *verb, *args; { return(0); }
 
 /* flushall.c --------------------------------------------------------- */
 	flushall(fd) { }
+
+/* fp2argv.c ---------------------------------------------------------- */
+int	fp2argv(fp, argv_) FILE *fp; char ***argv_; { return(0); }
 
 /* gethome.c ---------------------------------------------------------- */
 char	*gethome() { return(0); }
