@@ -1,4 +1,4 @@
-/* $Id: rcsdefs.h,v 9.3 1991/09/06 11:18:46 dickey Exp $ */
+/* $Id: rcsdefs.h,v 9.4 1991/09/13 07:33:04 dickey Exp $ */
 
 #ifndef	_RCSDEFS_H_
 #define	_RCSDEFS_H_
@@ -54,6 +54,8 @@ typedef	struct	{
 		int	num_lines;	/* total lines in file	*/
 		int	num_added;	/* lines added		*/
 		int	num_deleted;	/* lines deleted	*/
+		char	*buffer;	/* loaded-file (raw)	*/
+		char	**vector;	/* pointers to lines	*/
 	} RCSTREE;
 #endif	/* S_IFMT */
 
@@ -150,10 +152,12 @@ extern	char *	getenv();
 	RCSTREE *rcsload(
 			_ARX(char *,	name)
 			_ARX(int,	full)
+			_ARX(int,	load)
 			_AR1(int,	verbose)
 			)
 			_DCL(char *,	name)
 			_DCL(int,	full)
+			_DCL(int,	load)
 			_DCL(int,	verbose)
 			_RET
 

@@ -1,4 +1,4 @@
-# $Id: descrip.mms,v 9.1 1991/06/20 08:20:27 dickey Exp $
+# $Id: descrip.mms,v 9.2 1991/09/13 07:53:01 dickey Exp $
 # MMS-file for miscellaneous library routines	
 #
 ####### (Development) ##########################################################
@@ -31,6 +31,7 @@ LIBRARYMODULES = -
 	FAILED, -
 	FILE2ARGV, -
 	FILE2MEM, -
+	FILESIZE, -
 	FP2ARGV, -
 	FTYPE, -
 	ISTEXTFILE, -
@@ -134,6 +135,7 @@ C_SRC	=-
 	FILE2ARGV.C -
 	FILE2MEM.C -
 	FILECOPY.C -
+	FILESIZE.C -
 	FOR_USER.C -
 	FP2ARGV.C -
 	FTYPE.C -
@@ -253,6 +255,7 @@ FAILED.obj :		$(PTYPES_H)
 FILE2ARGV.obj :		$(PTYPES_H)
 FILE2MEM.obj :		$(PTYPES_H)
 FILECOPY.obj :		$(PTYPES_H)
+FILESIZE.obj :		$(PTYPES_H)
 FOR_USER.obj :		$(PTYPES_H)
 FP2ARGV.obj :		$(PTYPES_H)
 FTYPE.obj :		$(PTYPES_H)

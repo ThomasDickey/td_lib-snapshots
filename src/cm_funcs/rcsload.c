@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcsload.c,v 9.5 1991/09/06 11:20:50 dickey Exp $";
+static	char	Id[] = "$Id: rcsload.c,v 9.6 1991/09/13 08:56:28 dickey Exp $";
 #endif
 
 /*
@@ -7,9 +7,12 @@ static	char	Id[] = "$Id: rcsload.c,v 9.5 1991/09/06 11:20:50 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	19 Aug 1988
  * $Log: rcsload.c,v $
- * Revision 9.5  1991/09/06 11:20:50  dickey
- * added 'readonly' arg to 'rcsopen()'
+ * Revision 9.6  1991/09/13 08:56:28  dickey
+ * partial implementation of logic to load file-text
  *
+ *		Revision 9.5  91/09/06  12:06:55  dickey
+ *		added 'readonly' arg to 'rcsopen()'
+ *		
  *		Revision 9.4  91/09/06  10:32:16  dickey
  *		lint
  *		
@@ -44,6 +47,7 @@ static	char	Id[] = "$Id: rcsload.c,v 9.5 1991/09/06 11:20:50 dickey Exp $";
 extern	long	packdate();
 extern	char	*ctime();
 extern	char	*txtalloc();
+extern	off_t	filesize();
 
 /* local definitions */
 #define	CHUNK	31			/* one less than a power of 2 */
@@ -53,7 +57,12 @@ extern	char	*txtalloc();
 
 static	int	cur_added,
 		cur_deleted;
-static	int	log_or_edit;
+static	int	log_or_edit;		/* -1=log, 0=text, 1=delta */
+
+					/* data used for loading text */
+static	int	load_flag;
+static	char	*load_buffer,
+		*load_last;
 
 					/* buffer maintained by 'loadtext()' */
 static	char	*my_buffer;
@@ -65,10 +74,35 @@ static	unsigned my_limit;
  ************************************************************************/
 
 static
+append_text(s)
+char	*s;
+{
+	if (load_flag && s != 0) {
+		while (*load_last++ = *s++);
+	}
+}
+
+/*
+ * This leaves each record in the file with the editing-code prefixed to the
+ * line-contents.
+ */
+static
+append_delta(c, line, s)
+char	*s;
+{
+	if (load_flag) {
+		char	temp[80];
+		FORMAT(temp, "%c%d", c, line);
+		append_text(s);
+		append_text(s);
+	}
+}
+
+static
 loadtext(c)
 {
-	char	etype;		/* editing type */
-	static	int	at, skip;
+	static	char	edit_type;		/* editing type */
+	static	int	edit_at, skip;
 
 	if (my_buffer == 0)
 		my_buffer = doalloc(my_buffer, my_limit = BUFSIZ);
@@ -81,19 +115,38 @@ loadtext(c)
 		my_length = 0;
 
 		if (log_or_edit > 0) {
-			if (skip > 0)
+			if (skip > 0) {
 				skip--;
-			else if (sscanf(my_buffer, "%c%d %d",&etype,&at,&skip) == 3) {
-				if (etype == 'a')
+				edit_at++;
+				append_delta(edit_type, edit_at, my_buffer);
+			} else if (sscanf(my_buffer,
+					"%c%d %d",
+					&edit_type, &edit_at, &skip) == 3) {
+				if (edit_type == 'a')
 					cur_added += skip;
-				else {
-					if (etype == 'd')
-						cur_deleted += skip;
+				else if (edit_type == 'd') {
+					cur_deleted += skip;
+					append_delta(edit_type, edit_at,
+						strchr(my_buffer, ' ')+1);
+					skip = 0;
+				} else	{
+#ifdef	TEST
+					PRINTF("? unknown edit-code:%c\n",
+						edit_type);
+					exit(FAIL);
+#endif
 					skip = 0;
 				}
 			}
+#ifdef	TEST
+			else {
+				PRINTF("? unexpected record\n");
+				exit(FAIL);
+			}
+#endif
 		} else if (log_or_edit == 0) {
 			cur_added++;
+			append_text(my_buffer);
 		}
 	} else if (c != EOS) {
 		if (my_length >= my_limit-1)
@@ -114,12 +167,29 @@ eat_text(s, code)
 char	*s;
 int	code;
 {
+	char	*base = load_last;
+
 	if ((log_or_edit = code) >= 0) {
 		cur_added =
 		cur_deleted = 0;
 	}
 	my_length   = 0;
-	return rcsparse_str(s, loadtext);
+	s = rcsparse_str(s, loadtext);
+
+	/* compute vector of line-pointers */
+	if (base != 0 && log_or_edit >= 0) {
+		register int	j;
+		register char	*p;
+		int	count = 0;
+		for (j = 0, p = base; p != load_last; p += strlen(p)+1, j++)
+#ifdef	TEST
+			PRINTF("%5d:\t%s\n", j+1, p)
+#endif
+			;
+		count = j;
+	}
+
+	return s;
 }
 
 /*
@@ -209,9 +279,10 @@ char	*root;
  ************************************************************************/
 
 RCSTREE *
-rcsload(archive, full, verbose)
+rcsload(archive, full, load, verbose)
 char	*archive;			/* name of file to open		*/
 int	full;				/* TRUE if we open full path	*/
+int	load;				/* TRUE if we load file-text	*/
 int	verbose;			/* TRUE if we show messages	*/
 {
 	static	RCSTREE	nil;		/* empty struct, for terminator */
@@ -220,12 +291,22 @@ int	verbose;			/* TRUE if we show messages	*/
 	unsigned total = 0;		/* number of items in vector	*/
 	char	key[BUFSIZ],
 		tmp[BUFSIZ],
+		*name,
 		*s	= 0;
 	register int j, k;
 	int	delta	= 0;
 
-	if (!rcsopen(name2rcs(archive,full), verbose, TRUE))
+	if (!rcsopen(name = name2rcs(archive,full), verbose, TRUE))
 		return(vec);
+
+	if (load_flag = load) {
+		off_t	length = filesize(name);
+		if (length < 0)
+			return vec;
+		load_buffer = doalloc((char *)0, (unsigned)length);
+	} else
+		load_buffer = 0;
+	load_last = load_buffer;
 
 	k = -1;
 	while (s = rcsread(s)) {
@@ -255,6 +336,8 @@ int	verbose;			/* TRUE if we show messages	*/
 		case S_NEXT:
 			s = rcsparse_num(tmp,s);
 			new.parent = txtalloc(tmp);
+			new.buffer = load_buffer;
+			load_buffer = 0;
 			vec = DOALLOC(vec,RCSTREE,((total+1)|CHUNK)+1);
 			vec[total++] = new;
 			vec[total+1] = nil;
@@ -334,8 +417,14 @@ int	verbose;			/* TRUE if we show messages	*/
 rcsunload(p)
 RCSTREE	*p;			/* vector to release */
 {
-	if (p)
+	if (p != 0) {
+		register int	j;
+		for (j = 0; p[j].vector; j++) {
+			if (p[j].buffer != 0)	free(p[j].buffer);
+			if (p[j].vector != 0)	vecfree(p[j].vector);
+		}
 		dofree((char *)p);
+	}
 }
 
 #ifdef	TEST
@@ -346,7 +435,7 @@ char	*argv[];
 	register int	j, k;
 
 	for (j = 1; j < argc; j++) {
-		if (p = rcsload(argv[j], TRUE)) {
+		if (p = rcsload(argv[j], TRUE, TRUE, TRUE)) {
 			for (k = 0; p[k].tstamp; k++)
 				PRINTF("%05d/%05d  %3s => %s \t%s",
 					p[k].num_added,
@@ -357,12 +446,5 @@ char	*argv[];
 			rcsunload(p);
 		}
 	}
-}
-
-failed(s)
-char	*s;
-{
-	perror(s);
-	(void)exit(1);
 }
 #endif

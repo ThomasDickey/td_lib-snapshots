@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19910912
+MANIFEST for td_lib, version t19910913
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 Makefile                        top-level makefile for TD_LIB
@@ -76,6 +76,7 @@ src/pathname/edittree.c         VMS/unix edit-tree-of-files
 src/pathname/file2arg.c         load a text-file to memory in 'argv[]' format, returning the number of lines
 src/pathname/file2mem.c         code from 'file2argv.c' which loads a file to blob-string in memory
 src/pathname/filecopy.c         copy a file
+src/pathname/filesize.c         returns filesize, in bytes
 src/pathname/fp2argv.c          file-pointer to argv-list
 src/pathname/ftype.c            finds filename's suffix
 src/pathname/ftype2.c           finds filename's suffix (style 2)

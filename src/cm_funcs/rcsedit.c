@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	*Id = "$Id: rcsedit.c,v 9.3 1991/09/06 12:06:10 dickey Exp $";
+static	char	*Id = "$Id: rcsedit.c,v 9.4 1991/09/13 09:06:42 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,8 @@ static	char	*Id = "$Id: rcsedit.c,v 9.3 1991/09/06 12:06:10 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	26 May 1988
  * Modified:
+ *		13 Sep 1991, corrected rcsparse_str -- was not passing spaces
+ *			     back to caller.
  *		06 Sep 1991, added 'readonly' arg; suppress tempfile-creation
  *			     if true.
  *		10 Jul 1991, write directly into lock-file to avoid redundant
@@ -271,7 +273,10 @@ int	(*str_func)();		/* copies string as we read it */
 	register int c;
 
 	if (s != 0) {
-		s = skips(s);
+		while (isspace(*s)) {
+			STR_FUNC(*s);
+			s++;
+		}
 		while (*s != '@')
 			if ((s = rcsread(s)) == 0)		goto done;
 		s++;		/* skip past opening '@' */
@@ -285,7 +290,7 @@ int	(*str_func)();		/* copies string as we read it */
 					STR_FUNC(c);
 				}
 			}
-		} while (s = rcsread(s));
+		} while (s = readit());
 	}
 done:	STR_FUNC(EOS);
 	return (s);

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: file2mem.c,v 9.1 1991/09/12 07:36:07 dickey Exp $";
+static	char	Id[] = "$Id: file2mem.c,v 9.2 1991/09/13 07:57:15 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: file2mem.c,v 9.1 1991/09/12 07:36:07 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	11 May 1989
  * Modified:
+ *		13 Sep 1991, use 'filesize()'
  *		12 Sep 1991, removed redundant def for 'errno' (VMS C 3.2)
  *
  * Function:	Reads a file into memory, returning a pointer to the result.
@@ -27,10 +28,9 @@ char	*
 file2mem(name)
 char	*name;
 {
-	auto	 struct stat sb;
 	auto	 FILE	*fp;
-	auto	 int	j,
-			expected,	/* expected file-size */
+	auto	 int	j;
+	auto	 off_t	expected,	/* expected file-size */
 			length;
 	auto	 char	*blob;
 
@@ -54,13 +54,8 @@ char	*name;
 		 * to read it in a single chunk.  Assume a nominal line-size
 		 * so that we will cut the average time on realloc.
 		 */
-		if (stat(name, &sb) < 0)
+		if ((length = filesize(name)) < 0)
 			return (0);
-		if ((sb.st_mode & S_IFMT) != S_IFREG) {
-			errno = EISDIR;
-			return (0);
-		}
-		length = sb.st_size;
 #ifdef	vms
 		/* on vms, 'stat()' returns size in terms of blocks */
 		expected = length & ~511;

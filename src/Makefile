@@ -1,4 +1,4 @@
-# $Id: Makefile,v 9.3 1991/09/09 07:38:33 dickey Exp $
+# $Id: Makefile,v 9.4 1991/09/13 08:00:18 dickey Exp $
 # MAKE-file for miscellaneous library routines
 #
 ####### (Development) ##########################################################
@@ -40,6 +40,7 @@ CSRC	=\
 	file2argv.c\
 	file2mem.c\
 	filecopy.c\
+	filesize.c\
 	for_user.c\
 	fp2argv.c\
 	ftype.c\
@@ -137,6 +138,7 @@ OBJS	=\
 	file2argv.o\
 	file2mem.o\
 	filecopy.o\
+	filesize.o\
 	for_user.o\
 	fp2argv.o\
 	ftype.o\

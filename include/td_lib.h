@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 9.4 1991/07/22 13:54:37 dickey Exp $ */
+/* $Id: td_lib.h,v 9.5 1991/09/13 07:51:27 dickey Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for CM_TOOLS COMMON
@@ -242,6 +242,13 @@
 			_DCL(char *,	src)
 			_DCL(char *,	dst)
 			_DCL(int,	copy)
+			_RET
+
+	/* filesize.c ------------------------------------------------- */
+	off_t	filesize(
+			_AR1(char *,	name)
+			)
+			_DCL(char *,	name)
 			_RET
 
 	/* for_user.c ------------------------------------------------- */
