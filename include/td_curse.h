@@ -1,4 +1,4 @@
-/* $Id: td_curse.h,v 12.56 2003/11/06 01:28:06 tom Exp $ */
+/* $Id: td_curse.h,v 12.57 2004/02/09 23:51:34 tom Exp $ */
 
 /*
  * TD_LIB CURSES-related definitions
@@ -33,6 +33,7 @@
 #undef FLUSHO
 #undef PENDIN
 #undef NOFLSH
+#undef VINTR	/* fix for SGTTY definition in Solaris curses.h */
 #endif
 
 #ifdef HZ

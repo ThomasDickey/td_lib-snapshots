@@ -1,3 +1,16 @@
+2004-02-09  dickey@invisible-island.net
+
+	* include/td_curse.h:
+	030430 Solaris 2.5.1 curses.h includes both termio.h and termios.h;
+	something changed since mid-2001 when I last built, and things like
+	dumptty.c don't compile because they include termios.h first, defining
+	VINTR, which turns off the ifdef in Sun's curses.h that would include
+	termio.h
+
+2004-01-06  dickey@invisible-island.net
+
+	* config.sub, config.guess: 2004-01-05
+
 2003-11-29  dickey@invisible-island.net
 
 	* install-sh: resync with my-autoconf
