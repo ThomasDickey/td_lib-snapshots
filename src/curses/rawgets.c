@@ -3,6 +3,7 @@
  * Title:	rawgets.c (raw-mode 'gets()')
  * Created:	29 Sep 1987 (from 'fl.c')
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		05 Feb 1996, don't write to lower-right corner (sysvr4 bug).
  *		04 Nov 1995, mods to display on 80th column.
  *		03 Sep 1995, make this work with bsd4.4 curses
@@ -71,7 +72,7 @@
 #include	"td_curse.h"
 #include	"dyn_str.h"
 
-MODULE_ID("$Id: rawgets.c,v 12.24 2002/07/03 13:04:43 tom Exp $")
+MODULE_ID("$Id: rawgets.c,v 12.25 2004/03/07 22:06:58 tom Exp $")
 
 #define	SHIFT	5
 
@@ -101,53 +102,56 @@ MODULE_ID("$Id: rawgets.c,v 12.24 2002/07/03 13:04:43 tom Exp $")
  * Keep the base-position of 'bfr[]' visible, so that when resizing the
  * window, the calling application can move the 'rawgets()' display area.
  */
-	int	x_rawgets, y_rawgets;
+int x_rawgets, y_rawgets;
 
 /*
  * Private functions/variables
  */
-static	void	MoveTo(_ar1(char *, at));
-static	void	ShowAt(_ar1(char *, at));
+static void MoveTo(char * at);
+static void ShowAt(char * at);
 
-static	WINDOW	*Z;		/* window we use in this module */
-static	char	**Prefix;	/* insert/scrolling prefix, if any */
-static	DYN	*history;	/* record of keystrokes if logging active */
-static	int	xlast,		/* last usable column in screen */
-		shift,		/* amount shifted in no-wrap mode */
-		wrap,		/* if we echo newline, assume wrappable */
-		errs,		/* flag for error/illegal char */
-		Imode;		/* insert:1, scroll:0 */
-static	char	*bbase;		/* 'bfr[]' copy */
-static	char	*CurIns;	/* current insertion position */
-static	int	FieldLen;	/* limit before truncation or wrap */
+static WINDOW *Z;		/* window we use in this module */
+static char **Prefix;		/* insert/scrolling prefix, if any */
+static DYN *history;		/* record of keystrokes if logging active */
+static int xlast;		/* last usable column in screen */
+static int shift;		/* amount shifted in no-wrap mode */
+static int wrap;		/* if we echo newline, assume wrappable */
+static int errs;		/* flag for error/illegal char */
+static int Imode;		/* insert:1, scroll:0 */
+static char *bbase;		/* 'bfr[]' copy */
+static char *CurIns;		/* current insertion position */
+static int FieldLen;		/* limit before truncation or wrap */
 
 /*
  * Clear the remainder of the current line to the 'xlast' position.  Don't
  * use wclrtoeol() when wrapping, since xlast may not be on the end.
  */
-static
-void	ClearIt(_AR0)
+static void
+ClearIt(void)
 {
-	if (Z) {
-		register int	x, y;
-		auto	int	highlighted = (!wrap && !Imode);
-		auto	int	limit;
+    if (Z) {
+	int x, y;
+	int highlighted = (!wrap && !Imode);
+	int limit;
 
-		if (highlighted)			NoHighlight(Z);
-		getyx(Z, y, x);
-		limit = (y >= LINES-1 && xlast >= COLS-1) ? COLS-2 : xlast;
-		while (++x <= limit)			(void)waddch(Z,' ');
-		if (highlighted)			Highlight(Z);
-	}
+	if (highlighted)
+	    NoHighlight(Z);
+	getyx(Z, y, x);
+	limit = (y >= LINES - 1 && xlast >= COLS - 1) ? COLS - 2 : xlast;
+	while (++x <= limit)
+	    (void) waddch(Z, ' ');
+	if (highlighted)
+	    Highlight(Z);
+    }
 }
 
-static
-void	ShowAll(_AR0)
+static void
+ShowAll(void)
 {
-	if (Z) {
-		(void)wmove(Z, y_rawgets, x_rawgets);
-		ShowAt(bbase+shift);
-	}
+    if (Z) {
+	(void) wmove(Z, y_rawgets, x_rawgets);
+	ShowAt(bbase + shift);
+    }
 }
 
 /*
@@ -155,41 +159,38 @@ void	ShowAll(_AR0)
  * ignore details such as wraparound, and whether the cursor is at the end of
  * string.
  */
-static
-void	MoveTo(
-	_AR1(char *,	at))
-	_DCL(char *,	at)
+static void
+MoveTo(char *at)
 {
-	if (Z) {
-		register char	*s;
-		register int	y = y_rawgets,
-				x = x_rawgets;
-		auto	 int	original = shift;
+    if (Z) {
+	char *s;
+	int y = y_rawgets, x = x_rawgets;
+	int original = shift;
 
-		for (s = bbase, shift = 0; *s != EOS && s != at; s++) {
-			if (!isprint(UCH(*s)))
-				x++;
-			if (++x >= xlast) {
-				if (wrap) {
-					x = 0;
-					y++;
-				} else {
-					shift += SHIFT;
-					x -= SHIFT;
-				}
-			}
+	for (s = bbase, shift = 0; *s != EOS && s != at; s++) {
+	    if (!isprint(UCH(*s)))
+		x++;
+	    if (++x >= xlast) {
+		if (wrap) {
+		    x = 0;
+		    y++;
+		} else {
+		    shift += SHIFT;
+		    x -= SHIFT;
 		}
-		/* Control characters that are before the left shift-margin
-		 * don't count in the adjustment
-		 */
-		for (s = bbase; s-bbase < shift; s++)
-			if (!isprint(UCH(*s)))
-				x--;
-		if (shift != original)
-			ShowAll();
-
-		(void)wmove(Z, y, x);
+	    }
 	}
+	/* Control characters that are before the left shift-margin
+	 * don't count in the adjustment
+	 */
+	for (s = bbase; s - bbase < shift; s++)
+	    if (!isprint(UCH(*s)))
+		x--;
+	if (shift != original)
+	    ShowAll();
+
+	(void) wmove(Z, y, x);
+    }
 }
 
 #ifndef	NO_XTERM_MOUSE
@@ -197,214 +198,190 @@ void	MoveTo(
  * Given cursor coordinates, computes the resulting position within the
  * buffer.  Update the display and return the buffer pointer.
  */
-static
-char *	MoveFrom(
-	_ARX(int,	row)
-	_AR1(int,	col)
-		)
-	_DCL(int,	row)
-	_DCL(int,	col)
+static char *
+MoveFrom(int row, int col)
 {
-	if (Z) {
-		register char	*s;
-		register int	y = y_rawgets,
-				x = x_rawgets;
+    if (Z) {
+	char *s;
+	int y = y_rawgets, x = x_rawgets;
 
-		if (row < y_rawgets) {
-			row = y_rawgets;
-			col = x_rawgets;
-		}
-
-		for (s = bbase; *s != EOS; s++) {
-			if (y == row
-			 && x == col)
-			 	break;
-			if (!isprint(UCH(*s)))
-				x++;
-			if (++x >= xlast) {
-				if (wrap) {
-					x = 0;
-					y++;
-				}
-			}
-		}
-		MoveTo(s);
-		ShowAt(s);
-		return s;
+	if (row < y_rawgets) {
+	    row = y_rawgets;
+	    col = x_rawgets;
 	}
-	return 0;
+
+	for (s = bbase; *s != EOS; s++) {
+	    if (y == row
+		&& x == col)
+		break;
+	    if (!isprint(UCH(*s)))
+		x++;
+	    if (++x >= xlast) {
+		if (wrap) {
+		    x = 0;
+		    y++;
+		}
+	    }
+	}
+	MoveTo(s);
+	ShowAt(s);
+	return s;
+    }
+    return 0;
 }
 #endif
 
 /*
  * Repaint the string starting at a given position
  */
-static
-void	ShowAt(
-	_AR1(char *,	at))
-	_DCL(char *,	at)
+static void
+ShowAt(char *at)
 {
-	if (Z) {
-		register int	y, x, row, col, len, cnt;
-		auto	int	margin = wMaxY(Z);
+    if (Z) {
+	int y, x, row, col, len, cnt;
+	int margin = wMaxY(Z);
 
-		getyx(Z, y, x);
-		for (row = y, col = x; (*at != EOS) && (row < margin); row++) {
-			(void)wmove(Z, row, col);
-			len = strlen(at);
-			cnt = xlast - col;
-			while (len-- > 0) {
-				register chtype	c;
-				if (cnt-- <= 0)
-					break;
-				c = *at++ & 0xff;
-				if (!isprint(c)) {
-					x++;
-					(void)waddch(Z, '^');
-					if (cnt-- <= 0)
-						break;
-					if (c == '\177')
-						c = '?';
-					else
-						c |= '@';
-				}
-				(void)waddch(Z, c);
-			}
-			if (!wrap) {
-				if (len > 0 || cnt <= 0) {
-					(void)wmove(Z, y, x);
-					return;
-				}
-				break;
-			}
-			col = 0;
+	getyx(Z, y, x);
+	for (row = y, col = x; (*at != EOS) && (row < margin); row++) {
+	    (void) wmove(Z, row, col);
+	    len = strlen(at);
+	    cnt = xlast - col;
+	    while (len-- > 0) {
+		chtype c;
+		if (cnt-- <= 0)
+		    break;
+		c = *at++ & 0xff;
+		if (!isprint(c)) {
+		    x++;
+		    (void) waddch(Z, '^');
+		    if (cnt-- <= 0)
+			break;
+		    if (c == '\177')
+			c = '?';
+		    else
+			c |= '@';
 		}
-		ClearIt();
-		(void)wmove(Z, y, x);
+		(void) waddch(Z, c);
+	    }
+	    if (!wrap) {
+		if (len > 0 || cnt <= 0) {
+		    (void) wmove(Z, y, x);
+		    return;
+		}
+		break;
+	    }
+	    col = 0;
 	}
+	ClearIt();
+	(void) wmove(Z, y, x);
+    }
 }
 
 /*
  * Insert a character in the screen and into 'bfr[]' at the given position.
  */
-static
-void	InsertAt(
-	_ARX(char *,	at)
-	_AR1(int,	c)
-		)
-	_DCL(char *,	at)
-	_DCL(int,	c)
+static void
+InsertAt(char *at, int c)
 {
-	register int	d  = c;
-	register char	*s = at;
+    int d = c;
+    char *s = at;
 
-	for(;;) {
-		if ((c = d) != EOS) {
-			d = *s;
-			*s++ = c;
-		} else
-			break;
-	}
-	*s = EOS;
-	ShowAt(at);
-	MoveTo(at+1);
+    for (;;) {
+	if ((c = d) != EOS) {
+	    d = *s;
+	    *s++ = c;
+	} else
+	    break;
+    }
+    *s = EOS;
+    ShowAt(at);
+    MoveTo(at + 1);
 }
 
 /*
  * Delete the character(s) before the given position in 'bfr[]'.
  */
-static
-char *	DeleteBefore(
-	_ARX(char *,	at)
-	_AR1(int,	count)
-		)
-	_DCL(char *,	at)
-	_DCL(int,	count)
+static char *
+DeleteBefore(char *at, int count)
 {
-	if (at > bbase) {
-		register char	*d = at,
-				*s = at;
-		register int	old = 0, new_y, x;
+    if (at > bbase) {
+	char *d = at, *s = at;
+	int old = 0, new_y, x;
 
-		if (Z) {
-			if (wrap) {
-				MoveTo(at+strlen(at));
-				getyx(Z, old, x);
-			}
+	if (Z) {
+	    if (wrap) {
+		MoveTo(at + strlen(at));
+		getyx(Z, old, x);
+	    }
+	}
+	while (count-- > 0) {
+	    at--;
+	    if (--d == bbase)
+		break;
+	}
+
+	while ((*d++ = *s++) != EOS)
+	    /*EMPTY */ ;
+
+	if (Z) {
+	    if (wrap) {
+		MoveTo(at + strlen(at));
+		getyx(Z, new_y, x);
+
+		while (old >= new_y) {
+		    (void) wmove(Z, new_y, x);
+		    ClearIt();
+		    new_y++;
+		    x = 0;
 		}
-		while (count-- > 0) {
-			at--;
-			if (--d == bbase)
-				break;
-		}
+	    }
+	    MoveTo(at);
+	    ShowAt(at);
+	}
+    } else
+	errs++;
 
-		while ((*d++ = *s++) != EOS)
-			/*EMPTY*/;
-
-		if (Z) {
-			if (wrap) {
-				MoveTo(at+strlen(at));
-				getyx(Z, new_y, x);
-
-				while (old >= new_y) {
-					(void)wmove(Z, new_y, x);
-					ClearIt();
-					new_y++;
-					x = 0;
-				}
-			}
-			MoveTo(at);
-			ShowAt(at);
-		}
-	} else
-		errs++;
-
-	return(at);
+    return (at);
 }
 
 /*
  * Delete the words before the given pointer
  */
-static
-char *	DeleteWordBefore(
-	_ARX(char *,	at)
-	_AR1(int,	count)
-		)
-	_DCL(char *,	at)
-	_DCL(int,	count)
+static char *
+DeleteWordBefore(char *at, int count)
 {
-	register char	*s;
-	register int	found;
+    char *s;
+    int found;
 
-	while ((at > bbase) && (count-- > 0)) {
-		for (s = at-1, found = 0; s >= bbase; s--) {
-			if (isspace(UCH(*s))) {
-				if (found) {
-					s++;	/* point to first nonblank */
-					break;
-				}
-			} else
-				found++;
+    while ((at > bbase) && (count-- > 0)) {
+	for (s = at - 1, found = 0; s >= bbase; s--) {
+	    if (isspace(UCH(*s))) {
+		if (found) {
+		    s++;	/* point to first nonblank */
+		    break;
 		}
-		at = DeleteBefore(at, at - s);
+	    } else
+		found++;
 	}
-	return (at);
+	at = DeleteBefore(at, at - s);
+    }
+    return (at);
 }
 
 /*
  * Show the insert/scroll prefix
  */
-static
-void	ShowPrefix(_AR0)
+static void
+ShowPrefix(void)
 {
-	if (Z && Prefix) {
-		register char	*prefix = Prefix[Imode];
+    if (Z && Prefix) {
+	char *prefix = Prefix[Imode];
 
-		(void)NoHighlight(Z);
-		(void)wmove(Z, y_rawgets, (int)(x_rawgets-strlen(prefix)));
-		while (*prefix)
-			(void)waddch(Z,(chtype)(*prefix++));
-	}
+	(void) NoHighlight(Z);
+	(void) wmove(Z, y_rawgets, (int) (x_rawgets - strlen(prefix)));
+	while (*prefix)
+	    (void) waddch(Z, (chtype) (*prefix++));
+    }
 }
 
 /*
@@ -412,25 +389,25 @@ void	ShowPrefix(_AR0)
  * overwriting the prefix-string of the prompt which is written before
  * calling this procedure.
  */
-static
-void	ToggleMode(_AR0)
+static void
+ToggleMode(void)
 {
-	Imode = !Imode;
+    Imode = !Imode;
 
-	if (Z) {
-		register int	y, x;
+    if (Z) {
+	int y, x;
 
-		getyx(Z, y, x);
-		ShowPrefix();
+	getyx(Z, y, x);
+	ShowPrefix();
 
-		if (!wrap) {
-			if (!Imode)
-				Highlight(Z);
-			ShowAll();
-		}
-
-		(void)wmove(Z, y, x);
+	if (!wrap) {
+	    if (!Imode)
+		Highlight(Z);
+	    ShowAll();
 	}
+
+	(void) wmove(Z, y, x);
+    }
 }
 
 /*
@@ -439,26 +416,26 @@ void	ToggleMode(_AR0)
  * layout.
  */
 #ifdef	SIGWINCH
-static
-void	Redisplay (_AR0)
+static void
+Redisplay(void)
 {
-	WINDOW	*win = Z;
-	if (win == 0)
-		win = stdscr;
+    WINDOW *win = Z;
+    if (win == 0)
+	win = stdscr;
+    (void) wmove(win, y_rawgets, x_rawgets);
+    if (wrap) {
+	xlast = x_rawgets + FieldLen;
+	if (xlast > wMaxX(Z))
+	    xlast = wMaxX(Z);
+	(void) wclrtobot(win);
 	(void) wmove(win, y_rawgets, x_rawgets);
-	if (wrap) {
-		xlast = x_rawgets + FieldLen;
-		if (xlast > wMaxX(Z))
-			xlast = wMaxX(Z);
-		(void) wclrtobot(win);
-		(void) wmove(win, y_rawgets, x_rawgets);
-	} else {
-		xlast = wMaxX(Z);
-	}
-	ShowPrefix();
-	ShowAt(bbase);
-	MoveTo(CurIns);
-	(void) wrefresh(win);
+    } else {
+	xlast = wMaxX(Z);
+    }
+    ShowPrefix();
+    ShowAt(bbase);
+    MoveTo(CurIns);
+    (void) wrefresh(win);
 }
 #endif
 
@@ -466,261 +443,247 @@ void	Redisplay (_AR0)
  *	main procedure							*
  ************************************************************************/
 
-int	wrawgets (
-	_ARX(WINDOW *,	win)
-	_ARX(char *,	bfr)		/* in/out buffer */
-	_ARX(char **,	pref)		/* prefix, for insert/scroll */
-	_ARX(int,	buffer_len)	/* maximum length of 'bfr' */
-	_ARX(int,	field_len)	/* maximum length of display-field */
-	_ARX(int,	first_col)	/* initial column for editing */
-	_ARX(int,	first_mode)	/* initial insert/scroll mode */
-	_ARX(int,	new_line)	/* force newline-echo on completion */
-	_ARX(int,	fast_q)		/* nonnull: extra quit character */
-	_ARX(char **,	command)	/* nonnull: read inputs */
-	_AR1(int,	logging)	/* nonnull: write inputs */
-		)
-	_DCL(WINDOW *,	win)
-	_DCL(char *,	bfr)
-	_DCL(char **,	pref)
-	_DCL(int,	buffer_len)
-	_DCL(int,	field_len)
-	_DCL(int,	first_col)
-	_DCL(int,	first_mode)
-	_DCL(int,	new_line)
-	_DCL(int,	fast_q)
-	_DCL(char **,	command)
-	_DCL(int,	logging)
+int
+wrawgets(WINDOW *win,
+	 char *bfr,		/* in/out buffer */
+	 char **pref,		/* prefix, for insert/scroll */
+	 int buffer_len,	/* maximum length of 'bfr' */
+	 int field_len,		/* maximum length of display-field */
+	 int first_col,		/* initial column for editing */
+	 int first_mode,	/* initial insert/scroll mode */
+	 int new_line,		/* force newline-echo on completion */
+	 int fast_q,		/* nonnull: extra quit character */
+	 char **command,	/* nonnull: read inputs */
+	 int logging)		/* nonnull: write inputs */
 {
-	register int	c,
-			EraseChar = erasechar(),
-			EraseWord = eraseword(),
-			EraseLine = killchar();
-	auto	 int	count, log_count, literal;
-	static	 DYN	*saved;
+    int c, EraseChar = erasechar(), EraseWord = eraseword(), EraseLine =
+    killchar();
+    int count, log_count, literal;
+    static DYN *saved;
 
-	saved = dyn_copy(saved, bfr);
-	if (logging)
-		dyn_init(&history, 1);
+    saved = dyn_copy(saved, bfr);
+    if (logging)
+	dyn_init(&history, 1);
 
-	FieldLen = field_len;
-	Prefix = pref;
-	wrap  = new_line;
-	Imode = 1;
-	errs  = 0;
-	bbase = CurIns = bfr;
-	shift = 0;
+    FieldLen = field_len;
+    Prefix = pref;
+    wrap = new_line;
+    Imode = 1;
+    errs = 0;
+    bbase = CurIns = bfr;
+    shift = 0;
 
-	if ((Z = win) != 0) {
-		getyx(Z, y_rawgets, x_rawgets);	/* get my initial position */
-		ShowPrefix();
-		(void)wmove(Z, y_rawgets, x_rawgets);
-		xlast = x_rawgets + FieldLen;
-		if (xlast > wMaxX(Z))
-			xlast = wMaxX(Z);
+    if ((Z = win) != 0) {
+	getyx(Z, y_rawgets, x_rawgets);		/* get my initial position */
+	ShowPrefix();
+	(void) wmove(Z, y_rawgets, x_rawgets);
+	xlast = x_rawgets + FieldLen;
+	if (xlast > wMaxX(Z))
+	    xlast = wMaxX(Z);
 
-		MoveTo(bfr+strlen(bfr));
-		if (wrap)
-			(void)wclrtobot(Z);
+	MoveTo(bfr + strlen(bfr));
+	if (wrap)
+	    (void) wclrtobot(Z);
 
-		if (Imode != first_mode)
-			ToggleMode();
-		else
-			ShowAll();
+	if (Imode != first_mode)
+	    ToggleMode();
+	else
+	    ShowAll();
 
+    } else {
+	x_rawgets =
+	    y_rawgets = 0;
+	xlast = wMaxX(Z);
+    }
+
+    /* set editing-position to initial column */
+    if ((count = strlen(CurIns)) < first_col)
+	first_col = count;
+    CurIns += first_col;
+    MoveTo(CurIns);
+
+    for (;;) {
+	if (errs) {
+	    errs = 0;
+	    beep();
+	}
+
+	if (command && *command && **command) {
+	    log_count = FALSE;
+	    if (Imode || !isdigit(UCH(**command)))
+		count = 1;
+	    else {
+		char *s = *command;
+		count = 0;
+		while (isdigit(UCH(*s))) {
+		    log_count = TRUE;
+		    count = (count * 10) + (*s++ - '0');
+		}
+		*command = s;
+	    }
+	    on_winch(Redisplay);
+	    c = decode_logch(command, (int *) 0);
+	    if ((literal = to_literal(c)) == TRUE)
+		c = decode_logch(command, (int *) 0);
+	    on_winch((void (*)(void)) 0);
 	} else {
-		x_rawgets =
-		y_rawgets = 0;
-		xlast = wMaxX(Z);
+	    if (Z)
+		(void) wrefresh(Z);
+	    count = 1;
+	    on_winch(Redisplay);
+	    c = cmdch(Imode ? (int *) 0 : &count);
+	    on_winch((void (*)(void)) 0);
+	    log_count = (count != 1);
+
+	    if ((literal = to_literal(c)) == TRUE)
+		c = wgetch(Z);
 	}
+	if (c == EOS)
+	    continue;
 
-	/* set editing-position to initial column */
-	if ((count = strlen(CurIns)) < first_col)
-		first_col = count;
-	CurIns += first_col;
-	MoveTo(CurIns);
-
-	for (;;) {
-		if (errs) {
-			errs = 0;
-			beep();
-		}
-
-		if (command && *command && **command) {
-			log_count = FALSE;
-			if (Imode || !isdigit(UCH(**command)))
-				count = 1;
-			else {
-				register char	*s = *command;
-				count = 0;
-				while (isdigit(UCH(*s))) {
-					log_count = TRUE;
-					count = (count * 10) + (*s++ - '0');
-				}
-				*command = s;
-			}
-			on_winch(Redisplay);
-			c = decode_logch(command, (int *)0);
-			if ((literal = to_literal(c)) == TRUE)
-				c = decode_logch(command, (int *)0);
-			on_winch((void(*)(_AR0))0);
-		} else {
-			if (Z)
-				(void)wrefresh(Z);
-			count = 1;
-			on_winch(Redisplay);
-			c = cmdch(Imode ? (int *)0 : &count);
-			on_winch((void(*)(_AR0))0);
-			log_count = (count != 1);
-
-			if ((literal = to_literal(c)) == TRUE)
-				c = wgetch(Z);
-		}
-		if (c == EOS)
-			continue;
-
-		/*
-		 * Note: the command-script will be logged exactly only if
-		 * none of the repeat-counts have leading zeroes.
-		 */
-		if (logging) {
-			char	temp[20];
-			if (literal) {
-				encode_logch(temp, log_count ? &count : (int *)0, CTL('V'));
-				history = dyn_append(history, temp);
-				log_count = FALSE;
-			}
-			encode_logch(temp, log_count ? &count : (int *)0, c);
-			history = dyn_append(history, temp);
-		}
-
+	/*
+	 * Note: the command-script will be logged exactly only if
+	 * none of the repeat-counts have leading zeroes.
+	 */
+	if (logging) {
+	    char temp[20];
+	    if (literal) {
+		encode_logch(temp, log_count ? &count : (int *) 0, CTL('V'));
+		history = dyn_append(history, temp);
+		log_count = FALSE;
+	    }
+	    encode_logch(temp, log_count ? &count : (int *) 0, c);
+	    history = dyn_append(history, temp);
+	}
 #ifndef	NO_XTERM_MOUSE
-		/*
-		 * Use the mouse for (re)positioning the cursor within the
-		 * buffer.
-		 */
-		if (c == KEY_MOUSE) {
-			if (xt_mouse.released) {
-				if (xt_mouse.button == 1) {
-					CurIns = MoveFrom(xt_mouse.row,
-						       xt_mouse.col);
-				} else {
-					errs++;
-				}
-			}
-			continue;
+	/*
+	 * Use the mouse for (re)positioning the cursor within the
+	 * buffer.
+	 */
+	if (c == KEY_MOUSE) {
+	    if (xt_mouse.released) {
+		if (xt_mouse.button == 1) {
+		    CurIns = MoveFrom(xt_mouse.row,
+				      xt_mouse.col);
+		} else {
+		    errs++;
 		}
+	    }
+	    continue;
+	}
 #endif
-		/*
-		 * We return only one of three types of thing:
-		 *	up/down arrow,
-		 *	kill-character
-		 *	or return/newline
-		 * so that we can interlock this with a history-mechanism.
-		 */
-		if (!literal) {
-			if (c == '\r')
-				c = '\n';
-			if (c == '\n') {
-				MoveTo(bbase + strlen(bbase));
-				if (Z && new_line)
-					(void)waddch(Z,'\n');
-				break;
-			}
-			if (to_up(c)) {
-				c = KEY_UP;
-				break;
-			}
-			if (to_down(c)) {
-				c = KEY_DOWN;
-				break;
-			}
+	/*
+	 * We return only one of three types of thing:
+	 *      up/down arrow,
+	 *      kill-character
+	 *      or return/newline
+	 * so that we can interlock this with a history-mechanism.
+	 */
+	if (!literal) {
+	    if (c == '\r')
+		c = '\n';
+	    if (c == '\n') {
+		MoveTo(bbase + strlen(bbase));
+		if (Z && new_line)
+		    (void) waddch(Z, '\n');
+		break;
+	    }
+	    if (to_up(c)) {
+		c = KEY_UP;
+		break;
+	    }
+	    if (to_down(c)) {
+		c = KEY_DOWN;
+		break;
+	    }
 
-			if (to_toggle(c)) {
-				ToggleMode();
-				continue;
-			}
-			if (!Imode) {
-				if ((c == fast_q)
-				 || ((fast_q != EOS) && (c == 'q'))) {
-					(void)strcpy(bfr, dyn_string(saved));
-					break;
-				}
-			}
-
+	    if (to_toggle(c)) {
+		ToggleMode();
+		continue;
+	    }
+	    if (!Imode) {
+		if ((c == fast_q)
+		    || ((fast_q != EOS) && (c == 'q'))) {
+		    (void) strcpy(bfr, dyn_string(saved));
+		    break;
 		}
-
-		/*
-		 * Normally we insert/edit only printing characters.
-		 * In literal-mode, we can insert any ascii character.
-		 */
-		if (literal || (Imode && !is_special(c) && isprint(c))) {
-			while (count-- > 0) {
-				if (CurIns-bfr < buffer_len)
-					InsertAt(CurIns++, c);
-				else {
-					errs++;
-					break;
-				}
-			}
-			continue;
-		}
-
-		if ((c == EraseChar) || (c == '\b')) {
-			CurIns = DeleteBefore(CurIns, count);
-		} else if (c == EraseWord) {
-			CurIns = DeleteWordBefore(CurIns, count);
-		} else if (c == EraseLine) {
-			if (Imode) {
-				count = strlen(bfr);
-				(void)DeleteBefore(bfr+count, count);
-				break;
-			} else
-				CurIns = DeleteBefore(CurIns, CurIns - bfr);
-
-		} else if (to_left(c)) {
-			if (CurIns > bfr) {
-				register char	*s = CurIns;
-				while (count-- > 0)
-					if (--s == bfr)
-						break;
-				MoveTo(CurIns = s);
-			} else
-				errs++;
-		} else if (to_right(c)) {
-			if (*CurIns != EOS) {
-				register char	*s = CurIns;
-				while (count-- > 0)
-					if (*(++s) == EOS)
-						break;
-				MoveTo(CurIns = s);
-			} else
-				errs++;
-		} else if (to_home(c)) {
-			MoveTo(CurIns = bbase);
-		} else if (to_end(c)) {
-			MoveTo(CurIns = bbase + strlen(bbase));
-		} else
-			errs++;
+	    }
 
 	}
 
-	if (Z) {
-		if (!wrap && !Imode)
-			ToggleMode();
-
-		if (!command || !*command)
-			(void)wrefresh(Z);
+	/*
+	 * Normally we insert/edit only printing characters.
+	 * In literal-mode, we can insert any ascii character.
+	 */
+	if (literal || (Imode && !is_special(c) && isprint(c))) {
+	    while (count-- > 0) {
+		if (CurIns - bfr < buffer_len)
+		    InsertAt(CurIns++, c);
+		else {
+		    errs++;
+		    break;
+		}
+	    }
+	    continue;
 	}
 
-	return (c);	/* returns character which terminated this call */
+	if ((c == EraseChar) || (c == '\b')) {
+	    CurIns = DeleteBefore(CurIns, count);
+	} else if (c == EraseWord) {
+	    CurIns = DeleteWordBefore(CurIns, count);
+	} else if (c == EraseLine) {
+	    if (Imode) {
+		count = strlen(bfr);
+		(void) DeleteBefore(bfr + count, count);
+		break;
+	    } else
+		CurIns = DeleteBefore(CurIns, CurIns - bfr);
+
+	} else if (to_left(c)) {
+	    if (CurIns > bfr) {
+		char *s = CurIns;
+		while (count-- > 0)
+		    if (--s == bfr)
+			break;
+		MoveTo(CurIns = s);
+	    } else
+		errs++;
+	} else if (to_right(c)) {
+	    if (*CurIns != EOS) {
+		char *s = CurIns;
+		while (count-- > 0)
+		    if (*(++s) == EOS)
+			break;
+		MoveTo(CurIns = s);
+	    } else
+		errs++;
+	} else if (to_home(c)) {
+	    MoveTo(CurIns = bbase);
+	} else if (to_end(c)) {
+	    MoveTo(CurIns = bbase + strlen(bbase));
+	} else
+	    errs++;
+
+    }
+
+    if (Z) {
+	if (!wrap && !Imode)
+	    ToggleMode();
+
+	if (!command || !*command)
+	    (void) wrefresh(Z);
+    }
+
+    return (c);			/* returns character which terminated this call */
 }
 
 /*
  * Returns the logging history from the last call on 'wrawgets()'
  */
-char *	rawgets_log(_AR0)
+char *
+rawgets_log(void)
 {
-	return dyn_string(history);
+    return dyn_string(history);
 }
 
 /************************************************************************
@@ -729,37 +692,38 @@ char *	rawgets_log(_AR0)
 #ifdef	TEST
 _MAIN
 {
-	register int	j	= 0;
-	auto	 int	w_flag	= ((argc > 1) && !strcmp(argv[1], "-w"));
-	auto	 char	bfr[BUFSIZ];
-	static	 char	*pref[] = { "^ ", "> "};
+    int j = 0;
+    int w_flag = ((argc > 1) && !strcmp(argv[1], "-w"));
+    char bfr[BUFSIZ];
+    static char *pref[] =
+    {"^ ", "> "};
 
-	initscr();
-	rawterm();
-	*bfr = EOS;
-	while (strlen(bfr) < 3 * COLS) {
-		(void)strcat(bfr, "abcdefghijklmnopqrstuvwxyz.");
-		(void)sprintf(bfr + strlen(bfr), "%d ", j++);
-	}
-	move(0, 0);
-	printw("You will be prompted at each line, until the buffer is empty");
-	j = 1;
-	for (;;) {
-		move(j, 0);
-		clrtobot();
-		move(j, 0);
-		printw("%05d> ", j);
-		rawgets(bfr, pref, sizeof(bfr),
-			COLS/2, strlen(bfr), TRUE,
-			w_flag, 'q',
-			(char **)0, FALSE);
-		if (!*bfr)
-			break;
-		if (++j >= LINES)
-			j = 1;
-	}
-	endwin();
-	exit(SUCCESS);
-	/*NOTREACHED*/
+    initscr();
+    rawterm();
+    *bfr = EOS;
+    while (strlen(bfr) < 3 * COLS) {
+	(void) strcat(bfr, "abcdefghijklmnopqrstuvwxyz.");
+	(void) sprintf(bfr + strlen(bfr), "%d ", j++);
+    }
+    move(0, 0);
+    printw("You will be prompted at each line, until the buffer is empty");
+    j = 1;
+    for (;;) {
+	move(j, 0);
+	clrtobot();
+	move(j, 0);
+	printw("%05d> ", j);
+	rawgets(bfr, pref, sizeof(bfr),
+		COLS / 2, strlen(bfr), TRUE,
+		w_flag, 'q',
+		(char **) 0, FALSE);
+	if (!*bfr)
+	    break;
+	if (++j >= LINES)
+	    j = 1;
+    }
+    endwin();
+    exit(SUCCESS);
+    /*NOTREACHED */
 }
-#endif	/* TEST */
+#endif /* TEST */

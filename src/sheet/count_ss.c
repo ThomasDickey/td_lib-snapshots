@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	03 Feb 1992
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *
  * Function:	counts rows/columns in a spreadsheet-table (in memory via
@@ -11,26 +12,22 @@
 
 #include "td_sheet.h"
 
-MODULE_ID("$Id: count_ss.c,v 12.2 1993/10/29 17:35:22 tom Exp $")
+MODULE_ID("$Id: count_ss.c,v 12.3 2004/03/07 22:03:45 tom Exp $")
 
 int
-count_ss_cols(
-_AR1(char **,	vec))
-_DCL(char **,	vec)
+count_ss_cols(char **vec)
 {
-	auto	int	count	= 0;
-	static	DYN	*temp;
+    int count = 0;
+    static DYN *temp;
 
-	if (vec && *vec)
-		while (get_field_of(*vec, count, (char *)0, &temp))
-			count++;
-	return count;
+    if (vec && *vec)
+	while (get_field_of(*vec, count, (char *) 0, &temp))
+	    count++;
+    return count;
 }
 
 int
-count_ss_rows(
-_AR1(char **,	vec))
-_DCL(char **,	vec)
+count_ss_rows(char **vec)
 {
-	return veclen(vec);
+    return veclen(vec);
 }

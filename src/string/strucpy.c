@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	06 Oct 1988
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, converted to ANSI
@@ -18,44 +19,38 @@
 #define CHR_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: strucpy.c,v 12.4 2000/12/02 18:05:04 tom Exp $")
+MODULE_ID("$Id: strucpy.c,v 12.5 2004/03/07 22:03:45 tom Exp $")
 
 /*
  * Copy string, converting to uppercase
  */
-char *	strucpy(
-	_ARX(char *,	dst)
-	_AR1(char *,	src)
-		)
-	_DCL(char *,	dst)
-	_DCL(char *,	src)
+char *
+strucpy(char *dst, char *src)
 {
-	auto	char	*base = dst;
-	register int	c;
-	while ((c = *src++) != EOS) {
-		UpperCase(c);
-		*dst++ = c;
-	}
-	*dst = EOS;
-	return (base);
+    char *base = dst;
+    int c;
+
+    while ((c = *src++) != EOS) {
+	UpperCase(c);
+	*dst++ = c;
+    }
+    *dst = EOS;
+    return (base);
 }
 
 /*
  * Copy string, converting to lowercase
  */
-char *	strlwrcpy(
-	_ARX(char *,	dst)
-	_AR1(char *,	src)
-		)
-	_DCL(char *,	dst)
-	_DCL(char *,	src)
+char *
+strlwrcpy(char *dst, char *src)
 {
-	auto	char	*base = dst;
-	register int	c;
-	while ((c = *src++) != EOS) {
-		LowerCase(c);
-		*dst++ = c;
-	}
-	*dst = EOS;
-	return (base);
+    char *base = dst;
+    int c;
+
+    while ((c = *src++) != EOS) {
+	LowerCase(c);
+	*dst++ = c;
+    }
+    *dst = EOS;
+    return (base);
 }

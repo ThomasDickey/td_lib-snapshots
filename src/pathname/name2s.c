@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	18 Aug 1988 (from ded2s.c)
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		05 Nov 1995, added tilde to shell-characters
  *		21 Sep 1993, gcc-warnings
  *		04 Oct 1991, conversion to ANSI
@@ -39,7 +40,7 @@
 #define	STR_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: name2s.c,v 12.6 1995/11/05 23:14:50 tom Exp $")
+MODULE_ID("$Id: name2s.c,v 12.7 2004/03/07 22:03:45 tom Exp $")
 
 #define	isshell(c)	(strchr("*%?$()[]{}|<>^&;#\\\"`'~", c) != 0)
 #define	isAEGIS(c)	(strchr("*%?()[]{}\\", c) != 0)
@@ -49,90 +50,88 @@ MODULE_ID("$Id: name2s.c,v 12.6 1995/11/05 23:14:50 tom Exp $")
 #define	doAEGIS
 #endif
 
-int	name2s(
-	_ARX(char *,	bfr)
-	_ARX(int,	len)
-	_ARX(char *,	name)
-	_AR1(int,	opt)
-		)
-	_DCL(char *,	bfr)
-	_DCL(int,	len)
-	_DCL(char *,	name)
-	_DCL(int,	opt)
+int
+name2s(char *bfr, int len, char *name, int opt)
 {
-	register int num = 0;
-	register int c;
-	int	esc	= opt & 1;
+    int num = 0;
+    int c;
+    int esc = opt & 1;
 #ifdef	doAEGIS
-	int	in_leaf	= 0;
+    int in_leaf = 0;
 #endif
 
-	while (((c = *name++) != EOS) && (len-- > 0)) {
+    while (((c = *name++) != EOS) && (len-- > 0)) {
 #ifdef	doAEGIS
-		if (isSlash(c))	in_leaf = 0;
-		else		in_leaf++;
-		if (opt & 2) {	/* show underlying apollo filenames */
-			if (isascii(c) && isgraph(c)) {
-				if (isalpha(c) && isupper(c)) {
-					bfr[num++] = ':';
-					c = LowerMacro(c);
-				} else if ((c == ':')
-				||	   (c == '.'
-					&&  in_leaf == 1
-					&&  strchr("./", *name) == 0))
-					bfr[num++] = ':';
-				else if (opt & 5) {
-					if (isAEGIS(c))
-						bfr[num++] = '@';
-					if ((opt & 1) && isshell(c))
-						bfr[num++] = '\\';
-				}
-				bfr[num++] = c;
-			} else if (c == ' ') {
-				bfr[num++] = ':';
-				bfr[num++] = '_';
-			} else {
-				FORMAT(bfr+num, ":%s#%02x", esc ? "\\" : "", c);
-				num = strlen(bfr);
-			}
-		} else
-#endif	/* doAegis */
-		if (esc) {
-			if(!isascii(c)
-			 || iscntrl(c)
-			 || isspace(c)
-			 || isshell(c))
-				bfr[num++] = '\\'; /* escape the nasty thing */
-			bfr[num++] = c;
-		} else {
-			if (isascii(c) && isprint(c)) {
-				bfr[num++] = c;
-			} else
-				bfr[num++] = '?';
+	if (isSlash(c))
+	    in_leaf = 0;
+	else
+	    in_leaf++;
+	if (opt & 2) {		/* show underlying apollo filenames */
+	    if (isascii(c) && isgraph(c)) {
+		if (isalpha(c) && isupper(c)) {
+		    bfr[num++] = ':';
+		    c = LowerMacro(c);
+		} else if ((c == ':')
+			   || (c == '.'
+			       && in_leaf == 1
+			       && strchr("./", *name) == 0))
+		    bfr[num++] = ':';
+		else if (opt & 5) {
+		    if (isAEGIS(c))
+			bfr[num++] = '@';
+		    if ((opt & 1) && isshell(c))
+			bfr[num++] = '\\';
 		}
+		bfr[num++] = c;
+	    } else if (c == ' ') {
+		bfr[num++] = ':';
+		bfr[num++] = '_';
+	    } else {
+		FORMAT(bfr + num, ":%s#%02x", esc ? "\\" : "", c);
+		num = strlen(bfr);
+	    }
+	} else
+#endif /* doAegis */
+	if (esc) {
+	    if (!isascii(c)
+		|| iscntrl(c)
+		|| isspace(c)
+		|| isshell(c))
+		bfr[num++] = '\\';	/* escape the nasty thing */
+	    bfr[num++] = c;
+	} else {
+	    if (isascii(c) && isprint(c)) {
+		bfr[num++] = c;
+	    } else
+		bfr[num++] = '?';
 	}
-	bfr[num] = EOS;
-	return num;
+    }
+    bfr[num] = EOS;
+    return num;
 }
 
 #ifdef	TEST
 /*ARGSUSED*/
 _MAIN
 {
-	register int j;
-	int	opt	= 0;
-	char	bfr[BUFSIZ];
+    int j;
+    int opt = 0;
+    char bfr[BUFSIZ];
 
-	while ((j = getopt(argc, argv, "eu")) != EOF)
-		switch (j) {
-		case 'e':	opt |= 1;	break;
-		case 'u':	opt |= 2;	break;
-		}
-	for (j = optind; j < argc; j++) {
-		name2s(bfr, sizeof(bfr), argv[j], opt);
-		printf("%d:\t\"%s\" => \"%s\"\n", j - optind + 1, argv[j], bfr);
+    while ((j = getopt(argc, argv, "eu")) != EOF)
+	switch (j) {
+	case 'e':
+	    opt |= 1;
+	    break;
+	case 'u':
+	    opt |= 2;
+	    break;
 	}
-	exit(SUCCESS);
-	/*NOTREACHED*/
+    for (j = optind; j < argc; j++) {
+	name2s(bfr, sizeof(bfr), argv[j], opt);
+	printf("%d:\t\"%s\" => \"%s\"\n", j - optind + 1, argv[j], bfr);
+    }
+    exit(SUCCESS);
+    /*NOTREACHED */
 }
-#endif	/* TEST */
+#endif /* TEST */

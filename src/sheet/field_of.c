@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	03 Feb 1992
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		30 May 1998, compile with g++
  *		01 Jul 1994, use autoconf to control use of 'memmove()'
  *		29 Oct 1993, ifdef-ident
@@ -21,9 +22,9 @@
 #include "td_sheet.h"
 #include <ctype.h>
 
-MODULE_ID("$Id: field_of.c,v 12.5 1998/05/30 10:51:39 tom Exp $")
+MODULE_ID("$Id: field_of.c,v 12.6 2004/03/07 22:03:45 tom Exp $")
 
-static	int	opt_Blanks;
+static int opt_Blanks;
 
 #define	COMMA		','
 #define	QUOTE		'"'
@@ -32,174 +33,153 @@ static	int	opt_Blanks;
 /*
  * Looks to see if we must quote a field.
  */
-static
-int	must_quote(
-	_AR1(char *,	buffer))
-	_DCL(char *,	buffer)
+static int
+must_quote(char *buffer)
 {
-	register int	c;
-	while ((c = *buffer++) != EOS) {
-		if (c == COMMA || isquote(c))
-			return TRUE;
-		else if (!opt_Blanks && isspace(c))
-			return TRUE;
-	}
-	return FALSE;
+    int c;
+    while ((c = *buffer++) != EOS) {
+	if (c == COMMA || isquote(c))
+	    return TRUE;
+	else if (!opt_Blanks && isspace(c))
+	    return TRUE;
+    }
+    return FALSE;
 }
 
 /*
  * Applies quotes to a field.
  */
-static
-char *	QuotedField(
-	_AR1(char *,	src))
-	_DCL(char *,	src)
+static char *
+QuotedField(char *src)
 {
-	static	DYN	*tmp;
-	register int	c;
+    static DYN *tmp;
+    int c;
 
-	dyn_init(&tmp, BUFSIZ);
-	if (*src) {
-		tmp = dyn_append_c(tmp, QUOTE);
-		while ((c = *src++) != EOS) {
-			if (c == QUOTE)		/* quoted-quote */
-				tmp = dyn_append_c(tmp, c);
-			tmp = dyn_append_c(tmp, c);
-		}
-		tmp = dyn_append_c(tmp, QUOTE);
+    dyn_init(&tmp, BUFSIZ);
+    if (*src) {
+	tmp = dyn_append_c(tmp, QUOTE);
+	while ((c = *src++) != EOS) {
+	    if (c == QUOTE)	/* quoted-quote */
+		tmp = dyn_append_c(tmp, c);
+	    tmp = dyn_append_c(tmp, c);
 	}
-	return dyn_string(tmp);
+	tmp = dyn_append_c(tmp, QUOTE);
+    }
+    return dyn_string(tmp);
 }
 
 /*
  * Skips past the current position if it has a comma
  */
-static
-char *	skip_past_comma(
-	_AR1(char *,	src))
-	_DCL(char *,	src)
+static char *
+skip_past_comma(char *src)
 {
-	if (*src == COMMA)
-		src++;
-	return src;
+    if (*src == COMMA)
+	src++;
+    return src;
 }
 
 /*
  * Skips to the comma ending the current field.  Note that if the field is
  * empty, this may be the first character in the field.
  */
-static
-char *	skip_to_comma(
-	_AR1(char *,	src))
-	_DCL(char *,	src)
+static char *
+skip_to_comma(char *src)
 {
-	auto	int	quote	= EOS;
-	register int	c;
+    int quote = EOS;
+    int c;
 
-	while ((c = *src) != EOS) {
-		src++;
-		if (quote) {			/* looking for end-of-quote? */
-			if (c == quote) {
-				if (c == *src)	/* doubled-quote? */
-					src++;
-				else
-					quote = EOS;
-			}
-		} else if (isquote(c)) {	/* beginning a quote? */
-			quote = c;
-		} else if (c == COMMA) {
-			src--;
-			break;
-		}
+    while ((c = *src) != EOS) {
+	src++;
+	if (quote) {		/* looking for end-of-quote? */
+	    if (c == quote) {
+		if (c == *src)	/* doubled-quote? */
+		    src++;
+		else
+		    quote = EOS;
+	    }
+	} else if (isquote(c)) {	/* beginning a quote? */
+	    quote = c;
+	} else if (c == COMMA) {
+	    src--;
+	    break;
 	}
-	return src;
+    }
+    return src;
 }
 
 /*
  * Computes first/last pointers to the N'th field in a comma-separated list
  */
-static
-int	skip_to_field(
-	_ARX(char *,	list)
-	_ARX(int,	N)
-	_ARX(char **,	first)
-	_AR1(char **,	last)
-		)
-	_DCL(char *,	list)
-	_DCL(int,	N)
-	_DCL(char **,	first)
-	_DCL(char **,	last)
+static int
+skip_to_field(char *list,
+	      int N,
+	      char **first,
+	      char **last)
 {
-	if ((*first = list) != 0) {
-		*last	= skip_to_comma(*first);
-		while (N > 0) {
-			if (**last != EOS) {
-				N--;
-				*first	= skip_past_comma(*last);
-				*last	= skip_to_comma(*first);
-			} else {
-				*first	= *last;
-				break;
-			}
-		}
-	} else {
-		*first	= 0;
-		*last	= "";
-		N = -1;
+    if ((*first = list) != 0) {
+	*last = skip_to_comma(*first);
+	while (N > 0) {
+	    if (**last != EOS) {
+		N--;
+		*first = skip_past_comma(*last);
+		*last = skip_to_comma(*first);
+	    } else {
+		*first = *last;
+		break;
+	    }
 	}
-	return N;
+    } else {
+	*first = 0;
+	*last = "";
+	N = -1;
+    }
+    return N;
 }
 
 /*
  * Strips quotes and extraneous whitespace from a field
  */
-static
-char *	UnquotedField(
-	_ARX(DYN **,	dst)
-	_AR1(char *,	src)
-		)
-	_DCL(DYN **,	dst)
-	_DCL(char *,	src)
+static char *
+UnquotedField(DYN ** dst, char *src)
 {
-	auto	char	*next	= skip_to_comma(src);
-	auto	int	quote	= EOS,
-			first	= TRUE,
-			last	= -1;
-	register int	c;
+    char *next = skip_to_comma(src);
+    int quote = EOS, first = TRUE, last = -1;
+    int c;
 
-	dyn_init(dst, BUFSIZ);
-	while (src != next) {
-		c = *src++;
-		if (quote) {
-			if (c == quote) {
-				if (c == *src) {
-					src++;
-				} else {
-					quote = EOS;
-					continue;
-				}
-			}
-		} else if (isquote(c)) {
-			quote = c;
-			continue;
-		} else if (!opt_Blanks) {
-			if (isspace(c)) {
-				if (first)	/* ignore leading blank */
-					continue;
-			} else	/* point to last nonblank */
-				last = dyn_length(*dst);
+    dyn_init(dst, BUFSIZ);
+    while (src != next) {
+	c = *src++;
+	if (quote) {
+	    if (c == quote) {
+		if (c == *src) {
+		    src++;
+		} else {
+		    quote = EOS;
+		    continue;
 		}
-
-		*dst = dyn_append_c(*dst, c);
-		first = FALSE;
+	    }
+	} else if (isquote(c)) {
+	    quote = c;
+	    continue;
+	} else if (!opt_Blanks) {
+	    if (isspace(c)) {
+		if (first)	/* ignore leading blank */
+		    continue;
+	    } else		/* point to last nonblank */
+		last = dyn_length(*dst);
 	}
 
-	if (last >= 0) {
-		dyn_string(*dst)[last+1] = EOS;
-		(*dst)->cur_length = last;	/* patch */
-	}
+	*dst = dyn_append_c(*dst, c);
+	first = FALSE;
+    }
 
-	return dyn_string(*dst);
+    if (last >= 0) {
+	dyn_string(*dst)[last + 1] = EOS;
+	(*dst)->cur_length = last;	/* patch */
+    }
+
+    return dyn_string(*dst);
 }
 
 /************************************************************************
@@ -210,98 +190,85 @@ char *	UnquotedField(
  * Set/clear a flag which we can use to control whether embedded blanks in a
  * field must be quoted.
  */
-void	field_uses_quotes(
-	_AR1(int,	flag))
-	_DCL(int,	flag)
+void
+field_uses_quotes(int flag)
 {
-	opt_Blanks = !flag;
+    opt_Blanks = !flag;
 }
 
 /*
  * Returns the N'th comma-separated field, with leading/trailing blanks
  * removed.
  */
-char *	get_field_of(
-	_ARX(char *,	list)
-	_ARX(int,	N)
-	_ARX(char *,	dftval)
-	_AR1(DYN **,	result)
-		)
-	_DCL(char *,	list)
-	_DCL(int,	N)
-	_DCL(char *,	dftval)
-	_DCL(DYN **,	result)
+char *
+get_field_of(char *list,
+	     int N,
+	     char *dftval,
+	     DYN ** result)
 {
-	auto	char	*item,
-			*next;
+    char *item, *next;
 
-	if (((N = skip_to_field(list, N, &item, &next)) == 0)
-	 && (*item != EOS))
-		return UnquotedField(result, item);
+    if (((N = skip_to_field(list, N, &item, &next)) == 0)
+	&& (*item != EOS))
+	return UnquotedField(result, item);
 
-	if (dftval != 0) {
-		*result = dyn_copy(*result, dftval);
-		return dyn_string(*result);	/* did not find field */
-	}
+    if (dftval != 0) {
+	*result = dyn_copy(*result, dftval);
+	return dyn_string(*result);	/* did not find field */
+    }
 
-	return 0;
+    return 0;
 }
 
 /*
  * Sets the N'th field in the comma-separated list.  This assumes that 'list'
  * is an allocated variable, or null.
  */
-char *	set_field_of(
-	_ARX(char *,	list)
-	_ARX(int,	N)
-	_AR1(char *,	buffer)
-		)
-	_DCL(char *,	list)
-	_DCL(int,	N)
-	_DCL(char *,	buffer)
+char *
+set_field_of(char *list,
+	     int N,
+	     char *buffer)
 {
-	auto	char	*item,
-			*next,
-			*last	= list;
-	auto	size_t	need;
+    char *item, *next, *last = list;
+    size_t need;
 
-	/* find the point at which we replace the field */
-	if ((N = skip_to_field(list, N, &item, &next)) < 0)
-		N = 0;		/* list was null */
+    /* find the point at which we replace the field */
+    if ((N = skip_to_field(list, N, &item, &next)) < 0)
+	N = 0;			/* list was null */
 
-	/* ensure that the argument is nonnull */
-	if (buffer == 0)
-		buffer = "";
+    /* ensure that the argument is nonnull */
+    if (buffer == 0)
+	buffer = "";
 
-	/* check to see if we must quote the string */
-	if (must_quote(buffer))
-		buffer = QuotedField(buffer);
+    /* check to see if we must quote the string */
+    if (must_quote(buffer))
+	buffer = QuotedField(buffer);
 
-	/* allocate sufficient space for the new data */
-	need = strlen(buffer) + strlen(next) + (item - list) + N;
-	list = doalloc(list, (unsigned)need + 1);
+    /* allocate sufficient space for the new data */
+    need = strlen(buffer) + strlen(next) + (item - list) + N;
+    list = doalloc(list, (unsigned) need + 1);
 
-	/*
-	 * If we had prior contents, must reformat
-	 */
-	need = strlen(buffer);
-	if (last != 0) {
-		item	= (item - last) + list;
-		next	= (next - last) + list;
-		(void)memmove(item + N + need, next, strlen(next)+1);
-	} else {
-		item	= list;
-		need++;	/* for trailing null */
-	}
+    /*
+     * If we had prior contents, must reformat
+     */
+    need = strlen(buffer);
+    if (last != 0) {
+	item = (item - last) + list;
+	next = (next - last) + list;
+	(void) memmove(item + N + need, next, strlen(next) + 1);
+    } else {
+	item = list;
+	need++;			/* for trailing null */
+    }
 
-	/*
-	 * Insert the new buffer, and fill in missing commas, if any
-	 */
-	(void)memmove(item + N, buffer, need);
-	while (N-- > 0)
-		item[N] = ',';
+    /*
+     * Insert the new buffer, and fill in missing commas, if any
+     */
+    (void) memmove(item + N, buffer, need);
+    while (N-- > 0)
+	item[N] = ',';
 
-	return list;
+    return list;
 }
 
 /************************************************************************
@@ -310,6 +277,6 @@ char *	set_field_of(
 #ifdef	TEST
 _MAIN
 {
-	/*NOT IMPLEMENTED*/
+    /*NOT IMPLEMENTED */
 }
 #endif

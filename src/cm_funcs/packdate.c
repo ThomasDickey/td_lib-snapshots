@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	26 Mar 1986
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		03 Jul 2002, make the mktime() changes work on Solaris.
  *		21 Apr 2002, if mktime() is available, use that.  For instance
  *			     cygwin uses 1974 for zero-time.
@@ -41,114 +42,106 @@
  *		Base date is Thu Jan 1, 1970
  */
 
+#define STR_PTYPES
 #define TIM_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: packdate.c,v 12.22 2002/07/05 11:15:57 tom Exp $")
+MODULE_ID("$Id: packdate.c,v 12.23 2004/03/07 16:31:58 tom Exp $")
 
 #define	LEAP(y)	(!(y&3))
 
 #ifdef timezone
-#undef timezone		/* workaround for U/Win bug */
+#undef timezone			/* workaround for U/Win bug */
 #endif
 
-long	gmt_offset(
-	_AR1(time_t,	t))
-	_DCL(time_t,	t)
+long
+gmt_offset(time_t t)
 {
-	struct	tm tm;
-	long	result	= 0;
+    struct tm tm;
+    long result = 0;
 
-	/*
-	 * Parse the computed time using 'localtime' to avoid the complication
-	 * of determining the range between the last-Sunday-in-April to the
-	 * last-Sunday-in-October. Invoke it here so we can bypass the SunOs
-	 * 'gettimeofday()' procedure, which does not work well.
-	 */
-	tm = *localtime(&t);
+    /*
+     * Parse the computed time using 'localtime' to avoid the complication
+     * of determining the range between the last-Sunday-in-April to the
+     * last-Sunday-in-October. Invoke it here so we can bypass the SunOs
+     * 'gettimeofday()' procedure, which does not work well.
+     */
+    tm = *localtime(&t);
 
 #if defined(HAVE_TM_GMTOFF)
-	result -= tm.tm_gmtoff;
+    result -= tm.tm_gmtoff;
 #else /* UNIX */
 #if defined(TIMEZONE_DECLARED)
-	result += timezone;
+    result += timezone;
 #else
 #if defined(HAVE_GETTIMEOFDAY)
-	{
-	struct	timeval	t2;
-	struct	timezone tz;
-		(void)gettimeofday(&t2, &tz);
-		result += (tz.tz_minuteswest * MINUTE);
-	}
+    {
+	struct timeval t2;
+	struct timezone tz;
+	(void) gettimeofday(&t2, &tz);
+	result += (tz.tz_minuteswest * MINUTE);
+    }
 #else
 #endif
-#endif	/* TIMEZONE_DECLARED */
+#endif /* TIMEZONE_DECLARED */
 
-	/*
-	 * Check to see if the local-time display for a given clock-time
-	 * (in GMT seconds) would be bumped up an hour for daylight savings
-	 * time.
-	 */
+    /*
+     * Check to see if the local-time display for a given clock-time
+     * (in GMT seconds) would be bumped up an hour for daylight savings
+     * time.
+     */
 #if defined(HAVE_TM_ISDST)
-	if (tm.tm_isdst)	result -= HOUR;
+    if (tm.tm_isdst)
+	result -= HOUR;
 #endif
-#endif	/* HAVE_TM_GMTOFF */
-	return result;
+#endif /* HAVE_TM_GMTOFF */
+    return result;
 }
 
-long	packdate (
-	_ARX(int,	 year)
-	_ARX(int,	 mon)
-	_ARX(int,	 day)
-	_ARX(int,	 hour)
-	_ARX(int,	 min)
-	_AR1(int,	 sec)
-		)
-	_DCL(int,	 year)
-	_DCL(int,	 mon)
-	_DCL(int,	 day)
-	_DCL(int,	 hour)
-	_DCL(int,	 min)
-	_DCL(int,	 sec)
+long
+packdate(int year, int mon, int day, int hour, int min, int sec)
 {
 #if defined(HAVE_MKTIME)
-	time_t result;
-	struct tm tm;
+    time_t result;
+    struct tm tm;
 
-	memset(&tm, 0, sizeof(tm));
-	if (year > 1900)
-		year -= 1900;
-	tm.tm_year = year;
-	tm.tm_mon = mon - 1;
-	tm.tm_mday = day;
-	tm.tm_hour = hour;
-	tm.tm_min = min;
-	tm.tm_sec = sec;
-	tm.tm_isdst = -1;
+    memset(&tm, 0, sizeof(tm));
+    if (year > 1900)
+	year -= 1900;
+    tm.tm_year = year;
+    tm.tm_mon = mon - 1;
+    tm.tm_mday = day;
+    tm.tm_hour = hour;
+    tm.tm_min = min;
+    tm.tm_sec = sec;
+    tm.tm_isdst = -1;
 
-	result = mktime(&tm);
+    result = mktime(&tm);
 #else
-	auto	time_t	result = sec;
-	register int	j;
-static	int	m[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+    time_t result = sec;
+    int j;
+    static int m[12] =
+    {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 /*			  jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec */
 
-	if (year < 200)
-		year += 1900;
+    if (year < 200)
+	year += 1900;
 
-	result += (MINUTE * min) + (HOUR * hour);
-	for (j = 1970; j < year; j++) {
-		result += YEAR;
-		if (LEAP(j))	result += DAY;
-	}
-	for (j = 1; j < mon; j++) {
-		result += DAY * m[j-1];
-	}
-	if (mon > 2 && LEAP(year))	result += DAY;
-	result += (day-1) * DAY;
-	result += gmt_offset(result);
+    result += (MINUTE * min) + (HOUR * hour);
+    for (j = 1970; j < year; j++) {
+	result += YEAR;
+	if (LEAP(j))
+	    result += DAY;
+    }
+    for (j = 1; j < mon; j++) {
+	result += DAY * m[j - 1];
+    }
+    if (mon > 2 && LEAP(year))
+	result += DAY;
+    result += (day - 1) * DAY;
+    result += gmt_offset(result);
 #endif
-	return result;
+    return result;
 }
 
 /************************************************************************
@@ -157,37 +150,37 @@ static	int	m[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 #ifdef	TEST
 _MAIN
 {
-	auto	time_t	now = time((time_t *)0);
-	auto	time_t	then;
-	auto	struct	tm tm;
-	tm = *localtime(&now);
+    time_t now = time((time_t *) 0);
+    time_t then;
+    struct tm tm;
+    tm = *localtime(&now);
 
-	printf("Current time: %s", ctime(&now));
-	printf("  sec   =%d\n",  tm.tm_sec);
-	printf("  min   =%d\n",  tm.tm_min);
-	printf("  hour  =%d\n",  tm.tm_hour);
-	printf("  mday  =%d\n",  tm.tm_mday);
-	printf("  mon   =%d\n",  tm.tm_mon);
-	printf("  year  =%d\n",  tm.tm_year);
-	printf("  wday  =%d\n",  tm.tm_wday);
-	printf("  yday  =%d\n",  tm.tm_yday);
+    printf("Current time: %s", ctime(&now));
+    printf("  sec   =%d\n", tm.tm_sec);
+    printf("  min   =%d\n", tm.tm_min);
+    printf("  hour  =%d\n", tm.tm_hour);
+    printf("  mday  =%d\n", tm.tm_mday);
+    printf("  mon   =%d\n", tm.tm_mon);
+    printf("  year  =%d\n", tm.tm_year);
+    printf("  wday  =%d\n", tm.tm_wday);
+    printf("  yday  =%d\n", tm.tm_yday);
 #if defined(HAVE_TM_ISDST)
-	printf("  isdst =%d\n",  tm.tm_isdst);
+    printf("  isdst =%d\n", tm.tm_isdst);
 #endif
 #if defined(HAVE_TM_ZONE)
-	printf("  zone  =%s\n",  tm.tm_zone);
+    printf("  zone  =%s\n", tm.tm_zone);
 #endif
 #if defined(HAVE_TM_GMTOFF)
-	printf("  gmtoff=%ld\n", tm.tm_gmtoff);
+    printf("  gmtoff=%ld\n", tm.tm_gmtoff);
 #endif
 #if defined(HAVE_TIMEZONE)
-	printf("timezone=%ld\n", timezone);
+    printf("timezone=%ld\n", timezone);
 #endif
 
-	then = packdate (tm.tm_year, tm.tm_mon+1, tm.tm_mday,
-			tm.tm_hour,  tm.tm_min,   tm.tm_sec);
-	printf("Packed time: %s", ctime(&then));
-	exit(SUCCESS);
-	/*NOTREACHED*/
+    then = packdate(tm.tm_year, tm.tm_mon + 1, tm.tm_mday,
+		    tm.tm_hour, tm.tm_min, tm.tm_sec);
+    printf("Packed time: %s", ctime(&then));
+    exit(SUCCESS);
+    /*NOTREACHED */
 }
-#endif	/* TEST */
+#endif /* TEST */

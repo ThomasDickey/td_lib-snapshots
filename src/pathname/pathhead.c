@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	25 Aug 1988
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		06 Feb 1992, use 'stat_dir()'
@@ -29,57 +30,55 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: pathhead.c,v 12.5 1994/05/21 20:17:24 tom Exp $")
+MODULE_ID("$Id: pathhead.c,v 12.6 2004/03/07 22:03:45 tom Exp $")
 
 char *
-pathhead (
-_ARX(char *,	path)
-_AR1(Stat_t *,	sb_)
-	)
-_DCL(char *,	path)
-_DCL(Stat_t *,	sb_)
+pathhead(char *path, Stat_t * sb_)
 {
-	auto	int	trimmed	= 0;
-	auto	Stat_t	sb;
-	register char  *s;
-	static	char	buffer[BUFSIZ];
+    int trimmed = 0;
+    Stat_t sb;
+    char *s;
+    static char buffer[BUFSIZ];
 
-	if (sb_ == 0)	sb_ = &sb;
-	path = strcpy(buffer, path);
-	while ((s = fleaf_delim(path)) != NULL) {
+    if (sb_ == 0)
+	sb_ = &sb;
+    path = strcpy(buffer, path);
+    while ((s = fleaf_delim(path)) != NULL) {
 #ifdef	apollo
-		if (!strcmp(path, "//"))		break;
+	if (!strcmp(path, "//"))
+	    break;
 #endif
-		if (s[1] == EOS) {	/* trailing delimiter ? */
-			if (path == s)			break;
-			*s = EOS;	/* trim it */
-			trimmed++;
-		} else {
-			if (stat_dir(path, sb_) < 0) {
-				*s = EOS;
-				trimmed++;
-			} else
-				break;
-		}
+	if (s[1] == EOS) {	/* trailing delimiter ? */
+	    if (path == s)
+		break;
+	    *s = EOS;		/* trim it */
+	    trimmed++;
+	} else {
+	    if (stat_dir(path, sb_) < 0) {
+		*s = EOS;
+		trimmed++;
+	    } else
+		break;
 	}
-	if (stat_dir(path, sb_) < 0
-	||  (*path == EOS)
-	||  (s == 0 && !trimmed)) {
-		(void)stat(strcpy(path, "."), sb_);
-	}
-	return (path);
+    }
+    if (stat_dir(path, sb_) < 0
+	|| (*path == EOS)
+	|| (s == 0 && !trimmed)) {
+	(void) stat(strcpy(path, "."), sb_);
+    }
+    return (path);
 }
 
 #ifdef	TEST
 _MAIN
 {
-	register int j;
-	for (j = 1; j < argc; j++)
-		printf("%d:\t\"%s\" => \"%s\"\n",
-			j,
-			argv[j],
-			pathhead(argv[j], (Stat_t *)0));
-	exit(SUCCESS);
-	/*NOTREACHED*/
+    int j;
+    for (j = 1; j < argc; j++)
+	printf("%d:\t\"%s\" => \"%s\"\n",
+	       j,
+	       argv[j],
+	       pathhead(argv[j], (Stat_t *) 0));
+    exit(SUCCESS);
+    /*NOTREACHED */
 }
-#endif	/* TEST */
+#endif /* TEST */

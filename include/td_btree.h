@@ -1,4 +1,4 @@
-/* $Id: td_btree.h,v 12.6 2000/06/30 10:48:42 tom Exp $ */
+/* $Id: td_btree.h,v 12.7 2004/03/07 21:46:31 tom Exp $ */
 
 /*
  * TD_LIB binary-tree functions
@@ -26,32 +26,25 @@
 	/* cf: offsetof */
 #define BI_NODE_SIZE ((size_t) ((BI_NODE *)0)->value.text)
 
-#ifdef lint
-#define	BI_NODE_ALLOC(size) (BI_NODE *)(size)
-#else
 #define	BI_NODE_ALLOC(size) (BI_NODE *)doalloc((char *)0, size + BI_NODE_SIZE)
-#endif
 
 #define BI_TREE struct _bi_tree
 	BI_TREE	{
-	int	(*compare) (_arx(void *,a) _ar1(void *,b));
-	BI_NODE*(*allocat) (_ar1(void *,a));
-	void	(*display) (_ar1(void *,a));
+	int	(*compare) (void * a, void * b);
+	BI_NODE*(*allocat) (void * a);
+	void	(*display) (void * a);
 	BI_NODE	head;		/* root data, on end to ease initialization */
 	};
 
 	void *	btree_find(
-		_arx(BI_TREE *,	tree)
-		_ar1(void *,	data)
+		BI_TREE *	tree,
+		void *	data
 			)
-		_dcl(BI_TREE *,	tree)
-		_dcl(void *,	data)
-		_ret
+		;
 
 	void	btree_dump(
-		_ar1(BI_TREE *,	tree)
+		BI_TREE *	tree
 			)
-		_dcl(BI_TREE *,	tree)
-		_nul
+		;
 
 #endif /* TD_BTREE_H */

@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	24 Oct 1989
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, converted to ANSI
@@ -17,29 +18,28 @@
 #define CHR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: istextfl.c,v 12.4 2000/12/24 22:32:45 tom Exp $")
+MODULE_ID("$Id: istextfl.c,v 12.5 2004/03/07 22:03:45 tom Exp $")
 
-int	istextfile(
-	_AR1(char *,	name))
-	_DCL(char *,	name)
+int
+istextfile(char *name)
 {
-	auto	FILE	*fp;
-	auto	char	bfr[BUFSIZ];
-	register int	n, c;
+    FILE *fp;
+    char bfr[BUFSIZ];
+    int n, c;
 
-	if ((fp = fopen(name, "r")) != 0) {
-		while ((n = fread(bfr, sizeof(char), sizeof(bfr), fp)) > 0) {
-			while (n-- > 0) {
-				c = bfr[n];
-				if (!isascii(c)
-				||  (!isprint(c) && !isspace(c))) {
-					FCLOSE(fp);
-					return (FALSE);
-				}
-			}
+    if ((fp = fopen(name, "r")) != 0) {
+	while ((n = fread(bfr, sizeof(char), sizeof(bfr), fp)) > 0) {
+	    while (n-- > 0) {
+		c = bfr[n];
+		if (!isascii(c)
+		    || (!isprint(c) && !isspace(c))) {
+		    FCLOSE(fp);
+		    return (FALSE);
 		}
-		FCLOSE(fp);
-		return (TRUE);
+	    }
 	}
-	return (FALSE);
+	FCLOSE(fp);
+	return (TRUE);
+    }
+    return (FALSE);
 }

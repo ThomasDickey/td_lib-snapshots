@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	06 Feb 1992
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *
  * Function:	does a 'stat()' on a pathname.  If no error is found, it also
@@ -13,20 +14,15 @@
 #define	ERR_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: stat_fil.c,v 12.4 1994/08/21 19:31:53 tom Exp $")
+MODULE_ID("$Id: stat_fil.c,v 12.5 2004/03/07 22:03:45 tom Exp $")
 
 int
-stat_file(
-_ARX(char *,	path)
-_AR1(Stat_t *,	sb)
-	)
-_DCL(char *,	path)
-_DCL(Stat_t *,	sb)
+stat_file(char *path, Stat_t * sb)
 {
-	if (stat(path, sb) >= 0) {
-		if (isFILE(sb->st_mode))
-			return 0;
-		errno = EISDIR;
-	}
-	return -1;
+    if (stat(path, sb) >= 0) {
+	if (isFILE(sb->st_mode))
+	    return 0;
+	errno = EISDIR;
+    }
+    return -1;
 }

@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	13 Jul 1994
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *
  * Function:	returns the total number of blocks used by a file, counting
  *		both direct and indirect blocks.
@@ -15,12 +16,12 @@
 #define ERR_PTYPES
 #include <ptypes.h>
 
-MODULE_ID("$Id: fileblox.c,v 12.8 2002/07/05 11:18:55 tom Exp $")
+MODULE_ID("$Id: fileblox.c,v 12.9 2004/03/07 22:03:45 tom Exp $")
 
 #ifdef SYS_UNIX
 #if !defined(STAT_HAS_ST_BLOCKS)
 
-#ifdef __hpux	/* incompatible def */
+#ifdef __hpux			/* incompatible def */
 #undef  NINDIR
 #undef  BSIZE
 #endif
@@ -34,59 +35,56 @@ MODULE_ID("$Id: fileblox.c,v 12.8 2002/07/05 11:18:55 tom Exp $")
 
 #define	frac(a,b)	((a) + (b) - 1) / (b)
 
-long	fileblocks (
-	_AR1(const Stat_t *,	sb))
-	_DCL(const Stat_t *,	sb)
+long
+fileblocks(const Stat_t * sb)
 {
-	auto	long	bytes = sb->st_size;
-	register long	blocks = frac(bytes, 512);
-	register long	c = blocks - NDIR;
+    long bytes = sb->st_size;
+    long blocks = frac(bytes, 512);
+    long c = blocks - NDIR;
 
-	if (c > 0) {
-		blocks += frac(c,NINDIR);
-		if (c > NINDIR) {
-			blocks++;
-			c -= (NINDIR * NINDIR);
-			if (c > 0) {
-				blocks += 1 + frac(c,NINDIR);
-			}
-		}
+    if (c > 0) {
+	blocks += frac(c, NINDIR);
+	if (c > NINDIR) {
+	    blocks++;
+	    c -= (NINDIR * NINDIR);
+	    if (c > 0) {
+		blocks += 1 + frac(c, NINDIR);
+	    }
 	}
-	return (blocks);
+    }
+    return (blocks);
 }
 #endif /* !STAT_HAS_ST_BLOCKS */
-#endif	/* SYS_UNIX */
+#endif /* SYS_UNIX */
 
 #ifdef	TEST
-static
-void	do_file (
-	_AR1(char *,	name))
-	_DCL(char *,	name)
+static void
+do_file(char *name)
 {
-	Stat_t	sb;
-	if (stat_file(name, &sb) >= 0) {
-		printf("%8ld >%8ld %s\n",
-			sb.st_size,
-			fileblocks(&sb),
-			name);
-	} else if (errno != EISDIR) {
-		perror(name);
-	}
+    Stat_t sb;
+    if (stat_file(name, &sb) >= 0) {
+	printf("%8ld >%8ld %s\n",
+	       sb.st_size,
+	       fileblocks(&sb),
+	       name);
+    } else if (errno != EISDIR) {
+	perror(name);
+    }
 }
 
 _MAIN
 {
-	int	n;
-	if (argc > 1) {
-		for (n = 0; n < argc; n++)
-			do_file(argv[n]);
-	} else {
-		char	buffer[BUFSIZ];
-		while (gets(buffer)) {
-			strtrim(buffer);
-			do_file(buffer);
-		}
+    int n;
+    if (argc > 1) {
+	for (n = 0; n < argc; n++)
+	    do_file(argv[n]);
+    } else {
+	char buffer[BUFSIZ];
+	while (gets(buffer)) {
+	    strtrim(buffer);
+	    do_file(buffer);
 	}
-	exit(EXIT_SUCCESS);
+    }
+    exit(EXIT_SUCCESS);
 }
-#endif	/* TEST */
+#endif /* TEST */

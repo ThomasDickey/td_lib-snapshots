@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	26 May 1988
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		04 Oct 1991, conversion to ANSI
@@ -26,55 +27,85 @@
 #include	"rcsdefs.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: rcskeys.c,v 12.5 2002/07/03 13:04:43 tom Exp $")
+MODULE_ID("$Id: rcskeys.c,v 12.6 2004/03/07 16:31:58 tom Exp $")
 
-int	rcskeys(
-	_AR1(char *,	arg))
-	_DCL(char *,	arg)
+int
+rcskeys(char *arg)
 {
-	static	struct	{
-		int	code;
-		char	*text;
-		} keys[] = {
-				/* <admin> section			*/
-		{S_HEAD,	"head"},	/* {<num>};		*/
-		{S_BRANCH,	"branch"},	/* {<num>}*;		*/
-		{S_ACCESS,	"access"},	/* {<id>}*;		*/
-		{S_SYMBOLS,	"symbols"},	/* {<id> : <num>}*;	*/
-		{S_LOCKS,	"locks"},	/* {<id> : <num>}*;	*/
-		{S_COMMENT,	"comment"},	/* {<string};		*/
-		{S_STRICT,	"strict"},	/* strict-locking	*/
-				/* <delta> section begins with <num>	*/
-		{S_DATE,	"date"},	/* <num>;		*/
-		{S_AUTHOR,	"author"},	/* {<id>};		*/
-		{S_STATE,	"state"},	/* {<id>};		*/
-		{S_BRANCHES,	"branches"},	/* {<num>}*;		*/
-		{S_NEXT,	"next"},	/* {<num>};		*/
-		{S_DESC,	"desc"},	/* ends header		*/
-				/* <deltatext> begins with <num>	*/
-		{S_LOG,		"log"},		/* log-message		*/
-		{S_TEXT,	"text"}		/* text/editing commands*/
-		};
-	register size_t j;
-	register char	*s = arg;
-	int	code	= -1;
+    static struct {
+	int code;
+	char *text;
+    } keys[] = {
+	/* <admin> section                      */
+	{
+	    S_HEAD, "head"
+	},			/* {<num>};             */
+	{
+	    S_BRANCH, "branch"
+	},			/* {<num>}*;            */
+	{
+	    S_ACCESS, "access"
+	},			/* {<id>}*;             */
+	{
+	    S_SYMBOLS, "symbols"
+	},			/* {<id> : <num>}*;     */
+	{
+	    S_LOCKS, "locks"
+	},			/* {<id> : <num>}*;     */
+	{
+	    S_COMMENT, "comment"
+	},			/* {<string};           */
+	{
+	    S_STRICT, "strict"
+	},			/* strict-locking       */
+	/* <delta> section begins with <num>    */
+	{
+	    S_DATE, "date"
+	},			/* <num>;               */
+	{
+	    S_AUTHOR, "author"
+	},			/* {<id>};              */
+	{
+	    S_STATE, "state"
+	},			/* {<id>};              */
+	{
+	    S_BRANCHES, "branches"
+	},			/* {<num>}*;            */
+	{
+	    S_NEXT, "next"
+	},			/* {<num>};             */
+	{
+	    S_DESC, "desc"
+	},			/* ends header          */
+	/* <deltatext> begins with <num>        */
+	{
+	    S_LOG, "log"
+	},			/* log-message          */
+	{
+	    S_TEXT, "text"
+	}			/* text/editing commands */
+    };
+    size_t j;
+    char *s = arg;
+    int code = -1;
 
-	if (*s) {
-		if (isdigit(UCH(*s))) {
-			while (isdigit(UCH(*s)) || (*s == '.'))	s++;
-			if (*s == EOS)
-				code = S_VERS;
-		} else {
-			code = -2;	/* no match at all */
-			for (j = 0; j < SIZEOF(keys); j++) {
-				if (!strcmp(keys[j].text, s)) {
-					code = keys[j].code;
-					break;
-				}
-			}
+    if (*s) {
+	if (isdigit(UCH(*s))) {
+	    while (isdigit(UCH(*s)) || (*s == '.'))
+		s++;
+	    if (*s == EOS)
+		code = S_VERS;
+	} else {
+	    code = -2;		/* no match at all */
+	    for (j = 0; j < SIZEOF(keys); j++) {
+		if (!strcmp(keys[j].text, s)) {
+		    code = keys[j].code;
+		    break;
 		}
+	    }
 	}
-	if (RCS_DEBUG > 1)
-		PRINTF("++ rcskeys(%s) = %d\n", arg, code);
-	return (code);
+    }
+    if (RCS_DEBUG > 1)
+	PRINTF("++ rcskeys(%s) = %d\n", arg, code);
+    return (code);
 }

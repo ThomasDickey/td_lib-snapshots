@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	06 Jun 1988
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, conversion to ANSI
@@ -15,38 +16,38 @@
 #define PWD_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: gethome.c,v 12.6 2001/05/15 00:58:56 tom Exp $")
+MODULE_ID("$Id: gethome.c,v 12.7 2004/03/07 22:03:45 tom Exp $")
 
 char *
-gethome(_AR0)
+gethome(void)
 {
 #ifdef	SYS_UNIX
-	register struct passwd *q;
-	register char	*r;
-	static   char	*home;
+    struct passwd *q;
+    char *r;
+    static char *home;
 
-	if (home == 0) {
-		if (((q = getpwuid((uid_t)getuid())) == 0)
-		||  ((r = q->pw_dir) == 0)) {		/* prefer passwd-file */
-			if ((r = getenv("HOME")) == 0)	/* fall-back (sys-err)*/
-				r = ".";		/* give up */
-		}
-		home = stralloc(r);
+    if (home == 0) {
+	if (((q = getpwuid((uid_t) getuid())) == 0)
+	    || ((r = q->pw_dir) == 0)) {	/* prefer passwd-file */
+	    if ((r = getenv("HOME")) == 0)	/* fall-back (sys-err) */
+		r = ".";	/* give up */
 	}
-	return (home);
+	home = stralloc(r);
+    }
+    return (home);
 #endif
 #ifdef	vms
-	return "sys$login:";
+    return "sys$login:";
 #endif
 #ifdef	MSDOS
-	return "/";
+    return "/";
 #endif
 }
 
 #ifdef	TEST
 _MAIN
 {
-	printf("HOME= \"%s\"\n", gethome());
-	exit(SUCCESS);
+    printf("HOME= \"%s\"\n", gethome());
+    exit(SUCCESS);
 }
-#endif	/* TEST */
+#endif /* TEST */

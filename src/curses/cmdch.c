@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	01 Dec 1987 (broke out of 'ded.c')
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		03 Jul 2003, check for KEY_RESIZE makes ncurses sigwinch work
  *		15 Feb 1998, add home/end/ppage/npage keys.
  *		25 Sep 1996, fix for ANSI arrow-key decoding
@@ -47,271 +48,284 @@
 #include	"td_curse.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: cmdch.c,v 12.30 2003/07/02 22:57:14 tom Exp $")
+MODULE_ID("$Id: cmdch.c,v 12.31 2004/03/07 22:03:45 tom Exp $")
 
 #define	ESC(c)	((c) == '\033')
 #define	END(s)	s[strlen(s)-1]
-#define	if_C(c)	if (i_blk[j] == c)
+#define	CMP(c)	(i_blk[j] == c)
 #define	EQL(s)	(!strcmp(i_blk,((s)?(s):"")))
 
 #if !defined(NO_XTERM_MOUSE)
 
 #define XtermPos() (getch() - 041)	/* 0..COLS-1 or 0..LINES-1 */
 
-XtermMouse xt_mouse;	/* state of XTerm-mouse */
+XtermMouse xt_mouse;		/* state of XTerm-mouse */
 
 #if !defined(NCURSES_MOUSE_VERSION)
-static	int	double_click (_AR0)
+static int
+double_click(void)
 {
 #if defined(HAVE_GETTIMEOFDAY)
-	static	struct	timeval	last_time;
-	auto	struct	timeval	this_time;
-	auto	struct	timezone this_zone;
-	register int	event = FALSE;
-	register long	diff;
+    static struct timeval last_time;
+    struct timeval this_time;
+    struct timezone this_zone;
+    int event = FALSE;
+    long diff;
 
-	(void) gettimeofday(&this_time, &this_zone);
+    (void) gettimeofday(&this_time, &this_zone);
 
-	diff = this_time.tv_sec - last_time.tv_sec;
-	if (diff <= 1) {
-		diff *= 1000000L;
-		diff += (this_time.tv_usec - last_time.tv_usec);
-		event = diff < 1000000L;
-	}
+    diff = this_time.tv_sec - last_time.tv_sec;
+    if (diff <= 1) {
+	diff *= 1000000L;
+	diff += (this_time.tv_usec - last_time.tv_usec);
+	event = diff < 1000000L;
+    }
 
-	last_time = this_time;
-	return event;
+    last_time = this_time;
+    return event;
 #else
-	return FALSE;
+    return FALSE;
 #endif
 }
-#endif	/* !NCURSES_MOUSE_VERSION */
-#endif	/* !NO_XTERM_MOUSE */
+#endif /* !NCURSES_MOUSE_VERSION */
+#endif /* !NO_XTERM_MOUSE */
 
 #if !defined(HAVE_KEYPAD)
 # if !defined(HAVE_TCAP_CURSOR)
-static	char	*KU, *KD, *KR, *KL;
-static	char	*KH;
+static char *KU, *KD, *KR, *KL;
+static char *KH;
 # endif
-static	char	*kH, *KP, *KN;		/* not generally in BSD curses */
-static	int	ansi	= FALSE;
+static char *kH, *KP, *KN;	/* not generally in BSD curses */
+static int ansi = FALSE;
 
-static
-int	known_key(
-	_AR1(char *,	i_blk))
-	_DCL(char *,	i_blk)
+static int
+known_key(char *i_blk)
 {
-	if	(EQL(KU))	return KEY_UP;
-	else if	(EQL(KD))	return KEY_DOWN;
-	else if	(EQL(KL))	return KEY_LEFT;
-	else if	(EQL(KR))	return KEY_RIGHT;
-	else if	(EQL(KH))	return KEY_HOME;
-	else if	(EQL(kH))	return KEY_END;
-	else if	(EQL(KP))	return KEY_PPAGE;
-	else if	(EQL(KN))	return KEY_NPAGE;
-	return EOS;
+    if (EQL(KU))
+	return KEY_UP;
+    else if (EQL(KD))
+	return KEY_DOWN;
+    else if (EQL(KL))
+	return KEY_LEFT;
+    else if (EQL(KR))
+	return KEY_RIGHT;
+    else if (EQL(KH))
+	return KEY_HOME;
+    else if (EQL(kH))
+	return KEY_END;
+    else if (EQL(KP))
+	return KEY_PPAGE;
+    else if (EQL(KN))
+	return KEY_NPAGE;
+    return EOS;
 }
-#endif	/* HAVE_KEYPAD */
+#endif /* HAVE_KEYPAD */
 
-int	cmdch(
-	_AR1(int *,	cnt_))
-	_DCL(int *,	cnt_)
+int
+cmdch(int *cnt_)
 {
-	register int	j = 0;
-	auto	int	c	= EOS,
-			done	= FALSE,
-			had_c	= 0,
-			count	= 0;
-	auto	char	i_blk[1024];
-	static	int	init	= FALSE;
+    int j = 0;
+    int c = EOS, done = FALSE, had_c = 0, count = 0;
+    char i_blk[1024];
+    static int init = FALSE;
 #if defined(NCURSES_MOUSE_VERSION) && !defined(NO_XTERM_MOUSE)
-	MEVENT	myevent;
+    MEVENT myevent;
 #endif
 
-	if (!init) {
-		init = TRUE;
+    if (!init) {
+	init = TRUE;
 #if !defined(HAVE_KEYPAD)
-		{
-		static	char	o_blk[1024], *a_ = o_blk;
-			if (tgetent(i_blk,getenv("TERM")) <= 0)
-				failed("cmdch/tgetent");
+	{
+	    static char o_blk[1024], *a_ = o_blk;
+	    if (tgetent(i_blk, getenv("TERM")) <= 0)
+		failed("cmdch/tgetent");
 # if !defined(HAVE_TCAP_CURSOR)
-			KD = tgetstr("kd", &a_);
-			KU = tgetstr("ku", &a_);
-			KR = tgetstr("kr", &a_);
-			KL = tgetstr("kl", &a_);
-			KH = tgetstr("kh", &a_);
+	    KD = tgetstr("kd", &a_);
+	    KU = tgetstr("ku", &a_);
+	    KR = tgetstr("kr", &a_);
+	    KL = tgetstr("kl", &a_);
+	    KH = tgetstr("kh", &a_);
 # endif
-			kH = tgetstr("kH", &a_);
-			KP = tgetstr("kP", &a_);
-			KN = tgetstr("kN", &a_);
-		}
-		if (KD && KU && KR && KL) {
-			if (ESC(*KD) && ESC(*KU) && ESC(*KR) && ESC(*KL))
-				ansi	=  END(KU) == 'A'
-					&& END(KD) == 'B'
-					&& END(KR) == 'C'
-					&& END(KL) == 'D';
-		}
-#endif	/* HAVE_KEYPAD */
+	    kH = tgetstr("kH", &a_);
+	    KP = tgetstr("kP", &a_);
+	    KN = tgetstr("kN", &a_);
 	}
+	if (KD && KU && KR && KL) {
+	    if (ESC(*KD) && ESC(*KU) && ESC(*KR) && ESC(*KL))
+		ansi = END(KU) == 'A'
+		    && END(KD) == 'B'
+		    && END(KR) == 'C'
+		    && END(KL) == 'D';
+	}
+#endif /* HAVE_KEYPAD */
+    }
 
-	while (!done) {
+    while (!done) {
 
-		c = getch();
+	c = getch();
 #if defined(HAVE_KEYPAD)
-		switch (c) {
-		/*
-		 * These definitions simplify the task of porting between BSD-
-		 * and SYS5-curses.  Just because I turn on the keypad, I
-		 * shouldn't have to worry about normal keycodes shifting about
-		 * as a side-effect.
-		 */
+	switch (c) {
+	    /*
+	     * These definitions simplify the task of porting between BSD-
+	     * and SYS5-curses.  Just because I turn on the keypad, I
+	     * shouldn't have to worry about normal keycodes shifting about
+	     * as a side-effect.
+	     */
 #ifdef KEY_DC
 #if KEY_DC != '\177'
-		case KEY_DC:	c = '\177';	done = TRUE;	break;
+	case KEY_DC:
+	    c = '\177';
+	    done = TRUE;
+	    break;
 #endif
 #endif
 #ifdef KEY_BACKSPACE
 #if KEY_BACKSPACE != '\b'
-		case KEY_BACKSPACE: c = '\b';	done = TRUE;	break;
+	case KEY_BACKSPACE:
+	    c = '\b';
+	    done = TRUE;
+	    break;
 #endif
 #endif
 #ifdef KEY_ENTER
 #if KEY_ENTER != '\n'
-		case KEY_ENTER: c = '\n';	done = TRUE;	break;
+	case KEY_ENTER:
+	    c = '\n';
+	    done = TRUE;
+	    break;
 #endif
 #endif
 #if defined(NCURSES_MOUSE_VERSION) && !defined(NO_XTERM_MOUSE)
-		case KEY_MOUSE:
-			getmouse(&myevent);
-			xt_mouse.col = myevent.x;
-			xt_mouse.row = myevent.y;
-			if (myevent.bstate & BUTTON1_CLICKED) {
-				xt_mouse.button = 1;
-				xt_mouse.dbl_clik = FALSE;
-			} else
-			if (myevent.bstate & BUTTON1_DOUBLE_CLICKED) {
-				xt_mouse.button = 1;
-				xt_mouse.dbl_clik = TRUE;
-			} else
-			if (myevent.bstate & BUTTON2_CLICKED) {
-				xt_mouse.button = 2;
-				xt_mouse.dbl_clik = FALSE;
-			} else
-			if (myevent.bstate & BUTTON2_DOUBLE_CLICKED) {
-				xt_mouse.button = 2;
-				xt_mouse.dbl_clik = TRUE;
-			} else
-			if (myevent.bstate & BUTTON3_CLICKED) {
-				xt_mouse.button = 3;
-				xt_mouse.dbl_clik = FALSE;
-			} else
-			if (myevent.bstate & BUTTON3_DOUBLE_CLICKED) {
-				xt_mouse.button = 3;
-				xt_mouse.dbl_clik = TRUE;
-			} else
-				break;
-			xt_mouse.pressed  = TRUE;
-			xt_mouse.released = TRUE;
-			done = TRUE;
-			break;
+	case KEY_MOUSE:
+	    getmouse(&myevent);
+	    xt_mouse.col = myevent.x;
+	    xt_mouse.row = myevent.y;
+	    if (myevent.bstate & BUTTON1_CLICKED) {
+		xt_mouse.button = 1;
+		xt_mouse.dbl_clik = FALSE;
+	    } else if (myevent.bstate & BUTTON1_DOUBLE_CLICKED) {
+		xt_mouse.button = 1;
+		xt_mouse.dbl_clik = TRUE;
+	    } else if (myevent.bstate & BUTTON2_CLICKED) {
+		xt_mouse.button = 2;
+		xt_mouse.dbl_clik = FALSE;
+	    } else if (myevent.bstate & BUTTON2_DOUBLE_CLICKED) {
+		xt_mouse.button = 2;
+		xt_mouse.dbl_clik = TRUE;
+	    } else if (myevent.bstate & BUTTON3_CLICKED) {
+		xt_mouse.button = 3;
+		xt_mouse.dbl_clik = FALSE;
+	    } else if (myevent.bstate & BUTTON3_DOUBLE_CLICKED) {
+		xt_mouse.button = 3;
+		xt_mouse.dbl_clik = TRUE;
+	    } else
+		break;
+	    xt_mouse.pressed = TRUE;
+	    xt_mouse.released = TRUE;
+	    done = TRUE;
+	    break;
 #endif
 #ifdef KEY_RESIZE
-		case KEY_RESIZE:
-			break;			/* eat this for sigwinch */
+	case KEY_RESIZE:
+	    break;		/* eat this for sigwinch */
 #endif
-		case KEY_HOME:			/* FALLTHRU */
-		case KEY_END:			/* FALLTHRU */
-		case KEY_PPAGE:			/* FALLTHRU */
-		case KEY_NPAGE:			/* FALLTHRU */
-		case KEY_UP:			/* FALLTHRU */
-		case KEY_DOWN:			/* FALLTHRU */
-		case KEY_LEFT:			/* FALLTHRU */
-		case KEY_RIGHT:			done = TRUE;	break;
-		}
-		if (done)
-			break;
+	case KEY_HOME:		/* FALLTHRU */
+	case KEY_END:		/* FALLTHRU */
+	case KEY_PPAGE:	/* FALLTHRU */
+	case KEY_NPAGE:	/* FALLTHRU */
+	case KEY_UP:		/* FALLTHRU */
+	case KEY_DOWN:		/* FALLTHRU */
+	case KEY_LEFT:		/* FALLTHRU */
+	case KEY_RIGHT:
+	    done = TRUE;
+	    break;
+	}
+	if (done)
+	    break;
 #endif /* HAVE_KEYPAD */
-		if (iscntrl(c) || j != 0)
-			i_blk[j++] = c;
+	if (iscntrl(c) || j != 0)
+	    i_blk[j++] = c;
 
 #if !defined(HAVE_KEYPAD) && !defined(NO_XTERM_MOUSE)
-		if (ESC(c)) {	/* assume "standard" escapes */
-			do {
-				i_blk[j++] = c = getch();
-				i_blk[j] = EOS;
-			} while (!isalpha(c) && !known_key(i_blk));
-		}
-#endif
-		if (j) {
-			i_blk[j] = EOS;
-			done	= TRUE;
-#if !defined(HAVE_KEYPAD)
-			if (known_key(i_blk))
-				c = known_key(i_blk);
-			else
-#endif /* !HAVE_KEYPAD */
-			if (j > 1) {	/* extended escapes */
-#if !defined(NO_XTERM_MOUSE) && !defined(NCURSES_MOUSE_VERSION)
-				/* patch: should test for xterm_mouse */
-				if (!strncmp(i_blk, "\033[M", 3)) {
-					auto	int	the_button;
-					static	int	last_row = -1;
-					static	int	last_col = -1;
-
-					c = KEY_MOUSE;
-					the_button   = (getch() & 3) + 1;
-					xt_mouse.col = XtermPos();
-					xt_mouse.row = XtermPos();
-					if (the_button > 3) {
-						xt_mouse.released = TRUE;
-					} else {
-						xt_mouse.pressed  = TRUE;
-						xt_mouse.released = FALSE;
-						xt_mouse.button   = the_button;
-						xt_mouse.dbl_clik = double_click()
-							&& (last_row == xt_mouse.row)
-							&& (last_col == xt_mouse.col);
-						last_row = xt_mouse.row;
-						last_col = xt_mouse.col;
-					}
-				} else
-#endif	/* !NO_XTERM_MOUSE */
-#if !defined(HAVE_KEYPAD)
-				if (ansi) {
-					j--;
-					if_C('A')	c = KEY_UP;
-					else if_C('B')	c = KEY_DOWN;
-					else if_C('C')	c = KEY_RIGHT;
-					else if_C('D')	c = KEY_LEFT;
-					else {
-						if (END(i_blk) != 'O'
-					     	&&  END(i_blk) != '[') {
-							j = 0;
-							beep();
-						} else
-							j++; /* cannot skip */
-						done = FALSE;
-					}
-				} else
-#endif	/* !HAVE_KEYPAD */
-				{
-					beep();
-					done = FALSE;
-				}
-			}
-		} else if ((cnt_ != 0) && isdigit(c)) {
-			had_c++;
-			count = (count * 10) + (c - '0');
-		} else
-			done = TRUE;
+	if (ESC(c)) {		/* assume "standard" escapes */
+	    do {
+		i_blk[j++] = c = getch();
+		i_blk[j] = EOS;
+	    } while (!isalpha(c) && !known_key(i_blk));
 	}
+#endif
+	if (j) {
+	    i_blk[j] = EOS;
+	    done = TRUE;
+#if !defined(HAVE_KEYPAD)
+	    if (known_key(i_blk))
+		c = known_key(i_blk);
+	    else
+#endif /* !HAVE_KEYPAD */
+	    if (j > 1) {	/* extended escapes */
+#if !defined(NO_XTERM_MOUSE) && !defined(NCURSES_MOUSE_VERSION)
+		/* patch: should test for xterm_mouse */
+		if (!strncmp(i_blk, "\033[M", 3)) {
+		    int the_button;
+		    static int last_row = -1;
+		    static int last_col = -1;
 
-	if (cnt_)
-		*cnt_ = (had_c != 0) ? count : 1;
+		    c = KEY_MOUSE;
+		    the_button = (getch() & 3) + 1;
+		    xt_mouse.col = XtermPos();
+		    xt_mouse.row = XtermPos();
+		    if (the_button > 3) {
+			xt_mouse.released = TRUE;
+		    } else {
+			xt_mouse.pressed = TRUE;
+			xt_mouse.released = FALSE;
+			xt_mouse.button = the_button;
+			xt_mouse.dbl_clik = double_click()
+			    && (last_row == xt_mouse.row)
+			    && (last_col == xt_mouse.col);
+			last_row = xt_mouse.row;
+			last_col = xt_mouse.col;
+		    }
+		} else
+#endif /* !NO_XTERM_MOUSE */
+#if !defined(HAVE_KEYPAD)
+		if (ansi) {
+		    j--;
+		    if (CMP('A'))
+			c = KEY_UP;
+		    else if (CMP('B'))
+			c = KEY_DOWN;
+		    else if (CMP('C'))
+			c = KEY_RIGHT;
+		    else if (CMP('D'))
+			c = KEY_LEFT;
+		    else {
+			if (END(i_blk) != 'O'
+			    && END(i_blk) != '[') {
+			    j = 0;
+			    beep();
+			} else
+			    j++;	/* cannot skip */
+			done = FALSE;
+		    }
+		} else
+#endif /* !HAVE_KEYPAD */
+		{
+		    beep();
+		    done = FALSE;
+		}
+	    }
+	} else if ((cnt_ != 0) && isdigit(c)) {
+	    had_c++;
+	    count = (count * 10) + (c - '0');
+	} else
+	    done = TRUE;
+    }
 
-	if (c == '\r')
-		c = '\n';
-	return(c);
+    if (cnt_)
+	*cnt_ = (had_c != 0) ? count : 1;
+
+    if (c == '\r')
+	c = '\n';
+    return (c);
 }

@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	13 Jul 1994, from 'rcspath.c'
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *
  * Function:	This returns the pathname of the specified SCCS-utility, and
  *		is intended to provide a measure of security in executing
@@ -12,20 +13,19 @@
 #include	"ptypes.h"
 #include	"sccsdefs.h"
 
-MODULE_ID("$Id: sccspath.c,v 12.2 1994/07/14 01:34:57 tom Exp $")
+MODULE_ID("$Id: sccspath.c,v 12.3 2004/03/07 16:31:58 tom Exp $")
 
-char *	sccspath(
-	_AR1(char *,	utility))
-	_DCL(char *,	utility)
+char *
+sccspath(char *utility)
 {
-	static	char	bfr[BUFSIZ];
+    static char bfr[BUFSIZ];
 #ifdef	SCCS_PATH
-	auto	char	tmp[BUFSIZ];
-	utility = pathcat(tmp, SCCS_PATH, utility);
+    char tmp[BUFSIZ];
+    utility = pathcat(tmp, SCCS_PATH, utility);
 #endif
-	if (which(bfr, sizeof(bfr), utility, ".") <= 0) {
-		failed(utility);
-		/*NOTREACHED*/
-	}
-	return bfr;
+    if (which(bfr, sizeof(bfr), utility, ".") <= 0) {
+	failed(utility);
+	/*NOTREACHED */
+    }
+    return bfr;
 }

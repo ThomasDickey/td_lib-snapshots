@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	30 Aug 1988
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		04 Oct 1991, conversion to ANSI
@@ -32,83 +33,75 @@
 #define	SIG_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: filecopy.c,v 12.8 1995/04/22 21:07:27 tom Exp $")
+MODULE_ID("$Id: filecopy.c,v 12.9 2004/03/07 22:03:45 tom Exp $")
 
-int	filecopy(
-	_ARX(char *,	src)
-	_ARX(char *,	dst)
-	_AR1(int,	copy)
-		)
-	_DCL(char *,	src)
-	_DCL(char *,	dst)
-	_DCL(int,	copy)
+int
+filecopy(char *src, char *dst, int copy)
 {
-	Stat_t	sb1, sb2;
-	register int	count,
-			fi,
-			fo;
+    Stat_t sb1, sb2;
+    int count, fi, fo;
 
-	errno = 0;		/* reset so we can use as return-code */
-	if (stat(src, &sb1) < 0) {
-		if (copy)
-			return (-1);
-		else {		/* ...make destination non-existent too */
-			(void)unlink(dst);
-			return (0);
-		}
+    errno = 0;			/* reset so we can use as return-code */
+    if (stat(src, &sb1) < 0) {
+	if (copy)
+	    return (-1);
+	else {			/* ...make destination non-existent too */
+	    (void) unlink(dst);
+	    return (0);
 	}
+    }
+    if ((sb1.st_mode & S_IFMT) != S_IFREG) {
+	errno = EISDIR;
+	return (-1);
+    }
+    if (stat(dst, &sb2) >= 0) {
 	if ((sb1.st_mode & S_IFMT) != S_IFREG) {
-		errno = EISDIR;
-		return (-1);
+	    errno = EISDIR;
+	    return (-1);
 	}
-	if (stat(dst, &sb2) >= 0) {
-		if ((sb1.st_mode & S_IFMT) != S_IFREG) {
-			errno = EISDIR;
-			return (-1);
-		}
-		if ((sb1.st_dev == sb2.st_dev)
-		&&  (sb1.st_ino == sb2.st_ino)) {
-			errno = EEXIST;
-			return (-1);
-		}
+	if ((sb1.st_dev == sb2.st_dev)
+	    && (sb1.st_ino == sb2.st_ino)) {
+	    errno = EEXIST;
+	    return (-1);
 	}
+    }
 
-	catchall(SIG_IGN);
-	if ((fi = open(src, O_RDONLY, 0)) >= 0) {
-		int	mode = sb1.st_mode & 0777;
-		if (((unlink(dst) >= 0) || (errno == ENOENT))
-		&&  ((fo = open(dst, O_CREAT | O_WRONLY, mode)) >= 0)) {
+    catchall(SIG_IGN);
+    if ((fi = open(src, O_RDONLY, 0)) >= 0) {
+	int mode = sb1.st_mode & 0777;
+	if (((unlink(dst) >= 0) || (errno == ENOENT))
+	    && ((fo = open(dst, O_CREAT | O_WRONLY, mode)) >= 0)) {
 
-			errno = 0;	/* reset after 'unlink()' */
-			if (copy) {
-				char	bfr[BUFSIZ];
+	    errno = 0;		/* reset after 'unlink()' */
+	    if (copy) {
+		char bfr[BUFSIZ];
 
-				while ((count = read(fi, bfr, sizeof(bfr))) > 0)
-					if (write(fo, bfr, (LEN_READ)count) < 0)
-						break;
-			}
-			(void)close(fo);
-			(void)chmod(dst, (mode_t)mode);
-			(void)setmtime(dst, sb1.st_mtime, sb1.st_atime);
-		}
-		(void)close(fi);
+		while ((count = read(fi, bfr, sizeof(bfr))) > 0)
+		    if (write(fo, bfr, (LEN_READ) count) < 0)
+			break;
+	    }
+	    (void) close(fo);
+	    (void) chmod(dst, (mode_t) mode);
+	    (void) setmtime(dst, sb1.st_mtime, sb1.st_atime);
 	}
-	catchall(SIG_DFL);
+	(void) close(fi);
+    }
+    catchall(SIG_DFL);
 
-	return (errno ? -1 : 0);
+    return (errno ? -1 : 0);
 }
 
 #ifdef	TEST
 _MAIN
 {
-	char	*src, *dst;
+    char *src, *dst;
 
-	if (argc > 2) {
-		PRINTF("src=%s, dst=%s\n", src = argv[1], dst = argv[2]);
-		if (filecopy(src, dst, TRUE) < 0)
-			perror("copy");
-	}
-	exit(SUCCESS);
-	/*NOTREACHED*/
+    if (argc > 2) {
+	PRINTF("src=%s, dst=%s\n", src = argv[1], dst = argv[2]);
+	if (filecopy(src, dst, TRUE) < 0)
+	    perror("copy");
+    }
+    exit(SUCCESS);
+    /*NOTREACHED */
 }
-#endif	/* TEST */
+#endif /* TEST */

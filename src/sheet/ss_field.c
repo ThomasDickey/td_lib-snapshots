@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	03 Feb 1992
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *		02 Aug 1992, 'get_field_of()' uses DYN-strings.
  *
@@ -11,36 +12,25 @@
 
 #include "td_sheet.h"
 
-MODULE_ID("$Id: ss_field.c,v 12.2 1993/10/29 17:35:24 tom Exp $")
+MODULE_ID("$Id: ss_field.c,v 12.3 2004/03/07 22:03:45 tom Exp $")
 
-char *	get_ss_field(
-	_ARX(char **,	vec)
-	_ARX(int,	row)
-	_ARX(int,	col)
-	_ARX(char *,	dftval)
-	_AR1(DYN **,	result)
-		)
-	_DCL(char **,	vec)
-	_DCL(int,	row)
-	_DCL(int,	col)
-	_DCL(char *,	dftval)
-	_DCL(DYN **,	result)
+char *
+get_ss_field(char **vec,
+	     int row,
+	     int col,
+	     char *dftval,
+	     DYN ** result)
 {
-	return (vec != 0)
-		? get_field_of(vec[row], col, dftval, result)
-		: dftval;
+    return ((vec != 0)
+	    ? get_field_of(vec[row], col, dftval, result)
+	    : dftval);
 }
 
-char *	set_ss_field(
-	_ARX(char **,	vec)
-	_ARX(int,	row)
-	_ARX(int,	col)
-	_AR1(char *,	buffer)
-		)
-	_DCL(char **,	vec)
-	_DCL(int,	row)
-	_DCL(int,	col)
-	_DCL(char *,	buffer)
+char *
+set_ss_field(char **vec,
+	     int row,
+	     int col,
+	     char *buffer)
 {
-	return set_field_of(vec[row], col, buffer);
+    return set_field_of(vec[row], col, buffer);
 }

@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	07 Feb 1992
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		30 May 1998, compile with g++
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
@@ -25,119 +26,97 @@
 #include "rcsdefs.h"
 #include <ctype.h>
 
-MODULE_ID("$Id: rcssymbs.c,v 12.5 2002/07/03 13:04:43 tom Exp $")
+MODULE_ID("$Id: rcssymbs.c,v 12.6 2004/03/07 16:31:58 tom Exp $")
 
 #define	isname(c)	(isalnum(UCH(c)) || (c == '_'))
 
-static
-void
-compress(
-_AR1(char *,	in_out))
-_DCL(char *,	in_out)
+static void
+compress(char *in_out)
 {
-	register char	*s, *d;
+    char *s, *d;
 
-	for (s = in_out; (*s == '0') && isname(s[1]); s++)
-		;
-	if (s != in_out)
-		for (d = in_out; (*d++ = *s++) != EOS; )
-			;
+    for (s = in_out; (*s == '0') && isname(s[1]); s++) ;
+    if (s != in_out)
+	for (d = in_out; (*d++ = *s++) != EOS;) ;
 
-	for (s = in_out; (*s != EOS);  s++) {
-		if (*s == '.') {
-			compress(s+1);
-			break;
-		}
+    for (s = in_out; (*s != EOS); s++) {
+	if (*s == '.') {
+	    compress(s + 1);
+	    break;
 	}
+    }
 }
 
-static
-void
-substitute(
-_ARX(char *,	in_out)
-_ARX(char *,	name)
-_AR1(char *,	value)
-	)
-_DCL(char *,	in_out)
-_DCL(char *,	name)
-_DCL(char *,	value)
+static void
+substitute(char *in_out,
+	   char *name,
+	   char *value)
 {
-	if (in_out != 0) {
-		if (!strcmp(in_out, name))
-			(void) strcpy(in_out, value);
-		compress(in_out);
-	}
+    if (in_out != 0) {
+	if (!strcmp(in_out, name))
+	    (void) strcpy(in_out, value);
+	compress(in_out);
+    }
 }
 
-static
-void
-expand(
-_ARX(char *,	in_out)
-_ARX(char *,	name)
-_AR1(char *,	value)
-	)
-_DCL(char *,	in_out)
-_DCL(char *,	name)
-_DCL(char *,	value)
+static void
+expand(char *in_out,
+       char *name,
+       char *value)
 {
-	auto	char	buffer[BUFSIZ];
-	auto	char	*base = 0;
-	auto	int	first = TRUE;
+    char buffer[BUFSIZ];
+    char *base = 0;
+    int first = TRUE;
 
-	register char	*d = buffer,
-			*s = in_out;
-	register int	item;
+    char *d = buffer, *s = in_out;
+    int item;
 
-	while (*s == '.')
-		s++;
+    while (*s == '.')
+	s++;
+    *d = EOS;
+
+    while (*s) {
+	if ((item = *s++) == '.') {
+	    substitute(base, name, value);
+	    d = base + strlen(base);
+	    first = TRUE;
+	} else if (first) {
+	    first = FALSE;
+	    base = d;
+	}
+	*d++ = item;
 	*d = EOS;
-
-	while (*s) {
-		if ((item = *s++) == '.') {
-			substitute(base, name, value);
-			d     = base + strlen(base);
-			first = TRUE;
-		} else if (first) {
-			first = FALSE;
-			base  = d;
-		}
-		*d++ = item;
-		*d = EOS;
-	}
-	substitute(base, name, value);
-	(void)strcpy(in_out, buffer);
+    }
+    substitute(base, name, value);
+    (void) strcpy(in_out, buffer);
 }
 
 char *
-rcssymbols(
-_ARX(char *,	s)			/* current scan position */
-_ARX(char *,	dst)
-_AR1(char *,	src)
-	)
-_DCL(char *,	s)
-_DCL(char *,	dst)
-_DCL(char *,	src)
+rcssymbols(char *s,		/* current scan position */
+	   char *dst,
+	   char *src)
 {
-	char	identifier[BUFSIZ],
-		revision[BUFSIZ],
-		temp[BUFSIZ];
+    char identifier[BUFSIZ];
+    char revision[BUFSIZ];
+    char temp[BUFSIZ];
 
-	if (src == 0)
-		src = "";
-	(void)strcpy(temp, src);
+    if (src == 0)
+	src = "";
+    (void) strcpy(temp, src);
 
-	do {
-		s = rcsparse_id(identifier, s);
-		if (*s == ':')	s++;
-		s = rcsparse_num(revision, s);
-		if (*identifier && *revision && *src)
-			expand(temp, identifier, revision);
-	} while (*identifier);
+    do {
+	s = rcsparse_id(identifier, s);
+	if (*s == ':')
+	    s++;
+	s = rcsparse_num(revision, s);
+	if (*identifier && *revision && *src)
+	    expand(temp, identifier, revision);
+    } while (*identifier);
 
-	if (strcmp(src, temp)) {
-		if (RCS_DEBUG)
-			PRINTF("++ expand %s => %s\n", src, temp);
-		(void)strcpy(dst, temp);
-	}
-	return (s);
+    if (strcmp(src, temp)) {
+	if (RCS_DEBUG)
+	    PRINTF("++ expand %s => %s\n", src, temp);
+	(void) strcpy(dst, temp);
+    }
+    return (s);
 }

@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	19 Sep 1988
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, conversion to ANSI
@@ -32,55 +33,53 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: sameleaf.c,v 12.5 1993/12/02 15:52:03 tom Exp $")
+MODULE_ID("$Id: sameleaf.c,v 12.6 2004/03/07 22:03:45 tom Exp $")
 
-int	sameleaf(
-	_ARX(char *,	path)
-	_AR1(char *,	leaf)
-		)
-	_DCL(char *,	path)
-	_DCL(char *,	leaf)
+int
+sameleaf(char *path, char *leaf)
 {
-	static	char	dotdot[] = { '.', '.', PATH_SLASH, EOS };
-	auto	 int	adjust;
-	auto	 char	tmp[BUFSIZ];
-	register char	*s;
+    static char dotdot[] =
+    {'.', '.', PATH_SLASH, EOS};
 
-	(void)strcpy(tmp, path);
-	while (!strncmp(leaf, dotdot, 3))
-		leaf += 3;
-	while ((s = fleaf(tmp)) != NULL) { /* find real leaf-name */
-		if (*s != EOS)
-			break;
-		*(--s) = EOS;		/* ...trimming off trailing delimiter */
-	}
-	if (s == 0)
-		s = tmp;
+    int adjust;
+    char tmp[BUFSIZ];
+    char *s;
 
-	/*
-	 * Even after trimming, 'leaf' may contain a delimiter.  If so, we must
-	 * readjust the pointer to the path which we compare:
-	 */
-	if ((adjust = strlen(s) - strlen(leaf)) < 0) {
-		if (s + adjust == tmp)
-			s = tmp;
-		else if (((s + adjust) > tmp) && (isSlash(s[adjust-1])))
-			s += adjust;
-	}
+    (void) strcpy(tmp, path);
+    while (!strncmp(leaf, dotdot, 3))
+	leaf += 3;
+    while ((s = fleaf(tmp)) != NULL) {	/* find real leaf-name */
+	if (*s != EOS)
+	    break;
+	*(--s) = EOS;		/* ...trimming off trailing delimiter */
+    }
+    if (s == 0)
+	s = tmp;
+
+    /*
+     * Even after trimming, 'leaf' may contain a delimiter.  If so, we must
+     * readjust the pointer to the path which we compare:
+     */
+    if ((adjust = strlen(s) - strlen(leaf)) < 0) {
+	if (s + adjust == tmp)
+	    s = tmp;
+	else if (((s + adjust) > tmp) && (isSlash(s[adjust - 1])))
+	    s += adjust;
+    }
 #ifdef	TEST
-	printf("\tcompare \"%s\" \"%s\"\n", s, leaf);
+    printf("\tcompare \"%s\" \"%s\"\n", s, leaf);
 #endif
-	return (!strcmp(s, leaf));
+    return (!strcmp(s, leaf));
 }
 
 #ifdef	TEST
 _MAIN
 {
-	register int	j;
-	for (j = 1; j < argc; j++)
-		printf("%d:\t%s %s => %d\n",
-			j, argv[1], argv[j],
-			sameleaf(argv[1], argv[j]));
-	exit(SUCCESS);
+    int j;
+    for (j = 1; j < argc; j++)
+	printf("%d:\t%s %s => %d\n",
+	       j, argv[1], argv[j],
+	       sameleaf(argv[1], argv[j]));
+    exit(SUCCESS);
 }
-#endif	/* TEST */
+#endif /* TEST */

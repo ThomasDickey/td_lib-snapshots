@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	05 Feb 1992
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *
  * Function:	Parses argument-lists of working and/or archive names for rcs-
@@ -77,7 +78,7 @@
 #include "rcsdefs.h"
 #include <errno.h>
 
-MODULE_ID("$Id: rcsargpr.c,v 12.6 2001/12/11 13:56:38 tom Exp $")
+MODULE_ID("$Id: rcsargpr.c,v 12.7 2004/03/07 16:31:58 tom Exp $")
 
 /************************************************************************
  *	local data							*
@@ -94,19 +95,16 @@ MODULE_ID("$Id: rcsargpr.c,v 12.6 2001/12/11 13:56:38 tom Exp $")
 
 #define	LEN_SUFFIX	(sizeof(suffix)-1)
 
-static	char	suffix[] = RCS_SUFFIX;
+static char suffix[] = RCS_SUFFIX;
 
-static	Stat_t	stat_working,
-		stat_archive,
-		stat_located;
+static Stat_t stat_working, stat_archive, stat_located;
 
-static	int	errs_working,	have_working,
-		errs_archive,	have_archive,
-		errs_located,	have_located;
+static int errs_working, have_working, errs_archive, have_archive,
+errs_located, have_located;
 
-static	char	*name_working,	/* complete path of working file */
-		*name_archive,	/* complete path of RCS file */
-		*name_located;	/* directory in which archive is located */
+static char *name_working,	/* complete path of working file */
+ *name_archive,			/* complete path of RCS file */
+ *name_located;			/* directory in which archive is located */
 
 /************************************************************************
  *	local procedures						*
@@ -116,120 +114,101 @@ static	char	*name_working,	/* complete path of working file */
  * Returns TRUE if the name ends with RCS_SUFFIX, making the filename that of
  * an RCS-archive.
  */
-static
-int
-is_archive(
-_AR1(char *,	name))
-_DCL(char *,	name)
+static int
+is_archive(char *name)
 {
-	size_t	len = strlen(name);
-	if (len >= LEN_SUFFIX)
-		if (!strcmp(suffix, name + len - LEN_SUFFIX))
-			return (TRUE);
-	return (FALSE);
+    size_t len = strlen(name);
+    if (len >= LEN_SUFFIX)
+	if (!strcmp(suffix, name + len - LEN_SUFFIX))
+	    return (TRUE);
+    return (FALSE);
 }
 
 /*
  * Returns a pointer to the leaf (i.e., filename) of a path.
  */
-static
-char *
-leaf_of(
-_AR1(char *,	name))
-_DCL(char *,	name)
+static char *
+leaf_of(char *name)
 {
-	register char	*s = fleaf(name);
-	return ((s != 0) ? s : name);
+    char *s = fleaf(name);
+    return ((s != 0) ? s : name);
 }
 
 /*
  * Strips the RCS-suffix from a path (modifies/returns its argument)
  */
-static
-char *
-strip_suffix(
-_AR1(char *,	name))
-_DCL(char *,	name)
+static char *
+strip_suffix(char *name)
 {
-	size_t	len = strlen(name);
-	if (len >= LEN_SUFFIX)
-		if (!strcmp(suffix, name + len - LEN_SUFFIX))
-			name[len - LEN_SUFFIX] = EOS;
-	return name;
+    size_t len = strlen(name);
+    if (len >= LEN_SUFFIX)
+	if (!strcmp(suffix, name + len - LEN_SUFFIX))
+	    name[len - LEN_SUFFIX] = EOS;
+    return name;
 }
 
 /*
  * Compares two paths to see if they have the same leaf (ignoring suffix)
  */
-static
-int
-same_name(
-_ARX(char *,	name1)
-_AR1(char *,	name2)
-	)
-_DCL(char *,	name1)
-_DCL(char *,	name2)
+static int
+same_name(char *name1,
+	  char *name2)
 {
-	auto	char	leaf1[MAXPATHLEN],
-			leaf2[MAXPATHLEN];
+    char leaf1[MAXPATHLEN], leaf2[MAXPATHLEN];
 
-	return !strcmp(
-		strip_suffix(strcpy(leaf1, leaf_of(name1))),
-		strip_suffix(strcpy(leaf2, leaf_of(name2)))
-			);
+    return !strcmp(
+		      strip_suffix(strcpy(leaf1, leaf_of(name1))),
+		      strip_suffix(strcpy(leaf2, leaf_of(name2)))
+	);
 }
 
 /*
  * Verify that a pathname is not too long, and properly formatted.
  */
-static
-int
-ok_name(
-_AR1(char *,	name))
-_DCL(char *,	name)
+static int
+ok_name(char *name)
 {
-	auto	size_t	len = strlen(name) + strlen(rcs_dir(NULL,NULL)) + LEN_SUFFIX + 2;
-	static	char	delim	= '$';
+    size_t len = strlen(name) + strlen(rcs_dir(NULL, NULL)) +
+    LEN_SUFFIX + 2;
+    static char delim = '$';
 
-	if (len > MAXPATHLEN) {
-		FPRINTF(stderr, "? name too long:%s\n", name);
-		return FALSE;
-	}
-	if (strchr(name, delim)) {
-		FPRINTF(stderr, "? name contains '%c':%s\n", delim, name);
-		return FALSE;
-	}
-	return TRUE;		/* ok I guess */
+    if (len > MAXPATHLEN) {
+	FPRINTF(stderr, "? name too long:%s\n", name);
+	return FALSE;
+    }
+    if (strchr(name, delim)) {
+	FPRINTF(stderr, "? name contains '%c':%s\n", delim, name);
+	return FALSE;
+    }
+    return TRUE;		/* ok I guess */
 }
 
 /*
  * Initializes this module
  */
-static
-void
-initialize(_AR0)
+static void
+initialize(void)
 {
-	static	int	done;
+    static int done;
 
-	if (!done) {
-		done = TRUE;
+    if (!done) {
+	done = TRUE;
 
-		*(name_working = doalloc((char *)0, MAXPATHLEN+1)) = EOS;
-		*(name_archive = doalloc((char *)0, MAXPATHLEN+1)) = EOS;
-		*(name_located = doalloc((char *)0, MAXPATHLEN+1)) = EOS;
-	}
+	*(name_working = doalloc((char *) 0, MAXPATHLEN + 1)) = EOS;
+	*(name_archive = doalloc((char *) 0, MAXPATHLEN + 1)) = EOS;
+	*(name_located = doalloc((char *) 0, MAXPATHLEN + 1)) = EOS;
+    }
 }
 
 /*
  * Re-initializes (for use in 'rcsargpair()')
  */
-static
-void
-reinitialize(_AR0)
+static void
+reinitialize(void)
 {
-	initialize();
-	errs_working = errs_archive = errs_located = 0;
-	have_working = have_archive = have_located = NOT_YET;
+    initialize();
+    errs_working = errs_archive = errs_located = 0;
+    have_working = have_archive = have_located = NOT_YET;
 }
 
 /************************************************************************
@@ -244,59 +223,53 @@ reinitialize(_AR0)
  * is copied also, so that the caller can do ownership/access testing.
  */
 int
-rcs_working(
-_ARX(char *,	Name)
-_AR1(Stat_t *,	Stat)
-	)
-_DCL(char *,	Name)
-_DCL(Stat_t *,	Stat)
+rcs_working(char *Name,
+	    Stat_t * Stat)
 {
-	initialize();
-	if (Stat != 0 || have_working == NOT_YET) {
-		have_working = stat_file(name_working, &stat_working);
-		errs_working = have_working ? errno : 0;
-	}
-	if (Stat != 0)	*Stat = stat_working;
-	if (Name != 0)	(void)strcpy(Name, name_working);
-	DEBUG(("++ rcs_working(%s) errs %d\n", name_working, errs_working))
+    initialize();
+    if (Stat != 0 || have_working == NOT_YET) {
+	have_working = stat_file(name_working, &stat_working);
+	errs_working = have_working ? errno : 0;
+    }
+    if (Stat != 0)
+	*Stat = stat_working;
+    if (Name != 0)
+	(void) strcpy(Name, name_working);
+    DEBUG(("++ rcs_working(%s) errs %d\n", name_working, errs_working))
 	return (errno = errs_working) ? -1 : 0;
 }
 
 int
-rcs_archive(
-_ARX(char *,	Name)
-_AR1(Stat_t *,	Stat)
-	)
-_DCL(char *,	Name)
-_DCL(Stat_t *,	Stat)
+rcs_archive(char *Name,
+	    Stat_t * Stat)
 {
-	initialize();
-	if (Stat != 0 || have_archive == NOT_YET) {
-		have_archive = stat_file(name_archive, &stat_archive);
-		errs_archive = have_archive ? errno : 0;
-	}
-	if (Stat != 0)	*Stat = stat_archive;
-	if (Name != 0)	(void)strcpy(Name, name_archive);
-	DEBUG(("++ rcs_archive(%s) errs %d\n", name_archive, errs_archive))
+    initialize();
+    if (Stat != 0 || have_archive == NOT_YET) {
+	have_archive = stat_file(name_archive, &stat_archive);
+	errs_archive = have_archive ? errno : 0;
+    }
+    if (Stat != 0)
+	*Stat = stat_archive;
+    if (Name != 0)
+	(void) strcpy(Name, name_archive);
+    DEBUG(("++ rcs_archive(%s) errs %d\n", name_archive, errs_archive))
 	return (errno = errs_archive) ? -1 : 0;
 }
 
 int
-rcs_located(
-_ARX(char *,	Name)
-_AR1(Stat_t *,	Stat)
-	)
-_DCL(char *,	Name)
-_DCL(Stat_t *,	Stat)
+rcs_located(char *Name,
+	    Stat_t * Stat)
 {
-	initialize();
-	if (Stat != 0 || have_located == NOT_YET) {
-		have_located = stat_dir(name_located, &stat_located);
-		errs_located = have_located ? errno : 0;
-	}
-	if (Stat != 0)	*Stat = stat_located;
-	if (Name != 0)	(void)strcpy(Name, name_located);
-	DEBUG(("++ rcs_located(%s) errs %d\n", name_located, errs_located))
+    initialize();
+    if (Stat != 0 || have_located == NOT_YET) {
+	have_located = stat_dir(name_located, &stat_located);
+	errs_located = have_located ? errno : 0;
+    }
+    if (Stat != 0)
+	*Stat = stat_located;
+    if (Name != 0)
+	(void) strcpy(Name, name_located);
+    DEBUG(("++ rcs_located(%s) errs %d\n", name_located, errs_located))
 	return (errno = errs_located) ? -1 : 0;
 }
 
@@ -304,116 +277,110 @@ _DCL(Stat_t *,	Stat)
  * Function to invoke for argument-parsing.
  */
 int
-rcsargpair(
-_ARX(int,	This)
-_ARX(int,	Last)	/* same as 'argc' */
-_AR1(char **,	Argv)	/* assumed non-volatile, from 'main()' */
-	)
-_DCL(int,	This)
-_DCL(int,	Last)
-_DCL(char **,	Argv)
+rcsargpair(int This,
+	   int Last,		/* same as 'argc' */
+	   char **Argv)		/* assumed non-volatile, from 'main()' */
 {
-	auto	int	test_1,
-			test_2;
-	auto	char	*name_1,
-			*name_2,
-			*working = 0,
-			*archive = 0,
-			temp_archive[MAXPATHLEN];
+    int test_1, test_2;
+    char *name_1;
+    char *name_2;
+    char *working = 0;
+    char *archive = 0;
+    char temp_archive[MAXPATHLEN];
 
-	reinitialize();
+    reinitialize();
 
-	/* gobble up one or two arguments with the same working-name */
-	if (This < Last) {
+    /* gobble up one or two arguments with the same working-name */
+    if (This < Last) {
 
-		name_1 = Argv[This++];
-		test_1 = is_archive(name_1);
-		if (!ok_name(name_1))
-			return Last;
+	name_1 = Argv[This++];
+	test_1 = is_archive(name_1);
+	if (!ok_name(name_1))
+	    return Last;
 
-		if (test_1)
-			archive = name_1;
-		else
-			working = name_1;
-
-		if (This < Last) {
-			name_2 = Argv[This];
-			test_2 = is_archive(name_2);
-			if (!ok_name(name_2))
-				return Last;
-
-			if ((test_1 ^ test_2) && same_name(name_1, name_2)) {
-				This++;
-				if (test_2)
-					archive = name_2;
-				else
-					working = name_2;
-			}
-		}
-	}
-
-	/* supply missing directory on archive, for consistency */
-	if (archive != 0 && !fleaf_delim(archive))
-		archive = pathcat(temp_archive, rcs_dir(NULL,NULL), archive);
-
-	if (archive == 0) {
-
-		TRACE(("...case 3\n"))
-		(void)strcpy(name_working, working);
-
-		(void)strcpy(name_archive, working);	/* copy path */
-		FORMAT(leaf_of(name_archive), "%s/%s%s",
-			rcs_dir(NULL,NULL), leaf_of(working), RCS_SUFFIX);
-
-	} else if (working == 0) {
-
-		TRACE(("...case 2\n"))
-		(void)strcpy(name_archive, archive);
-
-		working = leaf_of(archive);
-		FORMAT(name_working, "./%s", working);
-		(void)strip_suffix(name_working);
-
-	} else {
-
-		TRACE(("...case 1\n"))
-		(void)strcpy(name_working, working);
-		(void)strcpy(name_archive, archive);
-
-	}
-
-	/* the pathname must have a non-empty leaf! */
-	working = leaf_of(name_working);
-	if (!*working) {
-		FPRINTF(stderr, "? missing name for %s\n", archive);
-		return Last;
-	}
-
-	/* determine the directory-name for the RCS-archive */
-	name_1 = leaf_of(strcpy(name_located, name_archive));
-	if (name_1 == name_located)
-		(void)strcpy(name_1, ".");
+	if (test_1)
+	    archive = name_1;
 	else
-		name_1[-1] = EOS;
+	    working = name_1;
 
-	return This;
+	if (This < Last) {
+	    name_2 = Argv[This];
+	    test_2 = is_archive(name_2);
+	    if (!ok_name(name_2))
+		return Last;
+
+	    if ((test_1 ^ test_2) && same_name(name_1, name_2)) {
+		This++;
+		if (test_2)
+		    archive = name_2;
+		else
+		    working = name_2;
+	    }
+	}
+    }
+
+    /* supply missing directory on archive, for consistency */
+    if (archive != 0 && !fleaf_delim(archive))
+	archive = pathcat(temp_archive, rcs_dir(NULL, NULL), archive);
+
+    if (archive == 0) {
+
+	TRACE(("...case 3\n"))
+	    (void) strcpy(name_working, working);
+
+	(void) strcpy(name_archive, working);	/* copy path */
+	FORMAT(leaf_of(name_archive), "%s/%s%s",
+	       rcs_dir(NULL, NULL), leaf_of(working), RCS_SUFFIX);
+
+    } else if (working == 0) {
+
+	TRACE(("...case 2\n"))
+	    (void) strcpy(name_archive, archive);
+
+	working = leaf_of(archive);
+	FORMAT(name_working, "./%s", working);
+	(void) strip_suffix(name_working);
+
+    } else {
+
+	TRACE(("...case 1\n"))
+	    (void) strcpy(name_working, working);
+	(void) strcpy(name_archive, archive);
+
+    }
+
+    /* the pathname must have a non-empty leaf! */
+    working = leaf_of(name_working);
+    if (!*working) {
+	FPRINTF(stderr, "? missing name for %s\n", archive);
+	return Last;
+    }
+
+    /* determine the directory-name for the RCS-archive */
+    name_1 = leaf_of(strcpy(name_located, name_archive));
+    if (name_1 == name_located)
+	(void) strcpy(name_1, ".");
+    else
+	name_1[-1] = EOS;
+
+    return This;
 }
 
 #ifdef	TEST
 /*ARGSUSED*/
 _MAIN
 {
-	register int	j = 1;
+    int j = 1;
 
-	rcs_working(0,0);
-	while (j < argc) {
-		PRINTF("%3d] parameter:%s\n", j, argv[j]);
-		j = rcsargpair(j, argc, argv);
-		PRINTF("    working   :%s\n", name_working);
-		PRINTF("    archive   :%s\n", name_archive);
-		PRINTF("    located   :%s\n", name_located);
-	}
-	exit(SUCCESS);
-	/*NOTREACHED*/
+    rcs_working(0, 0);
+    while (j < argc) {
+	PRINTF("%3d] parameter:%s\n", j, argv[j]);
+	j = rcsargpair(j, argc, argv);
+	PRINTF("    working   :%s\n", name_working);
+	PRINTF("    archive   :%s\n", name_archive);
+	PRINTF("    located   :%s\n", name_located);
+    }
+    exit(SUCCESS);
+    /*NOTREACHED */
 }
-#endif	/* TEST */
+#endif /* TEST */

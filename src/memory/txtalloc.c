@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	29 Apr 1988
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		30 Jul 1995, split-out guts as btree.c
  *
  * Function:	Maintains a balanced binary tree of character strings, to
@@ -13,80 +14,71 @@
 #define	STR_PTYPES
 #include <td_btree.h>
 
-MODULE_ID("$Id: txtalloc.c,v 12.8 2000/06/30 10:48:46 tom Exp $")
+MODULE_ID("$Id: txtalloc.c,v 12.9 2004/03/07 22:07:19 tom Exp $")
 
-static
-BI_NODE	*new_node (
-	_AR1(void *,	data))
-	_DCL(void *,	data)
+static BI_NODE *
+new_node(void *data)
 {
-	char *value = (char *)data;
-	size_t need = strlen(value) + 1;
-	BI_NODE *result = BI_NODE_ALLOC(need);
-	memset(result, 0, BI_NODE_SIZE + need);
-	strcpy(result->value.text, value);
-	return result;
+    char *value = (char *) data;
+    size_t need = strlen(value) + 1;
+    BI_NODE *result = BI_NODE_ALLOC(need);
+    memset(result, 0, BI_NODE_SIZE + need);
+    strcpy(result->value.text, value);
+    return result;
 }
 
-static
-int	cmp_node (
-	_ARX(void *,	a)
-	_AR1(void *,	b)
-		)
-	_DCL(void *,	a)
-	_DCL(void *,	b)
+static int
+cmp_node(void *a, void *b)
 {
-	return strcmp((char *)a, (char *)b);
+    return strcmp((char *) a, (char *) b);
 }
 
-static
-void	dpy_node (
-	_AR1(void *,	a))
-	_DCL(void *,	a)
+static void
+dpy_node(void *a)
 {
-	PRINTF("%s", (char *)a);
+    PRINTF("%s", (char *) a);
 }
 
-static	BI_TREE	text_tree = {
-	cmp_node,
-	new_node,
-	dpy_node,
-	BI_NODE_NULL
-	};
-
-char *	txtalloc(
-	_AR1(char *,	text))
-	_DCL(char *,	text)
+static BI_TREE text_tree =
 {
-	return btree_find(&text_tree, text);
+    cmp_node,
+    new_node,
+    dpy_node,
+    BI_NODE_NULL
+};
+
+char *
+txtalloc(char *text)
+{
+    return btree_find(&text_tree, text);
 }
 
 /*
  * Dummy entry for consistency
  */
 /*ARGSUSED*/
-void	txtfree(
-	_AR1(char *,	p))
-	_DCL(char *,	p)
+void
+txtfree(char *p)
 {
-	/*NOT IMPLEMENTED*/
+    /*NOT IMPLEMENTED */
 }
 
 /******************************************************************************/
-void	free_txtalloc(_AR0)
+void
+free_txtalloc(void)
 {
-	/*NOT IMPLEMENTED*/
+    /*NOT IMPLEMENTED */
 }
 
 /******************************************************************************/
 #ifdef	TEST
 _MAIN
 {
-	register int	j;
-	for (j = 1; j < argc; j++)
-		(void)txtalloc(argv[j]);
-	btree_dump(&text_tree);
-	exit(SUCCESS);
-	/*NOTREACHED*/
+    register int j;
+    for (j = 1; j < argc; j++)
+	(void) txtalloc(argv[j]);
+    btree_dump(&text_tree);
+    exit(SUCCESS);
+    /*NOTREACHED */
 }
 #endif

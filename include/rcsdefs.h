@@ -1,4 +1,4 @@
-/* $Id: rcsdefs.h,v 12.8 2003/04/26 00:13:58 tom Exp $ */
+/* $Id: rcsdefs.h,v 12.9 2004/03/07 21:45:04 tom Exp $ */
 
 #ifndef	RCSDEFS_H
 #define	RCSDEFS_H
@@ -39,11 +39,7 @@
 
 #define NULL_FUNC (int (*)())0
 
-typedef	void	(*RcsparseStr)(
-#if defined(PROTOTYPES)
-			int	c
-#endif
-		);
+typedef	void	(*RcsparseStr)(int);
 
 /*
  * If the environment variable RCS_DEBUG is defined, we activate additional
@@ -57,264 +53,200 @@ typedef	void	(*RcsparseStr)(
 #include <deltree.h>
 
 	/* rcs_debug.c ----------------------------------------------- */
-	int	rcs_debug(_ar0)
-			_ret
+	int	rcs_debug(void)
+			;
 
 	/* rcs_dir.c ------------------------------------------------- */
 	char *	rcs_dir(
-			_arx(char *,	working_dir)
-			_ar1(char *,	pathname)
+			char *	working_dir,
+			char *	pathname
 			)
-			_dcl(char *,	working_dir)
-			_dcl(char *,	pathname)
-			_ret
+			;
 
 	/* rcsargpair.c ---------------------------------------------- */
 	int	rcs_working(
-			_arx(char *,	name)
-			_ar1(Stat_t *,	sb)
+			char *	name,
+			Stat_t *	sb
 			)
-			_dcl(char *,	name)
-			_dcl(Stat_t *,	sb)
-			_ret
+			;
 
 	int	rcs_archive(
-			_arx(char *,	name)
-			_ar1(Stat_t *,	sb)
+			char *	name,
+			Stat_t *	sb
 			)
-			_dcl(char *,	name)
-			_dcl(Stat_t *,	sb)
-			_ret
+			;
 
 	int	rcs_located(
-			_arx(char *,	name)
-			_ar1(Stat_t *,	sb)
+			char *	name,
+			Stat_t *	sb
 			)
-			_dcl(char *,	name)
-			_dcl(Stat_t *,	sb)
-			_ret
+			;
 
 	int	rcsargpair(
-			_arx(int,	item)
-			_arx(int,	argc)
-			_ar1(char **,	argv)
+			int	item,
+			int	argc,
+			char **	argv
 			)
-			_dcl(int,	item)
-			_dcl(int,	argc)
-			_dcl(char **,	argv)
-			_ret
+			;
 
 	/* rcsedit.c ------------------------------------------------- */
 	int	rcsopen(
-			_arx(char *,	name)
-			_arx(int,	show)
-			_ar1(int,	readonly)
+			char *	name,
+			int	show,
+			int	readonly
 			)
-			_dcl(char *,	name)
-			_dcl(int,	show)
-			_dcl(int,	readonly)
-			_ret
+			;
 
 	char *	rcsread(
-			_arx(char *,	s)
-			_ar1(int,	code)
+			char *	s,
+			int	code
 			)
-			_dcl(char *,	s)
-			_dcl(int,	code)
-			_ret
+			;
 
 	void	rcsedit (
-			_arx(char *,	oldname)
-			_ar1(char *,	newname)
+			char *	oldname,
+			char *	newname
 			)
-			_dcl(char *,	oldname)
-			_dcl(char *,	newname)
-			_nul
+			;
 
-	void	rcsclose(_ar0)
-			_nul
+	void	rcsclose(void)
+			;
 
 	char *	rcsparse_num(
-			_arx(char *,	d)
-			_ar1(char *,	s)
+			char *	d,
+			char *	s
 			)
-			_dcl(char *,	d)
-			_dcl(char *,	s)
-			_ret
+			;
 
 	char *	rcsparse_id(
-			_arx(char *,	d)
-			_ar1(char *,	s)
+			char *	d,
+			char *	s
 			)
-			_dcl(char *,	d)
-			_dcl(char *,	s)
-			_ret
+			;
 
 	char *	rcsparse_str(
-			_arx(char *,	s)
-			_ar1(RcsparseStr,f)
+			char *	s,
+			RcsparseStr	f
 			)
-			_dcl(char *,	s)
-			_dcl(RcsparseStr,f)
-			_ret
+			;
 
 	/* rcskeys.c ------------------------------------------------- */
 	int	rcskeys(
-			_ar1(char *,	s)
+			char *	s
 			)
-			_dcl(char *,	s)
-			_ret
+			;
 
 	/* rcslast.c ------------------------------------------------- */
 	void	rcslast(
-			_arx(char *,	wd)
-			_arx(char *,	n)
-			_arx(char **,	v_)
-			_arx(time_t *,	t_)
-			_ar1(char **,	l_)
+			char *	wd,
+			char *	n,
+			char **	v_,
+			time_t *	t_,
+			char **	l_
 			)
-			_dcl(char *,	wd)
-			_dcl(char *,	n)
-			_dcl(char **,	v_)
-			_dcl(time_t *,	t_)
-			_dcl(char **,	l_)
-			_nul
+			;
 
 	/* rcsload.c ------------------------------------------------- */
 	DELTREE *rcsload(
-			_arx(char *,	name)
-			_arx(int,	full)
-			_arx(int,	load)
-			_ar1(int,	verbose)
+			char *	name,
+			int	full,
+			int	load,
+			int	verbose
 			)
-			_dcl(char *,	name)
-			_dcl(int,	full)
-			_dcl(int,	load)
-			_dcl(int,	verbose)
-			_ret
+			;
 
 	void	rcsunload(
-			_ar1(DELTREE *,	p)
+			DELTREE *	p
 			)
-			_dcl(DELTREE *,	p)
-			_nul
+			;
 
 	/* rcslocks.c ------------------------------------------------ */
 	char *	rcslocks(
-			_arx(char *,	s)
-			_arx(char *,	who)
-			_ar1(char *,	rev)
+			char *	s,
+			char *	who,
+			char *	rev
 			)
-			_dcl(char *,	s)
-			_dcl(char *,	who)
-			_dcl(char *,	rev)
-			_ret
+			;
 
 	/* rcsname.c -------------------------------------------------- */
 	char *	rcs2name(
-			_arx(char *,	name)
-			_ar1(int,	full)
+			char *	name,
+			int	full
 			)
-			_dcl(char *,	name)
-			_dcl(int,	full)
-			_ret
+			;
 
 	char *	name2rcs(
-			_arx(char *,	name)
-			_ar1(int,	full)
+			char *	name,
+			int	full
 			)
-			_dcl(char *,	name)
-			_dcl(int,	full)
-			_ret
+			;
 
 	/* rcspath.c -------------------------------------------------- */
 	char *	rcspath(
-			_ar1(char *,	name)
+			char *	name
 			)
-			_dcl(char *,	name)
-			_ret
+			;
 
 	/* rcspermit.c ------------------------------------------------ */
 	int	rcspermit(
-			_arx(char *,	path)
-			_arx(char *,	base)
-			_ar1(char **,	accflag)
+			char *	path,
+			char *	base,
+			char **	accflag
 			)
-			_dcl(char *,	path)
-			_dcl(char *,	base)
-			_dcl(char **,	accflag)
-			_ret
+			;
 
 	/* rcssymbols.c ---------------------------------------------- */
 	char *	rcssymbols(
-			_arx(char *,	s)
-			_arx(char *,	dst)
-			_ar1(char *,	src)
+			char *	s,
+			char *	dst,
+			char *	src
 			)
-			_dcl(char *,	s)
-			_dcl(char *,	dst)
-			_dcl(char *,	src)
-			_ret
+			;
 
 	/* rcstemp.c -------------------------------------------------- */
 	char *	rcstemp(
-			_arx(char *,	name)
-			_ar1(int,	copy)
+			char *	name,
+			int	copy
 			)
-			_dcl(char *,	name)
-			_dcl(int,	copy)
-			_ret
+			;
 
 	/* rcstime.c -------------------------------------------------- */
 	void	time2rcs(
-			_arx(char *,	buffer)
-			_ar1(time_t,	when)
+			char *	buffer,
+			time_t	when
 			)
-			_dcl(char *,	buffer)
-			_dcl(time_t,	when)
-			_nul
+			;
 
 	time_t	rcs2time(
-			_ar1(char *,	buffer)
+			char *	buffer
 			)
-			_dcl(char *,	buffer)
-			_ret
+			;
 
 	/* samebranch.c ----------------------------------------------- */
 	int	samebranch(
-			_arx(char *,	rev1)
-			_ar1(char *,	rev2)
+			char *	rev1,
+			char *	rev2
 			)
-			_dcl(char *,	rev1)
-			_dcl(char *,	rev2)
-			_ret
+			;
 
 	/* vcs_file.c ------------------------------------------------- */
 	char *	vcs_file(
-			_arx(char *,	path)
-			_arx(char *,	name)
-			_ar1(int,	temp)
+			char *	path,
+			char *	name,
+			int	temp
 			)
-			_dcl(char *,	path)
-			_dcl(char *,	name)
-			_dcl(int,	temp)
-			_ret
+			;
 
 #ifdef CVS_PATH
 	/* cvslast.c -------------------------------------------------- */
 	void	cvslast(
-			_arx(char *,	wd)
-			_arx(char *,	n)
-			_arx(char **,	v_)
-			_arx(time_t *,	t_)
-			_ar1(char **,	l_)
+			char *	wd,
+			char *	n,
+			char **	v_,
+			time_t *	t_,
+			char **	l_
 			)
-			_dcl(char *,	wd)
-			_dcl(char *,	n)
-			_dcl(char **,	v_)
-			_dcl(time_t *,	t_)
-			_dcl(char **,	l_)
-			_nul
+			;
 
 #endif
 

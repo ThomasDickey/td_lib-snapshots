@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 12.50 2002/07/05 12:44:35 tom Exp $ */
+/* $Id: ptypes.h,v 12.51 2004/03/08 01:43:22 tom Exp $ */
 
 #ifndef	PTYPES_H
 #define	PTYPES_H
@@ -150,95 +150,6 @@ typedef	short	ino_t;
 #endif
 
 /*
- * Definition which is true iff we use function-prototypes
- */
-#undef	PROTOTYPES
-#if	defined(vms) || defined(__TURBOC__) || (defined(__STDC__) && !defined(LINTLIBRARY)) || defined(CC_HAS_PROTOS)
-#define	PROTOTYPES	1
-#endif
-/*FIXME: make a test for prototypes */
-
-/*
- * Definitions for files which are combined lint-library/function-prototype
- * declarations (e.g., "td_lib.h"):
- */
-#ifdef	LINTLIBRARY
-#define	_fn1(t,v,a)	v
-#define	_fnx(t,v,a)	_fn1(t,v,a),
-#define	_ar0
-#define	_ar1(t,v)	v
-#define	_arx(t,v)	_ar1(t,v),
-#define	_dcl(t,v)	t v;
-#define	_ret		{return(0);}
-#define	_nul		{}
-#else	/* !LINTLIBRARY */
-#if	defined(PROTOTYPES)	/* function prototypes */
-#define	_fn1(t,v,a)	t (*v)a
-#define	_fnx(t,v,a)	_fn1(t,v,a),
-#define	_ar0		void
-#define	_ar1(t,v)	t v
-#define	_arx(t,v)	_ar1(t,v),
-#define	_dcl(t,v)
-#define	_ret		;
-#define	_nul		;
-#else	/* -- old-style declarations */
-#define	_fn1(t,v,a)
-#define	_fnx(t,v,a)
-#define	_ar0
-#define	_ar1(t,v)
-#define	_arx(t,v)
-#define	_dcl(t,v)
-#define	_ret		;
-#define	_nul		;
-#endif	/* PROTOTYPES */
-#endif	/* LINTLIBRARY */
-
-/*
- * The ARGS() macro is used for general extern-prototypes
- */
-#if	defined(PROTOTYPES)
-#define	ARGS(p) p
-#else
-#define	ARGS(p) ()
-#endif
-
-/*
- * Define special macros to represent the "..." ellipsis
- */
-#undef _DOTS		/* similar usage in Cygwin */
-
-#if	defined(PROTOTYPES)
-#define	_DOTS	...
-#define	_CDOTS	,...
-#else
-#define	_DOTS
-#define	_CDOTS
-#endif
-
-/*
- * Macros to use with actual procedures to make them use prototypes if the
- * compiler supports it:
- */
-#if	defined(PROTOTYPES)
-#define	_FN1(t,v,a)	t (*v)a
-#define	_AR1(t,v)	t v
-#define	_AR0		void
-#define	_DCL(t,v)
-#else
-#define	_FN1(t,v,a)	v
-#define	_AR1(t,v)	v
-#define	_AR0
-#define	_DCL(t,v)	t v;
-#endif
-
-#define	_FNX(t,v,a)	_FN1(t,v,a),
-#define	_ARX(t,v)	_AR1(t,v),
-
-	/* shorthand for single-argument */
-#define	_ONE(t,v)	(_AR1(t,v)) _DCL(t,v)
-#define _one(t,a)	(_ar1(t,a))
-
-/*
  * Declare functions which are int (or implicit) in some systems, but explicitly
  * void in system5.  Also, declare nuisance-types which are unsigned/int,
  * depending on the system:
@@ -317,24 +228,10 @@ typedef	short	ino_t;
 #define	FFLUSH	(void)fflush
 #define	FCLOSE	(void)fclose
 
-/*
- * Define pseudo-functions to lint memory-allocator:
- */
-#ifdef	lint
-#define	def_DOALLOC(t)	/*ARGSUSED*/ static t *def_doalloc(p,n)\
-						t *p; unsigned n;\
-						{return(0);}
-#define	def_ALLOC(t)	/*ARGSUSED*/ static t *def_alloc(n)\
-						unsigned n;\
-						{return(0);}
-#define	DOALLOC(p,t,n)	def_doalloc(p,n)
-#define	ALLOC(t,n)	def_alloc(n)
-#else	/* lint */
-#define	def_DOALLOC(t)
-#define	def_ALLOC(t)
+//#define	def_DOALLOC(t)
+//#define	def_ALLOC(t)
 #define	DOALLOC(p,t,n)	(t *)doalloc((char *)p,sizeof(t)*(n))
 #define	ALLOC(t,n)	DOALLOC(0,t,n)
-#endif	/* lint */
 
 /******************************************************************************
  * Define symbols used in 'access()' function                                 *
@@ -511,16 +408,16 @@ extern int sys_nerr;
 #define	SIG_T	RETSIGTYPE	/* obsolete */
 
 #if defined(SIG_ARGS_VARYING)
-#  define SIGNAL_ARGS _AR1(int,sig) _CDOTS
-#  define SIGNAL_args _ar1(int,sig) _CDOTS
+#  define SIGNAL_ARGS int sig, ...
+#  define SIGNAL_args int sig, ...
 #endif
 
 #ifndef SIGNAL_ARGS
-#  define SIGNAL_ARGS _AR1(int,sig)
-#  define SIGNAL_args _ar1(int,sig)
+#  define SIGNAL_ARGS int sig
+#  define SIGNAL_args int sig
 #endif
 
-#define	SIGNAL_FUNC(f)		RETSIGTYPE f (SIGNAL_ARGS) _DCL(int,sig)
+#define	SIGNAL_FUNC(f)		RETSIGTYPE f (SIGNAL_ARGS)
 
 #define	DCL_SIGNAL(func)	RETSIGTYPE	(*func)(SIGNAL_args)
 
@@ -673,11 +570,10 @@ extern	long	timezone;
 #include <td_lib.h>
 
 #if !(defined(lint) || defined(TESTING_CONFIG_H))
-extern	int	main(_arx(int,argc) _ar1(char **,argv));
+extern	int	main(int argc, char ** argv);
 #endif	/* lint */
 #define	_MAIN\
-	int	main(_ARX(int,argc) _AR1(char **,argv))\
-		     _DCL(int,argc) _DCL(char **,argv)
+	int	main(int argc, char ** argv)
 
 #endif	/* LINTLIBRARY */
 

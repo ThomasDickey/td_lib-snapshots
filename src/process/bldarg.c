@@ -2,6 +2,7 @@
  * Title:	bldarg.c (build argv-array)
  * Created:	17 Dec 1985
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, converted to ANSI
@@ -35,30 +36,24 @@
 #define CHR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: bldarg.c,v 12.5 2002/07/03 13:04:43 tom Exp $")
+MODULE_ID("$Id: bldarg.c,v 12.6 2004/03/07 22:03:45 tom Exp $")
 
 #define	blank(c)	(isascii(c) && isspace(c))
 
-void	bldarg (
-	_ARX(int,	argc)
-	_ARX(char **,	argv)
-	_AR1(char *,	string)
-		)
-	_DCL(int,	argc)
-	_DCL(char **,	argv)
-	_DCL(char *,	string)
+void
+bldarg(int argc, char **argv, char *string)
 {
-register int  j  = 0;
-register char *s = string;
+    int j = 0;
+    char *s = string;
 
-	while (*s && (j < argc-1)) {
-		while (blank(UCH(*s)))	
-			*s++ = EOS;
-		argv[j++] = *s ? s : 0;
-		while (*s && !blank(UCH(*s))) {
-			*s = toascii(*s);
-			s++;
-		}
+    while (*s && (j < argc - 1)) {
+	while (blank(UCH(*s)))
+	    *s++ = EOS;
+	argv[j++] = *s ? s : 0;
+	while (*s && !blank(UCH(*s))) {
+	    *s = toascii(*s);
+	    s++;
 	}
-	argv[j] = 0;
+    }
+    argv[j] = 0;
 }

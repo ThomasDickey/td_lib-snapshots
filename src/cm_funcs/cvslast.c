@@ -3,7 +3,9 @@
  * Author:	T.E.Dickey
  * Created:	15 Feb 1988
  *
- * Modified:	26 Apr 2003, finally got around to finishing...
+ * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
+ *		26 Apr 2003, finally got around to finishing...
  */
 
 #define	STR_PTYPES
@@ -12,7 +14,7 @@
 #include	<time.h>
 #include	"rcsdefs.h"
 
-MODULE_ID("$Id: cvslast.c,v 12.2 2003/04/26 11:17:14 tom Exp $")
+MODULE_ID("$Id: cvslast.c,v 12.3 2004/03/07 16:31:58 tom Exp $")
 
 #define NAME_LIST "Entries"
 #define NAME_ARCH "Repository"

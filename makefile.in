@@ -1,4 +1,4 @@
-# $Id: makefile.in,v 12.15 1998/03/01 20:45:16 tom Exp $
+# $Id: makefile.in,v 12.17 2004/03/07 15:32:38 tom Exp $
 # Top-level makefile for TD_LIB common library
 
 SHELL		= /bin/sh
@@ -47,14 +47,13 @@ SOURCES	=\
 	$(CONFIG_H)
 
 MFILES	=\
-	certify/Makefile\
 	include/Makefile\
 	support/Makefile
 
 ####### (Standard Productions) #################################################
 all\
 lintlib\
-install::	lib $(I_CFG) $(MDEFN)
+install::	../td_lib lib $(I_CFG) $(MDEFN)
 
 clean\
 clobber ::	td_make.in
@@ -68,7 +67,6 @@ run_test\
 sources\
 lint.out ::	$(MFILES)
 	cd support &&	$(MAKE) $(MAKE_OPTS) $@
-	cd certify &&	$(MAKE) $(MAKE_OPTS) $@
 	cd include &&	$(MAKE) $(MAKE_OPTS) $@
 	cd src &&	$(MAKE) $(MAKE_OPTS) $@
 	cd test &&	$(MAKE) $(MAKE_OPTS) $@
@@ -88,6 +86,7 @@ distclean:	clobber
 	-cd test &&	$(MAKE) $(MAKE_OPTS) $@
 	-$(RM) $(PURE)
 	-$(RM) makefile src/makefile test/makefile
+	-$(RM) ../td_lib
 
 install::	all $(bindir) $(my_incdir) $(libdir)
 	$(srcdir)/support/ins_hdr "$(INSTALL_DATA)" $(my_incdir) $(I_LIST)
@@ -104,5 +103,7 @@ uninstall::
 $(bindir) \
 $(my_incdir) \
 $(libdir) \
-lib:					; $(srcdir)/mkdirs.sh $@
+lib:					; $(SHELL) $(srcdir)/mkdirs.sh $@
 $(SOURCES):
+
+../td_lib:				; $(SHELL) $(srcdir)/support/selflink.sh

@@ -3,345 +3,333 @@
  * Author:	T.E.Dickey
  * Created:	16 Jul 1994
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *
  * Function:	writes the current tty settings to the given file, with
  *		a header message.  The first time it's called, 'dumptty()'
  *		saves the terminal settings for reference. This is used for
  *		debugging curses applications.
  */
-#define TRM_PTYPES	/* <termios.h> */
+#define TRM_PTYPES		/* <termios.h> */
 #include <td_curse.h>
 
-MODULE_ID("$Id: dumptty.c,v 12.4 2002/07/05 11:17:40 tom Exp $")
+MODULE_ID("$Id: dumptty.c,v 12.5 2004/03/07 22:03:45 tom Exp $")
 
 #define	CONTRAST(msg,f) Contrast(msg, (long)(tst.f), (long)(ref.f))
 #define	SHOWMASK(t,m)   ShowMasks(t, SIZEOF(t), m)
 
-typedef	struct	{
-	long	code;
-	char *	name;
-	} TABLE;
+typedef struct {
+    long code;
+    char *name;
+} TABLE;
 
-static	FILE *	the_fp;
+static FILE *the_fp;
 
 #if defined(USING_TERMIOS_H) || defined(USING_TERMIO_H)
-static	char *	CtlChar(	/* c_cc[] characters */
-		_AR1(int,	c))
-		_DCL(int,	c)
+static char *
+CtlChar(int c)			/* c_cc[] characters */
 {
-	static	TABLE	table[] = {
+    static TABLE table[] =
+    {
 #ifdef VINTR
-		{ VINTR,	"INTR" },
+	{VINTR, "INTR"},
 #endif
 #ifdef VQUIT
-		{ VQUIT,	"QUIT" },
+	{VQUIT, "QUIT"},
 #endif
 #ifdef VERASE
-		{ VERASE,	"ERASE" },
+	{VERASE, "ERASE"},
 #endif
 #ifdef VKILL
-		{ VKILL,	"KILL" },
+	{VKILL, "KILL"},
 #endif
 #ifdef VEOF
-		{ VEOF,		"EOF" },
+	{VEOF, "EOF"},
 #endif
 #ifdef VTIME
-		{ VTIME,	"TIME" },
+	{VTIME, "TIME"},
 #endif
 #ifdef VMIN
-		{ VMIN,		"MIN" },
+	{VMIN, "MIN"},
 #endif
 #ifdef VSWTC
-		{ VSWTC,	"SWTC" },
+	{VSWTC, "SWTC"},
 #endif
 #ifdef VSTART
-		{ VSTART,	"START" },
+	{VSTART, "START"},
 #endif
 #ifdef VSTOP
-		{ VSTOP,	"STOP" },
+	{VSTOP, "STOP"},
 #endif
 #ifdef VSUSP
-		{ VSUSP,	"SUSP" },
+	{VSUSP, "SUSP"},
 #endif
 #ifdef VEOL
-		{ VEOL,		"EOL" },
+	{VEOL, "EOL"},
 #endif
 #ifdef VREPRINT
-		{ VREPRINT,	"REPRINT" },
+	{VREPRINT, "REPRINT"},
 #endif
 #ifdef VDISCARD
-		{ VDISCARD,	"DISCARD" },
+	{VDISCARD, "DISCARD"},
 #endif
 #ifdef VWERASE
-		{ VWERASE,	"WERASE" },
+	{VWERASE, "WERASE"},
 #endif
 #ifdef VLNEXT
-		{ VLNEXT,	"LNEXT" },
+	{VLNEXT, "LNEXT"},
 #endif
 #ifdef VEOL2
-		{ VEOL2,	"EOL2" },
+	{VEOL2, "EOL2"},
 #endif
-	};
-	static	char	temp[10];
-	register unsigned n;
-	for (n = 0; n < SIZEOF(table); n++)
-		if (table[n].code == c)
-			return table[n].name;
-	FORMAT(temp, "cc[%d]", n);
-	return temp;
+    };
+    static char temp[10];
+    unsigned n;
+    for (n = 0; n < SIZEOF(table); n++)
+	if (table[n].code == c)
+	    return table[n].name;
+    FORMAT(temp, "cc[%d]", n);
+    return temp;
 }
 
-static	TABLE	table_iflag [] = {	/* c_iflag bits */
+static TABLE table_iflag[] =
+{				/* c_iflag bits */
 #ifdef IGNBRK
-		{ IGNBRK,	"IGNBRK" },
+    {IGNBRK, "IGNBRK"},
 #endif
 #ifdef BRKINT
-		{ BRKINT,	"BRKINT" },
+    {BRKINT, "BRKINT"},
 #endif
 #ifdef IGNPAR
-		{ IGNPAR,	"IGNPAR" },
+    {IGNPAR, "IGNPAR"},
 #endif
 #ifdef PARMRK
-		{ PARMRK,	"PARMRK" },
+    {PARMRK, "PARMRK"},
 #endif
 #ifdef INPCK
-		{ INPCK,	"INPCK" },
+    {INPCK, "INPCK"},
 #endif
 #ifdef ISTRIP
-		{ ISTRIP,	"ISTRIP" },
+    {ISTRIP, "ISTRIP"},
 #endif
 #ifdef INLCR
-		{ INLCR,	"INLCR" },
+    {INLCR, "INLCR"},
 #endif
 #ifdef IGNCR
-		{ IGNCR,	"IGNCR" },
+    {IGNCR, "IGNCR"},
 #endif
 #ifdef ICRNL
-		{ ICRNL,	"ICRNL" },
+    {ICRNL, "ICRNL"},
 #endif
 #ifdef IUCLC
-		{ IUCLC,	"IUCLC" },
+    {IUCLC, "IUCLC"},
 #endif
 #ifdef IXON
-		{ IXON,		"IXON" },
+    {IXON, "IXON"},
 #endif
 #ifdef IXANY
-		{ IXANY,	"IXANY" },
+    {IXANY, "IXANY"},
 #endif
 #ifdef IXOFF
-		{ IXOFF,	"IXOFF" },
+    {IXOFF, "IXOFF"},
 #endif
 #ifdef IMAXBEL
-		{ IMAXBEL,	"IMAXBEL" },
+    {IMAXBEL, "IMAXBEL"},
 #endif
-	};
+};
 
-static	TABLE	table_oflag[] = {	/* c_oflag bits */
+static TABLE table_oflag[] =
+{				/* c_oflag bits */
 #ifdef OPOST
-	{ OPOST,	"OPOST" },
+    {OPOST, "OPOST"},
 #endif
 #ifdef OLCUC
-	{ OLCUC,	"OLCUC" },
+    {OLCUC, "OLCUC"},
 #endif
 #ifdef ONLCR
-	{ ONLCR,	"ONLCR" },
+    {ONLCR, "ONLCR"},
 #endif
 #ifdef OCRNL
-	{ OCRNL,	"OCRNL" },
+    {OCRNL, "OCRNL"},
 #endif
 #ifdef ONOCR
-	{ ONOCR,	"ONOCR" },
+    {ONOCR, "ONOCR"},
 #endif
 #ifdef ONLRET
-	{ ONLRET,	"ONLRET" },
+    {ONLRET, "ONLRET"},
 #endif
 #ifdef OFILL
-	{ OFILL,	"OFILL" },
+    {OFILL, "OFILL"},
 #endif
 #ifdef OFDEL
-	{ OFDEL,	"OFDEL" },
+    {OFDEL, "OFDEL"},
 #endif
 #ifdef NLDLY
-	{ NLDLY,	"NLDLY" },
+    {NLDLY, "NLDLY"},
 #endif
 #ifdef CRDLY
-	{ CRDLY,	"CRDLY" },
+    {CRDLY, "CRDLY"},
 #endif
 #ifdef TABDLY
-	{ TABDLY,	"TABDLY" },
+    {TABDLY, "TABDLY"},
 #endif
 #ifdef BSDLY
-	{ BSDLY,	"BSDLY" },
+    {BSDLY, "BSDLY"},
 #endif
 #ifdef VTDLY
-	{ VTDLY,	"VTDLY" },
+    {VTDLY, "VTDLY"},
 #endif
 #ifdef FFDLY
-	{ FFDLY,	"FFDLY" },
+    {FFDLY, "FFDLY"},
 #endif
-	};
+};
 
-static	TABLE	table_cflag[] = {	/* c_cflag bit meaning */
+static TABLE table_cflag[] =
+{				/* c_cflag bit meaning */
 #ifdef CBAUD
-	{ CBAUD,	"CBAUD" },
+    {CBAUD, "CBAUD"},
 #endif
 #ifdef CSIZE
-	{ CSIZE,	"CSIZE" },
+    {CSIZE, "CSIZE"},
 #endif
 #ifdef CSTOPB
-	{ CSTOPB,	"CSTOPB" },
+    {CSTOPB, "CSTOPB"},
 #endif
 #ifdef CREAD
-	{ CREAD,	"CREAD" },
+    {CREAD, "CREAD"},
 #endif
 #ifdef PARENB
-	{ PARENB,	"PARENB" },
+    {PARENB, "PARENB"},
 #endif
 #ifdef PARODD
-	{ PARODD,	"PARODD" },
+    {PARODD, "PARODD"},
 #endif
 #ifdef HUPCL
-	{ HUPCL,	"HUPCL" },
+    {HUPCL, "HUPCL"},
 #endif
 #ifdef CLOCAL
-	{ CLOCAL,	"CLOCAL" },
+    {CLOCAL, "CLOCAL"},
 #endif
-	};
+};
 
-static	TABLE	table_lflag[] = {	/* c_lflag bits */
+static TABLE table_lflag[] =
+{				/* c_lflag bits */
 #ifdef ISIG
-	{ ISIG,		"ISIG" },
+    {ISIG, "ISIG"},
 #endif
 #ifdef ICANON
-	{ ICANON,	"ICANON" },
+    {ICANON, "ICANON"},
 #endif
 #ifdef XCASE
-	{ XCASE,	"XCASE" },
+    {XCASE, "XCASE"},
 #endif
 #ifdef ECHO
-	{ ECHO,		"ECHO" },
+    {ECHO, "ECHO"},
 #endif
 #ifdef ECHOE
-	{ ECHOE,	"ECHOE" },
+    {ECHOE, "ECHOE"},
 #endif
 #ifdef ECHOK
-	{ ECHOK,	"ECHOK" },
+    {ECHOK, "ECHOK"},
 #endif
 #ifdef ECHONL
-	{ ECHONL,	"ECHONL" },
+    {ECHONL, "ECHONL"},
 #endif
 #ifdef NOFLSH
-	{ NOFLSH,	"NOFLSH" },
+    {NOFLSH, "NOFLSH"},
 #endif
 #ifdef TOSTOP
-	{ TOSTOP,	"TOSTOP" },
+    {TOSTOP, "TOSTOP"},
 #endif
 #ifdef ECHOCTL
-	{ ECHOCTL,	"ECHOCTL" },
+    {ECHOCTL, "ECHOCTL"},
 #endif
 #ifdef ECHOPRT
-	{ ECHOPRT,	"ECHOPRT" },
+    {ECHOPRT, "ECHOPRT"},
 #endif
 #ifdef ECHOKE
-	{ ECHOKE,	"ECHOKE" },
+    {ECHOKE, "ECHOKE"},
 #endif
 #ifdef FLUSHO
-	{ FLUSHO,	"FLUSHO" },
+    {FLUSHO, "FLUSHO"},
 #endif
 #ifdef PENDIN
-	{ PENDIN,	"PENDIN" },
+    {PENDIN, "PENDIN"},
 #endif
 #ifdef IEXTEN
-	{ IEXTEN,	"IEXTEN" },
+    {IEXTEN, "IEXTEN"},
 #endif
-	};
+};
+
+static void
+ShowMasks(TABLE * table, int length, long mask)
+{
+    int n;
+    for (n = 0; n < length; n++) {
+	if (mask & table[n].code) {
+	    FPRINTF(the_fp, "\t=>%s (%#lo)\n",
+		    table[n].name,
+		    table[n].code);
+	    mask &= ~(table[n].code);
+	}
+    }
+    if (mask != 0)
+	FPRINTF(the_fp, "\t=>? (%#lo)\n", mask);
+}
+#endif /* #if USING_TERMIOS_H || USING_TERMIO_H */
 
 static
-void	ShowMasks(
-	_ARX(TABLE *,	table)
-	_ARX(int,	length)
-	_AR1(long,	mask)
-		)
-	_DCL(TABLE *,	table)
-	_DCL(int,	length)
-	_DCL(long,	mask)
+long
+Contrast(char *msg, long tst, long ref)
 {
-	register int	n;
-	for (n = 0; n < length; n++) {
-		if (mask & table[n].code) {
-			FPRINTF(the_fp, "\t=>%s (%#lo)\n",
-				table[n].name,
-				table[n].code);
-			mask &= ~(table[n].code);
-		}
-	}
-	if (mask != 0)
-		FPRINTF(the_fp, "\t=>? (%#lo)\n", mask);
-}
-#endif	/* #if USING_TERMIOS_H || USING_TERMIO_H */
+    long diff = 0;
 
-static
-long	Contrast (
-	_ARX(char *,	msg)
-	_ARX(long,	tst)
-	_AR1(long,	ref)
-	)
-	_DCL(char *,	msg)
-	_DCL(long,	tst)
-	_DCL(long,	ref)
-{
-	long	diff	= 0;
-
-	FPRINTF(the_fp, "\t%8s %#lo", msg, tst);
-	if (tst != ref) {
-		FPRINTF(the_fp, " (was %#lo)", ref);
-		diff = tst ^ ref;
-	}
-	(void)fputc('\n', the_fp);
-	return diff;
+    FPRINTF(the_fp, "\t%8s %#lo", msg, tst);
+    if (tst != ref) {
+	FPRINTF(the_fp, " (was %#lo)", ref);
+	diff = tst ^ ref;
+    }
+    (void) fputc('\n', the_fp);
+    return diff;
 }
 
-void	dumptty (
-	_ARX(FILE *,	fp)
-	_AR1(char *,	msg)
-	)
-	_DCL(FILE *,	fp)
-	_DCL(char *,	msg)
+void
+dumptty(FILE *fp, char *msg)
 {
 #if defined(USING_TERMIOS_H) || defined(USING_TERMIO_H)
-	auto	int	n;
-	auto	long	mask;
+    int n;
+    long mask;
 #endif
-	static	TermioT ref;
-	static	int	initialized;
-	auto	TermioT tst;
+    static TermioT ref;
+    static int initialized;
+    TermioT tst;
 
-	the_fp = fp;
-	GetTerminal(&tst);
-	FPRINTF(fp, "%s: \n", msg);
-	if (!initialized) {
-		ref = tst;
-		initialized = TRUE;
-	}
+    the_fp = fp;
+    GetTerminal(&tst);
+    FPRINTF(fp, "%s: \n", msg);
+    if (!initialized) {
+	ref = tst;
+	initialized = TRUE;
+    }
 #if defined(USING_TERMIOS_H) || defined(USING_TERMIO_H)
-	if ((mask = CONTRAST("iflag", c_iflag)) != 0)
-		SHOWMASK(table_iflag, mask);
-	if ((mask = CONTRAST("oflag", c_oflag)) != 0)
-		SHOWMASK(table_oflag, mask);
-	if ((mask = CONTRAST("cflag", c_cflag)) != 0)
-		SHOWMASK(table_cflag, mask);
-	if ((mask = CONTRAST("lflag", c_lflag)) != 0)
-		SHOWMASK(table_lflag, mask);
-	for (n = 0; n < NCCS; n++) {	/* control chars */
-		if (tst.c_cc[n] != 0 || ref.c_cc[n] != 0)
-			(void)CONTRAST(CtlChar(n), c_cc[n]);
-	}
+    if ((mask = CONTRAST("iflag", c_iflag)) != 0)
+	SHOWMASK(table_iflag, mask);
+    if ((mask = CONTRAST("oflag", c_oflag)) != 0)
+	SHOWMASK(table_oflag, mask);
+    if ((mask = CONTRAST("cflag", c_cflag)) != 0)
+	SHOWMASK(table_cflag, mask);
+    if ((mask = CONTRAST("lflag", c_lflag)) != 0)
+	SHOWMASK(table_lflag, mask);
+    for (n = 0; n < NCCS; n++) {	/* control chars */
+	if (tst.c_cc[n] != 0 || ref.c_cc[n] != 0)
+	    (void) CONTRAST(CtlChar(n), c_cc[n]);
+    }
 #else
-	(void)CONTRAST("ispeed", sg_ispeed);	/* input speed */
-	(void)CONTRAST("ospeed", sg_ospeed);	/* output speed */
-	(void)CONTRAST("erase",  sg_erase);	/* erase character */
-	(void)CONTRAST("kill",   sg_kill);	/* kill character */
-	(void)CONTRAST("flags",  sg_flags);	/* mode flags */
+    (void) CONTRAST("ispeed", sg_ispeed);	/* input speed */
+    (void) CONTRAST("ospeed", sg_ospeed);	/* output speed */
+    (void) CONTRAST("erase", sg_erase);		/* erase character */
+    (void) CONTRAST("kill", sg_kill);	/* kill character */
+    (void) CONTRAST("flags", sg_flags);		/* mode flags */
 #endif
-	FFLUSH(fp);	/* just in case the program dies! */
+    FFLUSH(fp);			/* just in case the program dies! */
 }

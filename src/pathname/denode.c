@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	22 Jan 1987
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *		03 Oct 1991, converted to ANSI
  *
@@ -25,42 +26,38 @@
 
 #include "ptypes.h"
 
-MODULE_ID("$Id: denode.c,v 12.4 1993/11/28 23:36:40 tom Exp $")
+MODULE_ID("$Id: denode.c,v 12.5 2004/03/07 22:03:45 tom Exp $")
 
-char *	denode (
-	_ARX(register char *,	path)
-	_ARX(register char *,	node)
-	_AR1(int *,		opt)
-		)
-	_DCL(register char *,	path)
-	_DCL(register char *,	node)
-	_DCL(int *,		opt)
+char *
+denode(char *path, char *node, int *opt)
 {
-	register char *s = path, *t = node;
+    char *s = path, *t = node;
 
-	if (opt && (*opt >= 0)) {
-		t += *opt;
-	} else {
-		register int n = 0;
-		while (!isSlash(node[n]) && node[n] != EOS)
-			n++;
-		if (opt) {
-			node[n] = EOS;
-			*opt = n;
-		}
-		t += n;
+    if (opt && (*opt >= 0)) {
+	t += *opt;
+    } else {
+	int n = 0;
+	while (!isSlash(node[n]) && node[n] != EOS)
+	    n++;
+	if (opt) {
+	    node[n] = EOS;
+	    *opt = n;
 	}
+	t += n;
+    }
 
-	if (node < t) {
-		while (*s) {
-			if (node < t) {
-				if (*node != *s)	break;
-			} else {
-				if (isSlash(*s))	path = s;
-				break;
-			}
-			node++, s++;
-		}
+    if (node < t) {
+	while (*s) {
+	    if (node < t) {
+		if (*node != *s)
+		    break;
+	    } else {
+		if (isSlash(*s))
+		    path = s;
+		break;
+	    }
+	    node++, s++;
 	}
-	return(path);
+    }
+    return (path);
 }

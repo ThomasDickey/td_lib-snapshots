@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	08 May 1990
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		13 Jul 1994, modified interface with 'sccs_dir()'
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
@@ -35,45 +36,40 @@
 
 #include	<ctype.h>
 
-MODULE_ID("$Id: sccsname.c,v 12.6 1994/07/13 19:22:54 tom Exp $")
+MODULE_ID("$Id: sccsname.c,v 12.7 2004/03/07 16:31:58 tom Exp $")
 
 #define	LEN_PREFIX	(sizeof(prefix)-1)
 
-static	char	prefix[] = SCCS_PREFIX;
+static char prefix[] = SCCS_PREFIX;
 
 /************************************************************************
  *	local procedures						*
  ************************************************************************/
 
-static
-char *	leaf(
-	_AR1(char *,	name))
-	_DCL(char *,	name)
+static char *
+leaf(char *name)
 {
-	register char	*s = fleaf(name);
-	return ((s != 0) ? s : name);
+    char *s = fleaf(name);
+    return ((s != 0) ? s : name);
 }
 
 /*
  * Returns TRUE if the name begins with SCCS_PREFIX.
  */
-static
-int	sccs_prefix(
-	_AR1(char *,	name))
-	_DCL(char *,	name)
+static int
+sccs_prefix(char *name)
 {
-	register char	*s = leaf(name);
-	return (strlen(s) > LEN_PREFIX && !strncmp(s, prefix, LEN_PREFIX));
+    char *s = leaf(name);
+    return (strlen(s) > LEN_PREFIX && !strncmp(s, prefix, LEN_PREFIX));
 }
 
-static
-void	trim_leaf(
-	_AR1(char *,	name))
-	_DCL(char *,	name)
+static void
+trim_leaf(char *name)
 {
-	register char *s = fleaf_delim(name);
-	if (s != 0) name = s;
-	*name = EOS;
+    char *s = fleaf_delim(name);
+    if (s != 0)
+	name = s;
+    *name = EOS;
 }
 
 /************************************************************************
@@ -85,131 +81,110 @@ void	trim_leaf(
  * of the working file.
  */
 char *
-sccs2name(
-_ARX(char *,	name)
-_AR1(int,	full)
-	)
-_DCL(char *,	name)
-_DCL(int,	full)
+sccs2name(char *name, int full)
 {
-	char	*s, *t;
-static	char	fname[BUFSIZ];
+    char *s, *t;
+    static char fname[BUFSIZ];
 
-	if (sccs_prefix(name)) {
+    if (sccs_prefix(name)) {
 
-		s = leaf(strcpy(fname, name));
-		t = leaf(name) + LEN_PREFIX;
-		while ((*s++ = *t++) != EOS)
-			;
+	s = leaf(strcpy(fname, name));
+	t = leaf(name) + LEN_PREFIX;
+	while ((*s++ = *t++) != EOS) ;
 
-		if ((s = leaf(fname)) > fname) {
-			char	*d = fname;
-			if (full) {
-				s[-1] = EOS;
-				if (((t = leaf(d)) > d)
-				&&  sameleaf(t, sccs_dir((char *)0,(char *)0)))
-					d = t;
-			}
-			while ((*d++ = *s++) != EOS)
-				;
-		}
-	} else {
-		(void)strcpy(fname, name);
+	if ((s = leaf(fname)) > fname) {
+	    char *d = fname;
+	    if (full) {
+		s[-1] = EOS;
+		if (((t = leaf(d)) > d)
+		    && sameleaf(t, sccs_dir((char *) 0, (char *) 0)))
+		    d = t;
+	    }
+	    while ((*d++ = *s++) != EOS) ;
 	}
-	return (fname);
+    } else {
+	(void) strcpy(fname, name);
+    }
+    return (fname);
 }
 
 /*
  * Given the name of either the working file, or the SCCS-file, obtain the name
  * of the SCCS-file.
  */
-char *	name2sccs(
-	_ARX(char *,	name)
-	_AR1(int,	full)
-		)
-	_DCL(char *,	name)
-	_DCL(int,	full)
+char *
+name2sccs(char *name, int full)
 {
-	static	char	fname[MAXPATHLEN];
+    static char fname[MAXPATHLEN];
 
-	if (sccs_prefix(name)) {
-		(void)strcpy(fname, name);
+    if (sccs_prefix(name)) {
+	(void) strcpy(fname, name);
+    } else {
+	char *dname = sccs_dir(".", name);
+
+	if (full) {
+	    trim_leaf(strcpy(fname, name));
+	    if (sameleaf(fname, dname))
+		trim_leaf(fname);
 	} else {
-		char	*dname = sccs_dir(".", name);
-
-		if (full) {
-			trim_leaf(strcpy(fname, name));
-			if (sameleaf(fname, dname))
-				trim_leaf(fname);
-		} else {
-			*fname = EOS;
-		}
-
-		if (isSlash(*dname) || *dname == '~')
-			(void)strcpy(fname, dname);
-		else
-			(void)pathcat(fname, fname, dname);
-
-		(void)strcat(
-			pathcat(fname, fname, prefix),
-			leaf(name));
+	    *fname = EOS;
 	}
-	return (fname);
+
+	if (isSlash(*dname) || *dname == '~')
+	    (void) strcpy(fname, dname);
+	else
+	    (void) pathcat(fname, fname, dname);
+
+	(void) strcat(
+			 pathcat(fname, fname, prefix),
+			 leaf(name));
+    }
+    return (fname);
 }
 
 #ifdef	TEST
-void	do_test(
-	_arx(int,	argc)
-	_arx(char **,	argv)
-	_ar1(int,	full));
-
-void	do_test(
-	_ARX(int,	argc)
-	_ARX(char **,	argv)
-	_AR1(int,	full)
-		)
-	_DCL(int,	argc)
-	_DCL(char **,	argv)
-	_DCL(int,	full)
+void
+do_test(int argc, char **argv, int full)
 {
-	int	j;
-	char	old[BUFSIZ], *new;
+    int j;
+    char old[BUFSIZ], *new;
 
-	if (argc > 1) {
-		printf("** %s-path\n", full ? "full" : "local");
-		printf("name2sccs:\n");
-		for (j = 1; j < argc; j++) {
-			(void)strcpy(old, name2sccs(argv[j], !full));
-			new = name2sccs(argv[j], full);
-			printf("  %-20s => %s%s\n",
-				argv[j], new,
-				strcmp(old, new) ? " (*)" : "");
-		}
-		printf("sccs2name:\n");
-		for (j = 1; j < argc; j++) {
-			(void)strcpy(old, sccs2name(argv[j], !full));
-			new = sccs2name(argv[j], full);
-			printf("  %-20s => %s%s\n",
-				argv[j], new,
-				strcmp(old, new) ? " (*)" : "");
-		}
-	} else {
-		static	char	*test[] = {
-			"?",
-			"name",			"s.name",
-			"path/name",		"path/s.name",
-			"path/SCCS/name",	"path/SCCS/s.name",
-			"SCCS/name",		"SCCS/s.name"
-		};
-		(void)putenv("SCCS_DIR=SCCS");
-		do_test (SIZEOF(test), test, full);
+    if (argc > 1) {
+	printf("** %s-path\n", full ? "full" : "local");
+	printf("name2sccs:\n");
+	for (j = 1; j < argc; j++) {
+	    (void) strcpy(old, name2sccs(argv[j], !full));
+	    new = name2sccs(argv[j], full);
+	    printf("  %-20s => %s%s\n",
+		   argv[j], new,
+		   strcmp(old, new) ? " (*)" : "");
 	}
+	printf("sccs2name:\n");
+	for (j = 1; j < argc; j++) {
+	    (void) strcpy(old, sccs2name(argv[j], !full));
+	    new = sccs2name(argv[j], full);
+	    printf("  %-20s => %s%s\n",
+		   argv[j], new,
+		   strcmp(old, new) ? " (*)" : "");
+	}
+    } else {
+	static char *test[] =
+	{
+	    "?",
+	    "name", "s.name",
+	    "path/name", "path/s.name",
+	    "path/SCCS/name", "path/SCCS/s.name",
+	    "SCCS/name", "SCCS/s.name"
+	};
+	(void) putenv("SCCS_DIR=SCCS");
+	do_test(SIZEOF(test), test, full);
+    }
 }
 
 _MAIN
 {
-	do_test(argc, argv, FALSE);
-	do_test(argc, argv, TRUE);
-	exit(SUCCESS);
+    do_test(argc, argv, FALSE);
+    do_test(argc, argv, TRUE);
+    exit(SUCCESS);
 }
-#endif	/* TEST */
+#endif /* TEST */

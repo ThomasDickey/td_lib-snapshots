@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	20 Apr 1988
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, converted to ANSI
@@ -17,37 +18,44 @@
 #define CHR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: dumpchr.c,v 12.4 2000/12/24 22:17:38 tom Exp $")
+MODULE_ID("$Id: dumpchr.c,v 12.5 2004/03/07 22:03:45 tom Exp $")
 
 #define	OUT	FPRINTF(fp,
 
-void	dumpchr(
-	_ARX(FILE *,	fp)
-	_AR1(int,	c)
-		)
-	_DCL(FILE *,	fp)
-	_DCL(int,	c)
+void
+dumpchr(FILE *fp, int c)
 {
-	c &= 0377;
-	if (!isascii(c)) {
-		OUT "\\|");
-		c = toascii(c);
+    c &= 0377;
+    if (!isascii(c)) {
+	OUT "\\|");
+	c = toascii(c);
+    }
+    if (isprint(c)) {
+	if (c == '\\')
+	    OUT "\\");
+	else if (c == '"')
+	    OUT "\\\"");
+	else
+	    OUT "%c", c);
+    } else {
+	switch (c) {
+	case '\b':
+	    OUT "\\b");
+	    break;
+	case '\n':
+	    OUT "\\n");
+	    break;
+	case '\t':
+	    OUT "\\t");
+	    break;
+	case '\f':
+	    OUT "\\f");
+	    break;
+	case '\r':
+	    OUT "\\r");
+	    break;
+	default:
+	    OUT "\\%03o", c);
 	}
-	if (isprint(c)) {
-		if (c == '\\')
-			OUT "\\");
-		else if (c == '"')
-			OUT "\\\"");
-		else
-			OUT "%c", c);
-	} else {
-		switch(c) {
-		case '\b':	OUT "\\b");	break;
-		case '\n':	OUT "\\n");	break;
-		case '\t':	OUT "\\t");	break;
-		case '\f':	OUT "\\f");	break;
-		case '\r':	OUT "\\r");	break;
-		default:	OUT "\\%03o", c);
-		}
-	}
+    }
 }

@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	20 May 1988
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		26 Mar 2002, if atime is zero, use current time.  Zero does not
  *                           work with cygwin.
  *		22 Apr 1995, added 'atime' parameter.
@@ -19,27 +20,25 @@
 #include	"ptypes.h"
 #include	<time.h>
 
-MODULE_ID("$Id: setmtime.c,v 12.9 2002/07/05 11:18:55 tom Exp $")
+MODULE_ID("$Id: setmtime.c,v 12.10 2004/03/07 22:03:45 tom Exp $")
 
 #if defined(HAVE_UTIME_H)
 #include	<utime.h>
 #else
-struct	utimbuf { time_t actime, modtime; };
-extern	int	utime(_arx(const char *,s) _ar1(const struct utimbuf *,p));
+struct utimbuf {
+    time_t actime, modtime;
+};
+extern int utime(const char *, const struct utimbuf *);
 #endif
 
-int	setmtime(
-	_ARX(char *,	name)		/* name of file to touch */
-	_ARX(time_t,	mtime)		/* modification time we want to leave */
-	_AR1(time_t,	atime)		/* access time we want to leave */
-		)
-	_DCL(char *,	name)
-	_DCL(time_t,	mtime)
-	_DCL(time_t,	atime)
+int
+setmtime(char *name,		/* name of file to touch */
+	 time_t mtime,		/* modification time we want to leave */
+	 time_t atime)		/* access time we want to leave */
 {
-	struct utimbuf tp;
+    struct utimbuf tp;
 
-	tp.modtime = mtime;
-	tp.actime  = (atime != 0) ? atime : time((time_t *)0);
-	return (utime(name, &tp));
+    tp.modtime = mtime;
+    tp.actime = (atime != 0) ? atime : time((time_t *) 0);
+    return (utime(name, &tp));
 }

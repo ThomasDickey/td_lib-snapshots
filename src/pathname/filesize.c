@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	13 Sep 1991
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *		06 Feb 1992, use 'stat_file()'
  *		04 Oct 1991, conversion to ANSI
@@ -12,14 +13,12 @@
 
 #include "ptypes.h"
 
-MODULE_ID("$Id: filesize.c,v 12.3 1994/05/21 20:17:19 tom Exp $")
+MODULE_ID("$Id: filesize.c,v 12.4 2004/03/07 22:03:45 tom Exp $")
 
 off_t
-filesize(
-_AR1(char *,	name))
-_DCL(char *,	name)
+filesize(char *name)
 {
-	auto	Stat_t	sb;
+    Stat_t sb;
 
-	return (stat_file(name, &sb) < 0) ? -1 : sb.st_size;
+    return (stat_file(name, &sb) < 0) ? -1 : sb.st_size;
 }

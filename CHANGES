@@ -1,3 +1,38 @@
+2004-03-08  dickey@invisible-island.net
+
+	* configure.in: typo
+
+	* src/cm_funcs/cvslast.c:
+	I also noticed that restat'ing a line in ded caused screen trash if the
+	lock owner was shown.  That was because I'd used strtok() in a situation
+	where the field might be empty - strtok() skips to the next field in that
+	case.  Rewrote the parsing logic.
+
+	* src/cm_funcs/cvslast.c:
+	I'd noticed that I had to restat in ded to show the first few entries in
+	a directory.  Found that was because my logic for initializing the cache
+	had a couple of flaws (did not initialize the data for check_timestamp
+	properly, and did not read the data from the cache on the first item).
+
+2004-03-07  dickey@invisible-island.net
+
+	* include/ptypes.h, src/memory/txtalloc.c, src/memory/doalloc.c, src/curses/rawgets.c, src/curses/on_winch.c, src/compare/diffload.c, src/compare/btree.c, src/compare/cmpqsort.c, src/compare/m2comp.c, src/compare/scomp.c, src/curses/addchnst.c, src/curses/beep.c, src/curses/blip.c, src/curses/cmdch.c, src/curses/dumpchr.c, src/curses/dumptty.c, src/curses/dumpwin.c, src/curses/erasechr.c, src/curses/is_xterm.c, src/curses/killchar.c, src/curses/lnextchr.c, src/curses/logch.c, src/curses/padedit.c, src/curses/rawterm.c, src/curses/resizwin.c, src/curses/savewin.c, src/curses/scr_size.c, src/curses/viewfile.c, src/curses/win2file.c, src/curses/wrepaint.c, src/curses/wresize.c, src/memory/memmove.c, src/memory/stralloc.c, src/memory/vecalloc.c, src/memory/vecedit.c, src/memory/veclen.c, src/pathname/abspath.c, src/pathname/acc_mode.c, src/pathname/add2fnam.c, src/pathname/arg2file.c, src/pathname/copyback.c, src/pathname/denode.c, src/pathname/dlettree.c, src/pathname/dotname.c, src/pathname/editfile.c, src/pathname/edittree.c, src/pathname/file2arg.c, src/pathname/file2mem.c, src/pathname/fileblox.c, src/pathname/filecopy.c, src/pathname/filesize.c, src/pathname/fleaf.c, src/pathname/fleaf14.c, src/pathname/fp2argv.c, src/pathname/ftype.c, src/pathname/ftype2.c, src/pathname/is_spath.c, src/pathname/istextfl.c, src/pathname/mem2file.c, src/pathname/modechar.c, src/pathname/name2s.c, src/pathname/pathcat.c, src/pathname/pathcmp.c, src/pathname/pathhead.c, src/pathname/pathleaf.c, src/pathname/relpath.c, src/pathname/samehead.c, src/pathname/sameleaf.c, src/pathname/stat_dir.c, src/pathname/stat_fil.c, src/pathname/track_wd.c, src/pathname/trimpath.c, src/pathname/trnstree.c, src/pathname/walktree.c, src/pathname/which.c, src/port2vms/dir2path.c, src/port2vms/name2vms.c, src/port2vms/path2dir.c, src/port2vms/path2vms.c, src/port2vms/rmsio.c, src/port2vms/time2vms.c, src/port2vms/uid2s.c, src/port2vms/utimes.c, src/port2vms/vms2name.c, src/port2vms/vms_dirs.c, src/port2vms/vms_pthc.c, src/port2vms/vms_rpth.c, src/port2vms/vms_wild.c, src/port2vms/zone2vms.c, src/process/bldarg.c, src/process/catarg.c, src/process/catchall.c, src/process/egress.c, src/process/execute.c, src/process/failed.c, src/process/for_admn.c, src/process/for_user.c, src/process/gethome.c, src/process/getopt.c, src/process/getuser.c, src/process/in_group.c, src/process/interact.c, src/process/makeargv.c, src/process/revert.c, src/process/savesuid.c, src/process/shoarg.c, src/process/showuids.c, src/process/usercopy.c, src/process/userprot.c, src/process/walkback.c, src/sheet/count_ss.c, src/sheet/field_of.c, src/sheet/ss_field.c, src/string/dftenv.c, src/string/dotcmp.c, src/string/dyn_app.c, src/string/dyn_appc.c, src/string/dyn_cata.c, src/string/dyn_copy.c, src/string/dyn_str.c, src/string/lsbycols.c, src/string/ltostr.c, src/string/strbcmp.c, src/string/strclean.c, src/string/strcount.c, src/string/strerror.c, src/string/strtrim.c, src/string/strucmp.c, src/string/strucpy.c, src/string/strwcmp.c, src/unix/gid2s.c, src/unix/s2gid.c, src/unix/s2uid.c, src/unix/setmtime.c, src/unix/uid2s.c, test/compare/test_cmp.c, include/td_ext.h, include/td_curse.h, include/td_regex.h, include/td_scomp.h, include/td_lib.h, include/dyn_str.h, include/deltree.h, include/td_btree.h, include/td_qsort.h, include/vms_dirs.h, include/td_sheet.h, include/sccsdefs.h, include/rcsdefs.h, include/port2vms.h, include/cmv_defs.h, src/cm_funcs/cmv_dir.c, src/cm_funcs/cmv_last.c, src/cm_funcs/cutoff.c, src/cm_funcs/cvslast.c, src/cm_funcs/lastrev.c, src/cm_funcs/newzone.c, src/cm_funcs/next_ver.c, src/cm_funcs/packdate.c, src/cm_funcs/rcs_dir.c, src/cm_funcs/rcsargpr.c, src/cm_funcs/rcsdebug.c, src/cm_funcs/rcsedit.c, src/cm_funcs/rcskeys.c, src/cm_funcs/rcslast.c, src/cm_funcs/rcsload.c, src/cm_funcs/rcslocks.c, src/cm_funcs/rcsname.c, src/cm_funcs/rcspath.c, src/cm_funcs/rcsperm.c, src/cm_funcs/rcssymbs.c, src/cm_funcs/rcstemp.c, src/cm_funcs/rcstime.c, src/cm_funcs/samebr.c, src/cm_funcs/sccs_dir.c, src/cm_funcs/sccsdbug.c, src/cm_funcs/sccslast.c, src/cm_funcs/sccsname.c, src/cm_funcs/sccspath.c, src/cm_funcs/vcs_file.c, src/cm_funcs/vercmp.c:
+	remove K&R support, indent'd
+
+	* aclocal.m4: add CF_ANSI_CC_REQD
+
+	* configure.in: make ANSI C (c89 actually) required
+
+	* support/selflink.sh: RCS_BASE
+
+	* makefile.in:
+	add scripting to create a "td_lib" symbolic link if the build directory
+	does not happen to be named "td_lib".  That allows me to make the actual
+	directory name have a version number (patch date), but still allow building
+	other components side-by-side.
+
+	* makefile.in: remove certify
+
 2004-02-23  dickey@invisible-island.net
 
 	* config.sub: 2004-02-23

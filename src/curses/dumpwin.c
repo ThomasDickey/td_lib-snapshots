@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	20 Apr 1988 (from code written 13 Nov 1987)
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		18 Oct 2000, don't bother with _leave/_leaveok except for the
  *			     known cases.
  *		15 Feb 1998, make this work with non-scalar chtype, use winnstr.
@@ -28,103 +29,94 @@
 #include	"td_curse.h"
 #include	<time.h>
 
-MODULE_ID("$Id: dumpwin.c,v 12.20 2002/07/05 11:17:40 tom Exp $")
+MODULE_ID("$Id: dumpwin.c,v 12.21 2004/03/07 22:03:45 tom Exp $")
 
 #define	OUT	FPRINTF
 
 static char *
-line_data(
-	_ARX(WINDOW *,	win)
-	_AR1(int,	row)
-		)
-	_DCL(WINDOW *,	win)
-	_DCL(int,	row)
+line_data(WINDOW *win, int row)
 {
-	static char *result;
-	int len = wMaxX(win);
+    static char *result;
+    int len = wMaxX(win);
 
-	if (result != 0)
-		free(result);
+    if (result != 0)
+	free(result);
 
-	if ((result = malloc(len)) != 0) {
+    if ((result = malloc(len)) != 0) {
 #if defined(HAVE_WINNSTR)
-		int y, x;
+	int y, x;
 
-		getyx(win, y, x);
-		wmove(win, row, 0);
-		winnstr(win, result, len);
-		wmove(win, y, x);
+	getyx(win, y, x);
+	wmove(win, row, 0);
+	winnstr(win, result, len);
+	wmove(win, y, x);
 #else /* assume: TYPE_CHTYPE_IS_SCALAR */
-		int x;
-		for (x = 0; x < len; x++) {
-			result[x] = CursesData(win,row,x);
-		}
-#endif
+	int x;
+	for (x = 0; x < len; x++) {
+	    result[x] = CursesData(win, row, x);
 	}
-	return result;
+#endif
+    }
+    return result;
 }
 
-void	dumpwin(
-	_ARX(WINDOW *,	w)
-	_AR1(char *,	tag)
-		)
-	_DCL(WINDOW *,	w)
-	_DCL(char *,	tag)
+void
+dumpwin(WINDOW *w, char *tag)
 {
-	char	fname[MAXPATHLEN],
-		*output = pathcat(fname, gethome(), "dumpwin.out");
-	FILE	*fp = fopen(output, "a+");
-	int	j,k;
+    char fname[MAXPATHLEN], *output = pathcat(fname, gethome(),
+					      "dumpwin.out");
+    FILE *fp = fopen(output, "a+");
+    int j, k;
 
-	if (fp) {
-		time_t	now = time((time_t *)0);
-		int	current_x;
-		int	current_y;
+    if (fp) {
+	time_t now = time((time_t *) 0);
+	int current_x;
+	int current_y;
 
-		getyx(w, current_y, current_x);
+	getyx(w, current_y, current_x);
 
-		OUT(fp, "%s: %s", tag, ctime(&now));
-		OUT(fp, "window @ %p (LINES=%d, COLS=%d)\n", w, LINES, COLS);
+	OUT(fp, "%s: %s", tag, ctime(&now));
+	OUT(fp, "window @ %p (LINES=%d, COLS=%d)\n", w, LINES, COLS);
 
-		OUT(fp, "   _cury:%d, _curx:%d\n", current_y, current_x);
-		OUT(fp, "   _maxy:%d, _maxx:%d\n", wMaxY(w), wMaxX(w));
-		OUT(fp, "   _begy:%d, _begx:%d\n", wBegY(w), wBegX(w));
+	OUT(fp, "   _cury:%d, _curx:%d\n", current_y, current_x);
+	OUT(fp, "   _maxy:%d, _maxx:%d\n", wMaxY(w), wMaxX(w));
+	OUT(fp, "   _begy:%d, _begx:%d\n", wBegY(w), wBegX(w));
 
 #if defined(CURSES_LIKE_NCURSES)
-		OUT(fp, "   _region %d..%d\n",     w->_regtop, w->_regbottom);
-		OUT(fp, "   _pary:%d  _parx:%d\n", w->_pary, w->_parx);
-		OUT(fp, "   _flags:   %#x\n", w->_flags);
-		OUT(fp, "   _clear:   %#x\n", w->_clear);
-		OUT(fp, "   _scroll:  %#x\n", w->_scroll);
-		OUT(fp, "   _leave:   %#x\n", w->_leaveok);
+	OUT(fp, "   _region %d..%d\n", w->_regtop, w->_regbottom);
+	OUT(fp, "   _pary:%d  _parx:%d\n", w->_pary, w->_parx);
+	OUT(fp, "   _flags:   %#x\n", w->_flags);
+	OUT(fp, "   _clear:   %#x\n", w->_clear);
+	OUT(fp, "   _scroll:  %#x\n", w->_scroll);
+	OUT(fp, "   _leave:   %#x\n", w->_leaveok);
 #endif
 #if defined(CURSES_LIKE_BSD44)
-		OUT(fp, "   _flags:   %#x\n", w->flags);
-		OUT(fp, "   _clear:   %#x\n", w->flags & __CLEAROK);
-		OUT(fp, "   _flush:   %#x\n", w->flags & __FLUSH);
-		OUT(fp, "   _leave:   %#x\n", w->flags & __LEAVEOK);
-		OUT(fp, "   _scroll:  %#x\n", w->flags & __SCROLLOK);
+	OUT(fp, "   _flags:   %#x\n", w->flags);
+	OUT(fp, "   _clear:   %#x\n", w->flags & __CLEAROK);
+	OUT(fp, "   _flush:   %#x\n", w->flags & __FLUSH);
+	OUT(fp, "   _leave:   %#x\n", w->flags & __LEAVEOK);
+	OUT(fp, "   _scroll:  %#x\n", w->flags & __SCROLLOK);
 #endif
 #ifndef CURSES_LIKE_UNKNOWN
-		OUT(fp, "   _y @ %p\n", &(CursesLine(w,0)));
+	OUT(fp, "   _y @ %p\n", &(CursesLine(w, 0)));
 #endif
-		for (j = 0; j < wMaxY(w); j++) {
-			char *data;
+	for (j = 0; j < wMaxY(w); j++) {
+	    char *data;
 #ifdef CURSES_LIKE_UNKNOWN
-			OUT(fp, "%8d) \"", j);
+	    OUT(fp, "%8d) \"", j);
 #else
-			OUT(fp, "%8d) [%3d,%3d] %p: \"",
-				j,
-				CursesFirstCh(w,j),
-				CursesLastCh(w,j), CursesLine(w,j));
+	    OUT(fp, "%8d) [%3d,%3d] %p: \"",
+		j,
+		CursesFirstCh(w, j),
+		CursesLastCh(w, j), CursesLine(w, j));
 #endif
-			if ((data = line_data(w,j)) != 0) {
-				for (k = 0; k < wMaxX(w); k++)
-					dumpchr(fp, data[k]);
-			}
-			OUT(fp, "\"\n");
-			FFLUSH(fp);
-		}
-		FCLOSE(fp);
+	    if ((data = line_data(w, j)) != 0) {
+		for (k = 0; k < wMaxX(w); k++)
+		    dumpchr(fp, data[k]);
+	    }
+	    OUT(fp, "\"\n");
+	    FFLUSH(fp);
 	}
+	FCLOSE(fp);
+    }
 }

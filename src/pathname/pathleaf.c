@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	18 Aug 1988
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, conversion to ANSI
@@ -24,42 +25,42 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: pathleaf.c,v 12.4 1993/11/27 16:24:16 tom Exp $")
+MODULE_ID("$Id: pathleaf.c,v 12.5 2004/03/07 22:03:45 tom Exp $")
 
 char *
-pathleaf (
-_AR1(char *,	path))
-_DCL(char *,	path)
+pathleaf(char *path)
 {
-	register char  *s;
-	static	char	buffer[BUFSIZ];
+    char *s;
+    static char buffer[BUFSIZ];
 
-	path	= strcpy(buffer, path);
-	while ((s = fleaf_delim(path)) != NULL) {
+    path = strcpy(buffer, path);
+    while ((s = fleaf_delim(path)) != NULL) {
 #ifdef	apollo
-		if (!strcmp(path, "//"))		break;
+	if (!strcmp(path, "//"))
+	    break;
 #endif
 #ifndef	vms
-		if (s[1] == EOS) {	/* trailing delimiter ? */
-			if (path == s)			break;
-			*s = EOS;	/* trim it */
-		} else
+	if (s[1] == EOS) {	/* trailing delimiter ? */
+	    if (path == s)
+		break;
+	    *s = EOS;		/* trim it */
+	} else
 #endif
-			return (++s);
-	}
-	return (path);
+	    return (++s);
+    }
+    return (path);
 }
 
 #ifdef	TEST
 _MAIN
 {
-	register int j;
-	for (j = 1; j < argc; j++)
-		printf("%d:\t\"%s\" => \"%s\"\n",
-			j,
-			argv[j],
-			pathleaf(argv[j]));
-	exit(SUCCESS);
-	/*NOTREACHED*/
+    int j;
+    for (j = 1; j < argc; j++)
+	printf("%d:\t\"%s\" => \"%s\"\n",
+	       j,
+	       argv[j],
+	       pathleaf(argv[j]));
+    exit(SUCCESS);
+    /*NOTREACHED */
 }
-#endif	/* TEST */
+#endif /* TEST */

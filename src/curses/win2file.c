@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	07 Jun 1988
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		15 Feb 1998, workaround for non-scalar chtype.
  *		03 Sep 1995, make this work with bsd4.4 curses
  *		29 Oct 1993, ifdef-ident
@@ -36,7 +37,7 @@
 #include	<ctype.h>
 #include	<time.h>
 
-MODULE_ID("$Id: win2file.c,v 12.16 2002/07/05 11:18:55 tom Exp $")
+MODULE_ID("$Id: win2file.c,v 12.17 2004/03/07 22:03:45 tom Exp $")
 
 #define	OUT	FPRINTF(fp,
 
@@ -72,134 +73,120 @@ MODULE_ID("$Id: win2file.c,v 12.16 2002/07/05 11:18:55 tom Exp $")
 static char *
 CursesLine(WINDOW *win, int row)
 {
-	static char *result;
+    static char *result;
 
-	if (result != 0)
-		free(result);
+    if (result != 0)
+	free(result);
 
-	if ((result = malloc(COLS)) != 0) {
-		int y, x;
+    if ((result = malloc(COLS)) != 0) {
+	int y, x;
 
-		getyx(win, y, x);
-		wmove(win, row, 0);
-		winnstr(win, result, COLS);
-		wmove(win, y, x);
-	}
-	return result;
+	getyx(win, y, x);
+	wmove(win, row, 0);
+	winnstr(win, result, COLS);
+	wmove(win, y, x);
+    }
+    return result;
 }
 
 #define CursesData(win,y,x)  CursesLine(win,y)[x]
 #endif
 
-static
-void	MarkIt(
-	_ARX(WINDOW *,	win)
-	_ARX(int,	row)
-	_AR1(chtype,	c)
-		)
-	_DCL(WINDOW *,	win)
-	_DCL(int,	row)
-	_DCL(chtype,	c)
+static void
+MarkIt(WINDOW *win, int row, chtype c)
 {
-	(void)wmove(win, (int)(row + wBegY(win)), (int)wBegX(win));
-	(void)waddch(win,c);
+    (void) wmove(win, (int) (row + wBegY(win)), (int) wBegX(win));
+    (void) waddch(win, c);
 }
 
-void	win2fp(
-	_ARX(WINDOW *,	win)
-	_ARX(FILE *,	fp)
-	_AR1(char *,	prefix)
-		)
-	_DCL(WINDOW *,	win)
-	_DCL(FILE *,	fp)
-	_DCL(char *,	prefix)
+void
+win2fp(WINDOW *win,
+       FILE *fp,
+       char *prefix)
 {
-	auto	time_t	now	= time((time_t *)0);
-	auto	int	y,x;
+    time_t now = time((time_t *) 0);
+    int y, x;
 
-	register int	j, k;
-	register chtype	khr;
-	int	rows = wMaxY(win);
-	int	cols = wMaxX(win);
+    int j, k;
+    chtype khr;
+    int rows = wMaxY(win);
+    int cols = wMaxX(win);
 
-	OUT "%sscreen saved at %s", *prefix ? prefix : "\f", ctime(&now));
-	OUT "%s----------------(%dx%d)\n", prefix, rows, cols);
+    OUT "%sscreen saved at %s", *prefix ? prefix : "\f", ctime(&now));
+    OUT "%s----------------(%dx%d)\n", prefix, rows, cols);
 
-	getyx(win, y, x);
-	for (j = 0; j < rows; j++) {
-		OUT "%s", prefix);
-		if (CursesLine(win,j) != NULL) {
-			int	last = -1;
+    getyx(win, y, x);
+    for (j = 0; j < rows; j++) {
+	OUT "%s", prefix);
+	if (CursesLine(win, j) != NULL) {
+	    int last = -1;
 
-			/* animate this so user can see something */
-			khr = CursesData(win,j,0);
-			MarkIt(win, j, A_STANDOUT | '*');
-			(void)wrefresh(win);
-			MarkIt(win, j, khr);
+	    /* animate this so user can see something */
+	    khr = CursesData(win, j, 0);
+	    MarkIt(win, j, A_STANDOUT | '*');
+	    (void) wrefresh(win);
+	    MarkIt(win, j, khr);
 
-			/* find the last nonblank column */
-			for (k = 0; k < cols; k++) {
-				khr = CursesData(win,j,k);
-				if ((khr = toascii(khr)) == EOS)
-					break;
-				if (!isspace(khr))
-					last = k;
-			}
+	    /* find the last nonblank column */
+	    for (k = 0; k < cols; k++) {
+		khr = CursesData(win, j, k);
+		if ((khr = toascii(khr)) == EOS)
+		    break;
+		if (!isspace(khr))
+		    last = k;
+	    }
 
-			/* dump the line, setting boldface as needed */
-			for (k = 0; k <= last; k++) {
-				auto	int	bold;
+	    /* dump the line, setting boldface as needed */
+	    for (k = 0; k <= last; k++) {
+		int bold;
 
-				khr = CursesData(win,j,k);
-				bold = CursesBold(win,j,k);
-				khr &= (A_CHARTEXT|A_ALTCHARSET);
+		khr = CursesData(win, j, k);
+		bold = CursesBold(win, j, k);
+		khr &= (A_CHARTEXT | A_ALTCHARSET);
 
-#ifdef ACS_HLINE /* figure we've got the others */
-				if (khr == ACS_HLINE)
-					khr = '-';
-				else if (khr == ACS_VLINE)
-					khr = '|';
-				else if (khr == ACS_ULCORNER
-				   ||	 khr == ACS_LLCORNER
-				   ||	 khr == ACS_URCORNER
-				   ||	 khr == ACS_LRCORNER
-				   ||	 khr == ACS_RTEE
-				   ||	 khr == ACS_LTEE
-				   ||	 khr == ACS_BTEE
-				   ||	 khr == ACS_TTEE
-				   ||	 khr == ACS_PLUS)
-				   	khr = '+';
-					else khr = toascii(khr);
+#ifdef ACS_HLINE		/* figure we've got the others */
+		if (khr == ACS_HLINE)
+		    khr = '-';
+		else if (khr == ACS_VLINE)
+		    khr = '|';
+		else if (khr == ACS_ULCORNER
+			 || khr == ACS_LLCORNER
+			 || khr == ACS_URCORNER
+			 || khr == ACS_LRCORNER
+			 || khr == ACS_RTEE
+			 || khr == ACS_LTEE
+			 || khr == ACS_BTEE
+			 || khr == ACS_TTEE
+			 || khr == ACS_PLUS)
+		    khr = '+';
+		else
+		    khr = toascii(khr);
 #else
-				khr = toascii(khr);
+		khr = toascii(khr);
 #endif
-				if (isprint(khr)) {
-					if (bold)
-						OUT "%c\b", (int)khr);
-					OUT "%c", (int)khr);
-				} else
-					OUT "?");
-			}
-		}
-		OUT "\n");
+		if (isprint(khr)) {
+		    if (bold)
+			OUT "%c\b", (int) khr);
+		    OUT "%c", (int) khr);
+		} else
+		    OUT "?");
+	    }
 	}
-	(void)wmove(win, y,x);
-	(void)wrefresh(win);
+	OUT "\n");
+    }
+    (void) wmove(win, y, x);
+    (void) wrefresh(win);
 }
 
-int	win2file(
-	_ARX(WINDOW *,	win)
-	_AR1(char *,	file)
-		)
-	_DCL(WINDOW *,	win)
-	_DCL(char *,	file)
-{
-	auto	FILE	*fp;
+int win2file(
+		WINDOW *win,
+		char *file) {
+    FILE *fp;
 
-	if ((fp = fopen(file, "a+")) != NULL) {
-		win2fp(win, fp, "");
-		FCLOSE(fp);
-		return (0);
-	}
-	return (-1);
+    if ((fp = fopen(file, "a+")) != NULL) {
+	win2fp(win, fp, "");
+	FCLOSE(fp);
+	return (0);
+    }
+    return (-1);
 }

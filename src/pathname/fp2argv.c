@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	18 Jul 1988
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		17 Nov 1992, modified _FNX macro.
@@ -22,76 +23,67 @@
 #include	"ptypes.h"
 #include	"dyn_str.h"
 
-MODULE_ID("$Id: fp2argv.c,v 12.4 1998/05/30 11:29:31 tom Exp $")
+MODULE_ID("$Id: fp2argv.c,v 12.5 2004/03/07 22:03:45 tom Exp $")
 
-	/*ARGSUSED*/
-	def_DOALLOC(char *)
 #define	CHUNK	32
 
-static
-char *
-get_line(
-_AR1(FILE *,	fp))
-_DCL(FILE *,	fp)
+static char *
+get_line(FILE *fp)
 {
-	static	DYN	*bfr;
-	static	char	tmp[] = "?";
+    static DYN *bfr;
+    static char tmp[] = "?";
 
-	dyn_init(&bfr, BUFSIZ);
+    dyn_init(&bfr, BUFSIZ);
 
-	do {
-		tmp[0] = fgetc(fp);
-		if (feof(fp))
-			break;
-		(void)dyn_append(bfr, tmp);
-		if (tmp[0] == '\n')
-			break;
-	} while (!ferror(fp));
+    do {
+	tmp[0] = fgetc(fp);
+	if (feof(fp))
+	    break;
+	(void) dyn_append(bfr, tmp);
+	if (tmp[0] == '\n')
+	    break;
+    } while (!ferror(fp));
 
-	return dyn_length(bfr) ? dyn_string(bfr) : 0;
+    return dyn_length(bfr) ? dyn_string(bfr) : 0;
 }
 
-int	fp2argv(
-	_ARX(FILE *,	fp)
-	_ARX(char ***,	argv_)
-	_FN1(void,	trace,	(_AR1(char *,s)))
-		)
-	_DCL(FILE *,	fp)
-	_DCL(char ***,	argv_)
-	_DCL(void,	(*trace)())
+int
+fp2argv(FILE *fp,
+	char ***argv_,
+	void (*trace) (char *s))
 {
-	register char **vec = 0;
-	register int  lines = 0;
-	register unsigned have  = 0;
-	char	*buffer;
+    char **vec = 0;
+    int lines = 0;
+    unsigned have = 0;
+    char *buffer;
 
-	while ((buffer = get_line(fp)) != 0) {
-		unsigned need	= (++lines | (CHUNK-1)) + 1;
-		if (need != have) {
-			vec  = DOALLOC(vec, char *, need);
-			have = need;
-		}
-		vec[lines-1] = stralloc(buffer);
-		if (trace != 0)
-			(*trace)(buffer);
+    while ((buffer = get_line(fp)) != 0) {
+	unsigned need = (++lines | (CHUNK - 1)) + 1;
+	if (need != have) {
+	    vec = DOALLOC(vec, char *, need);
+	    have = need;
 	}
-	if (lines == 0)
-		vec = DOALLOC(vec, char *, 1);
-	vec[lines]   = 0;
-	*argv_ = vec;
-	return (lines);
+	vec[lines - 1] = stralloc(buffer);
+	if (trace != 0)
+	    (*trace) (buffer);
+    }
+    if (lines == 0)
+	vec = DOALLOC(vec, char *, 1);
+    vec[lines] = 0;
+    *argv_ = vec;
+    return (lines);
 }
 
 #ifdef	TEST
 _MAIN
 {
-	char	**list;
-	register int j;
+    char **list;
+    int j;
 
-	fp2argv(stdin, &list, 0);
-	for (j = 0; list[j]; j++)
-		PRINTF("%d:\t%s", j+1, list[j]);
-	exit(SUCCESS);
-	/*NOTREACHED*/
+    fp2argv(stdin, &list, 0);
+    for (j = 0; list[j]; j++)
+	PRINTF("%d:\t%s", j + 1, list[j]);
+    exit(SUCCESS);
+    /*NOTREACHED */
 }
 #endif

@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	24 Aug 1988, from 'checkin'
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *		03 Oct 1991, conversion to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
@@ -26,37 +27,33 @@
 #include	"ptypes.h"
 #include	"rcsdefs.h"
 
-MODULE_ID("$Id: rcslocks.c,v 12.2 1993/10/29 17:35:24 tom Exp $")
+MODULE_ID("$Id: rcslocks.c,v 12.3 2004/03/07 16:31:58 tom Exp $")
 
 char *
-rcslocks(
-_ARX(char *,	s)			/* current scan position */
-_ARX(char *,	who)
-_AR1(char *,	rev)
-	)
-_DCL(char *,	s)
-_DCL(char *,	who)
-_DCL(char *,	rev)
+rcslocks(char *s,		/* current scan position */
+	 char *who,
+	 char *rev)
 {
-	int	any_one	= (*who == EOS),
-		any_rev = (*rev == EOS);
-	char	locked_by[BUFSIZ],
-		lock_name[BUFSIZ];
-	char	*who_am_i = *who ? who : getuser();
+    int any_one = (*who == EOS);
+    int any_rev = (*rev == EOS);
+    char locked_by[BUFSIZ];
+    char lock_name[BUFSIZ];
+    char *who_am_i = *who ? who : getuser();
 
-	do {
-		s = rcsparse_id(locked_by, s);
-		if (*s == ':')	s++;
-		s = rcsparse_num(lock_name, s);
-		if (*locked_by && *lock_name) {
-			if (any_one && (any_rev || !strcmp(rev, lock_name)))
-				(void)strcpy(who, locked_by);
-			if (any_rev && (any_one || !strcmp(who, locked_by)))
-				(void)strcpy(rev, lock_name);
-			if (!strcmp(locked_by, who_am_i))
-				any_one =
-				any_rev = FALSE;
-		}
-	} while (*locked_by);
-	return (s);
+    do {
+	s = rcsparse_id(locked_by, s);
+	if (*s == ':')
+	    s++;
+	s = rcsparse_num(lock_name, s);
+	if (*locked_by && *lock_name) {
+	    if (any_one && (any_rev || !strcmp(rev, lock_name)))
+		(void) strcpy(who, locked_by);
+	    if (any_rev && (any_one || !strcmp(who, locked_by)))
+		(void) strcpy(rev, lock_name);
+	    if (!strcmp(locked_by, who_am_i))
+		any_one =
+		    any_rev = FALSE;
+	}
+    } while (*locked_by);
+    return (s);
 }

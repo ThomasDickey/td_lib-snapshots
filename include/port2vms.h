@@ -1,5 +1,5 @@
 /*
- * $Id: port2vms.h,v 12.8 2001/05/15 00:57:40 tom Exp $
+ * $Id: port2vms.h,v 12.9 2004/03/07 21:44:57 tom Exp $
  *
  * VMS-definitions for supporting unix/vms port
  */
@@ -44,154 +44,130 @@ typedef	struct	timeval {
 #endif	/* vms/SYS_UNIX/MSDOS */
 
 extern	char *	dir2path(
-		_ar1(char *,		src)
+		char *		src
 		)
-		_dcl(char *,		src)
-		_ret
+		;
 
 #ifndef		TD_LIB_H
 extern	char *	gid2s(
-		_ar1(int,		gid)
+		int		gid
 		)
-		_dcl(int,		gid)
-		_ret
+		;
 #endif
 
 extern	char *	name2vms(
-		_arx(char *,		dst)
-		_ar1(char *,		src)
+		char *		dst,
+		char *		src
 		)
-		_dcl(char *,		dst)
-		_dcl(char *,		src)
-		_ret
+		;
 
 extern	char *	path2dir(
-		_ar1(char *,		src)
+		char *		src
 		)
-		_dcl(char *,		src)
-		_ret
+		;
 
 extern	char *	path2vms(
-		_arx(char *,		dst)
-		_ar1(char *,		src)
+		char *		dst,
+		char *		src
 		)
-		_dcl(char *,		dst)
-		_dcl(char *,		src)
-		_ret
+		;
 
 #ifdef	vms
 extern	int	rmsio_open (
-		_arx(char *,	name_)
-		_ar1(char *,	mode_));
+		char *	name_,
+		char *	mode_);
 
 extern	int	rmsio_open2 (
-		_arx(char *,	name_)
-		_arx(char *,	dft_)
-		_ar1(char *,	mode_));
+		char *	name_,
+		char *	dft_,
+		char *	mode_);
 
 extern	int	rmsio_read (
-		_arx(int,	fd)
-		_arx(char *,	bfr)
-		_ar1(int,	maxbfr));
+		int	fd,
+		char *	bfr,
+		int	maxbfr);
 
 extern	int	rmsio_write (
-		_arx(int,	fd)
-		_arx(char *,	bfr)
-		_ar1(int,	maxbfr));
+		int	fd,
+		char *	bfr,
+		int	maxbfr);
 
 extern	int	rmsio_close (
-		_ar1(int,	fd));
+		int	fd);
 
 extern	void	rmsio_perror (
-		_ar1(char *,	s));
+		char *	s);
 
 extern	int	rmsio_size (
-		_ar1(int,	fd));
+		int	fd);
 #endif
 
 #ifndef		TD_LIB_H
 extern	int	s2gid(
-		_ar1(char *,		name)
+		char *		name
 		)
-		_dcl(char *,		name)
-		_ret
+		;
 #endif
 
 #ifndef		TD_LIB_H
 extern	int	s2uid(
-		_ar1(char *,		name)
+		char *		name
 		)
-		_dcl(char *,		name)
-		_ret
+		;
 #endif
 
 #ifdef	vms
 extern	void	time2vms(
-		_arx(long *,		vms_time)
-		_ar1(time_t,		unix_time)
+		long *		vms_time,
+		time_t		unix_time
 		)
-		_dcl(long *,		vms_time)
-		_dcl(time_t,		unix_time)
-		_nul
+		;
 #endif	/* vms */
 
 #ifndef		TD_LIB_H
 extern	char *	uid2s(
-		_ar1(int,		uid)
+		int		uid
 		)
-		_dcl(int,		uid)
-		_ret
+		;
 #endif
 
 #ifdef	vms
 extern	int	utimes(
-		_arx(char *,		filespec)
-		_ar1(struct timeval *,	tv)
+		char *		filespec,
+		struct timeval *	tv
 		)
-		_dcl(char *,		filespec)
-		_dcl(struct timeval *,	tv)
-		_ret
+		;
 #endif	/* vms */
 
 extern	char *	vms2name(
-		_arx(char *,		dst)
-		_ar1(char *,		src)
+		char *		dst,
+		char *		src
 		)
-		_dcl(char *,		dst)
-		_dcl(char *,		src)
-		_ret
+		;
 
 extern	int	vms_iswild(
-		_ar1(char *,		name)
+		char *		name
 		)
-		_dcl(char *,		name)
-		_ret
+		;
 
 extern	char *	vms_pathcat(
-		_arx(char *,		dst)
-		_arx(char *,		p)
-		_ar1(char *,		n)
+		char *		dst,
+		char *		p,
+		char *		n
 		)
-		_dcl(char *,		dst)
-		_dcl(char *,		p)
-		_dcl(char *,		n)
-		_ret
+		;
 
 extern	char *	vms_relpath(
-		_arx(char *,		dst)
-		_arx(char *,		cwd)
-		_ar1(char *,		src)
+		char *		dst,
+		char *		cwd,
+		char *		src
 		)
-		_dcl(char *,		dst)
-		_dcl(char *,		cwd)
-		_dcl(char *,		src)
-		_ret
+		;
 
 extern	time_t	zone2vms(
-		_ar1(time_t,		reference)
+		time_t		reference
 		)
-		_dcl(time_t,		reference)
-		_ret
+		;
 
 /* conversions from unix-form to native system */
 #ifdef	vms
