@@ -1,4 +1,4 @@
-# $Id: Makefile,v 10.2 1992/02/25 08:14:36 dickey Exp $
+# $Id: Makefile,v 11.0 1992/06/30 07:14:30 ste_cm Rel $
 # make-file for CM_TOOLS common/test library
 #
 
@@ -27,6 +27,7 @@ SOURCES	= Makefile descrip.mms README $(REF_FILES)
 
 PROGS	=\
 	abspath\
+	cutoff\
 	diffload\
 	doalloc\
 	dotcmp\
@@ -89,6 +90,7 @@ $(SOURCES):		; $(GET) $@
 
 # rules to make SunOs 'make' "work" with VPATH
 abspath.c\
+cutoff.c\
 diffload.c\
 doalloc.c\
 dotcmp.c\
