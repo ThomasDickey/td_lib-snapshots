@@ -1,3 +1,14 @@
+1988-03-24  dickey@software.org
+
+	* src/curses/killchar.c, src/curses/erasechr.c: New file.
+
+	* include/llib-ltd:
+	cleanup from prototype, moved 'ftree' module from Scope to ded-directory.
+
+	* src/Makefile: modules needed to support 'ftree'.
+
+	* src/curses/beep.c, include/ptypes.h: New file.
+
 1988-02-01  dickey@software.org
 
 	* src/cm_funcs/packdate.c: recompiled under sys5 environment.

@@ -1,15 +1,19 @@
-MANIFEST for td_lib, version t19880201
+MANIFEST for td_lib, version t19880324
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 include                         subdirectory
 include/llib-ltd                template for lint-library
+include/ptypes.h                principal include-file for TD_LIB
 src                             subdirectory
 src/Makefile                    makefile for td_lib/src
 src/cm_funcs                    subdirectory
 src/cm_funcs/packdate.c         pack numbers to make UNIX date
 src/cm_funcs/sccslast.c         scan for last SCCS date & version
 src/curses                      subdirectory
+src/curses/beep.c               sound audible alarm
 src/curses/cmdch.c              command-character decoder
+src/curses/erasechr.c           returns erase-char value
+src/curses/killchar.c           returns kill-char value
 src/curses/padedit.c            opens an edit-pad (or xterm) on a file
 src/curses/rawgets.c            read a string via curses in raw mode (allow edits)
 src/curses/rawterm.c            set terminal to raw (cooked) mode
