@@ -1,9 +1,11 @@
-#ifndef	lint
-static	char	Id[] = "$Id: getopt.c,v 8.0 1992/11/20 10:07:24 ste_cm Rel $";
+#ifndef	NO_IDENT
+static	char	Id[] = "$Id: getopt.c,v 8.1 1993/12/04 18:46:24 tom Exp $";
 #endif
 
 /*
+ * Title:	getopt.c
  * Modified:
+ *		04 Dec 1994, ifdefs.
  *		20 Nov 1992, use prototypes
  *
  * SYSTEM5-like 'getopt()'

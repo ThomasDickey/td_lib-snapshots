@@ -1,5 +1,5 @@
 /*
- * $Id: port2vms.h,v 8.0 1993/04/29 14:15:31 ste_cm Rel $
+ * $Id: port2vms.h,v 8.1 1993/12/04 18:43:18 tom Exp $
  *
  * VMS-definitions for supporting unix/vms port
  */
@@ -23,11 +23,6 @@ typedef	struct	timeval {
 	long	tv_usec;
 	};
 
-#ifndef	getwd
-#define	getwd(p)	getcwd(p,sizeof(p)-2)	/* patch: ptypes.h (5.0) */
-extern	char		*getcwd();
-#endif	/* getwd */
-
 #define	bzero(p,len)	memset(p,0,len)
 #define	bcopy(s,d,n)	memcpy(d,s,n)
 #define	rmdir		remove
@@ -42,15 +37,26 @@ extern	char		*getcwd();
 #endif
 		/* (try doing strings w/o descriptors!) */
 
-#else	/* unix */
+#else	/* unix or MSDOS */
 
+#ifdef	unix
 #include	<sys/time.h>		/* defines 'struct timeval' */
+#endif
 
 #define	_OPENDIR(s,m)	(isDIR(m))
 #define	OPENDIR_ARG	"."
 #define	EDITDIR_ARG	"."
 
-#endif	/* vms/unix */
+#endif	/* vms/unix/MSDOS */
+
+/*
+ * Externals assumed by 'deletetree()'
+ */
+#ifndef	LINTLIBRARY
+extern	void	fail      (_ar1(char *,text));
+extern	int	deletefile(_ar1(char *,name));
+extern	int	deletedir (_ar1(char *,name));
+#endif
 
 /*
  * Library procedures for unix/vms compatability
@@ -189,6 +195,7 @@ extern	char *	uid2s(
 		_dcl(int,		uid)
 		_ret
 
+#ifdef	vms
 extern	int	utimes(
 		_arx(char *,		filespec)
 		_ar1(struct timeval *,	tv)
@@ -196,6 +203,7 @@ extern	int	utimes(
 		_dcl(char *,		filespec)
 		_dcl(struct timeval *,	tv)
 		_ret
+#endif	/* vms */
 
 extern	char *	vms2name(
 		_arx(char *,		dst)
