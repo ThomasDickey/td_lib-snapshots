@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: resizwin.c,v 12.8 1995/04/01 14:36:39 tom Exp $";
+static	char	Id[] = "$Id: resizwin.c,v 12.10 1995/07/03 23:57:55 tom Exp $";
 #endif
 
 /*
@@ -86,8 +86,7 @@ int	resizewin(_AR0)
 			wresize(curscr, my_LINES, my_COLS);
 			wresize(newscr, my_LINES, my_COLS);
 			resizeterm(my_LINES, my_COLS);
-			savewin();
-			unsavewin(TRUE,0);
+			wrefresh(curscr);
 			return (TRUE);
 #else
 			return (FALSE);	/* probably doesn't work */
