@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	*Id = "$Id: field_of.c,v 10.7 1992/06/24 07:54:16 dickey Exp $";
+static	char	*Id = "$Id: field_of.c,v 11.0 1992/07/17 16:36:54 ste_cm Rel $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	*Id = "$Id: field_of.c,v 10.7 1992/06/24 07:54:16 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	03 Feb 1992
  * Modified:
+ *		17 Jul 1992, port to Apollo SR10.2 (no 'memmove()')
  *		24 Jun 1992, port to SunOs (no 'memmove()')
  *
  * Function:	insert/extract field in comma-separated list a la spreadsheet
@@ -20,13 +21,24 @@ static	char	*Id = "$Id: field_of.c,v 10.7 1992/06/24 07:54:16 dickey Exp $";
 
 #define	STR_PTYPES
 #include "spreadsheet.h"
+#include <ctype.h>
 
 static	int	opt_Blanks;
 
 #define	COMMA		','
 #define	isquote(c)	(c == '"' || c == '\'')
 
+#define	HAS_MEMMOVE
+
 #ifdef	sun
+#undef	HAS_MEMMOVE
+#endif
+
+#if	defined(apollo) && !defined(__STDCPP__)
+#undef	HAS_MEMMOVE
+#endif
+
+#ifndef	HAS_MEMMOVE
 static
 char *	memmove(
 	_ARX(char *,	s1)
