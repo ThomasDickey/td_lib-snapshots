@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.73 1996/10/20 17:47:21 tom Exp $
+dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.75 1996/12/27 20:13:14 tom Exp $
 dnl vi:set ts=4:
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", without change
@@ -300,14 +300,23 @@ AC_CACHE_VAL(td_cv_tm_gmtoff_decl,[
 AC_MSG_RESULT($td_cv_tm_gmtoff_decl)
 test $td_cv_tm_gmtoff_decl = yes && AC_DEFINE(HAVE_TM_GMTOFF)
 
+AC_MSG_CHECKING(for .tm_isdst in struct tm)
+AC_CACHE_VAL(td_cv_tm_isdst_decl,[
+	AC_TRY_COMPILE([$td_decl],
+		[struct tm tm; tm.tm_isdst],
+		[td_cv_tm_isdst_decl=yes],
+		[td_cv_tm_isdst_decl=no])])
+AC_MSG_RESULT($td_cv_tm_isdst_decl)
+test $td_cv_tm_isdst_decl = yes && AC_DEFINE(HAVE_TM_ISDST)
+
 AC_MSG_CHECKING(for .tm_zone in struct tm)
 AC_CACHE_VAL(td_cv_tm_zone_decl,[
 	AC_TRY_COMPILE([$td_decl],
-		[struct tm tm; tm.tm_isdst],
+		[struct tm tm; tm.tm_zone],
 		[td_cv_tm_zone_decl=yes],
 		[td_cv_tm_zone_decl=no])])
 AC_MSG_RESULT($td_cv_tm_zone_decl)
-test $td_cv_tm_zone_decl = yes && AC_DEFINE(HAVE_TM_ISDST)
+test $td_cv_tm_zone_decl = yes && AC_DEFINE(HAVE_TM_ZONE)
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl	Combines AC_HAVE_FUNCS logic with additional test from Kevin Buettner
@@ -872,6 +881,29 @@ AC_DEFUN([TD_UPPERCASE],
 changequote(,)dnl
 $2=`echo $1 |tr '[a-z]' '[A-Z]'`
 changequote([,])dnl
+])dnl
+dnl ---------------------------------------------------------------------------
+dnl Check for ANSI stdarg.h vs varargs.h.  Note that some systems include
+dnl <varargs.h> within <stdarg.h>.
+AC_DEFUN([TD_VARARGS],
+[
+AC_MSG_CHECKING(for standard varargs)
+AC_CACHE_VAL(td_cv_ansi_varargs,[
+	AC_TRY_COMPILE([
+#if HAVE_STDARG_H
+#include <stdarg.h>
+#else
+#if HAVE_VARARGS_H
+#include <varargs.h>
+#endif
+#endif
+		],
+		[return 0;} void foo(char *fmt,...){va_list args;va_start(args,fmt);va_end(args)],
+		[td_cv_ansi_varargs=yes],
+		[td_cv_ansi_varargs=no])
+	])
+AC_MSG_RESULT($td_cv_ansi_varargs)
+test $td_cv_ansi_varargs = yes && AC_DEFINE(ANSI_VARARGS)
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Test for the presence of <sys/wait.h>, 'union wait', arg-type of 'wait()'.
