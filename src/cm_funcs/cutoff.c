@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: cutoff.c,v 10.0 1991/10/17 07:56:03 ste_cm Rel $";
+static	char	Id[] = "$Id: cutoff.c,v 10.1 1992/01/08 14:55:24 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: cutoff.c,v 10.0 1991/10/17 07:56:03 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	20 May 1988 (from 'sccsdate.c')
  * Modified:
+ *		08 Jan 1992, allow year to be given as "xx", "19xx" or "20xx";
  *		03 Oct 1991, converted to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
  *		25 Jul 1989, recompiled with apollo SR10 -- mods for function
@@ -40,10 +41,12 @@ _AR1(char **,	argv)
 _DCL(int,	argc)
 _DCL(char **,	argv)
 {
-time_t	date;
-char	bfr[80],
-	*d = strcpy(bfr, "991231235959"),
-	*s = optarg;
+	int	first	= TRUE;
+	long	year	= 1900;
+	time_t	date;
+	char	bfr[80],
+		*d = strcpy(bfr, "991231235959"),
+		*s = optarg;
 
 	newzone(5,0,0);		/* interpret date in EST5EDT */
 
@@ -51,8 +54,20 @@ char	bfr[80],
 	 * Decode the date from the argument list
 	 */
 	while (*d) {
-		if (isdigit(*s))	*d++ = *s++;
-		else {
+		if (isdigit(*s)) {
+			*d++ = *s++;
+
+			if (first && (d - bfr) == 2) {
+				first = FALSE;
+				if (!strncmp(bfr, "19", 2))
+					d = bfr;
+				else if (!strncmp(bfr, "20", 2)) {
+					year = 2000;
+					d = bfr;
+				}
+			}
+
+		} else {
 			if ((d-bfr) & 1) {
 				*d = d[-1];
 				d[-1] = '0';
@@ -71,7 +86,8 @@ char	bfr[80],
 			}
 		}
 	}
-	date = packdate(1900+Z(0),Z(1),Z(2),Z(3),Z(4),Z(5));
+
+	date = packdate(year+Z(0),Z(1),Z(2),Z(3),Z(4),Z(5));
 	oldzone();		/* restore original timezone */
 	return (date);
 }
