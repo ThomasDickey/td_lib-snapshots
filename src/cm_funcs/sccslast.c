@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)sccslast.c	1.2 87/01/23 08:59:31";
+static	char	sccs_id[] = "@(#)sccslast.c	1.3 87/09/30 11:16:04";
 #endif	lint
 
 /*
@@ -9,8 +9,12 @@ static	char	sccs_id[] = "@(#)sccslast.c	1.2 87/01/23 08:59:31";
  */
 
 #include	<stdio.h>
+#include	<ctype.h>
 #include	<sys/types.h>
-extern	char	*strcpy();
+#include	<sys/stat.h>
+extern	char	*strcat(),
+		*strcpy(),
+		*strrchr();
 
 extern	long	packdate();
 
@@ -51,37 +55,66 @@ int	gotten = 0;
 	}
 }
 
-sccslast (path, rels_, vers_, date_)
-char	*path;
+sccslast (working, path, rels_, vers_, date_)
+char	*working;		/* working directory (absolute) */
+char	*path;			/* pathname to check (may be relative) */
 unsigned char *rels_, *vers_;
 time_t	*date_;
 {
 char	name[MAXPATH+1];
-register char *s;
+int	is_sccs	= 0;
+register char *s, *t;
+struct	stat	sbfr;
 
 	*rels_ = *vers_ = 0;
 	*date_ = 0;
 
 	/*
-	 * First, find the actual filename in the 'path[]' variable.  If the
-	 * name begins with 's.', assume that this may be an sccs-file, and
-	 * open it.
+	 * If the file resides in an sccs-directory and its name begins with
+	 * an appropriate prefix (lowercase letter followed by '.' and then
+	 * more characters) assume it is an sccs file.
 	 */
-	s = path + strlen(path);
-	while (s > path) {
-		if (s[-1] == '/')	break;
-		s--;
-	}
-	if (!strncmp(s, "s.", 2)) {
-		trysccs(path, rels_, vers_, date_);
-		if (*date_)		return;
+	if (s = strrchr(t = path, '/')) { /* determine directory from path */
+		*(t = s) = '\0';
+		if (s = strrchr(path, '/'))
+			s++;
+		else
+			s = path;
+		*t++ = '/';
+		is_sccs = !strncmp(s,"sccs",4);
+	} else if (s = strrchr(working, '/')) {
+		is_sccs = !strcmp(++s,"sccs");
+	} else
+		return;			/* illegal input: give up */
+
+	/*
+	 * If the file is an sccs-file, we wish to show the file-modification
+	 * date in the Z-field since this will highlight better files which are
+	 * not checked-in, or which are not checked out (possibly obsolete).
+	 */
+	if (is_sccs			/* t => filename */
+	&&  (strlen(t) > 2)
+	&&  (isalpha(*t) && islower(*t))
+	&&  (t[1] == '.')) {
+	char	xx = *t;
+		*t = 's';
+		(void)strcpy(name, path);
+		*t = xx;
+		trysccs(name, rels_, vers_, date_);
+		if (*date_) {		/* it was an ok sccs file */
+			(void)sprintf(&name[t-path], "../%s", t+2);
+			*date_ = 0;	/* use actual modification-date! */
+			if (stat(name, &sbfr) >= 0)
+				*date_ = sbfr.st_mtime;
+			return;
+		}
 	}
 
 	/*
-	 * If the original path was not that of an sccs-file, look in the
-	 * standard place (i.e., <directory>/sccs/s.<name>)
+	 * The file was not itself an sccs-file.  Construct the name of an
+	 * sccs-file assuming the standard naming convention, and try again.
 	 */
-	(void) strcpy (name, path);
-	(void) sprintf (&name[s-path], "sccs/s.%s", s);
+	(void)strcpy(name,  s = path);
+	(void)strcat(strcpy(&name[t-s],"sccs/s."), t);
 	trysccs(name, rels_, vers_, date_);
 }

@@ -1,3 +1,8 @@
+1987-09-30  Thomas E. Dickey
+
+	* src/cm_funcs/sccslast.c:
+	revised this so it does something meaningful for sccs-files themselves!
+
 1987-09-29  Thomas E. Dickey
 
 	* src/curses/rawgets.c: New file.
