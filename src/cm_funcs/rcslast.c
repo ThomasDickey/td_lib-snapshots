@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: rcslast.c,v 12.2 1993/10/29 17:35:24 dickey Exp $";
+static	char	Id[] = "$Id: rcslast.c,v 12.3 1993/11/27 16:59:32 dickey Exp $";
 #endif
 
 /*
@@ -97,7 +97,7 @@ void	tryRCS (
 		(void)strcpy (user, uid2s((int)getuid()));
 		(void)strcpy(lstring, strcpy(vstring, "?"));
 
-		while (!finish && (s = rcsread(s, code))) {
+		while (!finish && (s = rcsread(s, code)) != 0) {
 			s = rcsparse_id(key, s);
 
 			switch (code = rcskeys(key)) {
@@ -185,16 +185,14 @@ void	rcslast (
 	 * If the file resides in an RCS-directory and its name ends with
 	 * an appropriate suffix (i.e., ",v") assume it is an RCS file.
 	 */
-	if ((s = strrchr(t = path, '/')) != NULL) { /* determine directory from path */
+	if ((s = fleaf_delim(t = path)) != NULL) { /* determine directory from path */
 		*(t = s) = EOS;
-		if ((s = strrchr(path, '/')) != NULL)
-			s++;
-		else
+		if ((s = fleaf(path)) == NULL)
 			s = path;
 		is_RCS = !strcmp(s,dname);
-		*t++ = '/';
-	} else if ((s = strrchr(working, '/')) != NULL) {
-		is_RCS = !strcmp(++s,dname);
+		*t++ = PATH_SLASH;
+	} else if ((s = fleaf(working)) != NULL) {
+		is_RCS = !strcmp(s,dname);
 	} else
 		return;			/* illegal input: give up */
 
@@ -212,10 +210,9 @@ void	rcslast (
 
 			if (t != path) {
 				name[t - path - 1] = EOS;
-				if ((s = strrchr(name, '/')) != NULL)
-					s[1] = EOS;
-				else
-					name[0] = EOS;
+				if ((s = fleaf(name)) == NULL)
+					s = name;
+				name[0] = EOS;
 				(void)strcat(name, t);
 			} else
 				(void)strcat(strcpy(name, "../"), t);

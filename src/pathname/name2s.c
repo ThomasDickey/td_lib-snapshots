@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static  char    Id[] = "$Id: name2s.c,v 12.3 1993/10/29 17:35:25 dickey Exp $";
-#endif 
-
 /*
  * Title:	name2s.c (convert name to external string)
  * Author:	T.E.Dickey
@@ -43,6 +39,8 @@ static  char    Id[] = "$Id: name2s.c,v 12.3 1993/10/29 17:35:25 dickey Exp $";
 #define	STR_PTYPES
 #include "ptypes.h"
 
+MODULE_ID("$Id: name2s.c,v 12.5 1993/11/27 17:18:40 tom Exp $")
+
 #define	isshell(c)	(strchr("*%?$()[]{}|<>^&;#\\\"`'", c) != 0)
 #define	isAEGIS(c)	(strchr("*%?()[]{}\\", c) != 0)
 
@@ -62,59 +60,59 @@ int	name2s(
 	_DCL(char *,	name)
 	_DCL(int,	opt)
 {
-	char	*base = bfr;
+	register int num = 0;
 	register int c;
 	int	esc	= opt & 1;
 #ifdef	doAEGIS
 	int	in_leaf	= 0;
 #endif
 
-	while ((c = *name++) && len-- > 0) {
+	while (((c = *name++) != EOS) && (len-- > 0)) {
 #ifdef	doAEGIS
-		if (c == '/')	in_leaf = 0;
+		if (isSlash(c))	in_leaf = 0;
 		else		in_leaf++;
 		if (opt & 2) {	/* show underlying apollo filenames */
 			if (isascii(c) && isgraph(c)) {
 				if (isalpha(c) && isupper(c)) {
-					*bfr++ = ':';
+					bfr[num++] = ':';
 					c = LowerMacro(c);
 				} else if ((c == ':')
 				||	   (c == '.'
 					&&  in_leaf == 1
 					&&  strchr("./", *name) == 0))
-					*bfr++ = ':';
+					bfr[num++] = ':';
 				else if (opt & 5) {
 					if (isAEGIS(c))
-						*bfr++ = '@';
+						bfr[num++] = '@';
 					if ((opt & 1) && isshell(c))
-						*bfr++ = '\\';
+						bfr[num++] = '\\';
 				}
-				*bfr++ = c;
+				bfr[num++] = c;
 			} else if (c == ' ') {
-				*bfr++ = ':';
-				*bfr++ = '_';
+				bfr[num++] = ':';
+				bfr[num++] = '_';
 			} else {
-				FORMAT(bfr, ":%s#%02x", esc ? "\\" : "", c);
-				bfr += strlen(bfr);
+				FORMAT(bfr+num, ":%s#%02x", esc ? "\\" : "", c);
+				num = strlen(bfr);
 			}
 		} else
-#endif
+#endif	/* doAegis */
 		if (esc) {
 			if(!isascii(c)
 			 || iscntrl(c)
 			 || isspace(c)
 			 || isshell(c))
-				*bfr++ = '\\';	/* escape the nasty thing */
-			*bfr++ = c;
+				bfr[num++] = '\\'; /* escape the nasty thing */
+			bfr[num++] = c;
 		} else {
 			if (isascii(c) && isprint(c)) {
-				*bfr++ = c;
+				bfr[num++] = c;
 			} else
-				*bfr++ = '?';
+				bfr[num++] = '?';
 		}
 	}
-	*bfr = EOS;
-	return (bfr-base);
+	bfr[num] = EOS;
+	return num;
 }
 
 #ifdef	TEST
@@ -137,4 +135,4 @@ _MAIN
 	exit(SUCCESS);
 	/*NOTREACHED*/
 }
-#endif
+#endif	/* TEST */

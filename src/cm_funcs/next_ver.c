@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: next_ver.c,v 12.2 1993/10/29 17:35:25 dickey Exp $";
+static	char	Id[] = "$Id: next_ver.c,v 12.3 1993/11/27 14:27:06 dickey Exp $";
 #endif
 
 /*
@@ -27,7 +27,7 @@ void	next_version(
 
 	*dst = EOS;
 	while ((t = strchr(src, '.')) != NULL) {
-		size_t	len = t - src + 1;
+		size_t	len = (size_t)(t - src) + 1;
 		(void)strncpy(dst, src, len);
 		dst += len;
 		src = ++t;

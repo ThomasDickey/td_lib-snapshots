@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: sccslast.c,v 12.2 1993/10/29 17:35:24 dickey Exp $";
+static	char	Id[] = "$Id: sccslast.c,v 12.3 1993/11/27 16:59:48 dickey Exp $";
 #endif
 
 /*
@@ -83,9 +83,7 @@ void	trysccs (
 	}
 
 	if (gotten) {
-		if ((s = strrchr(strcpy(bfr, path), '/')) != NULL)
-			s++;
-		else
+		if ((s = fleaf(strcpy(bfr, path))) == NULL)
 			s = bfr;
 		*s = 'p';
 		if ((fp = fopen(bfr, "r")) != 0) {
@@ -127,16 +125,14 @@ void	sccslast (
 	 * an appropriate prefix (lowercase letter followed by '.' and then
 	 * more characters) assume it is an sccs file.
 	 */
-	if ((s = strrchr(t = path, '/')) != NULL) { /* determine directory from path */
+	if ((s = fleaf_delim(t = path)) != NULL) { /* determine directory from path */
 		*(t = s) = EOS;
-		if ((s = strrchr(path, '/')) != NULL)
-			s++;
-		else
+		if ((s = fleaf(path)) == NULL)
 			s = path;
 		is_sccs = !strcmp(s,dname);
-		*t++ = '/';
-	} else if ((s = strrchr(working, '/')) != NULL) {
-		is_sccs = !strcmp(++s,dname);
+		*t++ = PATH_SLASH;
+	} else if ((s = fleaf(working)) != NULL) {
+		is_sccs = !strcmp(s,dname);
 	} else
 		return;			/* illegal input: give up */
 
@@ -159,8 +155,8 @@ void	sccslast (
 
 			if (t != path) {
 				name[t - path - 1] = EOS;
-				if ((s = strrchr(name, '/')) != NULL)
-					s[1] = EOS;
+				if ((s = fleaf(name)) != NULL)
+					*s = EOS;
 				else
 					name[0] = EOS;
 				(void)strcat(name, t+2);

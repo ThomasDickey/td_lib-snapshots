@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: samebr.c,v 12.2 1993/10/29 17:35:24 dickey Exp $";
-#endif
-
 /*
  * Title:	samebranch.c
  * Author:	T.E.Dickey
@@ -18,6 +14,8 @@ static	char	Id[] = "$Id: samebr.c,v 12.2 1993/10/29 17:35:24 dickey Exp $";
 #include "ptypes.h"
 #include "rcsdefs.h"
 
+MODULE_ID("$Id: samebr.c,v 12.4 1993/11/27 14:29:04 tom Exp $")
+
 static
 size_t	two_dots(
 	_AR1(char *,	rev))
@@ -30,7 +28,7 @@ size_t	two_dots(
 			if (++dots >= 2)
 				break;
 	}
-	return (dots == 2) ? rev - base : 0;
+	return (dots == 2) ? (size_t)(rev - base) : 0;
 }
 
 int	samebranch(

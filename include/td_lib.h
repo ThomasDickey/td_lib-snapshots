@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 12.2 1993/09/21 16:07:55 dickey Exp $ */
+/* $Id: td_lib.h,v 12.3 1993/11/27 21:35:34 dickey Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for TD_LIB common
@@ -25,7 +25,7 @@
 #endif
 
 	/* abspath.c -------------------------------------------------- */
-#ifdef	unix
+#if	defined(unix) || defined(MSDOS)
 	void	abshome(
 			_ar1(char *,	path)
 			)
@@ -37,7 +37,7 @@
 			)
 			_dcl(char *,	path)
 			_nul
-#endif	/* unix */
+#endif	/* unix or MSDOS */
 
 	/* acc_mode.c ------------------------------------------------- */
 	char *	access_mode(
@@ -65,6 +65,13 @@
 			_dcl(char *,	name)
 			_dcl(char *,	mode)
 			_ret
+
+	/* blip.c ----------------------------------------------------- */
+	void	blip(
+			_ar1(int,	c)
+			)
+			_dcl(int,	c)
+			_nul
 
 	/* bldarg.c --------------------------------------------------- */
 	void	bldarg (
@@ -127,8 +134,10 @@
 			_dcl(int,	argc)
 			_dcl(char **,	argv)
 			_ret
+#endif	/* unix */
 
 	/* denode.c --------------------------------------------------- */
+#if	defined(unix) || defined(MSDOS)
 	char *	denode (
 			_arx(char *,	path)
 			_arx(char *,	node)
@@ -218,7 +227,7 @@
 			_ret
 
 	/* filecopy.c ------------------------------------------------- */
-#ifdef	unix
+#if	defined(unix) || defined(MSDOS)
 	int	filecopy(
 			_arx(char *,	src)
 			_arx(char *,	dst)
@@ -235,8 +244,22 @@
 			)
 			_dcl(char *,	name)
 			_ret
+#endif	/* unix or MSDOS */
+
+	/* fleaf.c ---------------------------------------------------- */
+	char *	fleaf_delim(
+			_ar1(char *,	path)
+			)
+			_dcl(char *,	path)
+			_ret
+	char *	fleaf(
+			_ar1(char *,	path)
+			)
+			_dcl(char *,	path)
+			_ret
 
 	/* for_admn.c ------------------------------------------------- */
+#ifdef	unix
 	int	for_admin2(
 			_fnx(int,	func,	(_AR0))
 			_arx(int,	the_uid)
@@ -406,7 +429,6 @@
 			_ret
 
 	/* name2s.c --------------------------------------------------- */
-#ifdef	unix
 	int	name2s(
 			_arx(char *,	bfr)
 			_arx(int,	maxbfr)
@@ -420,6 +442,7 @@
 			_ret
 
 	/* newzone.c -------------------------------------------------- */
+#ifdef	unix
 	int	localzone;
 
 	void	newzone(
@@ -434,7 +457,7 @@
 
 	void	oldzone(_ar0)
 			_nul
-
+#endif	/* unix */
 	/* next_ver.c ------------------------------------------------- */
 	void	next_version(
 			_arx(char *,	dst)
@@ -468,6 +491,7 @@
 			_ret
 
 	/* padedit.c -------------------------------------------------- */
+#ifdef	unix
 	int	padedit(
 			_arx(char *,	name)
 			_arx(int,	readonly)
@@ -480,6 +504,7 @@
 #endif	/* unix */
 
 	/* pathcat.c -------------------------------------------------- */
+#if	defined(unix) || defined(MSDOS)
 	char *	pathcat(
 			_arx(char *,	dst)
 			_arx(char *,	p)
@@ -491,7 +516,6 @@
 			_ret
 
 	/* pathcmp.c -------------------------------------------------- */
-#ifdef	unix
 	int	pathcmp(
 			_arx(char *,	p1)
 			_ar1(char *,	p2)
@@ -508,7 +532,6 @@
 			_dcl(char *,	path)
 			_dcl(STAT *,	s)
 			_ret
-#endif	/* unix */
 
 	/* pathleaf.c ------------------------------------------------- */
 	char *	pathleaf(
@@ -518,7 +541,6 @@
 			_ret
 
 	/* relpath.c -------------------------------------------------- */
-#ifdef	unix
 	char *	relpath(
 			_arx(char *,	dst)
 			_arx(char *,	cwd)
@@ -528,8 +550,10 @@
 			_dcl(char *,	cwd)
 			_dcl(char *,	src)
 			_ret
+#endif	/* unix or MSDOS */
 
 	/* revert.c --------------------------------------------------- */
+#ifdef	unix
 	int	revert(
 			_ar1(char *,	msg)
 			)
@@ -560,8 +584,8 @@
 			_dcl(char *,	leaf)
 			_ret
 
-#ifdef	unix
 	/* savesuid.c ------------------------------------------------- */
+#ifdef	unix
 	int	saves_uid(_ar0)
 			_ret
 
@@ -571,6 +595,7 @@
 			)
 			_dcl(int *,	lc)
 			_ret
+#endif	/* unix */
 
 	/* setmtime.c ------------------------------------------------- */
 	int	setmtime(
@@ -580,7 +605,6 @@
 			_dcl(char *,	name)
 			_dcl(time_t,	mtime)
 			_ret
-#endif	/* unix */
 
 	/* shoarg.c --------------------------------------------------- */
 	char 	*bldcmd (
@@ -837,14 +861,16 @@
 #endif	/* unix */
 
 	/* walkback.c ------------------------------------------------- */
+#ifdef	unix
 	void	walkback(
 			_ar1(char *,	program)
 			)
 			_dcl(char *,	program)
 			_nul
+#endif	/* unix */
 
 	/* walktree.c ------------------------------------------------- */
-#ifdef	unix
+#if	defined(unix) || defined(MSDOS)
 
 #define	WALK_FUNC_ARGS	\
 			_ARX(char *,	path)\

@@ -1,3 +1,166 @@
+1993-11-27  dickey@software.org
+
+	* src/pathname/relpath.c: mods for MSDOS
+
+1993-11-27  dickey@software.org
+
+	* src/pathname/relpath.c: use MODULE_ID
+
+1993-11-27  dickey@software.org
+
+	* src/pathname/fleaf.c: RCS_BASE
+
+	* src/curses/blip.c: mods for MSDOS
+
+1993-11-27  dickey@software.org
+
+	* src/curses/blip.c: use MODULE_ID
+
+1993-11-27  dickey@software.org
+
+	* include/td_lib.h, include/td_curse.h: adapted to MSDOS
+
+	* src/cm_funcs/vcs_file.c: use macro 'isSlash()' for unix/MSDOS porting
+
+1993-11-27  dickey@software.org
+
+	* src/cm_funcs/vcs_file.c: use MODULE_ID
+
+1993-11-27  dickey@software.org
+
+	* src/pathname/name2s.c: mods for MSDOS
+
+1993-11-27  dickey@software.org
+
+	* src/pathname/name2s.c: use MODULE_ID
+
+1993-11-27  dickey@software.org
+
+	* src/pathname/walktree.c:
+	TurboC compiler warnings, and MSDOS/unix path-delimiters
+
+	* src/pathname/pathcat.c: tweaks for porting to MSDOS
+
+1993-11-27  dickey@software.org
+
+	* src/pathname/pathcat.c: use MODULE_ID
+
+1993-11-27  dickey@software.org
+
+	* src/cm_funcs/sccslast.c: mods for MSDOS
+
+	* src/cm_funcs/rcslast.c: mods for TurboC/MSDOS
+
+	* src/pathname/pathhead.c: mods for MSDOS
+
+	* src/pathname/trimpath.c, src/cm_funcs/sccsname.c:
+	mods to "should" work on MSDOS
+
+	* src/pathname/sameleaf.c: first cut of port to MSDOS
+
+	* src/cm_funcs/rcsname.c: mods to make it "should" work on MSDOS
+
+	* src/cm_funcs/rcsargpr.c:
+	use 'fleaf_delim()' so this "should" work on MSDOS
+
+	* src/pathname/pathleaf.c: mods to make it "should" work for MSDOS
+
+1993-11-27  dickey@software.org
+
+	* src/pathname/pathleaf.c: use MODULE_ID
+
+1993-11-27  dickey@software.org
+
+	* src/pathname/ftype2.c: mods to make it "should" work on MSDOS
+
+1993-11-27  dickey@software.org
+
+	* src/pathname/ftype2.c: use MODULE_ID
+
+1993-11-27  dickey@software.org
+
+	* src/pathname/ftype.c: port to MSDOS
+
+1993-11-27  dickey@software.org
+
+	* src/pathname/ftype.c: use MODULE_ID
+
+1993-11-27  dickey@software.org
+
+	* src/cm_funcs/rcsedit.c: make this compile on TurboC
+
+	* src/pathname/add2fnam.c: port to MSDOS
+
+1993-11-27  dickey@software.org
+
+	* src/pathname/add2fnam.c: use MODULE_ID
+
+1993-11-27  dickey@software.org
+
+	* src/pathname/is_spath.c: port to MSDOS
+
+1993-11-27  dickey@software.org
+
+	* src/pathname/is_spath.c: use MODULE_ID
+
+1993-11-27  dickey@software.org
+
+	* src/pathname/file2arg.c, src/process/shoarg.c:
+	TurboC compiler warning
+
+1993-11-27  dickey@software.org
+
+	* src/process/shoarg.c: use MODULE_ID
+
+1993-11-27  dickey@software.org
+
+	* src/unix/setmtime.c: include <time.h> for TurboC
+
+	* src/cm_funcs/rcsperm.c, src/cm_funcs/samebr.c:
+	TurboC compiler warning
+
+1993-11-27  dickey@software.org
+
+	* src/cm_funcs/samebr.c: use MODULE_ID
+
+1993-11-27  dickey@software.org
+
+	* src/curses/savewin.c: clean compile with TurboC
+
+	* src/cm_funcs/next_ver.c, src/string/ltostr.c: TurboC compiler warning
+
+	* src/process/usercopy.c: ifdef'd for unix-only
+
+1993-11-27  dickey@software.org
+
+	* src/process/usercopy.c: use MODULE_ID
+
+1993-11-27  dickey@software.org
+
+	* src/curses/viewfile.c: ifdef'd for unix-only
+
+1993-11-27  dickey@software.org
+
+	* src/curses/viewfile.c: use MODULE_ID
+
+1993-11-27  dickey@software.org
+
+	* src/process/userprot.c, src/process/showuids.c: ifdef'd for unix-only
+
+1993-11-27  dickey@software.org
+
+	* src/process/showuids.c: use MODULE_ID
+
+1993-11-27  dickey@software.org
+
+	* src/memory/doalloc.c: ifdef'd out walkback-call (unix-only)
+
+	* src/compare/cmpqsort.c: compiler-warnings for MSDOS
+
+1993-11-27  dickey@software.org
+
+	* src/compare/cmpqsort.c: use MODULE_ID
+
 1993-11-26  dickey@software.org
 
 	* src/process/walkback.c: ifdef'd for unix-only

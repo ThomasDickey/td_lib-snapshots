@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: usercopy.c,v 12.2 1993/10/29 17:35:23 dickey Exp $";
-#endif
-
 /*
  * Title:	usercopy.c (copy a file for setuid program's caller)
  * Author:	T.E.Dickey
@@ -19,6 +15,10 @@ static	char	Id[] = "$Id: usercopy.c,v 12.2 1993/10/29 17:35:23 dickey Exp $";
  */
 
 #include	"ptypes.h"
+
+MODULE_ID("$Id: usercopy.c,v 12.4 1993/11/27 14:05:34 tom Exp $")
+
+#ifdef	unix
 
 static	char	*ucp_src,
 		*ucp_dst;
@@ -49,4 +49,6 @@ _MAIN
 	exit(SUCCESS);
 	/*NOTREACHED*/
 }
-#endif
+#endif	/* TEST */
+
+#endif	/* unix */

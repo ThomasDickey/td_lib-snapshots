@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: trimpath.c,v 12.2 1993/10/29 17:35:23 dickey Exp $";
+static	char	Id[] = "$Id: trimpath.c,v 12.3 1993/11/27 16:35:14 dickey Exp $";
 #endif
 
 /*
@@ -35,34 +35,34 @@ _DCL(char *,	cwd)
 	/*
 	 * Convert this to an absolute path somehow
 	 */
-	if (*path == '/') {
+	if (isSlash(*path)) {
 		;
 	} else if (*path) {
 		char	tmp[BUFSIZ];
 		d = strcpy(tmp, cwd);
 		s = path;
 		if (*s == '.')
-			if (s[1] == EOS || s[1] == '/')
+			if (s[1] == EOS || isSlash(s[1]))
 				s++;		/* absorb "." */
 		d += strlen(tmp);
-		if (d[-1] != '/')		/* add "/" iff we need it */
+		if (!isSlash(d[-1]))		/* add delim iff we need it */
 			(void)strcat(d, "/");
 		(void)strcat(d, s);
 		(void)strcpy(path,tmp);
 	}
 
 	/*
-	 * Trim out repeated '/' marks
+	 * Trim out repeated path-delimiter marks
 	 */
 	for (s = d = path; *s; s++) {
-		if (*s == '/') {
-			while (s[1] == '/')
+		if (isSlash(*s)) {
+			while (isSlash(s[1]))
 				s++;
 		} else if (*s == '.') {
-			if (s > path && s[-1] == '/') {
+			if (s > path && isSlash(s[-1])) {
 				if (s[1] == EOS)
 					break;
-				else if (s[1] == '/') {
+				else if (isSlash(s[1])) {
 					s++;
 					continue;
 				}
@@ -72,10 +72,10 @@ _DCL(char *,	cwd)
 	}
 
 	/*
-	 * Trim trailing '/' marks
+	 * Trim trailing path-delimiter marks
 	 */
 	while (d > path+1)
-		if (d[-1] == '/')	d--;
+		if (isSlash(d[-1]))	d--;
 		else			break;
 	*d = EOS;
 
@@ -84,13 +84,15 @@ _DCL(char *,	cwd)
 	 */
 	for (s = path; *s; s++) {
 		if (s[0] == '.' && s[1] == '.')
-			if ((s > path && s[-1] == '/')
-			&&  (s[2] == EOS || s[2] == '/')) {
+			if ((s > path && isSlash(s[-1]))
+			&&  (s[2] == EOS || isSlash(s[2]))) {
 				d = s+2;
 				if (s > path) {
 					s -= 2;
-					while (s > path && *s != '/') s--;
-					if (s == path &&  !*d) s++;
+					while (s > path && !isSlash(*s))
+						s--;
+					if (s == path &&  !*d)
+						s++;
 				} else if (*d)
 					s--;
 				while ((*s++ = *d++) != EOS)
@@ -144,4 +146,4 @@ _MAIN
 	exit(SUCCESS);
 	/*NOTREACHED*/
 }
-#endif
+#endif	/* TEST */

@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: sameleaf.c,v 12.2 1993/10/29 17:35:24 dickey Exp $";
+static	char	Id[] = "$Id: sameleaf.c,v 12.3 1993/11/27 16:29:04 dickey Exp $";
 #endif
 
 /*
@@ -50,22 +50,22 @@ int	sameleaf(
 	(void)strcpy(tmp, path);
 	while (!strncmp(leaf, "../", 3))
 		leaf += 3;
-	while ((s = strrchr(tmp, '/')) != NULL) { /* find real leaf-name */
-		if (*(++s))
+	while ((s = fleaf(tmp)) != NULL) { /* find real leaf-name */
+		if (*s != EOS)
 			break;
-		*(--s) = EOS;		/* ...trimming off trailing '/' */
+		*(--s) = EOS;		/* ...trimming off trailing delimiter */
 	}
 	if (s == 0)
 		s = tmp;
 
 	/*
-	 * Even after trimming, 'leaf' may contain a '/'.  If so, we must
+	 * Even after trimming, 'leaf' may contain a delimiter.  If so, we must
 	 * readjust the pointer to the path which we compare:
 	 */
 	if ((adjust = strlen(s) - strlen(leaf)) < 0) {
 		if (s + adjust == tmp)
 			s = tmp;
-		else if (((s + adjust) > tmp) && (s[adjust-1] == '/'))
+		else if (((s + adjust) > tmp) && (isSlash(s[adjust-1])))
 			s += adjust;
 	}
 #ifdef	TEST
@@ -84,4 +84,4 @@ _MAIN
 			sameleaf(argv[1], argv[j]));
 	exit(SUCCESS);
 }
-#endif
+#endif	/* TEST */

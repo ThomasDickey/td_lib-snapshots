@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: ltostr.c,v 12.2 1993/10/29 17:35:25 dickey Exp $";
+static	char	Id[] = "$Id: ltostr.c,v 12.3 1993/11/27 14:23:46 dickey Exp $";
 #endif
 
 /*
@@ -72,15 +72,15 @@ static	long	mask16, mask8, mask2;
 	}
 
 	if (value >= 0 && value < base)
-		*src++ = digits[value];
+		*src++ = digits[(int)value];
 	else {
-	int	remain;
+		int	remain;
 		if (base == 10) {
-		long	next	= ((value >> 1) & mask2) / 5;
-			remain	= value - (next * 10);
+			long	next	= ((value >> 1) & mask2) / 5;
+			remain	= (int)(value - (next * 10));
 			value	= next;
 		} else { /* right-shift keeps sign, so we must make masks */
-			remain = value & (base-1);
+			remain = (int)(value & (base-1));
 			if (base == 16) {
 				value >>= 4;
 				value &= mask16;

@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: rcsedit.c,v 12.2 1993/10/29 17:35:24 dickey Exp $";
+static	char	Id[] = "$Id: rcsedit.c,v 12.3 1993/11/27 16:12:50 dickey Exp $";
 #endif
 
 /*
@@ -36,13 +36,11 @@ static	char	Id[] = "$Id: rcsedit.c,v 12.2 1993/10/29 17:35:24 dickey Exp $";
  */
 
 #define	ACC_PTYPES
+#define	OPN_PTYPES
 #define	STR_PTYPES
 #include	"ptypes.h"
 #include	"rcsdefs.h"
 #include	<ctype.h>
-#ifdef	SYSTEM5
-#include	<sys/fcntl.h>
-#endif
 
 /* local definitions */
 #define	VERBOSE	if (verbose) PRINTF
@@ -92,7 +90,7 @@ int	dir_access(_AR0)
 	int	gid = getegid();
 	STAT	sb;
 
-	if ((s = strrchr(strcpy(temp, fname), '/')) != NULL)
+	if ((s = fleaf_delim(strcpy(temp, fname))) != NULL)
 		*s = EOS;
 	else
 		(void)strcpy(temp, ".");
@@ -224,7 +222,7 @@ int	rcsopen(
 	edit_at = 0;
 	VERBOSE("++ rcs-%s(%s)\n", readonly ? "scan" : "edit", fname);
 	if (	(stat_file(fname, &sb) >= 0)
-	&&	(fpS = fopen(fname, "r")) ) {
+	&&	(fpS = fopen(fname, "r")) != 0) {
 		int	fmode;
 
 		if (readonly)

@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: walktree.c,v 12.2 1993/10/29 17:35:23 dickey Exp $";
+static	char	Id[] = "$Id: walktree.c,v 12.3 1993/11/27 17:08:08 dickey Exp $";
 #endif
 
 /*
@@ -125,7 +125,7 @@ int	walktree(
 	&&  (ok_acc >= 0)
 	&&  (mode == S_IFDIR)) {
 		if ((chdir(namearg) >= 0)
-		&&  (dp = opendir("."))) {
+		&&  (dp = opendir(".")) != 0) {
 			abspath(strcpy(new_wd, "."));
 			num = 0;
 			vec = 0;
@@ -171,7 +171,7 @@ int	WALK_FUNC(display)
 		PRINTF("|--%c", (level > 0) ? '-' : ' ');
 	if ((sp != 0)
 	&&  ((sp->st_mode & S_IFMT) == S_IFDIR))
-		PRINTF("%s%c\n", name, name[strlen(name)-1] == '/' ? ' ' : '/');
+		PRINTF("%s%c\n", name, isSlash(name[strlen(name)-1]) ? ' ' : PATH_SLASH);
 	else
 		PRINTF("%s\n", name);
 	return(readable);

@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: rcsargpr.c,v 12.1 1993/10/29 17:35:23 dickey Exp $";
+static	char	Id[] = "$Id: rcsargpr.c,v 12.2 1993/11/27 16:25:06 dickey Exp $";
 #endif
 
 /*
@@ -140,8 +140,8 @@ leaf_of(
 _AR1(char *,	name))
 _DCL(char *,	name)
 {
-	register char	*s = strrchr(name, '/');
-	return ((s != 0) ? s+1 : name);
+	register char	*s = fleaf(name);
+	return ((s != 0) ? s : name);
 }
 
 /*
@@ -355,7 +355,7 @@ _DCL(char **,	Argv)
 	}
 
 	/* supply missing directory on archive, for consistency */
-	if (archive != 0 && !strchr(archive, '/'))
+	if (archive != 0 && !fleaf_delim(archive))
 		archive = pathcat(temp_archive, rcs_dir(), archive);
 
 	if (archive == 0) {

@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: savewin.c,v 12.2 1993/10/29 17:35:24 dickey Exp $";
+static	char	Id[] = "$Id: savewin.c,v 12.3 1993/11/27 14:28:38 dickey Exp $";
 #endif
 
 /*
@@ -49,7 +49,7 @@ static	SAVE	*saved;
 #define	c_ALLOC(n)	ALLOC(chtype,n)
 #endif
 
-#ifndef	SYSTEM5
+#if	!SYS5_CURSES
 /*
  * Force a character to be different
  */
@@ -65,7 +65,7 @@ int	newC(
 		c = '.';
 	return (c);
 }
-#endif	/* !SYSTEM5 */
+#endif	/* !SYS5_CURSES */
 
 /*
  * Save a window on the stack.
@@ -108,14 +108,14 @@ void	lastwin(
 	if (saved) {
 
 		if (redo) {
-#ifdef	SYSTEM5
+#if SYS5_CURSES
 			touchwin(stdscr);
 			clear();
 			refresh();
-#else	/* !SYSTEM5 */
+#else	/* !SYS5_CURSES */
 			/* "touch" cursor position */
-			VOID(wmove(stdscr, LINES, COLS));
-			VOID(wmove(curscr, LINES, COLS));
+			(void)wmove(stdscr, LINES, COLS);
+			(void)wmove(curscr, LINES, COLS);
 
 			/* do "touch" pass first to avoid clrtoeol bug */
 			for (row = top, t = z; row < LINES; row++) {
@@ -136,7 +136,7 @@ void	lastwin(
 				FOR_ROW(curscr,row)
 					s[j] = newC(newC(bfr[j]));
 			}
-#endif	/* !SYSTEM5 */
+#endif	/* SYS5_CURSES/!SYS5_CURSES */
 		}
 
 		for (row = top, t = z; row < LINES; row++) {
@@ -168,7 +168,8 @@ void	unsavewin(
 	_DCL(int,	redo)
 	_DCL(int,	top)
 {
-SAVE	*last;
+	SAVE	*last;
+
 	if (saved) {
 		lastwin(redo,top);
 		last = saved->link;
