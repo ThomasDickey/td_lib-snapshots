@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19880324
+MANIFEST for td_lib, version t19880420
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 include                         subdirectory
@@ -12,6 +12,8 @@ src/cm_funcs/sccslast.c         scan for last SCCS date & version
 src/curses                      subdirectory
 src/curses/beep.c               sound audible alarm
 src/curses/cmdch.c              command-character decoder
+src/curses/dumpchr.c            dump screen character to file
+src/curses/dumpwin.c            dump curses window to file
 src/curses/erasechr.c           returns erase-char value
 src/curses/killchar.c           returns kill-char value
 src/curses/padedit.c            opens an edit-pad (or xterm) on a file
