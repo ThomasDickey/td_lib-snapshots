@@ -38,7 +38,7 @@
 #include "rcsdefs.h"
 #include <errno.h>
 
-MODULE_ID("$Id: rcstemp.c,v 12.7 1994/07/16 15:25:20 tom Exp $")
+MODULE_ID("$Id: rcstemp.c,v 12.8 2000/06/30 10:39:31 tom Exp $")
 
 #define	DEBUG	if (RCS_DEBUG) PRINTF
 
@@ -97,7 +97,7 @@ char *	rcstemp(
 			if (getgid() != sb.st_gid)
 				mode = WORLD_OPEN;
 
-			if ((sb.st_mode &= CHMOD_MASK) != mode) {
+			if ((int) (sb.st_mode &= CHMOD_MASK) != mode) {
 				DEBUG("%% chmod %o %s (was %o)\n",
 						mode, tf,
 						(int)(sb.st_mode));

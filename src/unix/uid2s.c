@@ -25,7 +25,7 @@
 #define	STR_PTYPES
 #include <td_btree.h>
 
-MODULE_ID("$Id: uid2s.c,v 12.9 1995/09/14 17:48:16 tom Exp $")
+MODULE_ID("$Id: uid2s.c,v 12.10 2000/06/30 10:45:58 tom Exp $")
 
 #if HAVE_GETPWUID
 
@@ -126,7 +126,8 @@ void	dpy_node (
 static	BI_TREE	uid2s_tree = {
 	cmp_node,
 	new_node,
-	dpy_node
+	dpy_node,
+	BI_NODE_NULL
 	};
 
 char *	uid2s(

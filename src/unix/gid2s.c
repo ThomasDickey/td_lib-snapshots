@@ -23,7 +23,7 @@
 #define	STR_PTYPES
 #include <td_btree.h>
 
-MODULE_ID("$Id: gid2s.c,v 12.9 1996/12/27 16:02:42 tom Exp $")
+MODULE_ID("$Id: gid2s.c,v 12.10 2000/06/30 10:46:01 tom Exp $")
 
 #if HAVE_GETGRGID
 
@@ -91,7 +91,8 @@ void	dpy_node (
 static	BI_TREE	gid2s_tree = {
 	cmp_node,
 	new_node,
-	dpy_node
+	dpy_node,
+	BI_NODE_NULL
 	};
 
 char *	gid2s(

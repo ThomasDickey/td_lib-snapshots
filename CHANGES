@@ -1,3 +1,21 @@
+2000-06-30  dickey@clark.net
+
+	* src/memory/txtalloc.c: gcc warnings (missing initializer)
+
+	* include/td_btree.h: add BI_NODE_NULL
+
+	* src/unix/gid2s.c, src/unix/uid2s.c:
+	gcc warnings (missing initializer)
+
+	* src/cm_funcs/rcsedit.c, src/cm_funcs/rcstemp.c, src/process/egress.c, src/process/in_group.c, src/process/for_admn.c:
+	gcc warnings (int/unsigned)
+
+	* aclocal.m4: misc updates
+	(from tin, lynx)
+
+	* src/cm_funcs/sccs_dir.c:
+	oops - I was not skipping ':' if I found one, making an infinite loop
+
 2000-06-18  dickey@clark.net
 
 	* config.guess, config.sub: RCS_BASE

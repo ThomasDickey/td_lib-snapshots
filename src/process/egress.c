@@ -12,7 +12,7 @@
 #define ERR_PTYPES
 #include <ptypes.h>
 
-MODULE_ID("$Id: egress.c,v 12.2 1994/11/12 22:33:11 tom Exp $")
+MODULE_ID("$Id: egress.c,v 12.3 2000/06/30 10:39:29 tom Exp $")
 
 int	egress(
 	_ARX(char *,	pathname)
@@ -43,9 +43,9 @@ int	egress(
 			} else {	/* root can r/w anything */
 				return 0;
 			}
-		} else if (uid == sb.st_uid) {
+		} else if (uid == (int) sb.st_uid) {
 			mask = mode << 6;
-		} else if (gid == sb.st_gid) {
+		} else if (gid == (int) sb.st_gid) {
 			mask = mode << 3;
 		} else {
 			mask = mode;
