@@ -1,3 +1,15 @@
+1990-06-28  dickey@software.org
+
+	* src/cm_funcs/packdate.c: added a test-driver.
+	modified (for SunOs 4.1 upgrade) code which adjusts for the
+	timezone, since the 'gettimeofday()' system call was not
+	working properly.
+
+1990-06-28  ste_cm@software.org
+
+	* src/cm_funcs/packdate.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
 1990-06-27  dickey@software.org
 
 	* src/port2vms/vms_rpth.c:
