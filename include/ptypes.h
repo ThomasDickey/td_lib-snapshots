@@ -1,4 +1,4 @@
-/* $Header: /users/source/archives/td_lib.vcs/include/RCS/ptypes.h,v 4.0 1989/07/25 08:49:47 ste_cm Rel $ */
+/* $Id: ptypes.h,v 4.1 1989/09/06 15:13:59 dickey Exp $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -24,6 +24,13 @@
 #ifndef	S_IFLNK
 #define	lstat	stat
 #endif	S_IFLNK
+
+#ifdef	SYSTEM5
+#define	getwd(p)	getcwd(p,sizeof(p)-2)
+extern	char	*getcwd();
+#else	!SYSTEM5
+extern	char	*getwd();
+#endif	S_IFSOCK
 
 /*
  * Definitions for files which are combined lint-library/function-prototype

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/curses/RCS/padedit.c,v 4.0 1989/07/25 09:15:21 ste_cm Rel $";
+static	char	Id[] = "$Id: padedit.c,v 5.0 1989/09/06 15:49:36 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,9 +7,15 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/curses/R
  * Author:	T.E.Dickey
  * Created:	14 Dec 1987
  * $Log: padedit.c,v $
- * Revision 4.0  1989/07/25 09:15:21  ste_cm
- * BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+ * Revision 5.0  1989/09/06 15:49:36  ste_cm
+ * BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
  *
+ *		Revision 4.1  89/09/06  15:49:36  dickey
+ *		use getwd definition from "ptypes.h"
+ *		
+ *		Revision 4.0  89/07/25  09:15:21  ste_cm
+ *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+ *		
  *		Revision 3.1  89/07/25  09:15:21  dickey
  *		recompiled with apollo SR10 -- mods for function prototypes
  *		
@@ -33,6 +39,7 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/curses/R
  *		This is probably due to an APOLLO bug.
  */
 
+#define	STR_PTYPES
 #include	"ptypes.h"
 #ifdef	apollo
 #include	"/sys/ins/base.ins.c"
@@ -40,8 +47,6 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/curses/R
 #include	"/sys/ins/pad.ins.c"
 #include	"/sys/ins/streams.ins.c"
 #endif	apollo
-extern	char	*strcat();
-extern	char	*strcpy();
 
 #ifdef	apollo
 apollo_edit(name, readonly)
@@ -124,7 +129,6 @@ padedit(name, readonly, editor)
 char	*name, *editor;
 int	readonly;
 {
-	extern	char	*getcwd();
 	int	lc[2];
 	int	code = scr_size(lc);
 
@@ -145,7 +149,7 @@ int	readonly;
 		char	wd[BUFSIZ],
 			xt[BUFSIZ];
 
-		if (getcwd(wd,sizeof(wd)-2) == 0)
+		if (getwd(wd) == 0)
 			return (-1);
 		if (which(xt, sizeof(xt), "xterm", wd) <= 0)
 			return (-1);

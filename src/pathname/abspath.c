@@ -1,19 +1,19 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RCS/abspath.c,v 4.0 1988/09/09 07:56:04 ste_cm Rel $";
+static	char	Id[] = "$Id: abspath.c,v 5.0 1989/09/06 15:17:52 ste_cm Rel $";
 #endif	lint
 
 /*
  * Author:	T.E.Dickey
  * Created:	17 Sep 1987
  * $Log: abspath.c,v $
- * Revision 4.0  1988/09/09 07:56:04  ste_cm
- * BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+ * Revision 5.0  1989/09/06 15:17:52  ste_cm
+ * BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
  *
- *		Revision 3.0  88/09/09  07:56:04  ste_cm
- *		BASELINE Mon Jun 19 13:27:01 EDT 1989
+ *		Revision 4.1  89/09/06  15:17:52  dickey
+ *		use "ptypes.h" to consolidate definitions
  *		
- *		Revision 2.0  88/09/09  07:56:04  ste_cm
- *		BASELINE Thu Apr  6 09:45:13 EDT 1989
+ *		Revision 4.0  88/09/09  07:56:04  ste_cm
+ *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
  *		
  *		Revision 1.9  88/09/09  07:56:04  dickey
  *		sccs2rcs keywords
@@ -36,27 +36,18 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname
  *		strip it).
  */
 
+#define	STR_PTYPES
+#include	"ptypes.h"
 #ifdef	apollo
 #include	</sys/ins/base.ins.c>
 #include	</sys/ins/name.ins.c>
 #include	<ctype.h>
 #endif	apollo
 
-#include	<stdio.h>
 #include	<pwd.h>
-extern	char	*getenv(),
-		*strchr(),
-		*strcat(),
-		*strcpy();
+extern	char	*getenv();
 
 #define	MAXPATHLEN	BUFSIZ
-
-#ifdef	S_IFSOCK
-extern	char	*getwd();
-#else	S_IFSOCK
-#define	getwd(p)	getcwd(p,sizeof(p)-2)
-extern	char	*getcwd();
-#endif	S_IFSOCK
 
 #ifdef	apollo
 #define	TOP	2			/* permit 2 leading /'s */

@@ -1,27 +1,18 @@
-# $Id: Makefile,v 4.2 1989/08/25 09:56:12 dickey Exp $
+# $Id: Makefile,v 4.3 1989/09/06 15:22:34 dickey Exp $
 # MAKE-file for miscellaneous library routines
 #
 # $Log: Makefile,v $
-# Revision 4.2  1989/08/25 09:56:12  dickey
-# added ptypes.h dependency to which.o
+# Revision 4.3  1989/09/06 15:22:34  dickey
+# use "ptypes.h" in 'abspath.c'; added missing ranlib to 'archive' rule
 #
+#	Revision 4.2  89/08/25  09:56:12  dickey
+#	added ptypes.h dependency to which.o
+#	
 #	Revision 4.1  89/08/24  16:50:43  dickey
 #	added 'wrepaint.c'
 #	
 #	Revision 4.0  89/08/23  13:49:43  ste_cm
 #	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
-#	
-#	Revision 3.3  89/08/23  13:49:43  dickey
-#	added 'view_file.c'
-#	
-#	Revision 3.2  89/08/22  09:33:56  dickey
-#	corrected 'destroy' rule
-#	
-#	Revision 3.1  89/08/08  14:00:54  dickey
-#	added module 'dftenv'
-#	
-#	Revision 3.0  89/06/05  13:23:58  ste_cm
-#	BASELINE Mon Jun 19 13:27:01 EDT 1989
 #	
 ####### (Development) ##########################################################
 GET	= checkout
@@ -237,7 +228,9 @@ $A:	$(OBJS)
 archive: $(OBJS)
 	rm -f $A
 	ar rv $A $(OBJS)
+	ranlib $A
 #
+abspath.o:	$I/ptypes.h
 add2fname.o:	$I/ptypes.h
 argv2file.o:	$I/ptypes.h
 beep.o:		$I/ptypes.h
