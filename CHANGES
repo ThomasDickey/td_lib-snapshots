@@ -1,3 +1,7 @@
+1986-01-09  Thomas E. Dickey
+
+	* src/memory/doalloc.c: New file.
+
 1985-12-17  Thomas E. Dickey
 
 	* src/process/bldarg.c: New file.
