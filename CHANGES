@@ -1,3 +1,8 @@
+1989-07-05  dickey@software.org
+
+	* src/cm_funcs/rcsperm.c:
+	if the access-list is empty, we must own the file to operate upon it.
+
 1989-06-12  dickey@software.org
 
 	* src/pathname/add2fnam.c: added note about VMS

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs/RCS/rcsperm.c,v 3.0 1989/04/04 11:01:24 ste_cm Rel $";
+static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs/RCS/rcsperm.c,v 3.1 1989/07/05 09:48:44 dickey Exp $";
 #endif	lint
 
 /*
@@ -7,9 +7,12 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs
  * Author:	T.E.Dickey
  * Created:	08 Mar 1989
  * $Log: rcsperm.c,v $
- * Revision 3.0  1989/04/04 11:01:24  ste_cm
- * BASELINE Mon Jun 19 13:27:01 EDT 1989
+ * Revision 3.1  1989/07/05 09:48:44  dickey
+ * if the access-list is empty, we must own the file to operate upon it.
  *
+ *		Revision 3.0  89/04/04  11:01:24  ste_cm
+ *		BASELINE Mon Jun 19 13:27:01 EDT 1989
+ *		
  *		Revision 2.0  89/04/04  11:01:24  ste_cm
  *		BASELINE Thu Apr  6 09:45:13 EDT 1989
  *		
@@ -33,19 +36,18 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs
  *		information.
  */
 
+#define	STR_PTYPES
 #include	"ptypes.h"
 #include	"rcsdefs.h"
 #include	<ctype.h>
-#include	<string.h>
 extern	char	*getenv();
-extern	char	*pathcat();
-extern	char	*strtrim();
 extern	char	*uid2s();
 extern	char	*vcs_file();
 
 rcspermit(path,base)
 char	*path,*base;
 {
+	auto	struct stat sb;
 	auto	int	header	= TRUE;
 	auto	char	*s	= 0,
 			tip	[80],
@@ -53,6 +55,7 @@ char	*path,*base;
 			key	[BUFSIZ],
 			tmp	[BUFSIZ];
 	auto	int	empty	= TRUE,		/* assume access-list empty */
+			my_file,
 			ok	= FALSE;	/* assume no permission */
 
 	path = vcs_file(path, tmp, FALSE);
@@ -78,6 +81,12 @@ char	*path,*base;
 	if (!rcsopen(path, FALSE))
 		return (FALSE);		/* could not open file anyway */
 
+	/*
+	 * If access-list is empty, we want to know who owns the file:
+	 */
+	my_file = ((stat(path, &sb) >= 0)	/* ok always! */
+		&& (sb.st_uid == getuid()));
+
 	while (header && (s = rcsread(s))) {
 		s = rcsparse_id(key, s);
 
@@ -92,8 +101,9 @@ char	*path,*base;
 					break;
 				empty = FALSE;
 			} while (!(ok = !strcmp(tmp, user)));
-			if (empty)
-				ok = TRUE;
+			if (empty) {
+				ok = my_file;
+			}
 			if ((header = ok)
 			&&  (base  != 0))
 				(void)strcpy(base, tip);
