@@ -1,3 +1,18 @@
+1994-07-22  dickey@clark.net
+
+	* src/curses/wresize.c: RCS_BASE
+
+	* src/curses/Makefile: added wresize.c
+
+	* include/td_curse.h: split out module wresize.c from resizwin.c
+
+	* src/curses/savewin.c: deleted a couplpe of unused nits
+
+	* src/curses/dumpwin.c:
+	made special case for ncurses bug (cannot compute it here, because I want
+	to use dumpwin within resizewin!).
+	Changed OUT macro to be more conventional..
+
 1994-07-20  dickey@clark.net
 
 	* src/curses/rawgets.c: hide ncurses bug in a macro

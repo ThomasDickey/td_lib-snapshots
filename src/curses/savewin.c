@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: savewin.c,v 12.3 1993/11/27 14:28:38 dickey Exp $";
+static	char	Id[] = "$Id: savewin.c,v 12.4 1994/07/22 23:56:13 tom Exp $";
 #endif
 
 /*
@@ -36,9 +36,6 @@ typedef	struct	_save {
 	} SAVE;
 
 static	SAVE	*saved;
-
-#define	highlighted(c)	((c) & 0200)
-#define	unhighlight(c)	((c) & 0177)
 
 #ifdef	lint
 #define	_BODY(f,c)	static c *f(n) unsigned n; { return(0); }
@@ -142,7 +139,8 @@ void	lastwin(
 		for (row = top, t = z; row < LINES; row++) {
 
 			/* retrieve saved-image */
-			for (j = 0; j < COLS; bfr[j++] = *t++);
+			for (j = 0; j < COLS; bfr[j++] = *t++)
+				;
 			bfr[j] = EOS;
 			while ((--j >= 0) && (bfr[j] == ' '))
 				bfr[j] = EOS;

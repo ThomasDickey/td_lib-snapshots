@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: dumpwin.c,v 12.7 1994/07/19 22:53:32 tom Exp $";
+static	char	Id[] = "$Id: dumpwin.c,v 12.8 1994/07/22 23:50:06 tom Exp $";
 #endif
 
 /*
@@ -17,6 +17,9 @@ static	char	Id[] = "$Id: dumpwin.c,v 12.7 1994/07/19 22:53:32 tom Exp $";
  *
  * Function:	Dumps the state of a curses window
  *
+ * Notes:
+ *		Some versions of curses have an off-by-one error in the _maxx/_maxy
+ *		values.  This code cannot assume that.
  */
 
 #define		STR_PTYPES
@@ -24,7 +27,13 @@ static	char	Id[] = "$Id: dumpwin.c,v 12.7 1994/07/19 22:53:32 tom Exp $";
 #include	"td_curse.h"
 #include	<time.h>
 
-#define	OUT	FPRINTF(fp,
+#define	OUT	FPRINTF
+
+#if HAVE_LIBNCURSES
+# define ADJ 1
+#else
+# define ADJ 0
+#endif
 
 void	dumpwin(
 	_ARX(WINDOW *,	w)
@@ -42,31 +51,32 @@ void	dumpwin(
 	if (fp) {
 		time_t	now = time((time_t *)0);
 
-		OUT "%s: %s", tag, ctime(&now));
-		OUT "window @ %p (LINES=%d, COLS=%d)\n", w, LINES, COLS);
+		OUT(fp, "%s: %s", tag, ctime(&now));
+		OUT(fp, "window @ %p (LINES=%d, COLS=%d)\n", w, LINES, COLS);
 
-		OUT "   _cury:%d, _curx:%d\n", w->_cury, w->_curx);
-		OUT "   _maxy:%d, _maxx:%d\n", w->_maxy, w->_maxx);
-		OUT "   _begy:%d, _begx:%d\n", w->_begy, w->_begx);
+		OUT(fp, "   _cury:%d, _curx:%d\n", w->_cury, w->_curx);
+		OUT(fp, "   _maxy:%d, _maxx:%d\n", w->_maxy, w->_maxx);
+		OUT(fp, "   _begy:%d, _begx:%d\n", w->_begy, w->_begx);
 
 #if !SYS5_CURSES
-		OUT "   _orig:    %p\n", w->_orig);
-		OUT "   _nextp:   %p\n", w->_nextp);
+		OUT(fp, "   _orig:    %p\n", w->_orig);
+		OUT(fp, "   _nextp:   %p\n", w->_nextp);
 #endif
-		OUT "   _flags:   %#x\n", w->_flags);
-		OUT "   _clear:   %#x\n", w->_clear);
-		OUT "   _leave:   %#x\n", w->_leave);
-		OUT "   _scroll:  %#x\n", w->_scroll);
+		OUT(fp, "   _flags:   %#x\n", w->_flags);
+		OUT(fp, "   _clear:   %#x\n", w->_clear);
+		OUT(fp, "   _leave:   %#x\n", w->_leave);
+		OUT(fp, "   _scroll:  %#x\n", w->_scroll);
 
-		OUT "   _y @ %p\n", w->_y);
-		for (j = 0; j < w->_maxy; j++) {
+		OUT(fp, "   _y @ %p\n", w->_y);
+		for (j = 0; j < w->_maxy + ADJ; j++) {
 			p = w->_y[j];
-			OUT "%8d) [%3d,%3d] %p: \"",
+			OUT(fp, "%8d) [%3d,%3d] %p: \"",
 				j, w->_firstch[j], w->_lastch[j], p);
-			if (p)
-				while ((k = *p++) != EOS)
-					dumpchr(fp,k);
-			OUT "\"\n");
+			if (p != 0) {
+				for (k = 0; k < w->_maxx + ADJ; k++)
+					dumpchr(fp, (int)(p[k]));
+			}
+			OUT(fp, "\"\n");
 			FFLUSH(fp);
 		}
 		FCLOSE(fp);
