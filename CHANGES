@@ -1,3 +1,18 @@
+1987-11-10  dickey@software.org
+
+	* src/string/strclean.c, src/unix/gid2s.c, src/unix/uid2s.c: New file.
+
+	* src/string/strclean.c: sccs2rcs keywords
+
+1987-11-10  ste_cm@software.org
+
+	* src/string/strclean.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+	* src/string/strclean.c: BASELINE Thu Apr  6 09:45:13 EDT 1989
+
+	* src/string/strclean.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
 1987-09-30  Thomas E. Dickey
 
 	* src/cm_funcs/sccslast.c:
