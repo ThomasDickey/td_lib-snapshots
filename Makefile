@@ -1,4 +1,4 @@
-# $Id: Makefile,v 11.4 1992/10/16 12:27:10 dickey Exp $
+# $Id: Makefile,v 11.6 1992/12/04 11:54:58 ste_cm Exp $
 # Top-level makefile for CM_TOOLS common library
 
 ####### (Development) ##########################################################
@@ -28,8 +28,12 @@ MFILES	=\
 	test/Makefile
 
 IT	=\
+	$I/acl.h\
 	$I/cmdch.h\
 	$I/common.h\
+	$I/cm_curses.h\
+	$I/cm_qsort.h\
+	$I/cm_scomp.h\
 	$I/deltree.h\
 	$I/dyn_string.h\
 	$I/ptypes.h\
@@ -47,6 +51,7 @@ all\
 clean\
 clobber\
 destroy\
+run_tests\
 sources\
 lincnt.out\
 lint.out::	$(MFILES)
@@ -59,6 +64,7 @@ lint.out::	$(MFILES)
 lintlib::	$(MFILES)
 	cd interface;	$(MAKE) $@
 
+all\
 sources::	$(SOURCES)
 
 clean\
@@ -67,9 +73,6 @@ clobber\
 destroy::			; rm -rf lib
 destroy::			; cd support; $(DESTROY)
 destroy::			; $(DESTROY)
-
-run_tests::
-	@echo '** no test suite available for this module'
 
 install::	all $(IT)
 deinstall::			; rm -f $(IT)
@@ -80,7 +83,11 @@ $(SOURCES):				; $(GET) $@
 lib:					; mkdir $@
 
 i=interface
+$I/acl.h:		$i/acl.h	; $(PUT)
 $I/cmdch.h:		$i/cmdch.h	; $(PUT)
+$I/cm_curses.h:		$i/cm_curses.h	; $(PUT)
+$I/cm_qsort.h:		$i/cm_qsort.h	; $(PUT)
+$I/cm_scomp.h:		$i/cm_scomp.h	; $(PUT)
 $I/common.h:		$i/common.h	; $(PUT)
 $I/deltree.h:		$i/deltree.h	; $(PUT)
 $I/dyn_string.h:	$i/dyn_string.h	; $(PUT)

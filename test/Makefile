@@ -1,4 +1,4 @@
-# $Id: Makefile,v 11.10 1992/11/24 10:31:02 dickey Exp $
+# $Id: Makefile,v 11.12 1992/12/04 12:17:01 ste_cm Exp $
 # make-file for CM_TOOLS common/test library
 
 ####### (Development) ##########################################################
@@ -180,7 +180,7 @@ ALL	= $(PROGS)
 
 ####### (Standard Productions) #################################################
 all:		$(SOURCES)	; @echo 'type "make run_tests"'
-clean:				; rm -f $(CLEAN)
+clean:				; rm -f $(CLEAN) *.tmp
 clobber:	clean		; rm -f $(ALL)
 destroy:			; $(DESTROY)
 sources:	$(SOURCES)

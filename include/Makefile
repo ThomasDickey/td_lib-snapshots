@@ -1,4 +1,4 @@
-# $Id: Makefile,v 11.3 1992/11/19 15:03:40 dickey Exp $
+# $Id: Makefile,v 11.4 1992/12/04 11:51:08 ste_cm Exp $
 # make-file for CM_TOOLS common interface directory
 
 TOP	= ../..
@@ -32,7 +32,9 @@ IT	= $L/$(LLIB).ln
 ALL	=
 
 ####### (Standard Productions) #################################################
-all:		$(SOURCES) $(ALL)
+all\
+run_tests\
+install:	$(SOURCES) $(ALL)
 clean:				; rm -f $(CLEAN) *.ln
 clobber:	clean		; rm -f $(ALL) $(IT)
 destroy:			; $(DESTROY)

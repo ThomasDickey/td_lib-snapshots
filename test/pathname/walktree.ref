@@ -2,7 +2,6 @@
 ** path = ../test
  	../test/
 ?	|-- Makefile
-?	|-- RCS/
 ?	|-- README
  	|-- abspath
 ?	|-- abspath.ref
@@ -157,4 +156,4 @@
  	|-- which
 ?	|-- which.ref
  	|-- which.sh
-** total= 98
+** total= 99

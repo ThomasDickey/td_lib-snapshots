@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: padedit.c,v 11.0 1992/04/09 07:32:10 ste_cm Rel $";
+static	char	Id[] = "$Id: padedit.c,v 11.1 1992/12/04 09:16:30 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: padedit.c,v 11.0 1992/04/09 07:32:10 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	14 Dec 1987
  * Modified:
+ *		04 Dec 1992, split 'editor' param in case it has options.
  *		09 Apr 1992, show filename in xterm-title.
  *		04 Oct 1991, conversion to ANSI
  *		12 Sep 1991, removed redundant def for 'errno' (VMS C 3.2)
@@ -190,6 +191,7 @@ int	padedit(
 
 		char	wd[MAXPATHLEN],
 			xt[MAXPATHLEN],
+			tmp[BUFSIZ],
 			the_title[BUFSIZ];
 
 		if (getwd(wd) == 0)
@@ -208,7 +210,7 @@ int	padedit(
 		argv[argc++] = "-title";
 		argv[argc++] = the_title;
 		argv[argc++] = "-e";
-		argv[argc++] = editor;
+		argc += makeargv(&argv[argc], SIZEOF(argv)-argc-2, tmp, editor);
 		argv[argc++] = name;
 		argv[argc]   = 0;
 

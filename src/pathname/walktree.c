@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: walktree.c,v 11.3 1992/11/19 09:44:04 dickey Exp $";
+static	char	Id[] = "$Id: walktree.c,v 11.4 1992/12/04 12:52:05 ste_cm Exp $";
 #endif
 
 /*
@@ -94,7 +94,7 @@ int	walktree(
 	char		old_wd[BUFSIZ];
 	char		new_wd[BUFSIZ];
 	DIR		*dp;
-	struct	direct	*de;
+	DIRENT		*de;
 
 	if (stat(name, sb_) >= 0) {
 		mode = (sb.st_mode & S_IFMT);
@@ -155,8 +155,13 @@ static
 display(path, name, sp, ok_acc, level)
 char	*path;
 char	*name;
-struct	stat	*sp;
+STAT	*sp;
 {
+	if (!strcmp(name, "RCS/"))
+		return -1;
+	if (!strcmp(name, "RCS")) /* filter this out to make tests regress */
+		return -1;
+
 	PRINTF("%c\t", (ok_acc < 0) ? '?' : ' ');
 	while (level-- > 0)
 		PRINTF("|--%c", (level > 0) ? '-' : ' ');
