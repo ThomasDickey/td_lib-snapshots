@@ -1,3 +1,9 @@
+1988-02-01  dickey@software.org
+
+	* src/cm_funcs/packdate.c: recompiled under sys5 environment.
+
+	* src/cm_funcs/packdate.c: don't add leapday til after February!
+
 1987-12-14  dickey@software.org
 
 	* src/curses/padedit.c: New file.
