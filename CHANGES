@@ -1,3 +1,31 @@
+1990-03-27  dickey@software.org
+
+	* include/td_lib.h, src/Makefile: added 'strwcmp.c' module
+
+1990-03-27  ste_cm@software.org
+
+	* src/Makefile: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/Makefile:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1990-03-27  dickey@software.org
+
+	* src/string/strwcmp.c: RCS_BASE
+
+1990-03-27  ste_cm@software.org
+
+	* src/string/strwcmp.c: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/string/strwcmp.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/string/strwcmp.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+	* src/string/strwcmp.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
 1990-03-23  ste_cm@software.org
 
 	* include/ptypes.h: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)

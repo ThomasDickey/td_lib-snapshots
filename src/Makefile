@@ -1,10 +1,19 @@
-# $Id: Makefile,v 5.3 1990/03/02 11:50:31 dickey Exp $
+# $Id: Makefile,v 7.0 1990/03/27 13:24:46 ste_cm Rel $
 # MAKE-file for miscellaneous library routines
 #
 # $Log: Makefile,v $
-# Revision 5.3  1990/03/02 11:50:31  dickey
-# separated CFLAGS, INCLUDES, DEFINES defs.
+# Revision 7.0  1990/03/27 13:24:46  ste_cm
+# BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
 #
+#	Revision 6.0  90/03/27  13:24:46  ste_cm
+#	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+#	
+#	Revision 5.4  90/03/27  13:24:46  dickey
+#	added 'strwcmp.c' module
+#	
+#	Revision 5.3  90/03/02  11:50:31  dickey
+#	separated CFLAGS, INCLUDES, DEFINES defs.
+#	
 #	Revision 5.2  89/12/08  08:39:04  dickey
 #	added suffix-driven rules for lint, test files
 #	
@@ -107,6 +116,7 @@ CSRC	=\
 	strtrim.c\
 	strucmp.c\
 	strucpy.c\
+	strwcmp.c\
 	s2gid.c\
 	s2uid.c\
 	track_wd.c\
@@ -201,6 +211,7 @@ OBJS	=\
 	strtrim.o\
 	strucmp.o\
 	strucpy.o\
+	strwcmp.o\
 	s2gid.o\
 	s2uid.o\
 	track_wd.o\

@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 5.1 1989/12/12 09:03:27 dickey Exp $ */
+/* $Id: td_lib.h,v 5.2 1990/03/27 13:27:11 dickey Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for CM_TOOLS COMMON
@@ -641,6 +641,15 @@
 			)
 			_DCL(char *,	a)
 			_DCL(char *,	b)
+			_NUL
+
+	/* strwcmp.c -------------------------------------------------- */
+		strwcmp(
+			_ARX(char *,	wild)
+			_AR1(char *,	name)
+			)
+			_DCL(char *,	wild)
+			_DCL(char *,	name)
 			_NUL
 
 	/* track_wd.c ------------------------------------------------- */

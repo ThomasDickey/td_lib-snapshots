@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19900323
+MANIFEST for td_lib, version t19900327
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 Makefile                        top-level makefile for TD_LIB
@@ -129,6 +129,7 @@ src/string/strclean.c           "clean" string, removes unnecessary blanks
 src/string/strtrim.c            trim trailing whitespace from a string
 src/string/strucmp.c            compare two strings ignoring case
 src/string/strucpy.c            copy string, uppercasing it
+src/string/strwcmp.c            wildcard string-comparator
 src/unix                        subdirectory
 src/unix/gid2s.c                convert group-id to string
 src/unix/s2gid.c                convert string to group-id
