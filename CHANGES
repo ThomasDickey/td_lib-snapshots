@@ -1,3 +1,13 @@
+1995-02-03  dickey@clark.net
+
+	* Makefile: added some stuff for distclean of autoconf 2.1
+
+	* configure.in:
+	remove all escapes in definitions (e.g., before quote and space)
+	moved OnHost substitution to config_h.in
+
+	* config_h.in: moved OnHost substitution here, from configure.in
+
 1995-02-02  dickey@clark.net
 
 	* configure.in:

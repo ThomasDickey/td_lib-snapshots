@@ -1,5 +1,7 @@
 /* 
- * $Id: config_h.in,v 12.1 1994/06/25 22:36:15 tom Exp $
+ * $Id: config_h.in,v 12.2 1995/02/03 11:42:22 tom Exp $
+ *
+ * on host: @OnHost@
  *
  * config_h.in is a template file used by configure to produce config.h.
  * config_h is then transformed (by config.status) into the header file 

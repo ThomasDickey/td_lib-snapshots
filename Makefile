@@ -1,4 +1,4 @@
-# $Id: Makefile,v 12.11 1995/01/29 22:12:46 tom Exp $
+# $Id: Makefile,v 12.12 1995/02/03 11:48:37 tom Exp $
 # Top-level makefile for TD_LIB common library
 
 ####### (Development) ##########################################################
@@ -22,7 +22,7 @@ I_CFG	= $i/config.h
 MDEFN	= support/td_lib.mk
 
 CLEAN	= *.bak *.log *.out *.tst .nfs* core
-PURE	= stamp-* *.status $(I_CFG) $(MDEFN)
+PURE	= stamp-* config_h *.cache *.status $(I_CFG) $(MDEFN)
 DESTROY	=$(SHELL) -c 'for i in *;do case $$i in RCS);; *) $(RM) $$i;;esac;done;exit 0'
 
 ####### (Standard Lists) #######################################################
