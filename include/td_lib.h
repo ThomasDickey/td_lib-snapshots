@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 4.0 1989/08/23 14:09:06 ste_cm Rel $ */
+/* $Id: td_lib.h,v 4.1 1989/08/25 08:05:27 dickey Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for CM_TOOLS COMMON
@@ -756,4 +756,13 @@ int	win2file(
 			_DCL(WINDOW *,	win)
 			_DCL(char *,	file)
 			_RET
+
+	/* wrepaint.c ------------------------------------------------- */
+	wrepaint(
+			_ARX(WINDOW *,	win)
+			_AR1(int,	row)
+			)
+			_DCL(WINDOW *,	win)
+			_DCL(int,	row)
+			_NUL
 #endif	CUR_PTYPES
