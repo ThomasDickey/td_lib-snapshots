@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)uid2s.c	1.3 88/07/27 07:26:14";
+static	char	sccs_id[] = "@(#)uid2s.c	1.5 88/08/09 11:59:47";
 #endif	lint
 
 /*
@@ -14,6 +14,7 @@ static	char	sccs_id[] = "@(#)uid2s.c	1.3 88/07/27 07:26:14";
  *		defining the name.
  */
 
+#include	"ptypes.h"
 #include	<stdio.h>
 #include	<pwd.h>
 extern	char	*doalloc(),
@@ -27,12 +28,8 @@ typedef	struct {
 	} TABLE;
 
 #define	Q(j)	(q+j)->
-
-#ifdef	lint
-#define	DOALLOC(c,p,n)	(c *)0
-#else	lint
-#define	DOALLOC(c,p,n)	(c *)doalloc((char *)p, (n)*sizeof(c))
-#endif	lint
+#define	def_doalloc	def_UID_TABLE	/* lint (gould) */
+	def_DOALLOC(TABLE)
 
 char *
 uid2s(uid)
@@ -46,7 +43,7 @@ static	unsigned qmax = 0;
 	if ((qmax == 0) && setpwent() >= 0) {
 		while (p = getpwent()) {
 		register char *s = p->pw_name;
-			q = DOALLOC(TABLE,q, qmax+1);
+			q = DOALLOC(q, TABLE, qmax+1);
 			Q(qmax)t_uid  = p->pw_uid;
 			Q(qmax)t_name = stralloc(s);
 			qmax++;

@@ -1,4 +1,4 @@
-/* @(#)ptypes.h	1.2 88/05/19 10:16:48 */
+/* @(#)ptypes.h	1.3 88/08/09 09:51:06 */
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -17,3 +17,31 @@ extern	void	exit();
 extern		exit();
 #endif	SYSTEM5
 #endif	SYS3_LLIB
+
+/* miscellaneous useful definitions for linting */
+#ifndef	TRUE
+#define	TRUE	(1)
+#define	FALSE	(0)
+#endif	TRUE
+
+#define	EOS	'\0'
+
+#define	PRINTF	(void)printf
+#define	FORMAT	(void)sprintf
+
+#ifdef	lint
+#define	def_DOALLOC(t)	/*ARGSUSED*/ static t *def_doalloc(p,n)\
+						t *p; unsigned n;\
+						{return(0);}
+#define	def_ALLOC(t)	/*ARGSUSED*/ static t *def_alloc(n)\
+						unsigned n;\
+						{return(0);}
+#define	DOALLOC(p,t,n)	def_doalloc(p,n)
+#define	ALLOC(t,n)	def_alloc(n)
+#else	lint
+extern	char	*doalloc();
+#define	def_DOALLOC(t)
+#define	def_ALLOC(t)
+#define	DOALLOC(p,t,n)	(t *)doalloc((char *)p,sizeof(t)*(n))
+#define	ALLOC(t,n)	DOALLOC(0,t,n)
+#endif	lint

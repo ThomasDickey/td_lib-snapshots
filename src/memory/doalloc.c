@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)doalloc.c	1.6 88/05/17 09:57:18";
+static	char	sccs_id[] = "@(#)doalloc.c	1.7 88/08/09 07:45:02";
 #endif	lint
 
 /*
@@ -75,7 +75,7 @@ char	*oldp;
 		return;
 #endif	DEBUG
 	}
-	printf("free(%#x) not found\r\n", oldp);
+	(void)printf("free(%#x) not found\r\n", oldp);
 #if	defined(apollo) && defined(DEBUG)
 	/* force a walkback */
 	{

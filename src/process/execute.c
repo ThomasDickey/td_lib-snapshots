@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)execute.c	1.3 88/07/27 10:43:35";
+static	char	sccs_id[] = "@(#)execute.c	1.5 88/08/09 10:11:28";
 #endif	lint
 
 /*
@@ -27,16 +27,13 @@ extern	char	*strcpy();
 extern	char	**environ;
 extern	int	errno;
 
-#ifdef	lint
-#define	DOALLOC(c,p,n)	(c *)0
-#else	lint
-#define	DOALLOC(c,p,n)	(c *)doalloc(p, n * sizeof(c))
-#endif	lint
-
 #ifndef	SYSTEM5
+#include	<sys/wait.h>
 #define	fork	vfork
 #define	execvp	execve
 #endif	SYSTEM5
+
+	def_DOALLOC(char *)
 
 execute(verb, args)
 char	*verb;
@@ -51,8 +48,15 @@ char	cmds[BUFSIZ],
 #endif	SYSTEM5
 	*s	= strcat(strcat(strcpy(cmds, verb), " "), args);
 int	count	= 3,		/* minimum needed for 'bldarg()' */
-	pid,
-	status;
+	pid;
+
+#ifdef	SYSTEM5
+int	status;
+#define	W_RETCODE	(status >> 8) & 0xff)
+#else	SYSTEM5
+union	wait	status;
+#define	W_RETCODE	status.w_retcode
+#endif	SYSTEM5
 
 	while (*s) {
 		if (isspace(*s)) {
@@ -62,7 +66,7 @@ int	count	= 3,		/* minimum needed for 'bldarg()' */
 		} else
 			s++;
 	}
-	myargv = DOALLOC(char *, myargv, count);
+	myargv = DOALLOC(myargv, char *, (unsigned)count);
 	bldarg(count, myargv, cmds);
 
 #ifdef	SYSTEM5
@@ -81,7 +85,7 @@ int	count	= 3,		/* minimum needed for 'bldarg()' */
 
 	if ((pid = fork()) > 0) {
 		while (wait(&status) >= 0);
-		if (errno = ((status >> 8) & 0xff))
+		if (errno = W_RETCODE)
 			return (-1);
 		return (0);
 	} else if (pid == 0) {

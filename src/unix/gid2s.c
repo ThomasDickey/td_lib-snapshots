@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)gid2s.c	1.3 88/07/28 07:22:37";
+static	char	sccs_id[] = "@(#)gid2s.c	1.5 88/08/09 11:58:45";
 #endif	lint
 
 /*
@@ -14,10 +14,10 @@ static	char	sccs_id[] = "@(#)gid2s.c	1.3 88/07/28 07:22:37";
  *		defining the name.
  */
 
+#include	"ptypes.h"
 #include	<stdio.h>
 #include	<grp.h>
-extern	char	*doalloc(),
-		*ltostr(),
+extern	char	*ltostr(),
 		*stralloc(),
 		*strcpy();
 
@@ -27,12 +27,8 @@ typedef	struct {
 	} TABLE;
 
 #define	Q(j)	(q+j)->
-
-#ifdef	lint
-#define	DOALLOC(c,p,n)	(c *)0
-#else	lint
-#define	DOALLOC(c,p,n)	(c *)doalloc((char *)p, (n)*sizeof(c))
-#endif	lint
+#define	def_doalloc	def_GID_TABLE	/* lint (gould) */
+	def_DOALLOC(TABLE)
 
 char *
 gid2s(gid)
@@ -46,7 +42,7 @@ static	unsigned qmax = 0;
 	if ((qmax == 0) && setgrent() >= 0) {
 		while (p = getgrent()) {
 		register char *s = p->gr_name;
-			q = DOALLOC(TABLE,q,qmax+1);
+			q = DOALLOC(q,TABLE,qmax+1);
 			Q(qmax)t_gid  = p->gr_gid;
 			Q(qmax)t_name = stralloc(s);
 			qmax++;

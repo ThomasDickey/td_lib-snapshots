@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)newzone.c	1.4 88/07/28 10:06:44";
+static	char	sccs_id[] = "@(#)newzone.c	1.6 88/08/09 09:33:26";
 #endif	lint
 
 /*
@@ -39,10 +39,6 @@ extern	char	*ctime();
 extern	char	*strcat();
 extern	char	*strcpy();
 
-#define	TRUE	(1)
-#define	FALSE	(0)
-#define	FORMAT	(void)sprintf
-
 #define	MINUTE	60
 #define	HOUR	(60 * MINUTE)
 #define	DAY	(24 * HOUR)
@@ -57,6 +53,13 @@ static	time_t	now;
 
 static	char	old_TZ[NAMELEN];
 int	localzone;		/* public copy of minutes-west */
+
+#if	!defined(SYSTEM5) && !defined(apollo)
+typedef	char	**VEC;
+extern	VEC	environ;
+extern	char	*stralloc();
+	def_ALLOC(char *)
+#endif	SYSTEM5
 
 /************************************************************************
  *	local procedures						*
@@ -110,10 +113,7 @@ char	*name;
 #if	defined(SYSTEM5) || defined(apollo)
 	putenv(name);
 #else	SYSTEM5
-typedef	char	**VEC;
-extern	VEC	environ;
-extern	char	*doalloc(), *stralloc();
-register int	j, k;
+register unsigned j, k;
 register char	*s;
 int	len	= 3;		/* "TZ=" length */
 int	found	= FALSE;	/* set if we find variable */
@@ -129,7 +129,7 @@ int	match	= FALSE;	/* true iff we need no change */
 	}
 	if (!match) {
 		if (!found) {	/* allocate space for this in environ */
-		VEC	newp = (VEC)doalloc(0, sizeof(*environ) * (j + 2));
+		VEC	newp = ALLOC(char *,j + 2);
 			for (k = 0; k < j; k++)
 				newp[k] = environ[k];
 			newp[j+1] = 0;
