@@ -1,3 +1,8 @@
+1992-11-23  dickey@software.org
+
+	* src/process/for_user.c, src/process/for_admn.c:
+	flush outputs if we do a fork
+
 1992-11-20  dickey@software.org
 
 	* src/pathname/which.c: exit-code
