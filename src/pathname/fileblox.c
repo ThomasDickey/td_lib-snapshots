@@ -15,10 +15,10 @@
 #define ERR_PTYPES
 #include <ptypes.h>
 
-MODULE_ID("$Id: fileblox.c,v 12.7 2001/05/15 00:59:22 tom Exp $")
+MODULE_ID("$Id: fileblox.c,v 12.8 2002/07/05 11:18:55 tom Exp $")
 
 #ifdef SYS_UNIX
-#if !STAT_HAS_ST_BLOCKS
+#if !defined(STAT_HAS_ST_BLOCKS)
 
 #ifdef __hpux	/* incompatible def */
 #undef  NINDIR

@@ -1,4 +1,4 @@
-/* $Id: td_ext.h,v 12.16 2002/04/21 15:20:37 tom Exp $ */
+/* $Id: td_ext.h,v 12.17 2002/07/05 11:15:57 tom Exp $ */
 
 #ifndef	TD_EXT_H
 #define	TD_EXT_H
@@ -79,7 +79,7 @@ extern "C" {
  * Useful external-definitions                                                *
  ******************************************************************************/
 
-#if	TIMEZONE_DECLARED
+#if	defined(TIMEZONE_DECLARED)
 extern	long	timezone;
 #endif
 
@@ -88,10 +88,10 @@ extern	long	timezone;
  ******************************************************************************/
 #ifdef	CHR_PTYPES
 
-#if HAVE_TOLOWER && NEED_TOLOWER
+#if defined(HAVE_TOLOWER) && defined(NEED_TOLOWER)
 extern	int	tolower   ARGS((int c));
 #endif /* HAVE_TOLOWER */
-#if HAVE_TOUPPER && NEED_TOUPPER
+#if defined(HAVE_TOUPPER) && defined(NEED_TOUPPER)
 extern	int	toupper   ARGS((int c));
 #endif /* HAVE_TOUPPER */
 
@@ -102,22 +102,22 @@ extern	int	toupper   ARGS((int c));
  ******************************************************************************/
 #ifdef	DIR_PTYPES
 
-#if HAVE_OPENDIR && NEED_OPENDIR
+#if defined(HAVE_OPENDIR) && defined(NEED_OPENDIR)
 extern	DIR	*opendir  ARGS((const char *name));
 #endif /* HAVE_OPENDIR */
-#if HAVE_CLOSEDIR && NEED_CLOSEDIR
+#if defined(HAVE_CLOSEDIR) && defined(NEED_CLOSEDIR)
 extern	int	closedir  ARGS((DIR * dirp));
 #endif /* HAVE_CLOSEDIR */
-#if HAVE_READDIR && NEED_READDIR
+#if defined(HAVE_READDIR) && defined(NEED_READDIR)
 extern	DirentT *readdir  ARGS((DIR * dirp));
 #endif /* HAVE_READDIR */
-#if HAVE_REWINDDIR && NEED_REWINDDIR
+#if defined(HAVE_REWINDDIR) && defined(NEED_REWINDDIR)
 extern	void	rewinddir ARGS((DIR * dirp));
 #endif /* HAVE_REWINDDIR */
-#if HAVE_SEEKDIR && NEED_SEEKDIR
+#if defined(HAVE_SEEKDIR) && defined(NEED_SEEKDIR)
 extern	void	seekdir   ARGS((DIR * dirp, off_t pos));
 #endif /* HAVE_SEEKDIR */
-#if HAVE_TELLDIR && NEED_TELLDIR
+#if defined(HAVE_TELLDIR) && defined(NEED_TELLDIR)
 extern	off_t	telldir   ARGS((DIR * dirp));
 #endif /* HAVE_TELLDIR */
 
@@ -126,7 +126,7 @@ extern	off_t	telldir   ARGS((DIR * dirp));
 /******************************************************************************
  * <errno.h> definitions                                                      *
  ******************************************************************************/
-#if	HAVE_ERRNO && NEED_ERRNO
+#if defined(HAVE_ERRNO) && defined(NEED_ERRNO)
 extern	int	errno;
 #endif
 
@@ -135,10 +135,10 @@ extern	int	errno;
  ******************************************************************************/
 #ifdef	OPN_PTYPES
 
-#if HAVE_CREAT && NEED_CREAT
+#if defined(HAVE_CREAT) && defined(NEED_CREAT)
 extern	int	creat	 ARGS((const char *f, mode_t m));
 #endif /* HAVE_CREAT */
-#if HAVE_OPEN && NEED_OPEN
+#if defined(HAVE_OPEN) && defined(NEED_OPEN)
 extern	int	open	 ARGS((const char *f, int m, ...));
 #endif /* HAVE_OPEN */
 
@@ -149,27 +149,27 @@ extern	int	open	 ARGS((const char *f, int m, ...));
  ******************************************************************************/
 #ifdef	GRP_PTYPES
 
-#if HAVE_GRP_H
+#if defined(HAVE_GRP_H)
 
-#if HAVE_GETGRNAM && NEED_GETGRNAM
+#if defined(HAVE_GETGRNAM) && defined(NEED_GETGRNAM)
 extern	struct group * getgrnam ARGS((const char *name));
 #endif /* HAVE_GETGRNAM */
-#if HAVE_GETGRGID && NEED_GETGRGID
+#if defined(HAVE_GETGRGID) && defined(NEED_GETGRGID)
 extern	struct group * getgrgid ARGS((gid_t gid));
 #endif /* HAVE_GETGRGID */
-#if HAVE_GETGRENT && NEED_GETGRENT
+#if defined(HAVE_GETGRENT) && defined(NEED_GETGRENT)
 extern	struct group * getgrent ARGS((void));
 #endif /* HAVE_GETGRENT */
-#if HAVE_SETGRENT && NEED_SETGRENT
+#if defined(HAVE_SETGRENT) && defined(NEED_SETGRENT)
 extern	V_OR_I         setgrent ARGS((void));
 #endif /* HAVE_SETGRENT */
-#if HAVE_ENDGRENT && NEED_ENDGRENT
+#if defined(HAVE_ENDGRENT) && defined(NEED_ENDGRENT)
 extern	V_OR_I         endgrent ARGS((void));
 #endif /* HAVE_ENDGRENT */
 
 #endif	/* HAVE_GRP_H */
 
-#if HAVE_GETGROUPS && NEED_GETGROUPS
+#if defined(HAVE_GETGROUPS) && defined(NEED_GETGROUPS)
 extern	int getgroups ARGS((int size, GETGROUPS_T *list));
 #endif /* HAVE_GETGROUPS */
 
@@ -180,21 +180,21 @@ extern	int getgroups ARGS((int size, GETGROUPS_T *list));
  ******************************************************************************/
 #ifdef	PWD_PTYPES
 
-#if HAVE_PWD_H
+#if defined(HAVE_PWD_H)
 
-#if HAVE_GETPWNAM && NEED_GETPWNAM
+#if defined(HAVE_GETPWNAM) && defined(NEED_GETPWNAM)
 extern	struct passwd *	getpwnam ARGS((const char * name));
 #endif /* HAVE_GETPWNAM */
-#if HAVE_GETPWUID && NEED_GETPWUID
+#if defined(HAVE_GETPWUID) && defined(NEED_GETPWUID)
 extern	struct passwd *	getpwuid ARGS((uid_t uid));
 #endif /* HAVE_GETPWUID */
-#if HAVE_GETPWENT && NEED_GETPWENT
+#if defined(HAVE_GETPWENT) && defined(NEED_GETPWENT)
 extern	struct passwd *	getpwent ARGS((void));
 #endif /* HAVE_GETPWENT */
-#if HAVE_SETPWENT && NEED_SETPWENT
+#if defined(HAVE_SETPWENT) && defined(NEED_SETPWENT)
 extern	V_OR_I		setpwent ARGS((void));
 #endif /* HAVE_SETPWENT */
-#if HAVE_ENDPWENT && NEED_ENDPWENT
+#if defined(HAVE_ENDPWENT) && defined(NEED_ENDPWENT)
 extern	V_OR_I		endpwent ARGS((void));
 #endif /* HAVE_ENDPWENT */
 
@@ -206,61 +206,61 @@ extern	V_OR_I		endpwent ARGS((void));
  * <stdio.h> definitions                                                      *
  ******************************************************************************/
 
-#if HAVE_FCLOSE && NEED_FCLOSE
+#if defined(HAVE_FCLOSE) && defined(NEED_FCLOSE)
 extern	int	fclose   ARGS((FILE *s));
 #endif /* HAVE_FCLOSE */
-#if HAVE_FFLUSH && NEED_FFLUSH
+#if defined(HAVE_FFLUSH) && defined(NEED_FFLUSH)
 extern	int	fflush   ARGS((FILE *s));
 #endif /* HAVE_FFLUSH */
-#if HAVE_FGETC && NEED_FGETC
+#if defined(HAVE_FGETC) && defined(NEED_FGETC)
 extern	int	fgetc    ARGS((FILE *s));
 #endif /* HAVE_FGETC */
-#if HAVE_FPRINTF && NEED_FPRINTF
+#if defined(HAVE_FPRINTF) && defined(NEED_FPRINTF)
 extern	int	fprintf  ARGS((FILE *s, const char *f, ...));
 #endif /* HAVE_FPRINTF */
-#if HAVE_FPUTC && NEED_FPUTC
+#if defined(HAVE_FPUTC) && defined(NEED_FPUTC)
 extern	int	fputc    ARGS((int c, FILE *s));
 #endif /* HAVE_FPUTC */
-#if HAVE_FPUTS && NEED_FPUTS
+#if defined(HAVE_FPUTS) && defined(NEED_FPUTS)
 extern	int	fputs    ARGS((const char *b, FILE *s));
 #endif /* HAVE_FPUTS */
-#if HAVE_FREAD && NEED_FREAD
+#if defined(HAVE_FREAD) && defined(NEED_FREAD)
 extern	size_t	fread    ARGS((void *b, size_t sz, size_t n, FILE *s));
 #endif /* HAVE_FREAD */
-#if HAVE_FSCANF && NEED_FSCANF
+#if defined(HAVE_FSCANF) && defined(NEED_FSCANF)
 extern	int	fscanf   ARGS((FILE *s, const char *f, ...));
 #endif /* HAVE_FSCANF */
-#if HAVE_FSEEK && NEED_FSEEK
+#if defined(HAVE_FSEEK) && defined(NEED_FSEEK)
 extern	int	fseek    ARGS((FILE *s, long, int));
 #endif /* HAVE_FSEEK */
-#if HAVE_FWRITE && NEED_FWRITE
+#if defined(HAVE_FWRITE) && defined(NEED_FWRITE)
 extern	size_t	fwrite   ARGS((const void *b, size_t sz, size_t n, FILE *s));
 #endif /* HAVE_FWRITE */
-#if HAVE_PERROR && NEED_PERROR
+#if defined(HAVE_PERROR) && defined(NEED_PERROR)
 extern	V_OR_I2	perror   ARGS((const char *s));
 #endif /* HAVE_PERROR */
-#if HAVE_PRINTF && NEED_PRINTF
+#if defined(HAVE_PRINTF) && defined(NEED_PRINTF)
 extern	int	printf   ARGS((const char *f, ...));
 #endif /* HAVE_PRINTF */
-#if HAVE_PUTS && NEED_PUTS
+#if defined(HAVE_PUTS) && defined(NEED_PUTS)
 extern	int	puts     ARGS((const char *s));
 #endif /* HAVE_PUTS */
-#if HAVE_RENAME && NEED_RENAME
+#if defined(HAVE_RENAME) && defined(NEED_RENAME)
 extern	int	rename   ARGS((const char *s, const char *d));
 #endif /* HAVE_RENAME */
-#if HAVE_REWIND && NEED_REWIND
+#if defined(HAVE_REWIND) && defined(NEED_REWIND)
 extern	V_OR_I	rewind   ARGS((FILE *s));
 #endif /* HAVE_REWIND */
-#if HAVE_SETBUF && NEED_SETBUF
+#if defined(HAVE_SETBUF) && defined(NEED_SETBUF)
 extern	void	setbuf   ARGS((FILE *s, char *b));
 #endif /* HAVE_SETBUF */
-#if HAVE_SPRINTF && NEED_SPRINTF
+#if defined(HAVE_SPRINTF) && defined(NEED_SPRINTF)
 extern	int	sprintf  ARGS((char *b, const char *f, ...));
 #endif /* HAVE_SPRINTF */
-#if HAVE_SSCANF && NEED_SSCANF
+#if defined(HAVE_SSCANF) && defined(NEED_SSCANF)
 extern	int	sscanf	 ARGS((const char *b, const char *s, ...));
 #endif /* HAVE_SSCANF */
-#if HAVE_UNGETC && NEED_UNGETC
+#if defined(HAVE_UNGETC) && defined(NEED_UNGETC)
 extern	int	ungetc	 ARGS((int, FILE *));
 #endif /* HAVE_UNGETC */
 
@@ -268,28 +268,28 @@ extern	int	ungetc	 ARGS((int, FILE *));
  * <stdlib.h> definitions                                                     *
  ******************************************************************************/
 
-#if HAVE_CALLOC && NEED_CALLOC
+#if defined(HAVE_CALLOC) && defined(NEED_CALLOC)
 extern	V_OR_P	calloc  ARGS((size_t nel, size_t size));
 #endif /* HAVE_CALLOC */
-#if HAVE_EXIT && NEED_EXIT
+#if defined(HAVE_EXIT) && defined(NEED_EXIT)
 extern	V_OR_I2	exit    ARGS((int code));
 #endif /* HAVE_EXIT */
-#if HAVE_FREE && NEED_FREE
+#if defined(HAVE_FREE) && defined(NEED_FREE)
 extern	V_OR_I	free    ARGS((void *s));
 #endif /* HAVE_FREE */
-#if HAVE_GETENV && NEED_GETENV
+#if defined(HAVE_GETENV) && defined(NEED_GETENV)
 extern	char *	getenv  ARGS((const char *s));
 #endif /* HAVE_GETENV */
-#if HAVE_MALLOC && NEED_MALLOC
+#if defined(HAVE_MALLOC) && defined(NEED_MALLOC)
 extern	V_OR_P	malloc  ARGS((size_t size));
 #endif /* HAVE_MALLOC */
-#if HAVE_REALLOC && NEED_REALLOC
+#if defined(HAVE_REALLOC) && defined(NEED_REALLOC)
 extern	V_OR_P	realloc ARGS((V_OR_P ptr, size_t size));
 #endif /* HAVE_REALLOC */
-#if HAVE_STRTOL && NEED_STRTOL
+#if defined(HAVE_STRTOL) && defined(NEED_STRTOL)
 extern	long	strtol  ARGS((const char *s, char **d, int base));
 #endif /* HAVE_STRTOL */
-#if HAVE_SYSTEM && NEED_SYSTEM
+#if defined(HAVE_SYSTEM) && defined(NEED_SYSTEM)
 extern	int	system  ARGS((const char *s));
 #endif /* HAVE_SYSTEM */
 
@@ -298,16 +298,16 @@ extern	int	system  ARGS((const char *s));
  ******************************************************************************/
 #ifdef	STR_PTYPES
 
-#if HAVE_STRCHR && NEED_STRCHR
+#if defined(HAVE_STRCHR) && defined(NEED_STRCHR)
 extern	char *	strchr	ARGS((const char * s, int c));
 #endif /* HAVE_STRCHR */
-#if HAVE_STRERROR && NEED_STRERROR
+#if defined(HAVE_STRERROR) && defined(NEED_STRERROR)
 extern	char *	strerror ARGS((int errnum));
 #endif /* HAVE_STRERROR */
-#if HAVE_STRRCHR && NEED_STRRCHR
+#if defined(HAVE_STRRCHR) && defined(NEED_STRRCHR)
 extern	char *	strrchr	ARGS((const char * s, int c));
 #endif /* HAVE_STRRCHR */
-#if HAVE_STRTOK && NEED_STRTOK
+#if defined(HAVE_STRTOK) && defined(NEED_STRTOK)
 extern	char *	strtok	ARGS((char * s, const char * t));
 #endif /* HAVE_STRTOK */
 
@@ -318,7 +318,7 @@ extern	char *	strtok	ARGS((char * s, const char * t));
  ******************************************************************************/
 #ifdef	WAI_PTYPES
 
-#if HAVE_WAIT && NEED_WAIT
+#if defined(HAVE_WAIT) && defined(NEED_WAIT)
 extern	pid_t	wait    ARGS((WAIT_ARG_TYPE *p));
 #endif /* HAVE_WAIT */
 
@@ -329,10 +329,10 @@ extern	pid_t	wait    ARGS((WAIT_ARG_TYPE *p));
  ******************************************************************************/
 #ifdef	TIM_PTYPES
 
-#if HAVE_MKTIME && NEED_MKTIME
+#if defined(HAVE_MKTIME) && defined(NEED_MKTIME)
 extern	time_t	mktime  ARGS((struct tm *t));
 #endif /* HAVE_MKTEMP */
-#if HAVE_TIME && NEED_TIME
+#if defined(HAVE_TIME) && defined(NEED_TIME)
 extern	time_t	time    ARGS((time_t *t));
 #endif /* HAVE_TIME */
 
@@ -342,28 +342,28 @@ extern	time_t	time    ARGS((time_t *t));
  * <unistd.h> definitions                                                     *
  ******************************************************************************/
 
-#if HAVE__EXIT && NEED__EXIT
+#if defined(HAVE__EXIT) && defined(NEED__EXIT)
 extern	V_OR_I	_exit   ARGS((int code));
 #endif /* HAVE__EXIT */
-#if HAVE_FORK && NEED_FORK
+#if defined(HAVE_FORK) && defined(NEED_FORK)
 extern	int	fork	ARGS((void));
 #endif /* HAVE_FORK */
-#if HAVE_GETCWD && NEED_GETCWD
+#if defined(HAVE_GETCWD) && defined(NEED_GETCWD)
 extern	char	*getcwd ARGS((char *p, size_t n));
 #endif /* HAVE_GETCWD */
-#if HAVE_GETEGID && NEED_GETEGID
+#if defined(HAVE_GETEGID) && defined(NEED_GETEGID)
 extern	gid_t	getegid ARGS((void));
 #endif /* HAVE_GETEGID */
-#if HAVE_GETEUID && NEED_GETEUID
+#if defined(HAVE_GETEUID) && defined(NEED_GETEUID)
 extern	uid_t	geteuid ARGS((void));
 #endif /* HAVE_GETEUID */
-#if HAVE_GETGID && NEED_GETGID
+#if defined(HAVE_GETGID) && defined(NEED_GETGID)
 extern	gid_t	getgid  ARGS((void));
 #endif /* HAVE_GETGID */
-#if HAVE_GETUID && NEED_GETUID
+#if defined(HAVE_GETUID) && defined(NEED_GETUID)
 extern	uid_t	getuid  ARGS((void));
 #endif /* HAVE_GETUID */
-#if HAVE_REALPATH && NEED_REALPATH
+#if defined(HAVE_REALPATH) && defined(NEED_REALPATH)
 extern	char *	realpath  ARGS((char *src, char *dst));
 #endif /* HAVE_REALPATH */
 
@@ -373,78 +373,80 @@ extern	char *	realpath  ARGS((char *src, char *dst));
  *++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*
  ******************************************************************************/
 
-#if HAVE__FILBUF && NEED__FILBUF
+#if defined(HAVE__FILBUF) && defined(NEED__FILBUF)
 extern	int	_filbuf	 ARGS((FILE *s));
 #endif /* HAVE__FILBUF */
-#if HAVE__FLSBUF && NEED__FLSBUF
+#if defined(HAVE__FLSBUF) && defined(NEED__FLSBUF)
 extern	int	_flsbuf	 ARGS((int n, FILE *s));
 #endif /* HAVE__FLSBUF */
 
-#if HAVE_BZERO && NEED_BZERO
+#if defined(HAVE_BZERO) && defined(NEED_BZERO)
 extern	void	bzero	 ARGS((V_OR_P p, int n));
 #endif /* HAVE_BZERO */
 
-#if HAVE_GETOPT && NEED_GETOPT
+#if defined(HAVE_GETOPT) && defined(NEED_GETOPT)
 extern	int	getopt   ARGS((int argc, char * const *argv, const char *opts));
 #endif /* HAVE_GETOPT */
 extern	char *	optarg;
 extern	int	optind;
 
-#if HAVE_GETWD /*&& NEED_GETWD*/
+#if defined(HAVE_GETWD) /*&& NEED_GETWD*/
+#if defined(HAVE_GETWD) && defined(NEED_GETWD)
 extern	char *	getwd    ARGS((char *p));
 #endif /* HAVE_GETWD */
+#endif /* HAVE_GETWD */
 #ifdef	TIM_PTYPES
-#if HAVE_GETTIMEOFDAY && NEED_GETTIMEOFDAY
+#if defined(HAVE_GETTIMEOFDAY) && defined(NEED_GETTIMEOFDAY)
 extern	int	gettimeofday ARGS((struct timeval *tv, struct timezone *tz));
 #endif /* HAVE_GETTIMEOFDAY */
 #endif
-#if HAVE_IOCTL && NEED_IOCTL
+#if defined(HAVE_IOCTL) && defined(NEED_IOCTL)
 extern	int	ioctl	 ARGS((int f, int m, ...));
 #endif /* HAVE_IOCTL */
-#if HAVE_LSTAT && NEED_LSTAT
+#if defined(HAVE_LSTAT) && defined(NEED_LSTAT)
 extern	int	lstat	 ARGS((const char *f, Stat_t *s));
 #endif /* HAVE_LSTAT */
-#if HAVE_MEMMOVE && NEED_MEMMOVE
+#if defined(HAVE_MEMMOVE) && defined(NEED_MEMMOVE)
 extern	void *	memmove  ARGS((void *dest, const void *src, size_t n));
 #endif /* HAVE_MEMMOVE */
-#if HAVE_MKSTEMP && NEED_MKSTEMP
+#if defined(HAVE_MKSTEMP) && defined(NEED_MKSTEMP)
 extern	int	mkstemp  ARGS((char *s));
 #endif /* HAVE_MKSTEMP */
-#if HAVE_MKTEMP && NEED_MKTEMP
+#if defined(HAVE_MKTEMP) && defined(NEED_MKTEMP)
 extern	char *	mktemp   ARGS((char *s));
 #endif /* HAVE_MKTEMP */
-#if HAVE_PCLOSE && NEED_PCLOSE
+#if defined(HAVE_PCLOSE) && defined(NEED_PCLOSE)
 extern	int	pclose	 ARGS((FILE *s));
 #endif /* HAVE_PCLOSE */
-#if HAVE_POPEN && NEED_POPEN
+#if defined(HAVE_POPEN) && defined(NEED_POPEN)
 extern	FILE	*popen   ARGS((const char *name, const char *mode));
 #endif /* HAVE_POPEN */
-#if HAVE_PUTENV && NEED_PUTENV
+#if defined(HAVE_PUTENV) && defined(NEED_PUTENV)
 extern	int	putenv	 ARGS((const char *s));
 #endif /* HAVE_PUTENV */
-#if HAVE_READLINK && NEED_READLINK
+#if defined(HAVE_READLINK) && defined(NEED_READLINK)
 extern	int	readlink ARGS((const char *f, char *b, size_t n));
 #endif /* HAVE_READLINK */
-#if HAVE_SETEGID && NEED_SETEGID
+#if defined(HAVE_SETEGID) && defined(NEED_SETEGID)
 extern	int	setegid	 ARGS((gid_t g));
 #endif /* HAVE_SETEGID */
-#if HAVE_SETLINEBUF && NEED_SETLINEBUF
+#if defined(HAVE_SETLINEBUF) && defined(NEED_SETLINEBUF)
 extern	void	setlinebuf ARGS((FILE *s));
 #endif /* HAVE_SETLINEBUF */
-#if HAVE_SETRGID && NEED_SETRGID
+#if defined(HAVE_SETRGID) && defined(NEED_SETRGID)
 extern	int	setrgid	 ARGS((uid_t u));
 #endif /* HAVE_SETRGID */
-#if HAVE_SETRUID && NEED_SETRUID
+#if defined(HAVE_SETRUID) && defined(NEED_SETRUID)
 extern	int	setruid	 ARGS((uid_t u));
 #endif /* HAVE_SETRUID */
-#if HAVE_SYMLINK && NEED_SYMLINK
+#if defined(HAVE_SYMLINK) && defined(NEED_SYMLINK)
 extern	int	symlink	 ARGS((const char *s, const char *d));
 #endif /* HAVE_SYMLINK */
-#if HAVE_VFORK && NEED_VFORK
+#if defined(HAVE_VFORK) && defined(NEED_VFORK)
 extern	int	vfork	 ARGS((void));
 #endif /* HAVE_VFORK */
 
-#if HAVE_GETCWD		/* prefer Posix functions */
+#if defined(HAVE_GETCWD)	/* prefer Posix functions */
 #define	getwd(p)	getcwd(p,MAXPATHLEN)
 #endif
 

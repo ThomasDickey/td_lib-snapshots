@@ -23,9 +23,9 @@
 #define	STR_PTYPES
 #include <td_btree.h>
 
-MODULE_ID("$Id: gid2s.c,v 12.10 2000/06/30 10:46:01 tom Exp $")
+MODULE_ID("$Id: gid2s.c,v 12.11 2002/07/05 11:18:55 tom Exp $")
 
-#if HAVE_GETGRGID
+#if defined(HAVE_GETGRGID)
 
 typedef	struct {
 	int		user;

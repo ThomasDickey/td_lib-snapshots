@@ -14,13 +14,13 @@
 #include	"ptypes.h"
 #include	"td_curse.h"
 
-MODULE_ID("$Id: addchnst.c,v 12.4 1999/08/10 21:48:58 tom Exp $")
+MODULE_ID("$Id: addchnst.c,v 12.5 2002/07/05 11:15:57 tom Exp $")
 
 #ifndef OK
 #define OK 0
 #endif
 
-#if !HAVE_ADDCHNSTR
+#if !defined(HAVE_ADDCHNSTR)
 int	waddchnstr(
 	_ARX(WINDOW *,	win)
 	_ARX(chtype *,	s)

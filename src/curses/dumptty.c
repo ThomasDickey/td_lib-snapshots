@@ -12,7 +12,7 @@
 #define TRM_PTYPES	/* <termios.h> */
 #include <td_curse.h>
 
-MODULE_ID("$Id: dumptty.c,v 12.3 1998/05/30 11:05:54 tom Exp $")
+MODULE_ID("$Id: dumptty.c,v 12.4 2002/07/05 11:17:40 tom Exp $")
 
 #define	CONTRAST(msg,f) Contrast(msg, (long)(tst.f), (long)(ref.f))
 #define	SHOWMASK(t,m)   ShowMasks(t, SIZEOF(t), m)
@@ -24,7 +24,7 @@ typedef	struct	{
 
 static	FILE *	the_fp;
 
-#if USING_TERMIOS_H || USING_TERMIO_H
+#if defined(USING_TERMIOS_H) || defined(USING_TERMIO_H)
 static	char *	CtlChar(	/* c_cc[] characters */
 		_AR1(int,	c))
 		_DCL(int,	c)
@@ -308,7 +308,7 @@ void	dumptty (
 	_DCL(FILE *,	fp)
 	_DCL(char *,	msg)
 {
-#if USING_TERMIOS_H || USING_TERMIO_H
+#if defined(USING_TERMIOS_H) || defined(USING_TERMIO_H)
 	auto	int	n;
 	auto	long	mask;
 #endif
@@ -323,7 +323,7 @@ void	dumptty (
 		ref = tst;
 		initialized = TRUE;
 	}
-#if USING_TERMIOS_H || USING_TERMIO_H
+#if defined(USING_TERMIOS_H) || defined(USING_TERMIO_H)
 	if ((mask = CONTRAST("iflag", c_iflag)) != 0)
 		SHOWMASK(table_iflag, mask);
 	if ((mask = CONTRAST("oflag", c_oflag)) != 0)

@@ -9,9 +9,9 @@
  */
 #include "ptypes.h"
 
-MODULE_ID("$Id: memmove.c,v 12.2 1994/07/01 23:57:13 tom Exp $")
+MODULE_ID("$Id: memmove.c,v 12.3 2002/07/05 11:18:55 tom Exp $")
 
-#if	!HAVE_MEMMOVE
+#if	!defined(HAVE_MEMMOVE)
 char *	memmove(
 	_ARX(char *,	s1)
 	_ARX(char *,	s2)

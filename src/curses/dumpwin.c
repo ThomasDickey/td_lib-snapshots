@@ -28,7 +28,7 @@
 #include	"td_curse.h"
 #include	<time.h>
 
-MODULE_ID("$Id: dumpwin.c,v 12.19 2001/07/15 16:00:50 tom Exp $")
+MODULE_ID("$Id: dumpwin.c,v 12.20 2002/07/05 11:17:40 tom Exp $")
 
 #define	OUT	FPRINTF
 
@@ -47,7 +47,7 @@ line_data(
 		free(result);
 
 	if ((result = malloc(len)) != 0) {
-#if HAVE_WINNSTR
+#if defined(HAVE_WINNSTR)
 		int y, x;
 
 		getyx(win, y, x);
@@ -90,7 +90,7 @@ void	dumpwin(
 		OUT(fp, "   _maxy:%d, _maxx:%d\n", wMaxY(w), wMaxX(w));
 		OUT(fp, "   _begy:%d, _begx:%d\n", wBegY(w), wBegX(w));
 
-#if CURSES_LIKE_NCURSES
+#if defined(CURSES_LIKE_NCURSES)
 		OUT(fp, "   _region %d..%d\n",     w->_regtop, w->_regbottom);
 		OUT(fp, "   _pary:%d  _parx:%d\n", w->_pary, w->_parx);
 		OUT(fp, "   _flags:   %#x\n", w->_flags);
@@ -98,7 +98,7 @@ void	dumpwin(
 		OUT(fp, "   _scroll:  %#x\n", w->_scroll);
 		OUT(fp, "   _leave:   %#x\n", w->_leaveok);
 #endif
-#if CURSES_LIKE_BSD44
+#if defined(CURSES_LIKE_BSD44)
 		OUT(fp, "   _flags:   %#x\n", w->flags);
 		OUT(fp, "   _clear:   %#x\n", w->flags & __CLEAROK);
 		OUT(fp, "   _flush:   %#x\n", w->flags & __FLUSH);

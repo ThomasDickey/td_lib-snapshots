@@ -14,9 +14,9 @@
 
 #include	"td_curse.h"
 
-MODULE_ID("$Id: killchar.c,v 12.6 2000/01/01 14:26:43 tom Exp $")
+MODULE_ID("$Id: killchar.c,v 12.7 2002/07/05 11:17:40 tom Exp $")
 
-#if	!HAVE_KILLCHAR && !defined(killchar)
+#if	!defined(HAVE_KILLCHAR) && !defined(killchar)
 int	killchar(_AR0)
 {
 	int	code	= '\177';

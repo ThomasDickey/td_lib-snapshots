@@ -1,9 +1,9 @@
-/* $Id: ptypes.h,v 12.48 2002/07/03 12:50:30 tom Exp $ */
+/* $Id: ptypes.h,v 12.50 2002/07/05 12:44:35 tom Exp $ */
 
 #ifndef	PTYPES_H
 #define	PTYPES_H
 
-#if HAVE_CONFIG_H
+#if defined(HAVE_CONFIG_H)
 #include <td_config.h>
 #endif
 
@@ -35,7 +35,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-#if HAVE_SYS_PARAM_H
+#if defined(HAVE_SYS_PARAM_H)
 #include <sys/param.h>
 #endif
 
@@ -137,15 +137,15 @@ typedef	short	ino_t;
 #define HAVE_OLD_TOKEN_QUOTE  1
 #endif
 
-#if HAVE_STDLIB_H
+#if defined(HAVE_STDLIB_H)
 #include	<stdlib.h>
 #endif
 
-#if HAVE_UNISTD_H
+#if defined(HAVE_UNISTD_H)
 #include	<unistd.h>
 #endif
 
-#if !HAVE_LSTAT
+#if !defined(HAVE_LSTAT)
 #define	lstat	stat
 #endif
 
@@ -172,7 +172,7 @@ typedef	short	ino_t;
 #define	_ret		{return(0);}
 #define	_nul		{}
 #else	/* !LINTLIBRARY */
-#if	PROTOTYPES	/* function prototypes */
+#if	defined(PROTOTYPES)	/* function prototypes */
 #define	_fn1(t,v,a)	t (*v)a
 #define	_fnx(t,v,a)	_fn1(t,v,a),
 #define	_ar0		void
@@ -196,7 +196,7 @@ typedef	short	ino_t;
 /*
  * The ARGS() macro is used for general extern-prototypes
  */
-#if	PROTOTYPES
+#if	defined(PROTOTYPES)
 #define	ARGS(p) p
 #else
 #define	ARGS(p) ()
@@ -207,7 +207,7 @@ typedef	short	ino_t;
  */
 #undef _DOTS		/* similar usage in Cygwin */
 
-#if	PROTOTYPES
+#if	defined(PROTOTYPES)
 #define	_DOTS	...
 #define	_CDOTS	,...
 #else
@@ -219,7 +219,7 @@ typedef	short	ino_t;
  * Macros to use with actual procedures to make them use prototypes if the
  * compiler supports it:
  */
-#if	PROTOTYPES
+#if	defined(PROTOTYPES)
 #define	_FN1(t,v,a)	t (*v)a
 #define	_AR1(t,v)	t v
 #define	_AR0		void
@@ -342,7 +342,7 @@ typedef	short	ino_t;
 #ifdef	ACC_PTYPES
 
 #ifdef	SYS_UNIX
-#  if HAVE_SYS_FILE_H
+#  if defined(HAVE_SYS_FILE_H)
 #    include	<sys/file.h>
 #  endif
 #endif	/* vms/SYS_UNIX */
@@ -366,7 +366,7 @@ typedef	short	ino_t;
 #ifdef	CHR_PTYPES
 #include <ctype.h>
 
-#if STDC_HEADERS || HAVE_TOLOWER
+#if defined(STDC_HEADERS) || defined(HAVE_TOLOWER)
 # define LowerMacro(c) tolower(c)
 # define UpperMacro(c) toupper(c)
 #else
@@ -376,7 +376,7 @@ typedef	short	ino_t;
 # endif
 #endif
 
-#if STDC_HEADERS
+#if defined(STDC_HEADERS)
 #define LowerCase(c) c = LowerMacro(c)
 #define UpperCase(c) c = UpperMacro(c)
 #else
@@ -444,7 +444,7 @@ static	struct	direct	dbfr;
 
 #include <errno.h>
 
-# if DECL_SYS_ERRLIST
+# if defined(DECL_SYS_ERRLIST)
 extern char *sys_errlist[];
 extern int sys_nerr;
 # endif
@@ -456,7 +456,7 @@ extern int sys_nerr;
  ******************************************************************************/
 #ifdef	GRP_PTYPES
 
-#if HAVE_GRP_H
+#if defined(HAVE_GRP_H)
 #include <grp.h>
 #endif	/* HAVE_GRP_H */
 
@@ -467,10 +467,10 @@ extern int sys_nerr;
  ******************************************************************************/
 #ifdef	OPN_PTYPES
 
-#if HAVE_FCNTL_H
+#if defined(HAVE_FCNTL_H)
 #  include <fcntl.h>
 #else
-#  if HAVE_SYS_FCNTL_H
+#  if defined(HAVE_SYS_FCNTL_H)
 #    include <sys/fcntl.h>
 #  endif
 #endif
@@ -486,7 +486,7 @@ extern int sys_nerr;
  ******************************************************************************/
 #ifdef	PWD_PTYPES
 
-#if HAVE_PWD_H
+#if defined(HAVE_PWD_H)
 #include <pwd.h>
 #endif	/* HAVE_PWD_H */
 
@@ -497,7 +497,12 @@ extern int sys_nerr;
  ******************************************************************************/
 #ifdef	SIG_PTYPES
 
+#undef CS
+#define CS broken_GLIBC_CS	/* glibc 2.1.3 (mis)defines a lot of stuff */
+
 #include <signal.h>
+
+#undef CS
 
 #undef	SIG_T
 #undef	SIGNAL_FUNC
@@ -505,7 +510,7 @@ extern int sys_nerr;
 
 #define	SIG_T	RETSIGTYPE	/* obsolete */
 
-#if SIG_ARGS_VARYING
+#if defined(SIG_ARGS_VARYING)
 #  define SIGNAL_ARGS _AR1(int,sig) _CDOTS
 #  define SIGNAL_args _ar1(int,sig) _CDOTS
 #endif
@@ -519,7 +524,7 @@ extern int sys_nerr;
 
 #define	DCL_SIGNAL(func)	RETSIGTYPE	(*func)(SIGNAL_args)
 
-#if SIG_IGN_REDEFINEABLE
+#if defined(SIG_IGN_REDEFINEABLE)
 # undef  SIG_DFL
 # undef  SIG_IGN
 # undef  SIG_ERR
@@ -539,15 +544,15 @@ extern int sys_nerr;
  ******************************************************************************/
 #ifdef	STR_PTYPES
 
-#if STDC_HEADERS || HAVE_STRING_H
+#if defined(STDC_HEADERS) || defined(HAVE_STRING_H)
 #  include <string.h>
 /* An ANSI string.h and pre-ANSI memory.h might conflict.  */
-#  if !STDC_HEADERS && HAVE_MEMORY_H
+#  if !defined(STDC_HEADERS) && defined(HAVE_MEMORY_H)
 #    include <memory.h>
 #  endif /* not STDC_HEADERS and HAVE_MEMORY_H */
 #  define bcopy(s, d, n) memcpy ((d), (s), (n))
 #  define bcmp(s1, s2, n) memcmp ((s1), (s2), (n))
-#  if !HAVE_BZERO
+#  if !defined(HAVE_BZERO)
 #    define bzero(s, n) memset ((s), 0, (n))
 #  endif
 #else /* not STDC_HEADERS and not HAVE_STRING_H */
@@ -580,11 +585,11 @@ extern int sys_nerr;
 #define	DAY	(24*HOUR)
 #define	YEAR	(365*DAY)
 
-#if HAVE_TIMEZONE && !TIMEZONE_DECLARED && !LINTLIBRARY
+#if defined(HAVE_TIMEZONE) && !defined(TIMEZONE_DECLARED) && !defined(LINTLIBRARY)
 extern	long	timezone;
 #endif
 
-#if HAVE_UTIME_H
+#if defined(HAVE_UTIME_H)
 #include <utime.h>
 #endif
 
@@ -595,18 +600,18 @@ extern	long	timezone;
  ******************************************************************************/
 #ifdef	TRM_PTYPES
 
-#if HAVE_TERMIOS_H && HAVE_TCGETATTR
+#if defined(HAVE_TERMIOS_H) && defined(HAVE_TCGETATTR)
 #  include <termios.h>
 #  define USING_TERMIOS_H 1
 #  define TermioT struct termios
 #  define GetTerminal(p) tcgetattr(0, p)
 #  define SetTerminal(p) tcsetattr(0, TCSAFLUSH, p)
 #else
-#  if HAVE_TERMIO_H
+#  if defined(HAVE_TERMIO_H)
 #    include <termio.h>
 #    define USING_TERMIO_H 1
 #    define TermioT struct termio
-#    if HAVE_TCGETATTR
+#    if defined(HAVE_TCGETATTR)
 #      define GetTerminal(p) tcgetattr(0, p)
 #      define SetTerminal(p) tcsetattr(0, TCSAFLUSH, p)
 #    else
@@ -614,7 +619,7 @@ extern	long	timezone;
 #      define SetTerminal(p) ioctl(0, TCSETAF, p)
 #    endif
 #  else
-#    if HAVE_SGTTY_H
+#    if defined(HAVE_SGTTY_H)
 #      include <sgtty.h>		/* for stty/gtty functions */
 #      define USING_SGTTY_H 1
 #      define TermioT struct sgttyb
@@ -639,7 +644,7 @@ extern	long	timezone;
 #include <sys/wait.h>
 #endif
 
-#if WAIT_USES_UNION
+#if defined(WAIT_USES_UNION)
 # define	WAIT_ARG_TYPE	union wait
 #else
 # define	WAIT_ARG_TYPE	int
@@ -651,7 +656,7 @@ extern	long	timezone;
 #ifdef WEXITSTATUS
 # define	W_RETCODE(status)	WEXITSTATUS(status)
 #else
-# if WAIT_USES_UNION
+# if defined(WAIT_USES_UNION)
 #  define	W_RETCODE(status)	(status.w_retcode)
 # else
 #  define	W_RETCODE(status)	((status >> 8) & 0xff)

@@ -10,9 +10,9 @@
 #define	STR_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: getopt.c,v 12.3 2001/05/15 00:58:48 tom Exp $")
+MODULE_ID("$Id: getopt.c,v 12.4 2002/07/05 11:18:55 tom Exp $")
 
-#if !HAVE_GETOPT
+#if !defined(HAVE_GETOPT)
 
 #ifdef	SYS_UNIX
 #define ERR(s, c)	if(opterr){\
