@@ -1,3 +1,21 @@
+1989-02-27  dickey@software.org
+
+	* src/process/catarg.c: extended the range of pass-thru blanks.
+
+	* src/process/catarg.c: sccs2rcs keywords
+
+1989-02-27  ste_cm@software.org
+
+	* src/process/catarg.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/process/catarg.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+	* src/process/catarg.c: BASELINE Thu Apr  6 09:45:13 EDT 1989
+
+	* src/process/catarg.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
 1989-02-22  dickey@software.org
 
 	* src/port2vms/rmsio.c: New file.
