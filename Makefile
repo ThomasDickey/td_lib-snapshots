@@ -1,4 +1,4 @@
-# $Id: Makefile,v 10.1 1992/02/03 12:34:03 dickey Exp $
+# $Id: Makefile,v 10.3 1992/02/04 10:41:22 dickey Exp $
 # Top-level makefile for CM_TOOLS common library
 
 ####### (Development) ##########################################################
@@ -7,7 +7,9 @@ B	= $(TOP)/bin
 I	= $(TOP)/interface
 L	= $(TOP)/lib
 
-COPY	= rm -f $@; cp -p
+GET	= checkout
+COPY	= cp -p
+PUT	= rm -f $@; $(COPY) $? $@
 MAKE	= make $(MFLAGS) -k$(MAKEFLAGS)	CFLAGS="$(CFLAGS)" COPY="$(COPY)"
 
 ####### (Standard Lists) #######################################################
@@ -30,6 +32,7 @@ ALL	=\
 
 ####### (Standard Productions) #################################################
 all\
+lintlib\
 install::	lib
 
 all\
@@ -43,8 +46,14 @@ lint.out::	$(MFILES)
 	cd src;		$(MAKE) $@
 	cd test;	$(MAKE) $@
 
+lintlib::	$(MFILES)
+	cd interface;	$(MAKE) $@
+
 sources::	$(SOURCES)
 
+clean\
+clobber::
+	rm -f *.bak *.log *.out core
 clobber\
 destroy::
 	rm -rf lib
@@ -59,15 +68,16 @@ deinstall::		; rm -f $(ALL)
 
 ####### (Details of Productions) ###############################################
 $(MFILES)\
-$(SOURCES):				; checkout -x $@
+$(SOURCES):				; $(GET) -x $@
 lib:					; mkdir $@
 
 i=interface
-$I/cmdch.h:		$i/cmdch.h	; $(COPY) $? $@
-$I/common.h:		$i/common.h	; $(COPY) $? $@
-$I/deltree.h:		$i/deltree.h	; $(COPY) $? $@
-$I/ptypes.h:		$i/ptypes.h	; $(COPY) $? $@
-$I/rcsdefs.h:		$i/rcsdefs.h	; $(COPY) $? $@
-$I/sccsdefs.h:		$i/sccsdefs.h	; $(COPY) $? $@
-$I/spreadsheet.h:	$i/spreadsheet.h; $(COPY) $? $@
-$L/lib.a:	lib/lib.a		; $(COPY) $? $@; ranlib $@
+$I/cmdch.h:		$i/cmdch.h	; $(PUT)
+$I/common.h:		$i/common.h	; $(PUT)
+$I/deltree.h:		$i/deltree.h	; $(PUT)
+$I/ptypes.h:		$i/ptypes.h	; $(PUT)
+$I/rcsdefs.h:		$i/rcsdefs.h	; $(PUT)
+$I/sccsdefs.h:		$i/sccsdefs.h	; $(PUT)
+$I/spreadsheet.h:	$i/spreadsheet.h; $(PUT)
+
+$L/lib.a:	lib/lib.a		; $(PUT); ranlib $@

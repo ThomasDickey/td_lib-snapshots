@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 10.0 1991/10/17 10:44:46 ste_cm Rel $ */
+/* $Id: td_lib.h,v 10.2 1992/02/04 13:05:53 dickey Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for CM_TOOLS COMMON
@@ -84,6 +84,16 @@
 			)
 			_dcl(char *,	dst)
 			_dcl(char *,	src)
+			_nul
+
+	void	catarg2 (
+			_arx(char *,	dst)
+			_arx(char *,	opt)
+			_ar1(char *,	arg)
+			)
+			_dcl(char *,	dst)
+			_dcl(char *,	opt)
+			_dcl(char *,	arg)
 			_nul
 
 	/* catchall.c ------------------------------------------------- */
@@ -326,6 +336,10 @@
 			_ar1(int,	gid)
 			)
 			_dcl(int,	gid)
+			_ret
+
+	/* interactive.c ---------------------------------------------- */
+	int	interactive(_ar0)
 			_ret
 
 	/* istextfile.c ----------------------------------------------- */

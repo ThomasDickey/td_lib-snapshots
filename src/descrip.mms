@@ -1,4 +1,4 @@
-# $Id: descrip.mms,v 10.1 1992/02/03 12:06:52 dickey Exp $
+# $Id: descrip.mms,v 10.2 1992/02/04 13:07:36 dickey Exp $
 # MMS-file for miscellaneous library routines	
 #
 ####### (Development) ##########################################################
@@ -76,6 +76,7 @@ UNUSED_MODULES = -
 	GETHOME, 		# unix-passwd -
 	GETUSER, 		# unix-passwd -
 	GID2S, 			# PORTUNIX -
+	INTERACTIVE,		# unix filesystem
 	KILLCHAR 		# curses -
 	NAME2S,			# unix-style names only -
 	NEWZONE,		# unix environment -
@@ -153,6 +154,7 @@ C_SRC	=-
 	GETHOME.C -
 	GETUSER.C -
 	GID2S.C -
+	INTERACTIVE.C -
 	ISTEXTFILE.C -
 	KILLCHAR.C -
 	LIST_BY_COLS.C -

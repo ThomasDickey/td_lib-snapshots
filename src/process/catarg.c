@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: catarg.c,v 10.0 1991/10/03 08:42:53 ste_cm Rel $";
+static	char	Id[] = "$Id: catarg.c,v 12.0 1992/02/04 12:05:12 ste_cm Rel $";
 #endif
 
 /*
@@ -40,4 +40,19 @@ _DCL(char *,	src)
 		*dst++ = ' ';
 		*dst   = '\0';
 	}
+}
+
+void
+catarg2(
+_ARX(char *,	dst)
+_ARX(char *,	opt)
+_AR1(char *,	arg)
+	)
+_DCL(char *,	dst)
+_DCL(char *,	opt)
+_DCL(char *,	arg)
+{
+	catarg(dst, opt);
+	dst[strlen(dst)-1] = EOS;
+	catarg(dst, arg);
 }
