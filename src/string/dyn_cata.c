@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	*Id = "$Id: dyn_cata.c,v 10.3 1992/02/10 13:32:02 dickey Exp $";
+static	char	*Id = "$Id: dyn_cata.c,v 11.0 1992/02/11 09:16:11 ste_cm Rel $";
 #endif
 
 /*
@@ -14,7 +14,7 @@ static	char	*Id = "$Id: dyn_cata.c,v 10.3 1992/02/10 13:32:02 dickey Exp $";
 #include "ptypes.h"
 #include "dyn_string.h"
 
-#define	EMPTY(s)	(*s == EOS)
+#define	EMPTY(s)	((s == 0) || (*s == EOS))
 
 DYN *
 dyn_catarg(
