@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RCS/add2fnam.c,v 2.2 1989/06/08 15:09:44 dickey Exp $";
+static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RCS/add2fnam.c,v 8.0 1989/06/12 08:04:50 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -8,6 +8,7 @@ static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RC
  * Created:	05 Jun 1989
  *
  * Function:	Add a suffix to a filename, if it is not already there.
+ *		On VMS, we preserve the version-number, if it is given.
  *
  * Returns:	TRUE if the suffix is not present; in this case we append it
  *		to the filename-buffer.
