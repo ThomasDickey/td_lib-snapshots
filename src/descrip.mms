@@ -1,4 +1,4 @@
-# $Id: descrip.mms,v 11.2 1992/08/03 14:30:07 dickey Exp $
+# $Id: descrip.mms,v 11.3 1992/08/06 11:19:09 dickey Exp $
 # MMS-file for miscellaneous library routines	
 #
 ####### (Development) ##########################################################
@@ -90,6 +90,7 @@ UNUSED_MODULES = -
 	GID2S, 			# PORTUNIX -
 	INTERACTIVE,		# unix filesystem -
 	KILLCHAR 		# curses -
+	LOGCH, 			# curses/ded -
 	NAME2S,			# unix-style names only -
 	NEWZONE,		# unix environment -
 	PACKDATE,		# localtime() -
@@ -181,6 +182,7 @@ C_SRC	=-
 	ISTEXTFILE.C -
 	KILLCHAR.C -
 	LIST_BY_COLS.C -
+	LOGCH.C -
 	LTOSTR.C -
 	MAKEARGV.C -
 	MEM2FILE.C -
@@ -319,6 +321,7 @@ IS_SUBPATH.obj :	$(PTYPES_H)
 ISTEXTFILE.obj :	$(PTYPES_H)
 KILLCHAR.obj :		$(PTYPES_H)
 LIST_BY_COLS.obj :	$(PTYPES_H)
+LOGCH.obj :		$(PTYPES_H)	$(I)cmdch.h
 MEM2FILE.obj :		$(PTYPES_H)
 NAME2S.obj :		$(PTYPES_H)
 NEWZONE.obj :		$(PTYPES_H)

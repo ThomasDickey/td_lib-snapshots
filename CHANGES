@@ -1,3 +1,37 @@
+1992-08-06  dickey@software.org
+
+	* src/curses/rawgets.c:
+	modified so that if we are running from 'command' argument,
+	don't do refresh-per-char.
+
+	* src/curses/logch.c: lint
+
+	* src/curses/rawgets.c: implemented the 'command' argument.
+
+	* include/td_lib.h: added 'logch.c'
+
+	* src/Makefile, src/descrip.mms: logch.c
+
+	* src/curses/logch.c: RCS_BASE
+
+	* include/td_lib.h: lint
+
+	* src/curses/rawgets.c: added/implemented logging-arg.
+	added arg (unimplemented) for command-input.
+	got rid of unnecessary reference to CTL/F, so the macros
+	"to_???" contain the only interesting reserved characters.
+
+	* include/td_lib.h:
+	mods to rawgets.c: added interface for 'rawgets_log()', and args
+	fast_q, command, logging to 'wrawgets()'.  make 'rawgets()' a macro.
+
+	* src/curses/rawgets.c:
+	added logic to do "fast quit" (caller specifies a character
+	which causes quit while in scrolling-mode).
+	also, added logic for erase-word.
+	finally, corrected repeat-count in scrolling-mode (was
+	not being reset when doing erase char/word/line in insert-mode)
+
 1992-08-05  dickey@software.org
 
 	* src/curses/erasechr.c: added 'eraseword()' function

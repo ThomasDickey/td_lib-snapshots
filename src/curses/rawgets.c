@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rawgets.c,v 11.2 1992/08/05 15:46:52 dickey Exp $";
+static	char	Id[] = "$Id: rawgets.c,v 11.6 1992/08/06 12:33:22 dickey Exp $";
 #endif
 
 /*
@@ -7,7 +7,9 @@ static	char	Id[] = "$Id: rawgets.c,v 11.2 1992/08/05 15:46:52 dickey Exp $";
  * Title:	rawgets.c (raw-mode 'gets()')
  * Created:	29 Sep 1987 (from 'fl.c')
  * Modified:
+ *		06 Aug 1992, added command/logging arguments.
  *		05 Aug 1992, highlight in insert-mode when wrap is disabled.
+ *			     Added fast-quit and erase-word features.
  *		03 Oct 1991, converted to ANSI
  *		15 May 1991, mods to compile under apollo sr10.3
  *		02 Mar 1990, modified so that if this is invoked in no-wrap
@@ -34,7 +36,7 @@ static	char	Id[] = "$Id: rawgets.c,v 11.2 1992/08/05 15:46:52 dickey Exp $";
  * Function:	Accept input from the screen, permitting a user to either
  *		alter an existing string, or to enter a new one.  This
  *		procedure is called in raw/noecho mode, and is used by the
- *		directory editor to enter new command text.
+ *		directory editor to enter new text.
  *
  *		Only printing (including space) characters will be returned
  *		in 'bfr[]'.
@@ -51,6 +53,7 @@ static	char	Id[] = "$Id: rawgets.c,v 11.2 1992/08/05 15:46:52 dickey Exp $";
 #include	"ptypes.h"
 #include	<ctype.h>
 #include	"cmdch.h"
+#include	"dyn_string.h"
 
 #define	SHIFT	5
 
@@ -60,11 +63,12 @@ static	char	Id[] = "$Id: rawgets.c,v 11.2 1992/08/05 15:46:52 dickey Exp $";
 #define	to_end(c)	(((c) == CTL('F')))
 
 static	WINDOW	*Z;		/* window we use in this module */
+static	DYN	*history;	/* record of keystrokes if logging active */
 static	int	xbase,	ybase,	/* base-position of 'bfr[]' */
 		xlast,		/* last usable column in screen */
 		shift,		/* amount shifted in no-wrap mode */
 		wrap,		/* if we echo newline, assume wrappable */
-		errs,		/* flag for error/illegal command */
+		errs,		/* flag for error/illegal char */
 		Imode;		/* insert:1, scroll:-1 */
 static	char	*bbase;		/* 'bfr[]' copy */
 
@@ -214,6 +218,35 @@ char *	DeleteBefore(
 }
 
 /*
+ * Delete the words before the given pointer
+ */
+static
+char *	DeleteWordBefore(
+	_ARX(char *,	at)
+	_AR1(int,	count)
+		)
+	_DCL(char *,	at)
+	_DCL(int,	count)
+{
+	register char	*s;
+	register int	found;
+
+	while ((at > bbase) && (count-- > 0)) {
+		for (s = at-1, found = 0; s >= bbase; s--) {
+			if (isspace(*s)) {
+				if (found) {
+					s++;	/* point to first nonblank */
+					break;
+				}
+			} else
+				found++;
+		}
+		at = DeleteBefore(at, at - s);
+	}
+	return (at);
+}
+
+/*
  * Toggle the insert/scroll mode, and show the state of this flag by
  * overwriting the ":" position of the prompt which is written before
  * calling this procedure.
@@ -264,22 +297,32 @@ _DCL(int,	c)
 
 int	wrawgets (
 	_ARX(WINDOW *,	win)
-	_ARX(char *,	bfr)
-	_ARX(int,	size)
-	_ARX(int,	newline)
-	_AR1(int,	fast_q)
+	_ARX(char *,	bfr)		/* in/out buffer */
+	_ARX(int,	size)		/* maximum length of 'bfr' */
+	_ARX(int,	newline)	/* force newline-echo on completion */
+	_ARX(int,	fast_q)		/* nonnull: extra quit character */
+	_ARX(char **,	command)	/* nonnull: read inputs */
+	_AR1(int,	logging)	/* nonnull: write inputs */
 		)
 	_DCL(WINDOW *,	win)
 	_DCL(char *,	bfr)
 	_DCL(int,	size)
 	_DCL(int,	newline)
 	_DCL(int,	fast_q)
+	_DCL(char **,	command)
+	_DCL(int,	logging)
 {
 	register char	*tag;
 	register int	c,
-			ec = erasechar(),
-			kc = killchar();
+			EraseChar = erasechar(),
+			EraseWord = eraseword(),
+			EraseLine = killchar();
 	auto	 int	count;
+	static	 DYN	*saved;
+
+	saved = dyn_copy(saved, bfr);
+	if (logging)
+		dyn_init(&history, 1);
 
 	Z = win;
 	Imode = 1;
@@ -302,9 +345,36 @@ int	wrawgets (
 		if (errs) {
 			errs = 0;
 			beep();
-		} else
+		}
+
+		if (command && *command && **command) {
+			if (Imode || !isdigit(**command))
+				count = 1;
+			else {
+				register char	*s = *command;
+				count = 0;
+				while (isdigit(*s))
+					count = (count * 10) + (*s++ - '0');
+				*command = s;
+			}
+			c = decode_logch(command, (int *)0);
+		} else {
 			(void)wrefresh(Z);
-		c = cmdch(Imode ? (int *)0 : &count);
+			count = 1;
+			c = cmdch(Imode ? (int *)0 : &count);
+		}
+
+		/*
+		 * Record every character that we can infer.
+		 */
+		if (logging) {
+			if (count != 1) {
+				char	temp[20];
+				FORMAT(temp, "%d", count);
+				history = dyn_append(history, temp);
+			}
+			history = dyn_append_c(history, c);
+		}
 
 		/*
 		 * We return only one of three types of thing:
@@ -313,24 +383,24 @@ int	wrawgets (
 		 *	or return/newline
 		 * so that we can interlock this with a history-mechanism.
 		 */
-		if (c == '\n' || c == '\r') {
-			(void)move_end(tag,CTL('F'));
+		if ((c == '\n') || (c == '\r')) {
+			MoveTo(bbase + strlen(bbase));
 			if (newline) (void)waddch(Z,'\n');
 			break;
 		}
-		if (c == ARO_DOWN || c == ARO_UP)
+		if ((c == ARO_DOWN) || (c == ARO_UP))
 			break;
 
 		if (c == '\t') {
 			ToggleMode();
 		} else if (!Imode || !isascii(c)) {
 			/* process scroll-mode ops */
-			if (Imode)
-				count = 1;
 
 			if (fast_q) {
-				if (c == fast_q || c == 'q')
+				if ((c == fast_q) || (c == 'q')) {
+					(void)strcpy(bfr, dyn_string(saved));
 					break;
+				}
 			}
 			if (to_left(c)) {
 				if (tag > bfr) {
@@ -350,16 +420,20 @@ int	wrawgets (
 					MoveTo(tag = s);
 				} else
 					errs++;
-			} else if (c == ec) {
+			} else if (c == EraseChar) {
 				tag = DeleteBefore(tag,count);
-			} else if (c == kc) {
-				tag = DeleteBefore(tag,tag - bfr);
+			} else if (c == EraseWord) {
+				tag = DeleteWordBefore(tag,count);
+			} else if (c == EraseLine) {
+				tag = DeleteBefore(tag, tag - bfr);
 			} else
 				tag = move_end(tag,c);
 		} else {	/* process insert-mode ops */
-			if (c == ec) {
+			if (c == EraseChar) {
 				tag = DeleteBefore(tag,1);
-			} else if (c == kc) {
+			} else if (c == EraseWord) {
+				tag = DeleteWordBefore(tag,count);
+			} else if (c == EraseLine) {
 				count = strlen(bfr);
 				(void)DeleteBefore(bfr+count, count);
 				break;
@@ -379,6 +453,14 @@ int	wrawgets (
 	return (c);	/* returns character which terminated this call */
 }
 
+/*
+ * Returns the logging history from the last call on 'wrawgets()'
+ */
+char *	rawgets_log(_AR0)
+{
+	return dyn_string(history);
+}
+
 /************************************************************************
  *	test procedure							*
  ************************************************************************/
@@ -386,7 +468,7 @@ int	wrawgets (
 _MAIN
 {
 	register int	j	= 0;
-	auto	 int	wrap	= (argc > 1 && !strcmp(argv[1], "-w"));
+	auto	 int	wrap	= ((argc > 1) && !strcmp(argv[1], "-w"));
 	auto	 char	bfr[BUFSIZ];
 
 	initscr();

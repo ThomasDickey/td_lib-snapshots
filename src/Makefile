@@ -1,4 +1,4 @@
-# $Id: Makefile,v 11.3 1992/08/05 13:50:33 dickey Exp $
+# $Id: Makefile,v 11.4 1992/08/06 11:20:21 dickey Exp $
 # MAKE-file for miscellaneous library routines
 
 ####### (Environment) ##########################################################
@@ -58,6 +58,7 @@ CSRC	=\
 	istextfile.c\
 	killchar.c\
 	list_by_cols.c\
+	logch.c\
 	ltostr.c\
 	makeargv.c\
 	mem2file.c\
@@ -180,6 +181,7 @@ OBJS	=\
 	$Z(istextfile.o)\
 	$Z(killchar.o)\
 	$Z(list_by_cols.o)\
+	$Z(logch.o)\
 	$Z(ltostr.o)\
 	$Z(makeargv.o)\
 	$Z(mem2file.o)\
@@ -269,12 +271,10 @@ $Z:	$(OBJS)
 #
 .PRECIOUS: $Z
 #
-RCSDEFS_H	= $I/rcsdefs.h	$I/deltree.h
-SCCSDEFS_H	= $I/sccsdefs.h
-#
-$(OBJS):	$I/ptypes.h	$I/$(THAT).h
+$(OBJS):	$(PTYPES_H)
 
 $Z(cmdch.o)\
+$Z(logch.o)\
 $Z(rawgets.o):	$I/cmdch.h
 
 $Z(dyn_append.o)\
@@ -308,10 +308,5 @@ $Z(ss_field.o):	$I/spreadsheet.h $I/dyn_string.h
 #
 ####### (Development) ##########################################################
 $(SOURCES):			; $(GET) $@
-
-lint.out:	$(CSRC)
-	$(DATE)
-	sh -c 'for i in $?;do echo $$i: | tee -a $@;\
-		tdlint $(LINTOPT) $$i >>$@;done'
-
+lint.out:	$(CSRC)		; $(DATE); $(LINT_EACH)
 lincnt.out:	$(CSRC)		; $(DATE); lincnt $(CSRC) >>$@
