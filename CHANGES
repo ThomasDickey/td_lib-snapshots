@@ -1,3 +1,48 @@
+1997-09-09  dickey@clark.net
+
+	* test/unix/modules, test/string/modules, test/process/modules, test/port2vms/modules, test/pathname/modules, test/memory/modules, test/curses/modules:
+	RCS_BASE
+
+	* aclocal.m4: generate makefiles under test directory
+
+	* test/cm_funcs/modules: RCS_BASE
+
+	* configure.in: generate makefiles under test directory
+
+	* test/td_rules.mk: use distclean rather than destroy
+
+	* src/td_rules.mk:
+	don't remove makefile in distclean rule because gnu-make cheats
+
+	* test/makefile.end: RCS_BASE
+
+	* src/makefile.end: distclean rule will remove subdir's makefiles
+
+	* makefile.in: better distclean rule
+
+	* src/port2vms/modules, src/unix/modules, src/string/modules, src/sheet/modules, src/process/modules, src/pathname/modules, src/memory/modules, src/curses/modules, src/compare/modules:
+	RCS_BASE
+
+	* aclocal.m4: oops
+
+	* test/makefile.in: don't use Makefile
+
+	* src/td_defns.mk: use modules rather than Makefile
+
+	* aclocal.m4: second pass of fixes for generating src/makefile
+
+	* src/td_rules.mk: add 'distclean'
+
+	* src/makefile.end: RCS_BASE
+
+	* src/makefile.in: generate the subdirectory-traversal
+
+	* makefile.in: distclean rule
+
+	* aclocal.m4: verboseness tuning
+
+	* src/makefile.in: all makefiles are generated
+
 1997-09-08  dickey@clark.net
 
 	* aclocal.m4: first cut of macro to make src/*/makefiles

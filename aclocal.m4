@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.89 1997/09/08 23:58:03 tom Exp $
+dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.93 1997/09/09 22:20:38 tom Exp $
 dnl vi:set ts=4:
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "CF_" to "AC_"
@@ -1228,6 +1228,76 @@ then
 fi
 ])dnl
 dnl ---------------------------------------------------------------------------
+dnl Append predefined lists to src/*/makefile.
+dnl
+dnl Also, make a series of "cd XXX && make" statements, which is understood by
+dnl all "make -n" commands.
+AC_DEFUN([CF_TD_SRC_MAKEFILES],
+[
+for p in $cf_cv_src_modules
+do
+	q=$srcdir/src/$p/modules
+	cf_out=src/$p/makefile
+	if test -f $q ; then
+${AWK-awk} <$q >>$cf_out '
+BEGIN	{
+		found = 0;
+	}
+	{
+		if ( found == 0 )
+		{
+			printf "\nCSRC="
+			found = 1;
+		}
+		printf " \\\n\t%s.c", [$]1
+	}
+'
+${AWK-awk} <$q >>$cf_out '
+BEGIN	{
+		found = 0;
+	}
+	{
+		if ( found == 0 )
+		{
+			printf "\nOBJS="
+			found = 1;
+		}
+		printf " \\\n\t$Z(%s.o)", [$]1
+	}
+'
+	cat >>$cf_out <<CF_EOF
+
+
+${make_include_left}../td_rules.mk${make_include_right}
+CF_EOF
+	echo "	cd $p &&	\$(MAKE) \[$]@" >>src/makefile
+	fi
+done
+test -f $srcdir/src/makefile.end && \
+    cat $srcdir/src/makefile.end >>src/makefile
+])dnl
+dnl ---------------------------------------------------------------------------
+dnl Make a list of src/*/modules so that AC_OUTPUT has the list on-hand.
+AC_DEFUN([CF_TD_SRC_MODULES],
+[
+AC_MSG_CHECKING(for source modules)
+AC_CACHE_VAL(cf_cv_src_modules,[
+cf_cv_src_modules=""
+cf_cv_src_makefiles=""
+for p in $srcdir/src/*
+do
+	if test -d $p ; then
+		if test -f $p/modules ; then
+			p=`basename $p`
+			cf_cv_src_modules="$cf_cv_src_modules $p"
+			cf_cv_src_makefiles="$cf_cv_src_makefiles src/$p/makefile:$srcdir/src/sub_vars.in"
+		fi
+	fi
+done
+])
+AC_MSG_RESULT($cf_cv_src_modules)
+])dnl
+dnl ---------------------------------------------------------------------------
 dnl Make an uppercase version of a variable
 dnl $1=uppercase($2)
 AC_DEFUN([CF_UPPER],
@@ -1310,4 +1380,9 @@ if test $cf_cv_decl_union_wait = yes; then
 	AC_MSG_RESULT($cf_cv_arg_union_wait)
 	test $cf_cv_arg_union_wait = yes && AC_DEFINE(WAIT_USES_UNION)
 fi
+])dnl
+dnl ---------------------------------------------------------------------------
+dnl Use AC_VERBOSE w/o the warnings
+AC_DEFUN([CF_VERBOSE],
+[test -n "$verbose" && echo "	$1" 1>&AC_FD_MSG
 ])dnl

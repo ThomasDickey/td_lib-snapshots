@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19970908
+MANIFEST for td_lib, version t19970909
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         restrictions on copying/using this software
@@ -50,6 +50,8 @@ src/cm_funcs/cmv_last.c         lookup file's current version in CmVision
 src/cm_funcs/cutoff.c           SCCS-style cutoff date parsing
 src/cm_funcs/descrip.mms        MMS file for the TD_LIB/SRC/CM_FUNCS directory
 src/cm_funcs/lastrev.c          combines calls for RCS/SCCS/CMVision last-revision lookup
+src/cm_funcs/makefile.in        template for src/cm_funcs/makefile
+src/cm_funcs/modules            src/cm_funcs modules
 src/cm_funcs/newzone.c          set new timezone
 src/cm_funcs/next_ver.c         next-version computation
 src/cm_funcs/packdate.c         pack numbers to make UNIX date
@@ -82,6 +84,7 @@ src/compare/cmpqsort.c          default-comparison for 'qsort()'
 src/compare/descrip.mms         mms file for td_lib/src/compare
 src/compare/diffload.c          load delta-tree from difference of files
 src/compare/m2comp.c            Miller/Myers difference algorithm
+src/compare/modules             src/compare modules
 src/compare/scomp.c             simple difference algorithm
 src/curses                      subdirectory
 src/curses/Makefile             makefile for td_lib/src/curses
@@ -100,6 +103,7 @@ src/curses/keycode.c            ================================================
 src/curses/killchar.c           returns kill-char value
 src/curses/lnextchr.c           returns value of literal-next character
 src/curses/logch.c              abstracts log-character encode/decode for 'ded'; put here so I can use it
+src/curses/modules              src/curses modules
 src/curses/on_winch.c           catch SIGWINCH and invoke display refresh procedures
 src/curses/padedit.c            opens an edit-pad (or xterm) on a file
 src/curses/rawgets.c            read a string via curses in raw mode (allow edits)
@@ -113,11 +117,14 @@ src/curses/wrepaint.c           repaint window w/o clearing it, if possible
 src/curses/wresize.c            basic algorithm for resizing a curses-window.
 src                             subdirectory
 src/descrip.mms                 VMS build script for td_lib/src
+src/makefile.end                trailer for src/makefile
+src/makefile.in                 src/makefile template
 src/memory                      subdirectory
 src/memory/Makefile             makefile for td_lib/src/memory
 src/memory/descrip.mms          mms file for td_lib/src/memory
 src/memory/doalloc.c            wrapper for malloc/realloc/free (checks pointers)
 src/memory/memmove.c            fallback for 'memmove()'
+src/memory/modules              src/memory modules
 src/memory/stralloc.c           portable replacement for 'strdup()'
 src/memory/txtalloc.c           maintain dictionary of string "constants"
 src/memory/vecalloc.c           allocate an array
@@ -150,6 +157,7 @@ src/pathname/is_spath.c         tests a pathname to see if it is a subpath of th
 src/pathname/istextfl.c         tests a file to see if it is normal text vs binary
 src/pathname/mem2file.c         write a blob-string from memory to a file
 src/pathname/modechar.c         translate file-mode (binary) to character
+src/pathname/modules            src/pathname modules
 src/pathname/name2s.c           convert filename to printable string
 src/pathname/pathcat.c          concatenate directory & filename
 src/pathname/pathcmp.c          compare pathnames, for sorting
@@ -170,6 +178,7 @@ src/port2vms                    subdirectory
 src/port2vms/Makefile           makefile for td_lib/src/port2vms
 src/port2vms/descrip.mms        mms file for td_lib/src/port2vms
 src/port2vms/dir2path.c         VMS directory/pathname conversion
+src/port2vms/modules            src/port2vms modules
 src/port2vms/name2vms.c         convert unix filename to VMS format
 src/port2vms/path2dir.c         convert VMS pathname to directory
 src/port2vms/path2vms.c         convert unix pathname (directory!) to VMS format
@@ -200,6 +209,7 @@ src/process/getuser.c           get user name
 src/process/in_group.c          test if a group is in the user's access-group list
 src/process/interact.c          tests if a process is running interactively by attempting to open /dev/tty
 src/process/makeargv.c          make quick (nonstandard) argv-list list from a string
+src/process/modules             src/process modules
 src/process/revert.c            reset/disable setuid mode
 src/process/savesuid.c          tests for save-uid ability in setuid code
 src/process/shoarg.c            shows arguments built with 'catarg()'
@@ -212,6 +222,7 @@ src/sheet/Makefile              makefile for td_lib/src/sheet
 src/sheet/count_ss.c            counts fields in in-memory spreadsheet
 src/sheet/descrip.mms           mms file for td_lib/src/sheet
 src/sheet/field_of.c            'get_field_of()' from 'hist2ileaf.c'
+src/sheet/modules               src/sheet modules
 src/sheet/ss_field.c            insert/extract data in "spreadsheet" table
 src/string                      subdirectory
 src/string/Makefile             makefile for td_lib/src/string
@@ -225,6 +236,7 @@ src/string/dyn_copy.c           copy ordinary string to DYN string
 src/string/dyn_str.c            module for managing dynamic-strings
 src/string/lsbycols.c           list an array of character strings by columns
 src/string/ltostr.c             convert 'long' to a string
+src/string/modules              src/string modules
 src/string/strbcmp.c            compare two strings ignoring blanks a la "diff -b"
 src/string/strclean.c           "clean" string, removes unnecessary blanks
 src/string/strcount.c           counts instances of a char in a string
@@ -234,6 +246,7 @@ src/string/strucmp.c            compare two strings ignoring case
 src/string/strucpy.c            copy string, uppercasing it
 src/string/strwcmp.c            wildcard string-comparator
 src                             subdirectory
+src/sub_vars.in                 preamble for subdirectory makefiles
 src/td_defns.mk                 definitions for makefiles in subdirectories of td_lib/src
 src/td_defns.mms                common mms definitions for subdirectories
 src/td_rules.mk                 rules for makefiles in subdirectories of td_lib/src
@@ -242,6 +255,7 @@ src/unix                        subdirectory
 src/unix/Makefile               makefile for td_lib/src/unix
 src/unix/descrip.mms            mms file for td_lib/src/unix
 src/unix/gid2s.c                convert group-id to string
+src/unix/modules                src/unix modules
 src/unix/s2gid.c                convert string to group-id
 src/unix/s2uid.c                convert string to user-id
 src/unix/setmtime.c             set mtime/atime of a file
@@ -307,6 +321,7 @@ test/dummy.txt                  test-file #1
 test/dummy2.txt                 test-file
 test/dummy3.txt                 short test-case for 'rcsload'
 test/dummy4.txt                 long test-case for 'rcsload'
+test/makefile.in                test/makefile template
 test/memory                     subdirectory
 test/memory/Makefile            makefile for td_lib/test/memory
 test/memory/doalloc.ref         reference for 'doalloc'

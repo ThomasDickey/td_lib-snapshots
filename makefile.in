@@ -1,15 +1,13 @@
-# $Id: makefile.in,v 12.2 1997/09/08 00:39:41 tom Exp $
+# $Id: makefile.in,v 12.5 1997/09/09 10:11:12 tom Exp $
 # Top-level makefile for TD_LIB common library
 
 ####### (Development) ##########################################################
 
 SHELL		= /bin/sh
+@SET_MAKE@
 
-COPY	= cp
 RM	= -rm -f
-PUT	= $(RM) $@; $(COPY) $? $@
 TOP	= ..
-GET	= checkout
 THIS	= td_lib
 THAT	= libtd
 
@@ -40,7 +38,6 @@ CONFIG_H=\
 	configure.in
 
 SOURCES	=\
-	Makefile\
 	td_make.in\
 	descrip.mms\
 	README\
@@ -50,9 +47,7 @@ SOURCES	=\
 MFILES	=\
 	certify/Makefile\
 	include/Makefile\
-	src/Makefile\
-	support/Makefile\
-	test/Makefile
+	support/Makefile
 
 ####### (Standard Productions) #################################################
 all\
@@ -91,7 +86,10 @@ destroy ::			; $(RM) -r lib
 destroy ::			; cd support && $(DESTROY)
 destroy ::			; $(DESTROY)
 
-distclean:	clobber		; $(RM) $(PURE) makefile
+distclean:	clobber
+	cd src &&	$(MAKE) $@
+	cd test &&	$(MAKE) $@
+	$(RM) $(PURE) makefile src/makefile test/makefile
 
 install::	all $(my_incdir) $(libdir)
 	$(srcdir)/support/ins_hdr "$(INSTALL_DATA)" $(my_incdir) $(I_LIST)
@@ -103,9 +101,6 @@ deinstall::
 	$(RM) $(libdir)/$(THAT).a
 
 ####### (Details of Productions) ###############################################
-$(MFILES)\
-$(SOURCES):				; $(GET) $@
-
 $(my_incdir) \
 $(libdir) \
 lib:					; $(srcdir)/mkdirs.sh $@
