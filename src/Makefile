@@ -1,16 +1,20 @@
-# $Header: /users/source/archives/td_lib.vcs/src/RCS/Makefile,v 1.61 1989/03/20 12:31:36 dickey Exp $
+# $Header: /users/source/archives/td_lib.vcs/src/RCS/Makefile,v 1.62 1989/03/27 14:26:39 dickey Exp $
 # MAKE-file for miscellaneous library routines
 #
 # $Log: Makefile,v $
-# Revision 1.61  1989/03/20 12:31:36  dickey
-# converted to STE CM-format
+# Revision 1.62  1989/03/27 14:26:39  dickey
+# use 'rcspath.h' include-file for 'rcspath.c' path-constant.
 #
+#	Revision 1.61  89/03/20  12:31:36  dickey
+#	converted to STE CM-format
+#	
 #
 ####### (Development) ##########################################################
 GET	= checkout
 #
 ####### (Command-line Options) #################################################
 I	= ../interface
+J	= ../../../interface
 INCLUDES= -I$I
 CFLAGS  = $(DEFINES) $(INCLUDES) -O
 DATE	= echo '****'`date` >> $@
@@ -215,6 +219,7 @@ rcslast.o:	$I/ptypes.h	$I/rcsdefs.h
 rcsload.o:	$I/ptypes.h	$I/rcsdefs.h
 rcslocks.o:	$I/ptypes.h	$I/rcsdefs.h
 rcsname.o:	$I/ptypes.h	$I/rcsdefs.h
+rcspath.o:	$J/rcspath.h	; $(CC) -I$J -c $*.c
 rcspermit.o:	$I/ptypes.h	$I/rcsdefs.h
 resizewin.o:	$I/ptypes.h
 sccslast.o:	$I/ptypes.h

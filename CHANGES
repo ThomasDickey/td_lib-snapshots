@@ -1,3 +1,21 @@
+1989-03-27  dickey@software.org
+
+	* src/Makefile:
+	use 'rcspath.h' include-file for 'rcspath.c' path-constant.
+
+	* src/cm_funcs/rcspath.c:
+	use 'rcspath.h' to encapsulate the string-constant RCS_PATH
+
+1989-03-27  ste_cm@software.org
+
+	* src/cm_funcs/rcspath.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+	* src/cm_funcs/rcspath.c: BASELINE Thu Apr  6 09:45:13 EDT 1989
+
+1989-03-27  dickey@software.org
+
+	* Makefile: integration/cleanup of recursive make
+
 1989-03-24  dickey@software.org
 
 	* Makefile: added install/deinstall rules
