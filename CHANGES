@@ -1,3 +1,66 @@
+1990-05-08  dickey@software.org
+
+	* src/cm_funcs/sccsname.c: use 'sccsdefs.h'
+
+1990-05-08  ste_cm@software.org
+
+	* src/cm_funcs/sccsname.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+1990-05-08  dickey@software.org
+
+	* include/sccsdefs.h: corrected def-name
+
+1990-05-08  ste_cm@software.org
+
+	* include/sccsdefs.h:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+1990-05-08  dickey@software.org
+
+	* Makefile: added 'sccsdefs.h' to install-rule; simplified other rules
+
+1990-05-08  ste_cm@software.org
+
+	* Makefile: BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+1990-05-08  dickey@software.org
+
+	* src/descrip.mms: added module 'sccsname.c'
+
+	* src/cm_funcs/sccsname.c: RCS_BASE
+
+	* src/Makefile: added module 'sccsname.c'
+
+1990-05-08  ste_cm@software.org
+
+	* src/Makefile: BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+1990-05-08  dickey@software.org
+
+	* include/Makefile: broke 'sccsdefs.h' out of 'common.h'
+
+1990-05-08  ste_cm@software.org
+
+	* include/Makefile:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* include/Makefile: BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1990-05-08  dickey@software.org
+
+	* include/td_lib.h, include/llib-ltd:
+	broke 'sccsdefs.h' out of 'common.h'
+
+1990-05-08  ste_cm@software.org
+
+	* include/llib-ltd:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+1990-05-08  dickey@software.org
+
+	* include/sccsdefs.h: RCS_BASE
+
 1990-04-27  dickey@software.org
 
 	* include/td_lib.h: ported 'execute()' to vax/vms

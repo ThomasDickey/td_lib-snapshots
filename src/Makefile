@@ -1,32 +1,16 @@
-# $Id: Makefile,v 7.0 1990/03/27 13:24:46 ste_cm Rel $
+# $Id: Makefile,v 8.0 1990/05/08 13:28:12 ste_cm Rel $
 # MAKE-file for miscellaneous library routines
 #
 # $Log: Makefile,v $
-# Revision 7.0  1990/03/27 13:24:46  ste_cm
-# BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+# Revision 8.0  1990/05/08 13:28:12  ste_cm
+# BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
 #
-#	Revision 6.0  90/03/27  13:24:46  ste_cm
-#	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+#	Revision 7.1  90/05/08  13:28:12  dickey
+#	added module 'sccsname.c'
 #	
-#	Revision 5.4  90/03/27  13:24:46  dickey
-#	added 'strwcmp.c' module
-#	
-#	Revision 5.3  90/03/02  11:50:31  dickey
-#	separated CFLAGS, INCLUDES, DEFINES defs.
-#	
-#	Revision 5.2  89/12/08  08:39:04  dickey
-#	added suffix-driven rules for lint, test files
-#	
-#	Revision 5.1  89/12/07  14:33:37  dickey
-#	added 'lint2.out' rule, which is less sensitive to command-length
-#	than 'lint.out' (though much slower!)
-#	
-#	Revision 5.0  89/10/26  08:54:17  ste_cm
-#	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
-#	
-#	Revision 4.0  89/08/23  13:49:43  ste_cm
-#	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
-#	
+#	Revision 7.0  90/03/27  13:24:46  ste_cm
+#	BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+#
 ####### (Development) ##########################################################
 GET	= checkout
 #
@@ -108,6 +92,7 @@ CSRC	=\
 	savewin.c\
 	sccs_dir.c\
 	sccslast.c\
+	sccsname.c\
 	scr_size.c\
 	setmtime.c\
 	stralloc.c\
@@ -203,6 +188,7 @@ OBJS	=\
 	savewin.o\
 	sccs_dir.o\
 	sccslast.o\
+	sccsname.o\
 	scr_size.o\
 	setmtime.o\
 	stralloc.o\
@@ -265,6 +251,7 @@ rcslocks.o:	$I/rcsdefs.h
 rcsname.o:	$I/rcsdefs.h
 rcspath.o:	$J/rcspath.h	; $(CC) -I$J -c $*.c
 rcspermit.o:	$I/rcsdefs.h
+sccsname.o:	$I/sccsdefs.h
 vcs_file.o:	$I/rcsdefs.h
 #
 ####### (Development) ##########################################################
