@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rmsio.c,v 5.0 1991/05/20 17:17:10 ste_cm Rel $";
+static	char	Id[] = "$Id: rmsio.c,v 7.0 1991/10/18 15:49:05 ste_cm Rel $";
 #endif
 
 /*
@@ -392,8 +392,8 @@ int	rmsio_size (fd)
  * Test this module by using it to copy files
  */
 #ifdef	TEST
-main(argc, argv)
-char	*argv[];
+/*ARGSUSED*/
+_MAIN
 {
 	auto	int	src, dst, len, size;
 	auto	int	records	= 0;
@@ -419,5 +419,6 @@ char	*argv[];
 		}
 	}
 	exit (SUCCESS);
+	/*NOTREACHED*/
 }
 #endif

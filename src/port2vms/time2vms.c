@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: time2vms.c,v 5.0 1991/05/20 17:17:22 ste_cm Rel $";
+static	char	Id[] = "$Id: time2vms.c,v 5.1 1991/10/18 15:49:16 dickey Exp $";
 #endif
 
 /*
@@ -35,7 +35,8 @@ time_t	unix_time;
 }
 
 #ifdef	TEST
-main()
+/*ARGSUSED*/
+_MAIN
 {
 	extern	char	*ctime();
 	auto	char	buffer[132];
@@ -65,5 +66,7 @@ main()
 			mytm.tm_isdst);
 		unix_time -= 2 * MONTH;
 	}
+	exit (SUCCESS);
+	/*NOTREACHED*/
 }
 #endif

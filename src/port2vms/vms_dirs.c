@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: vms_dirs.c,v 5.0 1991/05/20 17:17:59 ste_cm Rel $";
+static	char	Id[] = "$Id: vms_dirs.c,v 5.1 1991/10/18 15:36:56 dickey Exp $";
 #endif
 
 /*
@@ -89,8 +89,8 @@ DIR	*dirp;
 #ifdef	TEST
 #include	<stdio.h>
 
-main(argc, argv)
-char	*argv[];
+/*ARGSUSED*/
+_MAIN
 {
 	DIR	*dirp;
 	struct	direct	*dp;
@@ -104,5 +104,7 @@ char	*argv[];
 			closedir(dirp);
 		}
 	}
+	exit(SUCCESS);
+	/*NOTREACHED*/
 }
 #endif

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: edittree.c,v 5.0 1991/05/20 17:16:10 ste_cm Rel $";
+static	char	Id[] = "$Id: edittree.c,v 5.1 1991/10/18 15:36:30 dickey Exp $";
 #endif
 
 /*
@@ -137,8 +137,8 @@ char	*argv[];
 	}
 }
 
-main(argc, argv)
-char	*argv[];
+/*ARGSUSED*/
+_MAIN
 {
 	if (argc > 1)
 		do_test(argc, argv);
@@ -154,5 +154,6 @@ char	*argv[];
 		do_test(sizeof(tbl)/sizeof(tbl[0]), tbl);
 	}
 	exit(SUCCESS);
+	/*NOTREACHED*/
 }
 #endif	/* TEST */

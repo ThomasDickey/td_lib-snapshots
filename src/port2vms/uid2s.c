@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: uid2s.c,v 5.0 1991/05/20 17:17:49 ste_cm Rel $";
+static	char	Id[] = "$Id: uid2s.c,v 7.0 1991/10/18 15:36:50 ste_cm Rel $";
 #endif
 
 /*
@@ -7,9 +7,18 @@ static	char	Id[] = "$Id: uid2s.c,v 5.0 1991/05/20 17:17:49 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	15 Dec 1988
  * $Log: uid2s.c,v $
- * Revision 5.0  1991/05/20 17:17:49  ste_cm
- * BASELINE Tue Jun 11 16:44:53 1991 -- apollo sr10.3
+ * Revision 7.0  1991/10/18 15:36:50  ste_cm
+ * BASELINE Thu Jul 16 16:14:02 1992 -- CM_TOOLS #11
  *
+ *		Revision 6.0  91/10/18  15:36:50  ste_cm
+ *		BASELINE Mon Oct 21 13:09:39 1991 -- adapt to CM_TOOLS #10
+ *		
+ *		Revision 5.1  91/10/18  15:36:50  dickey
+ *		use macro _MAIN
+ *		
+ *		Revision 5.0  91/05/20  17:17:49  ste_cm
+ *		BASELINE Tue Jun 11 16:44:53 1991 -- apollo sr10.3
+ *		
  *		Revision 4.1  91/05/20  17:17:49  dickey
  *		apollo sr10.3 cpp complains about endif-tags
  *		
@@ -225,8 +234,8 @@ vms_uid2s(id)
 	return (txtalloc(tmp));
 }
 #ifdef	TEST
-main(argc, argv)
-char	*argv[];
+/*ARGSUSED*/
+_MAIN
 {
 	auto	 int	uid = getuid();
 	auto	 int	gid = getgid();
@@ -253,5 +262,6 @@ char	*argv[];
 		}
 	}
 	exit(SUCCESS);
+	/*NOTREACHED*/
 }
 #endif

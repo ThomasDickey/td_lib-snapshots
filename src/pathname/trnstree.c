@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: trnstree.c,v 5.0 1991/05/20 17:17:36 ste_cm Rel $";
+static	char	Id[] = "$Id: trnstree.c,v 5.1 1991/10/18 15:25:14 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: trnstree.c,v 5.0 1991/05/20 17:17:36 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	12 Jan 1989
  * Modified:
+ *		18 Oct 1991, converted to ANSI
  *
  * Function:	Translates files in a tree.
  */
@@ -30,10 +31,15 @@ static	char	Id[] = "$Id: trnstree.c,v 5.0 1991/05/20 17:17:36 ste_cm Rel $";
 #endif
 
 
-transtree(oldname,func,recur)
-char	*oldname;
-int	(*func)();
-int	recur;
+void
+transtree(
+_ARX(char *,	oldname)
+_FNX(int,	func)
+_AR1(int,	recur)
+	)
+_DCL(char *,	oldname)
+_DCL(int,	(*func)())
+_DCL(int,	recur)
 {
 	auto	DIR		*dirp;
 	auto	struct	direct	*dp;
@@ -99,13 +105,14 @@ int	recur;
 
 #ifdef	TEST
 static
-do_file(name)
-char	*name;
+do_file(
+_AR1(char *,	name))
+_DCL(char *,	name)
 {
 }
 
-main(argc, argv)
-char	*argv[];
+/*ARGSUSED*/
+_MAIN
 {
 	register int	j;
 	auto	 char	*s;
@@ -118,5 +125,7 @@ char	*argv[];
 		} else
 			transtree(s,do_file,recur);
 	}
+	exit(SUCCESS);
+	/*NOTREACHED*/
 }
 #endif

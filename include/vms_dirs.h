@@ -1,10 +1,11 @@
 /*
- * $Id: vms_dirs.h,v 5.0 1989/09/14 14:57:43 ste_cm Rel $
+ * $Id: vms_dirs.h,v 8.0 1991/10/18 15:13:57 ste_cm Rel $
  *
  * VMS definitions to interface to unix-like DIRECTORY(3) procedures.
  */
 #ifndef	_UNIXDIR_
 #define	_UNIXDIR_
+
 #ifdef	vms
 #include	<rms.h>
 #ifndef	$DESCRIPTOR
@@ -34,41 +35,42 @@ typedef	struct	_dirdesc {
 #include <sys/dir.h>
 #endif	vms/unix
 
-DIR *		opendir(
-		_AR1(char *,	filename)
-		)
-		_DCL(char *,	filename)
-		_RET
+extern	DIR *		opendir(
+			_ar1(char *,	filename)
+			)
+			_dcl(char *,	filename)
+			_ret
 
-struct direct *	readdir(
-		_AR1(DIR *,	dirp)
-		)
-		_DCL(DIR *,	dirp)
-		_RET
+extern	struct direct *	readdir(
+			_ar1(DIR *,	dirp)
+			)
+			_dcl(DIR *,	dirp)
+			_ret
 
-long		telldir(
-		_AR1(DIR *,	dirp)
-		)
-		_DCL(DIR *,	dirp)
-		_RET
+extern	long		telldir(
+			_ar1(DIR *,	dirp)
+			)
+			_dcl(DIR *,	dirp)
+			_ret
 
-		seekdir(
-		_ARX(DIR *,	dirp)
-		_AR1(long,	loc)
-		)
-		_DCL(DIR *,	dirp)
-		_DCL(long,	loc)
-		_NUL
+extern	void		seekdir(
+			_arx(DIR *,	dirp)
+			_ar1(long,	loc)
+			)
+			_dcl(DIR *,	dirp)
+			_dcl(long,	loc)
+			_nul
 
-		rewinddir(
-		_AR1(DIR *,	dirp)
-		)
-		_DCL(DIR *,	dirp)
-		_NUL
+extern	void		rewinddir(
+			_ar1(DIR *,	dirp)
+			)
+			_dcl(DIR *,	dirp)
+			_nul
 
-		closedir(
-		_AR1(DIR *,	dirp)
-		)
-		_DCL(DIR *,	dirp)
-		_NUL
+extern	void		closedir(
+			_ar1(DIR *,	dirp)
+			)
+			_dcl(DIR *,	dirp)
+			_nul
+
 #endif	_UNIXDIR_

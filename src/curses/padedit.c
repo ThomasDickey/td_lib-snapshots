@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: padedit.c,v 9.3 1991/10/04 14:12:00 dickey Exp $";
+static	char	Id[] = "$Id: padedit.c,v 10.0 1991/10/18 11:08:32 ste_cm Rel $";
 #endif
 
 /*
@@ -203,7 +203,7 @@ _DCL(char *,	editor)
 		argv[argc++] = "-e";
 		argv[argc++] = editor;
 		argv[argc++] = name;
-		argv[argc++] = 0;
+		argv[argc]   = 0;
 
 		if (readonly) {	/* spawn and run away */
 			return (spawn(xt, argv));

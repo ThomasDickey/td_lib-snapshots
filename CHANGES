@@ -1,3 +1,188 @@
+1991-10-18  dickey@software.org
+
+	* src/port2vms/time2vms.c, src/port2vms/rmsio.c: use macro _MAIN
+
+1991-10-18  ste_cm@software.org
+
+	* src/port2vms/rmsio.c:
+	BASELINE Mon Oct 21 13:09:39 1991 -- adapt to CM_TOOLS #10
+
+	* src/port2vms/rmsio.c:
+	BASELINE Thu Jul 16 16:14:02 1992 -- CM_TOOLS #11
+
+1991-10-18  dickey@software.org
+
+	* src/port2vms/vms2name.c: use macro _MAIN; lint
+
+1991-10-18  ste_cm@software.org
+
+	* src/port2vms/vms2name.c:
+	BASELINE Mon Oct 21 13:09:39 1991 -- adapt to CM_TOOLS #10
+
+	* src/port2vms/vms2name.c:
+	BASELINE Thu Jul 16 16:14:02 1992 -- CM_TOOLS #11
+
+1991-10-18  dickey@software.org
+
+	* src/port2vms/name2vms.c: use macro _MAIN
+
+1991-10-18  ste_cm@software.org
+
+	* src/port2vms/name2vms.c:
+	BASELINE Mon Oct 21 13:09:39 1991 -- adapt to CM_TOOLS #10
+
+	* src/port2vms/name2vms.c:
+	BASELINE Thu Jul 16 16:14:02 1992 -- CM_TOOLS #11
+
+1991-10-18  dickey@software.org
+
+	* src/port2vms/zone2vms.c: use macro _MAIN
+
+1991-10-18  ste_cm@software.org
+
+	* src/port2vms/zone2vms.c:
+	BASELINE Mon Oct 21 13:09:39 1991 -- adapt to CM_TOOLS #10
+
+	* src/port2vms/zone2vms.c:
+	BASELINE Thu Jul 16 16:14:02 1992 -- CM_TOOLS #11
+
+1991-10-18  dickey@software.org
+
+	* src/port2vms/utimes.c: use macro _MAIN
+
+1991-10-18  ste_cm@software.org
+
+	* src/port2vms/utimes.c:
+	BASELINE Mon Oct 21 13:09:39 1991 -- adapt to CM_TOOLS #10
+
+	* src/port2vms/utimes.c:
+	BASELINE Thu Jul 16 16:14:02 1992 -- CM_TOOLS #11
+
+1991-10-18  dickey@software.org
+
+	* src/port2vms/vms_dirs.c, src/port2vms/uid2s.c: use macro _MAIN
+
+1991-10-18  ste_cm@software.org
+
+	* src/port2vms/uid2s.c:
+	BASELINE Mon Oct 21 13:09:39 1991 -- adapt to CM_TOOLS #10
+
+	* src/port2vms/uid2s.c:
+	BASELINE Thu Jul 16 16:14:02 1992 -- CM_TOOLS #11
+
+1991-10-18  dickey@software.org
+
+	* src/port2vms/path2dir.c: use macro _MAIN
+
+1991-10-18  ste_cm@software.org
+
+	* src/port2vms/path2dir.c:
+	BASELINE Mon Oct 21 13:09:39 1991 -- adapt to CM_TOOLS #10
+
+	* src/port2vms/path2dir.c:
+	BASELINE Thu Jul 16 16:14:02 1992 -- CM_TOOLS #11
+
+1991-10-18  dickey@software.org
+
+	* src/pathname/edittree.c, src/pathname/editfile.c, src/port2vms/dir2path.c:
+	use macro _MAIN
+
+1991-10-18  ste_cm@software.org
+
+	* src/port2vms/dir2path.c:
+	BASELINE Mon Oct 21 13:09:39 1991 -- adapt to CM_TOOLS #10
+
+	* src/port2vms/dir2path.c:
+	BASELINE Thu Jul 16 16:14:02 1992 -- CM_TOOLS #11
+
+1991-10-18  dickey@software.org
+
+	* src/pathname/dlettree.c: use macro _MAIN
+
+1991-10-18  ste_cm@software.org
+
+	* src/pathname/dlettree.c:
+	BASELINE Mon Oct 21 13:09:39 1991 -- adapt to CM_TOOLS #10
+
+	* src/pathname/dlettree.c:
+	BASELINE Thu Jul 16 16:14:02 1992 -- CM_TOOLS #11
+
+1991-10-18  dickey@software.org
+
+	* src/port2vms/vms_rpth.c: use macro _MAIN
+
+1991-10-18  ste_cm@software.org
+
+	* src/port2vms/vms_rpth.c:
+	BASELINE Mon Oct 21 13:09:39 1991 -- adapt to CM_TOOLS #10
+
+	* src/port2vms/vms_rpth.c:
+	BASELINE Thu Jul 16 16:14:02 1992 -- CM_TOOLS #11
+
+1991-10-18  dickey@software.org
+
+	* src/port2vms/vms_pthc.c: use macro _MAIN
+
+	* src/pathname/trnstree.c: converted to ANSI
+
+	* include/port2vms.h, include/vms_dirs.h:
+	use prototype-definitions from CM_TOOLS #10
+
+1991-10-18  ste_cm@software.org
+
+	* include/vms_dirs.h:
+	BASELINE Fri Apr 30 08:53:28 1993 -- TD_LIB split, VAX-shutdown
+
+	* include/vms_dirs.h:
+	BASELINE Mon Oct 21 13:09:39 1991 -- adapt to CM_TOOLS #10
+
+	* include/vms_dirs.h: BASELINE Thu Jul 16 16:14:02 1992 -- CM_TOOLS #11
+
+1991-10-18  dickey@software.org
+
+	* Makefile: cleanup recursion
+
+	* src/cm_funcs/sccslast.c:
+	if we have more than 2 dots in the version, it cannot be the
+	tip-version (ignore it)
+
+1991-10-18  ste_cm@software.org
+
+	* src/cm_funcs/sccslast.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+	* src/cm_funcs/sccslast.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+	* src/cm_funcs/sccslast.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1991-10-18  dickey@software.org
+
+	* src/curses/padedit.c: lint
+
+1991-10-18  ste_cm@software.org
+
+	* src/curses/padedit.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+1991-10-18  dickey@software.org
+
+	* src/curses/blip.c: try to make sure we are writing to a terminal
+
+1991-10-18  ste_cm@software.org
+
+	* src/curses/blip.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+	* src/curses/blip.c: BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1991-10-18  dickey@software.org
+
+	* include/ptypes.h:
+	defined new macros _DOTS, _CDOTS, SIGNAL_FUNC to cover up
+	hacks in making prototypes fit with 'signal()'
+
 1991-10-17  dickey@software.org
 
 	* src/process/failed.c:
