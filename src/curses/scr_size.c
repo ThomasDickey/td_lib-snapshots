@@ -31,7 +31,7 @@
 #include "ptypes.h"
 #include "td_curse.h"
 
-MODULE_ID("$Id: scr_size.c,v 12.6 1995/07/06 14:03:48 tom Exp $")
+MODULE_ID("$Id: scr_size.c,v 12.7 1997/09/11 16:51:25 tom Exp $")
 
 #ifdef	apollo
 #  ifdef	apollo_sr10
@@ -52,6 +52,11 @@ MODULE_ID("$Id: scr_size.c,v 12.6 1995/07/06 14:03:48 tom Exp $")
 
 #ifndef sr10_bug
 # define sr10_bug	0
+#endif
+
+#ifdef SCO
+#include <sys/stream.h>
+#include <sys/ptem.h>
 #endif
 
 #define	my_LINES	retval[0]

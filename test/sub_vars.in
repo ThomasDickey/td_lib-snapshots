@@ -1,0 +1,7 @@
+# $Id: sub_vars.in,v 12.1 1997/09/11 13:29:51 tom Exp $
+# MAKE-file for miscellaneous library routines
+
+@make_include_left@../../support/td_lib.mk@make_include_right@
+
+# Put this second, so we can override the CFLAGS, defining TEST.
+@make_include_left@../td_defns.mk@make_include_right@

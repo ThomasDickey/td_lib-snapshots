@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.96 1997/09/11 00:55:00 tom Exp $
+dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.99 1997/09/11 23:08:24 tom Exp $
 dnl vi:set ts=4:
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "CF_" to "AC_"
@@ -279,7 +279,7 @@ CF_ARG_DISABLE(echo,
 	[  --disable-echo          test: display \"compiling\" commands],
 	[
     ECHO_LD='@echo linking [$]@;'
-    SHOW_CC='	@echo compiling [$]@'
+    SHOW_CC='	@echo compiling [$]<'
     ECHO_CC='@'
 ],[
     ECHO_LD=''
@@ -1345,7 +1345,7 @@ BEGIN	{
 
 ${make_include_left}../td_rules.mk${make_include_right}
 CF_EOF
-	echo "	cd $p &&	\$(MAKE) \[$]@" >>src/makefile
+	echo "	cd $p &&	\$(MAKE) \$(MAKE_OPTS) \[$]@" >>src/makefile
 
 	if test $cf_cv_ar_rules = yes ; then
 cat >>$cf_out <<CF_EOF
@@ -1457,7 +1457,7 @@ ${AWK-awk} <$q >>$cf_out '
 		printf "%s.c:\n", [$]1
 	}
 '
-	echo "	cd $p &&	\$(MAKE) \[$]@" >>test/makefile
+	echo "	cd $p &&	\$(MAKE) \$(MAKE_OPTS) \[$]@" >>test/makefile
 	fi
 done
 test -f $srcdir/test/makefile.end && \
@@ -1477,7 +1477,7 @@ do
 		if test -f $p/modules ; then
 			p=`basename $p`
 			cf_cv_test_modules="$cf_cv_test_modules $p"
-			cf_cv_test_makefiles="$cf_cv_test_makefiles test/$p/makefile:$srcdir/src/sub_vars.in"
+			cf_cv_test_makefiles="$cf_cv_test_makefiles test/$p/makefile:$srcdir/test/sub_vars.in"
 		fi
 	fi
 done
@@ -1515,6 +1515,11 @@ AC_CACHE_VAL(cf_cv_ansi_varargs,[
 	])
 AC_MSG_RESULT($cf_cv_ansi_varargs)
 test $cf_cv_ansi_varargs = yes && AC_DEFINE(ANSI_VARARGS)
+])dnl
+dnl ---------------------------------------------------------------------------
+dnl Use AC_VERBOSE w/o the warnings
+AC_DEFUN([CF_VERBOSE],
+[test -n "$verbose" && echo "	$1" 1>&AC_FD_MSG
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Test for the presence of <sys/wait.h>, 'union wait', arg-type of 'wait()'.
@@ -1567,9 +1572,4 @@ if test $cf_cv_decl_union_wait = yes; then
 	AC_MSG_RESULT($cf_cv_arg_union_wait)
 	test $cf_cv_arg_union_wait = yes && AC_DEFINE(WAIT_USES_UNION)
 fi
-])dnl
-dnl ---------------------------------------------------------------------------
-dnl Use AC_VERBOSE w/o the warnings
-AC_DEFUN([CF_VERBOSE],
-[test -n "$verbose" && echo "	$1" 1>&AC_FD_MSG
 ])dnl

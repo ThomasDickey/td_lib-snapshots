@@ -1,4 +1,4 @@
-# $Id: makefile.in,v 12.7 1997/09/11 10:55:54 tom Exp $
+# $Id: makefile.in,v 12.9 1997/09/11 21:53:19 tom Exp $
 # Top-level makefile for TD_LIB common library
 
 SHELL		= /bin/sh
@@ -26,6 +26,7 @@ RANLIB		= @RANLIB@
 I_CFG		= include/td_config.h
 MDEFN		= support/td_lib.mk
 I_LIST		= `cat $(srcdir)/include/headers`
+MAKE_OPTS	= @cf_cv_makeflags@
 
 RM		= -rm -f
 CLEAN		= *.bak *.log *.out *.tst .nfs* core
@@ -64,14 +65,14 @@ clobber\
 run_test\
 sources\
 lint.out ::	$(MFILES)
-	cd support &&	$(MAKE) $@
-	cd certify &&	$(MAKE) $@
-	cd include &&	$(MAKE) $@
-	cd src &&	$(MAKE) $@
-	cd test &&	$(MAKE) $@
+	cd support &&	$(MAKE) $(MAKE_OPTS) $@
+	cd certify &&	$(MAKE) $(MAKE_OPTS) $@
+	cd include &&	$(MAKE) $(MAKE_OPTS) $@
+	cd src &&	$(MAKE) $(MAKE_OPTS) $@
+	cd test &&	$(MAKE) $(MAKE_OPTS) $@
 
 lintlib ::	$(MFILES)
-	cd include &&	$(MAKE) $@
+	cd include &&	$(MAKE) $(MAKE_OPTS) $@
 
 all\
 sources ::	$(SOURCES)
@@ -81,11 +82,11 @@ clobber ::			; $(RM) $(CLEAN)
 clobber ::			; $(RM) -r lib
 
 distclean:	clobber
-	- cd src &&	$(MAKE) $@
-	- cd test &&	$(MAKE) $@
-	- $(RM) $(PURE)
-	- $(RM) config.log config.cache config.status
-	- $(RM) makefile */makefile
+	-cd src &&	$(MAKE) $(MAKE_OPTS) $@
+	-cd test &&	$(MAKE) $(MAKE_OPTS) $@
+	-$(RM) $(PURE)
+	-$(RM) config.log config.cache config.status
+	-$(RM) makefile */makefile
 
 install::	all $(my_incdir) $(libdir)
 	$(srcdir)/support/ins_hdr "$(INSTALL_DATA)" $(my_incdir) $(I_LIST)

@@ -12,9 +12,10 @@
  *		the UNIX Operating System", by Maurice J.  Bach, Prentice-Hall
  *		1986.
  */
+#define ERR_PTYPES
 #include <ptypes.h>
 
-MODULE_ID("$Id: fileblox.c,v 12.4 1995/09/21 01:01:08 tom Exp $")
+MODULE_ID("$Id: fileblox.c,v 12.5 1997/09/11 15:23:22 tom Exp $")
 
 #ifdef unix
 #if !STAT_HAS_ST_BLOCKS

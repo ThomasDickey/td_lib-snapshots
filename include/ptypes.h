@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 12.41 1997/09/08 00:57:11 tom Exp $ */
+/* $Id: ptypes.h,v 12.42 1997/09/11 15:22:33 tom Exp $ */
 
 #ifndef	PTYPES_H
 #define	PTYPES_H
@@ -153,7 +153,7 @@ typedef	short	ino_t;
  * Definition which is true iff we use function-prototypes
  */
 #undef	PROTOTYPES
-#if	defined(vms) || defined(__TURBOC__) || (defined(__STDC__) && !defined(LINTLIBRARY))
+#if	defined(vms) || defined(__TURBOC__) || (defined(__STDC__) && !defined(LINTLIBRARY)) || defined(CC_HAS_PROTOS)
 #define	PROTOTYPES	1
 #endif
 /*FIXME: make a test for prototypes */

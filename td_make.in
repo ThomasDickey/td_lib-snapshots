@@ -1,4 +1,4 @@
-# $Id: td_make.in,v 12.14 1997/09/11 10:33:56 tom Exp $
+# $Id: td_make.in,v 12.16 1997/09/11 21:54:58 tom Exp $
 # common definitions for makefiles built over TD_LIB library.
 
 SHELL	= /bin/sh
@@ -14,17 +14,13 @@ RM	= rm -f
 LINT	= @LINT@
 CTAGS	= dotags
 
-GET	= checkout
-COPY	= cp
-PUT	= $(RM) $@; $(COPY) $? $@
-MAKE	= @MAKE@ @cf_cv_makeflags@
-
 CC		= @CC@
 CPP		= @CPP@
 INSTALL		= @INSTALL@
 INSTALL_PROGRAM	= @INSTALL_PROGRAM@
 INSTALL_DATA	= @INSTALL_DATA@
 RANLIB		= @RANLIB@
+MAKE_OPTS	= @cf_cv_makeflags@
 
 EXTRA_CFLAGS	= @EXTRA_CFLAGS@
 CFLAGS		= @CFLAGS@
@@ -79,13 +75,13 @@ LINT_EACH = $(SHELL) -c 'for i in $?;do echo $$i:; $(LINT) $(LINTOPTS) $$i >>$@;
 .SUFFIXES: .c .o .a
 
 .c.o:
-	@echo compiling $<
+@SHOW_CC@
 	@ECHO_CC@$(CC) $(CPP_OPTS) $(CFLAGS) $(EXTRA_CFLAGS) -c $<
 .o.a:
 	@$(AR) $@ $*.o
 	-@$(RM) $*.o
 .c.a:
-	@echo compiling $<
+@SHOW_CC@
 	@ECHO_CC@$(CC) $(CPP_OPTS) $(CFLAGS) $(EXTRA_CFLAGS) -c $<
 	@$(AR) $@ $*.o
 	-@$(RM) $*.o
