@@ -1,5 +1,5 @@
 #ifndef	NO_IDENT
-static	char	Id[] = "$Id: cmv_dir.c,v 12.7 1994/09/29 22:39:01 tom Exp $";
+static	char	Id[] = "$Id: cmv_dir.c,v 12.8 1995/01/05 23:20:35 tom Exp $";
 #endif
 
 /*
@@ -403,7 +403,8 @@ void	Initialize(_AR0)
 					add_working(p, s);
 				}
 			}
-			*next = at_next;
+			if ((*next = at_next) != EOS)
+				next++;
 		}
 		CmvVault = txtalloc(CmvVault);
 	}
