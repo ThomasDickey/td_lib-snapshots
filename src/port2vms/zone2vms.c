@@ -15,15 +15,10 @@
  *		00:00 and 02:00!
  */
 
+#define TIM_PTYPES
 #include	"port2vms.h"
 
-MODULE_ID("$Id: zone2vms.c,v 12.4 1994/10/07 00:07:02 tom Exp $")
-
-#undef MIN
-
-#define	MIN	60
-#define	HOUR	(60*MIN)
-#define	DAY	(24*HOUR)
+MODULE_ID("$Id: zone2vms.c,v 12.5 1995/10/31 23:23:12 tom Exp $")
 
 #define	M_APR	3
 #define	M_OCT	9
@@ -61,9 +56,6 @@ time_t	zone2vms(
 /*ARGSUSED*/
 _MAIN
 {
-#ifdef vms
-	extern	char	*ctime();
-#endif
 	auto	time_t	unix_time = 722271384/* time(0) for Nov 20, 1992 */,
 			real_time;
 	register int	j;

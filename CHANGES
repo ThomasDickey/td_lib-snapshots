@@ -1,3 +1,12 @@
+1995-10-31  dickey@clark.net
+
+	* src/port2vms/zone2vms.c: mods so this (should) compile on AIX
+
+	* include/port2vms.h: removed <sys/time.h>
+
+	* src/curses/cmdch.c:
+	mods to work on AIX, whose curses maps newline to KEY_ENTER
+
 1995-10-21  dickey@clark.net
 
 	* src/curses/erasechr.c: corrected ifdefs in eraseword()
