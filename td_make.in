@@ -1,4 +1,4 @@
-# $Id: td_make.in,v 12.16 1997/09/11 21:54:58 tom Exp $
+# $Id: td_make.in,v 12.17 1997/09/12 23:10:05 tom Exp $
 # common definitions for makefiles built over TD_LIB library.
 
 SHELL	= /bin/sh
@@ -75,13 +75,13 @@ LINT_EACH = $(SHELL) -c 'for i in $?;do echo $$i:; $(LINT) $(LINTOPTS) $$i >>$@;
 .SUFFIXES: .c .o .a
 
 .c.o:
-@SHOW_CC@
+@RULE_CC@
 	@ECHO_CC@$(CC) $(CPP_OPTS) $(CFLAGS) $(EXTRA_CFLAGS) -c $<
 .o.a:
 	@$(AR) $@ $*.o
 	-@$(RM) $*.o
 .c.a:
-@SHOW_CC@
+@RULE_CC@
 	@ECHO_CC@$(CC) $(CPP_OPTS) $(CFLAGS) $(EXTRA_CFLAGS) -c $<
 	@$(AR) $@ $*.o
 	-@$(RM) $*.o

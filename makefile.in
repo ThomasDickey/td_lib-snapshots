@@ -1,4 +1,4 @@
-# $Id: makefile.in,v 12.9 1997/09/11 21:53:19 tom Exp $
+# $Id: makefile.in,v 12.10 1997/09/12 00:14:23 tom Exp $
 # Top-level makefile for TD_LIB common library
 
 SHELL		= /bin/sh
@@ -13,6 +13,7 @@ THAT		= libtd
 prefix		= @prefix@
 exec_prefix	= @exec_prefix@
 includedir	= @includedir@
+bindir		= @bindir@
 libdir		= @libdir@
 srcdir		= @srcdir@
 
@@ -85,17 +86,18 @@ distclean:	clobber
 	-cd src &&	$(MAKE) $(MAKE_OPTS) $@
 	-cd test &&	$(MAKE) $(MAKE_OPTS) $@
 	-$(RM) $(PURE)
-	-$(RM) config.log config.cache config.status
-	-$(RM) makefile */makefile
+	-$(RM) td_config config_h makefile */makefile
 
 install::	all $(my_incdir) $(libdir)
 	$(srcdir)/support/ins_hdr "$(INSTALL_DATA)" $(my_incdir) $(I_LIST)
 	$(srcdir)/support/ins_mak "$(INSTALL_DATA)" $(libdir) $(my_incdir) support/$(THIS).mk
+	$(INSTALL_PROGRAM) -m 755 td_config $(bindir)
 	$(INSTALL_DATA) lib/$(THAT).a $(libdir)
 	$(RANLIB) $(libdir)/$(THAT).a
 
 deinstall::
 	$(srcdir)/support/rem_hdr $(my_incdir) $(I_LIST)
+	$(RM) $(bindir)/td_config
 	$(RM) $(libdir)/$(THIS).mk
 	$(RM) $(libdir)/$(THAT).a
 

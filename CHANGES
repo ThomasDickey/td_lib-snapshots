@@ -1,3 +1,17 @@
+1997-09-12  dickey@clark.net
+
+	* aclocal.m4: add CF_TOP_SRCDIR
+
+	* configure.in: use CF_TOP_SRCDIR
+
+	* td_make.in: use TOP_SRCDIR to simplify side-by-side config
+
+	* td_make.in: use RULE_CC rather than SHOW_CC
+
+	* aclocal.m4: add symbol RULE_CC
+
+	* aclocal.m4: fixes for TD_CONFIG
+
 1997-09-11  dickey@clark.net
 
 	* makefile.in: add td_config to install/deinstall rules
