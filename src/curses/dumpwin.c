@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)dumpwin.c	1.2 88/04/21 14:00:26";
+static	char	sccs_id[] = "@(#)dumpwin.c	1.3 88/05/11 10:36:48";
 #endif	lint
 
 /*
@@ -7,6 +7,9 @@ static	char	sccs_id[] = "@(#)dumpwin.c	1.2 88/04/21 14:00:26";
  * Author:	T.E.Dickey
  * Created:	20 Apr 1988 (from code written 13 Nov 1987)
  * Modified:
+ *		11 May 1988, corrected dump of 'firstch[]', 'lastch[]' arrays,
+ *			     which show the pending first/last change columns
+ *			     for a given row.
  *
  * Function:	Dumps the state of a curses window
  *
@@ -29,7 +32,6 @@ char	fname[BUFSIZ],
 	*s = strcat(strcpy(fname, getenv("HOME")), "/dumpwin.out");
 FILE	*fp = fopen(s, "a+");
 int	j,k;
-short	*t;
 
 	if (fp) {
 	long	now = time(0);
@@ -39,16 +41,6 @@ short	*t;
 		OUT "   _cury:%d, _curx:%d\n", w->_cury, w->_curx);
 		OUT "   _maxy:%d, _maxx:%d\n", w->_maxy, w->_maxx);
 		OUT "   _begy:%d, _begx:%d\n", w->_begy, w->_begx);
-
-		OUT "   _firstch: %#x\n", w->_firstch);
-		OUT "   _lastch:  %#x\n", w->_lastch);
-
-		for (t = w->_firstch; t < w->_lastch; t++) {
-			OUT "   %d) \"", t - w->_firstch);
-			dumpchr(fp, (((*t) >> 8) & 0xff));
-			dumpchr(fp, ((*t) & 0xff));
-			OUT "\"\n");
-		}
 
 		OUT "   _orig:    %#x\n", w->_orig);
 		OUT "   _nextp:   %#x\n", w->_nextp);
@@ -60,12 +52,13 @@ short	*t;
 		OUT "   _y @ %#x\n", w->_y);
 		for (j = 0; j < w->_maxy; j++) {
 			s = w->_y[j];
-			OUT "%8d) [%#x] %#x: \"", j, &w->_y[j], s);
+			OUT "%8d) [%3d,%3d] %#x: \"",
+				j, w->_firstch[j], w->_lastch[j], s);
 			if (s)
 				while (k = *s++)
 					dumpchr(fp,k);
 			OUT "\"\n");
-			fflush(fp);
+			(void)fflush(fp);
 		}
 		(void)fclose(fp);
 	}

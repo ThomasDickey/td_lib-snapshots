@@ -1,4 +1,4 @@
-/* @(#)llib-ltd	1.9 88/05/10 13:34:04 */
+/* @(#)llib-ltd	1.10 88/05/11 10:40:06 */
 /*LINTLIBRARY*/
 
 #include	<curses.h>
@@ -29,6 +29,7 @@ char	*denode (path, node, opt) char *path, *node; int *opt; { return(0); }
 
 /* doalloc.c ---------------------------------------------------------- */
 char	*doalloc(oldp,len) char *oldp; unsigned len; { return(0); }
+	dofree(oldp) char *oldp; { }
 
 /* dotname.c ---------------------------------------------------------- */
 int	dotname (path) char *path; { return(0); }

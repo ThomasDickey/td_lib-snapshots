@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)resizewin.c	1.3 88/05/06 14:59:29";
+static	char	sccs_id[] = "@(#)resizewin.c	1.4 88/05/11 10:33:07";
 #endif	lint
 
 /*
@@ -7,6 +7,8 @@ static	char	sccs_id[] = "@(#)resizewin.c	1.3 88/05/06 14:59:29";
  * Title:	resizewin.c (change size of curses window)
  * Created:	21 Apr 1988
  * Modified:
+ *		11 May 1988, reallocate firstch/lastch arrays (did not know what
+ *			     they were til looking at curses source).
  *
  * Function:	(Apollo only) inquire to see if the VT100 window has changed
  *		size since curses was initialized.  If so, adjust stdscr and
@@ -52,6 +54,8 @@ int	row;
 			free(w->_y[row]);
 
 		ALLOC(w->_y,chtype *, my_LINES);
+		ALLOC(w->_firstch,short, my_LINES);
+		ALLOC(w->_lastch, short, my_LINES);
 
 		for (row = LINES; row < my_LINES; row++)
 			w->_y[row] = 0;
