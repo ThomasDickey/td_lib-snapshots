@@ -1,3 +1,13 @@
+1994-05-27  dickey@clark.net
+
+	* acconfig.h: first cut for AC_ANSI_CPP
+
+	* aclocal.m4: first cut of AC_ANSI_CPP (doesn't work for some reason)
+
+	* configure.in: added AC_ANSI_CPP, AC_GMTOFF
+
+	* include/ptypes.h: obsoleted ANSI_CPP definition
+
 1994-05-24  dickey@clark.net
 
 	* configure.in: added tests for <regex.h>, etc.

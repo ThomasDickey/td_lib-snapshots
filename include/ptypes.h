@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 12.16 1994/05/23 23:18:24 tom Exp $ */
+/* $Id: ptypes.h,v 12.17 1994/05/27 22:18:49 tom Exp $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -106,6 +106,7 @@ typedef	short	ino_t;
 #define STDC_HEADERS 1	/* ...at least for TurboC */
 #define HAVE_FCNTL_H 1
 #define	HAVE_STDLIB_H 1
+#define	HAVE_STDARG_H 1
 #undef  HAVE_UNISTD_H
 #define HAVE_TIMEZONE 1
 #include <io.h>		/* for 'chmod()' */
@@ -113,6 +114,7 @@ typedef	short	ino_t;
 
 #if defined(vms)
 #define	HAVE_STDLIB_H 1
+#define HAVE_STDARG_H 1
 #undef  HAVE_UNISTD_H
 #endif
 
@@ -134,9 +136,13 @@ typedef	short	ino_t;
  */
 #undef	ANSI_CPP
 
-#if defined(apollo) && (defined(__STDCPP__) || defined(__GNUC__))
-# define ANSI_CPP 1
-#endif
+#if defined(apollo)
+#  if defined(__STDCPP__) || defined(__GNUC__)
+#   define ANSI_CPP 1
+#  else
+#   define ANSI_CPP 0
+#  endif
+#endif	/* apollo */
 
 #ifndef ANSI_CPP
 # if defined(__STDC__)
