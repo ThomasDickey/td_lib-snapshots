@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey (from MDIFF program)
  * Created:	05 Jul 1989
  * Modified:
+ *		30 May 1998, compile with g++
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		13 Nov 1992, to chunk the allocations of array cells, reducing
@@ -19,7 +20,7 @@
 #define	SCOMP	m2comp			/* name of this module */
 #include "td_scomp.h"
 
-MODULE_ID("$Id: m2comp.c,v 12.4 1993/10/29 17:35:25 tom Exp $")
+MODULE_ID("$Id: m2comp.c,v 12.5 1998/05/30 10:51:39 tom Exp $")
 
 #define	INSERT	1
 #define	DELETE	2
@@ -88,7 +89,7 @@ void	m2comp(
 	/* for each diagonal, two items are saved: */
 	auto	Line	*last_d;	/* the row containing the last d */
 	auto	EDIT	**script;	/* corresponding edit script */
-	auto	EDIT	*new;
+	auto	EDIT	*nxt;
 	register SAVE	*ptr;
 
 	auto	SAVE	*save_list;	/* global, so we can free cells */
@@ -139,7 +140,7 @@ void	m2comp(
 				ptr->used = 0;
 				save_list = ptr;
 			}
-			new = &(ptr->edit_struct[ptr->used++]);
+			nxt = &(ptr->edit_struct[ptr->used++]);
 
 			/* find a d on diagonal k */
 			if (	k             == ORIGIN - d
@@ -152,21 +153,21 @@ void	m2comp(
 				 * k-1.
 				 */
 				row       = last_d[k + 1] + 1;
-				new->link = script[k + 1];
-				new->op   = DELETE;
+				nxt->link = script[k + 1];
+				nxt->op   = DELETE;
 			} else {
 				/*
 				 * Move right from the last d-1 on diagonal k-1
 				 */
 				row       = last_d[k - 1];
-				new->link = script[k - 1];
-				new->op   = INSERT;
+				nxt->link = script[k - 1];
+				nxt->op   = INSERT;
 			}
 
 			/* Code common to the two cases */
-			new->line1 = row;
-			new->line2 = col = row + k - ORIGIN;
-			script[k]  = new;
+			nxt->line1 = row;
+			nxt->line2 = col = row + k - ORIGIN;
+			script[k]  = nxt;
 
 			/* Slide down the diagonal */
 			while (row < n1

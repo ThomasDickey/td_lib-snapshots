@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 12.17 1997/09/08 00:58:20 tom Exp $ */
+/* $Id: td_lib.h,v 12.18 1998/05/30 11:39:51 tom Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for TD_LIB common
@@ -1017,12 +1017,12 @@ extern	int	localzone;
 	/* which.c ---------------------------------------------------- */
 	int	which(
 			_arx(char *,	bfr)
-			_arx(int,	len)
+			_arx(unsigned,	len)
 			_arx(char *,	find)
 			_ar1(char *,	dot)
 			)
 			_dcl(char *,	bfr)
-			_dcl(int,	len)
+			_dcl(unsigned,	len)
 			_dcl(char *,	find)
 			_dcl(char *,	dot)
 			_ret

@@ -17,7 +17,7 @@
 
 #include <ptypes.h>
 
-MODULE_ID("$Id: vecedit.c,v 12.3 1993/10/29 17:35:23 tom Exp $")
+MODULE_ID("$Id: vecedit.c,v 12.4 1998/05/30 11:28:09 tom Exp $")
 
 char **
 vecedit(
@@ -31,12 +31,12 @@ _DCL(char **,	script)
 		len_out	= len_in,
 		use_in	= 0,
 		use_out	= 0;
-	int	e_at,
+	unsigned e_at,
 		e_len;
 	char	e_type,
 		**result;
 
-	register int	j;
+	register unsigned j;
 
 	static	char	*fmt	= "%c%d %d\n";
 

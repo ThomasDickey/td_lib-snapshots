@@ -22,7 +22,7 @@
 #include	"ptypes.h"
 #include	"dyn_str.h"
 
-MODULE_ID("$Id: fp2argv.c,v 12.3 1993/10/29 17:35:26 tom Exp $")
+MODULE_ID("$Id: fp2argv.c,v 12.4 1998/05/30 11:29:31 tom Exp $")
 
 	/*ARGSUSED*/
 	def_DOALLOC(char *)
@@ -62,7 +62,7 @@ int	fp2argv(
 {
 	register char **vec = 0;
 	register int  lines = 0;
-	register int  have  = 0;
+	register unsigned have  = 0;
 	char	*buffer;
 
 	while ((buffer = get_line(fp)) != 0) {

@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	03 Apr 1992
  * Modified:
+ *		30 May 1998, compile with g++
  *		29 Oct 1993, ifdef-ident
  *
  * Function:	copies an ordinary string to a dynamic-string.
@@ -12,7 +13,7 @@
 #include "ptypes.h"
 #include "dyn_str.h"
 
-MODULE_ID("$Id: dyn_copy.c,v 12.2 1993/10/29 17:35:23 tom Exp $")
+MODULE_ID("$Id: dyn_copy.c,v 12.3 1998/05/30 10:51:39 tom Exp $")
 
 DYN *	dyn_copy(
 	_ARX(DYN *,	p)
@@ -21,13 +22,13 @@ DYN *	dyn_copy(
 	_DCL(DYN *,	p)
 	_DCL(char *,	s)
 {
-	register size_t	new	= (s != 0) ? strlen(s) : 0;
+	register size_t	len	= (s != 0) ? strlen(s) : 0;
 
-	if (new != 0) {
-		p = dyn_alloc(p, new+1);
+	if (len != 0) {
+		p = dyn_alloc(p, len+1);
 		(void)strcpy(p->text, s);
-		p->cur_length = new;
+		p->cur_length = len;
 	} else
-		dyn_init(&p, new+1);
+		dyn_init(&p, len+1);
 	return p;
 }

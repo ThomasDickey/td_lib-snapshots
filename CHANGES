@@ -1,3 +1,28 @@
+1998-05-30  dickey@clark.net
+
+	* src/cm_funcs/lastrev.c: g++
+
+	* src/pathname/which.c: signed/unsigned warnings
+
+	* include/td_qsort.h: tweak for 'const'
+
+	* include/td_lib.h, src/cm_funcs/rcsargpr.c, src/pathname/fp2argv.c:
+	signed/unsigned warnings
+
+	* src/memory/vecedit.c: signed/unsigned warnings.
+
+	* src/curses/dumptty.c: signed/unsigned
+
+	* src/cm_funcs/rcsname.c, src/cm_funcs/rcskeys.c, src/cm_funcs/rcsload.c:
+	signed/unsigned warnings
+
+	* src/port2vms/vms2name.c: signed/unsigned
+
+	* src/process/catchall.c: signed/unsigned warnings
+
+	* src/cm_funcs/rcsedit.c, src/cm_funcs/rcsload.c, src/cm_funcs/rcssymbs.c, src/compare/m2comp.c, src/sheet/field_of.c, src/string/dyn_app.c, src/string/dyn_cata.c, src/string/dyn_copy.c, src/string/lsbycols.c:
+	compile:g++
+
 1998-05-29  dickey@clark.net
 
 	* include/td_ext.h: compile with g++

@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	03 Feb 1992
  * Modified:
+ *		30 May 1998, compile with g++
  *		01 Jul 1994, use autoconf to control use of 'memmove()'
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
@@ -20,7 +21,7 @@
 #include "td_sheet.h"
 #include <ctype.h>
 
-MODULE_ID("$Id: field_of.c,v 12.4 1994/07/01 23:54:04 tom Exp $")
+MODULE_ID("$Id: field_of.c,v 12.5 1998/05/30 10:51:39 tom Exp $")
 
 static	int	opt_Blanks;
 
@@ -231,12 +232,12 @@ char *	get_field_of(
 	_DCL(char *,	dftval)
 	_DCL(DYN **,	result)
 {
-	auto	char	*this,
+	auto	char	*item,
 			*next;
 
-	if (((N = skip_to_field(list, N, &this, &next)) == 0)
-	 && (*this != EOS))
-		return UnquotedField(result, this);
+	if (((N = skip_to_field(list, N, &item, &next)) == 0)
+	 && (*item != EOS))
+		return UnquotedField(result, item);
 
 	if (dftval != 0) {
 		*result = dyn_copy(*result, dftval);
@@ -259,13 +260,13 @@ char *	set_field_of(
 	_DCL(int,	N)
 	_DCL(char *,	buffer)
 {
-	auto	char	*this,
+	auto	char	*item,
 			*next,
 			*last	= list;
 	auto	size_t	need;
 
 	/* find the point at which we replace the field */
-	if ((N = skip_to_field(list, N, &this, &next)) < 0)
+	if ((N = skip_to_field(list, N, &item, &next)) < 0)
 		N = 0;		/* list was null */
 
 	/* ensure that the argument is nonnull */
@@ -277,7 +278,7 @@ char *	set_field_of(
 		buffer = QuotedField(buffer);
 
 	/* allocate sufficient space for the new data */
-	need = strlen(buffer) + strlen(next) + (this - list) + N;
+	need = strlen(buffer) + strlen(next) + (item - list) + N;
 	list = doalloc(list, (unsigned)need + 1);
 
 	/*
@@ -285,20 +286,20 @@ char *	set_field_of(
 	 */
 	need = strlen(buffer);
 	if (last != 0) {
-		this	= (this - last) + list;
+		item	= (item - last) + list;
 		next	= (next - last) + list;
-		(void)memmove(this + N + need, next, strlen(next)+1);
+		(void)memmove(item + N + need, next, strlen(next)+1);
 	} else {
-		this	= list;
+		item	= list;
 		need++;	/* for trailing null */
 	}
 
 	/*
 	 * Insert the new buffer, and fill in missing commas, if any
 	 */
-	(void)memmove(this + N, buffer, need);
+	(void)memmove(item + N, buffer, need);
 	while (N-- > 0)
-		this[N] = ',';
+		item[N] = ',';
 
 	return list;
 }

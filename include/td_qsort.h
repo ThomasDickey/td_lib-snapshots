@@ -1,4 +1,4 @@
-/* $Id: td_qsort.h,v 12.7 1997/09/08 00:58:29 tom Exp $ */
+/* $Id: td_qsort.h,v 12.8 1998/05/30 11:44:12 tom Exp $ */
 
 #ifndef	TD_QSORT_H
 #define	TD_QSORT_H
@@ -23,20 +23,20 @@
  */
 
 #ifndef	QSORT_SRC
-#define	QSORT_SRC	char *
+#define	QSORT_SRC	const char *
 #endif
-
-#define	QSORT_DST	QSORT_SRC*
 
 #if	PROTOTYPES
 #define	ANSI_QSORT 1
 #define	QSORT_CAST(s,d)	register QSORT_DST d = (QSORT_DST) s;
 #define QSORT_dst const V_OR_P
+#define QSORT_DST QSORT_SRC const *
 #define	QSORT_FUNC_ARGS(p1,p2)	_ARX(QSORT_dst,q1) _AR1(QSORT_dst,q2)
 #else
 #define	ANSI_QSORT 0
 #define	QSORT_CAST(s,d)
 #define QSORT_dst QSORT_DST
+#define QSORT_DST QSORT_SRC *
 #define	QSORT_FUNC_ARGS(p1,p2)	_ARX(QSORT_DST,p1) _AR1(QSORT_DST,p2)
 #endif
 
