@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)uid2s.c	1.5 88/08/09 11:59:47";
+static	char	sccs_id[] = "@(#)uid2s.c	1.7 88/08/10 12:47:09";
 #endif	lint
 
 /*
@@ -29,18 +29,23 @@ typedef	struct {
 
 #define	Q(j)	(q+j)->
 #define	def_doalloc	def_UID_TABLE	/* lint (gould) */
+	/*ARGSUSED*/
 	def_DOALLOC(TABLE)
 
 char *
 uid2s(uid)
 {
+extern	 struct passwd *getpwent();		/* cf: apollo sys5 */
+extern		VOID	setpwent();
+extern		VOID	endpwent();
 register struct passwd *p;
 register int	j;
 static   TABLE	*q;
 static   char	bfr[10];
 static	unsigned qmax = 0;
 
-	if ((qmax == 0) && setpwent() >= 0) {
+	if (qmax == 0) {
+		(void)setpwent();
 		while (p = getpwent()) {
 		register char *s = p->pw_name;
 			q = DOALLOC(q, TABLE, qmax+1);

@@ -1,3 +1,123 @@
+1988-08-10  dickey@software.org
+
+	* src/cm_funcs/packdate.c:
+	apollo sys5 cpp doesn't like 'defined()' expressions.
+
+	* src/pathname/abspath.c, src/unix/uid2s.c, src/unix/gid2s.c, src/cm_funcs/newzone.c, src/pathname/fp2argv.c:
+	lint/compile with apollo sys5
+
+	* src/pathname/fp2argv.c: sccs2rcs keywords
+
+1988-08-10  ste_cm@software.org
+
+	* src/pathname/fp2argv.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/pathname/fp2argv.c: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/pathname/fp2argv.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/pathname/fp2argv.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+	* src/pathname/fp2argv.c: BASELINE Thu Apr  6 09:45:13 EDT 1989
+
+	* src/pathname/fp2argv.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
+	* src/pathname/fp2argv.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1988-08-10  dickey@software.org
+
+	* src/process/execute.c, src/memory/doalloc.c:
+	lint/compile with apollo sys5
+
+	* src/memory/doalloc.c: sccs2rcs keywords
+
+1988-08-10  ste_cm@software.org
+
+	* src/memory/doalloc.c: BASELINE Thu Apr  6 09:45:13 EDT 1989
+
+1988-08-10  dickey@software.org
+
+	* include/llib-ltd, src/unix/s2uid.c: lint/compile with apollo sys5
+
+	* src/unix/s2uid.c: sccs2rcs keywords
+
+1988-08-10  ste_cm@software.org
+
+	* src/unix/s2uid.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/unix/s2uid.c: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/unix/s2uid.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+	* src/unix/s2uid.c: BASELINE Thu Apr  6 09:45:13 EDT 1989
+
+	* src/unix/s2uid.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
+	* src/unix/s2uid.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1988-08-10  dickey@software.org
+
+	* src/unix/s2gid.c: lint/compile with apollo sys5
+
+	* src/unix/s2gid.c: sccs2rcs keywords
+
+1988-08-10  ste_cm@software.org
+
+	* src/unix/s2gid.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/unix/s2gid.c: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/unix/s2gid.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/unix/s2gid.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+	* src/unix/s2gid.c: BASELINE Thu Apr  6 09:45:13 EDT 1989
+
+	* src/unix/s2gid.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
+	* src/unix/s2gid.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1988-08-10  dickey@software.org
+
+	* src/process/getuser.c: lint/compile with apollo sys5
+
+	* src/process/getuser.c: sccs2rcs keywords
+
+1988-08-10  ste_cm@software.org
+
+	* src/process/getuser.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+	* src/process/getuser.c: BASELINE Thu Apr  6 09:45:13 EDT 1989
+
+	* src/process/getuser.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
+1988-08-10  dickey@software.org
+
+	* src/process/gethome.c: lint/compile with apollo sys5
+
+	* src/process/gethome.c: sccs2rcs keywords
+
+1988-08-10  ste_cm@software.org
+
+	* src/process/gethome.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+	* src/process/gethome.c: BASELINE Thu Apr  6 09:45:13 EDT 1989
+
+	* src/process/gethome.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
 1988-08-09  dickey@software.org
 
 	* src/unix/uid2s.c, src/unix/gid2s.c:

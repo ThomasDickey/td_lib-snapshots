@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)packdate.c	1.9 88/08/08 07:39:45";
+static	char	sccs_id[] = "@(#)packdate.c	1.10 88/08/10 13:43:59";
 #endif	lint
 
 /*
@@ -17,7 +17,7 @@ static	char	sccs_id[] = "@(#)packdate.c	1.9 88/08/08 07:39:45";
  */
 
 #include	"ptypes.h"
-#if	defined(apollo) || defined(SYSTEM5)
+#ifdef	SYSTEM5
 #include	<time.h>
 #else
 #include	<sys/time.h>

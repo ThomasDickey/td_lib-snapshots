@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)abspath.c	1.6 88/05/17 07:42:21";
+static	char	sccs_id[] = "@(#)abspath.c	1.7 88/08/10 12:57:22";
 #endif	lint
 
 /*
@@ -31,7 +31,7 @@ static	char	sccs_id[] = "@(#)abspath.c	1.6 88/05/17 07:42:21";
 #include	<stdio.h>
 #include	<pwd.h>
 extern	char	*getenv(),
-		*index(),
+		*strchr(),
 		*strcat(),
 		*strcpy();
 
@@ -133,9 +133,10 @@ register char *s, *d = path;
 			while (*d++ = *s++);
 			precat(getenv("HOME"), d = path);
 		} else {	/* someone else's home */
+		extern	 struct passwd *getpwnam();	/* cf: apollo sys5 */
 		register struct passwd *p;
 		char	user[MAXPATHLEN];
-			if (s = index(strcpy(user, d+1), '/'))
+			if (s = strchr(strcpy(user, d+1), '/'))
 				*s++ = '\0';
 			else
 				s = d + strlen(d);

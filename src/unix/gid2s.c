@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)gid2s.c	1.5 88/08/09 11:58:45";
+static	char	sccs_id[] = "@(#)gid2s.c	1.6 88/08/10 12:46:29";
 #endif	lint
 
 /*
@@ -28,18 +28,23 @@ typedef	struct {
 
 #define	Q(j)	(q+j)->
 #define	def_doalloc	def_GID_TABLE	/* lint (gould) */
+	/*ARGSUSED*/
 	def_DOALLOC(TABLE)
 
 char *
 gid2s(gid)
 {
+extern	 struct group  *getgrent();		/* cf: apollo sys5 */
+extern		VOID	setgrent();
+extern		VOID	endgrent();
 register struct group *p;
 register int	j;
 static   TABLE	*q;
 static   char	bfr[10];
 static	unsigned qmax = 0;
 
-	if ((qmax == 0) && setgrent() >= 0) {
+	if (qmax == 0) {
+		(void)setgrent();
 		while (p = getgrent()) {
 		register char *s = p->gr_name;
 			q = DOALLOC(q,TABLE,qmax+1);

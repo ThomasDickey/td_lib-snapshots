@@ -1,12 +1,24 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)gethome.c	1.1 88/06/07 07:08:12";
+static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/process/RCS/gethome.c,v 4.0 1988/08/10 10:47:21 ste_cm Rel $";
 #endif	lint
 
 /*
  * Title:	gethome.c (get home name)
  * Author:	T.E.Dickey
  * Created:	06 Jun 1988
- * Modified:
+ * $Log: gethome.c,v $
+ * Revision 4.0  1988/08/10 10:47:21  ste_cm
+ * BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+ *
+ *		Revision 3.0  88/08/10  10:47:21  ste_cm
+ *		BASELINE Mon Jun 19 13:27:01 EDT 1989
+ *		
+ *		Revision 2.0  88/08/10  10:47:21  ste_cm
+ *		BASELINE Thu Apr  6 09:45:13 EDT 1989
+ *		
+ *		Revision 1.3  88/08/10  10:47:21  dickey
+ *		sccs2rcs keywords
+ *		
  *
  * Function:	Returns the path of the home directory of the current process.
  */
@@ -19,6 +31,7 @@ extern	char	*stralloc();
 char *
 gethome()
 {
+	extern	 struct passwd *getpwuid();		/* cf: apollo sys5 */
 	register struct passwd *q;
 	register char	*r;
 	static   char	*home;
