@@ -1,12 +1,18 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)rcsload.c	1.2 88/08/19 15:06:47";
+static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs/RCS/rcsload.c,v 2.0 1988/09/13 12:46:37 ste_cm Exp $";
 #endif	lint
 
 /*
  * Title:	rcsload.c (load delta-tree for an RCS file)
  * Author:	T.E.Dickey
  * Created:	19 Aug 1988
- * Modified:
+ * $Log: rcsload.c,v $
+ * Revision 2.0  1988/09/13 12:46:37  ste_cm
+ * BASELINE Thu Apr  6 09:45:13 EDT 1989
+ *
+ *		Revision 1.4  88/09/13  12:46:37  dickey
+ *		sccs2rcs keywords
+ *		
  *
  * Function:	Scans an RCS archive file, and returns an array of RCSTREE
  *		structures, which represent the information about each delta.
@@ -248,7 +254,7 @@ rcsunload(p)
 RCSTREE	*p;			/* vector to release */
 {
 	if (p)
-		free(p);
+		free((char *)p);
 }
 
 #ifdef	TEST

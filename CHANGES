@@ -1,3 +1,184 @@
+1988-09-13  dickey@software.org
+
+	* src/cm_funcs/newzone.c: lint
+
+	* src/cm_funcs/newzone.c: sccs2rcs keywords
+
+1988-09-13  ste_cm@software.org
+
+	* src/cm_funcs/newzone.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+	* src/cm_funcs/newzone.c: BASELINE Thu Apr  6 09:45:13 EDT 1989
+
+1988-09-13  dickey@software.org
+
+	* src/cm_funcs/rcsload.c: lint
+
+	* src/cm_funcs/rcsload.c: sccs2rcs keywords
+
+1988-09-13  ste_cm@software.org
+
+	* src/cm_funcs/rcsload.c: BASELINE Thu Apr  6 09:45:13 EDT 1989
+
+1988-09-13  dickey@software.org
+
+	* src/pathname/pathcat.c: oops: forgot to copy back onto 'dst[]'!
+
+	* src/pathname/pathcat.c: sccs2rcs keywords
+
+1988-09-13  ste_cm@software.org
+
+	* src/pathname/pathcat.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+	* src/pathname/pathcat.c: BASELINE Thu Apr  6 09:45:13 EDT 1989
+
+	* src/pathname/pathcat.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
+1988-09-13  dickey@software.org
+
+	* include/ptypes.h: added ACC_PTYPES, NULL_FUNC definitions.
+
+	* src/process/userprot.c: rewrote using 'for_user()'
+
+	* src/process/userprot.c: sccs2rcs keywords
+
+1988-09-13  ste_cm@software.org
+
+	* src/process/userprot.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/process/userprot.c: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/process/userprot.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/process/userprot.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+	* src/process/userprot.c: BASELINE Thu Apr  6 09:45:13 EDT 1989
+
+	* src/process/userprot.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
+	* src/process/userprot.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1988-09-13  dickey@software.org
+
+	* src/process/usercopy.c: rewrote using 'for_user()'
+
+	* src/process/usercopy.c: sccs2rcs keywords
+
+1988-09-13  ste_cm@software.org
+
+	* src/process/usercopy.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/process/usercopy.c: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/process/usercopy.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/process/usercopy.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+	* src/process/usercopy.c: BASELINE Thu Apr  6 09:45:13 EDT 1989
+
+	* src/process/usercopy.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
+	* src/process/usercopy.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1988-09-13  dickey@software.org
+
+	* include/llib-ltd, src/Makefile: added 'for_user.c' module.
+
+	* src/process/for_user.c: New file.
+
+	* src/process/for_user.c: sccs2rcs keywords
+
+	* src/pathname/copyback.c: protect file-copy with 'catchall()'
+
+	* src/pathname/copyback.c: sccs2rcs keywords
+
+1988-09-13  ste_cm@software.org
+
+	* src/pathname/copyback.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/pathname/copyback.c:
+	BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/pathname/copyback.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/pathname/copyback.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+	* src/pathname/copyback.c: BASELINE Thu Apr  6 09:45:13 EDT 1989
+
+	* src/pathname/copyback.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
+	* src/pathname/copyback.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1988-09-13  dickey@software.org
+
+	* src/pathname/filecopy.c: protect file-copy with 'catchall()'
+
+	* src/pathname/filecopy.c: sccs2rcs keywords
+
+1988-09-13  ste_cm@software.org
+
+	* src/pathname/filecopy.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+	* src/pathname/filecopy.c: BASELINE Thu Apr  6 09:45:13 EDT 1989
+
+1988-09-13  dickey@software.org
+
+	* include/llib-ltd:
+	added 'catchall.c', 'ftype.c', and 'ftype2.c' modules.
+
+	* src/Makefile: added 'catchall.c', 'ftype.c' and 'ftype2.c' modules.
+
+	* src/process/catchall.c: New file.
+
+	* src/process/catchall.c: sccs2rcs keywords
+
+1988-09-13  ste_cm@software.org
+
+	* src/process/catchall.c: BASELINE Thu Apr  6 09:45:13 EDT 1989
+
+1988-09-13  dickey@software.org
+
+	* src/pathname/ftype2.c: New file.
+
+	* src/pathname/ftype2.c: sccs2rcs keywords
+
+1988-09-13  ste_cm@software.org
+
+	* src/pathname/ftype2.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+	* src/pathname/ftype2.c: BASELINE Thu Apr  6 09:45:13 EDT 1989
+
+	* src/pathname/ftype2.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
+1988-09-13  dickey@software.org
+
+	* src/pathname/ftype.c: New file.
+
+	* src/pathname/ftype.c: sccs2rcs keywords
+
+1988-09-13  ste_cm@software.org
+
+	* src/pathname/ftype.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+	* src/pathname/ftype.c: BASELINE Thu Apr  6 09:45:13 EDT 1989
+
+	* src/pathname/ftype.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
 1988-09-12  dickey@software.org
 
 	* src/pathname/pathcat.c: New file.

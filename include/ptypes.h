@@ -1,4 +1,4 @@
-/* @(#)ptypes.h	1.7 88/08/17 09:42:53 */
+/* @(#)ptypes.h	1.8 88/09/13 11:06:14 */
 
 /*
  * The definitions in this file cover simple cases of bsd4.x/system5 porting,
@@ -52,6 +52,8 @@ extern	V_OR_I	rewind();
 #define	FAIL	1		/* exit() arg if any error */
 
 #define	EOS	'\0'
+
+#define NULL_FUNC (int (*)())0
 
 /*
  * Functions we (usually) ignore the return value from:
@@ -116,3 +118,14 @@ extern	char	killchar();
 #endif	SYSTEM5
 #include	<curses.h>
 #endif	CUR_PTYPES
+
+/*
+ * Define symbols used in 'access()' function
+ */
+#ifdef	ACC_PTYPES
+#ifdef	SYSTEM5
+#include	<unistd.h>
+#else	SYSTEM5
+#include	<sys/file.h>
+#endif	SYSTEM5
+#endif	ACC_PTYPES

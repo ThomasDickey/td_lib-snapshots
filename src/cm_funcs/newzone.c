@@ -1,12 +1,21 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)newzone.c	1.7 88/08/10 12:35:25";
+static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs/RCS/newzone.c,v 3.0 1988/09/13 12:47:57 ste_cm Rel $";
 #endif	lint
 
 /*
  * Title:	newzone.c (set new timezone)
  * Author:	T.E.Dickey
  * Created:	09 Jun 1988
- * Modified:
+ * $Log: newzone.c,v $
+ * Revision 3.0  1988/09/13 12:47:57  ste_cm
+ * BASELINE Mon Jun 19 13:27:01 EDT 1989
+ *
+ *		Revision 2.0  88/09/13  12:47:57  ste_cm
+ *		BASELINE Thu Apr  6 09:45:13 EDT 1989
+ *		
+ *		Revision 1.9  88/09/13  12:47:57  dickey
+ *		sccs2rcs keywords
+ *		
  *		28 Jul 1988, ifdef for two types of gould.
  *
  * Function:	This module contains two procedures, 'newzone()' and
@@ -59,6 +68,7 @@ int	localzone;		/* public copy of minutes-west */
 typedef	char	**VEC;
 extern	VEC	environ;
 extern	char	*stralloc();
+	/*ARGSUSED*/
 	def_ALLOC(char *)
 #endif	apollo
 #endif	SYSTEM5
