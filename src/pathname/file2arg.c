@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RCS/file2arg.c,v 2.2 1989/05/11 12:52:42 dickey Exp $";
+static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RCS/file2arg.c,v 5.0 1989/06/09 13:43:34 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -28,6 +28,7 @@ static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RC
 extern	FILE	*tmpfile();
 extern	int	errno;			/* ...not always in <errno.h> */
 extern	char	*file2mem();
+extern	char	**vecalloc();
 
 #define	AVG_LINE	25		/* nominal line-length */
 #define	AMOUNT(n)	(unsigned)(n)
@@ -59,13 +60,13 @@ char	***vec;
 	 * Reallocate space for the file counting the nulls inserted
 	 * after each newline.
 	 */
-	if (!(blob = realloc(blob, AMOUNT(length + lines + 1))))
+	if (!(blob = doalloc(blob, AMOUNT(length + lines + 1))))
 		return (-1);
 
 	/*
 	 * Allocate space for the vector pointing to the strings
 	 */
-	*vec = p = (char **)malloc((lines + 1) * sizeof(char *));
+	*vec = p = vecalloc((lines + 1) * sizeof(char *));
 
 	/*
 	 * Recopy the blob onto itself, putting a null after each newline.
@@ -99,8 +100,8 @@ char	*argv[];
 			PRINTF("file: %s (%d lines)\n", name, lines);
 			for (k=0; vec[k]; k++)
 				PRINTF("%d:\t%s", k + 1, vec[k]);
-			free(vec[0]);	/* frees the blob */
-			free((char *)vec);
+			dofree(vec[0]);	/* frees the blob */
+			dofree((char *)vec);
 			PRINTF("<EOF>\n");
 		} else {
 			perror(name);

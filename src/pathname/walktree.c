@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RCS/walktree.c,v 2.1 1989/04/24 16:44:34 dickey Exp $";
+static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RCS/walktree.c,v 3.0 1989/06/09 13:40:34 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,9 +7,15 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname
  * Author:	T.E.Dickey
  * Created:	31 Aug 1988
  * $Log: walktree.c,v $
- * Revision 2.1  1989/04/24 16:44:34  dickey
- * use VMS's string-function prototypes in port.
+ * Revision 3.0  1989/06/09 13:40:34  ste_cm
+ * BASELINE Mon Jun 19 13:27:01 EDT 1989
  *
+ *		Revision 2.2  89/06/09  13:40:34  dickey
+ *		use 'dofree()'
+ *		
+ *		Revision 2.1  89/04/24  16:44:34  dickey
+ *		use VMS's string-function prototypes in port.
+ *		
  *		Revision 1.2  88/08/31  13:33:42  dickey
  *		sccs2rcs keywords
  *		
@@ -146,7 +152,7 @@ char	*type;
 				while (num-- != 0)
 					total += walktree(new_wd, vec[num],
 						func, type, level+1);
-				free((PTR)vec);
+				dofree((PTR)vec);
 			}
 		}
 		(void)chdir(old_wd);

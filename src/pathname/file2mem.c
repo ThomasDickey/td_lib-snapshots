@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RCS/file2mem.c,v 2.1 1989/05/11 12:19:58 dickey Exp $";
+static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RCS/file2mem.c,v 4.0 1989/06/09 13:41:04 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -74,7 +74,7 @@ char	*name;
 	 * We now have a file-pointer open on a file of known length, which
 	 * we can read into memory using a single 'malloc()'
 	 */
-	blob = malloc((unsigned)(length + 2));
+	blob = doalloc((char *)0, (unsigned)(length + 2));
 	if (blob == 0) {
 		(void)fclose(fp);
 		return (0);
@@ -111,7 +111,7 @@ char	*argv[];
 		if (blob = file2mem(name = argv[j])) {
 			PRINTF("file: %s (%d chars)\n", name, strlen(blob));
 			PRINTF("%s<EOF>\n", blob);
-			free(blob);
+			dofree(blob);
 		} else {
 			perror(name);
 		}

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs/RCS/rcsload.c,v 2.0 1988/09/13 12:46:37 ste_cm Exp $";
+static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs/RCS/rcsload.c,v 4.0 1989/06/09 13:39:42 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,9 +7,18 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs
  * Author:	T.E.Dickey
  * Created:	19 Aug 1988
  * $Log: rcsload.c,v $
- * Revision 2.0  1988/09/13 12:46:37  ste_cm
- * BASELINE Thu Apr  6 09:45:13 EDT 1989
+ * Revision 4.0  1989/06/09 13:39:42  ste_cm
+ * BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
  *
+ *		Revision 3.0  89/06/09  13:39:42  ste_cm
+ *		BASELINE Mon Jun 19 13:27:01 EDT 1989
+ *		
+ *		Revision 2.1  89/06/09  13:39:42  dickey
+ *		use 'dofree()'
+ *		
+ *		Revision 2.0  88/09/13  12:46:37  ste_cm
+ *		BASELINE Thu Apr  6 09:45:13 EDT 1989
+ *		
  *		Revision 1.4  88/09/13  12:46:37  dickey
  *		sccs2rcs keywords
  *		
@@ -254,7 +263,7 @@ rcsunload(p)
 RCSTREE	*p;			/* vector to release */
 {
 	if (p)
-		free((char *)p);
+		dofree((char *)p);
 }
 
 #ifdef	TEST
