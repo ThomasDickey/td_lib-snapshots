@@ -1,4 +1,4 @@
-# $Id: descrip.mms,v 7.1 1990/05/08 13:45:06 dickey Exp $
+# $Id: descrip.mms,v 8.0 1990/06/27 09:23:57 ste_cm Rel $
 # MMS-file for miscellaneous library routines	
 #
 ####### (Development) ##########################################################
@@ -222,6 +222,7 @@ ALL :		$(A)($(LIBRARYMODULES))
 CLEAN :
 		- purge
 		- remove -vf *.LIS;* *.LOG;* TEST_*.*;*
+		- remove -vf *.OUT;* [-.LIB]*.A;* [-.LIB]*.LN;* $(I)*.LN;*
 CLOBBER :	CLEAN
 		- remove -vf *.OBJ;* $(ALL)
 DESTROY :	

@@ -1,3 +1,60 @@
+1990-06-27  dickey@software.org
+
+	* src/port2vms/vms_rpth.c:
+	use 'strlcpy()' to ensure that all pathnames are lowercased
+
+1990-06-27  ste_cm@software.org
+
+	* src/port2vms/vms_rpth.c: BASELINE Tue Aug 14 16:27:44 1990
+
+1990-06-27  dickey@software.org
+
+	* src/descrip.mms:
+	modified 'clean' rule to remove stuff that might be accidentally
+	copied from UNIX.
+
+1990-06-27  ste_cm@software.org
+
+	* src/descrip.mms:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+1990-06-27  dickey@software.org
+
+	* src/string/strucpy.c: added procedure 'strlcpy()' to this module.
+	altered 'strucpy()' to return its destination-arg a la 'strcpy()'
+
+1990-06-27  ste_cm@software.org
+
+	* src/string/strucpy.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+1990-06-27  dickey@software.org
+
+	* include/td_lib.h: added 'strlcpy()' to 'strucpy.c' module.
+	modified 'strucpy()' to return dst-arg
+
+1990-06-27  ste_cm@software.org
+
+	* include/td_lib.h:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+1990-06-27  dickey@software.org
+
+	* src/port2vms/vms_rpth.c, test/port2vms/vms_rpth.ref: RCS_BASE
+
+1990-06-27  ste_cm@software.org
+
+	* test/port2vms/vms_rpth.ref:
+	BASELINE Mon Oct 21 13:09:39 1991 -- adapt to CM_TOOLS #10
+
+	* test/port2vms/vms_rpth.ref:
+	BASELINE Thu Jul 16 16:14:02 1992 -- CM_TOOLS #11
+
+	* test/port2vms/vms_rpth.ref: BASELINE Tue Aug 14 16:27:44 1990
+
+	* test/port2vms/vms_rpth.ref:
+	BASELINE Tue Jun 11 16:44:53 1991 -- apollo sr10.3
+
 1990-06-26  dickey@software.org
 
 	* src/port2vms/vms_pthc.c: RCS_BASE
