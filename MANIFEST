@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19881130
+MANIFEST for td_lib, version t19881212
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 include                         subdirectory
@@ -48,6 +48,7 @@ src/pathname                    subdirectory
 src/pathname/abspath.c          convert path to absolute form
 src/pathname/copyback.c         copy file back from a temp-file
 src/pathname/denode.c           strip leading node-name from path
+src/pathname/dlettree.c         delete-tree code for VMS/unix
 src/pathname/dotname.c          test for "." or ".." names
 src/pathname/editfile.c         VMS/unix edit tree-of-files
 src/pathname/edittree.c         VMS/unix edit-tree-of-files
