@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)abspath.c	1.5 88/05/16 14:46:58";
+static	char	sccs_id[] = "@(#)abspath.c	1.6 88/05/17 07:42:21";
 #endif	lint
 
 /*
@@ -103,10 +103,11 @@ precat(prefix, string)
 char	*prefix, *string;
 {
 register char *s;
-	s = prefix + strlen(prefix);
+char	tmp[MAXPATHLEN];
+	s = strcpy(tmp, prefix) + strlen(prefix);
 	if (*string)
 		(void)strcat(strcat(s, "/"), string);
-	(void)strcpy(string, prefix);
+	(void)strcpy(string, tmp);
 	*s = '\0';
 }
 

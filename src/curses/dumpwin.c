@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)dumpwin.c	1.3 88/05/11 10:36:48";
+static	char	sccs_id[] = "@(#)dumpwin.c	1.4 88/05/17 07:56:47";
 #endif	lint
 
 /*
@@ -16,7 +16,8 @@ static	char	sccs_id[] = "@(#)dumpwin.c	1.3 88/05/11 10:36:48";
  */
 
 #include	<curses.h>
-extern	long	time();
+#include	<sys/types.h>
+extern	time_t	time();
 extern	char	*ctime(),
 		*getenv(),
 		*strcat(),
@@ -34,7 +35,7 @@ FILE	*fp = fopen(s, "a+");
 int	j,k;
 
 	if (fp) {
-	long	now = time(0);
+	time_t	now = time(0);
 		OUT "%s: %s", tag, ctime(&now));
 		OUT "window @ %#x\n", w);
 

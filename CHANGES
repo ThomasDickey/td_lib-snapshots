@@ -1,3 +1,62 @@
+1988-05-17  dickey@software.org
+
+	* src/curses/resizwin.c: lint
+
+	* src/curses/rawterm.c: lint/void
+
+	* src/cm_funcs/sccslast.c, src/unix/gid2s.c, src/unix/uid2s.c:
+	lint; use 'ltostr()' rather than 'sprintf()'.
+
+	* src/memory/doalloc.c, src/memory/vecalloc.c: lint
+
+	* src/memory/vecalloc.c: sccs2rcs keywords
+
+1988-05-17  ste_cm@software.org
+
+	* src/memory/vecalloc.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/memory/vecalloc.c: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/memory/vecalloc.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/memory/vecalloc.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+	* src/memory/vecalloc.c: BASELINE Thu Apr  6 09:45:13 EDT 1989
+
+	* src/memory/vecalloc.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
+	* src/memory/vecalloc.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1988-05-17  dickey@software.org
+
+	* src/curses/savewin.c: lint
+
+	* src/memory/txtalloc.c: lint (gould)
+
+	* src/memory/txtalloc.c: sccs2rcs keywords
+
+1988-05-17  ste_cm@software.org
+
+	* src/memory/txtalloc.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+	* src/memory/txtalloc.c: BASELINE Thu Apr  6 09:45:13 EDT 1989
+
+	* src/memory/txtalloc.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
+1988-05-17  dickey@software.org
+
+	* include/llib-ltd: port to gould
+
+	* src/curses/dumpwin.c: lint
+
+	* src/pathname/abspath.c:
+	oops: was overwriting 'prefix' arg in 'precat()'.
+
 1988-05-16  dickey@software.org
 
 	* src/pathname/abspath.c: getcwd/getwd porting.

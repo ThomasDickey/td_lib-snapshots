@@ -1,5 +1,5 @@
 #ifndef	NO_SCCS_ID
-static	char	sccs_id[] = "@(#)rawterm.c	1.1 87/11/24 09:30:23";
+static	char	sccs_id[] = "@(#)rawterm.c	1.2 88/05/17 13:13:05";
 #endif	NO_SCCS_ID
 
 /*
@@ -26,7 +26,7 @@ rawterm()
 	_pfast   =
 	_rawmode = TRUE;
 	_echoit  = FALSE;
-	stty(_tty_ch, &_tty);	/* single op avoids timing bug */
+	(void)stty(_tty_ch, &_tty);	/* single op avoids timing bug */
 #else	noecho
 	raw();			/* procedures, not macros (e.g., sys5) */
 	noecho();

@@ -1,4 +1,4 @@
-/* @(#)llib-ltd	1.12 88/05/16 13:18:05 */
+/* @(#)llib-ltd	1.13 88/05/17 07:57:33 */
 /*LINTLIBRARY*/
 
 #include	<curses.h>
@@ -41,9 +41,10 @@ int	dotname (path) char *path; { return(0); }
 	dumpwin(w,s) WINDOW *w; char *s; { }
 
 /* erasechar.c -------------------------------------------------------- */
-#ifndef	erasechar
-int	erasechar() { return(0); }
+#ifdef	erasechar
+#undef	erasechar
 #endif	erasechar
+int	erasechar() { return(0); }
 
 /* flushall.c --------------------------------------------------------- */
 	flushall(fd) { }
@@ -53,9 +54,10 @@ int	erasechar() { return(0); }
 char	*gid2s(gid) { return(0); }
 
 /* killchar.c --------------------------------------------------------- */
-#ifndef	killchar
-int	killchar() { return(0); }
+#ifdef	killchar
+#undef	killchar
 #endif	killchar
+int	killchar() { return(0); }
 
 /* ltostr.c ----------------------------------------------------------- */
 char	*ltostr(bfr, value, base) char *bfr; long value; { return(0); }
