@@ -1,3 +1,7 @@
+1998-09-17  dickey@clark.net
+
+	* src/cm_funcs/cmv_last.c: fix a nit with the binary-files
+
 1998-08-22  dickey@clark.net
 
 	* src/cm_funcs/cmv_dir.c: fix an int/long mismatch
