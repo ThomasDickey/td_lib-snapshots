@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19920204
+MANIFEST for td_lib, version t19920205
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 Makefile                        top-level makefile for TD_LIB
@@ -27,6 +27,7 @@ src/cm_funcs/newzone.c          set new timezone
 src/cm_funcs/next_ver.c         next-version computation
 src/cm_funcs/packdate.c         pack numbers to make UNIX date
 src/cm_funcs/rcs_dir.c          returns name of RCS-directory
+src/cm_funcs/rcsargpr.c         parse argument-pairs of working/archive files
 src/cm_funcs/rcsdebug.c         encapsulates $RCS_DEBUG variable
 src/cm_funcs/rcsedit.c          edit RCS archive-file
 src/cm_funcs/rcskeys.c          decode RCS keywords

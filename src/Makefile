@@ -1,4 +1,4 @@
-# $Id: Makefile,v 10.3 1992/02/04 13:07:36 dickey Exp $
+# $Id: Makefile,v 10.4 1992/02/05 14:29:37 dickey Exp $
 # MAKE-file for miscellaneous library routines
 #
 ####### (Development) ##########################################################
@@ -76,6 +76,7 @@ CSRC	=\
 	rcs_debug.c\
 	rcs_dir.c\
 	rcsedit.c\
+	rcsfilepair.c\
 	rcskeys.c\
 	rcslast.c\
 	rcsload.c\
@@ -182,6 +183,7 @@ OBJS	=\
 	rcs_debug.o\
 	rcs_dir.o\
 	rcsedit.o\
+	rcsfilepair.o\
 	rcskeys.o\
 	rcslast.o\
 	rcsload.o\
@@ -259,6 +261,7 @@ $(OBJS):	$I/ptypes.h	$I/common.h
 cmdch.o:	$I/cmdch.h
 rawgets.o:	$I/cmdch.h
 rcsedit.o:	$(RCSDEFS_H)
+rcsfilepair.o:	$(RCSDEFS_H)
 rcskeys.o:	$(RCSDEFS_H)
 rcslast.o:	$(RCSDEFS_H)
 rcsload.o:	$(RCSDEFS_H)

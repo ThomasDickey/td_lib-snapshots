@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: walktree.c,v 10.0 1991/10/17 07:53:58 ste_cm Rel $";
+static	char	Id[] = "$Id: walktree.c,v 10.1 1992/02/05 15:33:56 dickey Exp $";
 #endif
 
 /*
@@ -7,13 +7,10 @@ static	char	Id[] = "$Id: walktree.c,v 10.0 1991/10/17 07:53:58 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	31 Aug 1988
  * Modified:
+ *		05 Feb 1992, missed prototype on main-function
  *		03 Oct 1991, converted to ANSI
- *		
- *		Revision 8.1  91/05/15  09:58:45  dickey
- *		apollo sr10.3 cpp complains about tag in #endif
- *		
- *		Revision 4.1  89/09/06  15:20:27  dickey
- *		use 'getwd()' definition from "ptypes.h"
+ *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
+ *		06 Sep 1989, use 'getwd()' definition from "ptypes.h"
  *		
  * Function:	Given a pathname, this successively invokes a user-supplied
  *		function, with the following arguments:
@@ -86,12 +83,18 @@ _DCL(char **,	p2)
  * Given a name in the current directory, see what it is.  If it is a directory,
  * nest to a new level.
  */
-walktree(path, name, func, type, level)
-char	*path;
-char	*name;
-int	(*func)();
-char	*type;
-int	level;
+walktree(
+_ARX(char *,	path)
+_ARX(char *,	name)
+_FNX(int,	func)
+_ARX(char *,	type)
+_ARX(int,	level)
+	)
+_DCL(char *,	path)
+_DCL(char *,	name)
+_DCL(int,	(*func)())
+_DCL(char *,	type)
+_DCL(int,	level)
 {
 	int	total	= 0,
 		ok_acc	= -1,

@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 10.0 1991/10/23 10:52:19 ste_cm Rel $ */
+/* $Id: ptypes.h,v 10.1 1992/02/05 10:42:02 dickey Exp $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -16,6 +16,7 @@
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#define	STAT	struct	stat
 
 #ifndef	P_tmpdir
 #define	P_tmpdir	"/usr/tmp"

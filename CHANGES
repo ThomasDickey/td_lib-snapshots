@@ -1,3 +1,28 @@
+1992-02-05  dickey@software.org
+
+	* src/pathname/walktree.c:
+	oops: forgot to convert 'walktree()' entrypoint to prototypes
+
+	* include/rcsdefs.h: added 'rcsfilepair.c'
+
+	* src/Makefile, src/descrip.mms: added module 'rcsfilepair'
+
+	* src/cm_funcs/rcsargpr.c:
+	fleshed out the remainder (must lint/integrate/test)
+
+	* src/cm_funcs/rcsargpr.c:
+	make this parse the working/archive names (must do the
+	Mode-driven stuff, stats & directory-name).
+
+	* src/cm_funcs/rcsargpr.c: starting to flesh it out
+
+	* include/ptypes.h: added STAT-definition
+
+	* src/cm_funcs/rcsargpr.c:
+	got most of the description there, starting code
+
+	* src/cm_funcs/rcsargpr.c: RCS_BASE
+
 1992-02-04  dickey@software.org
 
 	* src/process/interact.c: RCS_BASE
