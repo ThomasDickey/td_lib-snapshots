@@ -1,3 +1,12 @@
+1989-10-23  dickey@software.org
+
+	* src/port2vms/zone2vms.c:
+	oops: had the EST/EDT switch dates reversed.  this looks right.
+
+1989-10-23  ste_cm@software.org
+
+	* src/port2vms/zone2vms.c: BASELINE Tue Aug 14 16:27:44 1990
+
 1989-10-19  dickey@software.org
 
 	* include/td_lib.h: corrected definition of 'relpath()'

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/port2vms/RCS/zone2vms.c,v 3.0 1988/09/30 09:28:51 ste_cm Rel $";
+static	char	Id[] = "$Id: zone2vms.c,v 4.0 1989/10/23 09:37:46 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -11,6 +11,9 @@ static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/port2vms/RC
  *		for daylight-savings time.  Returns an adjustment to a unix-
  *		derived time (GMT) to EST5EDT.  This adjustment is used to
  *		convert a unix-time to VMS wall-clock time.
+ *
+ *		Note that this is not correct for the switch dates between
+ *		00:00 and 02:00!
  */
 
 #include	"portunix.h"
@@ -35,12 +38,12 @@ time_t	unix_time;
 	sunday	= mytm.tm_mday - mytm.tm_wday;
 
 	unix_time = 0;			/* ...will be the adjustment */
-	if (mytm.tm_mon == M_APR) {	/* april (last sunday) */
-		if (sunday + 7 >= D_APR)
+	if (mytm.tm_mon == M_APR) {	/* april (first/last, by year) */
+		if ((mytm.tm_year >= 86 && (sunday >= 0))
+		||  (mytm.tm_year <= 85 && (sunday + 7 >= D_APR)))
 			mytm.tm_isdst = 1;
-	} else if (mytm.tm_mon == M_OCT) { /* october (first/last, by year) */
-		if ((mytm.tm_year >= 86 && (sunday <= 0))
-		||  (mytm.tm_year <= 85 && (sunday + 7 >= D_OCT)))
+	} else if (mytm.tm_mon == M_OCT) { /* october (last sunday) */
+		if (sunday + 7 < D_OCT)
 			mytm.tm_isdst = 1;
 	} else if (mytm.tm_mon > M_APR && mytm.tm_mon < M_OCT)
 		mytm.tm_isdst = 1;
