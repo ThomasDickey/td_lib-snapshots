@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	02 Aug 1994, from 'sccslast.c'
  * Modified:
+ *		21 Aug 1998, change cmv_lock to return binary file's mod-times.
  *		05 Jan 1995, CMVision stores all branches in the main trunk,
  *			     must use r-curr file to find the actual tip-version
  *		28 Sep 1994, CMVision encodes the file locks in the r-file.
@@ -22,7 +23,7 @@
 #include	<ptypes.h>
 #include	<cmv_defs.h>
 
-MODULE_ID("$Id: cmv_last.c,v 12.7 1995/02/18 00:04:00 tom Exp $")
+MODULE_ID("$Id: cmv_last.c,v 12.8 1998/08/21 13:10:20 tom Exp $")
 
 /*
  * Set the release.version and date values iff we find a legal sccs-file at
@@ -108,8 +109,10 @@ void	cmv_last (
 	*date_ = 0;
 
 	if (archive != 0) {
-		get_cmv_lock(working, path, lock_, vers_);
-		ScanSCCS(archive, vers_, date_);
+		char *arcleaf = fleaf(archive);
+		get_cmv_lock(working, path, lock_, vers_, date_);
+		if (strncmp(arcleaf, "b-", 2))
+			ScanSCCS(archive, vers_, date_);
 	}
 }
 

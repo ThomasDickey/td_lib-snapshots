@@ -1,3 +1,17 @@
+1998-08-21  dickey@clark.net
+
+	* src/cm_funcs/packdate.c:
+	back out the 'daylight' symbol change since it does not work on Solaris.
+	According to the man-pages, 'daylight' is supposed to be set as a side-effect
+	of the localtime and gmttime functions, but it is not (instead it seems to
+	be set from the current time).
+
+	* src/cm_funcs/cmv_dir.c:
+	changes to make cmv_lock return the binary file's modification-times.
+
+	* src/cm_funcs/cmv_last.c:
+	change so cmv_lock returns binary-file's mod-times.
+
 1998-08-20  dickey@clark.net
 
 	* include/cmv_defs.h:
