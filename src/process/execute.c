@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: execute.c,v 12.3 1993/11/26 14:15:18 dickey Exp $";
+static	char	Id[] = "$Id: execute.c,v 12.4 1993/12/05 00:50:48 tom Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: execute.c,v 12.3 1993/11/26 14:15:18 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	21 May 1988
  * Modified:
+ *		04 Dec 1993, port to TurboC
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		19 Nov 1992, memory-leak
@@ -53,6 +54,10 @@ extern	char	**environ;
 #define	EXECV(c,v,e)	execve(c,v,e)
 #endif	/* sys5 vs bsd4.x/vms */
 
+#ifdef	__TURBOC__
+#include <process.h>
+#endif
+
 	/*ARGSUSED*/
 	def_DOALLOC(char *)
 
@@ -69,6 +74,7 @@ int	execute(
 	_DCL(char *,	verb)
 	_DCL(char *,	args)
 {
+	/* patch: dyn_string? */
 	char	cmds[BUFSIZ],
 		*s	= strcat(strcat(strcpy(cmds, verb), " "), args);
 
@@ -190,7 +196,37 @@ int	count	= 3,		/* minimum needed for 'bldarg()' */
 		/*NOTREACHED*/
 	}
 #endif	/* unix */
-	return (-1);
+	/*
+	 * TurboC 3.0 for MS-DOS doesn't have 'fork()' or 'wait()', but it
+	 * does provide a similar construct that lets us get the child's
+	 * exit status (the whole point of this module).
+	 */
+#if	defined(__TURBOC__)
+	static	char	**myargv;	/* argument vector for 'bldarg()' */
+	auto	int	count	= 3;	/* minimum needed for 'bldarg()' */
+
+	/* Split the command-string into an argv-like structure suitable for
+	 * the 'spawnv()' procedure:
+	 */
+	while (*s != EOS) {
+		if (isspace(*s)) {
+			count++;
+			while (isspace(*s))
+				s++;
+		} else
+			s++;
+	}
+	myargv = DOALLOC(myargv, char *, (unsigned)count);
+	bldarg(count, myargv, cmds);
+
+#ifdef	TEST
+	dump_exec(*myargv,myargv);
+#endif
+	FFLUSH(stdout);
+	FFLUSH(stderr);
+	/* patch: NO_LEAK(myargv) */
+	return spawnvp(P_WAIT, *myargv, myargv);
+#endif	/* __TURBOC__ */
 }
 
 /************************************************************************
@@ -226,10 +262,11 @@ _MAIN
 		for (j = 2; j < argc; j++)
 			catarg(parms, argv[j]);
 		FPRINTF(stderr, "%% %s %s\n", verb, parms);
-		if (execute(verb, parms) >= 0)
-			exit(SUCCESS);
-		perror(verb);
-		exit(FAIL);
+		if (execute(verb, parms) < 0) {
+			perror(verb);
+			exit(FAIL);
+		}
+		exit(SUCCESS);
 	}
 	FPRINTF(stderr, "? expected verb+parms\n");
 	exit(FAIL);

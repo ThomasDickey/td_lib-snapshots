@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: which.c,v 12.3 1993/11/28 23:51:44 dickey Exp $";
+static	char	Id[] = "$Id: which.c,v 12.4 1993/12/05 01:24:58 tom Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: which.c,v 12.3 1993/11/28 23:51:44 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	18 Nov 1987
  * Modified:
+ *		04 Dec 1993, port to MSDOS.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		06 Feb 1992, use 'stat_file()'
@@ -38,8 +39,35 @@ int	executable(
 	_AR1(char *,	name))
 	_DCL(char *,	name)
 {
+#ifdef	unix
 	STAT	sb;
 	return (access(name, X_OK) >= 0) && (stat_file(name, &sb) >= 0);
+#endif
+#ifdef	MSDOS
+	char	*s = ftype(name);
+	char	*t = s;
+	int	ok = FALSE;
+	register int j;
+
+	if (s == name || s[-1] != '.') {
+		*s++ = '.';
+	}
+	if (s == t) {		/* don't supply a suffix */
+		ok = (access(name, R_OK) >= 0);
+	} else {
+		static	char	*exectypes[] = { "PIF", "BAT", "EXE", "COM" };
+		for (j = 0; j < SIZEOF(exectypes); j++) {
+			strcpy(s, exectypes[j]);
+			if (access(name, R_OK) >= 0) {
+				ok = TRUE;
+				break;
+			}
+		}
+		if (!ok)
+			*t = EOS;
+	}
+	return ok;
+#endif
 }
 
 int	which(
@@ -65,6 +93,11 @@ int	which(
 		if (executable(find))
 			(void)pathcat(test, dot, find);
 	} else {
+#ifdef	MSDOS	/* "." is at the beginning of the implied path */
+		if (executable(pathcat(test, dot, find)))
+			;
+		else
+#endif
 		while (*s) {
 			size_t n;
 			for (n = 0; s[n] != EOS && s[n] != PATHLIST_SEP; n++)
