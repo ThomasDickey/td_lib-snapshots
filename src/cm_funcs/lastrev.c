@@ -1,5 +1,5 @@
 #ifndef NO_IDENT
-static	char	Id[] = "$Id: lastrev.c,v 12.2 1994/08/21 18:26:46 tom Exp $";
+static	char	Id[] = "$Id: lastrev.c,v 12.3 1994/09/28 22:55:55 tom Exp $";
 #endif
 
 /*
@@ -31,24 +31,30 @@ static	TRY	try_order(
 	static	int	 num_order;
 	static	TRY vec_order[10];
 
+	auto	char	temp[BUFSIZ];
+	auto	char	*s;
+
 	if (num_order == 0) {
 		char	*env = getenv("DED_CM_LOOKUP");
 		if (env != 0) {
-			char	temp[BUFSIZ];
-			char	*s;
-
 			env = strlcpy(temp, env);
-			while ((s = strtok(env, ",")) != 0) {
-				if (!strcmp(s, "rcs")) {
-					vec_order[num_order++] = TryRcs;
-				} else if (!strcmp(s, "sccs")) {
-					vec_order[num_order++] = TrySccs;
-				} else if (!strcmp(s, "cmv")) {
-					vec_order[num_order++] = TryCmVision;
-				}
-				env = 0;
-			}
+		} else {
+			env = strcpy(temp, "rcs");
+#ifdef SCCS_PATH
+			(void)strcat(temp, ",sccs");
+#endif
 		}
+		while ((s = strtok(env, ",")) != 0) {
+			if (!strcmp(s, "rcs")) {
+				vec_order[num_order++] = TryRcs;
+			} else if (!strcmp(s, "sccs")) {
+				vec_order[num_order++] = TrySccs;
+			} else if (!strcmp(s, "cmv")) {
+				vec_order[num_order++] = TryCmVision;
+			}
+			env = 0;
+		}
+
 		vec_order[num_order++] = DontTry; /* end-marker */
 	}
 	if (try >= num_order)
