@@ -1,3 +1,7 @@
+1993-11-24  dickey@software.org
+
+	* src/curses/rawgets.c: added mouse support for xterm
+
 1993-11-23  dickey@software.org
 
 	* src/curses/rawterm.c: added the test for TERM==xterm
