@@ -1,0 +1,5 @@
+MANIFEST for td_lib, version t19851216
+--------------------------------------------------------------------------------
+MANIFEST                        this file
+src/pathname                    subdirectory
+src/pathname/dotname.c          test for "." or ".." names
