@@ -1,3 +1,8 @@
+1988-05-13  dickey@software.org
+
+	* src/curses/resizwin.c:
+	finally found bug which caused 'resizewin()' to crash!
+
 1988-05-12  dickey@software.org
 
 	* include/llib-ltd: added 'ltostr()' module.
