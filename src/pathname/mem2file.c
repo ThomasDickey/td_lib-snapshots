@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: mem2file.c,v 12.3 1994/05/21 20:17:22 tom Exp $";
-#endif
-
 /*
  * Title:	mem2file.c (memory-to-file I/O)
  * Author:	T.E.Dickey
@@ -20,6 +16,8 @@ static	char	Id[] = "$Id: mem2file.c,v 12.3 1994/05/21 20:17:22 tom Exp $";
 
 #define	STR_PTYPES
 #include	"ptypes.h"
+
+MODULE_ID("$Id: mem2file.c,v 12.5 1994/07/16 15:24:08 tom Exp $")
 
 int	mem2file(
 	_ARX(char *,	blob)
@@ -42,7 +40,7 @@ int	mem2file(
 		if ((sb.st_mode & S_IFMT) != S_IFREG)
 			return (-1);
 		if ( ( (save = (sb.st_mode & 0777)) & 0222) == 0)
-			if (chmod(name, save | 0600) < 0)
+			if (chmod(name, (mode_t)(save | 0600)) < 0)
 				return (-1);
 	} else
 		save = -1;
@@ -53,7 +51,7 @@ int	mem2file(
 		(void)fclose(fp);
 
 		if ((save >= 0)
-		&&  (chmod(name,save) < 0))
+		&&  (chmod(name, (mode_t)save) < 0))
 			return (-1);
 	}
 	return (len);

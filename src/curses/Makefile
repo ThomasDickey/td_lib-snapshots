@@ -1,4 +1,4 @@
-# $Id: Makefile,v 12.1 1994/07/02 14:43:51 tom Exp $
+# $Id: Makefile,v 12.2 1994/07/16 16:53:39 tom Exp $
 # MAKE-file for miscellaneous library routines
 
 ####### (Environment) ##########################################################
@@ -12,6 +12,7 @@ CSRC	=\
 	blip.c \
 	cmdch.c \
 	dumpchr.c \
+	dumptty.c \
 	dumpwin.c \
 	erasechr.c \
 	killchar.c \
@@ -35,6 +36,7 @@ OBJS	=\
 	$Z(blip.o) \
 	$Z(cmdch.o) \
 	$Z(dumpchr.o) \
+	$Z(dumptty.o) \
 	$Z(dumpwin.o) \
 	$Z(erasechr.o) \
 	$Z(killchar.o) \
@@ -56,6 +58,7 @@ include ../td_rules.mk
 ####### (Details of Productions) ###############################################
 $Z(beep.o)\
 $Z(cmdch.o)\
+$Z(dumptty.o)\
 $Z(dumpwin.o)\
 $Z(erasechr.o)\
 $Z(killchar.o)\

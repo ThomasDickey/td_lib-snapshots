@@ -1,4 +1,4 @@
-/* $Id: td_ext.h,v 12.5 1994/07/10 22:22:07 tom Exp $ */
+/* $Id: td_ext.h,v 12.6 1994/07/16 15:14:08 tom Exp $ */
 
 #ifndef	TD_EXT_H
 #define	TD_EXT_H
@@ -388,6 +388,11 @@ extern	int	optind;
 #if HAVE_GETWD && NEED_GETWD
 extern	char *	getwd    ARGS((char *p));
 #endif /* HAVE_GETWD */
+#ifdef	TIM_PTYPES
+#if HAVE_GETTIMEOFDAY && NEED_GETTIMEOFDAY
+extern	int	gettimeofday ARGS((struct timeval *tv, struct timezone *tz));
+#endif /* HAVE_GETTIMEOFDAY */
+#endif
 #if HAVE_IOCTL && NEED_IOCTL
 extern	int	ioctl	 ARGS((int f, int m, ...));
 #endif /* HAVE_IOCTL */

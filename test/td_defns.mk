@@ -1,4 +1,4 @@
-# $Id: td_defns.mk,v 12.3 1994/07/02 19:19:39 tom Exp $
+# $Id: td_defns.mk,v 12.4 1994/07/16 20:19:19 tom Exp $
 # common make-definitions for TD_LIB common/test library
 
 ####### (Development) ##########################################################
@@ -11,4 +11,4 @@ VPATH	= $S
 
 .SUFFIXES:
 .SUFFIXES: .c .lint
-.c:	; $(LINK) -o $@ $(CFLAGS) $(CPP_OPTS) $< $(LIBS) -lcurses -ltermcap
+.c:	; $(LINK) -o $@ $(CFLAGS) $(CPP_OPTS) $< $(LIB_ARGS) -lcurses -ltermcap

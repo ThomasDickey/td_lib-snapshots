@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: filecopy.c,v 12.4 1994/05/21 20:17:15 tom Exp $";
+static	char	Id[] = "$Id: filecopy.c,v 12.5 1994/07/16 15:23:47 tom Exp $";
 #endif
 
 /*
@@ -90,7 +90,7 @@ int	filecopy(
 						break;
 			}
 			(void)close(fo);
-			(void)chmod(dst, mode);
+			(void)chmod(dst, (mode_t)mode);
 			(void)setmtime(dst, sb1.st_mtime);
 		}
 		(void)close(fi);

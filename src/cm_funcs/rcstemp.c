@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: rcstemp.c,v 12.4 1994/07/11 01:29:34 tom Exp $";
-#endif
-
 /*
  * Title:	rcstemp.c (rcs to temp-name)
  * Author:	T.E.Dickey
@@ -42,7 +38,13 @@ static	char	Id[] = "$Id: rcstemp.c,v 12.4 1994/07/11 01:29:34 tom Exp $";
 #include "rcsdefs.h"
 #include <errno.h>
 
+MODULE_ID("$Id: rcstemp.c,v 12.7 1994/07/16 15:25:20 tom Exp $")
+
 #define	DEBUG	if (RCS_DEBUG) PRINTF
+
+#define	CHMOD_MASK	0777
+#define	WORLD_OPEN	0777
+#define	GROUP_OPEN	0775
 
 char *	rcstemp(
 	_ARX(char *,	working)
@@ -60,7 +62,9 @@ char *	rcstemp(
 #endif
 	 ) {
 		char	*tf = pathcat(tmp, "/tmp", uid2s((int)getuid()));
-		int	mode = ((getgid() == getegid()) ? 0775 : 0777);
+		int	mode = ((getgid() == getegid())
+				? GROUP_OPEN
+				: WORLD_OPEN);
 		Stat_t	sb;
 
 		DEBUG(".. rcstemp mode is %o gid:%d(%s) egid:%d(%s)\n",
@@ -72,7 +76,7 @@ char *	rcstemp(
 			int	oldmask = umask(0);
 
 			DEBUG("%% mkdir %s\n", tf);
-			if (mkdir(tf, mode) < 0) {
+			if (mkdir(tf, (mode_t)mode) < 0) {
 				failed(tf);
 				/*NOTREACHED*/
 			}
@@ -83,7 +87,7 @@ char *	rcstemp(
 				/*NOTREACHED*/
 			}
 
-			(void)umask(oldmask);
+			(void)umask((mode_t)oldmask);
 		} else {
 			DEBUG(".. %s group is %d(%s)\n",
 				tf,
@@ -91,13 +95,14 @@ char *	rcstemp(
 				gid2s((int)(sb.st_gid)));
 
 			if (getgid() != sb.st_gid)
-				mode = 0777;
+				mode = WORLD_OPEN;
 
-			if ((sb.st_mode &= 0777)   != mode) {
+			if ((sb.st_mode &= CHMOD_MASK) != mode) {
 				DEBUG("%% chmod %o %s (was %o)\n",
-						mode, tf, sb.st_mode);
-				if (chmod(tf, mode) < 0) {
-					if (sb.st_mode != 0777) {
+						mode, tf,
+						(int)(sb.st_mode));
+				if (chmod(tf, (mode_t)mode) < 0) {
+					if (sb.st_mode != WORLD_OPEN) {
 						failed(tf);
 						/*NOTREACHED*/
 					}

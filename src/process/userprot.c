@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: userprot.c,v 12.3 1993/11/27 14:03:38 dickey Exp $";
+static	char	Id[] = "$Id: userprot.c,v 12.4 1994/07/16 15:26:01 tom Exp $";
 #endif
 
 /*
@@ -28,7 +28,7 @@ static	char	Id[] = "$Id: userprot.c,v 12.3 1993/11/27 14:03:38 dickey Exp $";
 #ifdef	unix
 
 static	char	*upr_name;
-static	int	upr_mode;
+static	mode_t	upr_mode;
 static	time_t	upr_time;
 
 static	
