@@ -31,7 +31,7 @@
 #define TRM_PTYPES	/* <termios.h> */
 #include	"td_curse.h"
 
-MODULE_ID("$Id: rawterm.c,v 12.22 1998/05/29 21:19:46 tom Exp $")
+MODULE_ID("$Id: rawterm.c,v 12.23 2002/07/05 11:18:55 tom Exp $")
 
 TermioT	original_tty;
 TermioT	modified_tty;
@@ -52,8 +52,8 @@ void	show_term(
 #define show_term(s)
 #endif
 
-#if	!NO_XTERM_MOUSE
-#if	!NCURSES_MOUSE_VERSION
+#if	!defined(NO_XTERM_MOUSE)
+#if	!defined(NCURSES_MOUSE_VERSION)
 static	int	xterm_mouse(_AR0)
 {
 	static	int	initialized;
@@ -80,7 +80,7 @@ static	int	xterm_mouse(_AR0)
 
 static	void	enable_mouse(_AR0)
 {
-#if NCURSES_MOUSE_VERSION
+#if defined(NCURSES_MOUSE_VERSION)
 	(void)mousemask(
 		 BUTTON1_CLICKED |BUTTON1_DOUBLE_CLICKED
 		|BUTTON2_CLICKED |BUTTON2_DOUBLE_CLICKED
@@ -94,7 +94,7 @@ static	void	enable_mouse(_AR0)
 
 static	void	disable_mouse(_AR0)
 {
-#if NCURSES_MOUSE_VERSION
+#if defined(NCURSES_MOUSE_VERSION)
 	(void)mousemask((mmask_t)0, (mmask_t *)0);
 #else
 	if (xterm_mouse()) {
@@ -112,7 +112,7 @@ static	void	disable_mouse(_AR0)
  * do that, preferring endwin/refresh, which we don't want, since that clears
  * the screen as well.
  */
-#if	HAVE_TIGETSTR && HAVE_PUTP && !defined(NCURSES_VERSION)
+#if	defined(HAVE_TIGETSTR) && HAVE_PUTP && !defined(NCURSES_VERSION)
 extern	char *tigetstr();	/* FIXME */
 static	void	set_cursor_mode(_AR0)
 {
@@ -149,14 +149,14 @@ void	rawterm(_AR0)
 {
 	static	int	initialized ;
 
-#if HAVE_INTRFLUSH
+#if defined(HAVE_INTRFLUSH)
      	intrflush(stdscr, FALSE);
 #endif
-#if HAVE_KEYPAD
+#if defined(HAVE_KEYPAD)
 	keypad(stdscr,TRUE);
 #endif
 	show_term("before-raw-");
-#if	HAVE_CBREAK
+#if	defined(HAVE_CBREAK)
 	cbreak();
 #else
 	crmode();

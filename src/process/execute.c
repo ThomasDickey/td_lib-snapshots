@@ -38,14 +38,14 @@
 #include	"ptypes.h"
 #include	<errno.h>
 
-MODULE_ID("$Id: execute.c,v 12.10 2002/07/03 13:06:37 tom Exp $")
+MODULE_ID("$Id: execute.c,v 12.11 2002/07/05 11:22:40 tom Exp $")
 
 #ifdef	vms
 #  include	<descrip.h>
 #  include	<unixlib.h>
 #  include	<processes.h>
 #else	/* bsd4.x */
-#  if HAVE_EXECVP
+#  if defined(HAVE_EXECVP)
 #    define	EXECV(c,v,e)	execvp(c,v)
 #  else		/* assume bsd4.x */
      extern	char	**environ;
@@ -131,7 +131,7 @@ int	execute(
 #endif	/* vms */
 #ifdef	SYS_UNIX
 	static	char	**myargv;	/* argument vector for 'bldarg()' */
-#if HAVE_EXECVP
+#if defined(HAVE_EXECVP)
 	auto	char	*what;
 #else
 	auto	char	what[BUFSIZ];
@@ -155,7 +155,7 @@ int	execute(
 	myargv = DOALLOC(myargv, char *, (unsigned)count);
 	bldarg(count, myargv, cmds);
 
-#if HAVE_EXECVP
+#if defined(HAVE_EXECVP)
 	what = *myargv;
 #else
 	/*

@@ -19,9 +19,9 @@
 #include	"ptypes.h"
 #include	<time.h>
 
-MODULE_ID("$Id: setmtime.c,v 12.8 2002/03/26 18:59:32 tom Exp $")
+MODULE_ID("$Id: setmtime.c,v 12.9 2002/07/05 11:18:55 tom Exp $")
 
-#if HAVE_UTIME_H
+#if defined(HAVE_UTIME_H)
 #include	<utime.h>
 #else
 struct	utimbuf { time_t actime, modtime; };

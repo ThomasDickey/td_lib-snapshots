@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 12.22 2002/07/03 12:56:33 tom Exp $ */
+/* $Id: td_lib.h,v 12.23 2002/07/05 11:15:57 tom Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for TD_LIB common
@@ -278,7 +278,7 @@
 
 	/* fileblox.c ------------------------------------------------- */
 #if	defined(SYS_UNIX)
-#if	STAT_HAS_ST_BLOCKS
+#if	defined(STAT_HAS_ST_BLOCKS)
 #define	fileblocks(sb)	(sb)->st_blocks
 #else
 	long	fileblocks(
@@ -794,7 +794,7 @@ extern	int	localzone;
 			_ret
 
 	/* strerror.c ------------------------------------------------- */
-#if !HAVE_STRERROR
+#if !defined(HAVE_STRERROR)
 	char *	strerror(
 			_ar1(int,	err)
 			)

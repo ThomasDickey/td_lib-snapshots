@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Id: aclocal.m4,v 12.140 2002/04/27 00:32:06 tom Exp $
+dnl $Id: aclocal.m4,v 12.141 2002/07/05 09:37:13 tom Exp $
 dnl vi:set ts=4:
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "CF_" to "AC_"
@@ -574,6 +574,118 @@ CF_UPPER(cf_tr_type,$cf_cv_curses_style)
 AC_DEFINE_UNQUOTED(CURSES_LIKE_${cf_tr_type})
 ])dnl
 dnl ---------------------------------------------------------------------------
+dnl Check if we should include <curses.h> to pick up prototypes for termcap
+dnl functions.  On terminfo systems, these are normally declared in <curses.h>,
+dnl but may be in <term.h>.  We check for termcap.h as an alternate, but it
+dnl isn't standard (usually associated with GNU termcap).
+dnl
+dnl The 'tgoto()' function is declared in both terminfo and termcap.
+dnl
+dnl See CF_TYPE_OUTCHAR for more details.
+AC_DEFUN([CF_CURSES_TERMCAP],
+[
+AC_REQUIRE([CF_CURSES_TERM_H])
+AC_CACHE_CHECK(if we should include curses.h or termcap.h, cf_cv_need_curses_h,[
+cf_save_CPPFLAGS="$CPPFLAGS"
+cf_cv_need_curses_h=no
+
+for cf_t_opts in "" "NEED_TERMCAP_H"
+do
+for cf_c_opts in "" "NEED_CURSES_H"
+do
+
+    CPPFLAGS="$cf_save_CPPFLAGS $CHECK_DECL_FLAG"
+    test -n "$cf_c_opts" && CPPFLAGS="$CPPFLAGS -D$cf_c_opts"
+    test -n "$cf_t_opts" && CPPFLAGS="$CPPFLAGS -D$cf_t_opts"
+
+    AC_TRY_LINK([/* $cf_c_opts $cf_t_opts */
+$CHECK_DECL_HDRS],
+	[char *x = (char *)tgoto("")],
+	[test "$cf_cv_need_curses_h" = no && {
+	     cf_cv_need_curses_h=maybe
+	     cf_ok_c_opts=$cf_c_opts
+	     cf_ok_t_opts=$cf_t_opts
+	}],
+	[echo "Recompiling with corrected call (C:$cf_c_opts, T:$cf_t_opts)" >&AC_FD_CC
+	AC_TRY_LINK([
+$CHECK_DECL_HDRS],
+	[char *x = (char *)tgoto("",0,0)],
+	[cf_cv_need_curses_h=yes
+	 cf_ok_c_opts=$cf_c_opts
+	 cf_ok_t_opts=$cf_t_opts])])
+
+	CPPFLAGS="$cf_save_CPPFLAGS"
+	test "$cf_cv_need_curses_h" = yes && break
+done
+	test "$cf_cv_need_curses_h" = yes && break
+done
+
+if test "$cf_cv_need_curses_h" != no ; then
+	echo "Curses/termcap test = $cf_cv_need_curses_h (C:$cf_ok_c_opts, T:$cf_ok_t_opts)" >&AC_FD_CC
+	if test -n "$cf_ok_c_opts" ; then
+		if test -n "$cf_ok_t_opts" ; then
+			cf_cv_need_curses_h=both
+		else
+			cf_cv_need_curses_h=curses.h
+		fi
+	elif test -n "$cf_ok_t_opts" ; then
+		cf_cv_need_curses_h=termcap.h
+	elif test "$cf_cv_term_header" != no ; then
+		cf_cv_need_curses_h=term.h
+	else
+		cf_cv_need_curses_h=no
+	fi
+fi
+])
+
+case $cf_cv_need_curses_h in
+both) #(vi
+	AC_DEFINE_UNQUOTED(NEED_CURSES_H)
+	AC_DEFINE_UNQUOTED(NEED_TERMCAP_H)
+	;;
+curses.h) #(vi
+	AC_DEFINE_UNQUOTED(NEED_CURSES_H)
+	;;
+term.h) #(vi
+	AC_DEFINE_UNQUOTED(NEED_TERM_H)
+	;;
+termcap.h) #(vi
+	AC_DEFINE_UNQUOTED(NEED_TERMCAP_H)
+	;;
+esac
+
+])dnl
+dnl ---------------------------------------------------------------------------
+dnl SVr4 curses should have term.h as well (where it puts the definitions of
+dnl the low-level interface).  This may not be true in old/broken implementations,
+dnl as well as in misconfigured systems (e.g., gcc configured for Solaris 2.4
+dnl running with Solaris 2.5.1).
+AC_DEFUN([CF_CURSES_TERM_H],
+[
+AC_CACHE_CHECK(for term.h, cf_cv_term_header,[
+for cf_header in \
+	ncurses/term.h \
+	term.h
+do
+	AC_TRY_COMPILE([
+#include <${cf_cv_ncurses_header-curses.h}>
+#include <${cf_header}>],
+	[WINDOW *x],
+	[cf_cv_term_header=$cf_header],
+	[cf_cv_term_header=no])
+done
+])
+
+case $cf_cv_term_header in #(vi
+term.h) #(vi
+	AC_DEFINE(HAVE_TERM_H)
+	;;
+ncurses/term.h)
+	AC_DEFINE(HAVE_NCURSES_TERM_H)
+	;;
+esac
+])dnl
+dnl ---------------------------------------------------------------------------
 dnl "dirname" is not portable, so we fake it with a shell script.
 AC_DEFUN([CF_DIRNAME],[$1=`echo $2 | sed -e 's:/[[^/]]*$::'`])dnl
 dnl ---------------------------------------------------------------------------
@@ -785,7 +897,8 @@ EOF
 		Wnested-externs \
 		Wpointer-arith \
 		Wshadow \
-		Wstrict-prototypes $cf_warn_CONST
+		Wstrict-prototypes \
+		Wundef $cf_warn_CONST
 	do
 		CFLAGS="$cf_save_CFLAGS $EXTRA_CFLAGS -$cf_opt"
 		if AC_TRY_EVAL(ac_compile); then

@@ -24,7 +24,7 @@
 
 #include	"td_curse.h"
 
-MODULE_ID("$Id: wrepaint.c,v 12.13 1999/08/10 21:51:53 tom Exp $")
+MODULE_ID("$Id: wrepaint.c,v 12.14 2002/07/05 11:18:55 tom Exp $")
 
 void	wrepaint(
 	_ARX(WINDOW *,	win)
@@ -38,7 +38,7 @@ void	wrepaint(
 	 * which generally appears only in combination with a working
 	 * 'touchwin()'.
 	 */
-#if	GOOD_TOUCHWIN
+#if	defined(GOOD_TOUCHWIN)
 	touchwin(win);
 	wrefresh(curscr);
 #else
@@ -65,7 +65,7 @@ void	wrepaint(
 		row++;
 	}
 	clearok(win, FALSE);
-#if HAVE_TOUCHWIN
+#if defined(HAVE_TOUCHWIN)
 	touchwin(win); /* this does no harm, and makes BSD 4.4 work */
 #endif
 	(void)wrefresh(win);

@@ -44,7 +44,7 @@
 #define TIM_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: packdate.c,v 12.21 2002/07/03 17:28:10 tom Exp $")
+MODULE_ID("$Id: packdate.c,v 12.22 2002/07/05 11:15:57 tom Exp $")
 
 #define	LEAP(y)	(!(y&3))
 
@@ -67,13 +67,13 @@ long	gmt_offset(
 	 */
 	tm = *localtime(&t);
 
-#if HAVE_TM_GMTOFF
+#if defined(HAVE_TM_GMTOFF)
 	result -= tm.tm_gmtoff;
 #else /* UNIX */
-#if TIMEZONE_DECLARED
+#if defined(TIMEZONE_DECLARED)
 	result += timezone;
 #else
-#if HAVE_GETTIMEOFDAY
+#if defined(HAVE_GETTIMEOFDAY)
 	{
 	struct	timeval	t2;
 	struct	timezone tz;
@@ -89,7 +89,7 @@ long	gmt_offset(
 	 * (in GMT seconds) would be bumped up an hour for daylight savings
 	 * time.
 	 */
-#if HAVE_TM_ISDST
+#if defined(HAVE_TM_ISDST)
 	if (tm.tm_isdst)	result -= HOUR;
 #endif
 #endif	/* HAVE_TM_GMTOFF */
@@ -111,7 +111,7 @@ long	packdate (
 	_DCL(int,	 min)
 	_DCL(int,	 sec)
 {
-#if HAVE_MKTIME
+#if defined(HAVE_MKTIME)
 	time_t result;
 	struct tm tm;
 
@@ -171,16 +171,16 @@ _MAIN
 	printf("  year  =%d\n",  tm.tm_year);
 	printf("  wday  =%d\n",  tm.tm_wday);
 	printf("  yday  =%d\n",  tm.tm_yday);
-#if HAVE_TM_ISDST
+#if defined(HAVE_TM_ISDST)
 	printf("  isdst =%d\n",  tm.tm_isdst);
 #endif
-#if HAVE_TM_ZONE
+#if defined(HAVE_TM_ZONE)
 	printf("  zone  =%s\n",  tm.tm_zone);
 #endif
-#if HAVE_TM_GMTOFF
+#if defined(HAVE_TM_GMTOFF)
 	printf("  gmtoff=%ld\n", tm.tm_gmtoff);
 #endif
-#if HAVE_TIMEZONE
+#if defined(HAVE_TIMEZONE)
 	printf("timezone=%ld\n", timezone);
 #endif
 

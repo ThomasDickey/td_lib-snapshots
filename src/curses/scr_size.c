@@ -31,7 +31,7 @@
 #include "ptypes.h"
 #include "td_curse.h"
 
-MODULE_ID("$Id: scr_size.c,v 12.8 2001/05/15 01:00:04 tom Exp $")
+MODULE_ID("$Id: scr_size.c,v 12.9 2002/07/05 10:55:41 tom Exp $")
 
 #ifdef	apollo
 #  ifdef	apollo_sr10
@@ -41,10 +41,10 @@ MODULE_ID("$Id: scr_size.c,v 12.8 2001/05/15 01:00:04 tom Exp $")
 #    include </sys/ins/base.ins.c>
 #  endif	/* apollo_sr10	*/
 #else	/* SYS_UNIX */
-#  if HAVE_IOCTL_H
+#  if defined(HAVE_IOCTL_H)
 #    include <ioctl.h>
 #  else
-#    if HAVE_SYS_IOCTL_H
+#    if defined(HAVE_SYS_IOCTL_H)
 #      include <sys/ioctl.h>
 #    endif
 #  endif

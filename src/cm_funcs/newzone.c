@@ -36,7 +36,7 @@
 #define	TIM_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: newzone.c,v 12.6 1996/02/16 19:16:06 tom Exp $")
+MODULE_ID("$Id: newzone.c,v 12.7 2002/07/05 10:47:44 tom Exp $")
 
 #define	SIX_MM	(6 * (30 * DAY))
 
@@ -49,7 +49,7 @@ static	time_t	now;
 
 static	char	new_TZ[NAMELEN];
 static	char	old_TZ[NAMELEN];
-#if	!LOCALZONE_DECLARED
+#if	!defined(LOCALZONE_DECLARED)
 int	localzone;		/* public copy of minutes-west */
 #endif
 

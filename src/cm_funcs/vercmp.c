@@ -19,7 +19,7 @@
 
 #include	"ptypes.h"
 
-MODULE_ID("$Id: vercmp.c,v 12.6 1994/05/30 23:36:25 tom Exp $")
+MODULE_ID("$Id: vercmp.c,v 12.7 2002/07/05 11:15:57 tom Exp $")
 
 #define	DOT	'.'
 
@@ -83,7 +83,7 @@ QSORT_FUNC(compare)
 }
 
 #define	EQL(c)		((c > 0) ? ">" : ((c < 0) ? "<" : "="))
-#if	HAVE_NEW_TOKEN_QUOTE
+#if	defined(HAVE_NEW_TOKEN_QUOTE)
 #define	DO_TEST(a,b)	j = vercmp(#a, #b,  wild);\
 			PRINTF("%s\t%s %s \t(%d)\n", #a,  EQL(j), #b,  j)
 #else

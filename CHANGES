@@ -1,3 +1,26 @@
+2002-07-05  dickey@invisible-island.net
+
+	* include/td_curse.h, include/ptypes.h, src/curses/cmdch.c:
+	change ifdef convention to work with "gcc -Wundef"
+
+	* src/curses/resizwin.c, src/curses/savewin.c, include/ptypes.h, include/td_qsort.h, src/process/execute.c, src/process/in_group.c, include/td_curse.h, include/td_regex.h, src/curses/cmdch.c, src/curses/erasechr.c, src/curses/lnextchr.c, include/sccsdefs.h, src/curses/rawterm.c, src/curses/win2file.c, src/curses/wrepaint.c, src/curses/wresize.c, src/memory/memmove.c, src/pathname/fileblox.c, src/process/getopt.c, src/string/strerror.c, src/unix/gid2s.c, src/unix/setmtime.c, src/unix/uid2s.c, src/curses/beep.c, src/curses/dumptty.c, src/curses/dumpwin.c, src/curses/killchar.c, include/td_ext.h, include/td_lib.h, src/cm_funcs/packdate.c, src/cm_funcs/sccslast.c, src/cm_funcs/vercmp.c, src/curses/addchnst.c, include/rcsdefs.h, src/curses/scr_size.c, src/curses/is_xterm.c, src/cm_funcs/newzone.c:
+	change ifdef'ing convention to work with "gcc -Wundef"
+
+	* include/.vilerc:
+	change ifdef'ing convention to accommodate gcc -Wundef (mainly because I
+	want to compile using Tru64's strict warnings which do the same thing).
+	Correct two spurious ~endif's which no longer happen-to-work with vile.
+	Use ~local to attempt to restore $wrapscan after running the macros.
+
+	* aclocal.m4:
+	add CF_CURSES_TERM_H and CF_CURSES_TERMCAP, so I can get rid of explicit
+	checks for term.h and termcap.h which won't work properly on systems where
+	I might have ncurses.
+	Also add -Wundef to gcc warnings
+
+	* configure.in:
+	folded checks for term.h and termcap.h into CF_CURSES_TERM_H and CF_CURSES_TERMCAP
+
 2002-07-03  dickey@invisible-island.net
 
 	* src/cm_funcs/packdate.c:

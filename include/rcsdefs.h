@@ -1,4 +1,4 @@
-/* $Id: rcsdefs.h,v 12.6 2001/12/11 13:52:31 tom Exp $ */
+/* $Id: rcsdefs.h,v 12.7 2002/07/05 11:14:36 tom Exp $ */
 
 #ifndef	RCSDEFS_H
 #define	RCSDEFS_H
@@ -40,7 +40,7 @@
 #define NULL_FUNC (int (*)())0
 
 typedef	void	(*RcsparseStr)(
-#if PROTOTYPES
+#if defined(PROTOTYPES)
 			int	c
 #endif
 		);

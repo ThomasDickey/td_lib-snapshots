@@ -10,13 +10,13 @@
 #include <ptypes.h>
 #include <grp.h>
 
-MODULE_ID("$Id: in_group.c,v 12.5 2000/06/30 10:39:14 tom Exp $")
+MODULE_ID("$Id: in_group.c,v 12.6 2002/07/05 11:22:40 tom Exp $")
 
-#if HAVE_GETGROUPS
-#  if HAVE_SYS_PARAM_H
+#if defined(HAVE_GETGROUPS)
+#  if defined(HAVE_SYS_PARAM_H)
 #    include <sys/param.h>
 #  endif
-#  if HAVE_LIMITS_H
+#  if defined(HAVE_LIMITS_H)
 #    include <limits.h>
 #  endif
 #endif

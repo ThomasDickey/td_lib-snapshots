@@ -9,9 +9,9 @@
 #define STR_PTYPES
 #include "td_curse.h"
 
-MODULE_ID("$Id: is_xterm.c,v 12.2 1995/07/30 19:56:22 tom Exp $")
+MODULE_ID("$Id: is_xterm.c,v 12.3 2002/07/05 10:54:18 tom Exp $")
 
-#if !HAVE_IS_XTERM
+#if !defined(HAVE_IS_XTERM)
 /*
  * The most reliable way to determine if we're really running in an xterm is to
  * try to open the X Window display.  That has the drawback that we've got to

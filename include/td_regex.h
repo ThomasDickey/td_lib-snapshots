@@ -1,4 +1,4 @@
-/* $Id: td_regex.h,v 12.11 1996/05/23 10:35:36 tom Exp $ */
+/* $Id: td_regex.h,v 12.12 2002/07/05 11:22:17 tom Exp $ */
 
 /*
  * SYSTEM5/BSD4.x differences between native regular-expression handling:
@@ -9,7 +9,7 @@
 
 #undef REGEX_T
 
-#if HAVE_REGEX_H_FUNCS		/* HP/UX, Linux */
+#if defined(HAVE_REGEX_H_FUNCS)		/* HP/UX, Linux */
 #  include <regex.h>
 #  define REGEX_T regex_t
 #  define OLD_REGEX(expr)		regfree(&expr)
@@ -17,7 +17,7 @@
 #  define GOT_REGEX(expr,string)	(regexec(&expr, string, 0, (regmatch_t*)0, 0) == 0)
 #endif
 
-#if HAVE_REGEXPR_H_FUNCS && !defined(REGEX_T)	/* Solaris */
+#if defined(HAVE_REGEXPR_H_FUNCS) && !defined(REGEX_T)	/* Solaris */
 #  include <regexpr.h>
 #  define REGEX_T char *
 #  define OLD_REGEX(expr)		free(expr)
@@ -25,14 +25,14 @@
 #  define GOT_REGEX(expr,string)	(step(string, expr) != 0)
 #endif
 
-#if HAVE_REGCMP_FUNCS && !defined(REGEX_T)	/* old SYSTEM5 */
-#  if HAVE_PW_H && HAVE_LIBPW
+#if defined(HAVE_REGCMP_FUNCS) && !defined(REGEX_T)	/* old SYSTEM5 */
+#  if defined(HAVE_PW_H) && defined(HAVE_LIBPW)
 #    undef index
 #    define index CLIX_index	/* CLIX has conflict here */
 #    include <pw.h>
 #    undef index
 #  else
-#    if HAVE_LIBGEN_H		/* IRIX */
+#    if defined(HAVE_LIBGEN_H)		/* IRIX */
 #      include <libgen.h>
 #    else
 	extern	char	*regcmp(_ar1(char *,s) _CDOTS);
@@ -45,7 +45,7 @@
 #  define GOT_REGEX(expr,string)	(regex(expr, string,  (char *)0) != 0)
 #endif
 
-#if HAVE_RE_COMP_FUNCS && !defined(REGEX_T) /* probably BSD4.x */
+#if defined(HAVE_RE_COMP_FUNCS) && !defined(REGEX_T) /* probably BSD4.x */
 					/*  IRIX defines in <unistd.h> */
 	extern	char	*re_comp(_ar1(const char *,s)); /* returns 0 or error message */
 	extern	int	re_exec(_ar1(const char *,s));  /* (return > 0): match */

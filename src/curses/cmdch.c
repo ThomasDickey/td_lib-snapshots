@@ -46,14 +46,14 @@
 #include	"td_curse.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: cmdch.c,v 12.27 1998/05/30 01:02:36 tom Exp $")
+MODULE_ID("$Id: cmdch.c,v 12.29 2002/07/05 12:39:18 tom Exp $")
 
 #define	ESC(c)	((c) == '\033')
 #define	END(s)	s[strlen(s)-1]
 #define	if_C(c)	if (i_blk[j] == c)
 #define	EQL(s)	(!strcmp(i_blk,((s)?(s):"")))
 
-#if !NO_XTERM_MOUSE
+#if !defined(NO_XTERM_MOUSE)
 
 #define XtermPos() (getch() - 041)	/* 0..COLS-1 or 0..LINES-1 */
 
@@ -62,7 +62,7 @@ XtermMouse xt_mouse;	/* state of XTerm-mouse */
 #if !defined(NCURSES_MOUSE_VERSION)
 static	int	double_click (_AR0)
 {
-#if HAVE_GETTIMEOFDAY
+#if defined(HAVE_GETTIMEOFDAY)
 	static	struct	timeval	last_time;
 	auto	struct	timeval	this_time;
 	auto	struct	timezone this_zone;
@@ -87,8 +87,8 @@ static	int	double_click (_AR0)
 #endif	/* !NCURSES_MOUSE_VERSION */
 #endif	/* !NO_XTERM_MOUSE */
 
-#if !HAVE_KEYPAD
-# if !HAVE_TCAP_CURSOR
+#if !defined(HAVE_KEYPAD)
+# if !defined(HAVE_TCAP_CURSOR)
 static	char	*KU, *KD, *KR, *KL;
 static	char	*KH;
 # endif
@@ -123,18 +123,18 @@ int	cmdch(
 			count	= 0;
 	auto	char	i_blk[1024];
 	static	int	init	= FALSE;
-#if NCURSES_MOUSE_VERSION && !NO_XTERM_MOUSE
+#if defined(NCURSES_MOUSE_VERSION) && !defined(NO_XTERM_MOUSE)
 	MEVENT	myevent;
 #endif
 
 	if (!init) {
 		init = TRUE;
-#if !HAVE_KEYPAD
+#if !defined(HAVE_KEYPAD)
 		{
 		static	char	o_blk[1024], *a_ = o_blk;
 			if (tgetent(i_blk,getenv("TERM")) <= 0)
 				failed("cmdch/tgetent");
-# if !HAVE_TCAP_CURSOR
+# if !defined(HAVE_TCAP_CURSOR)
 			KD = tgetstr("kd", &a_);
 			KU = tgetstr("ku", &a_);
 			KR = tgetstr("kr", &a_);
@@ -158,7 +158,7 @@ int	cmdch(
 	while (!done) {
 
 		c = getch();
-#if HAVE_KEYPAD
+#if defined(HAVE_KEYPAD)
 		switch (c) {
 		/*
 		 * These definitions simplify the task of porting between BSD-
@@ -181,7 +181,7 @@ int	cmdch(
 		case KEY_ENTER: c = '\n';	done = TRUE;	break;
 #endif
 #endif
-#if NCURSES_MOUSE_VERSION && !NO_XTERM_MOUSE
+#if defined(NCURSES_MOUSE_VERSION) && !defined(NO_XTERM_MOUSE)
 		case KEY_MOUSE:
 			getmouse(&myevent);
 			xt_mouse.col = myevent.x;
@@ -231,7 +231,7 @@ int	cmdch(
 		if (iscntrl(c) || j != 0)
 			i_blk[j++] = c;
 
-#if !HAVE_KEYPAD && !NO_XTERM_MOUSE
+#if !defined(HAVE_KEYPAD) && !defined(NO_XTERM_MOUSE)
 		if (ESC(c)) {	/* assume "standard" escapes */
 			do {
 				i_blk[j++] = c = getch();
@@ -242,13 +242,13 @@ int	cmdch(
 		if (j) {
 			i_blk[j] = EOS;
 			done	= TRUE;
-#if !HAVE_KEYPAD
+#if !defined(HAVE_KEYPAD)
 			if (known_key(i_blk))
 				c = known_key(i_blk);
 			else
 #endif /* !HAVE_KEYPAD */
 			if (j > 1) {	/* extended escapes */
-#if !NO_XTERM_MOUSE && !NCURSES_MOUSE_VERSION
+#if !defined(NO_XTERM_MOUSE) && !defined(NCURSES_MOUSE_VERSION)
 				/* patch: should test for xterm_mouse */
 				if (!strncmp(i_blk, "\033[M", 3)) {
 					auto	int	the_button;
@@ -273,7 +273,7 @@ int	cmdch(
 					}
 				} else
 #endif	/* !NO_XTERM_MOUSE */
-#if !HAVE_KEYPAD
+#if !defined(HAVE_KEYPAD)
 				if (ansi) {
 					j--;
 					if_C('A')	c = KEY_UP;

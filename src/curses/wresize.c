@@ -14,9 +14,9 @@
 #include "ptypes.h"
 #include "td_curse.h"
 
-MODULE_ID("$Id: wresize.c,v 12.11 1995/12/16 00:17:05 tom Exp $")
+MODULE_ID("$Id: wresize.c,v 12.12 2002/07/05 11:18:55 tom Exp $")
 
-#if CURSES_LIKE_BSD
+#if defined(CURSES_LIKE_BSD)
 #ifdef	lint
 #define	_BODY(f,c)	static c *f(p,n) c *p; int n; { return(0); }
 /*ARGSUSED */		_BODY(pc_ALLOC,chtype *)
@@ -29,7 +29,7 @@ MODULE_ID("$Id: wresize.c,v 12.11 1995/12/16 00:17:05 tom Exp $")
 #endif
 #endif
 
-#if CURSES_LIKE_NCURSES
+#if defined(CURSES_LIKE_NCURSES)
 #ifdef	lint
 #define	_BODY(f,c)	static c *f(p,n) c *p; int n; { return(0); }
 /*ARGSUSED */		_BODY(ld_ALLOC,struct ldat)
@@ -44,7 +44,7 @@ MODULE_ID("$Id: wresize.c,v 12.11 1995/12/16 00:17:05 tom Exp $")
 
 #undef GOOD_RESIZE
 
-#if !HAVE_WRESIZE
+#if !defined(HAVE_WRESIZE)
 int	wresize(
 	_ARX(WINDOW *,	w)
 	_ARX(int,	ToLines)
@@ -54,7 +54,7 @@ int	wresize(
 	_DCL(int,	ToLines)
 	_DCL(int,	ToCols)
 {
-#if CURSES_LIKE_BSD && !GOOD_TOUCHWIN
+#if defined(CURSES_LIKE_BSD) && !defined(GOOD_TOUCHWIN)
 #define GOOD_WRESIZE 1
 	register int	row;
 	int	adjx	= w->_maxx - COLS;
@@ -109,7 +109,7 @@ int	wresize(
 	return OK;
 #endif	/* CURSES_LIKE_BSD */
 
-#if CURSES_LIKE_BSD44
+#if defined(CURSES_LIKE_BSD44)
 #define GOOD_WRESIZE 1
 	/*
 	 * This is based on "newwin.c 8.3 7/27/94" in the SlackWare 2.2 release.
@@ -147,7 +147,7 @@ int	wresize(
 	return OK;
 #endif	/* CURSES_LIKE_BSD44 */
 
-#if CURSES_LIKE_SYSV
+#if defined(CURSES_LIKE_SYSV)
 	/*
 	 * I don't know how to do this one.  I tried adapting the BSD-style
 	 * allocation, but got only as far as seeing that firstch/lastch are
@@ -155,7 +155,7 @@ int	wresize(
 	 */
 #endif
 
-#if CURSES_LIKE_NCURSES
+#if defined(CURSES_LIKE_NCURSES)
 #define GOOD_WRESIZE 1
 	register int	row;
 

@@ -42,7 +42,7 @@
 #include	<sccsdefs.h>
 #include	<ctype.h>
 
-MODULE_ID("$Id: sccslast.c,v 12.16 2002/04/30 11:07:07 tom Exp $")
+MODULE_ID("$Id: sccslast.c,v 12.17 2002/07/05 11:15:57 tom Exp $")
 
 /*
  * Post-Y2K years require special decoding
@@ -98,7 +98,7 @@ void	trysccs (
 	auto	char	ver[80];
 	auto	int	have_rev = FALSE;
 
-#if S_FILES_14
+#if defined(S_FILES_14)
 	auto	char	temp[MAXPATHLEN];
 	if (filesize(path) < 0
 	 && fleaf14(strcpy(temp, path))

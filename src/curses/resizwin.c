@@ -36,9 +36,9 @@
 
 #include	"td_curse.h"
 
-MODULE_ID("$Id: resizwin.c,v 12.18 1998/05/29 21:18:49 tom Exp $")
+MODULE_ID("$Id: resizwin.c,v 12.19 2002/07/05 11:35:36 tom Exp $")
 
-#if HAVE_RESIZETERM
+#if defined(HAVE_RESIZETERM)
 extern	WINDOW	*newscr;
 #endif
 
@@ -56,7 +56,7 @@ int	resizewin(_AR0)
 		my_LINES = lc[0];
 		my_COLS  = lc[1];
 		if (my_LINES != LINES || my_COLS != COLS) {
-#if CURSES_LIKE_BSD && (TYPE_CCHAR_T_IS_SCALAR || !HAVE_TYPE_CCHAR_T) && (TYPE_CHTYPE_IS_SCALAR || !HAVE_TYPE_CHTYPE)
+#if defined(CURSES_LIKE_BSD) && (defined(TYPE_CCHAR_T_IS_SCALAR) || !defined(HAVE_TYPE_CCHAR_T)) && (defined(TYPE_CHTYPE_IS_SCALAR) || !defined(HAVE_TYPE_CHTYPE))
 			wresize(stdscr, my_LINES, my_COLS);
 			wresize(curscr, my_LINES, my_COLS);
 			LINES = my_LINES;
@@ -65,14 +65,14 @@ int	resizewin(_AR0)
 			unsavewin(TRUE,0);
 			return (TRUE);
 #endif
-#if CURSES_LIKE_BSD44
+#if defined(CURSES_LIKE_BSD44)
 			wresize(stdscr, my_LINES, my_COLS);
 			wresize(curscr, my_LINES, my_COLS);
 			LINES = my_LINES;
 			COLS  = my_COLS;
 			return (TRUE);
 #endif
-#if CURSES_LIKE_SYSV
+#if defined(CURSES_LIKE_SYSV)
 #ifdef __hpux
 			dlog_comment("resizewin called\n");
 			dlog_comment("..., LINES %d, COLS %d\n", LINES, COLS);
@@ -86,7 +86,7 @@ int	resizewin(_AR0)
 			refresh();
 			return (TRUE);
 #endif
-#if CURSES_LIKE_NCURSES && HAVE_RESIZETERM
+#if defined(CURSES_LIKE_NCURSES) && defined(HAVE_RESIZETERM)
 			resizeterm(my_LINES, my_COLS);
 			wrefresh(curscr);
 			return (TRUE);

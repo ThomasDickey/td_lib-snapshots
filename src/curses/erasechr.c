@@ -19,24 +19,24 @@
 #define  TRM_PTYPES
 #include "td_curse.h"
 
-MODULE_ID("$Id: erasechr.c,v 12.10 2000/01/01 14:27:07 tom Exp $")
+MODULE_ID("$Id: erasechr.c,v 12.11 2002/07/05 11:22:17 tom Exp $")
 
 #define	STDIN_FD 0
 
-#if	!HAVE_ERASECHAR && !defined(erasechar)
+#if	!defined(HAVE_ERASECHAR) && !defined(erasechar)
 int	erasechar(_AR0)
 {
 	int	code	= '\b';		/* default value */
 	TermioT buf;
-#if USING_TERMIOS_H
+#if defined(USING_TERMIOS_H)
 	if (tcgetattr(0, &buf) >= 0)
 		code = buf.c_cc[VERASE];
 #else
-# if USING_TERMIO_H
+# if defined(USING_TERMIO_H)
 	if (ioctl(0, TCGETA, (char *)&buf) >= 0)
 		code = buf.c_cc[VERASE];
 # else
-#  if USING_SGTTY_H
+#  if defined(USING_SGTTY_H)
 	if (ioctl(STDIN_FD, TIOCGETP, (caddr_t)&buf) >= 0)
 		code = buf.sg_erase;
 #  endif
@@ -49,18 +49,18 @@ int	erasechar(_AR0)
 int	eraseword(_AR0)
 {
 	int	code	= CTL('W');	/* default value */
-#if USING_TERMIOS_H
+#if defined(USING_TERMIOS_H)
 	TermioT buf;
 # ifdef VWERASE				/* SunOS has it */
 	if (tcgetattr(0, &buf) >= 0)
 		code = buf.c_cc[VWERASE];
 # endif
 #else
-# if USING_TERMIO_H
+# if defined(USING_TERMIO_H)
 	if (ioctl(0, TCGETA, (char *)&buf) >= 0)
 		code = buf.c_cc[VWERASE];
 # else
-#  if USING_SGTTY_H
+#  if defined(USING_SGTTY_H)
 	struct ltchars buf;
 
 	if (ioctl(STDIN_FD, TIOCGLTC, (caddr_t)&buf) >= 0)

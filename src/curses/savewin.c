@@ -27,9 +27,9 @@
 #include	"td_curse.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: savewin.c,v 12.10 1998/05/29 21:18:53 tom Exp $")
+MODULE_ID("$Id: savewin.c,v 12.11 2002/07/05 11:34:48 tom Exp $")
 
-#if CURSES_LIKE_BSD && (TYPE_CCHAR_T_IS_SCALAR || !HAVE_TYPE_CCHAR_T) && (TYPE_CHTYPE_IS_SCALAR || !HAVE_TYPE_CHTYPE)
+#if defined(CURSES_LIKE_BSD) && (defined(TYPE_CCHAR_T_IS_SCALAR) || !defined(HAVE_TYPE_CCHAR_T)) && (defined(TYPE_CHTYPE_IS_SCALAR) || !defined(HAVE_TYPE_CHTYPE))
 
 typedef	struct	_save {
 	struct	_save	*link;

@@ -1,3 +1,4 @@
+; $Id: .vilerc,v 12.6 2002/07/05 10:38:14 tom Exp $
 set glob=on
 source ~/.vilerc
 
@@ -18,13 +19,18 @@ source ~/.vilerc
 		~endwhile
 		set-variable %l_func $identifier
 		set-variable %u_func &upp %l_func
-		set-variable %if_before &cat "#if HAVE_" &cat %u_func &cat " && NEED_" %u_func
+		set-variable %if_befor1 &cat "#if HAVE_" &cat %u_func &cat " && NEED_" %u_func
+		set-variable %if_before &cat "#if defined(HAVE_" &cat %u_func &cat ") && defined(NEED_" &cat %u_func ")"
 		set-variable %if_after &cat "#endif /* HAVE_" &cat %u_func " */"
 		beginning-of-line
 		~if $curline &gtr 1
 			back-line
 			set-variable %line $line
 			down-line
+			~if &seq %line %if_befor1
+				set-variable %found 2
+				~return
+			~endif
 			~if &seq %line %if_before
 				set-variable %found 2
 				~return
@@ -59,13 +65,13 @@ bind-key execute-macro-31 ^X-i
 
 ; Ifdef the entire file
 32 store-macro
+	~local $wrapscan
 	beginning-of-file
 	set nowrapscan
 	~while 1
 		end-of-line
 		search-forward "ARGS("
 		execute-macro-31
-	~endif
 	~endwhile
 ~endm
 bind-key execute-macro-32 ^X-I
@@ -84,18 +90,19 @@ bind-key execute-macro-32 ^X-I
 		~endif
 	~endif
 	write-message "cannot remove bracketing ifdefs"
+	end-of-line
 ~endm
 bind-key execute-macro-33 ^X-d
 
 ; Un-ifdef the entire file
 34 store-macro
+	~local $wrapscan
 	beginning-of-file
 	set nowrapscan
 	~while 1
 		end-of-line
 		search-forward "ARGS("
 		execute-macro-33
-	~endif
 	~endwhile
 ~endm
 bind-key execute-macro-34 ^X-D

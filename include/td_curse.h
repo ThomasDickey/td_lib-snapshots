@@ -1,4 +1,4 @@
-/* $Id: td_curse.h,v 12.50 2002/04/16 10:28:54 tom Exp $ */
+/* $Id: td_curse.h,v 12.52 2002/07/05 12:45:48 tom Exp $ */
 
 /*
  * TD_LIB CURSES-related definitions
@@ -10,6 +10,8 @@
 #ifndef		PTYPES_H
 #include <ptypes.h>
 #endif		/* PTYPES_H */
+
+#undef ERR	/* work around glib 2.1.3 bug */
 
 #ifdef sun	/* <termios.h> defines stuff in a different way :-( */
 #undef ECHO
@@ -51,12 +53,20 @@
 #endif
 #endif
 
-#if HAVE_NCURSES_TERMCAP_H && defined(NCURSES_VERSION)
+#if defined(NEED_TERM_H)
+
+#include <term.h>
+
+#else
+
+#if defined(HAVE_NCURSES_TERMCAP_H) && defined(NCURSES_VERSION)
 #include <ncurses/termcap.h>
 #endif
 
-#if HAVE_TERMCAP_H && !defined(NCURSES_VERSION)
+#if defined(HAVE_TERMCAP_H) && !defined(NCURSES_VERSION)
 #include <termcap.h>
+#endif
+
 #endif
 
 /*----------------------------------------------------------------------------*/
@@ -71,7 +81,7 @@
  *	c) some implementations of 'touchwin()' do not work (these usually
  *	   are the older BSD versions).
  */
-#if HAVE_KEYPAD
+#if defined(HAVE_KEYPAD)
 #define GOOD_TOUCHWIN 1
 #endif
 
@@ -86,7 +96,7 @@
 #endif
 
 #ifndef wMaxX
-#if CURSES_LIKE_BSD44
+#if defined(CURSES_LIKE_BSD44)
 #define	wMaxX(w)	((w)->maxx)
 #define	wMaxY(w)	((w)->maxy)
 #else
@@ -95,7 +105,7 @@
 #endif
 #endif	/* wMaxX */
 
-#if CURSES_LIKE_BSD44
+#if defined(CURSES_LIKE_BSD44)
 #define	wBegX(w)	((w)->begx)
 #define	wBegY(w)	((w)->begy)
 #else
@@ -104,12 +114,12 @@
 #endif
 
 /*----------------------------------------------------------------------------*/
-#if CURSES_LIKE_BSD
+#if defined(CURSES_LIKE_BSD)
 #define CursesLine(win,y)	(win)->_y[y]
 #define CursesFirstCh(win,y)	(win)->_firstch[y]
 #define CursesLastCh(win,y)	(win)->_lastch[y]
 #endif
-#if CURSES_LIKE_BSD44		/* curses with SlackWare 2.2 (bsd 4.4) */
+#if defined(CURSES_LIKE_BSD44)	/* curses with SlackWare 2.2 (bsd 4.4) */
 #define CursesType              __LDATA
 #define CursesData(win,y,x)	(win)->lines[y]->line[x].ch
 #define CursesLine(win,y)	(win)->lines[y]->line
@@ -117,12 +127,12 @@
 #define CursesLastCh(win,y)	(win)->lines[y]->lastch
 #include <termios.h>
 #endif
-#if CURSES_LIKE_SYSV
+#if defined(CURSES_LIKE_SYSV)
 #define CursesLine(win,y)	(win)->_line[y]
 #define CursesFirstCh(win,y)	(win)->_firstchar[y]
 #define CursesLastCh(win,y)	(win)->_lastchar[y]
 #endif
-#if CURSES_LIKE_NCURSES		/* ncurses 1.8.8 and later */
+#if defined(CURSES_LIKE_NCURSES) /* ncurses 1.8.8 and later */
 #define CursesLine(win,y)	(win)->_line[y].text
 #define CursesFirstCh(win,y)	(win)->_line[y].firstchar
 #define CursesLastCh(win,y)	(win)->_line[y].lastchar
@@ -192,7 +202,7 @@
 /*
  * note: System5 curses does not define the 'screen' structure
  */
-#if !HAVE_TYPE_CHTYPE
+#if !defined(HAVE_TYPE_CHTYPE)
 	typedef	char	chtype;		/* sys5-curses data-type */
 #endif
 
@@ -201,64 +211,64 @@
 #endif
 
 #ifndef beep
-#if HAVE_BEEP && NEED_BEEP
+#if defined(HAVE_BEEP) && defined(NEED_BEEP)
 extern	int	beep		ARGS((void));
 #endif /* HAVE_BEEP */
 #endif
 
 	/* sysv has, but bsd doesn't */
-#if !HAVE_UNGETCH
+#if !defined(HAVE_UNGETCH)
 #define ungetch(c) ungetc(c,stdin)
 #endif
 
-#if HAVE_ENDWIN && NEED_ENDWIN
+#if defined(HAVE_ENDWIN) && defined(NEED_ENDWIN)
 extern	int	endwin		ARGS((void));
 #endif /* HAVE_ENDWIN */
-#if HAVE_PRINTW && NEED_PRINTW
+#if defined(HAVE_PRINTW) && defined(NEED_PRINTW)
 extern	int	printw		ARGS((char *f, ...));
 #endif /* HAVE_PRINTW */
-#if USING_SGTTY_H
-#if HAVE_STTY && NEED_STTY
+#if defined(USING_SGTTY_H)
+#if defined(HAVE_STTY) && defined(NEED_STTY)
 extern	int	stty		ARGS((int f, struct sgttyb *p));
 #endif /* HAVE_STTY */
 #endif
-#if HAVE_TGETENT && NEED_TGETENT
+#if defined(HAVE_TGETENT) && defined(NEED_TGETENT)
 extern	int	tgetent		ARGS((char *p, const char *t));
 #endif /* HAVE_TGETENT */
-#if HAVE_TGETNUM && NEED_TGETNUM
+#if defined(HAVE_TGETNUM) && defined(NEED_TGETNUM)
 extern	int	tgetnum		ARGS((const char *n));
 #endif /* HAVE_TGETNUM */
-#if HAVE_TGETSTR && NEED_TGETSTR
+#if defined(HAVE_TGETSTR) && defined(NEED_TGETSTR)
 extern	char *	tgetstr		ARGS((const char *n, char **p));
 #endif /* HAVE_TGETSTR */
-#if HAVE_TOUCHWIN && NEED_TOUCHWIN
+#if defined(HAVE_TOUCHWIN) && defined(NEED_TOUCHWIN)
 extern	int	touchwin	ARGS((WINDOW *w));
 #endif /* HAVE_TOUCHWIN */
-#if HAVE_WADDCH && NEED_WADDCH
+#if defined(HAVE_WADDCH) && defined(NEED_WADDCH)
 extern	int	waddch		ARGS((WINDOW *w, chtype c));
 #endif /* HAVE_WADDCH */
-#if HAVE_WADDSTR && NEED_WADDSTR
+#if defined(HAVE_WADDSTR) && defined(NEED_WADDSTR)
 extern	int	waddstr		ARGS((WINDOW *w, char *s));
 #endif /* HAVE_WADDSTR */
-#if HAVE_WCLRTOBOT && NEED_WCLRTOBOT
+#if defined(HAVE_WCLRTOBOT) && defined(NEED_WCLRTOBOT)
 extern	int	wclrtobot	ARGS((WINDOW *w));
 #endif /* HAVE_WCLRTOBOT */
-#if HAVE_WCLRTOEOL && NEED_WCLRTOEOL
+#if defined(HAVE_WCLRTOEOL) && defined(NEED_WCLRTOEOL)
 extern	int	wclrtoeol	ARGS((WINDOW *w));
 #endif /* HAVE_WCLRTOEOL */
-#if HAVE_WGETCH && NEED_WGETCH
+#if defined(HAVE_WGETCH) && defined(NEED_WGETCH)
 extern	int	wgetch		ARGS((WINDOW *w));
 #endif /* HAVE_WGETCH */
-#if HAVE_WMOVE && NEED_WMOVE
+#if defined(HAVE_WMOVE) && defined(NEED_WMOVE)
 extern	int	wmove		ARGS((WINDOW *w, int ybase, int xbase));
 #endif /* HAVE_WMOVE */
-#if HAVE_WREFRESH && NEED_WREFRESH
+#if defined(HAVE_WREFRESH) && defined(NEED_WREFRESH)
 extern	int	wrefresh	ARGS((WINDOW *w));
 #endif /* HAVE_WREFRESH */
-#if HAVE_WSTANDEND && NEED_WSTANDEND
+#if defined(HAVE_WSTANDEND) && defined(NEED_WSTANDEND)
 extern	int	wstandend	ARGS((WINDOW *w));
 #endif /* HAVE_WSTANDEND */
-#if HAVE_WSTANDOUT && NEED_WSTANDOUT
+#if defined(HAVE_WSTANDOUT) && defined(NEED_WSTANDOUT)
 extern	int	wstandout	ARGS((WINDOW *w));
 #endif /* HAVE_WSTANDOUT */
 
@@ -289,11 +299,11 @@ extern	int	wstandout	ARGS((WINDOW *w));
 #define	resetty()	/* empty */
 #endif
 
-#if LINTLIBRARY
+#if defined(LINTLIBRARY)
 #define extern	/* nothing */
 #endif
 	/* addchnst.c ------------------------------------------------- */
-#if	!HAVE_ADDCHNSTR && !defined(TESTING_CONFIG_H)
+#if	!defined(HAVE_ADDCHNSTR) && !defined(TESTING_CONFIG_H)
 	int	waddchnstr(
 			_arx(WINDOW *,	w)
 			_arx(chtype *,	s)
@@ -307,7 +317,7 @@ extern	int	wstandout	ARGS((WINDOW *w));
 #endif
 
 	/* beep.c ----------------------------------------------------- */
-#if	!HAVE_BEEP && !defined(TESTING_CONFIG_H)
+#if	!defined(HAVE_BEEP) && !defined(TESTING_CONFIG_H)
 	void	beep(_ar0)
 			_nul
 #endif
@@ -350,7 +360,7 @@ extern	XtermMouse xt_mouse;	/* state of XTerm-mouse */
 			_nul
 
 	/* erasechar.c ------------------------------------------------ */
-#if	!HAVE_ERASECHAR && !defined(erasechar) && !defined(TESTING_CONFIG_H)
+#if	!defined(HAVE_ERASECHAR) && !defined(erasechar) && !defined(TESTING_CONFIG_H)
 	int	erasechar(_ar0)
 			_ret
 #endif
@@ -358,13 +368,13 @@ extern	XtermMouse xt_mouse;	/* state of XTerm-mouse */
 			_ret
 
 	/* is_xterm.c ------------------------------------------------- */
-#if	!HAVE_IS_XTERM
+#if	!defined(HAVE_IS_XTERM)
 	int	is_xterm(_ar0)
 			_ret
 #endif
 
 	/* killchar.c ------------------------------------------------- */
-#if	!HAVE_KILLCHAR && !defined(killchar) && !defined(TESTING_CONFIG_H)
+#if	!defined(HAVE_KILLCHAR) && !defined(killchar) && !defined(TESTING_CONFIG_H)
 	int	killchar(_ar0)
 			_ret
 #endif
@@ -375,7 +385,7 @@ extern	XtermMouse xt_mouse;	/* state of XTerm-mouse */
 
 	/* on_winch.c ------------------------------------------------- */
 #ifdef SIG_PTYPES
-#  if SIGWINCH
+#  if defined(SIGWINCH)
 	void	on_winch(
 			_fn1(void,	func,(void)))
 			_dcl(void,	(*func)())
@@ -391,7 +401,7 @@ extern	XtermMouse xt_mouse;	/* state of XTerm-mouse */
 #endif
 	/* rawgets.c -------------------------------------------------- */
 #ifdef SIG_PTYPES
-#  if SIGWINCH
+#  if defined(SIGWINCH)
 extern	int	x_rawgets;	/* position, for use when resizing */
 extern	int	y_rawgets;
 #  endif
@@ -494,7 +504,7 @@ extern	int	y_rawgets;
 			_nul
 
 	/* wresize.c -------------------------------------------------- */
-#if !HAVE_WRESIZE
+#if !defined(HAVE_WRESIZE)
 	int	wresize(
 			_arx(WINDOW *,	win)
 			_arx(int,	rows)

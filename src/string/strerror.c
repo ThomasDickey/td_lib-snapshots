@@ -9,15 +9,15 @@
 #define STR_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: strerror.c,v 12.6 1998/02/17 17:31:43 tom Exp $")
+MODULE_ID("$Id: strerror.c,v 12.7 2002/07/05 11:18:55 tom Exp $")
 
-#if !HAVE_STRERROR
+#if !defined(HAVE_STRERROR)
 char	*strerror (
 	_AR1(int,	errnum))
 	_DCL(int,	errnum)
 {
 	static	char	unknown[20] = "error ";
-#if HAVE_SYS_ERRLIST
+#if defined(HAVE_SYS_ERRLIST)
 	if (errnum > 0 && errnum < sys_nerr)
 		return sys_errlist[errnum];
 #endif
