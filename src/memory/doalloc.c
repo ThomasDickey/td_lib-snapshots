@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)doalloc.c	1.1 86/01/09 08:21:07";
+static	char	sccs_id[] = "@(#)doalloc.c	1.2 86/10/07 12:08:36";
 #endif	lint
 
 /*
@@ -17,21 +17,21 @@ static	char	sccs_id[] = "@(#)doalloc.c	1.1 86/01/09 08:21:07";
  */
 
 #include	<stdio.h>
-
-char	*malloc (),
-	*realloc ();
+extern	unsigned sleep();
+extern	char	*malloc (), *realloc ();
+extern	void	exit();
 
 char	*doalloc (oldp, amount)
 register char	*oldp;
-register int	amount;
+register unsigned amount;
 {
 register char	*newp = (oldp ? realloc(oldp, amount) : malloc(amount));
 
 	if (!newp) {
 		beep ();
-		fprintf (stderr, "Could not (re)allocate %d bytes\n", amount);
-		fflush (stderr);
-		sleep (3);
+		(void) fprintf (stderr, "Could not (re)allocate %d bytes\n", amount);
+		(void) fflush (stderr);
+		(void) sleep (3);
 		exit (1);
 	}
 	return (newp);
