@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 5.3 1989/12/07 13:46:35 dickey Exp $ */
+/* $Id: ptypes.h,v 5.4 1989/12/08 08:04:51 dickey Exp $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -27,7 +27,7 @@
 
 #ifndef	S_IFLNK
 #define	lstat	stat
-#endif	S_IFLNK
+#endif	/* S_IFLNK */
 
 #ifdef	SYSTEM5
 #define	getwd(p)	getcwd(p,sizeof(p)-2)
@@ -51,13 +51,13 @@ extern	char	*sprintf();
 #define	_DCL(t,v)	t v;
 #define	_RET		{return(0);}
 #define	_NUL		{}
-#else	!LINTLIBRARY
+#else	/* !LINTLIBRARY */
 #ifdef	vms
 #define	PROTOTYPES
-#endif	vms
+#endif	/* vms */
 #ifdef	__STDC__
 #define	PROTOTYPES
-#endif	__STDC__
+#endif	/* __STDC__ */
 #ifdef	PROTOTYPES	/* function prototypes */
 #define	FNC_PTYPES
 #define	_FN1(t,v)	t (*v)()
@@ -67,7 +67,7 @@ extern	char	*sprintf();
 #define	_DCL(t,v)
 #define	_RET		;
 #define	_NUL		;
-#else	!PROTOTYPES	/* old-style declarations */
+#else	/* !PROTOTYPES	-- old-style declarations */
 #define	_FN1(t,v)
 #define	_FNX(t,v)
 #define	_AR1(t,v)
@@ -75,8 +75,8 @@ extern	char	*sprintf();
 #define	_DCL(t,v)
 #define	_RET		;
 #define	_NUL		;
-#endif	PROTOTYPES
-#endif	LINTLIBRARY
+#endif	/* PROTOTYPES */
+#endif	/* LINTLIBRARY */
 
 /*
  * Declare argument for 'exit()' and '_exit()':
@@ -86,10 +86,10 @@ extern	char	*sprintf();
 #include	<stsdef.h>
 #define	SUCCESS	(STS$M_INHIB_MSG | STS$K_SUCCESS)
 #define	FAIL	(STS$M_INHIB_MSG | STS$K_ERROR)
-#else	unix
+#else	/* unix */
 #define	SUCCESS	(0)		/* if no error */
 #define	FAIL	(1)		/* if any error */
-#endif	vms/unix
+#endif	/* vms/unix */
 
 /*
  * Declare functions which are int (or implicit) in some systems, but explicitly
@@ -105,12 +105,12 @@ extern	char	*sprintf();
 #define	V_OR_I		int
 #define	LEN_QSORT	int
 #define	LEN_READ	int
-#else	unix
+#else	/* unix */
 #define	V_OR_I
 #define	LEN_QSORT	int
 #define	LEN_READ	int
-#endif	vms/unix
-#endif	SYSTEM5
+#endif	/* vms/unix */
+#endif	/* SYSTEM5 */
 
 /* the type of return-value from "signal()" */
 #if	defined(apollo) || !defined(NBBY)
@@ -123,17 +123,18 @@ extern	V_OR_I	_exit();
 extern	V_OR_I	exit();
 #ifndef	vms
 extern	V_OR_I	free();
-#endif	vms
+#endif	/* vms */
 extern	V_OR_I	perror();
 extern	V_OR_I	qsort();
 #ifndef	vms
 #ifndef	__STDC__
 extern	V_OR_I	rewind();
-#endif	__STDC__
+#endif	/* __STDC__ */
 #endif
 
 #ifdef	unix
 #if	defined(apollo) && defined(__STDC__)
+#define	apollo_sr10
 extern	uid_t	getuid(), geteuid();
 extern	gid_t	getgid(), getegid();
 #else
@@ -142,7 +143,7 @@ typedef	int	uid_t;
 typedef	int	gid_t;
 #endif	/* SunOs 3.5 (fixed in SunOs 4.0) */
 #endif
-#endif	unix
+#endif	/* unix */
 
 /*
  * Miscellaneous useful definitions for readability
@@ -150,7 +151,7 @@ typedef	int	gid_t;
 #ifndef	TRUE
 #define	TRUE	(1)
 #define	FALSE	(0)
-#endif	TRUE
+#endif	/* TRUE */
 
 #define	EOS	'\0'
 
@@ -177,17 +178,17 @@ typedef	int	gid_t;
 						{return(0);}
 #define	DOALLOC(p,t,n)	def_doalloc(p,n)
 #define	ALLOC(t,n)	def_alloc(n)
-#else	lint
+#else	/* lint */
 #define	def_DOALLOC(t)
 #define	def_ALLOC(t)
 #define	DOALLOC(p,t,n)	(t *)doalloc((char *)p,sizeof(t)*(n))
 #define	ALLOC(t,n)	DOALLOC(0,t,n)
-#endif	lint
+#endif	/* lint */
 
 #ifndef	vms
 extern	char	*doalloc();
 extern	char	*malloc(), *realloc();
-#endif	vms
+#endif	/* vms */
 
 /*
  * System5 does not provide the directory manipulation procedures in bsd4.x;
@@ -196,7 +197,7 @@ extern	char	*malloc(), *realloc();
 #ifdef	DIR_PTYPES
 #ifdef	vms
 #include	"unixdir.h"	/* get this from PORTUNIX */
-#else	unix
+#else	/* unix */
 #include	<sys/dir.h>
 #ifdef	SYSTEM5
 #define	DIR	FILE
@@ -206,9 +207,9 @@ extern	char	*malloc(), *realloc();
 				: (struct direct *)0)
 #define	closedir(fp)	FCLOSE(fp)
 static	struct	direct	dbfr;
-#endif	SYSTEM5
-#endif	vms/unix
-#endif	DIR_PTYPES
+#endif	/* SYSTEM5 */
+#endif	/* vms/unix */
+#endif	/* DIR_PTYPES */
 
 /*
  * System5 curses does not define the 'screen' structure
@@ -216,17 +217,17 @@ static	struct	direct	dbfr;
 #ifdef	CUR_PTYPES
 #ifdef	SYSTEM5
 struct	screen	{ int dummy; };
-#else	SYSTEM5
+#else	/* SYSTEM5 */
 typedef char	chtype;		/* sys5-curses data-type */
 #ifndef	erasechar
 extern	char	erasechar();
-#endif	erasechar
+#endif	/* erasechar */
 #ifndef	killchar
 extern	char	killchar();
-#endif	killchar
-#endif	SYSTEM5
+#endif	/* killchar */
+#endif	/* SYSTEM5 */
 #include	<curses.h>
-#endif	CUR_PTYPES
+#endif	/* CUR_PTYPES */
 
 /*
  * Define symbols used in 'access()' function
@@ -237,14 +238,14 @@ extern	char	killchar();
 #define	X_OK	1	/* executable */
 #define	W_OK	2	/* writeable */
 #define	R_OK	4	/* readable */
-#else	unix
+#else	/* unix */
 #ifdef	SYSTEM5
 #include	<unistd.h>
-#else	SYSTEM5
+#else	/* SYSTEM5 */
 #include	<sys/file.h>
-#endif	SYSTEM5
-#endif	vms/unix
-#endif	ACC_PTYPES
+#endif	/* SYSTEM5 */
+#endif	/* vms/unix */
+#endif	/* ACC_PTYPES */
 
 /*
  * Define string-procedures
@@ -254,16 +255,16 @@ extern	char	killchar();
 #ifndef	SYSTEM5
 #define	strchr	index
 #define	strrchr	rindex
-#endif	SYSTEM5
+#endif	/* SYSTEM5 */
 extern	char	*strchr();
 extern	char	*strrchr();
-#endif	STR_PTYPES
+#endif	/* STR_PTYPES */
 
 /*
  * Definitions of procedures in CM_TOOLS common library
  */
 #ifdef	FNC_PTYPES
 #include "common.h"
-#endif	FNC_PTYPES
+#endif	/* FNC_PTYPES */
 
-#endif	_PTYPES_
+#endif	/* _PTYPES_ */

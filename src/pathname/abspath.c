@@ -1,14 +1,20 @@
 #ifndef	lint
-static	char	Id[] = "$Id: abspath.c,v 5.0 1989/09/06 15:17:52 ste_cm Rel $";
+static	char	Id[] = "$Id: abspath.c,v 5.2 1989/12/08 08:58:48 dickey Exp $";
 #endif	lint
 
 /*
  * Author:	T.E.Dickey
  * Created:	17 Sep 1987
  * $Log: abspath.c,v $
- * Revision 5.0  1989/09/06 15:17:52  ste_cm
- * BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+ * Revision 5.2  1989/12/08 08:58:48  dickey
+ * apollo sr10.1 provides get-name call with correct char-case
  *
+ *		Revision 5.1  89/12/08  08:45:32  dickey
+ *		added a set of default-cases for test-driver
+ *		
+ *		Revision 5.0  89/09/06  15:17:52  ste_cm
+ *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+ *		
  *		Revision 4.1  89/09/06  15:17:52  dickey
  *		use "ptypes.h" to consolidate definitions
  *		
@@ -39,10 +45,15 @@ static	char	Id[] = "$Id: abspath.c,v 5.0 1989/09/06 15:17:52 ste_cm Rel $";
 #define	STR_PTYPES
 #include	"ptypes.h"
 #ifdef	apollo
+#ifdef	__STDC__
+#include	<apollo/base.h>
+#include	<apollo/name.h>
+#else	/* !__STDC__ */
 #include	</sys/ins/base.ins.c>
 #include	</sys/ins/name.ins.c>
 #include	<ctype.h>
-#endif	apollo
+#endif	/* __STDC__ */
+#endif	/* apollo */
 
 #include	<pwd.h>
 extern	char	*getenv();
@@ -65,12 +76,20 @@ static
 apollo_name(path)
 char	*path;
 {
+#ifdef	__STDC__			/* sr10.x */
+	auto	status_$t	st;
+	auto	unsigned short	out_len;
+
+	name_$get_path_lc(path, strlen(path), BUFSIZ, path, &out_len, &st);
+	if (st.all != status_$ok)
+		out_len = 0;
+	path[out_len] = EOS;
+#else					/* sr9.x */
 register char	*s, *d = path;
 name_$pname_t	in_name, out_name;
 short		in_len,
 		out_len;
 status_$t	st;
-extern	char	*strncpy();
 
 	in_len = strlen(strcpy(in_name, d));
 	name_$get_path(in_name, in_len, out_name, out_len, st);
@@ -97,6 +116,7 @@ extern	char	*strncpy();
 			d++;
 		}
 	}
+#endif					/* apollo sr10.x vs sr9.x */
 }
 #endif	apollo
 
@@ -254,18 +274,41 @@ register char *s, *d = path;
 }
 
 #ifdef	TEST
-main(argc,argv)
+do_test(argc,argv)
 char	*argv[];
 {
-extern	void	exit();
-register int j;
-char	bfr[MAXPATHLEN];
+	register int	j;
+	auto	 char	bfr[MAXPATHLEN];
+
 	for (j = 1; j < argc; j++) {
-		(void)printf("%d: %s\n", j, strcpy(bfr, argv[j]));
+		PRINTF("%d: %s\n", j, strcpy(bfr, argv[j]));
 		abspath(bfr);
-		(void)printf("=>  %s\n", bfr);
+		PRINTF("=>  %s\n", bfr);
 	}
-	exit(0);
+}
+
+main(argc, argv)
+char	*argv[];
+{
+	if (argc > 1)
+		do_test(argc, argv);
+	else {
+		static	char	*tbl[] = {
+				 "?"
+				,"."
+				,".."
+				,".././.."
+				,"../."
+				,"./.."
+				,"/"
+#ifdef	apollo
+				,"`node_data"
+#endif
+				,"/tmp"
+				};
+		do_test(sizeof(tbl)/sizeof(tbl[0]), tbl);
+	}
+	exit(SUCCESS);
 	/*NOTREACHED*/
 }
 #endif	TEST

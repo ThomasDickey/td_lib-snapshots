@@ -1,11 +1,14 @@
-# $Id: Makefile,v 5.1 1989/12/07 14:33:37 dickey Exp $
+# $Id: Makefile,v 5.2 1989/12/08 08:31:51 dickey Exp $
 # MAKE-file for miscellaneous library routines
 #
 # $Log: Makefile,v $
-# Revision 5.1  1989/12/07 14:33:37  dickey
-# added 'lint2.out' rule, which is less sensitive to command-length
-# than 'lint.out' (though much slower!)
+# Revision 5.2  1989/12/08 08:31:51  dickey
+# added suffix-driven rules for lint, test files
 #
+#	Revision 5.1  89/12/07  14:33:37  dickey
+#	added 'lint2.out' rule, which is less sensitive to command-length
+#	than 'lint.out' (though much slower!)
+#	
 #	Revision 5.0  89/10/26  08:54:17  ste_cm
 #	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
 #	
@@ -234,11 +237,12 @@ OBJS	=\
 	wrepaint.o
 #
 ALL	= $A
+.PRECIOUS: $A
 #
 ####### (Standard Productions) #################################################
 all:		sources $(ALL)
 #
-clean:				; rm -f *.o *.out *.ln
+clean:				; rm -f *.o *.out *.ln *.lint
 clobber:	clean		; rm -f $(ALL)
 destroy:
 	sh -c 'for i in *;do case $$i in RCS);; *) rm -f $$i;;esac;done;exit 0'
@@ -277,3 +281,10 @@ lint2.out:	$(CSRC)
 	sh -c 'for i in $?;do echo $$i: | tee -a $@;\
 		tdlint $(LINTOPT) $$i >>$@;done'
 lincnt.out:	$(CSRC)		; $(DATE); lincnt $(CSRC) >>$@
+#
+.SUFFIXES: .lint .tst
+.c.lint:
+	tdlint $(LINTOPT) $< >$@
+.c.tst:
+	$(CC) -o $@ -DTEST $(CFLAGS) $< $A
+	rm -f $*.o

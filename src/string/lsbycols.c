@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: lsbycols.c,v 5.1 1989/12/07 14:06:51 dickey Exp $";
+static	char	Id[] = "$Id: lsbycols.c,v 8.0 1989/12/08 08:21:15 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -29,6 +29,7 @@ static	char	Id[] = "$Id: lsbycols.c,v 5.1 1989/12/07 14:06:51 dickey Exp $";
 /*ARGSUSED*/
 list_by_cols(listp, sizep, num)
 char	**listp;
+int	sizep, num;
 {
 	register int	j, k;
 	auto	 int	maxlen = 0,	/* length of widest column */
