@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rawgets.c,v 11.11 1992/08/20 09:09:02 dickey Exp $";
+static	char	Id[] = "$Id: rawgets.c,v 11.12 1992/08/25 12:09:36 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: rawgets.c,v 11.11 1992/08/20 09:09:02 dickey Exp $";
  * Title:	rawgets.c (raw-mode 'gets()')
  * Created:	29 Sep 1987 (from 'fl.c')
  * Modified:
+ *		25 Aug 1992, added 'first_mode' argument.
  *		20 Aug 1992, added 'field_len', 'first_col' arguments.
  *		17 Aug 1992, if 'fast_q' is non-null, start edit in scroll-mode
  *		10 Aug 1992, allow window-arg to be null, for replaying scripts
@@ -333,6 +334,7 @@ int	wrawgets (
 	_ARX(int,	buffer_len)	/* maximum length of 'bfr' */
 	_ARX(int,	field_len)	/* maximum length of display-field */
 	_ARX(int,	first_col)	/* initial column for editing */
+	_ARX(int,	first_mode)	/* initial insert/scroll mode */
 	_ARX(int,	newline)	/* force newline-echo on completion */
 	_ARX(int,	fast_q)		/* nonnull: extra quit character */
 	_ARX(char **,	command)	/* nonnull: read inputs */
@@ -344,6 +346,7 @@ int	wrawgets (
 	_DCL(int,	buffer_len)
 	_DCL(int,	field_len)
 	_DCL(int,	first_col)
+	_DCL(int,	first_mode)
 	_DCL(int,	newline)
 	_DCL(int,	fast_q)
 	_DCL(char **,	command)
@@ -379,7 +382,7 @@ int	wrawgets (
 		if (!wrap)
 			while (strlen(bfr) > (shift + xlast - xbase))
 				shift += SHIFT;
-		if (fast_q)
+		if (Imode != first_mode)
 			ToggleMode();
 		else
 			ShowAll();
@@ -510,7 +513,8 @@ int	wrawgets (
 			(void)wstandend(Z);
 			ShowAll();
 		}
-		(void)wrefresh(Z);
+		if (!command || !*command)
+			(void)wrefresh(Z);
 	}
 
 	return (c);	/* returns character which terminated this call */
