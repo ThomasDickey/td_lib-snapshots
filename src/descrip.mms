@@ -1,4 +1,4 @@
-# $Header: /users/source/archives/td_lib.vcs/src/RCS/descrip.mms,v 2.4 1989/05/17 10:02:35 dickey Exp $
+# $Header: /users/source/archives/td_lib.vcs/src/RCS/descrip.mms,v 2.5 1989/05/18 11:13:49 dickey Exp $
 # MMS-file for miscellaneous library routines	
 #
 ####### (Development) ##########################################################
@@ -14,6 +14,7 @@ TEST_CC =	$(CC) $(CFLAGS) /DEFINE="TEST" $(MMS$SOURCE)
 #
 ####### (Standard Lists) #######################################################
 LIBRARYMODULES = -
+	ARGV2FILE, -
 	BEEP, -
 	BLDARG, -
 	BLIP, -
@@ -100,6 +101,7 @@ UNUSED_MODULES = -
 #
 C_SRC	=-
 	ABSPATH.C -
+	ARGV2FILE.C -
 	BEEP.C -
 	BLDARG.C -
 	BLIP.C -
@@ -212,6 +214,7 @@ INSTALL :
 ####### (Details of Productions) ###############################################
 ! Dependencies to archive are done by default rules, e.g.,
 !'$(A)(UNIXDIR) :	UNIXDIR.OBJ
+argv2file.obj :		$(PTYPES_H)
 beep.obj :		$(PTYPES_H)
 cmdch.obj :		$(PTYPES_H)	$(I)cmdch.h
 copyback.obj :		$(PTYPES_H)

@@ -1,11 +1,14 @@
-# $Header: /users/source/archives/td_lib.vcs/src/RCS/Makefile,v 2.4 1989/05/11 15:32:12 dickey Exp $
+# $Header: /users/source/archives/td_lib.vcs/src/RCS/Makefile,v 2.5 1989/05/18 11:12:40 dickey Exp $
 # MAKE-file for miscellaneous library routines
 #
 # $Log: Makefile,v $
-# Revision 2.4  1989/05/11 15:32:12  dickey
-# added file2mem & mem2file modules.  added ptypes.h-dependency for
-# catchall.c; revised destroy-rule.
+# Revision 2.5  1989/05/18 11:12:40  dickey
+# added argv2file
 #
+#	Revision 2.4  89/05/11  15:32:12  dickey
+#	added file2mem & mem2file modules.  added ptypes.h-dependency for
+#	catchall.c; revised destroy-rule.
+#	
 #	Revision 2.3  89/04/27  11:22:49  dickey
 #	added 'failed.c' to simplify use of this library
 #	
@@ -33,6 +36,7 @@ LINTOPT	= $(DEFINES) $(INCLUDES) -I$J -ltd -lcurses -lapollo
 A	= ../lib/lib.a
 CSRC	=\
 	abspath.c\
+	argv2file.c\
 	beep.c\
 	bldarg.c\
 	blip.c\
@@ -119,6 +123,7 @@ SOURCES	= Makefile descrip.mms $(CSRC)
 #
 OBJS	=\
 	abspath.o\
+	argv2file.o\
 	beep.o\
 	bldarg.o\
 	blip.o\
@@ -223,6 +228,7 @@ archive: $(OBJS)
 	rm -f $A
 	ar rv $A $(OBJS)
 #
+argv2file.o:	$I/ptypes.h
 beep.o:		$I/ptypes.h
 catchall.o:	$I/ptypes.h
 cmdch.o:	$I/ptypes.h	$I/cmdch.h
