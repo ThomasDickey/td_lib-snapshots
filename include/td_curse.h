@@ -1,4 +1,4 @@
-/* $Id: td_curse.h,v 12.4 1993/11/05 17:58:30 dickey Exp $ */
+/* $Id: td_curse.h,v 12.5 1993/11/19 19:28:03 dickey Exp $ */
 
 /*
  * TD_LIB CURSES-related definitions
@@ -23,6 +23,8 @@
 #define	ARO_DOWN	ARO('D')
 #define	ARO_LEFT	ARO('L')
 #define	ARO_RIGHT	ARO('R')
+
+#define ARO_MOUSE       ARO('M')
 
 /*
  * note: System5 curses does not define the 'screen' structure
@@ -102,6 +104,17 @@ extern	int	wrefresh	(WINDOW *);
 			_nul
 
 	/* cmdch.c ---------------------------------------------------- */
+#ifndef	NO_XTERM_MOUSE
+	struct	{
+	int	col;		/* 0 .. COLS-1 */
+	int	row;		/* 0 .. LINES-1 */
+	int	button;		/* 1, 2 or 3 */
+	int	pressed;	/* boolean */
+	int	released;	/* boolean */
+	int	dbl_clik;	/* boolean */
+	} xt_mouse;	/* state of XTerm-mouse */
+#endif
+
 	int	cmdch(
 			_ar1(int *,	cntp)
 			)
@@ -172,6 +185,9 @@ extern	int	wrefresh	(WINDOW *);
 
 	/* rawterm.c -------------------------------------------------- */
 	void	rawterm(_ar0)
+			_nul
+
+	void	cookterm(_ar0)
 			_nul
 
 	/* resizewin.c ------------------------------------------------ */
