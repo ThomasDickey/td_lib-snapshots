@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 11.9 1992/11/18 08:36:10 dickey Exp $ */
+/* $Id: ptypes.h,v 11.10 1992/12/01 13:52:41 dickey Exp $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -370,6 +370,7 @@ typedef	int	gid_t;
 static	struct	direct	dbfr;
 #endif	/* SYSTEM5 */
 #endif	/* vms/unix */
+#define	DIRENT	struct	direct
 #endif	/* DIR_PTYPES */
 
 /*
