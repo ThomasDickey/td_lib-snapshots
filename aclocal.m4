@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.55 1995/02/18 00:04:00 tom Exp $
+dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.56 1995/03/23 02:03:37 tom Exp $
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "TD_" to "AC_"
 dnl ---------------------------------------------------------------------------
@@ -347,7 +347,7 @@ AC_CACHE_VAL(td_cv_REGCMP_func,[
 	TD_REGCMP_LIBS
 	if test $td_cv_REGCMP_func = no; then
 		td_save_LIBS="$LIBS"
-		LIBS="$LIBS -lPW"
+		LIBS="-lPW $LIBS"
 		TD_REGCMP_LIBS
 		LIBS="${td_save_LIBS}"
 		test $td_cv_REGCMP_func = yes && td_cv_REGCMP_func="yes-lPW"
@@ -618,12 +618,12 @@ AC_CHECK_LIB(termcap, tgetent)
 	# ensure that we don't add the termcap library, but some functions use
 	# it anyway if it's there.
 if test $ac_cv_lib_termcap = yes; then
-	LIBS="${td_save_LIBS} -lcurses -ltermcap"
+	LIBS="-lcurses -ltermcap ${td_save_LIBS}"
 	AC_CHECK_LIB(curses, initscr)
 	if test $ac_cv_lib_curses = yes; then
-		LIBS="${td_save_LIBS} -lcurses -ltermcap"
+		LIBS="-lcurses -ltermcap ${td_save_LIBS}"
 	else
-		LIBS="${td_save_LIBS} -ltermcap"
+		LIBS="-ltermcap ${td_save_LIBS}"
 	fi
 else
 	AC_CHECK_LIB(curses, initscr)
