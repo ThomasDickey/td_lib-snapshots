@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcsload.c,v 9.8 1991/09/16 08:13:25 dickey Exp $";
+static	char	Id[] = "$Id: rcsload.c,v 9.9 1991/09/17 08:12:09 dickey Exp $";
 #endif
 
 /*
@@ -7,9 +7,12 @@ static	char	Id[] = "$Id: rcsload.c,v 9.8 1991/09/16 08:13:25 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	19 Aug 1988
  * $Log: rcsload.c,v $
- * Revision 9.8  1991/09/16 08:13:25  dickey
- * load history-comment also
+ * Revision 9.9  1991/09/17 08:12:09  dickey
+ * renamed RCSTREE to DELTREE; use prototype-macros
  *
+ *		Revision 9.8  91/09/16  08:14:42  dickey
+ *		load history-comment also
+ *		
  *		Revision 9.7  91/09/16  07:49:17  dickey
  *		construct vectors for text of file, plus deltas (must next
  *		evaluate deltas, also load history-text).
@@ -39,7 +42,7 @@ static	char	Id[] = "$Id: rcsload.c,v 9.8 1991/09/16 08:13:25 dickey Exp $";
  *		18 Apr 1990, changed call on 'name2rcs()'
  *		
  *
- * Function:	Scans an RCS archive file, and returns an array of RCSTREE
+ * Function:	Scans an RCS archive file, and returns an array of DELTREE
  *		structures, which represent the information about each delta.
  *
  * patch:	should permit this to load the actual delta text also on the
@@ -59,9 +62,9 @@ extern	off_t	filesize();
 
 /* local definitions */
 #define	CHUNK	31			/* one less than a power of 2 */
-#define	def_doalloc RCSTREE_alloc
+#define	def_doalloc DELTREE_alloc
 	/*ARGSUSED*/
-	def_DOALLOC(RCSTREE)
+	def_DOALLOC(DELTREE)
 
 static	int	cur_added,
 		cur_deleted;
@@ -83,8 +86,10 @@ static	unsigned my_limit;
  ************************************************************************/
 
 static
-append(s)
-char	*s;
+append(
+_AR1(char *,	s)
+	)
+_DCL(char *,	s)
 {
 	if (load_last != 0 && s != 0) {
 		while (*load_last++ = *s++);
@@ -92,7 +97,10 @@ char	*s;
 }
 
 static
-loadtext(c)
+loadtext(
+_AR1(int,	c)
+	)
+_DCL(int,	c)
 {
 	static	char	edit_type;		/* editing type */
 	static	int	edit_at, skip;
@@ -158,9 +166,12 @@ loadtext(c)
  */
 static
 char	*
-eat_text(s, code)
-char	*s;
-int	code;
+eat_text(
+_ARX(char *,	s)
+_AR1(int,	code)
+	)
+_DCL(char *,	s)
+_DCL(int,	code)
 {
 	char	*base = load_last;
 
@@ -210,8 +221,10 @@ int	code;
  */
 static
 time_t
-eat_date(arg)
-char	*arg;
+eat_date(
+_AR1(char *,	arg)
+	)
+_DCL(char *,	arg)
 {
 	time_t	value = 0;
 	int	yd, md, dd, ht, mt, st;
@@ -232,8 +245,10 @@ char	*arg;
  */
 static
 char *
-branch_of(rev)
-char *rev;
+branch_of(
+_AR1(char *,	rev)
+	)
+_DCL(char *,	rev)
 {
 	char	bfr[BUFSIZ];
 	register char	*s = strcpy(bfr, rev), *t = bfr;
@@ -255,10 +270,14 @@ char *rev;
  * branch leaves the trunk to propagate the line counts.
  */
 static
-fill_branch(vector, at, root)
-RCSTREE *vector;
-int	at;
-char	*root;
+fill_branch(
+_ARX(DELTREE *,	vector)
+_ARX(int,	at)
+_AR1(char *,	root)
+	)
+_DCL(DELTREE *,	vector)
+_DCL(int,	at)
+_DCL(char *,	root)
 {
 	register int	j;
 	int	found	= FALSE;
@@ -291,15 +310,20 @@ char	*root;
  *	public entrypoints						*
  ************************************************************************/
 
-RCSTREE *
-rcsload(archive, full, load, verbose)
-char	*archive;			/* name of file to open		*/
-int	full;				/* TRUE if we open full path	*/
-int	load;				/* TRUE if we load file-text	*/
-int	verbose;			/* TRUE if we show messages	*/
+DELTREE *
+rcsload(
+_ARX(char *,	archive)		/* name of file to open		*/
+_ARX(int,	full)			/* TRUE if we open full path	*/
+_ARX(int,	load)			/* TRUE if we load file-text	*/
+_AR1(int,	verbose)		/* TRUE if we show messages	*/
+	)
+_DCL(char *,	archive)
+_DCL(int,	full)
+_DCL(int,	load)
+_DCL(int,	verbose)
 {
-	static	RCSTREE	nil;		/* empty struct, for terminator */
-	RCSTREE	new,			/* current struct, for loading	*/
+	static	DELTREE	nil;		/* empty struct, for terminator */
+	DELTREE	new,			/* current struct, for loading	*/
 		*vec = 0;		/* vector of structs to return	*/
 	unsigned total = 0;		/* number of items in vector	*/
 	char	key[BUFSIZ],
@@ -354,7 +378,7 @@ int	verbose;			/* TRUE if we show messages	*/
 			new.buffer = load_buffer;	load_buffer = 0;
 			new.vector = load_vector;	load_vector = 0;
 			new.logged = load_logged;	load_logged = 0;
-			vec = DOALLOC(vec,RCSTREE,((total+1)|CHUNK)+1);
+			vec = DOALLOC(vec,DELTREE,((total+1)|CHUNK)+1);
 			vec[total++] = new;
 			vec[total+1] = nil;
 			break;
@@ -430,8 +454,10 @@ int	verbose;			/* TRUE if we show messages	*/
  * To release storage, we simply release the vector, since the stuff allocated
  * by 'txtalloc()' is persistent.
  */
-rcsunload(p)
-RCSTREE	*p;			/* vector to release */
+rcsunload(
+_AR1(DELTREE *,	p)			/* vector to release */
+	)
+_DCL(DELTREE *,	p)
 {
 	if (p != 0) {
 		register int	j;
@@ -447,7 +473,7 @@ RCSTREE	*p;			/* vector to release */
 main(argc, argv)
 char	*argv[];
 {
-	RCSTREE	*p;
+	DELTREE	*p;
 	register int	j, k;
 
 	for (j = 1; j < argc; j++) {
@@ -462,5 +488,6 @@ char	*argv[];
 			rcsunload(p);
 		}
 	}
+	exit(SUCCESS);
 }
 #endif

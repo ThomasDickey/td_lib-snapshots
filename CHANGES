@@ -1,3 +1,59 @@
+1991-09-17  dickey@software.org
+
+	* src/memory/vecedit.c: lint
+
+	* src/memory/vecedit.c: RCS_BASE
+
+	* include/td_lib.h: added definitions of 'vecedit()' and 'veclen()'
+
+	* src/Makefile: added modules VECEDIT, VECLEN
+	broke deltree.h out of rcsdefs.h
+
+	* src/descrip.mms: added modules VECEDIT, VECLEN
+
+	* src/memory/veclen.c: RCS_BASE
+
+1991-09-17  ste_cm@software.org
+
+	* src/memory/veclen.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+	* src/memory/veclen.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+	* src/memory/veclen.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1991-09-17  dickey@software.org
+
+	* src/cm_funcs/rcsload.c:
+	renamed RCSTREE to DELTREE; use prototype-macros
+
+	* include/ptypes.h:
+	changed names of prototype/lint macros for consistency with
+	DBS; always include "common.h" now -- makes most extern
+	defs obsolete.
+
+	* include/sccsdefs.h, include/rcsdefs.h, include/td_lib.h:
+	changed names of prototype/lint macros for consistency with DBS
+
+	* Makefile: added rule for 'deltree.h'
+
+	* include/Makefile:
+	broke out 'RCSTREE' definition from 'rcsdefs.h' as 'deltree.h'
+
+	* include/deltree.h: RCS_BASE
+
+1991-09-17  ste_cm@software.org
+
+	* include/deltree.h:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+1991-09-17  dickey@software.org
+
+	* include/rcsdefs.h:
+	broke out definition of 'RCSTREE', renamed to 'DELTREE'
+
 1991-09-16  dickey@software.org
 
 	* src/cm_funcs/rcsload.c: load history-comment also

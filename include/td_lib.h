@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 9.5 1991/09/13 07:51:27 dickey Exp $ */
+/* $Id: td_lib.h,v 9.7 1991/09/17 09:07:39 dickey Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for CM_TOOLS COMMON
@@ -13,190 +13,190 @@
 
 	/* MAIN-PROGRAM *********************************************** */
 		failed(
-			_AR1(char *,	s)
+			_ar1(char *,	s)
 			)
-			_DCL(char *,	s)
-			_NUL
+			_dcl(char *,	s)
+			_nul
 
 	/* GENERIC-LIBRARY ******************************************** */
 
 	/* abspath.c -------------------------------------------------- */
 #ifdef	unix
 		abshome(
-			_AR1(char *,	path)
+			_ar1(char *,	path)
 			)
-			_DCL(char *,	path)
-			_NUL
+			_dcl(char *,	path)
+			_nul
 
 		abspath(
-			_AR1(char *,	path)
+			_ar1(char *,	path)
 			)
-			_DCL(char *,	path)
-			_NUL
+			_dcl(char *,	path)
+			_nul
 #endif	/* unix */
 
 	/* add2fname.c ------------------------------------------------ */
 	int	add2fname(
-			_ARX(char *,	fname)
-			_AR1(char *,	suffix)
+			_arx(char *,	fname)
+			_ar1(char *,	suffix)
 			)
-			_DCL(char *,	fname)
-			_DCL(char *,	suffix)
-			_RET
+			_dcl(char *,	fname)
+			_dcl(char *,	suffix)
+			_ret
 
 	/* argv2file.c ------------------------------------------------ */
 	int	argv2file(
-			_ARX(char **,	vec)
-			_ARX(char *,	name)
-			_AR1(char *,	mode)
+			_arx(char **,	vec)
+			_arx(char *,	name)
+			_ar1(char *,	mode)
 			)
-			_DCL(char **,	vec)
-			_DCL(char *,	name)
-			_DCL(char *,	mode)
-			_RET
+			_dcl(char **,	vec)
+			_dcl(char *,	name)
+			_dcl(char *,	mode)
+			_ret
 
 	/* beep.c ----------------------------------------------------- */
 		beep()
-			_NUL
+			_nul
 
 	/* bldarg.c --------------------------------------------------- */
 		bldarg (
-			_ARX(int,	argc)
-			_ARX(char **,	argv)
-			_AR1(char *,	string)
+			_arx(int,	argc)
+			_arx(char **,	argv)
+			_ar1(char *,	string)
 			)
-			_DCL(int,	argc)
-			_DCL(char **,	argv)
-			_DCL(char *,	string)
-			_NUL
+			_dcl(int,	argc)
+			_dcl(char **,	argv)
+			_dcl(char *,	string)
+			_nul
 
 	/* blip.c ----------------------------------------------------- */
 	void	blip(
-			_AR1(int,	c)
+			_ar1(int,	c)
 			)
-			_DCL(int,	c)
-			_NUL
+			_dcl(int,	c)
+			_nul
 
 	/* catarg.c --------------------------------------------------- */
 		catarg (
-			_ARX(char *,	dst)
-			_AR1(char *,	src)
+			_arx(char *,	dst)
+			_ar1(char *,	src)
 			)
-			_DCL(char *,	dst)
-			_DCL(char *,	src)
-			_NUL
+			_dcl(char *,	dst)
+			_dcl(char *,	src)
+			_nul
 
 	/* catchall.c ------------------------------------------------- */
 #ifdef	SIG_PTYPES
 		catchall (
-			_FN1(SIG_T,	func)
+			_fn1(SIG_T,	func)
 			)
-			_DCL(SIG_T,	(*func)())
-			_NUL
+			_dcl(SIG_T,	(*func)())
+			_nul
 #endif
 
 	/* cmdch.c ---------------------------------------------------- */
 #ifdef	CUR_PTYPES
 	int	cmdch(
-			_AR1(int *,	cntp)
+			_ar1(int *,	cntp)
 			)
-			_DCL(int *,	cntp)
-			_RET
+			_dcl(int *,	cntp)
+			_ret
 #endif	/* CUR_PTYPES */
 
 	/* copyback.c ------------------------------------------------- */
 	int	copyback(
-			_ARX(FILE *,	fp)
-			_ARX(char *,	name)
-			_ARX(int,	mode)
-			_AR1(int,	lines)
+			_arx(FILE *,	fp)
+			_arx(char *,	name)
+			_arx(int,	mode)
+			_ar1(int,	lines)
 			)
-			_DCL(FILE *,	fp)
-			_DCL(char *,	name)
-			_DCL(int,	mode)
-			_DCL(int,	lines)
-			_RET
+			_dcl(FILE *,	fp)
+			_dcl(char *,	name)
+			_dcl(int,	mode)
+			_dcl(int,	lines)
+			_ret
 
 	/* cutoff.c --------------------------------------------------- */
 #ifdef	unix
 	time_t	cutoff(
-			_ARX(int,	argc)
-			_AR1(char **,	argv)
+			_arx(int,	argc)
+			_ar1(char **,	argv)
 			)
-			_DCL(int,	argc)
-			_DCL(char **,	argv)
-			_RET
+			_dcl(int,	argc)
+			_dcl(char **,	argv)
+			_ret
 
 	/* denode.c --------------------------------------------------- */
 	char	*denode (
-			_ARX(char *,	path)
-			_ARX(char *,	node)
-			_AR1(int *,	opt)
+			_arx(char *,	path)
+			_arx(char *,	node)
+			_ar1(int *,	opt)
 			)
-			_DCL(char *,	path)
-			_DCL(char *,	node)
-			_DCL(int *,	opt)
-			_RET
+			_dcl(char *,	path)
+			_dcl(char *,	node)
+			_dcl(int *,	opt)
+			_ret
 #endif	/* unix */
 
 	/* dftenv.c --------------------------------------------------- */
 	char	*dftenv(
-			_ARX(char *,	value)
-			_AR1(char *,	name)
+			_arx(char *,	value)
+			_ar1(char *,	name)
 			)
-			_DCL(char *,	value)
-			_DCL(char *,	name)
-			_RET
+			_dcl(char *,	value)
+			_dcl(char *,	name)
+			_ret
 
 	/* doalloc.c -------------------------------------------------- */
 	char	*doalloc(
-			_ARX(char *,	oldp)
-			_AR1(unsigned,	len)
+			_arx(char *,	oldp)
+			_ar1(unsigned,	len)
 			)
-			_DCL(char *,	oldp)
-			_DCL(unsigned,	len)
-			_RET
+			_dcl(char *,	oldp)
+			_dcl(unsigned,	len)
+			_ret
 
 		dofree(
-			_AR1(char *,	oldp)
+			_ar1(char *,	oldp)
 			)
-			_DCL(char *,	oldp)
-			_NUL
+			_dcl(char *,	oldp)
+			_nul
 
 	/* dotcmp.c --------------------------------------------------- */
 	int	dotcmp (
-			_ARX(char *,	s1)
-			_AR1(char *,	s2)
+			_arx(char *,	s1)
+			_ar1(char *,	s2)
 			)
-			_DCL(char *,	s1)
-			_DCL(char *,	s2)
-			_RET
+			_dcl(char *,	s1)
+			_dcl(char *,	s2)
+			_ret
 
 	/* dotname.c -------------------------------------------------- */
 	int	dotname (
-			_AR1(char *,	path)
+			_ar1(char *,	path)
 			)
-			_DCL(char *,	path)
-			_RET
+			_dcl(char *,	path)
+			_ret
 
 	/* dumpchr.c -------------------------------------------------- */
 		dumpchr(
-			_ARX(FILE *,	fp)
-			_AR1(int,	c)
+			_arx(FILE *,	fp)
+			_ar1(int,	c)
 			)
-			_DCL(FILE *,	fp)
-			_DCL(int,	c)
-			_NUL
+			_dcl(FILE *,	fp)
+			_dcl(int,	c)
+			_nul
 
 	/* dumpwin.c -------------------------------------------------- */
 #ifdef	CUR_PTYPES
 		dumpwin(
-			_ARX(WINDOW *,	w)
-			_AR1(char *,	s)
+			_arx(WINDOW *,	w)
+			_ar1(char *,	s)
 			)
-			_DCL(WINDOW *,	w)
-			_DCL(char *,	s)
-			_NUL
+			_dcl(WINDOW *,	w)
+			_dcl(char *,	s)
+			_nul
 
 	/* erasechar.c ------------------------------------------------ */
 #ifdef	erasechar
@@ -204,119 +204,119 @@
 #endif	/* erasechar */
 		char	erasechar(
 			)
-			_RET
+			_ret
 #endif	/* CUR_PTYPES */
 
 	/* execute.c -------------------------------------------------- */
 	int	execute(
-			_ARX(char *,	verb)
-			_AR1(char *,	args)
+			_arx(char *,	verb)
+			_ar1(char *,	args)
 			)
-			_DCL(char *,	verb)
-			_DCL(char *,	args)
-			_RET
+			_dcl(char *,	verb)
+			_dcl(char *,	args)
+			_ret
 
 	/* file2argv.c ------------------------------------------------ */
 	int	file2argv(
-			_ARX(char *,	name)
-			_AR1(char ***,	vec)
+			_arx(char *,	name)
+			_ar1(char ***,	vec)
 			)
-			_DCL(char *,	name)
-			_DCL(char ***,	vec)
-			_RET
+			_dcl(char *,	name)
+			_dcl(char ***,	vec)
+			_ret
 
 	/* file2mem.c ------------------------------------------------- */
 	char *	file2mem(
-			_AR1(char *,	name)
+			_ar1(char *,	name)
 			)
-			_DCL(char *,	name)
-			_RET
+			_dcl(char *,	name)
+			_ret
 
 	/* filecopy.c ------------------------------------------------- */
 #ifdef	unix
 	int	filecopy(
-			_ARX(char *,	src)
-			_ARX(char *,	dst)
-			_AR1(int,	copy)
+			_arx(char *,	src)
+			_arx(char *,	dst)
+			_ar1(int,	copy)
 			)
-			_DCL(char *,	src)
-			_DCL(char *,	dst)
-			_DCL(int,	copy)
-			_RET
+			_dcl(char *,	src)
+			_dcl(char *,	dst)
+			_dcl(int,	copy)
+			_ret
 
 	/* filesize.c ------------------------------------------------- */
 	off_t	filesize(
-			_AR1(char *,	name)
+			_ar1(char *,	name)
 			)
-			_DCL(char *,	name)
-			_RET
+			_dcl(char *,	name)
+			_ret
 
 	/* for_user.c ------------------------------------------------- */
 	int	for_user2(
-			_FNX(int,	func)
-			_ARX(int,	the_uid)
-			_AR1(int,	the_gid)
+			_fnx(int,	func)
+			_arx(int,	the_uid)
+			_ar1(int,	the_gid)
 			)
-			_DCL(int,	(*func)())
-			_DCL(int,	the_uid)
-			_DCL(int,	the_gid)
-			_RET
+			_dcl(int,	(*func)())
+			_dcl(int,	the_uid)
+			_dcl(int,	the_gid)
+			_ret
 
 	int	for_user(
-			_FN1(int,	func)
+			_fn1(int,	func)
 			)
-			_DCL(int,	(*func)())
-			_RET
+			_dcl(int,	(*func)())
+			_ret
 #endif	/* unix */
 
 	/* fp2argv.c -------------------------------------------------- */
 	int	fp2argv(
-			_ARX(FILE *,	fp)
-			_ARX(char ***,	argv_)
-			_FN1(void,	trace)
+			_arx(FILE *,	fp)
+			_arx(char ***,	argv_)
+			_fn1(void,	trace)
 			)
-			_DCL(FILE *,	fp)
-			_DCL(char ***,	argv_)
-			_DCL(void,	(*trace)())
-			_RET
+			_dcl(FILE *,	fp)
+			_dcl(char ***,	argv_)
+			_dcl(void,	(*trace)())
+			_ret
 
 	/* ftype.c ---------------------------------------------------- */
 	char	*ftype(
-			_AR1(char *,	path)
+			_ar1(char *,	path)
 			)
-			_DCL(char *,	path)
-			_RET
+			_dcl(char *,	path)
+			_ret
 
 	/* ftype2.c --------------------------------------------------- */
 #ifdef	unix
 	char	*ftype2(
-			_AR1(char *,	path)
+			_ar1(char *,	path)
 			)
-			_DCL(char *,	path)
-			_RET
+			_dcl(char *,	path)
+			_ret
 
 	/* gethome.c -------------------------------------------------- */
 	char	*gethome()
-			_RET
+			_ret
 
 	/* getuser.c -------------------------------------------------- */
 	char	*getuser()
-			_RET
+			_ret
 #endif	/* unix */
 
 	/* gid2s.c ---------------------------------------------------- */
 	char	*gid2s(
-			_AR1(int,	gid)
+			_ar1(int,	gid)
 			)
-			_DCL(int,	gid)
-			_RET
+			_dcl(int,	gid)
+			_ret
 
 	/* istextfile.c ----------------------------------------------- */
 	int	istextfile(
-			_AR1(char *,	name)
+			_ar1(char *,	name)
 			)
-			_DCL(char *,	name)
-			_RET
+			_dcl(char *,	name)
+			_ret
 
 	/* killchar.c ------------------------------------------------- */
 #ifdef	CUR_PTYPES
@@ -324,531 +324,547 @@
 #undef	killchar
 #endif	/* killchar */
 	char	killchar()
-			_RET
+			_ret
 #endif	/* CUR_PTYPES */
 
 	/* list_by_cols.c --------------------------------------------- */
 		list_by_cols(
-			_ARX(char **,	listp)
-			_ARX(int,	sizep)
-			_AR1(int,	num)
+			_arx(char **,	listp)
+			_arx(int,	sizep)
+			_ar1(int,	num)
 			)
-			_DCL(char **,	listp)
-			_DCL(int,	sizep)
-			_DCL(int,	num)
-			_NUL
+			_dcl(char **,	listp)
+			_dcl(int,	sizep)
+			_dcl(int,	num)
+			_nul
 
 	/* ltostr.c --------------------------------------------------- */
 	char	*ltostr(
-			_ARX(char *,	bfr)
-			_ARX(long,	value)
-			_AR1(int,	base)
+			_arx(char *,	bfr)
+			_arx(long,	value)
+			_ar1(int,	base)
 			)
-			_DCL(char *,	bfr)
-			_DCL(long,	value)
-			_DCL(int,	base)
-			_RET
+			_dcl(char *,	bfr)
+			_dcl(long,	value)
+			_dcl(int,	base)
+			_ret
 
 	/* makeargv.c ------------------------------------------------- */
 	int	makeargv(
-			_ARX(char **,	argv)
-			_ARX(int,	maxarg)
-			_ARX(char *,	dst)
-			_AR1(char *,	src)
+			_arx(char **,	argv)
+			_arx(int,	maxarg)
+			_arx(char *,	dst)
+			_ar1(char *,	src)
 			)
-			_DCL(char **,	argv)
-			_DCL(int,	maxarg)
-			_DCL(char *,	dst)
-			_DCL(char *,	src)
-			_RET
+			_dcl(char **,	argv)
+			_dcl(int,	maxarg)
+			_dcl(char *,	dst)
+			_dcl(char *,	src)
+			_ret
 
 	/* mem2file.c ------------------------------------------------- */
 	int	mem2file(
-			_ARX(char *,	blob)
-			_ARX(char *,	name)
-			_AR1(char *,	mode)
+			_arx(char *,	blob)
+			_arx(char *,	name)
+			_ar1(char *,	mode)
 			)
-			_DCL(char *,	blob)
-			_DCL(char *,	name)
-			_DCL(char *,	mode)
-			_RET
+			_dcl(char *,	blob)
+			_dcl(char *,	name)
+			_dcl(char *,	mode)
+			_ret
 
 	/* modechar.c ------------------------------------------------- */
 	int	modechar(
-			_AR1(unsigned,	mode)
+			_ar1(unsigned,	mode)
 			)
-			_DCL(unsigned,	mode)
-			_RET
+			_dcl(unsigned,	mode)
+			_ret
 
 	/* name2s.c --------------------------------------------------- */
 #ifdef	unix
 	int	name2s(
-			_ARX(char *,	bfr)
-			_ARX(int,	maxbfr)
-			_ARX(char *,	name)
-			_AR1(int,	opt)
+			_arx(char *,	bfr)
+			_arx(int,	maxbfr)
+			_arx(char *,	name)
+			_ar1(int,	opt)
 			)
-			_DCL(char *,	bfr)
-			_DCL(int,	maxbfr)
-			_DCL(char *,	name)
-			_DCL(int,	opt)
-			_RET
+			_dcl(char *,	bfr)
+			_dcl(int,	maxbfr)
+			_dcl(char *,	name)
+			_dcl(int,	opt)
+			_ret
 
 	/* newzone.c -------------------------------------------------- */
 	int	localzone;
 
 		newzone(
-			_ARX(int,	hours)
-			_ARX(int,	minutes)
-			_AR1(int,	apres)
+			_arx(int,	hours)
+			_arx(int,	minutes)
+			_ar1(int,	apres)
 			)
-			_DCL(int,	hours)
-			_DCL(int,	minutes)
-			_DCL(int,	apres)
-			_NUL
+			_dcl(int,	hours)
+			_dcl(int,	minutes)
+			_dcl(int,	apres)
+			_nul
 
 		oldzone()
-			_NUL
+			_nul
 
 	/* packdate.c ------------------------------------------------- */
 	long	packdate (
-			_ARX(int,	year)
-			_ARX(int,	mon)
-			_ARX(int,	day)
-			_ARX(int,	hour)
-			_ARX(int,	min)
-			_AR1(int,	s)
+			_arx(int,	year)
+			_arx(int,	mon)
+			_arx(int,	day)
+			_arx(int,	hour)
+			_arx(int,	min)
+			_ar1(int,	s)
 			)
-			_DCL(int,	year)
-			_DCL(int,	mon)
-			_DCL(int,	day)
-			_DCL(int,	hour)
-			_DCL(int,	min)
-			_DCL(int,	s)
-			_RET
+			_dcl(int,	year)
+			_dcl(int,	mon)
+			_dcl(int,	day)
+			_dcl(int,	hour)
+			_dcl(int,	min)
+			_dcl(int,	s)
+			_ret
 
 	/* padedit.c -------------------------------------------------- */
 	int	padedit(
-			_ARX(char *,	name)
-			_ARX(int,	readonly)
-			_AR1(char *,	editor)
+			_arx(char *,	name)
+			_arx(int,	readonly)
+			_ar1(char *,	editor)
 			)
-			_DCL(char *,	name)
-			_DCL(int,	readonly)
-			_DCL(char *,	editor)
-			_RET
+			_dcl(char *,	name)
+			_dcl(int,	readonly)
+			_dcl(char *,	editor)
+			_ret
 #endif	/* unix */
 
 	/* pathcat.c -------------------------------------------------- */
 	char *	pathcat(
-			_ARX(char *,	dst)
-			_ARX(char *,	p)
-			_AR1(char *,	n)
+			_arx(char *,	dst)
+			_arx(char *,	p)
+			_ar1(char *,	n)
 			)
-			_DCL(char *,	dst)
-			_DCL(char *,	p)
-			_DCL(char *,	n)
-			_RET
+			_dcl(char *,	dst)
+			_dcl(char *,	p)
+			_dcl(char *,	n)
+			_ret
 
 	/* pathcmp.c -------------------------------------------------- */
 #ifdef	unix
 	int	pathcmp(
-			_ARX(char *,	p1)
-			_AR1(char *,	p2)
+			_arx(char *,	p1)
+			_ar1(char *,	p2)
 			)
-			_DCL(char *,	p1)
-			_DCL(char *,	p2)
-			_RET
+			_dcl(char *,	p1)
+			_dcl(char *,	p2)
+			_ret
 
 	/* pathhead.c ------------------------------------------------- */
 	char *	pathhead(
-			_ARX(char *,	path)
-			_AR1(struct stat *, s)
+			_arx(char *,	path)
+			_ar1(struct stat *, s)
 			)
-			_DCL(char *,	path)
-			_DCL(struct stat *, s)
-			_RET
+			_dcl(char *,	path)
+			_dcl(struct stat *, s)
+			_ret
 #endif	/* unix */
 
 	/* pathleaf.c ------------------------------------------------- */
 	char *	pathleaf(
-			_AR1(char *,	path)
+			_ar1(char *,	path)
 			)
-			_DCL(char *,	path)
-			_RET
+			_dcl(char *,	path)
+			_ret
 
 	/* rawgets.c -------------------------------------------------- */
 #ifdef	CUR_PTYPES
 	int	wrawgets (
-			_ARX(WINDOW *,	win)
-			_ARX(char *,	bfr)
-			_ARX(int,	size)
-			_AR1(int,	newline)
+			_arx(WINDOW *,	win)
+			_arx(char *,	bfr)
+			_arx(int,	size)
+			_ar1(int,	newline)
 			)
-			_DCL(WINDOW *,	win)
-			_DCL(char *,	bfr)
-			_DCL(int,	size)
-			_DCL(int,	newline)
-			_RET
+			_dcl(WINDOW *,	win)
+			_dcl(char *,	bfr)
+			_dcl(int,	size)
+			_dcl(int,	newline)
+			_ret
 
 	int	rawgets (
-			_ARX(char *,	bfr)
-			_ARX(int,	size)
-			_AR1(int,	newline)
+			_arx(char *,	bfr)
+			_arx(int,	size)
+			_ar1(int,	newline)
 			)
-			_DCL(char *,	bfr)
-			_DCL(int,	size)
-			_DCL(int,	newline)
-			_RET
+			_dcl(char *,	bfr)
+			_dcl(int,	size)
+			_dcl(int,	newline)
+			_ret
 
 	/* rawterm.c -------------------------------------------------- */
 		rawterm()
-			_NUL
+			_nul
 
 	/* relpath.c -------------------------------------------------- */
 #ifdef	unix
 	char *	relpath(
-			_ARX(char *,	dst)
-			_ARX(char *,	cwd)
-			_AR1(char *,	src)
+			_arx(char *,	dst)
+			_arx(char *,	cwd)
+			_ar1(char *,	src)
 			)
-			_DCL(char *,	dst)
-			_DCL(char *,	cwd)
-			_DCL(char *,	src)
-			_RET
+			_dcl(char *,	dst)
+			_dcl(char *,	cwd)
+			_dcl(char *,	src)
+			_ret
 #endif	/* unix */
 
 	/* resizewin.c ------------------------------------------------ */
 	int	resizewin()
-			_RET
+			_ret
 #endif	/* CUR_PTYPES */
 
 	/* revert.c --------------------------------------------------- */
 #ifdef	unix
 		revert(
-			_AR1(char *,	msg)
+			_ar1(char *,	msg)
 			)
-			_DCL(char *,	msg)
-			_NUL
+			_dcl(char *,	msg)
+			_nul
 
 	/* s2gid.c ---------------------------------------------------- */
 	int	s2gid(
-			_AR1(char *,	s)
+			_ar1(char *,	s)
 			)
-			_DCL(char *,	s)
-			_RET
+			_dcl(char *,	s)
+			_ret
 
 	/* s2uid.c ---------------------------------------------------- */
 	int	s2uid(
-			_AR1(char *,	s)
+			_ar1(char *,	s)
 			)
-			_DCL(char *,	s)
-			_RET
+			_dcl(char *,	s)
+			_ret
 #endif	/* unix */
 
 	/* sameleaf.c ------------------------------------------------- */
 	int	sameleaf(
-			_ARX(char *,	path)
-			_AR1(char *,	leaf)
+			_arx(char *,	path)
+			_ar1(char *,	leaf)
 			)
-			_DCL(char *,	path)
-			_DCL(char *,	leaf)
-			_RET
+			_dcl(char *,	path)
+			_dcl(char *,	leaf)
+			_ret
 
 	/* savewin.c -------------------------------------------------- */
 #ifdef	CUR_PTYPES
 		savewin()
-			_NUL
+			_nul
 
 		lastwin(
-			_ARX(int,	redo)
-			_AR1(int,	top)
+			_arx(int,	redo)
+			_ar1(int,	top)
 			)
-			_DCL(int,	redo)
-			_DCL(int,	top)
-			_NUL
+			_dcl(int,	redo)
+			_dcl(int,	top)
+			_nul
 
 		unsavewin(
-			_ARX(int,	redo)
-			_AR1(int,	top)
+			_arx(int,	redo)
+			_ar1(int,	top)
 			)
-			_DCL(int,	redo)
-			_DCL(int,	top)
-			_NUL
+			_dcl(int,	redo)
+			_dcl(int,	top)
+			_nul
 #endif	/* CUR_PTYPES */
 
 #ifdef	unix
 	/* scr_size.c ------------------------------------------------- */
 	int	scr_size(
-			_AR1(int *,	lc)
+			_ar1(int *,	lc)
 			)
-			_DCL(int *,	lc)
-			_RET
+			_dcl(int *,	lc)
+			_ret
 
 	/* setmtime.c ------------------------------------------------- */
 	int	setmtime(
-			_ARX(char *,	name)
-			_AR1(time_t,	mtime)
+			_arx(char *,	name)
+			_ar1(time_t,	mtime)
 			)
-			_DCL(char *,	name)
-			_DCL(time_t,	mtime)
-			_RET
+			_dcl(char *,	name)
+			_dcl(time_t,	mtime)
+			_ret
 #endif	/* unix */
 
 	/* shoarg.c --------------------------------------------------- */
 	char 	*bldcmd (
-			_ARX(char *,	dst)
-			_ARX(char *,	src)
-			_AR1(size_t,	len)
+			_arx(char *,	dst)
+			_arx(char *,	src)
+			_ar1(size_t,	len)
 			)
-			_DCL(char *,	dst)
-			_DCL(char *,	src)
-			_DCL(size_t,	len)
-			_RET
+			_dcl(char *,	dst)
+			_dcl(char *,	src)
+			_dcl(size_t,	len)
+			_ret
 
 	char 	*bldcmd2 (
-			_ARX(char *,	dst)
-			_ARX(char *,	src1)
-			_ARX(char *,	src2)
-			_AR1(size_t,	len)
+			_arx(char *,	dst)
+			_arx(char *,	src1)
+			_arx(char *,	src2)
+			_ar1(size_t,	len)
 			)
-			_DCL(char *,	dst)
-			_DCL(char *,	src1)
-			_DCL(char *,	src2)
-			_DCL(size_t,	len)
-			_RET
+			_dcl(char *,	dst)
+			_dcl(char *,	src1)
+			_dcl(char *,	src2)
+			_dcl(size_t,	len)
+			_ret
 
 		shoarg (
-			_ARX(FILE *,	fp)
-			_ARX(char *,	command)
-			_AR1(char *,	args)
+			_arx(FILE *,	fp)
+			_arx(char *,	command)
+			_ar1(char *,	args)
 			)
-			_DCL(FILE *,	fp)
-			_DCL(char *,	command)
-			_DCL(char *,	args)
-			_NUL
+			_dcl(FILE *,	fp)
+			_dcl(char *,	command)
+			_dcl(char *,	args)
+			_nul
 
 	/* stralloc.c ------------------------------------------------- */
 	char	*stralloc(
-			_AR1(char *,	string)
+			_ar1(char *,	string)
 			)
-			_DCL(char *,	string)
-			_RET
+			_dcl(char *,	string)
+			_ret
 
 		strfree(
-			_AR1(char *,	string)
+			_ar1(char *,	string)
 			)
-			_DCL(char *,	string)
-			_NUL
+			_dcl(char *,	string)
+			_nul
 
 	/* strbcmp.c -------------------------------------------------- */
 	int	strbcmp(
-			_ARX(char *,	a)
-			_AR1(char *,	b)
+			_arx(char *,	a)
+			_ar1(char *,	b)
 			)
-			_DCL(char *,	a)
-			_DCL(char *,	b)
-			_RET
+			_dcl(char *,	a)
+			_dcl(char *,	b)
+			_ret
 
 	/* strclean.c ------------------------------------------------- */
 	int	strclean(
-			_AR1(char *,	string)
+			_ar1(char *,	string)
 			)
-			_DCL(char *,	string)
-			_RET
+			_dcl(char *,	string)
+			_ret
 
 	/* strtrim.c -------------------------------------------------- */
 	char *	strtrim(
-			_AR1(char *,	string)
+			_ar1(char *,	string)
 			)
-			_DCL(char *,	string)
-			_RET
+			_dcl(char *,	string)
+			_ret
 
 	/* strucmp.c -------------------------------------------------- */
 	int	strucmp(
-			_ARX(char *,	a)
-			_AR1(char *,	b)
+			_arx(char *,	a)
+			_ar1(char *,	b)
 			)
-			_DCL(char *,	a)
-			_DCL(char *,	b)
-			_RET
+			_dcl(char *,	a)
+			_dcl(char *,	b)
+			_ret
 
 	/* strucpy.c -------------------------------------------------- */
 	char *	strucpy(
-			_ARX(char *,	a)
-			_AR1(char *,	b)
+			_arx(char *,	a)
+			_ar1(char *,	b)
 			)
-			_DCL(char *,	a)
-			_DCL(char *,	b)
-			_RET
+			_dcl(char *,	a)
+			_dcl(char *,	b)
+			_ret
 
 	char *	strlcpy(
-			_ARX(char *,	a)
-			_AR1(char *,	b)
+			_arx(char *,	a)
+			_ar1(char *,	b)
 			)
-			_DCL(char *,	a)
-			_DCL(char *,	b)
-			_RET
+			_dcl(char *,	a)
+			_dcl(char *,	b)
+			_ret
 
 	/* strwcmp.c -------------------------------------------------- */
 	int	strwcmp(
-			_ARX(char *,	wild)
-			_AR1(char *,	name)
+			_arx(char *,	wild)
+			_ar1(char *,	name)
 			)
-			_DCL(char *,	wild)
-			_DCL(char *,	name)
-			_RET
+			_dcl(char *,	wild)
+			_dcl(char *,	name)
+			_ret
 
 	/* track_wd.c ------------------------------------------------- */
 		track_wd(
-			_AR1(char *,	path)
+			_ar1(char *,	path)
 			)
-			_DCL(char *,	path)
-			_NUL
+			_dcl(char *,	path)
+			_nul
 
 	/* trimpath.c ------------------------------------------------- */
 	char	*trimpath(
-			_ARX(char *,	path)
-			_AR1(char *,	cwd)
+			_arx(char *,	path)
+			_ar1(char *,	cwd)
 			)
-			_DCL(char *,	path)
-			_DCL(char *,	cwd)
-			_RET
+			_dcl(char *,	path)
+			_dcl(char *,	cwd)
+			_ret
 
 	/* txtalloc.c ------------------------------------------------- */
 	char	*txtalloc(
-			_AR1(char *,	string)
+			_ar1(char *,	string)
 			)
-			_DCL(char *,	string)
-			_RET
+			_dcl(char *,	string)
+			_ret
 
 		txtfree(
-			_AR1(char *,	string)
+			_ar1(char *,	string)
 			)
-			_DCL(char *,	string)
-			_NUL
+			_dcl(char *,	string)
+			_nul
 
 	/* uid2s.c ---------------------------------------------------- */
 	char	*uid2s(
-			_AR1(int,	uid)
+			_ar1(int,	uid)
 			)
-			_DCL(int,	uid)
-			_RET
+			_dcl(int,	uid)
+			_ret
 
 	/* usercopy.c ------------------------------------------------- */
 #ifdef	unix
 	int	usercopy(
-			_ARX(char *,	src)
-			_AR1(char *,	dst)
+			_arx(char *,	src)
+			_ar1(char *,	dst)
 			)
-			_DCL(char *,	src)
-			_DCL(char *,	dst)
-			_RET
+			_dcl(char *,	src)
+			_dcl(char *,	dst)
+			_ret
 
 	/* userprot.c ------------------------------------------------- */
 	int	userprot(
-			_ARX(char *,	name)
-			_ARX(int,	mode)
-			_AR1(time_t,	mtime)
+			_arx(char *,	name)
+			_arx(int,	mode)
+			_ar1(time_t,	mtime)
 			)
-			_DCL(char *,	name)
-			_DCL(int,	mode)
-			_DCL(time_t,	mtime)
-			_RET
+			_dcl(char *,	name)
+			_dcl(int,	mode)
+			_dcl(time_t,	mtime)
+			_ret
 #endif	/* unix */
 
 	/* vecalloc.c ------------------------------------------------- */
 	char	**vecalloc(
-			_AR1(unsigned,	len)
+			_ar1(unsigned,	len)
 			)
-			_DCL(unsigned,	len)
-			_RET
+			_dcl(unsigned,	len)
+			_ret
 
 		vecfree(
-			_AR1(char **,	v)
+			_ar1(char **,	v)
 			)
-			_DCL(char **,	v)
-			_NUL
+			_dcl(char **,	v)
+			_nul
+
+	/* vecedit.c -------------------------------------------------- */
+	char **	vecedit (
+			_arx(char **,	text)
+			_ar1(char **,	script)
+			)
+			_dcl(char **,	text)
+			_dcl(char **,	script)
+			_ret
+
+	/* veclen.c --------------------------------------------------- */
+	int	veclen (
+			_ar1(char **,	vector)
+			)
+			_dcl(char **,	vector)
+			_ret
 
 	/* vercmp.c --------------------------------------------------- */
 	int	vercmp (
-			_ARX(char *,	s1)
-			_ARX(char *,	s2)
-			_AR1(int,	wild)
+			_arx(char *,	s1)
+			_arx(char *,	s2)
+			_ar1(int,	wild)
 			)
-			_DCL(char *,	s1)
-			_DCL(char *,	s2)
-			_DCL(int,	wild)
-			_RET
+			_dcl(char *,	s1)
+			_dcl(char *,	s2)
+			_dcl(int,	wild)
+			_ret
 
 	/* view_file.c ------------------------------------------------ */
 #ifdef	unix
 	int	view_file(
-			_ARX(char *,	fname)
-			_AR1(int,	readonly)
+			_arx(char *,	fname)
+			_ar1(int,	readonly)
 			)
-			_DCL(char *,	fname)
-			_DCL(int,	readonly)
-			_RET
+			_dcl(char *,	fname)
+			_dcl(int,	readonly)
+			_ret
 #endif	/* unix */
 
 	/* walktree.c ------------------------------------------------- */
 #ifdef	unix
 	int	walktree(
-			_ARX(char *,	p)
-			_ARX(char *,	n)
-			_FNX(int,	f)
-			_ARX(char *,	m)
-			_AR1(int,	lvl)
+			_arx(char *,	p)
+			_arx(char *,	n)
+			_fnx(int,	f)
+			_arx(char *,	m)
+			_ar1(int,	lvl)
 			)
-			_DCL(char *,	p)
-			_DCL(char *,	n)
-			_DCL(int,	(*f)())
-			_DCL(char *,	m)
-			_DCL(int,	lvl)
-			_RET
+			_dcl(char *,	p)
+			_dcl(char *,	n)
+			_dcl(int,	(*f)())
+			_dcl(char *,	m)
+			_dcl(int,	lvl)
+			_ret
 
 	/* which.c ---------------------------------------------------- */
 	int	which(
-			_ARX(char *,	bfr)
-			_ARX(int,	len)
-			_ARX(char *,	find)
-			_AR1(char *,	dot)
+			_arx(char *,	bfr)
+			_arx(int,	len)
+			_arx(char *,	find)
+			_ar1(char *,	dot)
 			)
-			_DCL(char *,	bfr)
-			_DCL(int,	len)
-			_DCL(char *,	find)
-			_DCL(char *,	dot)
-			_RET
+			_dcl(char *,	bfr)
+			_dcl(int,	len)
+			_dcl(char *,	find)
+			_dcl(char *,	dot)
+			_ret
 #endif	/* unix */
 
 	/* win2file.c ------------------------------------------------- */
 #ifdef	CUR_PTYPES
 	win2fp(
-			_ARX(WINDOW *,	win)
-			_ARX(FILE *,	fp)
-			_AR1(char *,	prefix)
+			_arx(WINDOW *,	win)
+			_arx(FILE *,	fp)
+			_ar1(char *,	prefix)
 			)
-			_DCL(WINDOW *,	win)
-			_DCL(FILE *,	fp)
-			_DCL(char *,	prefix)
-			_NUL
+			_dcl(WINDOW *,	win)
+			_dcl(FILE *,	fp)
+			_dcl(char *,	prefix)
+			_nul
 
 int	win2file(
-			_ARX(WINDOW *,	win)
-			_AR1(char *,	file)
+			_arx(WINDOW *,	win)
+			_ar1(char *,	file)
 			)
-			_DCL(WINDOW *,	win)
-			_DCL(char *,	file)
-			_RET
+			_dcl(WINDOW *,	win)
+			_dcl(char *,	file)
+			_ret
 
 	/* wrepaint.c ------------------------------------------------- */
 	wrepaint(
-			_ARX(WINDOW *,	win)
-			_AR1(int,	row)
+			_arx(WINDOW *,	win)
+			_ar1(int,	row)
 			)
-			_DCL(WINDOW *,	win)
-			_DCL(int,	row)
-			_NUL
+			_dcl(WINDOW *,	win)
+			_dcl(int,	row)
+			_nul
 #endif	/* CUR_PTYPES */
 #endif		/* _COMMON_H_ */

@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 9.1 1991/07/22 13:25:03 dickey Exp $ */
+/* $Id: ptypes.h,v 9.2 1991/09/17 08:11:26 dickey Exp $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -56,39 +56,49 @@ extern	char	*sprintf();
  * declarations (e.g., "common.h"):
  */
 #ifdef	LINTLIBRARY
-#define	_FN1(t,v)	v
-#define	_FNX(t,v)	_FN1(t,v),
-#define	_AR1(t,v)	v
-#define	_ARX(t,v)	_AR1(t,v),
-#define	_DCL(t,v)	t v;
-#define	_RET		{return(0);}
-#define	_NUL		{}
+#define	_fn1(t,v)	v
+#define	_fnx(t,v)	_fn1(t,v),
+#define	_ar1(t,v)	v
+#define	_arx(t,v)	_ar1(t,v),
+#define	_dcl(t,v)	t v;
+#define	_ret		{return(0);}
+#define	_nul		{}
 #else	/* !LINTLIBRARY */
-#ifdef	vms
-#define	PROTOTYPES
-#endif	/* vms */
-#ifdef	__STDC__
-#define	PROTOTYPES
+#ifdef	__STDC__	/* function prototypes */
+#define	_fn1(t,v)	t (*v)()
+#define	_fnx(t,v)	_fn1(t,v),
+#define	_ar1(t,v)	t v
+#define	_arx(t,v)	_ar1(t,v),
+#define	_dcl(t,v)
+#define	_ret		;
+#define	_nul		;
+#else	/* !__STDC__	-- old-style declarations */
+#define	_fn1(t,v)
+#define	_fnx(t,v)
+#define	_ar1(t,v)
+#define	_arx(t,v)
+#define	_dcl(t,v)
+#define	_ret		;
+#define	_nul		;
 #endif	/* __STDC__ */
-#ifdef	PROTOTYPES	/* function prototypes */
-#define	FNC_PTYPES
-#define	_FN1(t,v)	t (*v)()
-#define	_FNX(t,v)	_FN1(t,v),
-#define	_AR1(t,v)	t v
-#define	_ARX(t,v)	_AR1(t,v),
-#define	_DCL(t,v)
-#define	_RET		;
-#define	_NUL		;
-#else	/* !PROTOTYPES	-- old-style declarations */
-#define	_FN1(t,v)
-#define	_FNX(t,v)
-#define	_AR1(t,v)
-#define	_ARX(t,v)
-#define	_DCL(t,v)
-#define	_RET		;
-#define	_NUL		;
-#endif	/* PROTOTYPES */
 #endif	/* LINTLIBRARY */
+
+/*
+ * Macros to use with actual procedures to make them use prototypes if the
+ * compiler supports it:
+ */
+#ifdef	__STDC__
+#define	_FN1(t,v)	t (*v)()
+#define	_AR1(t,v)	t v
+#define	_DCL(t,v)
+#else
+#define	_FN1(t,v)	v
+#define	_AR1(t,v)	v
+#define	_DCL(t,v)	t v;
+#endif
+
+#define	_FNX(t,v)	_FN1(t,v),
+#define	_ARX(t,v)	_AR1(t,v),
 
 /*
  * Declare argument for 'exit()' and '_exit()':
@@ -323,8 +333,6 @@ extern	char	*strrchr();
 /*
  * Definitions of procedures in CM_TOOLS common library
  */
-#ifdef	FNC_PTYPES
 #include "common.h"
-#endif	/* FNC_PTYPES */
 
 #endif	/* _PTYPES_ */
