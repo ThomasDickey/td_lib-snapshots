@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcsload.c,v 10.0 1991/10/17 14:25:03 ste_cm Rel $";
+static	char	Id[] = "$Id: rcsload.c,v 10.1 1992/01/08 12:29:50 dickey Exp $";
 #endif
 
 /*
@@ -409,7 +409,7 @@ _DCL(int,	verbose)
 			new.buffer = load_buffer;	load_buffer = 0;
 			vec = DOALLOC(vec,DELTREE,((total+1)|CHUNK)+1);
 			vec[total++] = new;
-			vec[total+1] = nil;
+			vec[total]   = nil;
 			break;
 		case S_DATE:
 			s = rcsparse_num(tmp, s);

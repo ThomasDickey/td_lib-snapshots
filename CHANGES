@@ -1,3 +1,10 @@
+1992-01-08  dickey@software.org
+
+	* src/cm_funcs/cutoff.c:
+	modified so that I can precede the year by "19" or "20".
+
+	* src/cm_funcs/rcsload.c: oops: put the null-struct on the wrong index
+
 1991-12-13  dickey@software.org
 
 	* support/td_progs.mms:
