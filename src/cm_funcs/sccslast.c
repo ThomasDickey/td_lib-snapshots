@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	20 Oct 1986
  * Modified:
+ *		30 Apr 2002, check for SunOS 4.x's pre-Y2K years (a colon).
  *		21 Jul 2000, mods to support $SCCS_VAULT
  *		09 Jan 2000, implement 2037 window for Y2K years.
  *		04 Jan 2000, decode Solaris' 2-digit pre-Y2K years.
@@ -41,7 +42,7 @@
 #include	<sccsdefs.h>
 #include	<ctype.h>
 
-MODULE_ID("$Id: sccslast.c,v 12.15 2000/07/21 23:03:41 tom Exp $")
+MODULE_ID("$Id: sccslast.c,v 12.16 2002/04/30 11:07:07 tom Exp $")
 
 /*
  * Post-Y2K years require special decoding
@@ -53,6 +54,9 @@ int	sccsyear (
 	char *	p = 0;
 	long	value;
 
+	if (*src == ':') {
+		*src = '0';
+	}
 	if ((value = strtol(src, &p, 10)) <= 0
 	 || p == 0
 	 || *p == EOS) {
