@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.93 1997/09/09 22:20:38 tom Exp $
+dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.94 1997/09/10 00:50:52 tom Exp $
 dnl vi:set ts=4:
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "CF_" to "AC_"
@@ -1296,6 +1296,102 @@ do
 done
 ])
 AC_MSG_RESULT($cf_cv_src_modules)
+])dnl
+dnl ---------------------------------------------------------------------------
+dnl Append predefined lists to test/*/makefile.
+dnl
+dnl Also, make a series of "cd XXX && make" statements, which is understood by
+dnl all "make -n" commands.
+AC_DEFUN([CF_TD_TEST_MAKEFILES],
+[
+for p in $cf_cv_test_modules
+do
+	q=$srcdir/test/$p/modules
+	cf_out=test/$p/makefile
+	if test -f $q ; then
+		mv $cf_out $cf_out.tmp
+		echo "THIS=$p" >$cf_out
+		echo >>$cf_out
+		cat $cf_out.tmp >>$cf_out
+		rm -f $cf_out.tmp
+${AWK-awk} <$q >>$cf_out '
+BEGIN	{
+		found = 0;
+	}
+	{
+		if ( found == 0 )
+		{
+			printf "\nREF_FILES="
+			found = 1;
+		}
+		printf " \\\n\t%s.ref", [$]1
+	}
+'
+${AWK-awk} <$q >>$cf_out '
+BEGIN	{
+		found = 0;
+	}
+	{
+		if ( found == 0 )
+		{
+			printf "\n\nSCRIPTS= \\\n\trun_test.sh"
+			found = 1;
+		}
+		printf " \\\n\t%s.sh", [$]1
+	}
+'
+${AWK-awk} <$q >>$cf_out '
+BEGIN	{
+		found = 0;
+	}
+	{
+		if ( found == 0 )
+		{
+			printf "\n\nPROGS="
+			found = 1;
+		}
+		printf " \\\n\t%s", [$]1
+	}
+'
+	cat >>$cf_out <<CF_EOF
+
+
+${make_include_left}../td_rules.mk${make_include_right}
+
+# Fix for SunOS VPATH
+
+CF_EOF
+${AWK-awk} <$q >>$cf_out '
+	{
+		printf "%s.c:\n", [$]1
+	}
+'
+	echo "	cd $p &&	\$(MAKE) \[$]@" >>test/makefile
+	fi
+done
+test -f $srcdir/test/makefile.end && \
+    cat $srcdir/test/makefile.end >>test/makefile
+])dnl
+dnl ---------------------------------------------------------------------------
+dnl Make a list of test/*/modules so that AC_OUTPUT has the list on-hand.
+AC_DEFUN([CF_TD_TEST_MODULES],
+[
+AC_MSG_CHECKING(for source modules)
+AC_CACHE_VAL(cf_cv_test_modules,[
+cf_cv_test_modules=""
+cf_cv_test_makefiles=""
+for p in $srcdir/test/*
+do
+	if test -d $p ; then
+		if test -f $p/modules ; then
+			p=`basename $p`
+			cf_cv_test_modules="$cf_cv_test_modules $p"
+			cf_cv_test_makefiles="$cf_cv_test_makefiles test/$p/makefile:$srcdir/src/sub_vars.in"
+		fi
+	fi
+done
+])
+AC_MSG_RESULT($cf_cv_test_modules)
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Make an uppercase version of a variable

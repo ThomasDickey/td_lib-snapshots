@@ -1,5 +1,5 @@
 
-# $Id: makefile.end,v 12.2 1997/09/10 00:16:10 tom Exp $
+# $Id: makefile.end,v 12.1 1997/09/10 00:16:10 tom Exp $
 # end MAKE-file for miscellaneous library routines
 
 clean ::			; -$(RM) $(CLEAN)
