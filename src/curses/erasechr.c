@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	24 Mar 1988
  * Modified:
+ *		01 Jan 2000, 'erasechar()' is a macro in bsd4.4 curses
  *		04 Jul 1994, autoconf mods.
  *		19 May 1994, port to Solaris
  *		26 Apr 1994, port to Linux
@@ -18,11 +19,11 @@
 #define  TRM_PTYPES
 #include "td_curse.h"
 
-MODULE_ID("$Id: erasechr.c,v 12.9 1995/10/21 20:23:48 tom Exp $")
+MODULE_ID("$Id: erasechr.c,v 12.10 2000/01/01 14:27:07 tom Exp $")
 
 #define	STDIN_FD 0
 
-#if	!HAVE_ERASECHAR
+#if	!HAVE_ERASECHAR && !defined(erasechar)
 int	erasechar(_AR0)
 {
 	int	code	= '\b';		/* default value */
