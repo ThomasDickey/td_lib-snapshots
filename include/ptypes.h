@@ -1,4 +1,7 @@
-/* @(#)ptypes.h	1.8 88/09/13 11:06:14 */
+/* $Header: /users/source/archives/td_lib.vcs/include/RCS/ptypes.h,v 1.10 1989/03/16 07:47:26 dickey Exp $ */
+
+#ifndef	_PTYPES_
+#define	_PTYPES_
 
 /*
  * The definitions in this file cover simple cases of bsd4.x/system5 porting,
@@ -129,3 +132,16 @@ extern	char	killchar();
 #include	<sys/file.h>
 #endif	SYSTEM5
 #endif	ACC_PTYPES
+
+/*
+ * Define string-procedures
+ */
+#ifdef	STR_PTYPES
+#include	<string.h>
+#ifndef	SYSTEM5
+#define	strchr	index
+#define	strrchr	rindex
+#endif	SYSTEM5
+#endif	STR_PTYPES
+
+#endif	_PTYPES_

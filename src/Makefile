@@ -1,4 +1,4 @@
-# @(#)Makefile	1.59 89/03/15 13:42:32
+# @(#)Makefile	1.60 89/03/16 08:45:49
 # MAKE-file for miscellaneous library routines
 #
 ####### (Development) ##########################################################
@@ -47,6 +47,7 @@ CSRC	=\
 	packdate.c\
 	padedit.c\
 	pathcat.c\
+	pathcmp.c\
 	pathhead.c\
 	pathleaf.c\
 	rawgets.c\
@@ -124,6 +125,7 @@ OBJS	=\
 	packdate.o\
 	padedit.o\
 	pathcat.o\
+	pathcmp.o\
 	pathhead.o\
 	pathleaf.o\
 	rawgets.o\
@@ -204,6 +206,7 @@ name2s.o:	ptypes.h
 newzone.o:	ptypes.h
 packdate.o:	ptypes.h
 padedit.o:	ptypes.h
+pathcmp.o:	ptypes.h
 rawgets.o:	ptypes.h	cmdch.h
 rawterm.o:	ptypes.h
 rcsedit.o:	ptypes.h	rcsdefs.h

@@ -1,12 +1,16 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)rcspath.c	1.1 88/09/09 09:28:22";
+static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs/RCS/rcspath.c,v 1.3 1989/03/16 16:23:19 dickey Exp $";
 #endif	lint
 
 /*
  * Title:	rcspath.c (rcs-utility to path-name)
  * Author:	T.E.Dickey
  * Created:	09 Sep 1988
- * Modified:
+ * $Log: rcspath.c,v $
+ * Revision 1.3  1989/03/16 16:23:19  dickey
+ * sccs2rcs keywords
+ *
+ *		16 Mar 1989, changed default for site-path
  *
  * Function:	This returns the pathname of the specified RCS-utility, and
  *		is intended to provide a measure of security in executing
@@ -19,7 +23,7 @@ extern	char	*strcpy();
 
 #ifndef	RCS_PATH
 #ifdef	apollo
-#define	RCS_PATH	"//spe_site/local/ste/bin/"
+#define	RCS_PATH	"/ste_site/ste/bin/"
 #endif	apollo
 #endif	RCS_PATH
 

@@ -1,3 +1,49 @@
+1989-03-16  dickey@software.org
+
+	* src/cm_funcs/rcspath.c: changed default ste-path
+
+	* src/cm_funcs/rcspath.c: sccs2rcs keywords
+
+	* src/pathname/pathcmp.c: New file.
+
+	* src/pathname/pathcmp.c: sccs2rcs keywords
+
+1989-03-16  ste_cm@software.org
+
+	* src/pathname/pathcmp.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/pathname/pathcmp.c: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/pathname/pathcmp.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/pathname/pathcmp.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+	* src/pathname/pathcmp.c: BASELINE Thu Apr  6 09:45:13 EDT 1989
+
+	* src/pathname/pathcmp.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
+	* src/pathname/pathcmp.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1989-03-16  dickey@software.org
+
+	* src/Makefile, include/llib-ltd: added 'pathcmp()' module
+
+	* include/llib-ltd: sccs2rcs keywords
+
+1989-03-16  ste_cm@software.org
+
+	* include/llib-ltd: BASELINE Thu Apr  6 09:38:25 EDT 1989
+
+1989-03-16  dickey@software.org
+
+	* include/ptypes.h: added defs for <string.h>
+
+	* include/ptypes.h: sccs2rcs keywords
+
 1989-03-15  dickey@software.org
 
 	* src/Makefile, include/llib-ltd: added 'rcs_debug()' module
