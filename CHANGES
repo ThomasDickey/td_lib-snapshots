@@ -1,3 +1,7 @@
+1995-01-27  dickey@clark.net
+
+	* src/cm_funcs/cmv_dir.c: quick fix for binary-file version parsing
+
 1995-01-26  dickey@clark.net
 
 	* aclocal.m4: added support for "--with-ncurses" flag
