@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: gethome.c,v 12.2 1993/10/29 17:35:26 dickey Exp $";
+static	char	Id[] = "$Id: gethome.c,v 12.3 1993/11/26 21:57:30 dickey Exp $";
 #endif
 
 /*
@@ -22,6 +22,7 @@ static	char	Id[] = "$Id: gethome.c,v 12.2 1993/10/29 17:35:26 dickey Exp $";
 char *
 gethome(_AR0)
 {
+#ifdef	unix
 	register struct passwd *q;
 	register char	*r;
 	static   char	*home;
@@ -35,6 +36,13 @@ gethome(_AR0)
 		home = stralloc(r);
 	}
 	return (home);
+#endif
+#ifdef	vms
+	return "sys$login:";
+#endif
+#ifdef	MSDOS
+	return "/";
+#endif
 }
 
 #ifdef	TEST
@@ -43,4 +51,4 @@ _MAIN
 	printf("HOME= \"%s\"\n", gethome());
 	exit(SUCCESS);
 }
-#endif
+#endif	/* TEST */

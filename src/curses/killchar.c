@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: killchar.c,v 12.2 1993/10/29 17:35:25 dickey Exp $";
+static	char	Id[] = "$Id: killchar.c,v 12.3 1993/11/26 22:03:56 dickey Exp $";
 #endif
 
 /*
@@ -18,7 +18,7 @@ static	char	Id[] = "$Id: killchar.c,v 12.2 1993/10/29 17:35:25 dickey Exp $";
 #include	"td_curse.h"
 
 #ifndef	killchar
-#ifndef	SYSTEM5
+#if	!SYS5_CURSES
 int	killchar(_AR0)
 {
 	int	code	= '\177';
@@ -28,5 +28,5 @@ int	killchar(_AR0)
 		code = buf.sg_kill;
 	return (code);
 }
-#endif
+#endif	/* SYS5_CURSES */
 #endif	/* killchar */

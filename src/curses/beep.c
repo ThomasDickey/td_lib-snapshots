@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: beep.c,v 12.2 1993/10/29 17:35:27 dickey Exp $";
+static	char	Id[] = "$Id: beep.c,v 12.3 1993/11/26 14:03:58 dickey Exp $";
 #endif
 
 /*
@@ -17,7 +17,7 @@ static	char	Id[] = "$Id: beep.c,v 12.2 1993/10/29 17:35:27 dickey Exp $";
 
 #include	"td_curse.h"
 
-#ifndef	SYSTEM5
+#if !SYS5_CURSES
 void	beep(_AR0)
 {
 	blip('\007');

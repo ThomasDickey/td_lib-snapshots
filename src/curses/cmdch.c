@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: cmdch.c,v 12.4 1993/11/19 21:07:56 dickey Exp $";
+static	char	Id[] = "$Id: cmdch.c,v 12.5 1993/11/26 14:10:12 dickey Exp $";
 #endif
 
 /*
@@ -47,7 +47,7 @@ static	char	Id[] = "$Id: cmdch.c,v 12.4 1993/11/19 21:07:56 dickey Exp $";
 #endif
 #endif
 
-#ifdef	SYSTEM5
+#if	SYS5_CURSES
 #undef	HAS_CURSOR	/* patch: want to use 'keypad()' */
 #endif
 

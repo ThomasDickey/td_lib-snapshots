@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: catchall.c,v 12.2 1993/10/29 17:35:27 dickey Exp $";
-#endif
-
 /*
  * Title:	catchall.c (catch all signals)
  * Author:	T.E.Dickey
@@ -27,6 +23,8 @@ static	char	Id[] = "$Id: catchall.c,v 12.2 1993/10/29 17:35:27 dickey Exp $";
 #define	SIG_PTYPES
 #include "ptypes.h"
 
+MODULE_ID("$Id: catchall.c,v 12.4 1993/11/26 13:28:40 tom Exp $")
+
 void	catchall(
 	_FN1(SIG_T,	catchsig,	(SIGNAL_ARGS)))
 	_DCL(SIG_T,	(*catchsig)())
@@ -34,11 +32,13 @@ void	catchall(
 #define	SAVE(j)	save[j].func
 	static	struct	{ DCL_SIGNAL(func); } save[NSIG+1];
 	static	char	sigs[] = {
-				SIGINT,
-				SIGHUP,
-				SIGQUIT,
-				SIGPIPE,
-				SIGTERM
+				SIGINT
+				,SIGTERM
+#ifdef unix
+				,SIGHUP
+				,SIGQUIT
+				,SIGPIPE
+#endif
 			};
 	register int j;
 

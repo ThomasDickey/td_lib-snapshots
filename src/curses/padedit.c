@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: padedit.c,v 12.3 1993/10/29 17:35:25 dickey Exp $";
-#endif
-
 /*
  * Title:	padedit.c (pad-edit)
  * Author:	T.E.Dickey
@@ -41,6 +37,10 @@ static	char	Id[] = "$Id: padedit.c,v 12.3 1993/10/29 17:35:25 dickey Exp $";
 #define	WAI_PTYPES
 #include	"ptypes.h"
 #include	<errno.h>
+
+MODULE_ID("$Id: padedit.c,v 12.5 1993/11/26 22:12:34 tom Exp $")
+
+#ifdef	unix
 
 #ifdef	apollo
 #ifdef	apollo_sr10
@@ -252,4 +252,6 @@ _MAIN
 	exit(SUCCESS);
 	/*NOTREACHED*/
 }
-#endif
+#endif	/* TEST */
+
+#endif	/* unix */
