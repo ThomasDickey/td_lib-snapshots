@@ -1,3 +1,7 @@
+1989-04-17  dickey@software.org
+
+	* src/pathname/trimpath.c: RCS_BASE
+
 1989-04-13  dickey@software.org
 
 	* support/td_lib.mms, support/td_progs.mms: New file.
