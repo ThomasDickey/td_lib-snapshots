@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: diffload.c,v 12.2 1993/10/29 17:35:27 dickey Exp $";
+static	char	Id[] = "$Id: diffload.c,v 12.3 1994/05/21 20:16:58 tom Exp $";
 #endif
 
 /*
@@ -123,7 +123,7 @@ _DCL(char **,	names)
 _DCL(int,	load)
 _DCL(int,	verbose)
 {
-	auto	STAT	sb;
+	auto	Stat_t	sb;
 	auto	int	total	= veclen(names);
 	auto	DELTREE	*vec	= ALLOC(DELTREE,(unsigned)total+1);
 	static	DELTREE	nil;

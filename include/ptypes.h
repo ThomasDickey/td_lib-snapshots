@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 12.12 1994/04/26 23:00:16 tom Exp $ */
+/* $Id: ptypes.h,v 12.14 1994/05/21 20:15:07 tom Exp $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -30,6 +30,7 @@
 
 	/* useful stuff for <sys/stat.h> */
 #define	STAT	struct	stat
+#define	Stat_t	struct	stat	/* STAT conflicts with 'dist' package */
 #define	isDIR(mode)	((mode & S_IFMT) == S_IFDIR)
 #define	isFILE(mode)	((mode & S_IFMT) == S_IFREG)
 #ifdef	S_IFLNK
@@ -93,7 +94,7 @@ typedef	short	ino_t;
 #define	isSlash(c)   ((c) == PATH_SLASH)
 #endif
 
-#if	defined(__hpux) || defined(linux)
+#if	defined(__hpux) || defined(__svr4__) || defined(linux)
 #define	SYSTEM5
 #define	HAS_STDLIB 1
 #define HAS_UNISTD 1
@@ -264,7 +265,7 @@ typedef	short	ino_t;
 #endif	/* vms/unix */
 #endif	/* SYSTEM5 */
 
-#ifdef	sun
+#if	defined(sun) && !defined(V_OR_I)
 #define	V_OR_I		int
 #define	V_OR_I2		void
 #endif
@@ -294,7 +295,7 @@ typedef	short	ino_t;
 
 #if	defined(SYSTEM5) || defined(vms) || defined(__TURBOC__)
 #define	getwd(p)	getcwd(p,sizeof(p)-2)
-#if	!(defined(__hpux) || defined(linux) || defined(__TURBOC__))
+#if	!(defined(__hpux) || defined(linux) || defined(__svr4__) || defined(__TURBOC__))
 extern	char	*getcwd(_ar1(char *,p));
 #endif
 #else	/* !SYSTEM5 */
@@ -318,7 +319,7 @@ extern	long	strtol(
 		_ar1(int,	base));
 #endif
 #if	!(defined(vms) || defined(__TURBOC__))
-#if	!(defined(apollo_sr10) || defined(__hpux) || defined(linux) || defined(__CLCC__))
+#if	!(defined(apollo_sr10) || defined(__hpux) || defined(linux) || defined(__svr4__) || defined(__CLCC__))
 extern	V_OR_I2	perror (_ar1(char *,s));
 extern	V_OR_I	rewind (_ar1(FILE *,s));
 #endif
@@ -329,7 +330,7 @@ extern	time_t	time   (_ar1(time_t *,t));
 
 #endif	/* !vms */
 
-#if	!(defined(__hpux) || defined(linux))
+#if	!(defined(__hpux) || defined(linux) || defined(__svr4__))
 extern	FILE	*popen(_arx(char *,name) _ar1(char *,mode));
 
 extern	int	getopt(
@@ -366,38 +367,52 @@ extern	int	creat	(char *, int);
 extern	int	fclose	(FILE *);
 extern	int	fflush	(FILE *);
 extern	int	fgetc	(FILE *);
+#ifndef __svr4__
 extern	int	fork	(void);
 extern	int	fprintf (FILE *, char *, ...);
+#endif	/* __svr4__ */
 extern	int	fputc	(int, FILE *);
+#ifndef __svr4__
 extern	int	fputs	(char *, FILE *);
 extern	int	fread	(char *, int, int, FILE *);
 extern	int	fscanf	(FILE *, char *, ...);
 extern	int	fseek	(FILE *, long, int);
 extern	int	fwrite	(char *, int, int, FILE *);
+#endif	/* __svr4__ */
 extern	int	setegid	(gid_t);
 extern	int	setlinebuf(FILE *);
 extern	int	setruid	(uid_t);
 extern	int	setrgid	(uid_t);
+#ifndef __svr4__
 extern	int	ioctl	(int, int, caddr_t);
-extern	int	lstat	(char *, STAT *);
+extern	int	lstat	(char *, Stat_t *);
+#endif	/* __svr4__ */
 extern	int	open	(char *, int, int);
 extern	int	pclose	(FILE *);
+#ifndef __svr4__
 extern	int	printf	(char *, ...);
+#endif	/* __svr4__ */
 extern	int	putenv	(char *);
+#ifndef __svr4__
 extern	int	puts	(char *);
 extern	int	readlink(char *, char *, int);
 extern	int	rename	(char *, char *);
 extern	int	sscanf	(char *, ...);
+#endif	/* __svr4__ */
 extern	void	setbuf	(FILE *, char *);
+#ifndef __svr4__
 extern	int	symlink	(char *, char *);
 extern	int	system	(char *);
+#endif	/* __svr4__ */
 extern	int	tgetent	(char *, char *);
 extern	int	tgetnum	(char *);
 extern	int	ungetc	(int, FILE *);
+#ifndef __svr4__
 extern	int	vfork	(void);
+#endif	/* __svr4__ */
 #endif
 
-#if	defined(sun)	/* missing from <stdlib.h> */
+#if	defined(sun) && !defined(__svr4__)	/* missing from <stdlib.h> */
 extern	long	strtol(
 		_arx(char *,	s)
 		_arx(char **,	d)
@@ -419,10 +434,6 @@ extern	long	strtol(
 #define	EOS	'\0'
 
 #define	SIZEOF(v)	(sizeof(v)/sizeof(v[0]))
-
-#ifndef	MAXPATHLEN
-#define	MAXPATHLEN	256
-#endif
 
 #define NULL_FUNC (int (*)())0
 
@@ -567,7 +578,7 @@ static	struct	direct	dbfr;
 #ifndef MSDOS
 #include <pwd.h>
 
-#if	!defined(__hpux) && !defined(linux)
+#if	!(defined(__hpux) || defined(linux) || defined(__svr4__))
 extern	struct passwd *	getpwnam(_ar1(char *,name));
 extern	struct passwd *	getpwuid(_ar1(int,uid));
 
@@ -636,7 +647,7 @@ extern	V_OR_I		endpwent(_ar0);
 #define	strchr	index
 #define	strrchr	rindex
 #endif	/* SYSTEM5 */
-#if	!(defined(__hpux) || defined(linux) || defined(__TURBOC__) || defined(__CLCC__))
+#if	!(defined(__hpux) || defined(linux) || defined(__svr4__) || defined(__TURBOC__) || defined(__CLCC__))
 extern	char *	strchr (_arx(char *,s) _ar1(int,c));
 extern	char *	strrchr(_arx(char *,s) _ar1(int,c));
 extern	char *	strtok (_arx(char *,s) _ar1(char *,t));
@@ -695,5 +706,10 @@ extern	void	main(_arx(int,argc) _ar1(char **,argv));
 		     _DCL(int,argc) _DCL(char **,argv)
 
 #endif	/* LINTLIBRARY */
+
+/* This may be defined in one of the system includes */
+#ifndef	MAXPATHLEN
+#define	MAXPATHLEN	256
+#endif
 
 #endif	/* _PTYPES_ */

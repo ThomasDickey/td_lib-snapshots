@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: rcsargpr.c,v 12.2 1993/11/27 16:25:06 dickey Exp $";
-#endif
-
 /*
  * Title:	rcsargpair.c
  * Author:	T.E.Dickey
@@ -81,6 +77,8 @@ static	char	Id[] = "$Id: rcsargpr.c,v 12.2 1993/11/27 16:25:06 dickey Exp $";
 #include "rcsdefs.h"
 #include <errno.h>
 
+MODULE_ID("$Id: rcsargpr.c,v 12.4 1994/05/21 20:16:53 tom Exp $")
+
 /************************************************************************
  *	local data							*
  ************************************************************************/
@@ -98,7 +96,7 @@ static	char	Id[] = "$Id: rcsargpr.c,v 12.2 1993/11/27 16:25:06 dickey Exp $";
 
 static	char	suffix[] = RCS_SUFFIX;
 
-static	STAT	stat_working,
+static	Stat_t	stat_working,
 		stat_archive,
 		stat_located;
 
@@ -242,16 +240,16 @@ reinitialize(_AR0)
  * Functions that copy the corresponding name into caller's buffer, and return
  * 0 iff the object already exists (-1 otherwise).
  *
- * If the Stat-pointer is nonnull (the usual case), the corresponding STAT block
+ * If the Stat-pointer is nonnull (the usual case), the corresponding Stat_t block
  * is copied also, so that the caller can do ownership/access testing.
  */
 int
 rcs_working(
 _ARX(char *,	Name)
-_AR1(STAT *,	Stat)
+_AR1(Stat_t *,	Stat)
 	)
 _DCL(char *,	Name)
-_DCL(STAT *,	Stat)
+_DCL(Stat_t *,	Stat)
 {
 	initialize();
 	if (Stat != 0 || have_working == NOT_YET) {
@@ -267,10 +265,10 @@ _DCL(STAT *,	Stat)
 int
 rcs_archive(
 _ARX(char *,	Name)
-_AR1(STAT *,	Stat)
+_AR1(Stat_t *,	Stat)
 	)
 _DCL(char *,	Name)
-_DCL(STAT *,	Stat)
+_DCL(Stat_t *,	Stat)
 {
 	initialize();
 	if (Stat != 0 || have_archive == NOT_YET) {
@@ -286,10 +284,10 @@ _DCL(STAT *,	Stat)
 int
 rcs_located(
 _ARX(char *,	Name)
-_AR1(STAT *,	Stat)
+_AR1(Stat_t *,	Stat)
 	)
 _DCL(char *,	Name)
-_DCL(STAT *,	Stat)
+_DCL(Stat_t *,	Stat)
 {
 	initialize();
 	if (Stat != 0 || have_located == NOT_YET) {

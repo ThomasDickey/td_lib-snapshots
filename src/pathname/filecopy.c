@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: filecopy.c,v 12.3 1993/11/26 21:54:20 dickey Exp $";
+static	char	Id[] = "$Id: filecopy.c,v 12.4 1994/05/21 20:17:15 tom Exp $";
 #endif
 
 /*
@@ -45,7 +45,7 @@ int	filecopy(
 	_DCL(char *,	dst)
 	_DCL(int,	copy)
 {
-	STAT	sb1, sb2;
+	Stat_t	sb1, sb2;
 	register int	count,
 			fi,
 			fo;

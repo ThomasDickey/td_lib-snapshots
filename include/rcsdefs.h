@@ -1,4 +1,4 @@
-/* $Id: rcsdefs.h,v 12.1 1993/09/21 17:54:06 dickey Exp $ */
+/* $Id: rcsdefs.h,v 12.2 1994/05/21 20:15:03 tom Exp $ */
 
 #ifndef	_RCSDEFS_H_
 #define	_RCSDEFS_H_
@@ -66,26 +66,26 @@ typedef	void	(*RcsparseStr)(
 	/* rcsargpair.c ---------------------------------------------- */
 	int	rcs_working(
 			_arx(char *,	name)
-			_ar1(STAT *,	sb)
+			_ar1(Stat_t *,	sb)
 			)
 			_dcl(char *,	name)
-			_dcl(STAT *,	sb)
+			_dcl(Stat_t *,	sb)
 			_ret
 
 	int	rcs_archive(
 			_arx(char *,	name)
-			_ar1(STAT *,	sb)
+			_ar1(Stat_t *,	sb)
 			)
 			_dcl(char *,	name)
-			_dcl(STAT *,	sb)
+			_dcl(Stat_t *,	sb)
 			_ret
 
 	int	rcs_located(
 			_arx(char *,	name)
-			_ar1(STAT *,	sb)
+			_ar1(Stat_t *,	sb)
 			)
 			_dcl(char *,	name)
-			_dcl(STAT *,	sb)
+			_dcl(Stat_t *,	sb)
 			_ret
 
 	int	rcsargpair(

@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: which.c,v 12.4 1993/12/05 01:24:58 tom Exp $";
-#endif
-
 /*
  * Title:	which.c (which-executable scanner)
  * Author:	T.E.Dickey
@@ -34,13 +30,15 @@ static	char	Id[] = "$Id: which.c,v 12.4 1993/12/05 01:24:58 tom Exp $";
 #define	STR_PTYPES
 #include	"ptypes.h"
 
+MODULE_ID("$Id: which.c,v 12.6 1994/05/21 20:18:44 tom Exp $")
+
 static
 int	executable(
 	_AR1(char *,	name))
 	_DCL(char *,	name)
 {
 #ifdef	unix
-	STAT	sb;
+	Stat_t	sb;
 	return (access(name, X_OK) >= 0) && (stat_file(name, &sb) >= 0);
 #endif
 #ifdef	MSDOS

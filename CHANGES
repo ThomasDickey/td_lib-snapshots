@@ -1,3 +1,50 @@
+1994-05-21  dickey@clark.net
+
+	* test/compare/test_cmp.c: renamed-STAT
+
+	* MANIFEST.new: after one pass with Configure
+
+	* patchlevel.h: RCS_BASE
+
+	* src/cm_funcs/rcslast.c, src/cm_funcs/rcsperm.c, src/cm_funcs/rcstemp.c, src/cm_funcs/sccslast.c, src/pathname/stat_dir.c, src/pathname/stat_fil.c, src/pathname/walktree.c, src/pathname/which.c:
+	renamed-STAT
+
+	* src/cm_funcs/rcslast.c, src/cm_funcs/rcsperm.c, src/pathname/which.c:
+	use MODULE_ID
+
+	* src/cm_funcs/rcsedit.c, src/pathname/pathhead.c: renamed-STAT
+
+	* src/pathname/pathhead.c: use MODULE_ID
+
+	* src/pathname/mem2file.c, src/pathname/filesize.c: renamed-STAT
+
+	* src/pathname/filesize.c: use MODULE_ID
+
+	* src/pathname/filecopy.c, src/compare/diffload.c, src/cm_funcs/rcsargpr.c:
+	renamed-STAT
+
+	* src/cm_funcs/rcsargpr.c: use MODULE_ID
+
+	* include/td_lib.h, include/ptypes.h, include/rcsdefs.h: renamed-STAT
+
+	* MANIFEST.new: RCS_BASE
+
+	* src/curses/rawterm.c: comment
+
+	* src/curses/dumpwin.c: make this compile with NCURSES
+
+	* src/curses/cmdch.c: first pass of adaptations for NCURSES
+
+	* include/td_curse.h: starting to test with NCURSES
+
+	* src/curses/beep.c: tested specifically for curses 'beep()'
+
+	* include/td_curse.h, include/ptypes.h: port to Solaris (__svr4__)
+
+	* src/curses/rawterm.c: hack to make this run on Solaris
+
+	* src/curses/erasechr.c: port to Solaris
+
 1994-04-27  dickey@clark.net
 
 	* src/curses/wrepaint.c, src/curses/rawterm.c: Linux-port

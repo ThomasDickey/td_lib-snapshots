@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: rcsperm.c,v 12.3 1993/11/27 14:32:58 dickey Exp $";
-#endif
-
 /*
  * Title:	rcspermit.c
  * Author:	T.E.Dickey
@@ -36,6 +32,8 @@ static	char	Id[] = "$Id: rcsperm.c,v 12.3 1993/11/27 14:32:58 dickey Exp $";
 #include	"dyn_str.h"
 #include	<ctype.h>
 
+MODULE_ID("$Id: rcsperm.c,v 12.5 1994/05/21 20:18:44 tom Exp $")
+
 int	rcspermit(
 	_ARX(char *,	path)
 	_ARX(char *,	base)
@@ -46,7 +44,7 @@ int	rcspermit(
 	_DCL(char **,	accflag)
 {
 	static	DYN *	access_list;
-	auto	STAT	sb;
+	auto	Stat_t	sb;
 	auto	int	header	= TRUE;
 	auto	char	*s	= 0,
 			tip	[80],
