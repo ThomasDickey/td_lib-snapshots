@@ -1,3 +1,22 @@
+1990-03-05  dickey@software.org
+
+	* include/ptypes.h: added defs of P_tmpdir, L_tmpnam for apollo compat.
+
+	* src/cm_funcs/rcsedit.c: port to sun3 (os3.4)
+
+	* src/pathname/file2arg.c: lint
+
+1990-03-05  ste_cm@software.org
+
+	* src/pathname/file2arg.c:
+	BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/pathname/file2arg.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/pathname/file2arg.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
 1990-03-02  dickey@software.org
 
 	* src/Makefile: separated CFLAGS, INCLUDES, DEFINES defs.

@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 5.5 1990/02/14 09:06:05 dickey Exp $ */
+/* $Id: ptypes.h,v 5.6 1990/03/05 11:54:13 dickey Exp $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -16,6 +16,11 @@
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+
+#ifndef	P_tmpdir
+#define	P_tmpdir	"/usr/tmp"
+#define	L_tmpnam	32
+#endif
 
 #ifdef	S_IFSOCK
 #if	S_IFSOCK == S_IFLNK
