@@ -1,3 +1,13 @@
+1987-12-01  dickey@software.org
+
+	* src/Makefile: added some modules to support 'ded' + 'ftree'.
+
+	* src/memory/stralloc.c: New file.
+
+	* include/llib-ltd: Added a bunch of modules, including 'rqr'
+
+	* src/memory/vecalloc.c: New file.
+
 1987-11-25  dickey@software.org
 
 	* src/Makefile: added some debugging junk
