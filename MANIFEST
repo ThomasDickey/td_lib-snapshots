@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19870930
+MANIFEST for td_lib, version t19871110
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 src/cm_funcs                    subdirectory
@@ -14,3 +14,8 @@ src/pathname/denode.c           strip leading node-name from path
 src/pathname/dotname.c          test for "." or ".." names
 src/process                     subdirectory
 src/process/bldarg.c            build argc+argv array from string
+src/string                      subdirectory
+src/string/strclean.c           "clean" string, removes unnecessary blanks
+src/unix                        subdirectory
+src/unix/gid2s.c                convert group-id to string
+src/unix/uid2s.c                convert user-id to string
