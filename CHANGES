@@ -1,3 +1,16 @@
+1993-11-30  dickey@software.org
+
+	* src/cm_funcs/packdate.c:
+	need <sys/time.h> on apollo (maybe on sunos too?)
+
+	* src/descrip.mms, src/Makefile: added module 'fleaf'
+
+	* src/pathname/fleaf.c: tweaks for trailing newline
+
+1993-11-30  dickey@software.org
+
+	* src/pathname/fleaf.c: use MODULE_ID
+
 1993-11-28  dickey@software.org
 
 	* include/ptypes.h: first pass of adaptations to MSDOS

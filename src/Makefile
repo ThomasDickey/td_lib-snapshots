@@ -1,4 +1,4 @@
-# $Id: Makefile,v 12.2 1993/11/05 17:57:37 dickey Exp $
+# $Id: Makefile,v 12.3 1993/11/30 14:24:12 dickey Exp $
 # MAKE-file for miscellaneous library routines
 
 ####### (Environment) ##########################################################
@@ -47,6 +47,7 @@ CSRC	=\
 	file2mem.c\
 	filecopy.c\
 	filesize.c\
+	fleaf.c\
 	for_admn.c\
 	for_user.c\
 	fp2argv.c\
@@ -175,6 +176,7 @@ OBJS	=\
 	$Z(file2mem.o)\
 	$Z(filecopy.o)\
 	$Z(filesize.o)\
+	$Z(fleaf.o)\
 	$Z(for_admn.o)\
 	$Z(for_user.o)\
 	$Z(fp2argv.o)\
@@ -286,7 +288,6 @@ $Z:	$(OBJS)
 $(OBJS):	$(PTYPES_H)
 
 $Z(beep.o)\
-$Z(blip.o)\
 $Z(cmdch.o)\
 $Z(dumpwin.o)\
 $Z(erasechr.o)\

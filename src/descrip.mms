@@ -1,4 +1,4 @@
-# $Id: descrip.mms,v 12.1 1993/11/05 17:57:35 dickey Exp $
+# $Id: descrip.mms,v 12.2 1993/11/30 14:25:17 dickey Exp $
 # MMS-file for miscellaneous library routines	
 #
 ####### (Development) ##########################################################
@@ -41,6 +41,7 @@ LIBRARYMODULES = -
 	FILE2ARG, -
 	FILE2MEM, -
 	FILESIZE, -
+	FLEAF, -
 	FP2ARGV, -
 	FTYPE, -
 	IS_SPATH, -
@@ -177,6 +178,7 @@ C_SRC	=-
 	FILESIZE.C -
 	FOR_ADMN.C -
 	FOR_USER.C -
+	FLEAF.C -
 	FP2ARGV.C -
 	FTYPE.C -
 	FTYPE2.C -
@@ -323,6 +325,7 @@ FILECOPY.obj :		$(PTYPES_H)
 FILESIZE.obj :		$(PTYPES_H)
 FOR_ADMN.obj :		$(PTYPES_H)
 FOR_USER.obj :		$(PTYPES_H)
+FLEAF.obj :		$(PTYPES_H)
 FP2ARGV.obj :		$(PTYPES_H)
 FTYPE.obj :		$(PTYPES_H)
 FTYPE2.obj :		$(PTYPES_H)

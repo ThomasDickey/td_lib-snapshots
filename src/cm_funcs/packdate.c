@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: packdate.c,v 12.3 1993/11/26 22:11:52 dickey Exp $";
+static	char	Id[] = "$Id: packdate.c,v 12.4 1993/11/30 14:36:07 dickey Exp $";
 #endif
 
 /*
@@ -30,6 +30,9 @@ static	char	Id[] = "$Id: packdate.c,v 12.3 1993/11/26 22:11:52 dickey Exp $";
  */
 
 #include	"ptypes.h"
+#ifdef	apollo
+#include	<sys/time.h>
+#endif
 #include	<time.h>
 
 #define	MINUTE	60
