@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 7.1 1990/05/08 13:26:36 dickey Exp $ */
+/* $Id: td_lib.h,v 8.0 1990/06/27 08:51:53 ste_cm Rel $ */
 
 /*
  * Combined lint-library/function prototype definitions for CM_TOOLS COMMON
@@ -620,13 +620,21 @@
 			_RET
 
 	/* strucpy.c -------------------------------------------------- */
-		strucpy(
+	char *	strucpy(
 			_ARX(char *,	a)
 			_AR1(char *,	b)
 			)
 			_DCL(char *,	a)
 			_DCL(char *,	b)
-			_NUL
+			_RET
+
+	char *	strlcpy(
+			_ARX(char *,	a)
+			_AR1(char *,	b)
+			)
+			_DCL(char *,	a)
+			_DCL(char *,	b)
+			_RET
 
 	/* strwcmp.c -------------------------------------------------- */
 	int	strwcmp(

@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19900626
+MANIFEST for td_lib, version t19900627
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 Makefile                        top-level makefile for TD_LIB
@@ -106,6 +106,7 @@ src/port2vms/utimes.c           VMS hack to provide unix-compatible 'utimes()' f
 src/port2vms/vms2name.c         convert VMS filename to unix format
 src/port2vms/vms_dirs.c         VMS hack to provide unix-style directory access
 src/port2vms/vms_pthc.c         VAX/VMS version of 'pathcat()'
+src/port2vms/vms_rpth.c         computes relative pathname for VAX/VMS paths
 src/port2vms/vms_wild.c         tests a filename for vms-wildcards
 src/port2vms/zone2vms.c         compute timezone adjustment for VMS/unix time conversion
 src/process                     subdirectory
@@ -148,3 +149,4 @@ support/td_progs.mms            VMS MMS include-file defining program-generation
 test/port2vms                   subdirectory
 test/port2vms/README            description of test/port2vms
 test/port2vms/vms_pthc.ref      reference for 'vms_pthc'
+test/port2vms/vms_rpth.ref      reference for 'vms_rpth'
