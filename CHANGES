@@ -1,3 +1,7 @@
+2003-11-29  dickey@invisible-island.net
+
+	* install-sh: resync with my-autoconf
+
 2003-11-07  dickey@invisible-island.net
 
 	* aclocal.m4: workaround for HPUX 11.23
