@@ -1,4 +1,4 @@
-# $Id: old-td_lib.mk,v 11.4 1992/10/15 08:58:02 dickey Exp $
+# $Id: old-td_lib.mk,v 11.5 1992/10/16 08:30:10 dickey Exp $
 # common definitions for makefiles built over CM_TOOLS library.
 
 ####### (Environment) ##########################################################
@@ -43,7 +43,7 @@ CPROTO	= cproto -e -i -fo'\\n\\t\\t' -fp'\\n\\t\\t'
 
 LINT_EACH = sh -c 'for i in $?;do echo $$i:; tdlint $(LINTOPTS) $$i >>$@;done'
 
-.SUFFIXES: .c .i .o .a .proto .lint .tst
+.SUFFIXES: .c .o .a
 
 .c.o:		; $(CC) $(CPP_OPTS) $(CFLAGS) -c $<
 .c.a:
@@ -51,8 +51,17 @@ LINT_EACH = sh -c 'for i in $?;do echo $$i:; tdlint $(LINTOPTS) $$i >>$@;done'
 	@$(CC) $(CFLAGS) $(CPP_OPTS) -c $*.c
 	@ar rv $@ $*.o
 	@rm -f $*.o
+
+.SUFFIXES: .i .proto .lint .tst
+
 .c.i:		; $(CC) $(CPP_OPTS) -E -C $< >$@
 .c.proto:	; $(CPROTO) $(CPP_OPTS) $< >$@
 .c.lint:	; tdlint $(LINTOPT) $< >$@
 
 .c.tst:		; $(CC) -o $@ -DTEST $(CFLAGS) $(CPP_OPTS) $< $Z $(LIBS)
+
+.SUFFIXES: .man .cat
+
+.man.cat:
+	rm -f $@
+	nroff -man $? >$@

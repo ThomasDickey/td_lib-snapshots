@@ -1,7 +1,7 @@
-# $Id: Makefile,v 11.1 1992/02/17 15:18:36 dickey Exp $
+# $Id: Makefile,v 11.2 1992/10/16 12:23:06 dickey Exp $
 
-####### (Development) ##########################################################
-GET	= checkout
+TOP	= ../..
+include $(TOP)/cm_library/support/cm_library.mk
 
 ####### (Standard Lists) #######################################################
 SOURCES	=\
@@ -11,15 +11,16 @@ SOURCES	=\
 	reusable_parts.txt
 
 ####### (Standard Productions) #################################################
-all:		$(SOURCES)
-clean:		; rm -f *.bak *.log *.out core
-clobber:	clean
-destroy:
-	sh -c 'for i in *;do case $$i in RCS);; *) rm -f $$i;;esac;done;exit 0'
-run_tests:
+all:		$(SOURCES) $(ALL)
+clean:				; rm -f $(CLEAN)
+clobber:	clean		; rm -f $(ALL)
+destroy:			; $(DESTROY)
 sources:	$(SOURCES)
-install:
+lint.out\
+lintlib\
+run_tests\
+install\
 deinstall:
 
 ####### (Details of Productions) ###############################################
-$(SOURCES):	; $(GET) $@
+$(SOURCES):			; $(GET) $@

@@ -1,3 +1,13 @@
+1992-10-16  dickey@software.org
+
+	* Makefile: corrected destroy/clean rules
+
+	* support/Makefile: corrected recursive destroy
+
+	* certify/Makefile: standardized rules
+
+	* support/old-td_lib.mk: moved .man.cat rule here too
+
 1992-10-15  dickey@software.org
 
 	* support/old-td_lib.mk: typo in LINT_EACH
