@@ -1,10 +1,25 @@
-# $Id: td_lib.mms,v 3.0 1989/08/28 09:22:59 ste_cm Rel $
+# $Id: td_lib.mms,v 7.0 1990/05/10 16:18:31 ste_cm Rel $
 # MMS reusable rules for PORTUNIX, and programs built with it.
 #
 # $Log: td_lib.mms,v $
-# Revision 3.0  1989/08/28 09:22:59  ste_cm
-# BASELINE Fri Oct  6 15:23:19 EDT 1989 -- support:ada_pits_000(rel3)
+# Revision 7.0  1990/05/10 16:18:31  ste_cm
+# BASELINE Thu Jul 16 16:14:02 1992 -- CM_TOOLS #11
 #
+#	Revision 6.0  90/05/10  16:18:31  ste_cm
+#	BASELINE Mon Oct 21 13:09:39 1991 -- adapt to CM_TOOLS #10
+#	
+#	Revision 5.0  90/05/10  16:18:31  ste_cm
+#	BASELINE Tue Jun 11 16:44:53 1991 -- apollo sr10.3
+#	
+#	Revision 4.0  90/05/10  16:18:31  ste_cm
+#	BASELINE Tue Aug 14 16:27:44 1990
+#	
+#	Revision 3.1  90/05/10  16:18:31  dickey
+#	must compile with G-FLOAT option if we use shareable library
+#	
+#	Revision 3.0  89/08/28  09:22:59  ste_cm
+#	BASELINE Fri Oct  6 15:23:19 EDT 1989 -- support:ada_pits_000(rel3)
+#	
 #	Revision 2.1  89/08/28  09:22:59  dickey
 #	changed LIB_ARGS/LIB_DEPS around so I can link with shareable C libs
 #	
@@ -23,7 +38,8 @@ B = COM:			! program-binaries for installation
 # Override default for CFLAGS and LINKFLAGS to generate useful information
 # for debugging:
 INCLUDES=	$(I),$(J)
-CFLAGS =	/Diagnostics /Listing /Debug /OBJECT=$@ /Include=($(INCLUDES))
+CFLAGS =	/Diagnostics /Listing /Debug-
+		/OBJECT=$@ /Include=($(INCLUDES)) /G_FLOAT
 LINKFLAGS =	/MAP/CROSS_REFERENCE/EXEC=$(MMS$TARGET_NAME).EXE
 #
 # Define a macro useful for generating test-programs for library modules:

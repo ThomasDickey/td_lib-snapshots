@@ -1,3 +1,20 @@
+1990-05-10  dickey@software.org
+
+	* support/td_lib.mms:
+	must compile with G-FLOAT option if we use shareable library
+
+1990-05-10  ste_cm@software.org
+
+	* support/td_lib.mms:
+	BASELINE Mon Oct 21 13:09:39 1991 -- adapt to CM_TOOLS #10
+
+	* support/td_lib.mms: BASELINE Thu Jul 16 16:14:02 1992 -- CM_TOOLS #11
+
+	* support/td_lib.mms: BASELINE Tue Aug 14 16:27:44 1990
+
+	* support/td_lib.mms:
+	BASELINE Tue Jun 11 16:44:53 1991 -- apollo sr10.3
+
 1990-05-08  dickey@software.org
 
 	* src/cm_funcs/sccsname.c: use 'sccsdefs.h'
