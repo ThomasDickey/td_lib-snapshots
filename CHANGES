@@ -1,3 +1,57 @@
+1989-08-17  dickey@software.org
+
+	* src/cm_funcs/sccslast.c:
+	rewrote the code which computes the path of the working-file
+	so that we don't use ".." unless necessary, so this works
+	better with symbolic links.
+
+1989-08-17  ste_cm@software.org
+
+	* src/cm_funcs/sccslast.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/cm_funcs/sccslast.c:
+	BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/cm_funcs/sccslast.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
+	* src/cm_funcs/sccslast.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1989-08-17  dickey@software.org
+
+	* src/cm_funcs/rcslast.c:
+	rewrote the code which computes the path of the working-file
+	so that we don't use ".." unless necessary, so this works
+	better with symbolic links.
+
+1989-08-17  ste_cm@software.org
+
+	* src/cm_funcs/rcslast.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
+1989-08-17  dickey@software.org
+
+	* src/process/failed.c:
+	flush stderr, stdout in case they were buffered.
+
+1989-08-17  ste_cm@software.org
+
+	* src/process/failed.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/process/failed.c: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/process/failed.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/process/failed.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
+	* src/process/failed.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
 1989-08-08  dickey@software.org
 
 	* src/Makefile, src/descrip.mms: added module 'dftenv'

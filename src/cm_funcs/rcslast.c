@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs/RCS/rcslast.c,v 3.0 1988/09/02 09:28:16 ste_cm Rel $";
+static	char	what[] = "$Id: rcslast.c,v 4.0 1989/08/17 11:55:10 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,9 +7,17 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs
  * Author:	T.E.Dickey
  * Created:	18 May 1988, from 'sccslast.c'
  * $Log: rcslast.c,v $
- * Revision 3.0  1988/09/02 09:28:16  ste_cm
- * BASELINE Mon Jun 19 13:27:01 EDT 1989
+ * Revision 4.0  1989/08/17 11:55:10  ste_cm
+ * BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
  *
+ *		Revision 3.1  89/08/17  11:55:10  dickey
+ *		rewrote the code which computes the path of the working-file
+ *		so that we don't use ".." unless necessary, so this works
+ *		better with symbolic links.
+ *		
+ *		Revision 3.0  88/09/02  09:28:16  ste_cm
+ *		BASELINE Mon Jun 19 13:27:01 EDT 1989
+ *		
  *		Revision 2.0  88/09/02  09:28:16  ste_cm
  *		BASELINE Thu Apr  6 09:45:13 EDT 1989
  *		
@@ -26,16 +34,13 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs
  *		shown; otherwise the tip-version is shown.
  */
 
+#define	STR_PTYPES
 #include	"ptypes.h"
 #include	<ctype.h>
 #include	"rcsdefs.h"
 
 extern	long	packdate();
 extern	char	*rcs_dir(),
-		*strcat(),
-		*strcpy(),
-		*strchr(),
-		*strrchr(),
 		*txtalloc();
 
 #define	SKIP(s)	while (isspace(*s)) s++;
@@ -202,8 +207,18 @@ char	**lock_;
 		tryRCS(strcpy(name,path), vers_, date_, lock_);
 		if (*date_) {		/* it was an ok RCS file */
 			/* look for checked-out file */
-			(void)strcat(strcpy(name+(t-path), "../"), t);
-			name[(t-path)+len+3-len_s] = EOS; /* trim suffix */
+
+			if (t != path) {
+				name[t - path - 1] = EOS;
+				if (s = strrchr(name, '/'))
+					s[1] = EOS;
+				else
+					name[0] = EOS;
+				(void)strcat(name, t);
+			} else
+				(void)strcat(strcpy(name, "../"), t);
+			name[strlen(name) - len_s] = EOS; /* trim suffix */
+
 			*date_ = 0;	/* use actual modification-date! */
 			if (stat(name, &sbfr) >= 0)
 				*date_ = sbfr.st_mtime;
