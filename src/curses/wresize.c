@@ -1,5 +1,5 @@
 #ifndef	NO_IDENT
-static	char	*Id = "$Id: wresize.c,v 12.6 1995/07/03 23:56:06 tom Exp $";
+static	char	*Id = "$Id: wresize.c,v 12.7 1995/07/06 00:29:00 tom Exp $";
 #endif
 
 /*
@@ -45,7 +45,8 @@ static	char	*Id = "$Id: wresize.c,v 12.6 1995/07/03 23:56:06 tom Exp $";
 #define max(a,b) ((a)<(b)?(b):(a))
 #endif
 
-void	wresize(
+#if !HAVE_WRESIZE
+int	wresize(
 	_ARX(WINDOW *,	w)
 	_ARX(int,	ToLines)
 	_AR1(int,	ToCols)
@@ -122,7 +123,7 @@ void	wresize(
 	 * If the number of lines has changed, adjust the size of the overall
 	 * vector:
 	 */
-	if (ToLines != LINES) {
+	if (ToLines != w->_maxy) {
 		for (row = ToLines+1; row <= w->_maxy; row++)
 			free((char *)(CursesLine(w,row)));
 
@@ -166,5 +167,7 @@ void	wresize(
 	 */
 	w->_maxx = ToCols;  if (w->_curx >= ToCols)  w->_curx = 0;
 	w->_maxy = ToLines; if (w->_cury >= ToLines) w->_cury = 0;
+	return OK;
 #endif
 }
+#endif	/* !HAVE_WRESIZE */

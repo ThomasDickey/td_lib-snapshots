@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.62 1995/06/06 20:20:16 tom Exp $
+dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.63 1995/07/06 00:29:00 tom Exp $
 dnl vi:set ts=4:
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "TD_" to "AC_"
@@ -107,7 +107,7 @@ define([TD_INCLUDE_PATH],
 for td_path in $1
 do
 	td_result=""
-	AC_MSG_CHECKING(for extra include-paths)
+	AC_MSG_CHECKING(for directory $td_path)
 	if test -d $td_path
 	then
 		INCLUDES="$INCLUDES -I$td_path"
@@ -116,7 +116,9 @@ do
 		td_result="$td_result $td_path"
 	fi
 	if test -z "$td_result"; then
-		td_result="(none)";
+		td_result=no
+	else
+		td_result=yes
 	fi
 	AC_MSG_RESULT($td_result)
 done
@@ -644,7 +646,7 @@ fi
 if test $ac_cv_lib_ncurses = yes; then
 	# Linux installs NCURSES's include files in a separate directory to avoid
 	# confusion with the native curses.  NCURSES has its own termcap support.
-	TD_INCLUDE_PATH(/usr/include/ncurses)
+	TD_INCLUDE_PATH(/usr/include/ncurses /usr/local/include/ncurses)
 	ac_cv_lib_curses=yes
 else
 	# The curses library often depends on the termcap library, so we've checked

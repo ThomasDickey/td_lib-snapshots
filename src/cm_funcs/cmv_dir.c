@@ -1,5 +1,5 @@
 #ifndef	NO_IDENT
-static	char	Id[] = "$Id: cmv_dir.c,v 12.14 1995/03/30 20:38:16 tom Exp $";
+static	char	Id[] = "$Id: cmv_dir.c,v 12.15 1995/07/06 19:58:06 tom Exp $";
 #endif
 
 /*
@@ -53,7 +53,6 @@ static	char	Id[] = "$Id: cmv_dir.c,v 12.14 1995/03/30 20:38:16 tom Exp $";
 
 #define	CMTREE	struct	CmTree
 	CMTREE	{
-	CMTREE	*cmparent;
 	CMTREE	*children;
 	CMTREE	*siblings;
 	CMFILE	*filelist;
@@ -61,12 +60,14 @@ static	char	Id[] = "$Id: cmv_dir.c,v 12.14 1995/03/30 20:38:16 tom Exp $";
 	char	*external;	/* external leaf-name */
 	char	*fullpath;
 	long	marktime;	/* ...from reading r-curr */
+	int	level;		/* ...level of 'internal' name */
 	};
 
 #define	VAULTS	struct	Vaults
 	VAULTS	{
 	VAULTS	*next;
 	char	*archive;	/* directory-path of the CmVision vault */
+	int	level;		/* ...its level */
 	CMTREE	*cmtree;	/* vault's internal structure */
 	WORKING	*working;	/* working trees associated with vault */
 	};
@@ -138,15 +139,37 @@ char *	NewExternal(
 }
 
 /*
+ * CmVision stores analogous information to the s-curr file in the top-level
+ * directories.  We use these also for navigating.
+ */
+static
+char *	parts_list(
+	_ARX(char *,	result)
+	_ARX(char *,	archive)
+	_AR1(int,	level)
+		)
+	_DCL(char *,	result)
+	_DCL(char *,	archive)
+	_DCL(int,	level)
+{
+	char	*leaf;
+
+	switch (level) {
+	case 0:	 leaf = "PROJ-list"; break;
+	case 1:  leaf = "CPCI-list"; break;
+	default: leaf = "s-curr";    break;
+	}
+	pathcat(result, archive, leaf);
+	return result;
+}
+
+/*
  * Read the entries in the s-curr file in the given directory, adding them
  * to the children of the given CMTREE node.
  */
 static
 void	read_s_curr(
-	_ARX(char *,	archive)	/* directory that may contain s-curr */
-	_AR1(CMTREE *,	parent)		/* parent node to populate */
-		)
-	_DCL(char *,	archive)
+	_AR1(CMTREE *,	parent))	/* parent node to populate */
 	_DCL(CMTREE *,	parent)
 {
 	char	temp[MAXPATHLEN];
@@ -155,7 +178,7 @@ void	read_s_curr(
 	FILE	*fp;
 	CMTREE	*p, *q;
 
-	if ((fp = fopen(pathcat(temp, archive, "s-curr"), "r")) != 0) {
+	if ((fp = fopen(parts_list(temp, parent->fullpath, parent->level), "r")) != 0) {
 		while (fgets(temp, sizeof(temp), fp) != 0) {
 			char *s = strchr(strtrim(temp), ';');
 			if (s == 0)
@@ -167,7 +190,8 @@ void	read_s_curr(
 			(void)strcpy(external, s+1);
 			if ((s = strchr(external, ';')) != 0)
 				*s = EOS;
-			p = NewCmTree(pathcat(temp, archive, internal));
+			p = NewCmTree(pathcat(temp, parent->fullpath, internal));
+			p->level    = parent->level + 1;
 			p->internal = NewInternal(parent, internal);
 			p->external = NewExternal(parent, external);
 			if ((q = parent->children) != 0)
@@ -195,10 +219,10 @@ CMTREE *FindInternalDir(
 	size_t	len2;
 
 	if (len1 == 0)
-		return parent;
+		return parent;	/* ambiguous, but better than nothing */
 	p = parent->children;
 	if (p == 0) {
-		read_s_curr(parent->fullpath, parent);
+		read_s_curr(parent);
 		p = parent->children;
 	}
 	/* if not at the current level, recur */
@@ -320,6 +344,59 @@ CMFILE *FindInternalFile(
 /******************************************************************************/
 
 /*
+ * Test existence of a parts-list file at a given level
+ */
+static
+int	part_exists(
+	_ARX(char *,	pathname)
+	_AR1(int,	level)
+		)
+	_DCL(char *,	pathname)
+	_DCL(int,	level)
+{
+	char	full[MAXPATHLEN];
+	struct stat sb;
+
+	return (stat_file (parts_list(full, pathname, level), &sb) == 0);
+}
+
+/*
+ * Infer the level of a vault directory by the presence of parts-list files.
+ */
+static
+int	level_of(
+	_AR1(char *,	pathname))
+	_DCL(char *,	pathname)
+{
+	int	level;
+	int	found;
+	char	part[MAXPATHLEN];
+
+	(void)strcpy(part, pathname);
+	for (level = 0, found = FALSE; level <= 2; level++) {
+		if (part_exists (part, level)) {
+			found = TRUE;
+			break;
+		}
+	}
+	if (found) {
+		if (level == 2) {
+			do {
+				*strrchr(part, '/') = EOS;
+				if (!part_exists (part, level+1))
+					break;
+				level++;
+			} while (*part != EOS);
+		}
+	} else {
+		level = -1;
+	}
+	return level;
+}
+
+/******************************************************************************/
+
+/*
  * We put stuff on the end of the linked list to preserve a natural ordering
  * of the search path.
  */
@@ -337,6 +414,8 @@ VAULTS	*add_archive(
 		r->archive = txtalloc(pathname);
 		r->working = 0;
 		r->cmtree  = NewCmTree(pathname);
+		r->cmtree->level =
+		r->level   = level_of(pathname);
 		if (q == 0)
 			VaultList = r;
 		else
@@ -431,16 +510,12 @@ int	samehead(
 	_DCL(char *,	path1)
 	_DCL(char *,	path2)
 {
-	int	match = 0;
-	register int	n;
-
-	for (n = 0; ; n++) {
-		if (isPath(path1[n]) && isPath(path2[n]))
-			match = n;
-		if (path1[n] == EOS || path2[n] == EOS)
-			break;
-		if (path1[n] != path2[n])
-			break;
+	size_t	match = strlen(path2);
+	if (strlen(path1) >= match) {
+		if (strcmp(path1, path2)
+		 && !isPath(path1[match])) {
+			match = 0;
+		}
 	}
 	return match;
 }
@@ -494,10 +569,14 @@ VAULTS *LookupVault(
 	}
 	if (max_n > 0) {
 		register int j;
-		if (result[max_n] != EOS)
+		int	level = max_p->level;
+		if (result[max_n] != EOS) {
 			max_n++;
+			level++;
+		}
 		for (j = 0; (result[j] = result[j+max_n]) != EOS; j++)
-			;
+			if (isPath(result[j]))
+				level++;;
 	}
 	return (max_n > 0) ? max_p : 0;
 }

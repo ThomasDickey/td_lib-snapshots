@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: resizwin.c,v 12.11 1995/07/04 18:28:10 tom Exp $";
+static	char	Id[] = "$Id: resizwin.c,v 12.12 1995/07/06 13:41:12 tom Exp $";
 #endif
 
 /*
@@ -49,46 +49,13 @@ int	resizewin(_AR0)
 	static	int	size[2];
 	auto	int	lc[2];
 
-#ifdef __hpux
-	lc[0] = LINES;
-	lc[1] = COLS;
-	if (scr_size(lc) >= 0) {
-#ifdef TEST_RESIZE
-		dlog_comment("resizewin called\n");
-		dlog_comment("..., LINES %d, COLS %d\n", LINES, COLS);
-		dlog_comment("..., scr_size (%d, %d)\n", lc[0], lc[1]);
-		dlog_flush();
-#else
-		my_LINES = lc[0];
-		my_COLS  = lc[1];
-		if (my_LINES != LINES || my_COLS != COLS) {
-			/* FIXME: if HP/UX curses does the resizing already,
-			 * how do we detect it?
-			 */
-		dlog_comment("resizewin returns true\n");
-			return TRUE;
-		}
-#endif
-	}
-	dlog_comment("resizewin returns false\n");
-	return	FALSE;
-#else	/* !__hpux */
-
 	lc[0] = LINES;
 	lc[1] = COLS;
 	if (scr_size(lc) >= 0) {
 		my_LINES = lc[0];
 		my_COLS  = lc[1];
 		if (my_LINES != LINES || my_COLS != COLS) {
-#if SYS5_CURSES
-#if HAVE_RESIZETERM	/* ncurses extension */
-			resizeterm(my_LINES, my_COLS);
-			wrefresh(curscr);
-			return (TRUE);
-#else
-			return (FALSE);	/* probably doesn't work */
-#endif
-#else	/* BSD curses */
+#if CURSES_LIKE_BSD
 			wresize(stdscr, my_LINES, my_COLS);
 			wresize(curscr, my_LINES, my_COLS);
 			LINES = my_LINES;
@@ -97,8 +64,20 @@ int	resizewin(_AR0)
 			unsavewin(TRUE,0);
 			return (TRUE);
 #endif
+#if CURSES_LIKE_SYSV
+#ifdef __hpux
+			dlog_comment("resizewin called\n");
+			dlog_comment("..., LINES %d, COLS %d\n", LINES, COLS);
+			dlog_comment("..., scr_size (%d, %d)\n", lc[0], lc[1]);
+			dlog_flush();
+#endif
+#endif
+#if CURSES_LIKE_NCURSES && HAVE_RESIZETERM
+			resizeterm(my_LINES, my_COLS);
+			wrefresh(curscr);
+			return (TRUE);
+#endif
 		}
 	}
 	return (FALSE);
-#endif	/* __hpux/!__hpux */
 }
