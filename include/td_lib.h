@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 12.11 1994/11/12 22:35:21 tom Exp $ */
+/* $Id: td_lib.h,v 12.12 1994/11/17 02:04:01 tom Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for TD_LIB common
@@ -361,11 +361,11 @@
 	int	fp2argv(
 			_arx(FILE *,	fp)
 			_arx(char ***,	argv_)
-			_fn1(void,	trace,	(_AR1(char *,s)))
+			_fn1(void,	tfunc,	(_AR1(char *,s)))
 			)
 			_dcl(FILE *,	fp)
 			_dcl(char ***,	argv_)
-			_dcl(void,	(*trace)())
+			_dcl(void,	(*tfunc)())
 			_ret
 
 	/* ftype.c ---------------------------------------------------- */

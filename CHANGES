@@ -1,3 +1,14 @@
+1994-11-17  dickey@clark.net
+
+	* src/memory/vecalloc.c: redundant ';'
+
+	* src/memory/vecalloc.c: use MODULE_ID
+
+1994-11-16  dickey@clark.net
+
+	* include/td_lib.h:
+	don't use 'trace' as parameter, conflicts with name in sys-includes
+
 1994-11-12  dickey@clark.net
 
 	* src/process/Makefile, src/process/descrip.mms: added:egress
