@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 12.1 1993/09/21 17:54:26 dickey Exp $ */
+/* $Id: ptypes.h,v 12.2 1993/09/24 19:15:17 dickey Exp $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -157,6 +157,8 @@
 #define	_FNX(t,v,a)	_FN1(t,v,a),
 #define	_ARX(t,v)	_AR1(t,v),
 
+#define	_ONE(t,v)	(_AR1(t,v)) _DCL(t,v)
+
 /*
  * Declare argument for 'exit()' and '_exit()':
  */
@@ -243,16 +245,18 @@ extern	V_OR_P	realloc(_arx(V_OR_P,ptr) _ar1(size_t,size));
 #endif
 #ifndef	vms
 #if	!defined(apollo_sr10)
-extern	V_OR_I2	perror(_ar1(char *,s));
-extern	V_OR_I	rewind(_ar1(FILE *,s));
+extern	V_OR_I2	perror (_ar1(char *,s));
+extern	V_OR_I	rewind (_ar1(FILE *,s));
 #endif
 
-extern	char *	getenv(_ar1(char *,s));
+extern	char *	getenv (_ar1(char *,s));
+extern	int	mkstemp(_ar1(char *,s));
+extern	char *	mktemp (_ar1(char *,s));
 extern	long	strtol(
 		_arx(char *,	s)
 		_arx(char **,	d)
 		_ar1(int,	base));
-extern	time_t	time(_ar1(time_t *,t));
+extern	time_t	time   (_ar1(time_t *,t));
 
 #endif	/* !vms */
 
@@ -280,6 +284,7 @@ typedef	int	gid_t;
 #if defined(__GNUC__) && defined(sun)
 extern	int	_filbuf	(FILE *);
 extern	int	_flsbuf	(int, FILE *);
+extern	void	bzero	(char *, int);
 extern	int	creat	(char *, int);
 extern	int	fclose	(FILE *);
 extern	int	fflush	(FILE *);
@@ -289,14 +294,20 @@ extern	int	fprintf (FILE *, char *, ...);
 extern	int	fputc	(int, FILE *);
 extern	int	fputs	(char *, FILE *);
 extern	int	fread	(char *, int, int, FILE *);
+extern	int	fscanf	(FILE *, char *, ...);
 extern	int	fseek	(FILE *, long, int);
 extern	int	fwrite	(char *, int, int, FILE *);
+extern	int	setegid	(gid_t);
+extern	int	setlinebuf(FILE *);
+extern	int	setruid	(uid_t);
+extern	int	setrgid	(uid_t);
 extern	int	ioctl	(int, int, caddr_t);
 extern	int	lstat	(char *, STAT *);
 extern	int	open	(char *, int, int);
 extern	int	pclose	(FILE *);
 extern	int	printf	(char *, ...);
 extern	int	putenv	(char *);
+extern	int	puts	(char *);
 extern	int	readlink(char *, char *, int);
 extern	int	rename	(char *, char *);
 extern	int	sscanf	(char *, ...);
@@ -305,6 +316,7 @@ extern	int	symlink	(char *, char *);
 extern	int	system	(char *);
 extern	int	tgetent	(char *, char *);
 extern	int	tgetnum	(char *);
+extern	int	ungetc	(int, FILE *);
 extern	int	vfork	(void);
 #endif
 
@@ -329,6 +341,10 @@ extern	int	vfork	(void);
 #endif
 
 #define NULL_FUNC (int (*)())0
+
+#ifndef NO_LEAKS
+#define NO_LEAKS 1
+#endif
 
 /*
  * Functions we (usually) ignore the return value from:
@@ -394,8 +410,6 @@ extern	int	toupper(int);
 #ifdef _tolower
 #define LowerMacro(c) _tolower(c)
 #define UpperMacro(c) _toupper(c)
-#define LowerCase(c)  c = tolower(c)
-#define UpperCase(c)  c = toupper(c)
 #endif
 
 #ifndef LowerCase
@@ -464,6 +478,7 @@ extern	V_OR_I		endpwent(_ar0);
 #ifdef	apollo
 #  ifdef	__SIG_HANDLER_T
 #    define	SIGNAL_ARGS _AR1(int,sig) _CDOTS
+#    define	SIGNAL_args _ar1(int,sig) _CDOTS
 #  else	/* sr10.2 or lower */
 #    undef	SIG_T
 #    define	SIG_T	int
@@ -471,14 +486,15 @@ extern	V_OR_I		endpwent(_ar0);
 #endif
 
 #ifndef SIGNAL_ARGS
-#  define SIGNAL_ARGS _ar1(int,sig)
+#  define SIGNAL_ARGS _AR1(int,sig)
+#  define SIGNAL_args _ar1(int,sig)
 #endif
 
 #ifndef	SIGNAL_FUNC
 #  define	SIGNAL_FUNC(f)	SIG_T f (SIGNAL_ARGS) _DCL(int,sig)
 #endif
 
-#define	DCL_SIGNAL(func)	SIG_T	(*func)(SIGNAL_ARGS)
+#define	DCL_SIGNAL(func)	SIG_T	(*func)(SIGNAL_args)
 
 #if defined(__GNUC__)
 # undef  SIG_DFL
@@ -493,13 +509,16 @@ extern	V_OR_I		endpwent(_ar0);
  * Define string-procedures                                                   *
  ******************************************************************************/
 #ifdef	STR_PTYPES
+#ifndef LINTLIBRARY
 #include	<string.h>
 #if	!defined(SYSTEM5) && !defined(vms) && !defined(apollo) && !defined(sun)
 #define	strchr	index
 #define	strrchr	rindex
 #endif	/* SYSTEM5 */
-extern	char	*strchr(_arx(char *,s) _ar1(int,c));
-extern	char	*strrchr(_arx(char *,s) _ar1(int,c));
+extern	char *	strchr (_arx(char *,s) _ar1(int,c));
+extern	char *	strrchr(_arx(char *,s) _ar1(int,c));
+extern	char *	strtok (_arx(char *,s) _ar1(char *,t));
+#endif
 #endif	/* STR_PTYPES */
 
 /******************************************************************************

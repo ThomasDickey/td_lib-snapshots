@@ -1,3 +1,7 @@
+1993-09-24  dickey@software.org
+
+	* include/ptypes.h: clean-compile with SunOs & gcc
+
 1993-09-23  dickey@software.org
 
 	* support/old-td_lib.mk: get rid of Purify-files in clean-rules
