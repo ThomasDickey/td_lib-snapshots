@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 9.5 1991/10/03 11:39:05 dickey Exp $ */
+/* $Id: ptypes.h,v 9.6 1991/10/04 17:03:48 dickey Exp $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -349,9 +349,9 @@ extern	char	*strrchr();
 
 #ifndef	lint
 extern		main(_arx(int,argc) _ar1(char **,argv));
+#endif	/* lint */
 #define	_MAIN	main(_ARX(int,argc) _AR1(char **,argv))\
 		     _DCL(int,argc) _DCL(char **,argv)
-#endif	/* lint */
 
 #endif	/* LINTLIBRARY */
 

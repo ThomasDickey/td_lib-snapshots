@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19911003
+MANIFEST for td_lib, version t19911004
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 Makefile                        top-level makefile for TD_LIB
@@ -152,6 +152,10 @@ support/linkopts.opt            default link-options file for PORTUNIX
 support/prog_top.mms            VMS MMS include-file defining standard (module-level) rules.
 support/td_lib.mms              VMS MMS include-file defining PORTUNIX library-rules
 support/td_progs.mms            VMS MMS include-file defining program-generation rules above PORTUNIX
+test                            subdirectory
+test/Makefile                   makefile for td_lib/test
+test/README                     description of td_lib/test
+test/descrip.mms                =============================================================================
 test/port2vms                   subdirectory
 test/port2vms/README            description of test/port2vms
 test/port2vms/vms_pthc.ref      reference for 'vms_pthc'

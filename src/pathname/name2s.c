@@ -1,5 +1,5 @@
 #ifndef lint
-static  char    Id[] = "$Id: name2s.c,v 9.1 1991/07/22 07:25:20 dickey Exp $";
+static  char    Id[] = "$Id: name2s.c,v 9.3 1991/10/04 13:12:39 dickey Exp $";
 #endif 
 
 /*
@@ -7,6 +7,7 @@ static  char    Id[] = "$Id: name2s.c,v 9.1 1991/07/22 07:25:20 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	18 Aug 1988 (from ded2s.c)
  * Modified:
+ *		04 Oct 1991, conversion to ANSI
  *		22 Jul 1991, allow space as a printing char.
  *		19 Aug 1988, added 'opt & 4' mode so we can make 'copy' work on
  *			     things like "/bin/[".
@@ -43,9 +44,16 @@ static  char    Id[] = "$Id: name2s.c,v 9.1 1991/07/22 07:25:20 dickey Exp $";
 #define	isshell(c)	(strchr("*%?$()[]{}|<>^&;#\\\"`'", c) != 0)
 #define	isAEGIS(c)	(strchr("*%?()[]{}\\", c) != 0)
 
-name2s(bfr, len, name, opt)
-char	*bfr, *name;
-int	len, opt;
+name2s(
+_ARX(char *,	bfr)
+_ARX(int,	len)
+_ARX(char *,	name)
+_AR1(int,	opt)
+	)
+_DCL(char *,	bfr)
+_DCL(int,	len)
+_DCL(char *,	name)
+_DCL(int,	opt)
 {
 	char	*base = bfr;
 	register int c;
@@ -103,8 +111,7 @@ int	len, opt;
 }
 
 #ifdef	TEST
-main(argc, argv)
-char	*argv[];
+_MAIN
 {
 	extern	int	optind;
 
@@ -121,5 +128,7 @@ char	*argv[];
 		name2s(bfr, sizeof(bfr), argv[j], opt);
 		printf("%d:\t\"%s\" => \"%s\"\n", j - optind + 1, argv[j], bfr);
 	}
+	exit(SUCCESS);
+	/*NOTREACHED*/
 }
 #endif

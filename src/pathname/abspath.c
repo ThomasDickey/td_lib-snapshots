@@ -1,11 +1,12 @@
 #ifndef	lint
-static	char	Id[] = "$Id: abspath.c,v 9.1 1991/07/22 13:28:55 dickey Exp $";
+static	char	Id[] = "$Id: abspath.c,v 10.0 1991/10/04 13:09:06 ste_cm Rel $";
 #endif
 
 /*
  * Author:	T.E.Dickey
  * Created:	17 Sep 1987
  * Modified:
+ *		04 Oct 1991, conversion to ANSI
  *		22 Jul 1991, moved MAXPATHLEN def to "ptypes.h"
  *		04 Apr 1991, try to recover in case 'getwd()' fails.
  *		24 Apr 1990, added entrypoint 'abshome()', which we use when
@@ -48,7 +49,6 @@ static	char	Id[] = "$Id: abspath.c,v 9.1 1991/07/22 13:28:55 dickey Exp $";
 #endif	/* apollo */
 
 #include	<pwd.h>
-extern	char	*getenv();
 
 #ifdef	apollo
 #define	TOP	2			/* permit 2 leading /'s */
@@ -56,15 +56,14 @@ extern	char	*getenv();
 #define	TOP	1
 #endif	/* apollo */
 
-extern	char	*denode();
-
 static	char	nodestr[MAXPATHLEN];	/* will hold nodename, if any */
 static	int	nodelen = -1;
 
 #ifdef	apollo
 static
-apollo_name(path)
-char	*path;
+apollo_name(
+_AR1(char *,	path))
+_DCL(char *,	path)
 {
 #ifdef	apollo_sr10			/* sr10.x */
 	auto	status_$t	st;
@@ -116,8 +115,12 @@ status_$t	st;
  * Concatenate two pathnames to make a longer one.
  */
 static
-precat(prefix, string)
-char	*prefix, *string;
+precat(
+_ARX(char *,	prefix)
+_AR1(char *,	string)
+	)
+_DCL(char *,	prefix)
+_DCL(char *,	string)
 {
 register char *s;
 char	tmp[MAXPATHLEN];
@@ -131,8 +134,9 @@ char	tmp[MAXPATHLEN];
 /************************************************************************
  *	main procedures							*
  ************************************************************************/
-abshome(path)
-char	*path;
+abshome(
+_AR1(char *,	path))
+_DCL(char *,	path)
 {
 	register char *s, *d = path;
 
@@ -158,8 +162,9 @@ char	*path;
 	}
 }
 
-abspath(path)
-char	*path;
+abspath(
+_AR1(char *,	path))
+_DCL(char *,	path)
 {
 register char *s, *d = path;
 
@@ -275,8 +280,12 @@ register char *s, *d = path;
 }
 
 #ifdef	TEST
-do_test(argc,argv)
-char	*argv[];
+do_test(
+_ARX(int,	argc)
+_AR1(char **,	argv)
+	)
+_DCL(int,	argc)
+_DCL(char **,	argv)
 {
 	register int	j;
 	auto	 char	bfr[MAXPATHLEN];
@@ -288,8 +297,7 @@ char	*argv[];
 	}
 }
 
-main(argc, argv)
-char	*argv[];
+_MAIN
 {
 	if (argc > 1)
 		do_test(argc, argv);

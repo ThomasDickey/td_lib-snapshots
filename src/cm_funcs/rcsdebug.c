@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcsdebug.c,v 9.1 1991/09/06 07:34:50 dickey Exp $";
+static	char	Id[] = "$Id: rcsdebug.c,v 12.0 1991/10/04 12:32:48 ste_cm Rel $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: rcsdebug.c,v 9.1 1991/09/06 07:34:50 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	15 Mar 1989
  * Modified:
+ *		04 Oct 1991, conversion to ANSI
  *		06 Sep 1991, return a value, allowing debug-levels
  *
  * Function:	Encapsulates knowledge of the RCS_DEBUG enviromnent variable
@@ -17,10 +18,9 @@ static	char	Id[] = "$Id: rcsdebug.c,v 9.1 1991/09/06 07:34:50 dickey Exp $";
  *		If the variable is a numeric constant, we return that value.
  */
 
-extern	long	strtol();
-extern	char	*getenv();
+#include "ptypes.h"
 
-rcs_debug()
+rcs_debug(_AR0)
 {
 	static	int	flag = -1;
 	register char	*s;

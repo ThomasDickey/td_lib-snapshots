@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: makeargv.c,v 9.1 1991/10/03 17:17:15 dickey Exp $";
+static	char	Id[] = "$Id: makeargv.c,v 11.0 1991/10/04 16:41:50 ste_cm Rel $";
 #endif
 
 /*
@@ -61,7 +61,7 @@ _DCL(char *,	src)
 _MAIN
 {
 	int	j,k;
-	char	*vec[NUM];
+	char	*vec[BUFSIZ];
 	char	tmp[80];
 	static	char	*tbl[] = {
 			"abc",
@@ -71,10 +71,10 @@ _MAIN
 		};
 
 	for (j = 0; j < sizeof(tbl)/sizeof(tbl[0]); j++) {
-		int	last = makeargv(vec, NUM, tmp,tbl[j]);
+		int	last = makeargv(vec, BUFSIZ, tmp,tbl[j]);
 		printf("%s\n", tbl[j]);
 		for (k = 0; k < last; k++)
-			printf("%d:\t'%s'\n", k, p[k]);
+			printf("%d:\t'%s'\n", k, vec[k]);
 	}
 }
 #endif

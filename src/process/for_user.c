@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: for_user.c,v 9.3 1991/09/12 07:35:57 dickey Exp $";
+static	char	Id[] = "$Id: for_user.c,v 11.0 1991/10/04 16:02:41 ste_cm Rel $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: for_user.c,v 9.3 1991/09/12 07:35:57 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	13 Sep 1988
  * Modified:
+ *		04 Oct 1991, conversion to ANSI
  *		12 Sep 1991, removed redundant def for 'errno' (VMS C 3.2)
  *		25 Jun 1991, added entrypoint 'for_user2()'. Ensure that we
  *			     reset group-id, and properly set 'errno' when
@@ -27,9 +28,14 @@ static	char	Id[] = "$Id: for_user.c,v 9.3 1991/09/12 07:35:57 dickey Exp $";
 #include	"ptypes.h"
 #include	<errno.h>
 
-for_user2(func, the_uid, the_gid)
-int	(*func)();
-int	the_uid, the_gid;
+for_user2(
+_FNX(int,	func)
+_ARX(int,	the_uid)
+_AR1(int,	the_gid)
+	)
+_DCL(int,	(*func)())
+_DCL(int,	the_uid)
+_DCL(int,	the_gid)
 {
 	register int	count,
 			pid;
@@ -66,8 +72,9 @@ int	the_uid, the_gid;
 	return (-1);
 }
 
-for_user(func)
-int	(*func)();
+for_user(
+_FN1(int,	func))
+_DCL(int,	(*func)())
 {
 	return for_user2(func, getuid(), getgid());
 }

@@ -1,33 +1,22 @@
-# $Id: Makefile,v 9.2 1991/09/17 07:39:22 dickey Exp $
+# $Id: Makefile,v 9.3 1991/10/04 16:34:31 dickey Exp $
 # Top-level makefile for CM_TOOLS common library
 #
-# $Log: Makefile,v $
-# Revision 9.2  1991/09/17 07:39:22  dickey
-# added rule for 'deltree.h'
-#
-#	Revision 9.1  91/07/23  10:01:32  dickey
-#	on SunOs, must ranlib archive after copying it
-#	
-#	Revision 9.0  91/06/05  14:36:31  ste_cm
-#	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
-#	
 ####### (Development) ##########################################################
 TOP	= ../..
 B	= $(TOP)/bin
 I	= $(TOP)/interface
 L	= $(TOP)/lib
-GET	= checkout
-PUT	= ../$B/copy -d ../$@
+COPY	= cp -p
 CFLAGS	=
-MAKE	= make $(MFLAGS) -k$(MAKEFLAGS)	GET=$(GET) CFLAGS="$(CFLAGS)"
+MAKE	= make $(MFLAGS) -k$(MAKEFLAGS)	CFLAGS="$(CFLAGS)"
 
 ####### (Standard Lists) #######################################################
 SOURCES	= Makefile descrip.mms README
-FIRST	=\
-	$(SOURCES)\
-	lib\
+
+MFILES	=\
 	interface/Makefile\
-	src/Makefile
+	src/Makefile\
+	test/Makefile
 
 ALL	=\
 	$I/cmdch.h\
@@ -40,36 +29,40 @@ ALL	=\
 
 ####### (Standard Productions) #################################################
 all\
+install::	lib
+
+all\
 clean\
 clobber\
-destroy rdestroy\
+destroy\
 sources\
 lincnt.out\
-lint.out::	$(FIRST)
+lint.out::	$(MFILES)
 	cd interface;	$(MAKE) $@
 	cd src;		$(MAKE) $@
+	cd test;	$(MAKE) $@
 
-rdestroy\
+clobber\
 destroy::
 	rm -rf lib
+destroy::
 	sh -c 'for i in *;do case $$i in RCS);; *) rm -f $$i;;esac;done;exit 0'
 
 run_tests:
 	@echo '** no test suite available for this module'
 
-install:	all $(ALL)
-deinstall:		; rm -f $(ALL)
+install::	all $(ALL)
+deinstall::		; rm -f $(ALL)
 
 ####### (Details of Productions) ###############################################
-interface/Makefile\
-src/Makefile\
-$(SOURCES):				; $(GET) -x $@
+$(MFILES)\
+$(SOURCES):				; checkout -x $@
 lib:					; mkdir $@
 
-$I/cmdch.h:	interface/cmdch.h	; cd interface;	$(PUT)
-$I/common.h:	interface/common.h	; cd interface;	$(PUT)
-$I/deltree.h:	interface/deltree.h	; cd interface;	$(PUT)
-$I/ptypes.h:	interface/ptypes.h	; cd interface;	$(PUT)
-$I/rcsdefs.h:	interface/rcsdefs.h	; cd interface;	$(PUT)
-$I/sccsdefs.h:	interface/sccsdefs.h	; cd interface;	$(PUT)
-$L/lib.a:	lib/lib.a		; cd lib;	$(PUT); ranlib $@
+$I/cmdch.h:	interface/cmdch.h	; $(COPY) $? $@
+$I/common.h:	interface/common.h	; $(COPY) $? $@
+$I/deltree.h:	interface/deltree.h	; $(COPY) $? $@
+$I/ptypes.h:	interface/ptypes.h	; $(COPY) $? $@
+$I/rcsdefs.h:	interface/rcsdefs.h	; $(COPY) $? $@
+$I/sccsdefs.h:	interface/sccsdefs.h	; $(COPY) $? $@
+$L/lib.a:	lib/lib.a		; $(COPY) $? $@; ranlib $@

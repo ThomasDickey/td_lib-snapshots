@@ -1,11 +1,13 @@
 #ifndef	lint
-static	char	Id[] = "$Id: viewfile.c,v 9.0 1991/05/15 09:58:34 ste_cm Rel $";
+static	char	Id[] = "$Id: viewfile.c,v 12.0 1991/10/04 07:56:37 ste_cm Rel $";
 #endif
 
 /*
  * Title:	view_file.c (create window to view file)
  * Author:	T.E.Dickey
  * Created:	23 Aug 1989
+ * Modified:
+ *		03 Oct 1991, converted to ANSI
  *
  * Function:	From a process running in 'curses', builds another window
  *		(preferably not in the same process-window) to view a file.
@@ -19,11 +21,13 @@ static	char	Id[] = "$Id: viewfile.c,v 9.0 1991/05/15 09:58:34 ste_cm Rel $";
 
 #define		CUR_PTYPES
 #include	"ptypes.h"
-extern	char	*dftenv();
 
-view_file(fname, readonly)
-char	*fname;
-int	readonly;
+view_file(
+_ARX(char *,	fname)
+_AR1(int,	readonly)
+	)
+_DCL(char *,	fname)
+_DCL(int,	readonly)
 {
 	auto	int	code;
 	auto	char	*editor = dftenv(readonly ? "view" : "vi", "EDITOR");

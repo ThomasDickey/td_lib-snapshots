@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcstemp.c,v 9.2 1991/09/12 07:35:49 dickey Exp $";
+static	char	Id[] = "$Id: rcstemp.c,v 9.10 1991/10/04 12:25:04 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: rcstemp.c,v 9.2 1991/09/12 07:35:49 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	25 Aug 1988
  * Modified:
+ *		04 Oct 1991, conversion to ANSI
  *		12 Sep 1991, removed redundant def for 'errno' (VMS C 3.2)
  *		11 Jul 1991, don't need temp-name if suid-root
  *		31 Oct 1989, account for present setting of 'umask'; use chown
@@ -33,15 +34,16 @@ static	char	Id[] = "$Id: rcstemp.c,v 9.2 1991/09/12 07:35:49 dickey Exp $";
 #define	STR_PTYPES
 #include	"ptypes.h"
 #include	<errno.h>
-extern	char	*uid2s();
-extern	char	*pathcat();
-extern	char	*pathleaf();
 
 #define	DEBUG	if (rcs_debug()) PRINTF
 
 char *
-rcstemp(working, copy)
-char	*working;
+rcstemp(
+_ARX(char *,	working)
+_AR1(int,	copy)
+	)
+_DCL(char *,	working)
+_DCL(int,	copy)
 {
 	static	char	tmp[BUFSIZ];
 

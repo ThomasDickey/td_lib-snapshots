@@ -1,11 +1,13 @@
 #ifndef	lint
-static	char	Id[] = "$Id: trimpath.c,v 9.0 1991/05/15 09:56:27 ste_cm Rel $";
+static	char	Id[] = "$Id: trimpath.c,v 11.0 1991/10/04 07:47:50 ste_cm Rel $";
 #endif
 
 /*
  * Title:	trimpath.c
  * Author:	T.E.Dickey
  * Created:	17 Apr 1989 (logic adapted from 'abspath.c')
+ * Modified:
+ *		03 Oct 1991, converted to ANSI
  *
  * Function:	Convert a pathname into canonical form.
  *
@@ -14,13 +16,17 @@ static	char	Id[] = "$Id: trimpath.c,v 9.0 1991/05/15 09:56:27 ste_cm Rel $";
  *
  * Returns:	pointer to buffer (modified)
  */
+
+#define	STR_PTYPES
 #include	"ptypes.h"
-#include	<string.h>
 
 char	*
-trimpath(path,cwd)
-char	*path;
-char	*cwd;
+trimpath(
+_ARX(char *,	path)
+_AR1(char *,	cwd)
+	)
+_DCL(char *,	path)
+_DCL(char *,	cwd)
 {
 	register char *s, *d;
 
@@ -93,20 +99,23 @@ char	*cwd;
 }
 
 #ifdef	TEST
-do_test(argc,argv)
-char	*argv[];
+do_test(
+_ARX(int,	argc)
+_AR1(char **,	argv)
+	)
+_DCL(int,	argc)
+_DCL(char **,	argv)
 {
 	register int j;
 	auto	 char	bfr[BUFSIZ];
 
 	for (j = 1; j < argc; j++) {
 		(void)trimpath(strcpy(bfr, argv[j]), "/usr/local");
-		(void)printf("%d: %s => %s\n", j, argv[j], bfr);
+		PRINTF("%d: %s => %s\n", j, argv[j], bfr);
 	}
 }
 
-main(argc, argv)
-char	*argv[];
+_MAIN
 {
 	if (argc > 1)
 		do_test(argc, argv);

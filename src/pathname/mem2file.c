@@ -1,11 +1,13 @@
 #ifndef	lint
-static	char	Id[] = "$Id: mem2file.c,v 9.0 1991/05/15 09:28:06 ste_cm Rel $";
+static	char	Id[] = "$Id: mem2file.c,v 11.0 1991/10/04 07:35:16 ste_cm Rel $";
 #endif
 
 /*
  * Title:	mem2file.c (memory-to-file I/O)
  * Author:	T.E.Dickey
  * Created:	11 May 1989
+ * Modified:
+ *		03 Oct 1991, converted to ANSI
  *
  * Function:	writes a string to a given file.  The mode of the file is
  *		preserved if it already exists.
@@ -17,8 +19,14 @@ static	char	Id[] = "$Id: mem2file.c,v 9.0 1991/05/15 09:28:06 ste_cm Rel $";
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-mem2file(blob, name, mode)
-char	*blob,*name,*mode;
+mem2file(
+_ARX(char *,	blob)
+_ARX(char *,	name)
+_AR1(char *,	mode)
+	)
+_DCL(char *,	blob)
+_DCL(char *,	name)
+_DCL(char *,	mode)
 {
 	auto	int		len;
 	auto	int		save;

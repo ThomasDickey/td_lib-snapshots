@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: file2mem.c,v 9.2 1991/09/13 07:57:15 dickey Exp $";
+static	char	Id[] = "$Id: file2mem.c,v 11.0 1991/10/04 13:54:34 ste_cm Rel $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: file2mem.c,v 9.2 1991/09/13 07:57:15 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	11 May 1989
  * Modified:
+ *		04 Oct 1991, conversion to ANSI
  *		13 Sep 1991, use 'filesize()'
  *		12 Sep 1991, removed redundant def for 'errno' (VMS C 3.2)
  *
@@ -25,8 +26,9 @@ static	char	Id[] = "$Id: file2mem.c,v 9.2 1991/09/13 07:57:15 dickey Exp $";
 extern	FILE	*tmpfile();
 
 char	*
-file2mem(name)
-char	*name;
+file2mem(
+_AR1(char *,	name))
+_DCL(char *,	name)
 {
 	auto	 FILE	*fp;
 	auto	 int	j;
@@ -95,9 +97,7 @@ char	*name;
 
 
 #ifdef	TEST
-#define	PRINTF	(void)printf
-main(argc, argv)
-char	*argv[];
+_MAIN
 {
 	register int	j, k;
 	auto	 int	lines;

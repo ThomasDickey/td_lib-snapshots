@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: padedit.c,v 9.2 1991/09/12 08:01:52 dickey Exp $";
+static	char	Id[] = "$Id: padedit.c,v 9.3 1991/10/04 14:12:00 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: padedit.c,v 9.2 1991/09/12 08:01:52 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	14 Dec 1987
  * Modified:
+ *		04 Oct 1991, conversion to ANSI
  *		12 Sep 1991, removed redundant def for 'errno' (VMS C 3.2)
  *		09 Sep 1991, lint (apollo SR10.3)
  *		06 Jun 1991, modified debug-traces. If xterm is invoked,
@@ -50,8 +51,12 @@ static	char	Id[] = "$Id: padedit.c,v 9.2 1991/09/12 08:01:52 dickey Exp $";
 #endif
 
 #ifdef	apollo
-apollo_edit(name, readonly)
-char	*name;
+apollo_edit(
+_ARX(char *,	name)
+_AR1(int,	readonly)
+	)
+_DCL(char *,	name)
+_DCL(int,	readonly)
 {
 #ifdef	apollo_sr10
 	name_$pname_t		in_name;
@@ -120,9 +125,12 @@ char	*name;
  * Spawn a process which is detached from the current one.
  */
 static
-spawn(cmd, argv)
-char	*cmd;
-char	*argv[];
+spawn(
+_ARX(char *,	cmd)
+_AR1(char **,	argv)
+	)
+_DCL(char *,	cmd)
+_DCL(char **,	argv)
 {
 	int	pid;
 #ifdef	TEST
@@ -157,9 +165,14 @@ char	*argv[];
 	return (-1);
 }
 
-padedit(name, readonly, editor)
-char	*name, *editor;
-int	readonly;
+padedit(
+_ARX(char *,	name)
+_ARX(int,	readonly)
+_AR1(char *,	editor)
+	)
+_DCL(char *,	name)
+_DCL(int,	readonly)
+_DCL(char *,	editor)
 {
 	int	lc[2];
 	int	code = scr_size(lc);
@@ -170,7 +183,6 @@ int	readonly;
 	else
 #endif	/* apollo */
 	if (code == 0) {
-		extern	char	*getenv();
 		char	*display;
 		char	*argv[20];
 		int	argc	= 0;
@@ -209,8 +221,7 @@ int	readonly;
 }
 
 #ifdef	TEST
-main(argc, argv)
-char	*argv[];
+_MAIN
 {
 	register int j;
 	int	readonly = FALSE;
@@ -220,12 +231,7 @@ char	*argv[];
 		else
 			padedit(argv[j], readonly, "view");
 	}
-}
-
-failed(s)
-char	*s;
-{
-	perror(s);
-	exit(1);
+	exit(SUCCESS);
+	/*NOTREACHED*/
 }
 #endif

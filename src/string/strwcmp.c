@@ -1,22 +1,29 @@
 #ifndef	lint
-static	char	*Id = "$Id: strwcmp.c,v 9.0 1990/03/27 13:22:40 ste_cm Rel $";
+static	char	*Id = "$Id: strwcmp.c,v 11.0 1991/10/04 07:45:26 ste_cm Rel $";
 #endif
 
 /*
  * Title:	strwcmp (compare wildcard-strings)
  * Author:	T.E.Dickey
  * Created:	27 Mar 1989
+ * Modified:
+ *		03 Oct 1991, converted to ANSI
  *
  * Function:	Performs a wildcard comparison between two strings a la unix
  *		filenames.
  */
+
 #include "ptypes.h"
 
 #define	SINGLE	'?'
 #define	MULTI	'*'
 
-strwcmp(wild, name)
-char	*wild, *name;
+strwcmp(
+_ARX(char *,	wild)
+_AR1(char *,	name)
+	)
+_DCL(char *,	wild)
+_DCL(char *,	name)
 {
 	while (*wild || *name) {
 		if (*wild == MULTI) {
@@ -40,7 +47,7 @@ char	*wild, *name;
 
 #ifdef	TEST
 #define	SIZEOF(v)	(sizeof(v)/sizeof(v[0]))
-default_test()
+default_test(_AR0)
 {
 	static	char	*names[] = {
 		"",	"a",	"b",	"ab",	"ba",	"aa",	"bb",	"aba"
@@ -53,27 +60,28 @@ default_test()
 		};
 	register int	j,k;
 
-	printf("\t");
+	PRINTF("\t");
 	for (k = 0; k < SIZEOF(names); k++)
-		printf("%-5s", names[k]);
-	printf("\n");
+		PRINTF("%-5s", names[k]);
+	PRINTF("\n");
 
 	for (j = 0; j < SIZEOF(wilds); j++) {
-		printf("%s\t", wilds[j]);
+		PRINTF("%s\t", wilds[j]);
 		for (k = 0; k < SIZEOF(names); k++)
-			printf("%3d  ", strwcmp(wilds[j], names[k]));
-		printf("\n");
+			PRINTF("%3d  ", strwcmp(wilds[j], names[k]));
+		PRINTF("\n");
 	}
 }
 
-main(argc, argv)
-char	*argv[];
+_MAIN
 {
 	register int	j;
 	if (argc > 1) {
 		for (j = 1; j < argc; j++)
-			printf("%s\t%d\n", argv[j], strwcmp(argv[1], argv[j]));
+			PRINTF("%s\t%d\n", argv[j], strwcmp(argv[1], argv[j]));
 	} else
 		default_test();
+	exit(SUCCESS);
+	/*NOTREACHED*/
 }
 #endif

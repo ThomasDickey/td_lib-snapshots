@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	*Id = "$Id: rcsedit.c,v 9.4 1991/09/13 09:06:42 dickey Exp $";
+static	char	*Id = "$Id: rcsedit.c,v 9.5 1991/10/04 14:12:49 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	*Id = "$Id: rcsedit.c,v 9.4 1991/09/13 09:06:42 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	26 May 1988
  * Modified:
+ *		04 Oct 1991, conversion to ANSI
  *		13 Sep 1991, corrected rcsparse_str -- was not passing spaces
  *			     back to caller.
  *		06 Sep 1991, added 'readonly' arg; suppress tempfile-creation
@@ -48,7 +49,7 @@ static	int	verbose;	/* set if we show informational messages */
  ************************************************************************/
 
 static
-dir_access()
+dir_access(_AR0)
 {
 	register char	*s;
 	char	temp[MAXPATHLEN];
@@ -75,7 +76,9 @@ dir_access()
 }
 
 static
-delim(c)
+delim(
+_AR1(int,	c))
+_DCL(int,	c)
 {
 	if (isspace(c))	return (TRUE);
 	return (strchr(";:,@", c) != 0);
@@ -83,8 +86,9 @@ delim(c)
 
 static
 char *
-skips(s)
-char	*s;
+skips(
+_AR1(char *,	s))
+_DCL(char *,	s)
 {
 	while (isspace(*s))		s++;
 	return (s);
@@ -92,13 +96,13 @@ char	*s;
 
 static
 char *
-readit()
+readit(_AR0)
 {
 	return (fgets(buffer, sizeof(buffer), fpS));
 }
 
 static
-writeit()
+writeit(_AR0)
 {
 	if (*buffer != EOS && fpT != 0) {
 		fputs(buffer, fpT);
@@ -113,10 +117,14 @@ writeit()
 /*
  * Open the RCS file corresponding to 'name'.
  */
-rcsopen(name, show, readonly)
-char	*name;
-int	show;
-int	readonly;
+rcsopen(
+_ARX(char *,	name)
+_ARX(int,	show)
+_AR1(int,	readonly)
+	)
+_DCL(char *,	name)
+_DCL(int,	show)
+_DCL(int,	readonly)
 {
 	struct	stat	sb;
 	int	fd;
@@ -161,8 +169,9 @@ int	readonly;
  *	before calling this procedure again).
  */
 char *
-rcsread(s)
-char	*s;
+rcsread(
+_AR1(char *,	s))
+_DCL(char *,	s)
 {
 	do {
 		if (s) {
@@ -183,8 +192,14 @@ char	*s;
  * rcsedit(@)
  *	Alter a field in the input buffer.
  */
-rcsedit (where, old, new)
-char	*where, *old, *new;
+rcsedit (
+_ARX(char *,	where)
+_ARX(char *,	old)
+_AR1(char *,	new)
+	)
+_DCL(char *,	where)
+_DCL(char *,	old)
+_DCL(char *,	new)
 {
 size_t	len = strlen(old);
 char	tmp[BUFSIZ];
@@ -204,7 +219,7 @@ char	tmp[BUFSIZ];
  *	Close the RCS-file which was opened, optionally copying back from the
  *	temporary file.
  */
-rcsclose()
+rcsclose(_AR0)
 {
 	writeit();
 	if (changed) {
@@ -234,8 +249,12 @@ rcsclose()
 
 /* {<digit>{.}} */
 char *
-rcsparse_num(d, s)
-char	*d, *s;
+rcsparse_num(
+_ARX(char *,	d)
+_AR1(char *,	s)
+	)
+_DCL(char *,	d)
+_DCL(char *,	s)
 {
 	while (*s && (isdigit(*s) || (*s == '.')))	*d++ = *s++;
 	*d = EOS;
@@ -249,8 +268,12 @@ char	*d, *s;
  *	'rcskeys.c').
  */
 char *
-rcsparse_id(d, s)
-char	*d, *s;
+rcsparse_id(
+_ARX(char *,	d)
+_AR1(char *,	s)
+	)
+_DCL(char *,	d)
+_DCL(char *,	s)
 {
 	s = skips(s);
 	while (*s && !delim(*s))	*d++ = *s++;
@@ -266,9 +289,12 @@ char	*d, *s;
 #define	STR_FUNC(c)	if (str_func != 0)	str_func(c)
 
 char *
-rcsparse_str(s, str_func)
-register char	*s;
-int	(*str_func)();		/* copies string as we read it */
+rcsparse_str(
+_ARX(register char *,	s)
+_FN1(int,		str_func)	/* copies string as we read it */
+	)
+_DCL(register char *,	s)
+_DCL(int,		(*str_func)())
 {
 	register int c;
 

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcspath.c,v 9.2 1991/09/09 08:25:36 dickey Exp $";
+static	char	Id[] = "$Id: rcspath.c,v 12.0 1991/10/04 14:14:08 ste_cm Rel $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: rcspath.c,v 9.2 1991/09/09 08:25:36 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	09 Sep 1988
  * Modified:
+ *		04 Oct 1991, conversion to ANSI
  *		09 Sep 1991, lint
  *		20 Jun 1991, verify that utility exists, else failure
  *
@@ -17,11 +18,11 @@ static	char	Id[] = "$Id: rcspath.c,v 9.2 1991/09/09 08:25:36 dickey Exp $";
 
 #include	"ptypes.h"
 #include	"rcspath.h"
-extern	char	*pathcat();
 
 char *
-rcspath(utility)
-char	*utility;
+rcspath(
+_AR1(char *,	utility))
+_DCL(char *,	utility)
 {
 	static	char	bfr[BUFSIZ];
 #ifdef	RCS_PATH

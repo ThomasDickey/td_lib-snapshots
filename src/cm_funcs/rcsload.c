@@ -1,46 +1,24 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcsload.c,v 9.9 1991/09/17 08:12:09 dickey Exp $";
+static	char	Id[] = "$Id: rcsload.c,v 9.10 1991/10/04 09:42:12 dickey Exp $";
 #endif
 
 /*
  * Title:	rcsload.c (load delta-tree for an RCS file)
  * Author:	T.E.Dickey
  * Created:	19 Aug 1988
- * $Log: rcsload.c,v $
- * Revision 9.9  1991/09/17 08:12:09  dickey
- * renamed RCSTREE to DELTREE; use prototype-macros
- *
- *		Revision 9.8  91/09/16  08:14:42  dickey
- *		load history-comment also
- *		
- *		Revision 9.7  91/09/16  07:49:17  dickey
- *		construct vectors for text of file, plus deltas (must next
- *		evaluate deltas, also load history-text).
- *		
- *		Revision 9.6  91/09/13  09:03:20  dickey
- *		partial implementation of logic to load file-text
- *		
- *		Revision 9.5  91/09/06  12:06:55  dickey
- *		added 'readonly' arg to 'rcsopen()'
- *		
- *		Revision 9.4  91/09/06  10:32:16  dickey
- *		lint
- *		
- *		Revision 9.3  91/09/06  10:28:42  dickey
- *		made this compute line numbers for branches.
- *		corrected line-number computation
- *		
- *		Revision 9.2  91/09/06  08:35:54  dickey
- *		some cleanup, added code for 'author'
- *		
- *		Revision 9.1  91/09/05  11:37:15  dickey
- *		added 'full' argument
- *		
- *		Revision 9.0  91/05/15  09:40:58  ste_cm
- *		BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
- *		
+ * Modified:
+ *		04 Oct 1991, conversion to ANSI
+ *		17 Sep 1991, renamed RCSTREE to DELTREE; use prototype-macros
+ *		16 Sep 1991, Construct vectors for text of file, plus deltas
+ *			     (must next evaluate deltas, also load history-
+ *			     text).  Load history-comment also
+ *		13 Sep 1991, partial implementation of logic to load file-text
+ *		06 Sep 1991, some cleanup, added code for 'author'.  Made this
+ *			     compute line numbers for branches.  Corrected line-
+ *			     number computation.  Lint.  Added 'readonly' arg
+ *			     to 'rcsopen()'.
+ *		05 Sep 1991, added 'full' argument
  *		18 Apr 1990, changed call on 'name2rcs()'
- *		
  *
  * Function:	Scans an RCS archive file, and returns an array of DELTREE
  *		structures, which represent the information about each delta.
@@ -54,11 +32,7 @@ static	char	Id[] = "$Id: rcsload.c,v 9.9 1991/09/17 08:12:09 dickey Exp $";
 #include	"ptypes.h"
 #include	"rcsdefs.h"
 #include	<ctype.h>
-extern	long	packdate();
-extern	char	*ctime();
-extern	char	*txtalloc();
-extern	char	**vecalloc();
-extern	off_t	filesize();
+#include	<time.h>
 
 /* local definitions */
 #define	CHUNK	31			/* one less than a power of 2 */
@@ -87,8 +61,7 @@ static	unsigned my_limit;
 
 static
 append(
-_AR1(char *,	s)
-	)
+_AR1(char *,	s))
 _DCL(char *,	s)
 {
 	if (load_last != 0 && s != 0) {
@@ -98,8 +71,7 @@ _DCL(char *,	s)
 
 static
 loadtext(
-_AR1(int,	c)
-	)
+_AR1(int,	c))
 _DCL(int,	c)
 {
 	static	char	edit_type;		/* editing type */
@@ -222,8 +194,7 @@ _DCL(int,	code)
 static
 time_t
 eat_date(
-_AR1(char *,	arg)
-	)
+_AR1(char *,	arg))
 _DCL(char *,	arg)
 {
 	time_t	value = 0;
@@ -246,8 +217,7 @@ _DCL(char *,	arg)
 static
 char *
 branch_of(
-_AR1(char *,	rev)
-	)
+_AR1(char *,	rev))
 _DCL(char *,	rev)
 {
 	char	bfr[BUFSIZ];
@@ -455,8 +425,7 @@ _DCL(int,	verbose)
  * by 'txtalloc()' is persistent.
  */
 rcsunload(
-_AR1(DELTREE *,	p)			/* vector to release */
-	)
+_AR1(DELTREE *,	p))			/* vector to release */
 _DCL(DELTREE *,	p)
 {
 	if (p != 0) {
@@ -470,8 +439,7 @@ _DCL(DELTREE *,	p)
 }
 
 #ifdef	TEST
-main(argc, argv)
-char	*argv[];
+_MAIN
 {
 	DELTREE	*p;
 	register int	j, k;

@@ -1,42 +1,14 @@
 #ifndef	lint
-static	char	Id[] = "$Id: vcs_file.c,v 9.0 1991/05/15 09:57:40 ste_cm Rel $";
+static	char	Id[] = "$Id: vcs_file.c,v 12.0 1991/10/04 08:01:07 ste_cm Rel $";
 #endif
 
 /*
  * Title:	vcs_file (VCS permission- and temporary-file)
  * Author:	T.E.Dickey
  * Created:	13 Mar 1989
- * $Log: vcs_file.c,v $
- * Revision 9.0  1991/05/15 09:57:40  ste_cm
- * BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
- *
- *		Revision 8.1  91/05/15  09:57:40  dickey
- *		apollo sr10.3 cpp complains about tag in #endif
- *		
- *		Revision 8.0  89/03/13  13:04:49  ste_cm
- *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
- *		
- *		Revision 7.0  89/03/13  13:04:49  ste_cm
- *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
- *		
- *		Revision 6.0  89/03/13  13:04:49  ste_cm
- *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
- *		
- *		Revision 5.0  89/03/13  13:04:49  ste_cm
- *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
- *		
- *		Revision 4.0  89/03/13  13:04:49  ste_cm
- *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
- *		
- *		Revision 3.0  89/03/13  13:04:49  ste_cm
- *		BASELINE Mon Jun 19 13:27:01 EDT 1989
- *		
- *		Revision 2.0  89/03/13  13:04:49  ste_cm
- *		BASELINE Thu Apr  6 09:45:13 EDT 1989
- *		
- *		Revision 1.2  89/03/13  13:04:49  dickey
- *		sccs2rcs keywords
- *		
+ * Modified:
+ *		03 Oct 1991, converted to ANSI
+ *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
  *
  * Function:	This encapsulates the name for the 'permit' utility's directory-
  *		access file, and the temporary file which is used to update it.
@@ -45,17 +17,19 @@ static	char	Id[] = "$Id: vcs_file.c,v 9.0 1991/05/15 09:57:40 ste_cm Rel $";
  *		depends upon it.
  */
 
-#include	<string.h>
+#define	STR_PTYPES
 #include	"ptypes.h"
 #include	"rcsdefs.h"
-extern	char	*pathcat();
-extern	char	*pathleaf();
 
 char *
-vcs_file(path, name,temp)
-char	*path;		/* pathname to prepend, if nonnull */
-char	*name;		/* where to write the name */
-int	temp;		/* TRUE iff we provide temporary-name */
+vcs_file(
+_ARX(char *,	path)		/* pathname to prepend, if nonnull */
+_ARX(char *,	name)		/* where to write the name */
+_AR1(int,	temp)		/* TRUE iff we provide temporary-name */
+	)
+_DCL(char *,	path)
+_DCL(char *,	name)
+_DCL(int,	temp)
 {
 	register char	*s = pathleaf(rcs_dir());
 
@@ -69,11 +43,12 @@ int	temp;		/* TRUE iff we provide temporary-name */
 }
 
 #ifdef	TEST
-main(argc,argv)
-char	*argv[];
+_MAIN
 {
 	char	bfr[BUFSIZ];
 
-	printf("vcs_file='%s'\n", vcs_file("./", bfr,0));
+	PRINTF("vcs_file='%s'\n", vcs_file("./", bfr,0));
+	exit(SUCCESS);
+	/*NOTREACHED*/
 }
 #endif

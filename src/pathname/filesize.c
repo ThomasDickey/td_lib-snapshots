@@ -1,11 +1,13 @@
 #ifndef	lint
-static	char	*Id = "$Id: filesize.c,v 9.1 1991/09/13 08:03:39 dickey Exp $";
+static	char	*Id = "$Id: filesize.c,v 10.0 1991/10/04 10:02:45 ste_cm Rel $";
 #endif
 
 /*
  * Title:	filesize.c
  * Author:	T.E.Dickey
  * Created:	13 Sep 1991
+ * Modified:
+ *		04 Oct 1991, conversion to ANSI
  *
  * Function:	returns a file's size (in bytes), or -1 if none is available.
  */
@@ -14,8 +16,9 @@ static	char	*Id = "$Id: filesize.c,v 9.1 1991/09/13 08:03:39 dickey Exp $";
 #include <errno.h>
 
 off_t
-filesize(name)
-char	*name;
+filesize(
+_AR1(char *,	name))
+_DCL(char *,	name)
 {
 	auto	struct	stat	sb;
 

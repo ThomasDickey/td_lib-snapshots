@@ -1,8 +1,14 @@
 #ifndef	lint
-static	char	Id[] = "$Id: denode.c,v 9.0 1991/05/15 10:01:11 ste_cm Rel $";
+static	char	Id[] = "$Id: denode.c,v 12.0 1991/10/04 07:26:07 ste_cm Rel $";
 #endif
 
 /*
+ * Title:	denode.c
+ * Author:	T.E.Dickey
+ * Created:	22 Jan 1987
+ * Modified:
+ *		03 Oct 1991, converted to ANSI
+ *
  * Function:	Remove a leading node-name from a path.
  *
  * Arguments:
@@ -20,9 +26,17 @@ static	char	Id[] = "$Id: denode.c,v 9.0 1991/05/15 10:01:11 ste_cm Rel $";
  * Returns:	A pointer into the 'path' string, past any leading nodename.
  */
 
-char	*denode (path, node, opt)
-register char	*path, *node;
-int	*opt;
+#include "ptypes.h"
+
+char *
+denode (
+_ARX(register char *,	path)
+_ARX(register char *,	node)
+_AR1(int *,		opt)
+	)
+_DCL(register char *,	path)
+_DCL(register char *,	node)
+_DCL(int *,		opt)
 {
 register char *s = path, *t = node;
 

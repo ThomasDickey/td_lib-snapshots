@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: vecalloc.c,v 9.1 1991/09/13 07:37:54 dickey Exp $";
+static	char	Id[] = "$Id: vecalloc.c,v 12.0 1991/10/04 15:52:45 ste_cm Rel $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: vecalloc.c,v 9.1 1991/09/13 07:37:54 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	01 Dec 1987
  * Modified:
+ *		04 Oct 1991, conversion to ANSI
  *
  * Function:	Allocate space for a given vector (of pointers), and
  *		return a pointer to the non-volatile storage.  The
@@ -14,23 +15,22 @@ static	char	Id[] = "$Id: vecalloc.c,v 9.1 1991/09/13 07:37:54 dickey Exp $";
  *		stored vector.
  */
 
-extern	char	*doalloc();
+#include "ptypes.h"
 
-#ifdef	lint
-#define	DOALLOC(c,n)	(c *)0
-#else
-#define	DOALLOC(c,n)	(c *)(doalloc((char *)0, sizeof(c) * (n)))
-#endif
+	/*ARGSUSED*/
+	def_ALLOC(char *);
 
-/*ARGSUSED*/
 char **
-vecalloc(len)
+vecalloc(
+_AR1(unsigned,	len))
+_DCL(unsigned,	len)
 {
-	return(DOALLOC(char *,len));
+	return(ALLOC(char *,len));
 }
 
-vecfree(s)
-char	**s;
+vecfree(
+_AR1(char **,	s))
+_DCL(char **,	s)
 {
 	dofree((char *)s);
 }

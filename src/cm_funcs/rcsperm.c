@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcsperm.c,v 9.1 1991/09/06 11:23:01 dickey Exp $";
+static	char	Id[] = "$Id: rcsperm.c,v 11.0 1991/10/04 12:32:08 ste_cm Rel $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: rcsperm.c,v 9.1 1991/09/06 11:23:01 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	08 Mar 1989
  * Modified:
+ *		04 Oct 1991, conversion to ANSI
  *		06 Sep 1991, modified interface to 'rcsopen()'
  *		05 Jul 1989, if the access-list is empty, we must own the file
  *			     to operate upon it.
@@ -30,10 +31,13 @@ static	char	Id[] = "$Id: rcsperm.c,v 9.1 1991/09/06 11:23:01 dickey Exp $";
 #include	"ptypes.h"
 #include	"rcsdefs.h"
 #include	<ctype.h>
-extern	char	*uid2s();
 
-rcspermit(path,base)
-char	*path,*base;
+rcspermit(
+_ARX(char *,	path)
+_AR1(char *,	base)
+	)
+_DCL(char *,	path)
+_DCL(char *,	base)
 {
 	auto	struct stat sb;
 	auto	int	header	= TRUE;
