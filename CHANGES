@@ -1,3 +1,7 @@
+1998-07-01  dickey@clark.net
+
+	* aclocal.m4: pick up change the puts cursesX ahead of curses
+
 1998-06-29  dickey@clark.net
 
 	* src/pathname/fileblox.c: use 'const' because dedsort.c is doing that.
