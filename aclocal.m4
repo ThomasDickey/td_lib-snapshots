@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Id: aclocal.m4,v 12.128 2000/12/24 22:23:29 tom Exp $
+dnl $Id: aclocal.m4,v 12.129 2001/01/11 01:29:49 tom Exp $
 dnl vi:set ts=4:
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "CF_" to "AC_"
@@ -12,8 +12,14 @@ AC_DEFUN([CF_ADD_CFLAGS],
 for cf_add_cflags in $1
 do
 	case $cf_add_cflags in #(vi
-	-I*|-D*|-U*|-E|-P|-C) #(vi
-		CPPFLAGS="$CPPFLAGS $cf_add_cflags"
+	-undef|-nostdinc*|-I*|-D*|-U*|-E|-P|-C) #(vi
+		case "$CPPFLAGS" in
+		*$cf_add_cflags)
+			;;
+		*)
+			CPPFLAGS="$CPPFLAGS $cf_add_cflags"
+			;;
+		esac
 		;;
 	*)
 		CFLAGS="$CFLAGS $cf_add_cflags"
@@ -90,7 +96,7 @@ AC_MSG_RESULT($cf_cv_ansi_cc)
 
 if test "$cf_cv_ansi_cc" != "no"; then
 if test ".$cf_cv_ansi_cc" != ".-DCC_HAS_PROTOS"; then
-	CFLAGS="$CFLAGS $cf_cv_ansi_cc"
+	CF_ADD_CFLAGS($cf_cv_ansi_cc)
 else
 	AC_DEFINE(CC_HAS_PROTOS)
 fi
@@ -424,7 +430,7 @@ if test ".$ac_cv_func_initscr" != .yes ; then
 	cf_term_lib=""
 	cf_curs_lib=""
 
-	if test ".$cf_cv_ncurses_version" != .no
+	if test ".${cf_cv_ncurses_version-no}" != .no
 	then
 		cf_check_list="ncurses curses cursesX"
 	else
@@ -2089,5 +2095,5 @@ AC_TRY_LINK([
 	long x = winnstr(stdscr, "", 0)],
 	[cf_cv_need_xopen_extension=yes],
 	[cf_cv_need_xopen_extension=no])])])
-test $cf_cv_need_xopen_extension = yes && CFLAGS="$CFLAGS -D_XOPEN_SOURCE_EXTENDED"
+test $cf_cv_need_xopen_extension = yes && CPPFLAGS="$CPPFLAGS -D_XOPEN_SOURCE_EXTENDED"
 ])dnl
