@@ -1,4 +1,4 @@
-/* @(#)llib-ltd	1.21 88/05/27 10:06:29 */
+/* @(#)llib-ltd	1.22 88/06/01 09:58:17 */
 /*LINTLIBRARY*/
 
 #include	<curses.h>
@@ -113,7 +113,7 @@ char *	rcsparse_str(s) char *s; { return (0); }
 int	rcskeys(s) char *s; { return(0); }
 
 /* rcslast.c --------------------------------------------------------- */
-	rcslast(wd,n,v_,t_) char *wd,*n; char **v_; time_t *t_; { }
+	rcslast(wd,n,v_,t_,l_) char *wd,*n; char **v_, **l_; time_t *t_; { }
 
 /* rcsname.c ---------------------------------------------------------- */
 char *	rcsname(name) char *name; { return(0); }
@@ -133,7 +133,7 @@ int	s2uid(s) char	*s; { return (0); }
 	unsavewin(redo,top) { }
 
 /* sccslast.c --------------------------------------------------------- */
-	sccslast(wd,n,v_,t_) char *wd,*n; char **v_; time_t *t_; { }
+	sccslast(wd,n,v_,t_,l_) char *wd,*n; char **v_, **l_; time_t *t_; { }
 
 /* sccszone.c --------------------------------------------------------- */
 long	sccszone() { return(0); }

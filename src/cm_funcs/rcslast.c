@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)rcslast.c	1.2 88/05/23 06:39:32";
+static	char	sccs_id[] = "@(#)rcslast.c	1.3 88/06/01 10:01:43";
 #endif	lint
 
 /*
@@ -7,16 +7,20 @@ static	char	sccs_id[] = "@(#)rcslast.c	1.2 88/05/23 06:39:32";
  * Author:	T.E.Dickey
  * Created:	18 May 1988, from 'sccslast.c'
  * Modified:
+ *		01 Jun 1988, added 'locks' decoding.  Recoded using 'rcskeys()'.
  *		23 May 1988, combined 'rel', 'ver' args.
  *
  * Function:	Lookup the last RCS-delta date, and its release.version number
- *		for directory-editor.
+ *		for directory-editor.  If a locked version is found, this is
+ *		shown; otherwise the tip-version is shown.
  */
 
 #include	<stdio.h>
 #include	<ctype.h>
 #include	<sys/types.h>
 #include	<sys/stat.h>
+#include	"rcsdefs.h"
+
 extern	char	*strcat(),
 		*strcpy(),
 		*strchr(),
@@ -31,102 +35,117 @@ extern	char	*txtalloc();
 #define	FALSE	(0)
 #endif	TRUE
 
-#define	SUFFIX	",v"
-#define	LEN_S	2		/* strlen(SUFFIX) */
+#define	EOS	'\0'
+
+#define	SKIP(s)	while (isspace(*s)) s++;
+#define	COPY(name)\
+		SKIP(s);\
+		while (*s && !isspace(*s))		*name++ = *s++;\
+		*name = EOS;
+
+static	FILE	*rfp;
+static	char	bfr[BUFSIZ];
 
 /*
- * Parse for a keyword, converting the buffer to hold the value of the keyword
- * if it is found.
+ * Read the current line and parse for keywords, which are in quasi-free format,
+ * separated by semicolons.
  */
 static
-keyRCS(string, key)
-char	*string, *key;
+parse(key, arg)
+char	*key, *arg;
 {
-char	*s,
-	first[BUFSIZ],
-	second[BUFSIZ];
+register
+char	*mark, *s;
 
-	if (s = strchr(string, ';')) {
-		*s = '\0';
-		if (sscanf(string, "%s %s;", first, second) == 2)
-			if (!strcmp(first, key)) {
-				(void)strcpy(string, second);
-				return (TRUE);
-			}
+	while (*bfr == EOS || *bfr == '\n')
+		if (fgets(bfr, sizeof(bfr), rfp) == 0)
+			return (FALSE);
+	if (mark = strchr(s = bfr, ';')) {
+		*mark++ = EOS;
+		while (isspace(*mark))			mark++;
+	} else
+		mark = s + strlen(s);
+
+	COPY(key);
+	COPY(arg);
+	for (s = bfr; *s++ = *mark++;);
+	return (TRUE);
+}
+
+/*
+ * Parse the lock-argument to obtain the locker's name and the locked version.
+ * patch: this looks only for the first lock.
+ */
+static
+parse2(arg, locker, version)
+char	*arg, *locker, *version;
+{
+register char *s;
+
+	if (s = strchr(arg, ':')) {
+		*s++ = EOS;
+		SKIP(s);
+		COPY(version);
+		s = arg;
+		COPY(locker);
 	}
-	return (FALSE);
 }
 
 /*
  * Set the release.version and date values iff we find a legal RCS-file at
  * 'path[]'.  We scan for the following:
  */
-#define	S_HEAD	0	/* head <version_string>;	*/
-#define	S_HEAD2	1	/* <more header lines>		*/
-#define	S_SKIP	2	/* <blank lines>		*/
-#define	S_VERS	3	/* <version_string>		*/
-#define	S_DATE	4	/* date <date>; <some text>	*/
-#define	S_EXIT	5
-
-static	tryRCS (path, vers_, date_)
+static
+tryRCS (path, vers_, date_, lock_)
 char	*path;
 char	**vers_;
 time_t	*date_;
+char	**lock_;
 {
-FILE	*fp = fopen(path, "r");
-int	state = S_HEAD;
 int	yy, mm, dd, hr, mn, sc;
-char	vstring[BUFSIZ],
-	bfr[BUFSIZ],
-	*s;
+int	finish	= FALSE,
+	skip	= FALSE;
+char	key[BUFSIZ],
+	arg[BUFSIZ],
+	lstring[BUFSIZ],
+	vstring[BUFSIZ];
 
-	if (fp) {
-		while ((state < S_EXIT) && fgets(bfr, sizeof(bfr), fp)) {
-			for (s = bfr + strlen(bfr) - 1;
-				(s >= bfr) && isspace(*s);
-					*(s--) = '\0');
-			switch (state) {
+	if (rfp = fopen(path, "r")) {
+		*lstring =
+		*vstring =
+		*bfr = EOS;			/* initialize scanner */
+		while (!finish && parse(key, arg)) {
+			switch (rcskeys(key)) {
 			case S_HEAD:
-				if (keyRCS(bfr, "head")) {
-					s = strcpy(vstring, bfr);
-					while (*s) {
-						if (!isdigit(*s) && *s != '.') {
-							state = S_EXIT;
-							break;
-						}
-						s++;
-					}
-					state++;
-				} else
-					state = S_EXIT;
+				if (rcskeys(strcpy(vstring, arg)) != S_VERS)
+					finish = TRUE;
 				break;
-			case S_HEAD2:
-				if (!*bfr)	state++;
+			case S_COMMENT:
+				*bfr = EOS;	/* force new-scan */
 				break;
-			case S_SKIP:
-				if (*bfr)
-					state++;
-				else
-					break;
+			case S_LOCKS:
+				parse2(arg, lstring, vstring);
+				break;
 			case S_VERS:
-				if (!strcmp(bfr, vstring))
-					state++;
-				else
-					state = S_EXIT;
+				skip = strcmp(key, vstring);
 				break;
 			case S_DATE:
-				state = S_EXIT;	/* has to be here! */
-				if (!keyRCS(bfr, "date"))	break;
-				if (sscanf(bfr, "%d.%d.%d.%d.%d.%d",
+				if (skip)	break;
+				if (sscanf(arg, FMT_DATE,
 					&yy, &mm, &dd, &hr, &mn, &sc)
 					== 6) {
+					*lock_ = txtalloc(lstring);
 					*vers_ = txtalloc(vstring);
 					*date_ = packdate (1900+yy, mm, dd, hr, mn, sc)
 						- sccszone();
+					finish = TRUE;
 				}
+				break;
+			case S_DESC:
+				finish = TRUE;
 			}
 		}
-		(void) fclose(fp);
+		(void) fclose(rfp);
 	}
 }
 
@@ -134,18 +153,21 @@ char	vstring[BUFSIZ],
  *	main procedure							*
  ************************************************************************/
 
-rcslast (working, path, vers_, date_)
+rcslast (working, path, vers_, date_, lock_)
 char	*working;		/* working directory (absolute) */
 char	*path;			/* pathname to check (may be relative) */
 char	**vers_;
 time_t	*date_;
+char	**lock_;
 {
 char	name[BUFSIZ+1];
-int	is_RCS,
+int	len_s	= strlen(RCS_SUFFIX),
+	is_RCS,
 	len;
 register char *s, *t;
 struct	stat	sbfr;
 
+	*lock_ =
 	*vers_ = "?";
 	*date_ = 0;
 
@@ -159,10 +181,10 @@ struct	stat	sbfr;
 			s++;
 		else
 			s = path;
-		is_RCS = !strcmp(s,"RCS");
+		is_RCS = !strcmp(s,RCS_DIR);
 		*t++ = '/';
 	} else if (s = strrchr(working, '/')) {
-		is_RCS = !strcmp(++s,"RCS");
+		is_RCS = !strcmp(++s,RCS_DIR);
 	} else
 		return;			/* illegal input: give up */
 
@@ -172,13 +194,13 @@ struct	stat	sbfr;
 	 * not checked-in, or which are not checked out (possibly obsolete).
 	 */
 	if (is_RCS			/* t => filename */
-	&&  ((len = strlen(t)) > LEN_S)
-	&&  !strcmp(t + len - LEN_S, SUFFIX) ) {
-		tryRCS(strcpy(name,path), vers_, date_);
+	&&  ((len = strlen(t)) > len_s)
+	&&  !strcmp(t + len - len_s, RCS_SUFFIX) ) {
+		tryRCS(strcpy(name,path), vers_, date_, lock_);
 		if (*date_) {		/* it was an ok RCS file */
 			/* look for checked-out file */
 			(void)strcat(strcpy(name+(t-path), "../"), t);
-			name[(t-path)+len+3-LEN_S] = '\0'; /* trim suffix */
+			name[(t-path)+len+3-len_s] = '\0'; /* trim suffix */
 			*date_ = 0;	/* use actual modification-date! */
 			if (stat(name, &sbfr) >= 0)
 				*date_ = sbfr.st_mtime;
@@ -191,6 +213,12 @@ struct	stat	sbfr;
 	 * RCS-file assuming the standard naming convention, and try again.
 	 */
 	(void)strcpy(name,  s = path);
-	(void)strcat(strcat(strcpy(&name[t-s],"RCS/"), t), SUFFIX);
-	tryRCS(name, vers_, date_);
+	(void)strcat(
+		strcat(
+			strcat(
+				strcpy(&name[t-s],RCS_DIR),
+				"/"),
+			t),
+		RCS_SUFFIX);
+	tryRCS(name, vers_, date_, lock_);
 }

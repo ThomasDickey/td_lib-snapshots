@@ -1,3 +1,17 @@
+1988-06-01  dickey@software.org
+
+	* src/cm_funcs/sccslast.c: will later decode 'lock_' in 'trysccs()'.
+
+	* src/cm_funcs/rcslast.c:
+	recoded (used 'rcskeys()') to scan for lock-ownership.
+
+	* src/Makefile: use 'rcsdefs.h' in 'rcslast.c'
+
+	* include/llib-ltd: added 'lock_' arg to rcslast, sccslast procs.
+
+	* src/cm_funcs/sccslast.c:
+	added SCCS_DIR environment variable; added hook for 'lock_' argument.
+
 1988-05-27  dickey@software.org
 
 	* src/cm_funcs/rcsedit.c: New file.
