@@ -1,12 +1,25 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)rcsname.c	1.2 88/08/05 14:24:29";
+static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs/RCS/rcsname.c,v 4.0 1988/09/02 09:28:32 ste_cm Rel $";
 #endif	lint
 
 /*
  * Title:	rcsname.c (derive name of RCS file)
  * Author:	T.E.Dickey
  * Created:	27 May 1988
- * Modified:
+ * $Log: rcsname.c,v $
+ * Revision 4.0  1988/09/02 09:28:32  ste_cm
+ * BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+ *
+ *		Revision 3.0  88/09/02  09:28:32  ste_cm
+ *		BASELINE Mon Jun 19 13:27:01 EDT 1989
+ *		
+ *		Revision 2.0  88/09/02  09:28:32  ste_cm
+ *		BASELINE Thu Apr  6 09:45:13 EDT 1989
+ *		
+ *		Revision 1.4  88/09/02  09:28:32  dickey
+ *		sccs2rcs keywords
+ *		
+ *		02 Sep 1988, use 'rcs_dir()'.
  *		05 Aug 1988, rewrote to provide bidirectional translation, to
  *			     make 'checkin' and 'checkout' more foolproof.
  *
@@ -29,17 +42,14 @@ static	char	sccs_id[] = "@(#)rcsname.c	1.2 88/08/05 14:24:29";
  *		overwritten by subsequent calls.  The arguments are unmodified.
  */
 
+#include	"ptypes.h"
 #include	"rcsdefs.h"
 
-#include	<stdio.h>
 #include	<ctype.h>
+extern	char	*rcs_dir();
 extern	char	*strcat();
 extern	char	*strcpy();
 extern	char	*strrchr();
-
-#define	TRUE	(1)
-#define	FALSE	(0)
-#define	EOS	'\0'
 
 #define	LEN_SUFFIX	(sizeof(suffix)-1)
 
@@ -115,7 +125,7 @@ static	char	fname[BUFSIZ];
 		(void)strcat(
 			strcat(
 				strcat(
-					strcpy(fname, RCS_DIR),
+					strcpy(fname, rcs_dir()),
 					"/"),
 				leaf(name)),
 			suffix);

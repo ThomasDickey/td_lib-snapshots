@@ -1,12 +1,22 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)sccslast.c	1.9 88/06/30 06:28:42";
+static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs/RCS/sccslast.c,v 3.0 1988/09/02 09:17:11 ste_cm Rel $";
 #endif	lint
 
 /*
  * Title:	sccslast.c (scan for last sccs date)
  * Author:	T.E.Dickey
  * Created:	20 Oct 1986
- * Modified:
+ * $Log: sccslast.c,v $
+ * Revision 3.0  1988/09/02 09:17:11  ste_cm
+ * BASELINE Mon Jun 19 13:27:01 EDT 1989
+ *
+ *		Revision 2.0  88/09/02  09:17:11  ste_cm
+ *		BASELINE Thu Apr  6 09:45:13 EDT 1989
+ *		
+ *		Revision 1.11  88/09/02  09:17:11  dickey
+ *		sccs2rcs keywords
+ *		
+ *		02 Sep 1988, use 'sccs_dir()'
  *		30 Jun 1988, use 'newzone()' instead of 'sccszone()'.
  *		01 Jun 1988, use SCCS_DIR environment variable.
  *		23 May 1988, combined rels/vers args.
@@ -18,20 +28,14 @@ static	char	sccs_id[] = "@(#)sccslast.c	1.9 88/06/30 06:28:42";
  *		for directory-editor.
  */
 
-#include	<stdio.h>
+#include	"ptypes.h"
 #include	<ctype.h>
-#include	<sys/types.h>
-#include	<sys/stat.h>
-extern	char	*getenv(),
+extern	long	packdate();
+extern	char	*sccs_dir(),
 		*strcat(),
 		*strcpy(),
-		*strrchr();
-
-extern	long	packdate();
-extern	char	*txtalloc();
-
-#define	MAXPATH	256
-#define	FALSE	(0)
+		*strrchr(),
+		*txtalloc();
 
 /*
  * Set the release.version and date values iff we find a legal sccs-file at
@@ -78,14 +82,11 @@ char	**vers_;
 time_t	*date_;
 char	**lock_;
 {
-static	char	*sccs_dir;
-char	name[MAXPATH+1];
-int	is_sccs;
-register char *s, *t;
-struct	stat	sbfr;
-
-	if (!sccs_dir)	sccs_dir = getenv("SCCS_DIR");
-	if (!sccs_dir)	sccs_dir = "sccs";
+	auto	 char	name[BUFSIZ+1],
+			*dname = sccs_dir();
+	auto	 int	is_sccs;
+	register char	*s, *t;
+	struct	 stat	sbfr;
 
 	*lock_ =
 	*vers_ = "?";
@@ -102,10 +103,10 @@ struct	stat	sbfr;
 			s++;
 		else
 			s = path;
-		is_sccs = !strcmp(s,sccs_dir);
+		is_sccs = !strcmp(s,dname);
 		*t++ = '/';
 	} else if (s = strrchr(working, '/')) {
-		is_sccs = !strcmp(++s,sccs_dir);
+		is_sccs = !strcmp(++s,dname);
 	} else
 		return;			/* illegal input: give up */
 
@@ -138,6 +139,6 @@ struct	stat	sbfr;
 	 * sccs-file assuming the standard naming convention, and try again.
 	 */
 	(void)strcpy(name,  s = path);
-	(void)strcat(strcat(strcpy(&name[t-s], sccs_dir), "/s."), t);
+	(void)strcat(strcat(strcpy(&name[t-s], dname), "/s."), t);
 	trysccs(name, vers_, date_, lock_);
 }

@@ -1,4 +1,4 @@
-/* @(#)llib-ltd	1.41 88/08/31 10:23:17 */
+/* @(#)llib-ltd	1.42 88/09/02 08:54:48 */
 /*LINTLIBRARY*/
 
 #define	CUR_PTYPES
@@ -24,9 +24,6 @@
 
 /* catarg.c ----------------------------------------------------------- */
 	catarg (dst, src) char *dst, *src; { }
-
-/* closeall.c --------------------------------------------------------- */
-	closeall(fd) { }
 
 /* cmdch.c ------------------------------------------------------------ */
 int	cmdch(cntp) int *cntp; { return(0); }
@@ -65,12 +62,6 @@ char	erasechar() { return(0); }
 /* execute.c ---------------------------------------------------------- */
 int	execute(verb, args) char *verb, *args; { return(0); }
 
-/* fexists.c ---------------------------------------------------------- */
-time_t	fexists(name, opt) char *name; { return(0); }
-
-/* flushall.c --------------------------------------------------------- */
-	flushall(fd) { }
-
 /* filecopy.c --------------------------------------------------------- */
 int	filecopy(src, dst, copy) char *src, *dst; { return(0); }
 
@@ -106,9 +97,6 @@ int	localzone;
 	newzone(hours, minutes, apres) { }
 	oldzone() { }
 
-/* okpnum.c ----------------------------------------------------------- */
-int	okpnum (number) char *number; { return (0); }
-
 /* packdate.c --------------------------------------------------------- */
 long	packdate (year, mon, day, hour, min, s) { return (0); }
 
@@ -126,6 +114,9 @@ char *	pathleaf(path) char *path; { return(0); }
 
 /* rawterm.c ---------------------------------------------------------- */
 	rawterm() { }
+
+/* rcs_dir.c --------------------------------------------------------- */
+char *	rcs_dir() { return(0); }
 
 /* rcsedit.c --------------------------------------------------------- */
 int	rcsopen(name, show) char *name; { return (0); }
@@ -170,11 +161,11 @@ int	s2uid(s) char	*s; { return (0); }
 	lastwin(redo,top) { }
 	unsavewin(redo,top) { }
 
+/* sccs_dir.c --------------------------------------------------------- */
+char *	sccs_dir() { return(0); }
+
 /* sccslast.c --------------------------------------------------------- */
 	sccslast(wd,n,v_,t_,l_) char *wd,*n; char **v_, **l_; time_t *t_; { }
-
-/* sccszone.c --------------------------------------------------------- */
-long	sccszone() { return(0); }
 
 /* scr_size.c --------------------------------------------------------- */
 int	scr_size(lc) int *lc; { return(0); }

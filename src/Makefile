@@ -1,4 +1,4 @@
-# @(#)Makefile	1.48 88/09/01 06:58:54
+# @(#)Makefile	1.49 88/09/02 09:16:47
 # MAKE-file for miscellaneous library routines
 #
 ####### (Development) ##########################################################
@@ -20,7 +20,6 @@ CSRC	=\
 	bldarg.c\
 	blip.c\
 	catarg.c\
-	closeall.c\
 	cmdch.c\
 	copyback.c\
 	cutoff.c\
@@ -32,9 +31,7 @@ CSRC	=\
 	dumpwin.c\
 	erasechar.c\
 	execute.c\
-	fexists.c\
 	filecopy.c\
-	flushall.c\
 	fp2argv.c\
 	gethome.c\
 	getuser.c\
@@ -44,13 +41,13 @@ CSRC	=\
 	modechar.c\
 	name2s.c\
 	newzone.c\
-	okpnum.c\
 	packdate.c\
 	padedit.c\
 	pathhead.c\
 	pathleaf.c\
 	rawgets.c\
 	rawterm.c\
+	rcs_dir.c\
 	rcsedit.c\
 	rcskeys.c\
 	rcslast.c\
@@ -60,6 +57,7 @@ CSRC	=\
 	rcstemp.c\
 	resizewin.c\
 	savewin.c\
+	sccs_dir.c\
 	sccslast.c\
 	scr_size.c\
 	setmtime.c\
@@ -86,7 +84,6 @@ OBJS	=\
 	bldarg.o\
 	blip.o\
 	catarg.o\
-	closeall.o\
 	cmdch.o\
 	copyback.o\
 	cutoff.o\
@@ -98,9 +95,7 @@ OBJS	=\
 	dumpwin.o\
 	erasechar.o\
 	execute.o\
-	fexists.o\
 	filecopy.o\
-	flushall.o\
 	fp2argv.o\
 	gethome.o\
 	getuser.o\
@@ -110,13 +105,13 @@ OBJS	=\
 	modechar.o\
 	name2s.o\
 	newzone.o\
-	okpnum.o\
 	packdate.o\
 	padedit.o\
 	pathhead.o\
 	pathleaf.o\
 	rawgets.o\
 	rawterm.o\
+	rcs_dir.o\
 	rcsedit.o\
 	rcskeys.o\
 	rcslast.o\
@@ -126,6 +121,7 @@ OBJS	=\
 	rcstemp.o\
 	resizewin.o\
 	savewin.o\
+	sccs_dir.o\
 	sccslast.o\
 	scr_size.o\
 	setmtime.o\
@@ -179,14 +175,14 @@ packdate.o:	ptypes.h
 padedit.o:	ptypes.h
 rawgets.o:	ptypes.h	cmdch.h
 rawterm.o:	ptypes.h
-rcslast.o:	rcsdefs.h
 rcsedit.o:	ptypes.h	rcsdefs.h
 rcskeys.o:	rcsdefs.h
-rcslast.o:	rcsdefs.h
+rcslast.o:	ptypes.h	rcsdefs.h
 rcsload.o:	ptypes.h	rcsdefs.h
 rcslocks.o:	ptypes.h	rcsdefs.h
-rcsname.o:	rcsdefs.h
+rcsname.o:	ptypes.h	rcsdefs.h
 resizewin.o:	ptypes.h
+sccslast.o:	ptypes.h
 setmtime.o:	ptypes.h
 savewin.o:	ptypes.h
 uid2s.o:	ptypes.h

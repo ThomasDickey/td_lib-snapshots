@@ -1,12 +1,22 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)rcslast.c	1.4 88/06/30 06:47:35";
+static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs/RCS/rcslast.c,v 3.0 1988/09/02 09:28:16 ste_cm Rel $";
 #endif	lint
 
 /*
  * Title:	rcslast.c (scan for last RCS date)
  * Author:	T.E.Dickey
  * Created:	18 May 1988, from 'sccslast.c'
- * Modified:
+ * $Log: rcslast.c,v $
+ * Revision 3.0  1988/09/02 09:28:16  ste_cm
+ * BASELINE Mon Jun 19 13:27:01 EDT 1989
+ *
+ *		Revision 2.0  88/09/02  09:28:16  ste_cm
+ *		BASELINE Thu Apr  6 09:45:13 EDT 1989
+ *		
+ *		Revision 1.6  88/09/02  09:28:16  dickey
+ *		sccs2rcs keywords
+ *		
+ *		02 Sep 1988, use 'rcs_dir()'
  *		30 Jun 1988, use 'newzone()' rather than 'sccszone()'.
  *		01 Jun 1988, added 'locks' decoding.  Recoded using 'rcskeys()'.
  *		23 May 1988, combined 'rel', 'ver' args.
@@ -16,26 +26,17 @@ static	char	sccs_id[] = "@(#)rcslast.c	1.4 88/06/30 06:47:35";
  *		shown; otherwise the tip-version is shown.
  */
 
-#include	<stdio.h>
+#include	"ptypes.h"
 #include	<ctype.h>
-#include	<sys/types.h>
-#include	<sys/stat.h>
 #include	"rcsdefs.h"
 
-extern	char	*strcat(),
+extern	long	packdate();
+extern	char	*rcs_dir(),
+		*strcat(),
 		*strcpy(),
 		*strchr(),
-		*strrchr();
-
-extern	long	packdate();
-extern	char	*txtalloc();
-
-#ifndef	TRUE
-#define	TRUE	(1)
-#define	FALSE	(0)
-#endif	TRUE
-
-#define	EOS	'\0'
+		*strrchr(),
+		*txtalloc();
 
 #define	SKIP(s)	while (isspace(*s)) s++;
 #define	COPY(name)\
@@ -161,12 +162,13 @@ char	**vers_;
 time_t	*date_;
 char	**lock_;
 {
-char	name[BUFSIZ+1];
-int	len_s	= strlen(RCS_SUFFIX),
-	is_RCS,
-	len;
-register char *s, *t;
-struct	stat	sbfr;
+	auto	 char	name[BUFSIZ+1],
+			*dname	= rcs_dir();
+	auto	 int	len_s	= strlen(RCS_SUFFIX),
+			is_RCS,
+			len;
+	register char	*s, *t;
+	struct	 stat	sbfr;
 
 	*lock_ =
 	*vers_ = "?";
@@ -177,15 +179,15 @@ struct	stat	sbfr;
 	 * an appropriate suffix (i.e., ",v") assume it is an RCS file.
 	 */
 	if (s = strrchr(t = path, '/')) { /* determine directory from path */
-		*(t = s) = '\0';
+		*(t = s) = EOS;
 		if (s = strrchr(path, '/'))
 			s++;
 		else
 			s = path;
-		is_RCS = !strcmp(s,RCS_DIR);
+		is_RCS = !strcmp(s,dname);
 		*t++ = '/';
 	} else if (s = strrchr(working, '/')) {
-		is_RCS = !strcmp(++s,RCS_DIR);
+		is_RCS = !strcmp(++s,dname);
 	} else
 		return;			/* illegal input: give up */
 
@@ -201,7 +203,7 @@ struct	stat	sbfr;
 		if (*date_) {		/* it was an ok RCS file */
 			/* look for checked-out file */
 			(void)strcat(strcpy(name+(t-path), "../"), t);
-			name[(t-path)+len+3-len_s] = '\0'; /* trim suffix */
+			name[(t-path)+len+3-len_s] = EOS; /* trim suffix */
 			*date_ = 0;	/* use actual modification-date! */
 			if (stat(name, &sbfr) >= 0)
 				*date_ = sbfr.st_mtime;
@@ -217,7 +219,7 @@ struct	stat	sbfr;
 	(void)strcat(
 		strcat(
 			strcat(
-				strcpy(&name[t-s],RCS_DIR),
+				strcpy(&name[t-s],dname),
 				"/"),
 			t),
 		RCS_SUFFIX);
