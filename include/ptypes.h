@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 4.2 1989/09/15 09:17:22 dickey Exp $ */
+/* $Id: ptypes.h,v 4.3 1989/10/03 13:15:14 dickey Exp $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -124,6 +124,11 @@ extern	V_OR_I	qsort();
 extern	V_OR_I	rewind();
 #endif	__STDC__
 #endif
+
+#ifdef	unix
+extern	uid_t	getuid(), geteuid();
+extern	gid_t	getgid(), getegid();
+#endif	unix
 
 /*
  * Miscellaneous useful definitions for readability
