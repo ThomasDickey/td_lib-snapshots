@@ -1,3 +1,49 @@
+1988-08-19  dickey@software.org
+
+	* include/llib-ltd: oops: missed 'verbose' argument of 'rcsload()'.
+
+	* src/cm_funcs/rcsload.c:
+	added code to populate '.num_lines' data (at least, for trunk), and
+	to recognize branches (not yet supported).
+
+	* include/rcsdefs.h:
+	added 'num_lines' member to RCSTREE (complicated to determine, but essential).
+
+	* src/cm_funcs/rcsload.c: New file.
+
+	* include/rcsdefs.h:
+	added NULL_FUNC (for calls on 'rcsparse_str()') and RCSTREE struct,
+	returned by 'rcsload()'.
+
+	* src/Makefile: added 'rcsload.c' module.
+
+	* include/llib-ltd:
+	added 'rcsload.c' module; added arg to 'rcsparse_str()'.
+
+	* src/cm_funcs/rcsedit.c:
+	recoded 'rcsparse_str()' so that it looks for the '@' leading delimiter
+	before giving up.  also, added 'str_func' argument to it so that I can make the
+	skipped-text divert to buffers, etc., via a function.
+
+	* src/cm_funcs/rcskeys.c: added 'log' and 'text' keywords.
+
+	* include/rcsdefs.h:
+	added 'S_LOG' and 'S_TEXT' keywords as per change in 'rcskeys.c'
+
+	* src/cm_funcs/rcsedit.c:
+	changed order of test in 'rcsopen()' to ensure that 'fname' is a file
+	before trying to open it.
+
+	* src/pathname/name2s.c: added mode to separate AEGIS/unix escapes.
+
+	* src/pathname/name2s.c: sccs2rcs keywords
+
+1988-08-19  ste_cm@software.org
+
+	* src/pathname/name2s.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+	* src/pathname/name2s.c: BASELINE Thu Apr  6 09:45:13 EDT 1989
+
 1988-08-18  dickey@software.org
 
 	* src/pathname/name2s.c:

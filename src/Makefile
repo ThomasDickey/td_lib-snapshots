@@ -1,4 +1,4 @@
-# @(#)Makefile	1.40 88/08/18 13:49:01
+# @(#)Makefile	1.41 88/08/19 12:50:39
 # MAKE-file for miscellaneous library routines
 #
 ####### (Development) ##########################################################
@@ -51,6 +51,7 @@ CSRC	=\
 	rcsedit.c\
 	rcskeys.c\
 	rcslast.c\
+	rcsload.c\
 	rcsname.c\
 	resizewin.c\
 	savewin.c\
@@ -109,6 +110,7 @@ OBJS	=\
 	rcskeys.o\
 	rcslast.o\
 	rcsname.o\
+	rcsload.o\
 	resizewin.o\
 	savewin.o\
 	sccslast.o\
@@ -170,7 +172,7 @@ uid2s.o:	ptypes.h
 win2file.o:	ptypes.h
 #
 ####### (Development) ##########################################################
-$(LLIB).ln:	ptypes.h $(LLIB) ; makellib.sh $(LLIB) $(llib)
+$(LLIB).ln:	ptypes.h rcsdefs.h $(LLIB) ; makellib.sh $(LLIB) $(llib)
 $(SRCS):			; $(GET) -s sccs/s.$@
 lint.out:	$(CSRC)		; $(DATE); tdlint $(LINTOPT) $? >>$@
 lincnt.out:	$(CSRC)		; $(DATE); lincnt $(CSRC) >>$@

@@ -1,8 +1,9 @@
-/* @(#)llib-ltd	1.33 88/08/18 14:16:41 */
+/* @(#)llib-ltd	1.35 88/08/19 15:38:24 */
 /*LINTLIBRARY*/
 
 #define	CUR_PTYPES
 #include	"ptypes.h"
+#include	"rcsdefs.h"
 
 /* MAIN-PROGRAM ******************************************************* */
 	failed(s) char *s; { }		/* fatal-error exit */
@@ -124,13 +125,17 @@ char *	rcsread(s) char *s; { return(0); }
 	rcsclose() { }
 char *	rcsparse_num(d, s) char *d, *s; { return (0); }
 char *	rcsparse_id(d, s) char *d, *s; { return (0); }
-char *	rcsparse_str(s) char *s; { return (0); }
+char *	rcsparse_str(s,f) char *s; int (*f)(); { return (0); }
 
 /* rcskeys.c --------------------------------------------------------- */
 int	rcskeys(s) char *s; { return(0); }
 
 /* rcslast.c --------------------------------------------------------- */
 	rcslast(wd,n,v_,t_,l_) char *wd,*n; char **v_, **l_; time_t *t_; { }
+
+/* rcsload.c --------------------------------------------------------- */
+RCSTREE *rcsload(name,verbose) char *name; { return(0); }
+	rcsunload(p) RCSTREE *p; { }
 
 /* rcsname.c ---------------------------------------------------------- */
 char *	rcs2name(name) char *name; { return(0); }
