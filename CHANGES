@@ -1,3 +1,12 @@
+1989-12-06  dickey@software.org
+
+	* src/pathname/pathcat.c: 'fname' argument may be empty (cf: link2rcs).
+
+1989-12-06  ste_cm@software.org
+
+	* src/pathname/pathcat.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
 1989-12-01  dickey@software.org
 
 	* src/pathname/pathhead.c:
