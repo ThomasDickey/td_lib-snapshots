@@ -1,3 +1,28 @@
+1991-09-13  dickey@software.org
+
+	* src/cm_funcs/rcsedit.c:
+	corrections to 'rcsparse_str()' -- was not really passing all
+	text back via user-supplied function.
+
+	* src/cm_funcs/rcsload.c:
+	partial implementation of logic to load file-text
+
+	* src/pathname/filesize.c: RCS_BASE
+
+	* src/Makefile: added module 'filesize'
+
+	* src/pathname/file2mem.c:
+	use 'filesize()' rather than inline file-size code
+
+	* src/descrip.mms: added module 'filesize'
+
+	* include/td_lib.h: added module 'filesize()'
+
+	* src/memory/vecalloc.c: comments
+
+	* include/rcsdefs.h:
+	provided for making 'rcsload()' load the file-contents too
+
 1991-09-12  dickey@software.org
 
 	* support/prog_top.mms: mods to 'clobber' and 'destroy' rules
