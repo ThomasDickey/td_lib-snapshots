@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)padedit.c	1.1 87/12/14 10:51:03";
+static	char	sccs_id[] = "@(#)padedit.c	1.2 88/05/06 14:58:27";
 #endif	lint
 
 /*
@@ -16,15 +16,19 @@ static	char	sccs_id[] = "@(#)padedit.c	1.1 87/12/14 10:51:03";
  *		This is probably due to an APOLLO bug.
  */
 
+#ifdef	apollo
 #include	"/sys/ins/base.ins.c"
 #include	"/sys/ins/error.ins.c"
 #include	"/sys/ins/pad.ins.c"
 #include	"/sys/ins/streams.ins.c"
 extern	char	*strcpy();
+#endif	apollo
 
+/*ARGSUSED*/
 padedit(name, readonly)
 char	*name;
 {
+#ifdef	apollo
 name_$pname_t		in_name;
 pinteger		in_len;
 status_$t		st;
@@ -53,6 +57,7 @@ stream_$id_t		stream_id;
 		}
 		stream_$close(stream_id, st);
 	}
+#endif	apollo
 	return(0);
 }
 

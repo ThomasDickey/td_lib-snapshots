@@ -1,4 +1,4 @@
-# @(#)Makefile	1.11 88/05/03 14:25:48
+# @(#)Makefile	1.12 88/05/06 16:12:22
 # MAKE-file for miscellaneous library routines
 L=lib.a
 #
@@ -42,6 +42,7 @@ $L:	$(OBJS)
 #
 $L:
 	ar rv $L $?
+	ranlib $L
 #
 cmdch.o:	cmdch.h
 rawgets.o:	cmdch.h

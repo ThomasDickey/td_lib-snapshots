@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)resizewin.c	1.2 88/04/22 06:48:33";
+static	char	sccs_id[] = "@(#)resizewin.c	1.3 88/05/06 14:59:29";
 #endif	lint
 
 /*
@@ -18,9 +18,12 @@ static	char	sccs_id[] = "@(#)resizewin.c	1.2 88/04/22 06:48:33";
  *
  * Returns:	TRUE if a change has been made.
  */
+
+#ifdef	apollo
 #include </sys/ins/base.ins.c>
 #include	<curses.h>
 extern	char	*doalloc();
+#endif	apollo
 
 #ifndef	SYSTEM5
 typedef char	chtype;		/* sys5-curses data-type */

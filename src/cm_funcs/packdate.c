@@ -1,10 +1,11 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)packdate.c	1.6 88/02/01 09:33:45";
+static	char	sccs_id[] = "@(#)packdate.c	1.7 88/05/06 16:11:20";
 #endif	lint
 
 /*
  * Author:	T.E.Dickey
  * Modified:
+ *		06 May 1988, port to gould
  *		01 Feb 1988, ooops: wrong computation for leapyear.
  *		24 Nov 1987, made to run on BSD4.2 (as opposed to SYSTEM5).
  *
@@ -17,6 +18,9 @@ static	char	sccs_id[] = "@(#)packdate.c	1.6 88/02/01 09:33:45";
 
 #include	"ptypes.h"
 #include	<time.h>
+#ifdef	gould
+#include	<sys/time.h>
+#endif	gould
 extern	struct	tm	*localtime();
 
 #define	MINUTE	60

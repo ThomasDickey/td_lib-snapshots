@@ -1,3 +1,11 @@
+1988-05-06  dickey@software.org
+
+	* src/Makefile, src/cm_funcs/packdate.c, src/curses/resizwin.c, src/curses/padedit.c:
+	port to gould
+
+	* src/pathname/abspath.c:
+	For apollo, fix "/" names (needed "//" nodename), and added csh-style '~' translation
+
 1988-05-03  dickey@software.org
 
 	* include/llib-ltd, src/Makefile: moved 'padedit()' here.
