@@ -1,12 +1,24 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)pathcat.c	1.1 88/09/12 15:11:43";
+static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RCS/pathcat.c,v 4.0 1988/09/13 11:46:17 ste_cm Rel $";
 #endif	lint
 
 /*
  * Title:	pathcat.c (path concatenation)
  * Author:	T.E.Dickey
  * Created:	12 Sep 1988
- * Modified:
+ * $Log: pathcat.c,v $
+ * Revision 4.0  1988/09/13 11:46:17  ste_cm
+ * BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+ *
+ *		Revision 3.0  88/09/13  11:46:17  ste_cm
+ *		BASELINE Mon Jun 19 13:27:01 EDT 1989
+ *		
+ *		Revision 2.0  88/09/13  11:46:17  ste_cm
+ *		BASELINE Thu Apr  6 09:45:13 EDT 1989
+ *		
+ *		Revision 1.3  88/09/13  11:46:17  dickey
+ *		sccs2rcs keywords
+ *		
  *
  * Function:	Forms a "path/filename" string, given the two parts, and
  *		ensures that we treat existing "/" marks intelligently.
@@ -32,5 +44,5 @@ char	*dst, *dname, *fname;
 	(void)strcpy(tmp, dname);
 	if ((s = strrchr(tmp, '/')) && (!strcmp(s, "/")))
 		*s = '\0';		/* trim excess '/' */
-	return (strcat(strcat(tmp, "/"), fname));
+	return (strcpy(dst, (strcat(strcat(tmp, "/"), fname))));
 }

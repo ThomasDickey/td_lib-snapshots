@@ -1,12 +1,22 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)filecopy.c	1.2 88/08/30 16:11:21";
+static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RCS/filecopy.c,v 3.0 1988/09/13 08:57:27 ste_cm Rel $";
 #endif	lint
 
 /*
  * Title:	filecopy.c (copy a file)
  * Author:	T.E.Dickey
  * Created:	30 Aug 1988
- * Modified:
+ * $Log: filecopy.c,v $
+ * Revision 3.0  1988/09/13 08:57:27  ste_cm
+ * BASELINE Mon Jun 19 13:27:01 EDT 1989
+ *
+ *		Revision 2.0  88/09/13  08:57:27  ste_cm
+ *		BASELINE Thu Apr  6 09:45:13 EDT 1989
+ *		
+ *		Revision 1.4  88/09/13  08:57:27  dickey
+ *		sccs2rcs keywords
+ *		
+ *		13 Sep 1988, use 'catchall()'
  *		30 Aug 1988, redundant 'chmod()' is needed on Apollo SR9.7 if
  *			     we create a file with 0444 mode.
  *
@@ -28,6 +38,7 @@ static	char	sccs_id[] = "@(#)filecopy.c	1.2 88/08/30 16:11:21";
 
 #include	"ptypes.h"
 #include	<sys/file.h>
+#include	<sys/signal.h>
 #include	<errno.h>
 extern	int	errno;
 
@@ -65,6 +76,7 @@ char	*dst;
 		}
 	}
 
+	catchall(SIG_IGN);
 	if ((fi = open(src, O_RDONLY, 0)) >= 0) {
 		int	mode = sb1.st_mode & 0777;
 		if (((unlink(dst) >= 0) || (errno == ENOENT))
@@ -84,6 +96,7 @@ char	*dst;
 		}
 		(void)close(fi);
 	}
+	catchall(SIG_DFL);
 
 	return (errno ? -1 : 0);
 }

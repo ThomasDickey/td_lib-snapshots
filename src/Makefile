@@ -1,4 +1,4 @@
-# @(#)Makefile	1.51 88/09/12 15:08:35
+# @(#)Makefile	1.53 88/09/13 09:47:01
 # MAKE-file for miscellaneous library routines
 #
 ####### (Development) ##########################################################
@@ -20,6 +20,7 @@ CSRC	=\
 	bldarg.c\
 	blip.c\
 	catarg.c\
+	catchall.c\
 	cmdch.c\
 	copyback.c\
 	cutoff.c\
@@ -32,7 +33,10 @@ CSRC	=\
 	erasechar.c\
 	execute.c\
 	filecopy.c\
+	for_user.c\
 	fp2argv.c\
+	ftype.c\
+	ftype2.c\
 	gethome.c\
 	getuser.c\
 	gid2s.c\
@@ -86,6 +90,7 @@ OBJS	=\
 	bldarg.o\
 	blip.o\
 	catarg.o\
+	catchall.o\
 	cmdch.o\
 	copyback.o\
 	cutoff.o\
@@ -98,7 +103,10 @@ OBJS	=\
 	erasechar.o\
 	execute.o\
 	filecopy.o\
+	for_user.o\
 	fp2argv.o\
+	ftype.o\
+	ftype2.o\
 	gethome.o\
 	getuser.o\
 	gid2s.o\
@@ -170,6 +178,7 @@ dumpwin.o:	ptypes.h
 erasechar.o:	ptypes.h
 execute.o:	ptypes.h
 filecopy.o:	ptypes.h
+for_user.o:	ptypes.h
 fp2argv.o:	ptypes.h
 gid2s.o:	ptypes.h
 killchar.o:	ptypes.h

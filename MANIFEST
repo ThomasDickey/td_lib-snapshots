@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19880912
+MANIFEST for td_lib, version t19880913
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 include                         subdirectory
@@ -50,6 +50,8 @@ src/pathname/denode.c           strip leading node-name from path
 src/pathname/dotname.c          test for "." or ".." names
 src/pathname/filecopy.c         copy a file
 src/pathname/fp2argv.c          file-pointer to argv-list
+src/pathname/ftype.c            finds filename's suffix
+src/pathname/ftype2.c           finds filename's suffix (style 2)
 src/pathname/modechar.c         translate file-mode (binary) to character
 src/pathname/name2s.c           convert filename to printable string
 src/pathname/pathcat.c          concatenate directory & filename
@@ -60,7 +62,9 @@ src/pathname/which.c            locate file in $PATH
 src/process                     subdirectory
 src/process/bldarg.c            build argc+argv array from string
 src/process/catarg.c            concatenate argument (cf: bldarg)
+src/process/catchall.c          catch all signals
 src/process/execute.c           portable 'system()' call
+src/process/for_user.c          carry out function for set-uid user
 src/process/gethome.c           get $HOME path
 src/process/getuser.c           get user name
 src/process/usercopy.c          copy file for set-uid user
