@@ -1,3 +1,12 @@
+1989-03-20  dickey@software.org
+
+	* src/Makefile: converted to STE CM-format
+
+	* src/cm_funcs/rcstemp.c:
+	make a user-directory in /tmp to avoid conflicts between users (sigh)
+
+	* src/cm_funcs/rcstemp.c: sccs2rcs keywords
+
 1989-03-16  dickey@software.org
 
 	* src/cm_funcs/rcspath.c: changed default ste-path
