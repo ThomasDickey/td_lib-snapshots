@@ -1,8 +1,9 @@
-/* $Header: /users/source/archives/td_lib.vcs/include/RCS/llib-ltd,v 8.0 1990/05/08 13:26:17 ste_cm Rel $ */
+/* $Header: /users/source/archives/td_lib.vcs/include/RCS/llib-ltd,v 10.0 1991/05/24 08:42:53 ste_cm Rel $ */
 /*LINTLIBRARY*/
 
 #define	LINTLIBRARY
 #define	CUR_PTYPES
+#define	SIG_PTYPES
 #include	"ptypes.h"
 #include	"rcsdefs.h"
 #include	"sccsdefs.h"

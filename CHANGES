@@ -1,3 +1,16 @@
+1991-05-24  dickey@software.org
+
+	* include/td_lib.h: made this work with lint-library for 'catchall()'
+
+	* include/llib-ltd: added def to include 'catchall()'
+
+1991-05-24  ste_cm@software.org
+
+	* include/llib-ltd:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+	* include/llib-ltd: BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
 1991-05-20  dickey@software.org
 
 	* include/port2vms.h: apollo sr10.3 cpp complains about endif-tags
