@@ -1,3 +1,35 @@
+1988-10-06  dickey@software.org
+
+	* src/string/strucpy.c: RCS_BASE
+
+1988-10-06  ste_cm@software.org
+
+	* src/string/strucpy.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/string/strucpy.c: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/string/strucpy.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+	* src/string/strucpy.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
+	* src/string/strucpy.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1988-10-06  dickey@software.org
+
+	* src/port2vms/dir2path.c: New file.
+
+1988-10-06  ste_cm@software.org
+
+	* src/port2vms/dir2path.c: BASELINE Mon Jun 12 08:56:43 EDT 1989
+
+	* src/port2vms/dir2path.c:
+	BASELINE Mon Sep 18 08:24:15 EDT 1989 -- support:ada_pits_000(rel3)
+
+	* src/port2vms/dir2path.c: BASELINE Tue Aug 14 16:27:44 1990
+
 1988-10-05  dickey@software.org
 
 	* src/pathname/editfile.c: New file.
