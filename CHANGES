@@ -1,3 +1,7 @@
+2000-10-25  dickey@clark.net
+
+	* config.guess, config.sub: resync
+
 2000-10-19  dickey@clark.net
 
 	* configure.in: add a check for newterm
