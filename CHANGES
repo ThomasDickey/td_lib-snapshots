@@ -1,3 +1,16 @@
+1994-05-29  dickey@clark.net
+
+	* configure.in:
+	use AC_REGEX to absorb some macro calls (so it's simpler to understand)
+
+	* aclocal.m4:
+	finished off the cases that I know about for <regex.h> and related
+
+	* acconfig.h:
+	added HAVE_REGEXPR_H_FUNCS, HAVE_REGCMP_FUNCS, HAVE_RE_COMP_FUNCS
+
+	* include/td_regex.h: RCS_BASE
+
 1994-05-28  dickey@clark.net
 
 	* acconfig.h: added HAVE_REGEX_H_FUNCS
