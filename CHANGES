@@ -1,3 +1,7 @@
+1985-12-17  Thomas E. Dickey
+
+	* src/process/bldarg.c: New file.
+
 1985-12-16  Thomas E. Dickey
 
 	* src/pathname/dotname.c: New file.
