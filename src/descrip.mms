@@ -1,4 +1,4 @@
-# $Id: descrip.mms,v 10.2 1992/02/04 13:07:36 dickey Exp $
+# $Id: descrip.mms,v 10.3 1992/02/05 14:29:37 dickey Exp $
 # MMS-file for miscellaneous library routines	
 #
 ####### (Development) ##########################################################
@@ -89,6 +89,7 @@ UNUSED_MODULES = -
 	RCS_DEBUG,		# rcs (unix-only) -
 	RCS_DIR,		# rcs (unix-only) -
 	RCSEDIT,		# rcs (unix-only) -
+	RCSFILEPAIR,		# rcs (unix-only) -
 	RCSKEYS,		# rcs (unix-only) -
 	RCSLAST,		# rcs (unix-only) -
 	RCSLOAD,		# rcs (unix-only) -
@@ -176,6 +177,7 @@ C_SRC	=-
 	RCS_DEBUG.C -
 	RCS_DIR.C -
 	RCSEDIT.C -
+	RCSFILEPAIR.C -
 	RCSKEYS.C -
 	RCSLAST.C -
 	RCSLOAD.C -
@@ -292,6 +294,7 @@ PATHLEAF.obj :		$(PTYPES_H)
 RAWGETS.obj :		$(PTYPES_H)	$(I)cmdch.h
 RAWTERM.obj :		$(PTYPES_H)
 # rcsedit.obj :		$(PTYPES_H)	$(I)rcsdefs.h
+# rcsfilepair.obj :	$(PTYPES_H)	$(I)rcsdefs.h
 # rcskeys.obj :		$(PTYPES_H)	$(I)rcsdefs.h
 # rcslast.obj :		$(PTYPES_H)	$(I)rcsdefs.h
 # rcsload.obj :		$(PTYPES_H)	$(I)rcsdefs.h
