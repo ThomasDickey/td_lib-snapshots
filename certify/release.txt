@@ -1,10 +1,12 @@
-$Id: release.txt,v 12.1 1993/11/01 20:31:07 dickey Exp $
+$Id: release.txt,v 12.2 1994/07/02 11:57:53 tom Exp $
 
 --------------------------------------------------------------------------------
 
 Version 13.0:
 ------------
-Built on HP/UX.  Addressed gcc 2.4.5 warnings.
+Ports:
+	HP/UX (Addressed gcc 2.4.5 warnings.)
+	Linux (Slackware 0.99.15)
 
 Version 12.0:
 ------------

@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.19 1994/06/26 20:48:18 tom Exp $
+dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.22 1994/07/02 22:41:43 tom Exp $
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "TD_" to "AC_"
 dnl ---------------------------------------------------------------------------
@@ -77,15 +77,15 @@ dnl	Combines AC_HAVE_FUNCS logic with additional test from Kevin Buettner
 dnl	that checks to see if we need a prototype for the given function.
 define([TD_HAVE_FUNCS],
 [
-td_compile="$ac_compile"
-ac_compile="$ac_compile -Iinclude"
+td_CFLAGS="$CFLAGS"
+CFLAGS="$CFLAGS -Iinclude"
 for ac_func in $1
 do
 changequote(,)dnl
 ac_tr_func=`echo $ac_func | tr '[a-z]' '[A-Z]'`
 changequote([,])dnl
 AC_FUNC_CHECK(${ac_func},
-AC_DEFINE(HAVE_${ac_tr_func}))dnl
+AC_DEFINE(HAVE_${ac_tr_func})
 AC_COMPILE_CHECK([missing "$ac_func" extern],
 [#include <td_local.h>],
 [
@@ -93,9 +93,9 @@ AC_COMPILE_CHECK([missing "$ac_func" extern],
 struct zowie { int a; double b; struct zowie *c; char d; };
 extern struct zowie *$ac_func();
 ],
-AC_DEFINE(NEED_$ac_tr_func))
+AC_DEFINE(NEED_${ac_tr_func})))
 done
-ac_compile="$td_compile"
+CFLAGS="$td_CFLAGS"
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl	On both Ultrix and CLIX, I find size_t defined in <stdio.h>
@@ -278,6 +278,33 @@ TD_CURSES_ERASECHAR
 TD_CURSES_KILLCHAR
 ])dnl
 dnl ---------------------------------------------------------------------------
+dnl Test for non-Posix prototype for 'signal()'
+dnl
+dnl	Apollo sr10.x defines prototypes for the signal handling function that
+dnl	have an extra argument (in comparison with Standard C).  Also, on the
+dnl	systems that have standard prototypes, the predefined actions often
+dnl	have incomplete prototypes.  This macro tries to test for these cases
+dnl	so that when compiling I don't see unnecessary warning messages.
+dnl
+dnl	(If the compiler doesn't recognize prototypes, of course, this test
+dnl	will not find anything :-)
+dnl
+define([TD_SIG_ARGS],
+[AC_REQUIRE([AC_RETSIGTYPE])
+AC_CHECKING([non-standard signal handler prototype])
+AC_TEST_PROGRAM([
+#include <signal.h>
+RETSIGTYPE (*signal(int sig, RETSIGTYPE(*func)(int sig)))(int sig2);
+RETSIGTYPE catch(int sig) { exit(1); }
+main() { signal(SIGINT, catch); exit(0); }
+],[AC_DEFINE(SIG_ARGS_STANDARD)],[AC_TEST_PROGRAM([
+#include <signal.h>
+RETSIGTYPE (*signal(int sig, RETSIGTYPE(*func)(int sig,...)))(int sig2,...);
+RETSIGTYPE catch(int sig, ...) { exit(1); }
+main() { signal(SIGINT, catch); exit(0); }
+],[AC_DEFINE(SIG_ARGS_VARYING)])]
+)])dnl
+dnl ---------------------------------------------------------------------------
 dnl Test for the presence of <sys/wait.h>, 'union wait', arg-type of 'wait()'.
 dnl
 dnl	FIXME: These tests should have been in autoconf 1.11!
@@ -312,4 +339,16 @@ AC_COMPILE_CHECK([union wait declared], $td_decl,
  [union wait x; wait(&x)],
  [AC_DEFINE(WAIT_USES_UNION)])
  ])
+])dnl
+dnl ---------------------------------------------------------------------------
+dnl Test for the presence of the 'sys_errlist[]' array if we don't have the
+dnl 'strerror()' function.
+define([TD_SYS_ERRLIST],
+[AC_CHECKING(for sys_errlist in <errno.h>)
+ AC_TEST_PROGRAM([
+#include <stdio.h>
+#include <errno.h>
+int main() { char *x = sys_errlist[sys_nerr-1]; exit (x==0);}
+],
+[AC_DEFINE(HAVE_SYS_ERRLIST)])
 ])dnl

@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: doalloc.c,v 12.3 1993/11/27 13:54:24 dickey Exp $";
-#endif
-
 /*
  * Author:	T.E.Dickey
  * Created:	09 Jan 1986
@@ -29,6 +25,8 @@ static	char	Id[] = "$Id: doalloc.c,v 12.3 1993/11/27 13:54:24 dickey Exp $";
  */
 
 #include	"ptypes.h"
+
+MODULE_ID("$Id: doalloc.c,v 12.5 1994/07/02 18:00:08 tom Exp $")
 
 static	long	count_alloc,
 		count_freed;
@@ -233,7 +231,7 @@ void	show_alloc(_AR0)
 		for (j = 0; j < nowPending; j++) {
 			if (area[j].text) {
 				if (count++ < 10)
-					PRINTF("...%d) %d bytes in alloc #%d:%p\n",
+					PRINTF("...%d) %ld bytes in alloc #%d:%p\n",
 						j,
 						area[j].size,
 						area[j].note,

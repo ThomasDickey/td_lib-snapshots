@@ -1,4 +1,13 @@
 #!/bin/sh
-# $Id: pathhead.sh,v 12.0 1992/11/18 14:15:11 ste_cm Rel $
+# $Id: pathhead.sh,v 12.1 1994/07/02 18:33:45 tom Exp $
 ME=pathhead
-./$ME ./$ME ../test/$ME . .. ../ ../Makefile ../test/$ME ../src ../.. >$ME.tmp
+THIS=pathname
+./$ME ./$ME \
+	../$THIS/$ME \
+	. \
+	.. \
+	../ \
+	../Makefile \
+	../$THIS/$ME \
+	../src \
+	../.. >$ME.tmp

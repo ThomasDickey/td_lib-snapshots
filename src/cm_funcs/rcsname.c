@@ -1,12 +1,9 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: rcsname.c,v 12.4 1993/12/02 15:46:35 dickey Exp $";
-#endif
-
 /*
  * Title:	rcsname.c (derive name of RCS file)
  * Author:	T.E.Dickey
  * Created:	27 May 1988
  * Modified:
+ *		02 Jul 1994, allow rcs_dir() to be absolute path.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, conversion to ANSI
@@ -45,6 +42,8 @@ static	char	Id[] = "$Id: rcsname.c,v 12.4 1993/12/02 15:46:35 dickey Exp $";
 #include	"rcsdefs.h"
 
 #include	<ctype.h>
+
+MODULE_ID("$Id: rcsname.c,v 12.6 1994/07/02 17:18:14 tom Exp $")
 
 #define	LEN_SUFFIX	(sizeof(suffix)-1)
 
@@ -145,6 +144,8 @@ char *	name2rcs(
 
 	if (rcs_suffix(name)) {
 		(void)strcpy(fname, name);
+	} else if (*rcs_dir() == PATH_SLASH) {
+		(void)strcat(pathcat(fname, rcs_dir(), leaf(name)), suffix);
 	} else {
 		if (full) {
 			trim_leaf(strcpy(fname, name));

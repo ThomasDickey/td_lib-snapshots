@@ -1,4 +1,4 @@
-# $Id: Makefile,v 12.3 1994/06/25 23:05:12 tom Exp $
+# $Id: Makefile,v 12.4 1994/07/02 10:49:18 tom Exp $
 # Top-level makefile for TD_LIB common library
 
 ####### (Development) ##########################################################
@@ -86,6 +86,8 @@ clobber\
 destroy::			; $(RM) -r lib
 destroy::			; cd support; $(DESTROY)
 destroy::			; $(DESTROY)
+
+distclean:	clobber		; $(RM) $(PURE)
 
 install::	all $(IT)
 deinstall::			; $(RM) $(IT)

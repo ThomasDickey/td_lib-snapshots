@@ -1,5 +1,5 @@
 #ifndef	NO_IDENT
-static	char	Id[] = "$Id: strerror.c,v 12.1 1994/07/01 23:49:55 tom Exp $";
+static	char	Id[] = "$Id: strerror.c,v 12.3 1994/07/02 11:47:47 tom Exp $";
 #endif
 
 /*
@@ -9,7 +9,8 @@ static	char	Id[] = "$Id: strerror.c,v 12.1 1994/07/01 23:49:55 tom Exp $";
  *
  * Function:	provide the unix 'strerror()' function if it isn't available
  */
-#include "ptypes"
+#define STR_PTYPES
+#include "ptypes.h"
 
 #if !HAVE_STRERROR
 char	*strerror (
@@ -17,7 +18,7 @@ char	*strerror (
 	_DCL(int,	errnum)
 {
 	static	char	unknown[20] = "error ";
-#if HAVE_SYS_ERRLIST && HAVE_SYS_NERR
+#if HAVE_SYS_ERRLIST
 	if (errnum > 0 && errnum < sys_nerr)
 		return sys_errlist[errnum];
 #endif
@@ -35,3 +36,4 @@ _MAIN
 		PRINTF("%d:%s\n", n, strerror(n));
 	exit(EXIT_FAILURE);
 }
+#endif	/* TEST */

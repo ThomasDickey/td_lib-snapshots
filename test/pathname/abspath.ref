@@ -1,13 +1,13 @@
 1: .
-=>  TOP/td_lib/test
+=>  TOP/test/pathname
 2: ..
-=>  TOP/td_lib
+=>  TOP/test
 3: .././..
 =>  TOP
 4: ../.
-=>  TOP/td_lib
+=>  TOP/test
 5: ./..
-=>  TOP/td_lib
+=>  TOP/test
 6: /
 =>  /
 7: /tmp

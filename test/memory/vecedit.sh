@@ -1,9 +1,9 @@
 #!/bin/sh
-# $Id: vecedit.sh,v 12.0 1992/11/18 15:01:13 ste_cm Rel $
+# $Id: vecedit.sh,v 12.1 1994/07/02 17:58:28 tom Exp $
 ME=vecedit
 P=$ME.sh
 rm -f $ME.tmp
-for Q in dummy.txt dummy2.txt dummy.txt $ME.sh
+for Q in ../dummy.txt ../dummy2.txt ../dummy.txt $ME.sh
 do
 	if ( ./$ME $P $Q >/dev/null )
 	then	echo $P $Q >>$ME.tmp

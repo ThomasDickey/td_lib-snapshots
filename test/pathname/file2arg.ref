@@ -1,4 +1,4 @@
-file: dummy.txt (115 lines)
+file: ../dummy.txt (115 lines)
 1:	#ifndef	lint
 2:	static	char	Id[] = "@Id: file2argv.c,v 11.0 91/10/03 08:47:45 ste_cm Rel @";
 3:	#endif

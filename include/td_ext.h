@@ -1,4 +1,4 @@
-/* $Id: td_ext.h,v 12.2 1994/06/26 20:35:12 tom Exp $ */
+/* $Id: td_ext.h,v 12.3 1994/07/02 01:30:44 tom Exp $ */
 
 #ifndef	TD_EXT_H
 #define	TD_EXT_H
@@ -74,6 +74,15 @@
 /******************************************************************************
  * Useful external-definitions                                                *
  ******************************************************************************/
+
+#if	TIMEZONE_DECLARED
+extern	long	timezone;
+#endif
+
+#if	HAVE_SYS_ERRLIST
+extern	char	*sys_errlist[];
+extern	int	sys_nerr;
+#endif
 
 #if	HAVE_LTOSTR
 #define	ltostr	td_ltostr	/* rename my version */
@@ -293,6 +302,9 @@ extern	int	system  ARGS((const char *s));
 #if HAVE_STRCHR && NEED_STRCHR
 extern	char *	strchr	ARGS((const char * s, int c));
 #endif /* HAVE_STRCHR */
+#if HAVE_STRERROR && NEED_STRERROR
+extern	char *	strerror ARGS((int errnum));
+#endif /* HAVE_STRERROR */
 #if HAVE_STRRCHR && NEED_STRRCHR
 extern	char *	strrchr	ARGS((const char * s, int c));
 #endif /* HAVE_STRRCHR */
@@ -382,6 +394,9 @@ extern	int	ioctl	 ARGS((int f, int m, caddr_t p));
 #if HAVE_LSTAT && NEED_LSTAT
 extern	int	lstat	 ARGS((const char *f, Stat_t *s));
 #endif /* HAVE_LSTAT */
+#if HAVE_MEMMOVE && NEED_MEMMOVE
+extern	void *	memmove  ARGS((void *dest, const void *src, size_t n));
+#endif /* HAVE_MEMMOVE */
 #if HAVE_MKSTEMP && NEED_MKSTEMP
 extern	int	mkstemp  ARGS((char *s));
 #endif /* HAVE_MKSTEMP */

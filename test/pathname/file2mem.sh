@@ -1,4 +1,4 @@
 #!/bin/sh
-# $Id: file2mem.sh,v 12.0 1992/11/18 14:49:16 ste_cm Rel $
+# $Id: file2mem.sh,v 12.1 1994/07/02 18:31:39 tom Exp $
 ME=file2mem
-./$ME dummy.txt >$ME.tmp
+./$ME ../dummy.txt >$ME.tmp

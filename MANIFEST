@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19940701
+MANIFEST for td_lib, version t19940702
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         restrictions on copying/using this software
@@ -37,7 +37,9 @@ include/vms_dirs.h              VMS unix-style directory-interface definitions
 src                             subdirectory
 src/Makefile                    makefile for td_lib/src
 src/cm_funcs                    subdirectory
+src/cm_funcs/Makefile           makefile for td_lib/src/cm_funcs
 src/cm_funcs/cutoff.c           SCCS-style cutoff date parsing
+src/cm_funcs/descrip.mms        MMS file for the TD_LIB/SRC/CM_FUNCS directory
 src/cm_funcs/newzone.c          set new timezone
 src/cm_funcs/next_ver.c         next-version computation
 src/cm_funcs/packdate.c         pack numbers to make UNIX date
@@ -63,14 +65,19 @@ src/cm_funcs/sccsname.c         SCCS working/archive name translation (like 'rcs
 src/cm_funcs/vcs_file.c         encapsulates name of directory-level RCS permissions file
 src/cm_funcs/vercmp.c           compare version-strings
 src/compare                     subdirectory
+src/compare/Makefile            makefile for td_lib/src/compare
 src/compare/cmpqsort.c          default-comparison for 'qsort()'
+src/compare/descrip.mms         mms file for td_lib/src/compare
 src/compare/diffload.c          load delta-tree from difference of files
 src/compare/m2comp.c            Miller/Myers difference algorithm
 src/compare/scomp.c             simple difference algorithm
 src/curses                      subdirectory
+src/curses/Makefile             makefile for td_lib/src/curses
 src/curses/beep.c               sound audible alarm
+src/curses/bindkeys.c           stub for 'bindkeys()'
 src/curses/blip.c               write 1 character to screen, bypassing curses
 src/curses/cmdch.c              command-character decoder
+src/curses/descrip.mms          mms file for td_lib/src/curses
 src/curses/dumpchr.c            dump screen character to file
 src/curses/dumpwin.c            dump curses window to file
 src/curses/erasechr.c           returns erase-char value
@@ -89,6 +96,8 @@ src/curses/wrepaint.c           repaint window w/o clearing it, if possible
 src                             subdirectory
 src/descrip.mms                 VMS build script for td_lib/src
 src/memory                      subdirectory
+src/memory/Makefile             makefile for td_lib/src/memory
+src/memory/descrip.mms          mms file for td_lib/src/memory
 src/memory/doalloc.c            wrapper for malloc/realloc/free (checks pointers)
 src/memory/memmove.c            fallback for 'memmove()'
 src/memory/stralloc.c           portable replacement for 'strdup()'
@@ -97,12 +106,14 @@ src/memory/vecalloc.c           allocate an array
 src/memory/vecedit.c            edits vectors of text a la 'diff -n'
 src/memory/veclen.c             computes length of a vector
 src/pathname                    subdirectory
+src/pathname/Makefile           makefile for td_lib/src/pathname
 src/pathname/abspath.c          convert path to absolute form
 src/pathname/acc_mode.c         shows mode-argument for 'access()' in readable-form
 src/pathname/add2fnam.c         add suffix to a filename
 src/pathname/arg2file.c         write an argv-style (null-terminated vector of pointers to strings) to a file
 src/pathname/copyback.c         copy file back from a temp-file
 src/pathname/denode.c           strip leading node-name from path
+src/pathname/descrip.mms        mms file for td_lib/src/pathname
 src/pathname/dlettree.c         delete-tree code for VMS/unix
 src/pathname/dotname.c          test for "." or ".." names
 src/pathname/editfile.c         VMS/unix edit tree-of-files
@@ -133,7 +144,11 @@ src/pathname/trimpath.c         trim excess punctuation from a standard unix-sty
 src/pathname/trnstree.c         translate (producing new output-files) tree-of-files
 src/pathname/walktree.c         walk directory-tree, performing function
 src/pathname/which.c            locate file in $PATH
+src/port2dos                    subdirectory
+src/port2dos/Makefile           makefile for td_lib/src/port2dos
 src/port2vms                    subdirectory
+src/port2vms/Makefile           makefile for td_lib/src/port2vms
+src/port2vms/descrip.mms        mms file for td_lib/src/port2vms
 src/port2vms/dir2path.c         VMS directory/pathname conversion
 src/port2vms/name2vms.c         convert unix filename to VMS format
 src/port2vms/path2dir.c         convert VMS pathname to directory
@@ -149,9 +164,11 @@ src/port2vms/vms_rpth.c         computes relative pathname for VAX/VMS paths
 src/port2vms/vms_wild.c         tests a filename for vms-wildcards
 src/port2vms/zone2vms.c         compute timezone adjustment for VMS/unix time conversion
 src/process                     subdirectory
+src/process/Makefile            makefile for td_lib/src/process
 src/process/bldarg.c            build argc+argv array from string
 src/process/catarg.c            concatenate argument (cf: bldarg)
 src/process/catchall.c          catch all signals
+src/process/descrip.mms         mms file for td_lib/src/process
 src/process/execute.c           portable 'system()' call
 src/process/failed.c            fatal-error exit, normally in main-program
 src/process/for_admn.c          mirror of 'for_user()', runs a function as the effective user
@@ -169,10 +186,14 @@ src/process/usercopy.c          copy file for set-uid user
 src/process/userprot.c          set file protection for set-uid user
 src/process/walkback.c          generate a walkback (apollo, or systems with core/adb)
 src/sheet                       subdirectory
+src/sheet/Makefile              makefile for td_lib/src/sheet
 src/sheet/count_ss.c            counts fields in in-memory spreadsheet
+src/sheet/descrip.mms           mms file for td_lib/src/sheet
 src/sheet/field_of.c            'get_field_of()' from 'hist2ileaf.c'
 src/sheet/ss_field.c            insert/extract data in "spreadsheet" table
 src/string                      subdirectory
+src/string/Makefile             makefile for td_lib/src/string
+src/string/descrip.mms          mms file for td_lib/src/string
 src/string/dftenv.c             returns 'getenv()' with a default (non-null) value
 src/string/dotcmp.c             compare dot-separated strings
 src/string/dyn_app.c            append to a dynamic-string
@@ -190,7 +211,14 @@ src/string/strtrim.c            trim trailing whitespace from a string
 src/string/strucmp.c            compare two strings ignoring case
 src/string/strucpy.c            copy string, uppercasing it
 src/string/strwcmp.c            wildcard string-comparator
+src                             subdirectory
+src/td_defns.mk                 definitions for makefiles in subdirectories of td_lib/src
+src/td_defns.mms                common mms definitions for subdirectories
+src/td_rules.mk                 rules for makefiles in subdirectories of td_lib/src
+src/td_rules.mms                common rules for td_lib/src subdirectories
 src/unix                        subdirectory
+src/unix/Makefile               makefile for td_lib/src/unix
+src/unix/descrip.mms            mms file for td_lib/src/unix
 src/unix/gid2s.c                convert group-id to string
 src/unix/s2gid.c                convert string to group-id
 src/unix/s2uid.c                convert string to user-id
@@ -208,6 +236,7 @@ test                            subdirectory
 test/Makefile                   makefile for td_lib/test
 test/README                     description of td_lib/test
 test/cm_funcs                   subdirectory
+test/cm_funcs/Makefile          makefile for td_lib/test/cm_funcs
 test/cm_funcs/cutoff.ref        reference for 'dotcmp'
 test/cm_funcs/cutoff.sh         test-script for cutoff
 test/cm_funcs/newzone.ref       test result for newzone.sh
@@ -230,6 +259,7 @@ test/cm_funcs/vcs_file.sh       test-script for vcs_file
 test/cm_funcs/vercmp.ref        reference for vercmp test
 test/cm_funcs/vercmp.sh         test-script for vercmp
 test/compare                    subdirectory
+test/compare/Makefile           makefile for td_lib/test/compare
 test/compare/diffload.ref       test result
 test/compare/diffload.sh        =============================================================================
 test/compare/m2comp.ref         reference for 'm2comp.sh'
@@ -239,6 +269,7 @@ test/compare/scomp.ref          reference for 'scomp.sh'
 test/compare/scomp.sh           test-script for 'scomp'
 test/compare/test_cmp.c         test-driver for scomp/mcomp modules
 test/curses                     subdirectory
+test/curses/Makefile            makefile for td_lib/test/curses
 test/curses/padedit.ref         reference for 'padedit'
 test/curses/padedit.sh          test-script for 'padedit'
 test/curses/rawgets.ref         reference for 'rawgets'
@@ -253,6 +284,7 @@ test/dummy2.txt                 test-file
 test/dummy3.txt                 short test-case for 'rcsload'
 test/dummy4.txt                 long test-case for 'rcsload'
 test/memory                     subdirectory
+test/memory/Makefile            makefile for td_lib/test/memory
 test/memory/doalloc.ref         reference for 'doalloc'
 test/memory/doalloc.sh          test-script for 'doalloc'
 test/memory/run_test.sh         general test script
@@ -261,6 +293,7 @@ test/memory/txtalloc.sh         test-script for 'txtalloc'
 test/memory/vecedit.ref         reference for 'vecedit'
 test/memory/vecedit.sh          test-script for 'vecedit'
 test/pathname                   subdirectory
+test/pathname/Makefile          makefile for td_lib/test/pathname
 test/pathname/abspath.ref       reference for 'abspath'
 test/pathname/abspath.sh        test-script for 'abspath'
 test/pathname/dlettree.ref      reference for deletetree
@@ -299,8 +332,10 @@ test/pathname/walktree.sh       test-script for 'walktree'
 test/pathname/which.ref         reference for 'which'
 test/pathname/which.sh          test-script for 'which'
 test/port2dos                   subdirectory
+test/port2dos/Makefile          makefile for td_lib/test/port2dos
 test/port2dos/run_test.sh       general test script
 test/port2vms                   subdirectory
+test/port2vms/Makefile          makefile for td_lib/test/port2vms
 test/port2vms/README            description of test/port2vms
 test/port2vms/dir2path.ref      reference for 'dir2path'
 test/port2vms/dir2path.sh       test script for dir2path
@@ -322,6 +357,7 @@ test/port2vms/vms_wild.sh       test-script for 'vms_wild'
 test/port2vms/zone2vms.ref      reference for zone2vms
 test/port2vms/zone2vms.sh       test script for zone2vms
 test/process                    subdirectory
+test/process/Makefile           makefile for td_lib/test/process
 test/process/execute.ref        reference for 'execute'
 test/process/execute.sh         test-script for 'execute'
 test/process/failed.ref         reference for 'failed'
@@ -335,11 +371,11 @@ test/process/usercopy.ref       reference for 'usercopy'
 test/process/usercopy.sh        test-script for 'usercopy'
 test/process/walkback.ref       reference (apollo only) for walkback
 test/process/walkback.sh        test script for walkback
-test                            subdirectory
-test/run_test.sh                =============================================================================
 test/sheet                      subdirectory
+test/sheet/Makefile             makefile for td_lib/test/sheet
 test/sheet/run_test.sh          general test script
 test/string                     subdirectory
+test/string/Makefile            makefile for td_lib/test/string
 test/string/dotcmp.ref          reference for 'dotcmp'
 test/string/dotcmp.sh           test-script for 'dotcmp'
 test/string/lsbycols.ref        reference for 'lsbycols'
@@ -353,7 +389,11 @@ test/string/strucmp.ref         reference for 'strucmp'
 test/string/strucmp.sh          test-script for 'strucmp'
 test/string/strwcmp.ref         reference for 'strwcmp'
 test/string/strwcmp.sh          test-script for 'strwcmp'
+test                            subdirectory
+test/td_defns.mk                common definitions for test subdirectories
+test/td_rules.mk                common rules for test subdirectories
 test/unix                       subdirectory
+test/unix/Makefile              makefile for td_lib/test/unix
 test/unix/gid2s.ref             reference for 'gid2s'
 test/unix/gid2s.sh              test-script for 'gid2s'
 test/unix/run_test.sh           general test script

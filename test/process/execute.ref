@@ -1,13 +1,13 @@
 -> ./execute
 % ./execute ls -CF ./execute.sh 
--> ././execute
+-> ./execute
 0) ./execute
 1) ls
 2) -CF
 3) ./execute.sh
 -> ./execute
 % ls -CF ./execute.sh 
--> /bin/ls
+-> ls
 0) ls
 1) -CF
 2) ./execute.sh

@@ -1,13 +1,13 @@
 case  0)  RCS <= RCS
-          RCS <= TOP2/td_lib/test/RCS
+          RCS <= TOP2/test/pathname/RCS
 case  1)  . <= .
-          . <= TOP2/td_lib/test
+          . <= TOP2/test/pathname
 case  2)  .. <= ..
-          .. <= TOP2/td_lib
+          .. <= TOP2/test
 case  3)  ../.. <= ../..
           ../.. <= TOP2
 case  4)  ../bin <= ../bin
-          ../bin <= TOP2/td_lib/bin
+          ../bin <= TOP2/test/bin
 case  5)  /bin <= /bin
           /bin <= /bin
 case  6)  ../../bin <= ../../bin

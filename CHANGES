@@ -1,3 +1,135 @@
+1994-07-02  dickey@clark.net
+
+	* include/td_ext.h: make 'ioctl()' compatible with Linux.
+
+	* configure.in: added TD_SIG_ARGS
+
+	* aclocal.m4:
+	added more logic to encapsulate the redefined signal-macros
+
+	* include/ptypes.h: cleanup of SIG_PTYPES for autoconf
+
+	* aclocal.m4: tweaked a little
+
+	* aclocal.m4: added macro TD_SIG_ARGS
+
+	* include/ptypes.h: rationalized the case-conversion stuff
+
+	* test/Makefile, test/td_rules.mk: polished
+
+	* test/td_defns.mk: removed special lint rule
+
+	* test/unix/Makefile, test/string/Makefile: RCS_BASE
+
+	* test/process/execute.ref: adjustments to pathnames
+
+	* test/process/usercopy.sh: relative pathnames
+
+	* test/process/Makefile, test/port2dos/Makefile, test/port2vms/Makefile, test/sheet/Makefile:
+	RCS_BASE
+
+	* test/pathname/walktree.ref, test/pathname/walktree.sh, test/pathname/fp2argv.sh, test/pathname/relpath.ref, test/pathname/pathhead.ref, test/pathname/file2mem.ref, test/pathname/file2arg.ref, test/pathname/pathhead.sh, test/pathname/filecopy.sh, test/pathname/file2mem.sh, test/pathname/file2arg.sh, test/pathname/abspath.ref:
+	relative-pathnames
+
+	* test/pathname/Makefile, test/memory/Makefile: RCS_BASE
+
+	* src/memory/doalloc.c: format in trace-message (gcc warning)
+
+	* src/memory/doalloc.c: use MODULE_ID
+
+	* test/memory/vecedit.ref, test/memory/vecedit.sh: relative pathnames
+
+	* test/curses/Makefile: RCS_BASE
+
+	* test/compare/diffload.ref: relative-pathnames
+
+	* src/compare/diffload.c:
+	don't show the temp-filename in the trace; it makes testing harder
+
+	* src/compare/diffload.c: use MODULE_ID
+
+	* test/compare/scomp.sh, test/compare/diffload.sh, test/compare/m2comp.sh:
+	relative-pathnames
+
+	* test/cm_funcs/Makefile: use variable 'THIS'
+
+	* test/compare/Makefile: RCS_BASE
+
+	* test/td_defns.mk: added variables THIS, S.
+
+	* test/td_rules.mk: RCS_BASE
+
+	* test/cm_funcs/Makefile: chopped out 'td_rules.mk'
+
+	* test/cm_funcs/Makefile: RCS_BASE
+
+	* src/cm_funcs/rcsload.c: test file may not be in current directory
+
+	* src/cm_funcs/rcsload.c: use MODULE_ID
+
+	* test/cm_funcs/rcsload.sh: adjustments for new path layout
+
+	* src/cm_funcs/rcsname.c:
+	adjustments to make this work properly when the working file isn't in the
+	current directory, but the rcs directory is given as an absolute path.
+
+	* src/cm_funcs/rcsname.c: use MODULE_ID
+
+	* test/td_defns.mk: RCS_BASE
+
+	* include/ptypes.h: oops
+
+	* src/memory/descrip.mms: typos
+
+	* src/unix/descrip.mms, src/unix/Makefile, src/string/descrip.mms, src/string/Makefile:
+	RCS_BASE
+
+	* src/compare/descrip.mms, src/curses/descrip.mms, src/pathname/descrip.mms, src/process/descrip.mms:
+	typos
+
+	* src/sheet/descrip.mms, src/sheet/Makefile, src/process/descrip.mms, src/process/Makefile, src/port2vms/descrip.mms:
+	RCS_BASE
+
+	* src/td_rules.mms: forgot to define libraries (do I need it?)
+
+	* src/port2vms/Makefile, src/port2dos/Makefile, src/pathname/descrip.mms, src/pathname/Makefile, src/memory/descrip.mms:
+	RCS_BASE
+
+	* src/memory/Makefile: mem2file doesn't belong here
+
+	* src/memory/Makefile: RCS_BASE
+
+	* src/curses/bindkeys.c: typos
+
+	* src/curses/descrip.mms, src/curses/Makefile, src/curses/bindkeys.c:
+	RCS_BASE
+
+	* src/td_rules.mk: supply a dummy action for dummy targets
+
+	* src/cm_funcs/descrip.mms: use common defns/rules include-files
+
+	* src/Makefile: added common mms-scripts
+
+	* src/td_rules.mms, src/td_defns.mms: RCS_BASE
+
+	* src/compare/Makefile: comment
+
+	* src/compare/descrip.mms, src/compare/Makefile: RCS_BASE
+
+	* src/Makefile:
+	split this into a number of subdirectories, which should be easier to manage
+
+	* src/cm_funcs/descrip.mms, src/td_defns.mk, src/cm_funcs/Makefile, src/td_rules.mk:
+	RCS_BASE
+
+	* certify/release.txt: started notes for 13.0
+
+	* src/string/strerror.c: typo
+
+	* include/ptypes.h: defined the wrong FAIL/SUCCESS
+
+	* Makefile: added 'distclean' rule
+
 1994-07-01  dickey@clark.net
 
 	* include/td_ext.h: added strerror, memmove, sys_errlist, timezone

@@ -1,33 +1,10 @@
 ** mode = x
-** path = ../test
- 	../test/
+** path = ../pathname
+ 	../pathname/
 ?	|-- Makefile
-?	|-- README
  	|-- abspath
 ?	|-- abspath.ref
  	|-- abspath.sh
- 	|-- cutoff
-?	|-- cutoff.ref
- 	|-- cutoff.sh
- 	|-- diffload
-?	|-- diffload.ref
- 	|-- diffload.sh
- 	|-- doalloc
-?	|-- doalloc.ref
- 	|-- doalloc.sh
- 	|-- dotcmp
-?	|-- dotcmp.ref
- 	|-- dotcmp.sh
-?	|-- dummy.txt
-?	|-- dummy2.txt
-?	|-- dummy3.txt
-?	|-- dummy4.txt
- 	|-- execute
-?	|-- execute.ref
- 	|-- execute.sh
- 	|-- failed
-?	|-- failed.ref
- 	|-- failed.sh
  	|-- file2arg
 ?	|-- file2arg.ref
  	|-- file2arg.sh
@@ -40,37 +17,10 @@
  	|-- fp2argv
 ?	|-- fp2argv.ref
  	|-- fp2argv.sh
- 	|-- gethome
-?	|-- gethome.ref
- 	|-- gethome.sh
- 	|-- gid2s
-?	|-- gid2s.ref
- 	|-- gid2s.sh
- 	|-- lsbycols
-?	|-- lsbycols.ref
- 	|-- lsbycols.sh
- 	|-- ltostr
-?	|-- ltostr.ref
- 	|-- ltostr.sh
- 	|-- m2comp
-?	|-- m2comp.ref
- 	|-- m2comp.sh
 ?	|-- make.out
- 	|-- makeargv
-?	|-- makeargv.ref
- 	|-- makeargv.sh
  	|-- name2s
 ?	|-- name2s.ref
  	|-- name2s.sh
- 	|-- newzone
-?	|-- newzone.ref
- 	|-- newzone.sh
- 	|-- packdate
-?	|-- packdate.ref
- 	|-- packdate.sh
- 	|-- padedit
-?	|-- padedit.ref
- 	|-- padedit.sh
  	|-- pathcmp
 ?	|-- pathcmp.ref
  	|-- pathcmp.sh
@@ -80,75 +30,17 @@
  	|-- pathleaf
 ?	|-- pathleaf.ref
  	|-- pathleaf.sh
- 	|-- rawgets
-?	|-- rawgets.ref
- 	|-- rawgets.sh
- 	|-- rcsargpr
-?	|-- rcsargpr.ref
- 	|-- rcsargpr.sh
- 	|-- rcsload
-?	|-- rcsload.ref
- 	|-- rcsload.sh
- 	|-- rcsname
-?	|-- rcsname.ref
- 	|-- rcsname.sh
  	|-- relpath
 ?	|-- relpath.ref
  	|-- relpath.sh
 ?	|-- run_test.out
  	|-- run_test.sh
- 	|-- s2uid
-?	|-- s2uid.ref
- 	|-- s2uid.sh
- 	|-- samebr
-?	|-- samebr.ref
- 	|-- samebr.sh
  	|-- sameleaf
 ?	|-- sameleaf.ref
  	|-- sameleaf.sh
- 	|-- sccsname
-?	|-- sccsname.ref
- 	|-- sccsname.sh
- 	|-- scomp
-?	|-- scomp.ref
- 	|-- scomp.sh
- 	|-- scr_size
-?	|-- scr_size.ref
- 	|-- scr_size.sh
- 	|-- strbcmp
-?	|-- strbcmp.ref
- 	|-- strbcmp.sh
- 	|-- strucmp
-?	|-- strucmp.ref
- 	|-- strucmp.sh
- 	|-- strwcmp
-?	|-- strwcmp.ref
- 	|-- strwcmp.sh
-?	|-- test_cmp.c
  	|-- trimpath
 ?	|-- trimpath.ref
  	|-- trimpath.sh
- 	|-- txtalloc
-?	|-- txtalloc.ref
- 	|-- txtalloc.sh
- 	|-- uid2s
-?	|-- uid2s.ref
- 	|-- uid2s.sh
- 	|-- usercopy
-?	|-- usercopy.ref
- 	|-- usercopy.sh
- 	|-- vcs_file
-?	|-- vcs_file.ref
- 	|-- vcs_file.sh
- 	|-- vecedit
-?	|-- vecedit.ref
- 	|-- vecedit.sh
- 	|-- vercmp
-?	|-- vercmp.ref
- 	|-- vercmp.sh
- 	|-- walkback
-?	|-- walkback.ref
- 	|-- walkback.sh
  	|-- walktree
 ?	|-- walktree.ref
  	|-- walktree.sh
@@ -156,4 +48,4 @@
  	|-- which
 ?	|-- which.ref
  	|-- which.sh
-** total= 98
+** total= 31
