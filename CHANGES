@@ -1,3 +1,9 @@
+1995-05-15  dickey@clark.net
+
+	* src/curses/dumpwin.c: removed some obscure stuff...
+
+	* include/td_curse.h: correction for bsd-ifdef
+
 1995-04-26  dickey@clark.net
 
 	* aclocal.m4: fixes for ncurses/normal

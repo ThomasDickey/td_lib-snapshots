@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: dumpwin.c,v 12.11 1995/03/31 02:01:21 tom Exp $";
+static	char	Id[] = "$Id: dumpwin.c,v 12.12 1995/05/15 23:26:22 tom Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: dumpwin.c,v 12.11 1995/03/31 02:01:21 tom Exp $";
  * Author:	T.E.Dickey
  * Created:	20 Apr 1988 (from code written 13 Nov 1987)
  * Modified:
+ *		15 May 1995, removed _orig/_nextp -- too obscure to bother with
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, converted to ANSI
@@ -55,10 +56,6 @@ void	dumpwin(
 #if CURSES_LIKE_NCURSES
 		OUT(fp, "   _region %d..%d\n",     w->_regtop, w->_regbottom);
 		OUT(fp, "   _pary:%d  _parx:%d\n", w->_pary, w->_parx);
-#endif
-#if CURSES_LIKE_BSD
-		OUT(fp, "   _orig:    %p\n", w->_orig);
-		OUT(fp, "   _nextp:   %p\n", w->_nextp);
 #endif
 		OUT(fp, "   _flags:   %#x\n", w->_flags);
 		OUT(fp, "   _clear:   %#x\n", w->_clear);
