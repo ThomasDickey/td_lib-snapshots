@@ -1,3 +1,36 @@
+1992-04-03  dickey@software.org
+
+	* include/dyn_str.h: added 'dyn_copy()'
+
+1992-04-03  ste_cm@software.org
+
+	* include/dyn_str.h: BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1992-04-03  dickey@software.org
+
+	* src/descrip.mms: added dyn_copy.c'
+
+1992-04-03  ste_cm@software.org
+
+	* src/descrip.mms: BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1992-04-03  dickey@software.org
+
+	* src/Makefile: added dyn_copy.c
+
+1992-04-03  ste_cm@software.org
+
+	* src/Makefile: BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1992-04-03  dickey@software.org
+
+	* src/string/dyn_copy.c: RCS_BASE
+
+1992-04-03  ste_cm@software.org
+
+	* src/string/dyn_copy.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
 1992-04-02  dickey@software.org
 
 	* src/memory/doalloc.c: adjustments to logging in debug-mode

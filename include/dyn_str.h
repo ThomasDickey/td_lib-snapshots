@@ -1,4 +1,4 @@
-/* $Id: dyn_str.h,v 10.6 1992/02/07 11:15:15 dickey Exp $
+/* $Id: dyn_str.h,v 11.0 1992/04/03 08:01:28 ste_cm Rel $
  *
  *	Functions which manage dynamic-strings.
  */
@@ -45,6 +45,15 @@ typedef	struct	{
 		_dcl(DYN *,	p)
 		_dcl(char *,	opt)
 		_dcl(char *,	value)
+		_ret
+
+	/* dyn_copy.c ------------------------------------------------- */
+	DYN *	dyn_copy(
+		_arx(DYN *,	p)
+		_ar1(char *,	s)
+		)
+		_dcl(DYN *,	p)
+		_dcl(char *,	s)
 		_ret
 
 	/* dyn_string.c ----------------------------------------------- */

@@ -1,4 +1,4 @@
-# $Id: descrip.mms,v 10.12 1992/02/25 08:01:58 dickey Exp $
+# $Id: descrip.mms,v 11.0 1992/04/03 08:00:05 ste_cm Rel $
 # MMS-file for miscellaneous library routines	
 #
 ####### (Development) ##########################################################
@@ -31,6 +31,7 @@ LIBRARYMODULES = -
 	DUMPCHR, -
 	DYN_APPEND, -
 	DYN_CATARG, -
+	DYN_COPY, -
 	DYN_STRING, -
 	EXECUTE, -
 	FAILED, -
@@ -155,6 +156,7 @@ C_SRC	=-
 	DUMPWIN.C -
 	DYN_APPEND.C -
 	DYN_CATARG.C -
+	DYN_COPY.C -
 	DYN_STRING.C -
 	ERASECHAR.C -
 	EXECUTE.C -
@@ -292,9 +294,10 @@ COPYBACK.obj :		$(PTYPES_H)
 CUTOFF.obj :		$(PTYPES_H)
 DOALLOC.OBJ :		$(PTYPES_H)
 DUMPWIN.obj :		$(PTYPES_H)
-DYN_APPEND.obj :	$(PTYPES_H)
-DYN_CATARG.obj :	$(PTYPES_H)
-DYN_STRING.obj :	$(PTYPES_H)
+DYN_APPEND.obj \
+DYN_CATARG.obj \
+DYN_COPY.obj \
+DYN_STRING.obj :	$(PTYPES_H)	$(I)dyn_string.h
 ERASECHAR.obj :		$(PTYPES_H)
 EXECUTE.obj :		$(PTYPES_H)
 FAILED.obj :		$(PTYPES_H)
