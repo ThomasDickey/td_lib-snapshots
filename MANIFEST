@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19890601
+MANIFEST for td_lib, version t19890605
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 Makefile                        top-level makefile for TD_LIB
@@ -58,6 +58,7 @@ src/memory/txtalloc.c           maintain dictionary of string "constants"
 src/memory/vecalloc.c           allocate an array
 src/pathname                    subdirectory
 src/pathname/abspath.c          convert path to absolute form
+src/pathname/add2fnam.c         add suffix to a filename
 src/pathname/arg2file.c         write an argv-style (null-terminated vector of pointers to strings) to a file
 src/pathname/copyback.c         copy file back from a temp-file
 src/pathname/denode.c           strip leading node-name from path

@@ -1,4 +1,4 @@
-/* $Header: /users/source/archives/td_lib.vcs/include/RCS/td_lib.h,v 2.5 1989/05/18 12:47:23 dickey Exp $ */
+/* $Header: /users/source/archives/td_lib.vcs/include/RCS/td_lib.h,v 3.0 1989/06/05 13:21:31 ste_cm Rel $ */
 
 /*
  * Combined lint-library/function prototype definitions for CM_TOOLS COMMON
@@ -26,6 +26,15 @@
 			_DCL(char *,	path)
 			_NUL
 #endif	unix
+
+	/* add2fname.c ------------------------------------------------ */
+	int	add2fname(
+			_ARX(char *,	fname)
+			_AR1(char *,	suffix)
+			)
+			_DCL(char *,	fname)
+			_DCL(char *,	suffix)
+			_RET
 
 	/* argv2file.c ------------------------------------------------ */
 	int	argv2file(

@@ -1,4 +1,4 @@
-# $Header: /users/source/archives/td_lib.vcs/src/RCS/descrip.mms,v 2.5 1989/05/18 11:13:49 dickey Exp $
+# $Header: /users/source/archives/td_lib.vcs/src/RCS/descrip.mms,v 3.0 1989/06/05 13:27:22 ste_cm Rel $
 # MMS-file for miscellaneous library routines	
 #
 ####### (Development) ##########################################################
@@ -14,6 +14,7 @@ TEST_CC =	$(CC) $(CFLAGS) /DEFINE="TEST" $(MMS$SOURCE)
 #
 ####### (Standard Lists) #######################################################
 LIBRARYMODULES = -
+	ADD2FNAME, -
 	ARGV2FILE, -
 	BEEP, -
 	BLDARG, -
@@ -101,6 +102,7 @@ UNUSED_MODULES = -
 #
 C_SRC	=-
 	ABSPATH.C -
+	ADD2FNAME.C -
 	ARGV2FILE.C -
 	BEEP.C -
 	BLDARG.C -
@@ -214,31 +216,32 @@ INSTALL :
 ####### (Details of Productions) ###############################################
 ! Dependencies to archive are done by default rules, e.g.,
 !'$(A)(UNIXDIR) :	UNIXDIR.OBJ
-argv2file.obj :		$(PTYPES_H)
-beep.obj :		$(PTYPES_H)
-cmdch.obj :		$(PTYPES_H)	$(I)cmdch.h
-copyback.obj :		$(PTYPES_H)
-cutoff.obj :		$(PTYPES_H)
+ADD2FNAME.obj :		$(PTYPES_H)
+ARGV2FILE.obj :		$(PTYPES_H)
+BEEP.obj :		$(PTYPES_H)
+CMDCH.obj :		$(PTYPES_H)	$(I)cmdch.h
+COPYBACK.obj :		$(PTYPES_H)
+CUTOFF.obj :		$(PTYPES_H)
 DOALLOC.OBJ :		$(PTYPES_H)
-dumpwin.obj :		$(PTYPES_H)
-erasechar.obj :		$(PTYPES_H)
-execute.obj :		$(PTYPES_H)
-failed.obj :		$(PTYPES_H)
-file2argv.obj :		$(PTYPES_H)
-file2mem.obj :		$(PTYPES_H)
-filecopy.obj :		$(PTYPES_H)
-for_user.obj :		$(PTYPES_H)
-fp2argv.obj :		$(PTYPES_H)
-gid2s.obj :		$(PTYPES_H)
-killchar.obj :		$(PTYPES_H)
-mem2file.obj :		$(PTYPES_H)
-name2s.obj :		$(PTYPES_H)
-newzone.obj :		$(PTYPES_H)
-packdate.obj :		$(PTYPES_H)
-padedit.obj :		$(PTYPES_H)
-pathcmp.obj :		$(PTYPES_H)
-rawgets.obj :		$(PTYPES_H)	$(I)cmdch.h
-rawterm.obj :		$(PTYPES_H)
+DUMPWIN.obj :		$(PTYPES_H)
+ERASECHAR.obj :		$(PTYPES_H)
+EXECUTE.obj :		$(PTYPES_H)
+FAILED.obj :		$(PTYPES_H)
+FILE2ARGV.obj :		$(PTYPES_H)
+FILE2MEM.obj :		$(PTYPES_H)
+FILECOPY.obj :		$(PTYPES_H)
+FOR_USER.obj :		$(PTYPES_H)
+FP2ARGV.obj :		$(PTYPES_H)
+GID2S.obj :		$(PTYPES_H)
+KILLCHAR.obj :		$(PTYPES_H)
+MEM2FILE.obj :		$(PTYPES_H)
+NAME2S.obj :		$(PTYPES_H)
+NEWZONE.obj :		$(PTYPES_H)
+PACKDATE.obj :		$(PTYPES_H)
+PADEDIT.obj :		$(PTYPES_H)
+PATHCMP.obj :		$(PTYPES_H)
+RAWGETS.obj :		$(PTYPES_H)	$(I)cmdch.h
+RAWTERM.obj :		$(PTYPES_H)
 # rcsedit.obj :		$(PTYPES_H)	$(I)rcsdefs.h
 # rcskeys.obj :		$(PTYPES_H)	$(I)rcsdefs.h
 # rcslast.obj :		$(PTYPES_H)	$(I)rcsdefs.h
@@ -247,17 +250,17 @@ rawterm.obj :		$(PTYPES_H)
 # rcsname.obj :		$(PTYPES_H)	$(I)rcsdefs.h
 # rcspath.obj :		$J/rcspath.h	; $(CC) -I$J -c $*.c
 # rcspermit.obj :	$(PTYPES_H)	$(I)rcsdefs.h
-resizewin.obj :		$(PTYPES_H)
-sccslast.obj :		$(PTYPES_H)
-setmtime.obj :		$(PTYPES_H)
-savewin.obj :		$(PTYPES_H)
-trimpath.obj :		$(PTYPES_H)
-uid2s.obj :		$(PTYPES_H)
-usercopy.obj :		$(PTYPES_H)
-userprot.obj :		$(PTYPES_H)
+RESIZWWIN.obj :		$(PTYPES_H)
+SCCSLAST.obj :		$(PTYPES_H)
+SETMTIME.obj :		$(PTYPES_H)
+SAVEWIN.obj :		$(PTYPES_H)
+TRIMPATH.obj :		$(PTYPES_H)
+UID2S.obj :		$(PTYPES_H)
+USERCOPY.obj :		$(PTYPES_H)
+USERPROT.obj :		$(PTYPES_H)
 # vcs_file.obj :	$(PTYPES_H)	$(I)rcsdefs.h
 WALKTREE.OBJ :		$(PTYPES_H)
-win2file.obj :		$(PTYPES_H)
+WIN2FILE.obj :		$(PTYPES_H)
 #
 ####### (Development) ##########################################################
 !
