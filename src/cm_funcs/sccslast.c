@@ -1,12 +1,9 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: sccslast.c,v 12.8 1995/02/18 00:04:00 tom Exp $";
-#endif
-
 /*
  * Title:	sccslast.c (scan for last sccs date)
  * Author:	T.E.Dickey
  * Created:	20 Oct 1986
  * Modified:
+ *		14 Oct 1995, mods for 14-character names
  *		11 Aug 1994, decode CMVision date in comment.
  *		15 Jul 1994, mods for SCCS_VAULT
  *		29 Oct 1993, ifdef-ident
@@ -38,6 +35,8 @@ static	char	Id[] = "$Id: sccslast.c,v 12.8 1995/02/18 00:04:00 tom Exp $";
 #include	<sccsdefs.h>
 #include	<ctype.h>
 
+MODULE_ID("$Id: sccslast.c,v 12.10 1995/10/14 16:26:54 tom Exp $")
+
 /*
  * Set the release.version and date values iff we find a legal sccs-file at
  * 'path[]'.
@@ -54,14 +53,23 @@ void	trysccs (
 	_DCL(time_t *,	date_)
 	_DCL(char **,	lock_)
 {
-	auto	FILE	*fp = fopen(path, "r");
+	auto	FILE	*fp;
 	auto	int	gotten = 0;
 	auto	char	bfr[BUFSIZ];
 	auto	char	*s;
 	auto	int	yy, mm, dd, hr, mn, sc;
 	auto	char	ver[80];
 
-	if (fp) {
+#if S_FILES_14
+	auto	char	temp[MAXPATHLEN];
+	if (filesize(path) < 0
+	 && fleaf14(strcpy(temp, path))
+	 && filesize(temp) > 0) {
+		path = temp;
+	}
+#endif
+
+	if ((fp = fopen(path, "r")) != 0) {
 		newzone(5,0,FALSE);	/* interpret in EST5EDT */
 		while (fgets(bfr, sizeof(bfr), fp)) {
 			if (*bfr != '\001')
@@ -80,7 +88,7 @@ void	trysccs (
 				*vers_ = txtalloc(ver);
 				*date_ = packdate (1900+yy, mm, dd, hr, mn, sc);
 			}
-			/* for CmVision */
+#ifdef CMV_PATH		/* for CmVision */
 			if (!strncmp(bfr, "\001c ", 3)) {
 				time_t	when;
 				if ((s = strstr(bfr, "\\\001O")) != 0) {
@@ -91,6 +99,7 @@ void	trysccs (
 				}
 				break;
 			}
+#endif /* CMV_PATH */
 		}
 		FCLOSE(fp);
 		oldzone();		/* restore time-zone */
@@ -164,7 +173,8 @@ void	sccslast (
 	&&  (strlen(the_leaf) > LEN_PREFIX)
 	&&  (isalpha(*the_leaf) && islower(*the_leaf))
 	&&  (the_leaf[1] == '.')) {
-	char	xx = *the_leaf;
+		char	xx = *the_leaf;
+
 		*the_leaf = 's';
 		(void)strcpy(fname, path);
 		*the_leaf = xx;

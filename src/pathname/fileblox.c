@@ -1,7 +1,3 @@
-#ifndef	NO_IDENT
-static	char	Id[] = "$Id: fileblox.c,v 12.2 1994/07/18 00:59:52 tom Exp $";
-#endif
-
 /*
  * Title:	fileblox.c (file-blocks total)
  * Author:	T.E.Dickey
@@ -18,8 +14,15 @@ static	char	Id[] = "$Id: fileblox.c,v 12.2 1994/07/18 00:59:52 tom Exp $";
  */
 #include <ptypes.h>
 
+MODULE_ID("$Id: fileblox.c,v 12.4 1995/09/21 01:01:08 tom Exp $")
+
 #ifdef unix
 #if !STAT_HAS_ST_BLOCKS
+
+#ifdef __hpux	/* incompatible def */
+#undef  NINDIR
+#undef  BSIZE
+#endif
 
 #ifndef	NINDIR			/* should be in <sys/param.h> */
 #define	BSIZE		1024	/* size of indirect-block, in bytes */

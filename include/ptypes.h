@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 12.37 1995/02/12 01:00:47 tom Exp $ */
+/* $Id: ptypes.h,v 12.38 1995/10/14 21:24:34 tom Exp $ */
 
 #ifndef	PTYPES_H
 #define	PTYPES_H
@@ -37,6 +37,12 @@
 
 #if HAVE_SYS_PARAM_H
 #include <sys/param.h>
+#endif
+
+#ifdef	NO_IDENT
+#define	MODULE_ID(s)	/*nothing*/
+#else
+#define	MODULE_ID(s)	static const char Id[] = s;
 #endif
 
 	/* useful stuff for <sys/stat.h> */

@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: packdate.c,v 12.9 1994/07/15 15:50:10 tom Exp $";
-#endif
-
 /*
  * Title:	packdate.c (pack numbers to make a UNIX date)
  * Author:	T.E.Dickey
@@ -32,6 +28,8 @@ static	char	Id[] = "$Id: packdate.c,v 12.9 1994/07/15 15:50:10 tom Exp $";
 #define TIM_PTYPES
 #include	"ptypes.h"
 
+MODULE_ID("$Id: packdate.c,v 12.11 1995/10/14 16:37:14 tom Exp $")
+
 #define	LEAP(y)	(!(y&3))
 
 long	gmt_offset(
@@ -55,12 +53,14 @@ long	gmt_offset(
 #  if	HAVE_TM_GMTOFF
 	sec -= tm.tm_gmtoff;
 #  else	/* UNIX */
+#    if HAVE_GETTIMEOFDAY
 	{
 	struct	timeval	t2;
 	struct	timezone tz;
 		(void)gettimeofday(&t2, &tz);
 		sec += (tz.tz_minuteswest * MINUTE);
 	}
+#    endif
 #  endif
 #endif	/* TIMEZONE_DECLARED */
 

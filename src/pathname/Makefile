@@ -1,4 +1,4 @@
-# $Id: Makefile,v 12.4 1995/01/28 21:10:25 tom Exp $
+# $Id: Makefile,v 12.5 1995/10/14 15:04:38 tom Exp $
 # MAKE-file for filename and I/O library routines
 
 ####### (Environment) ##########################################################
@@ -23,6 +23,7 @@ CSRC	=\
 	filecopy.c \
 	filesize.c \
 	fleaf.c \
+	fleaf14.c \
 	fp2argv.c \
 	ftype.c \
 	ftype2.c \
@@ -64,6 +65,7 @@ OBJS	=\
 	$Z(filecopy.o) \
 	$Z(filesize.o) \
 	$Z(fleaf.o) \
+	$Z(fleaf14.o) \
 	$Z(fp2argv.o) \
 	$Z(ftype.o) \
 	$Z(ftype2.o) \

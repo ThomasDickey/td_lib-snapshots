@@ -1,3 +1,48 @@
+1995-10-14  dickey@clark.net
+
+	* src/port2vms/Makefile: dummy 'ALL' breaks normal compiles...
+
+	* include/ptypes.h: added macro MODULE_ID
+
+	* src/curses/dumpwin.c: idiots
+
+	* src/curses/dumpwin.c: use MODULE_ID
+
+	* src/cm_funcs/packdate.c:
+	ifdef'd in case we don't have 'gettimeofday()'
+
+	* src/cm_funcs/packdate.c: use MODULE_ID
+
+	* src/curses/cmdch.c:
+	if we've got no 'gettimeofday()' function, cannot do double_click check
+
+	* src/curses/cmdch.c: use MODULE_ID
+
+	* src/cm_funcs/sccslast.c: mods for 14-char pathnames
+
+	* src/cm_funcs/sccslast.c: use MODULE_ID
+
+	* include/td_curse.h: bsd44 curses dropped the definition of 'OK'
+
+	* include/sccsdefs.h: added def for S_FILES_14
+
+	* configure.in: added test for long filenames
+
+	* include/td_lib.h: added fleaf14.c
+
+	* src/pathname/Makefile: added fleaf14
+
+	* src/pathname/fleaf14.c: RCS_BASE
+
+	* src/pathname/fleaf14.c: use MODULE_ID
+
+1995-09-20  dickey@clark.net
+
+	* src/pathname/fileblox.c:
+	make this compile on HPUX (which has NINDIR with arguments for file-system)
+
+	* src/pathname/fileblox.c: use MODULE_ID
+
 1995-09-18  dickey@clark.net
 
 	* src/curses/bindkeys.c: draft (incomplete) of hashing

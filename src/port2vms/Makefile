@@ -1,4 +1,4 @@
-# $Id: Makefile,v 12.3 1995/07/30 17:36:48 tom Exp $
+# $Id: Makefile,v 12.4 1995/10/14 22:03:44 tom Exp $
 # MAKE-file for functions supporting VAX/VMS porting
 
 ####### (Environment) ##########################################################
@@ -39,8 +39,6 @@ VMS_SRC	=\
 	vms_dirs.c
 
 SOURCES	= Makefile descrip.mms $(CSRC) $(VMS_SRC)
-
-ALL	=
 
 ####### (Standard Productions) #################################################
 include ../td_rules.mk

@@ -1,4 +1,4 @@
-/* $Id: td_curse.h,v 12.35 1995/09/04 19:02:52 tom Exp $ */
+/* $Id: td_curse.h,v 12.36 1995/10/14 15:28:40 tom Exp $ */
 
 /*
  * TD_LIB CURSES-related definitions
@@ -97,6 +97,18 @@
 #define CursesLine(win,y)	(win)->_line[y].text
 #define CursesFirstCh(win,y)	(win)->_line[y].firstchar
 #define CursesLastCh(win,y)	(win)->_line[y].lastchar
+#endif
+
+#ifndef ERR
+#define ERR (-1)
+#endif
+
+#ifndef OK
+#if ERR < 0
+#define OK  (0)
+#else
+#define OK  (!(ERR))
+#endif
 #endif
 
 #ifndef CursesType
