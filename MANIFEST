@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t20031023
+MANIFEST for td_lib, version t20031106
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         restrictions on copying/using this software
@@ -91,6 +91,7 @@ src/curses/dumpchr.c            dump screen character to file
 src/curses/dumptty.c            dumps termio settings to a file, for debugging
 src/curses/dumpwin.c            dump curses window to file
 src/curses/erasechr.c           returns erase-char value
+src/curses/getmaxx.c            workaround for HPUX curses, which has no getmaxx(), etc.
 src/curses/is_xterm.c           return true if terminal is xterm
 src/curses/killchar.c           returns kill-char value
 src/curses/lnextchr.c           returns value of literal-next character

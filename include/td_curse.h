@@ -1,4 +1,4 @@
-/* $Id: td_curse.h,v 12.54 2003/07/02 21:22:56 tom Exp $ */
+/* $Id: td_curse.h,v 12.56 2003/11/06 01:28:06 tom Exp $ */
 
 /*
  * TD_LIB CURSES-related definitions
@@ -55,7 +55,15 @@
 
 #if defined(NEED_TERM_H)
 
-#include <term.h>
+#ifdef HAVE_NCURSES_TERM_H
+#include	<ncurses/term.h>
+#else
+#ifdef HAVE_NCURSES_TERM_H
+#include	<ncurses/term.h>
+#else
+#include	<term.h>
+#endif
+#endif
 
 #else
 
@@ -93,11 +101,29 @@
 #if  defined(HAVE_GETMAXX) && defined(HAVE_GETMAXY)
 #define wMaxX(w) getmaxx(w)
 #define wMaxY(w) getmaxy(w)
+#else
+#if  defined(HAVE_GETMAXYX)
+#undef getmaxx
+#undef getmaxy
+extern int getmaxx(WINDOW *);
+extern int getmaxy(WINDOW *);
+#define wMaxX(w) getmaxx(w)
+#define wMaxY(w) getmaxy(w)
+#endif
 #endif
 
 #if  defined(HAVE_GETBEGX) && defined(HAVE_GETBEGY)
 #define wBegX(w) getbegx(w)
 #define wBegY(w) getbegy(w)
+#else
+#if  defined(HAVE_GETBEGYX)
+#undef getbegx
+#undef getbegy
+extern int getbegx(WINDOW *);
+extern int getbegy(WINDOW *);
+#define wBegX(w) getbegx(w)
+#define wBegY(w) getbegy(w)
+#endif
 #endif
 
 #ifndef wMaxX
