@@ -1,0 +1,5 @@
+# $Id: makefile.in,v 12.2 1997/09/09 02:41:11 tom Exp $
+# MAKE-file for miscellaneous library routines
+
+@make_include_left@../td_defns.mk@make_include_right@
+@make_include_left@../../support/td_lib.mk@make_include_right@

@@ -1,0 +1,23 @@
+# $Id: makefile.in,v 12.3 1997/09/09 21:44:38 tom Exp $
+# MAKE-file for miscellaneous library routines
+
+####### (Environment) ##########################################################
+TOP	= ../..
+@make_include_left@../support/td_lib.mk@make_include_right@
+
+####### (Standard Lists) #######################################################
+SOURCES	= \
+	makefile.in	descrip.mms \
+	td_defns.mk	td_defns.mms \
+	td_rules.mk	td_rules.mms
+
+####### (Standard Productions) #################################################
+all ::		$(SOURCES)
+
+all \
+clean \
+clobber \
+distclean \
+lint.out \
+run_test \
+install ::	$(SOURCES)
