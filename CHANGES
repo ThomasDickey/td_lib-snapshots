@@ -1,3 +1,39 @@
+1991-06-07  dickey@software.org
+
+	* src/descrip.mms: brought dependencies on "ptypes.h" up to date
+
+1991-06-07  ste_cm@software.org
+
+	* src/descrip.mms: BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-06-07  dickey@software.org
+
+	* src/pathname/ftype2.c: *** empty log message ***
+
+1991-06-07  ste_cm@software.org
+
+	* src/pathname/ftype2.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-06-07  dickey@software.org
+
+	* src/descrip.mms: updated include-dependencies
+
+	* src/pathname/ftype.c: *** empty log message ***
+
+1991-06-07  ste_cm@software.org
+
+	* src/pathname/ftype.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-06-07  dickey@software.org
+
+	* include/ptypes.h: ported back to vms (CC 3.2)
+
+1991-06-07  ste_cm@software.org
+
+	* include/ptypes.h: BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
 1991-06-06  dickey@software.org
 
 	* src/curses/padedit.c:

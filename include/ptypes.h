@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 8.4 1991/06/05 16:53:30 dickey Exp $ */
+/* $Id: ptypes.h,v 9.0 1991/06/07 11:31:15 ste_cm Rel $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -41,7 +41,7 @@
 #define	lstat	stat
 #endif	/* S_IFLNK */
 
-#ifdef	SYSTEM5
+#if	defined(SYSTEM5) || defined(vms)
 #define	getwd(p)	getcwd(p,sizeof(p)-2)
 extern	char	*getcwd();
 #else	/* !SYSTEM5 */
@@ -114,7 +114,7 @@ extern	char	*sprintf();
 #define	LEN_READ	unsigned
 #else
 #ifdef	vms
-#define	V_OR_I		int
+#define	V_OR_I		void
 #define	LEN_QSORT	int
 #define	LEN_READ	int
 #else	/* unix */
@@ -128,7 +128,11 @@ extern	char	*sprintf();
  * defines the argument-type for "wait()"
  */
 #ifdef	WAI_PTYPES
+#ifdef	vms
+#include <processes.h>
+#else
 #include <sys/wait.h>
+#endif
 
 #undef	ARG_WAIT
 #undef	DCL_WAIT
@@ -303,7 +307,7 @@ extern	char	killchar();
  */
 #ifdef	STR_PTYPES
 #include	<string.h>
-#ifndef	SYSTEM5
+#if	!defined(SYSTEM5) && !defined(vms)
 #define	strchr	index
 #define	strrchr	rindex
 #endif	/* SYSTEM5 */

@@ -1,4 +1,4 @@
-# $Id: descrip.mms,v 8.0 1990/06/27 09:23:57 ste_cm Rel $
+# $Id: descrip.mms,v 9.0 1991/06/07 16:43:31 ste_cm Rel $
 # MMS-file for miscellaneous library routines	
 #
 ####### (Development) ##########################################################
@@ -238,6 +238,8 @@ $(A)($(LIBRARYMODULES)) : $(PTYPES_H)
 ADD2FNAME.obj :		$(PTYPES_H)
 ARGV2FILE.obj :		$(PTYPES_H)
 BEEP.obj :		$(PTYPES_H)
+CATARG.obj :		$(PTYPES_H)
+CATCHALL.obj :		$(PTYPES_H)
 CMDCH.obj :		$(PTYPES_H)	$(I)cmdch.h
 COPYBACK.obj :		$(PTYPES_H)
 CUTOFF.obj :		$(PTYPES_H)
@@ -251,15 +253,20 @@ FILE2MEM.obj :		$(PTYPES_H)
 FILECOPY.obj :		$(PTYPES_H)
 FOR_USER.obj :		$(PTYPES_H)
 FP2ARGV.obj :		$(PTYPES_H)
+FTYPE.obj :		$(PTYPES_H)
+FTYPE2.obj :		$(PTYPES_H)
 GID2S.obj :		$(PTYPES_H)
 ISTEXTFILE.obj :	$(PTYPES_H)
 KILLCHAR.obj :		$(PTYPES_H)
+LIST_BY_COLS.obj :	$(PTYPES_H)
 MEM2FILE.obj :		$(PTYPES_H)
 NAME2S.obj :		$(PTYPES_H)
 NEWZONE.obj :		$(PTYPES_H)
 PACKDATE.obj :		$(PTYPES_H)
 PADEDIT.obj :		$(PTYPES_H)
+PATHCAT.obj :		$(PTYPES_H)
 PATHCMP.obj :		$(PTYPES_H)
+PATHLEAF.obj :		$(PTYPES_H)
 RAWGETS.obj :		$(PTYPES_H)	$(I)cmdch.h
 RAWTERM.obj :		$(PTYPES_H)
 # rcsedit.obj :		$(PTYPES_H)	$(I)rcsdefs.h
@@ -271,10 +278,16 @@ RAWTERM.obj :		$(PTYPES_H)
 # rcspath.obj :		$J/rcspath.h	; $(CC) -I$J -c $*.c
 # rcspermit.obj :	$(PTYPES_H)	$(I)rcsdefs.h
 RESIZWWIN.obj :		$(PTYPES_H)
+SAMELEAF.obj :		$(PTYPES_H)
 SCCSLAST.obj :		$(PTYPES_H)
 SETMTIME.obj :		$(PTYPES_H)
 SAVEWIN.obj :		$(PTYPES_H)
+STRALLOC.obj :		$(PTYPES_H)
+STRCLEAN.obj :		$(PTYPES_H)
+STRUCPY.obj :		$(PTYPES_H)
+STRWCMP.obj :		$(PTYPES_H)
 TRIMPATH.obj :		$(PTYPES_H)
+TXTALLOC.obj :		$(PTYPES_H)
 UID2S.obj :		$(PTYPES_H)
 USERCOPY.obj :		$(PTYPES_H)
 USERPROT.obj :		$(PTYPES_H)
