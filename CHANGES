@@ -1,3 +1,7 @@
+1999-11-30  dickey@clark.net
+
+	* mkdirs.sh: OS/2 fix
+
 1999-08-16  dickey@clark.net
 
 	* configure.in: add test for ttyname(), needed for BeOS port
