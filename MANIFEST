@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19940713
+MANIFEST for td_lib, version t19940715
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         restrictions on copying/using this software
@@ -63,6 +63,7 @@ src/cm_funcs/sccs_dir.c         returns name of SCCS directory
 src/cm_funcs/sccsdbug.c         encapsulate SCCS_DEBUG environment variable
 src/cm_funcs/sccslast.c         scan for last SCCS date & version
 src/cm_funcs/sccsname.c         SCCS working/archive name translation (like 'rcsname.c').
+src/cm_funcs/sccspath.c         encapsulates knowledge of sccs-path
 src/cm_funcs/vcs_file.c         encapsulates name of directory-level RCS permissions file
 src/cm_funcs/vercmp.c           compare version-strings
 src/compare                     subdirectory
@@ -121,6 +122,7 @@ src/pathname/editfile.c         VMS/unix edit tree-of-files
 src/pathname/edittree.c         VMS/unix edit-tree-of-files
 src/pathname/file2arg.c         load a text-file to memory in 'argv[]' format, returning the number of lines
 src/pathname/file2mem.c         code from 'file2argv.c' which loads a file to blob-string in memory
+src/pathname/fileblox.c         computes # of blocks used by a file
 src/pathname/filecopy.c         copy a file
 src/pathname/filesize.c         returns filesize, in bytes
 src/pathname/fleaf.c            file-leaf (cf pathleaf)

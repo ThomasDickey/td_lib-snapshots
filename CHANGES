@@ -1,3 +1,16 @@
+1994-07-15  dickey@clark.net
+
+	* include/td_lib.h: added strerror if we don't already have it
+
+	* src/cm_funcs/sccslast.c:
+	corrected last change - broke the normal mode of operation
+
+	* src/cm_funcs/packdate.c: corrected ifdef to work on SunOS 4.1.x
+
+	* include/ptypes.h: added ERR_PTYPES
+
+	* src/cm_funcs/Makefile: added sccspath.c
+
 1994-07-13  dickey@clark.net
 
 	* src/pathname/fileblox.c: RCS_BASE

@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 12.7 1994/07/10 22:37:02 tom Exp $ */
+/* $Id: td_lib.h,v 12.9 1994/07/15 23:22:42 tom Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for TD_LIB common
@@ -225,6 +225,19 @@
 			)
 			_dcl(char *,	name)
 			_ret
+
+	/* fileblox.c ------------------------------------------------- */
+#if	defined(unix)
+#if	STAT_HAS_ST_BLOCKS
+#define	fileblocks(sb)	(sb)->st_blocks
+#else
+	long	fileblocks(
+			_ar1(Stat_t *,	sb)
+			)
+			_dcl(Stat_t *,	sb)
+			_ret
+#endif
+#endif
 
 	/* filecopy.c ------------------------------------------------- */
 #if	defined(unix) || defined(MSDOS)
@@ -701,6 +714,15 @@ extern	int	localzone;
 			_dcl(char *,	s)
 			_dcl(int,	c)
 			_ret
+
+	/* strerror.c ------------------------------------------------- */
+#if !HAVE_STRERROR
+	char *	strerror(
+			_ar1(int,	err)
+			)
+			_dcl(int,	err)
+			_ret
+#endif
 
 	/* strtrim.c -------------------------------------------------- */
 	char *	strtrim(

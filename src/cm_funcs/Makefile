@@ -1,4 +1,4 @@
-# $Id: Makefile,v 12.1 1994/07/02 12:56:29 tom Exp $
+# $Id: Makefile,v 12.2 1994/07/15 09:17:16 tom Exp $
 # MAKE-file for miscellaneous library routines
 
 ####### (Environment) ##########################################################
@@ -29,6 +29,7 @@ CSRC	=\
 	sccsdbug.c \
 	sccslast.c \
 	sccsname.c \
+	sccspath.c \
 	vcs_file.c \
 	vercmp.c
 
@@ -58,6 +59,7 @@ OBJS	=\
 	$Z(sccsdbug.o) \
 	$Z(sccslast.o) \
 	$Z(sccsname.o) \
+	$Z(sccspath.o) \
 	$Z(vcs_file.o) \
 	$Z(vercmp.o)
 
@@ -83,4 +85,5 @@ $Z(vcs_file.o):	$(RCSDEFS_H)
 
 $Z(sccsdbug.o)\
 $Z(sccslast.o)\
-$Z(sccsname.o):	$(SCCSDEFS_H)
+$Z(sccsname.o)\
+$Z(sccspath.o):	$(SCCSDEFS_H)
