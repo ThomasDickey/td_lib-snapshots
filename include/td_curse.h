@@ -1,4 +1,4 @@
-/* $Id: td_curse.h,v 12.23 1994/08/12 21:21:49 tom Exp $ */
+/* $Id: td_curse.h,v 12.24 1994/12/15 18:09:10 tom Exp $ */
 
 /*
  * TD_LIB CURSES-related definitions
@@ -80,6 +80,12 @@
 
 #if	defined(lint) && NEED_STRUCT_SCREEN
 	struct	screen	{ int dummy; };
+#endif
+
+#ifndef beep
+#if HAVE_BEEP && NEED_BEEP
+extern	int	beep		ARGS((void));
+#endif /* HAVE_BEEP */
 #endif
 
 #if HAVE_ENDWIN && NEED_ENDWIN
