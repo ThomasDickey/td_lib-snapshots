@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcsname.c,v 6.0 1989/10/04 12:14:54 ste_cm Rel $";
+static	char	Id[] = "$Id: rcsname.c,v 8.0 1990/04/18 13:55:07 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,9 +7,21 @@ static	char	Id[] = "$Id: rcsname.c,v 6.0 1989/10/04 12:14:54 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	27 May 1988
  * $Log: rcsname.c,v $
- * Revision 6.0  1989/10/04 12:14:54  ste_cm
- * BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+ * Revision 8.0  1990/04/18 13:55:07  ste_cm
+ * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
  *
+ *		Revision 7.0  90/04/18  13:55:07  ste_cm
+ *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+ *		
+ *		Revision 6.1  90/04/18  13:55:07  dickey
+ *		added 'full' argument to 'rcs2name()' and 'name2rcs()' so we
+ *		can force the conversion to preserve pathnames, rather than
+ *		coercing the conversion toward the current directory.  Added
+ *		to test-case also.
+ *		
+ *		Revision 6.0  89/10/04  12:14:54  ste_cm
+ *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+ *		
  *		Revision 5.0  89/10/04  12:14:54  ste_cm
  *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
  *		
@@ -81,11 +93,20 @@ char	*name;
 }
 
 static
+trim_leaf(name)
+char	*name;
+{
+	register char *s = strrchr(name, '/');
+	if (s != 0) name = s;
+	*name = EOS;
+}
+
+static
 char *
 leaf(name)
 char	*name;
 {
-	char	*s = strrchr(name, '/');
+	register char	*s = strrchr(name, '/');
 	return ((s != 0) ? s+1 : name);
 }
 
@@ -98,8 +119,9 @@ char	*name;
  * of the working file.
  */
 char *
-rcs2name(name)
+rcs2name(name,full)
 char	*name;
+int	full;
 {
 	char	*s, *t;
 static	char	fname[BUFSIZ];
@@ -108,8 +130,16 @@ static	char	fname[BUFSIZ];
 		int	len = strlen(strcpy(fname, name));
 
 		fname[len - LEN_SUFFIX] = EOS;
-		if ((s = leaf(fname)) > fname)
-			for (t = fname; *t++ = *s++;);
+		if ((s = leaf(fname)) > fname) {
+			char	*d = fname;
+			if (full) {
+				s[-1] = EOS;
+				if (((t = leaf(d)) > d)
+				&&  sameleaf(t, rcs_dir()))
+					d = t;
+			}
+			while (*d++ = *s++);
+		}
 	} else {
 		(void)strcpy(fname, name);
 	}
@@ -121,18 +151,27 @@ static	char	fname[BUFSIZ];
  * of the RCS-file.
  */
 char *
-name2rcs(name)
+name2rcs(name,full)
 char	*name;
+int	full;
 {
 static	char	fname[BUFSIZ];
 
 	if (rcs_suffix(name)) {
 		(void)strcpy(fname, name);
 	} else {
+		if (full) {
+			trim_leaf(strcpy(fname, name));
+			if (sameleaf(fname, rcs_dir()))
+				trim_leaf(fname);
+			if (*fname)
+				(void)strcat(fname, "/");
+		} else
+			*fname = EOS;
 		(void)strcat(
 			strcat(
 				strcat(
-					strcpy(fname, rcs_dir()),
+					strcat(fname, rcs_dir()),
 					"/"),
 				leaf(name)),
 			suffix);
@@ -141,18 +180,29 @@ static	char	fname[BUFSIZ];
 }
 
 #ifdef	TEST
-main(argc, argv)
+do_test(argc, argv, full)
 char	*argv[];
 {
 	int	j;
+	char	old[BUFSIZ], *new;
+
 	if (argc > 1) {
+		printf("** %s-path\n", full ? "full" : "local");
 		printf("name2rcs:\n");
 		for (j = 1; j < argc; j++) {
-			printf("  %-20s => %s\n", argv[j], name2rcs(argv[j]));
+			(void)strcpy(old, name2rcs(argv[j], !full));
+			new = name2rcs(argv[j], full);
+			printf("  %-20s => %s%s\n",
+				argv[j], new,
+				strcmp(old, new) ? " (*)" : "");
 		}
 		printf("rcs2name:\n");
 		for (j = 1; j < argc; j++) {
-			printf("  %-20s => %s\n", argv[j], rcs2name(argv[j]));
+			(void)strcpy(old, rcs2name(argv[j], !full));
+			new = rcs2name(argv[j], full);
+			printf("  %-20s => %s%s\n",
+				argv[j], new,
+				strcmp(old, new) ? " (*)" : "");
 		}
 	} else {
 		static	char	*test[] = {
@@ -162,8 +212,15 @@ char	*argv[];
 			"path/RCS/name",	"path/RCS/name,v",
 			"RCS/name",		"RCS/name,v"
 		};
-		(void) main (sizeof(test)/sizeof(test[0]), test);
+		do_test (sizeof(test)/sizeof(test[0]), test, full);
 	}
-	return(0);
+}
+
+main(argc, argv)
+char	*argv[];
+{
+	do_test(argc, argv, FALSE);
+	do_test(argc, argv, TRUE);
+	exit(0);
 }
 #endif	TEST

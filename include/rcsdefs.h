@@ -1,4 +1,4 @@
-/* $Header: /users/source/archives/td_lib.vcs/include/RCS/rcsdefs.h,v 6.0 1989/04/20 13:27:00 ste_cm Rel $ */
+/* $Id: rcsdefs.h,v 8.0 1990/04/18 08:13:31 ste_cm Rel $ */
 
 #ifndef	_RCSDEFS_H_
 #define	_RCSDEFS_H_
@@ -171,15 +171,19 @@ extern	char *	getenv();
 
 	/* rcsname.c -------------------------------------------------- */
 	char *	rcs2name(
-			_AR1(char *,	name)
+			_ARX(char *,	name)
+			_AR1(int,	full)
 			)
 			_DCL(char *,	name)
+			_DCL(int,	full)
 			_RET
 
 	char *	name2rcs(
-			_AR1(char *,	name)
+			_ARX(char *,	name)
+			_AR1(int,	full)
 			)
 			_DCL(char *,	name)
+			_DCL(int,	full)
 			_RET
 
 	/* rcspath.c -------------------------------------------------- */

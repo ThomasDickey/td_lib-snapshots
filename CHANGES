@@ -1,3 +1,51 @@
+1990-04-18  dickey@software.org
+
+	* src/cm_funcs/rcsedit.c: cleanup/lint (apollo sr10.2)
+
+1990-04-18  ste_cm@software.org
+
+	* src/cm_funcs/rcsedit.c: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/cm_funcs/rcsedit.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+1990-04-18  dickey@software.org
+
+	* src/cm_funcs/rcsname.c:
+	added 'full' argument to 'rcs2name()' and 'name2rcs()' so we
+	can force the conversion to preserve pathnames, rather than
+	coercing the conversion toward the current directory.  Added
+	to test-case also.
+
+1990-04-18  ste_cm@software.org
+
+	* src/cm_funcs/rcsname.c: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/cm_funcs/rcsname.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+1990-04-18  dickey@software.org
+
+	* include/rcsdefs.h: added argument to rcs2name & name2rcs
+
+1990-04-18  ste_cm@software.org
+
+	* include/rcsdefs.h: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* include/rcsdefs.h:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+1990-04-18  dickey@software.org
+
+	* src/cm_funcs/rcsload.c: changed call on 'name2rcs()'
+
+1990-04-18  ste_cm@software.org
+
+	* src/cm_funcs/rcsload.c: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/cm_funcs/rcsload.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
 1990-03-28  dickey@software.org
 
 	* src/descrip.mms: added module 'strwcmp'
