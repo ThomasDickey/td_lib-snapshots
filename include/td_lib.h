@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 8.0 1990/06/27 08:51:53 ste_cm Rel $ */
+/* $Id: td_lib.h,v 8.1 1991/05/15 11:42:42 dickey Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for CM_TOOLS COMMON
@@ -9,7 +9,7 @@
 #define		_COMMON_H_
 #ifndef		_PTYPES_
 #include "ptypes.h"
-#endif		_PTYPES_
+#endif		/* _PTYPES_ */
 
 	/* MAIN-PROGRAM *********************************************** */
 		failed(
@@ -33,7 +33,7 @@
 			)
 			_DCL(char *,	path)
 			_NUL
-#endif	unix
+#endif	/* unix */
 
 	/* add2fname.c ------------------------------------------------ */
 	int	add2fname(
@@ -87,11 +87,13 @@
 			_NUL
 
 	/* catchall.c ------------------------------------------------- */
+#ifdef	SIG_PTYPES
 		catchall (
-			_FN1(SIGS_T,	func)
+			_AR1(__sig_handler_t,	func)
 			)
-			_DCL(SIGS_T,	(*func)())
+			_DCL(__sig_handler_t,	func)
 			_NUL
+#endif
 
 	/* cmdch.c ---------------------------------------------------- */
 #ifdef	CUR_PTYPES
@@ -100,7 +102,7 @@
 			)
 			_DCL(int *,	cntp)
 			_RET
-#endif	CUR_PTYPES
+#endif	/* CUR_PTYPES */
 
 	/* copyback.c ------------------------------------------------- */
 	int	copyback(
@@ -135,7 +137,7 @@
 			_DCL(char *,	node)
 			_DCL(int *,	opt)
 			_RET
-#endif	unix
+#endif	/* unix */
 
 	/* dftenv.c --------------------------------------------------- */
 	char	*dftenv(
@@ -199,11 +201,11 @@
 	/* erasechar.c ------------------------------------------------ */
 #ifdef	erasechar
 #undef	erasechar
-#endif	erasechar
+#endif	/* erasechar */
 		char	erasechar(
 			)
 			_RET
-#endif	CUR_PTYPES
+#endif	/* CUR_PTYPES */
 
 	/* execute.c -------------------------------------------------- */
 	int	execute(
@@ -248,7 +250,7 @@
 			)
 			_DCL(int,	(*func)())
 			_RET
-#endif	unix
+#endif	/* unix */
 
 	/* fp2argv.c -------------------------------------------------- */
 	int	fp2argv(
@@ -281,7 +283,7 @@
 	/* getuser.c -------------------------------------------------- */
 	char	*getuser()
 			_RET
-#endif	unix
+#endif	/* unix */
 
 	/* gid2s.c ---------------------------------------------------- */
 	char	*gid2s(
@@ -301,10 +303,10 @@
 #ifdef	CUR_PTYPES
 #ifdef	killchar
 #undef	killchar
-#endif	killchar
+#endif	/* killchar */
 	char	killchar()
 			_RET
-#endif	CUR_PTYPES
+#endif	/* CUR_PTYPES */
 
 	/* list_by_cols.c --------------------------------------------- */
 		list_by_cols(
@@ -416,7 +418,7 @@
 			_DCL(int,	readonly)
 			_DCL(char *,	editor)
 			_RET
-#endif	unix
+#endif	/* unix */
 
 	/* pathcat.c -------------------------------------------------- */
 	char *	pathcat(
@@ -447,7 +449,7 @@
 			_DCL(char *,	path)
 			_DCL(struct stat *, s)
 			_RET
-#endif	unix
+#endif	/* unix */
 
 	/* pathleaf.c ------------------------------------------------- */
 	char *	pathleaf(
@@ -495,12 +497,12 @@
 			_DCL(char *,	cwd)
 			_DCL(char *,	src)
 			_RET
-#endif	unix
+#endif	/* unix */
 
 	/* resizewin.c ------------------------------------------------ */
 	int	resizewin()
 			_RET
-#endif	CUR_PTYPES
+#endif	/* CUR_PTYPES */
 
 	/* revert.c --------------------------------------------------- */
 #ifdef	unix
@@ -523,7 +525,7 @@
 			)
 			_DCL(char *,	s)
 			_RET
-#endif	unix
+#endif	/* unix */
 
 	/* sameleaf.c ------------------------------------------------- */
 	int	sameleaf(
@@ -554,7 +556,7 @@
 			_DCL(int,	redo)
 			_DCL(int,	top)
 			_NUL
-#endif	CUR_PTYPES
+#endif	/* CUR_PTYPES */
 
 #ifdef	unix
 	/* scr_size.c ------------------------------------------------- */
@@ -572,7 +574,7 @@
 			_DCL(char *,	name)
 			_DCL(time_t,	mtime)
 			_RET
-#endif	unix
+#endif	/* unix */
 
 	/* stralloc.c ------------------------------------------------- */
 	char	*stralloc(
@@ -701,7 +703,7 @@
 			_DCL(int,	mode)
 			_DCL(time_t,	mtime)
 			_RET
-#endif	unix
+#endif	/* unix */
 
 	/* vecalloc.c ------------------------------------------------- */
 	char	**vecalloc(
@@ -736,7 +738,7 @@
 			_DCL(char *,	fname)
 			_DCL(int,	readonly)
 			_RET
-#endif	unix
+#endif	/* unix */
 
 	/* walktree.c ------------------------------------------------- */
 #ifdef	unix
@@ -766,7 +768,7 @@
 			_DCL(char *,	find)
 			_DCL(char *,	dot)
 			_RET
-#endif	unix
+#endif	/* unix */
 
 	/* win2file.c ------------------------------------------------- */
 #ifdef	CUR_PTYPES
@@ -796,5 +798,5 @@ int	win2file(
 			_DCL(WINDOW *,	win)
 			_DCL(int,	row)
 			_NUL
-#endif	CUR_PTYPES
-#endif		_COMMON_H_
+#endif	/* CUR_PTYPES */
+#endif		/* _COMMON_H_ */

@@ -1,6 +1,6 @@
 #ifndef	lint
-static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RCS/trimpath.c,v 8.0 1989/05/11 12:35:56 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: trimpath.c,v 9.0 1991/05/15 09:56:27 ste_cm Rel $";
+#endif
 
 /*
  * Title:	trimpath.c
@@ -128,4 +128,4 @@ char	*argv[];
 	exit(SUCCESS);
 	/*NOTREACHED*/
 }
-#endif	TEST
+#endif

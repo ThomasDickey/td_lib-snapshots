@@ -1,15 +1,21 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/curses/RCS/killchar.c,v 8.0 1988/08/17 09:40:51 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: killchar.c,v 9.0 1991/05/15 10:03:55 ste_cm Rel $";
+#endif
 
 /*
  * Title:	killchar.c (return kill-char value)
  * Author:	T.E.Dickey
  * Created:	24 Mar 1988
  * $Log: killchar.c,v $
- * Revision 8.0  1988/08/17 09:40:51  ste_cm
- * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ * Revision 9.0  1991/05/15 10:03:55  ste_cm
+ * BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
  *
+ *		Revision 8.1  91/05/15  10:03:55  dickey
+ *		apollo sr10.3 cpp complains about tag in #endif
+ *		
+ *		Revision 8.0  88/08/17  09:40:51  ste_cm
+ *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ *		
  *		Revision 7.0  88/08/17  09:40:51  ste_cm
  *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
  *		
@@ -51,5 +57,5 @@ struct	sgttyb	buf;
 		code = buf.sg_kill;
 	return (code);
 }
-#endif	SYSTEM5
-#endif	killchar
+#endif
+#endif

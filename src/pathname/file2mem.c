@@ -1,6 +1,6 @@
 #ifndef	lint
-static	char	Id[] = "$Id: file2mem.c,v 8.0 1989/10/04 12:05:28 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: file2mem.c,v 9.0 1991/05/15 10:16:59 ste_cm Rel $";
+#endif
 
 /*
  * Title:	file2mem.c (file to argv-conversion)
@@ -63,9 +63,9 @@ char	*name;
 #ifdef	vms
 		/* on vms, 'stat()' returns size in terms of blocks */
 		expected = length & ~511;
-#else	unix
+#else	/* unix */
 		expected = length;
-#endif	vms/unix
+#endif	/* vms/unix */
 
 		if (!(fp = fopen(name, "r")))
 			return (0);
@@ -120,4 +120,4 @@ char	*argv[];
 	(void)exit(SUCCESS);
 	/*NOTREACHED*/
 }
-#endif	TEST
+#endif

@@ -1,15 +1,21 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/curses/RCS/resizwin.c,v 8.0 1988/08/11 07:39:12 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: resizwin.c,v 9.0 1991/05/15 09:48:03 ste_cm Rel $";
+#endif
 
 /*
  * Author:	T.E.Dickey
  * Title:	resizewin.c (change size of curses window)
  * Created:	21 Apr 1988
  * $Log: resizwin.c,v $
- * Revision 8.0  1988/08/11 07:39:12  ste_cm
- * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ * Revision 9.0  1991/05/15 09:48:03  ste_cm
+ * BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
  *
+ *		Revision 8.1  91/05/15  09:48:03  dickey
+ *		apollo sr10.3 cpp complains about tag in #endif
+ *		
+ *		Revision 8.0  88/08/11  07:39:12  ste_cm
+ *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ *		
  *		Revision 7.0  88/08/11  07:39:12  ste_cm
  *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
  *		
@@ -58,11 +64,11 @@ static	unsigned	size[2];
 /*ARGSUSED */		_BODY(pc_ALLOC,chtype *)
 /*ARGSUSED */		_BODY(c_ALLOC, chtype)
 /*ARGSUSED */		_BODY(s_ALLOC, short)
-#else	lint
+#else
 #define	pc_ALLOC(p,n)	DOALLOC(p,chtype *,n)
 #define	c_ALLOC(p,n)	DOALLOC(p,chtype,n)
 #define	s_ALLOC(p,n)	DOALLOC(p,short,n)
-#endif	lint
+#endif
 
 static
 doit(w)

@@ -1,6 +1,6 @@
 #ifndef	lint
-static	char	Id[] = "$Id: istextfl.c,v 8.0 1989/10/24 11:51:48 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: istextfl.c,v 9.0 1991/05/15 09:26:28 ste_cm Rel $";
+#endif
 
 /*
  * Title:	istextfile.c (is this a text-file?)

@@ -1,15 +1,18 @@
 #ifndef	lint
-static	char	Id[] = "$Id: execute.c,v 8.0 1990/04/27 14:09:37 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: execute.c,v 8.1 1991/05/15 13:16:14 dickey Exp $";
+#endif
 
 /*
  * Title:	execute.c (execute a command, returning its status)
  * Author:	T.E.Dickey
  * Created:	21 May 1988
  * $Log: execute.c,v $
- * Revision 8.0  1990/04/27 14:09:37  ste_cm
- * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ * Revision 8.1  1991/05/15 13:16:14  dickey
+ * mods to compile under apollo sr10.3
  *
+ *		Revision 8.0  90/04/27  14:09:37  ste_cm
+ *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ *		
  *		Revision 7.0  90/04/27  14:09:37  ste_cm
  *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
  *		
@@ -137,23 +140,23 @@ char	*args;
 		return (0);
 	errno = EVMSERR;	/* can't do much better than that! */
 
-#else	unix
+#else	/* unix */
 static	char	**myargv;	/* argument vector for 'bldarg()' */
 #ifdef	SYSTEM5
 char	*what;
-#else	SYSTEM5
+#else	/* !SYSTEM5 */
 char	what[BUFSIZ];
-#endif	SYSTEM5
+#endif	/* SYSTEM5/!SYSTEM5 */
 int	count	= 3,		/* minimum needed for 'bldarg()' */
 	pid;
 
 #ifdef	SYSTEM5
 int	status;
 #define	W_RETCODE	((status >> 8) & 0xff)
-#else	SYSTEM5
+#else	/* !SYSTEM5 */
 union	wait	status;
 #define	W_RETCODE	status.w_retcode
-#endif	SYSTEM5
+#endif	/* SYSTEM5/!SYSTEM5 */
 
 
 	/* Split the command-string into an argv-like structure suitable for
@@ -172,7 +175,7 @@ union	wait	status;
 
 #ifdef	SYSTEM5
 	what = *myargv;
-#else	SYSTEM5
+#else	/* !SYSTEM5 */
 	/*
 	 * 'execve()' needs an absolute pathname in the first argument.
 	 * Use 'which()' to get it.  Note that this won't work for ".",
@@ -182,7 +185,7 @@ union	wait	status;
 		errno = ENOENT;
 		return (-1);
 	}
-#endif	SYSTEM5
+#endif	/* SYSTEM5 */
 
 #ifdef	TEST
 	dump_exec(what,myargv);
@@ -191,7 +194,7 @@ union	wait	status;
 	(void)fflush(stdout);
 	(void)fflush(stderr);
 	if ((pid = fork()) > 0) {
-		while ((count = wait(&status)) != pid) {
+		while ((count = wait((int *)&status)) != pid) {
 			if ((count < 0) || (errno == ECHILD))
 				break;
 			errno = 0;
@@ -205,7 +208,7 @@ union	wait	status;
 		(void)_exit(errno);	/* just in case exec-failed */
 		/*NOTREACHED*/
 	}
-#endif	vms/unix
+#endif	/* vms/unix */
 	return (-1);
 }
 
@@ -247,4 +250,4 @@ char	*argv[];
 	fprintf(stderr, "? expected verb+parms\n");
 	exit(FAIL);
 }
-#endif	TEST
+#endif	/* TEST */

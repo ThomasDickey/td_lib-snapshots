@@ -1,14 +1,20 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/memory/RCS/doalloc.c,v 8.0 1989/06/09 14:27:50 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: doalloc.c,v 9.0 1991/05/15 10:16:03 ste_cm Rel $";
+#endif
 
 /*
  * Author:	T.E.Dickey
  * Created:	09 Jan 1986
  * $Log: doalloc.c,v $
- * Revision 8.0  1989/06/09 14:27:50  ste_cm
- * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ * Revision 9.0  1991/05/15 10:16:03  ste_cm
+ * BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
  *
+ *		Revision 8.1  91/05/15  10:16:03  dickey
+ *		apollo sr10.3 cpp complains about tag in #endif
+ *		
+ *		Revision 8.0  89/06/09  14:27:50  ste_cm
+ *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ *		
  *		Revision 7.0  89/06/09  14:27:50  ste_cm
  *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
  *		
@@ -50,7 +56,7 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/memory/R
 #ifdef	DEBUG
 static	char	*allocated[DEBUG];
 static	int	used;
-#endif	DEBUG
+#endif
 
 #ifdef	DEBUG_LOG
 static
@@ -70,7 +76,7 @@ logit(msg, num)
 #else
 #define	LOGIT(msg,num)
 #endif
-#endif	DEBUG_LOG
+#endif	/* DEBUG_LOG */
 
 /************************************************************************
  *	public entrypoints						*
@@ -92,7 +98,7 @@ register char	*newp = (oldp != 0) ? realloc(oldp, amount) : malloc(amount);
 		if (j >= used && j < DEBUG)
 			used = ++j;
 	}
-#endif	DEBUG
+#endif	/* DEBUG */
 	LOGIT("allocate", amount)
 	LOGIT("  old = ", oldp)
 	LOGIT("  new = ", newp)
@@ -116,10 +122,10 @@ char	*oldp;
 				return;
 			}
 		}
-#else	DEBUG
+#else	/* !DEBUG */
 		free(oldp);
 		return;
-#endif	DEBUG
+#endif	/* DEBUG */
 	}
 	(void)printf("free(%#x) not found\r\n", oldp);
 #ifdef	DEBUG
@@ -130,11 +136,11 @@ char	*oldp;
 		(void)sprintf(msg, "/com/tb %d", getpid());
 		(void)system(msg);
 	}
-#endif	apollo
+#endif	/* apollo */
 #ifdef	vms
 	*((char *)0) = 0;
-#endif	vms
-#endif	DEBUG
+#endif	/* vms */
+#endif	/* DEBUG */
 }
 
 #ifdef	TEST
@@ -144,4 +150,4 @@ main()
 	exit(SUCCESS);
 	/*NOTREACHED*/
 }
-#endif	TEST
+#endif	/* TEST */

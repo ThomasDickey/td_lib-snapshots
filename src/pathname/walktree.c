@@ -1,15 +1,21 @@
 #ifndef	lint
-static	char	Id[] = "$Id: walktree.c,v 8.0 1989/09/06 15:20:27 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: walktree.c,v 9.0 1991/05/15 09:58:45 ste_cm Rel $";
+#endif
 
 /*
  * Title:	walktree.c (link/directory tree)
  * Author:	T.E.Dickey
  * Created:	31 Aug 1988
  * $Log: walktree.c,v $
- * Revision 8.0  1989/09/06 15:20:27  ste_cm
- * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ * Revision 9.0  1991/05/15 09:58:45  ste_cm
+ * BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
  *
+ *		Revision 8.1  91/05/15  09:58:45  dickey
+ *		apollo sr10.3 cpp complains about tag in #endif
+ *		
+ *		Revision 8.0  89/09/06  15:20:27  ste_cm
+ *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ *		
  *		Revision 7.0  89/09/06  15:20:27  ste_cm
  *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
  *		
@@ -239,4 +245,4 @@ char	*s;
 	perror(s);
 	(void)exit(FAIL);
 }
-#endif	TEST
+#endif

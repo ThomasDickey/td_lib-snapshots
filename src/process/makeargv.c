@@ -1,6 +1,6 @@
 #ifndef	lint
-static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/process/RCS/makeargv.c,v 8.0 1989/04/19 09:42:32 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: makeargv.c,v 9.0 1991/05/15 10:04:09 ste_cm Rel $";
+#endif
 
 /*
  * Title:	makeargv.c
@@ -66,4 +66,4 @@ main()
 			printf("%d:\t'%s'\n", k, p[k]);
 	}
 }
-#endif	TEST
+#endif

@@ -1,6 +1,6 @@
 #ifndef	lint
-static	char	what[] = "$Id: viewfile.c,v 8.0 1989/09/28 10:47:34 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: viewfile.c,v 9.0 1991/05/15 09:58:34 ste_cm Rel $";
+#endif
 
 /*
  * Title:	view_file.c (create window to view file)

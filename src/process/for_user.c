@@ -1,15 +1,18 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/process/RCS/for_user.c,v 8.0 1989/03/31 15:22:36 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: for_user.c,v 8.1 1991/05/15 13:23:14 dickey Exp $";
+#endif
 
 /*
  * Title:	for_user.c (carry out function for set-uid user)
  * Author:	T.E.Dickey
  * Created:	13 Sep 1988
  * $Log: for_user.c,v $
- * Revision 8.0  1989/03/31 15:22:36  ste_cm
- * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ * Revision 8.1  1991/05/15 13:23:14  dickey
+ * mods to compile under apollo sr10.3
  *
+ *		Revision 8.0  89/03/31  15:22:36  ste_cm
+ *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ *		
  *		Revision 7.0  89/03/31  15:22:36  ste_cm
  *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
  *		
@@ -49,10 +52,10 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/process/
 extern	int	errno;
 
 #ifdef	SYSTEM5
-#else	SYSTEM5
+#else	/* !SYSTEM5 */
 #include	<sys/wait.h>
 #define	fork		vfork
-#endif	SYSTEM5
+#endif
 
 for_user(func)
 int	(*func)();
@@ -63,10 +66,10 @@ int	(*func)();
 #ifdef	SYSTEM5
 	int		status;
 #define	W_RETCODE	((status >> 8) & 0xff)
-#else	SYSTEM5
+#else	/* !SYSTEM5 */
 	union	wait	status;
 #define	W_RETCODE	status.w_retcode
-#endif	SYSTEM5
+#endif
 
 	if (getuid() == geteuid()) {
 		(void)(*func)();	/* invoke the special function */
@@ -74,7 +77,7 @@ int	(*func)();
 	}
 
 	if ((pid = fork()) > 0) {
-		while ((count = wait(&status)) != pid) {
+		while ((count = wait((int *)&status)) != pid) {
 			if ((count < 0) || (errno == ECHILD))
 				break;
 			errno = 0;

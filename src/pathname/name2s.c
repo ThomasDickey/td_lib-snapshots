@@ -1,15 +1,21 @@
 #ifndef lint
-static  char    Id[] = "$Id: name2s.c,v 8.0 1990/03/12 09:05:51 ste_cm Rel $";
-#endif  lint
+static  char    Id[] = "$Id: name2s.c,v 9.0 1991/05/15 09:29:17 ste_cm Rel $";
+#endif 
 
 /*
  * Title:	name2s.c (convert name to external string)
  * Author:	T.E.Dickey
  * Created:	18 Aug 1988 (from ded2s.c)
  * $Log: name2s.c,v $
- * Revision 8.0  1990/03/12 09:05:51  ste_cm
- * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ * Revision 9.0  1991/05/15 09:29:17  ste_cm
+ * BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
  *
+ *		Revision 8.1  91/05/15  09:29:17  dickey
+ *		apollo sr10.3 cpp complains about tag in #endif
+ *		
+ *		Revision 8.0  90/03/12  09:05:51  ste_cm
+ *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ *		
  *		Revision 7.0  90/03/12  09:05:51  ste_cm
  *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
  *		
@@ -84,7 +90,7 @@ int	len, opt;
 	int	esc	= opt & 1;
 #ifdef	apollo
 	int	in_leaf	= 0;
-#endif	apollo
+#endif
 
 	while ((c = *name++) && len-- > 0) {
 #ifdef	apollo
@@ -115,7 +121,7 @@ int	len, opt;
 				bfr += strlen(bfr);
 			}
 		} else
-#endif	apollo
+#endif
 		if (esc) {
 			if(iscntrl(c)
 			|| isspace(c)
@@ -153,4 +159,4 @@ char	*argv[];
 		printf("%d:\t\"%s\" => \"%s\"\n", j - optind + 1, argv[j], bfr);
 	}
 }
-#endif	TEST
+#endif

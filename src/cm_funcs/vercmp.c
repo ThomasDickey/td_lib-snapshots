@@ -1,15 +1,21 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs/RCS/vercmp.c,v 8.0 1988/12/14 11:16:57 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: vercmp.c,v 9.0 1991/05/15 09:58:23 ste_cm Rel $";
+#endif
 
 /*
  * Title:	vercmp.c (compare dot-separated version strings)
  * Author:	T.E.Dickey
  * Created:	14 Dec 1988 (from 'dotcmp()')
  * $Log: vercmp.c,v $
- * Revision 8.0  1988/12/14 11:16:57  ste_cm
- * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ * Revision 9.0  1991/05/15 09:58:23  ste_cm
+ * BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
  *
+ *		Revision 8.1  91/05/15  09:58:23  dickey
+ *		apollo sr10.3 cpp complains about tag in #endif
+ *		
+ *		Revision 8.0  88/12/14  11:16:57  ste_cm
+ *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ *		
  *		Revision 7.0  88/12/14  11:16:57  ste_cm
  *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
  *		
@@ -49,9 +55,9 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs
 
 #ifdef	TEST
 #define	TRACE(s)	printf s;
-#else	TEST
+#else
 #define	TRACE(s)
-#endif	TEST
+#endif
 
 vercmp(s1, s2, wild)
 char	*s1, *s2;
@@ -129,4 +135,4 @@ char	*argv[];
 	(void)exit(0);
 	/*NOTREACHED*/
 }
-#endif	TEST
+#endif

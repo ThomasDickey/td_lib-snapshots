@@ -1,4 +1,4 @@
-/* $Id: rcsdefs.h,v 8.0 1990/04/18 08:13:31 ste_cm Rel $ */
+/* $Id: rcsdefs.h,v 9.0 1991/05/15 09:00:59 ste_cm Rel $ */
 
 #ifndef	_RCSDEFS_H_
 #define	_RCSDEFS_H_
@@ -54,7 +54,7 @@ typedef	struct	{
 		int	num_deleted;	/* lines deleted	*/
 	} RCSTREE;
 extern	RCSTREE *rcsload();
-#endif	S_IFMT
+#endif	/* S_IFMT */
 
 /*
  * Useful external-definitions
@@ -222,4 +222,4 @@ extern	char *	getenv();
 			_DCL(int,	temp)
 			_RET
 
-#endif	_RCSDEFS_H_
+#endif	/* _RCSDEFS_H_ */

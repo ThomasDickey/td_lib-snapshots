@@ -1,15 +1,21 @@
 #ifndef	lint
-static	char	Id[] = "$Id: newzone.c,v 8.0 1989/10/04 11:58:57 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: newzone.c,v 9.0 1991/05/15 10:18:28 ste_cm Rel $";
+#endif
 
 /*
  * Title:	newzone.c (set new timezone)
  * Author:	T.E.Dickey
  * Created:	09 Jun 1988
  * $Log: newzone.c,v $
- * Revision 8.0  1989/10/04 11:58:57  ste_cm
- * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ * Revision 9.0  1991/05/15 10:18:28  ste_cm
+ * BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
  *
+ *		Revision 8.1  91/05/15  10:18:28  dickey
+ *		apollo sr10.3 cpp complains about tag in #endif
+ *		
+ *		Revision 8.0  89/10/04  11:58:57  ste_cm
+ *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ *		
  *		Revision 7.0  89/10/04  11:58:57  ste_cm
  *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
  *		
@@ -78,7 +84,7 @@ extern	char	*ctime();
 
 #ifdef	TEST
 static	time_t	now;
-#endif	TEST
+#endif
 
 static	char	old_TZ[NAMELEN];
 int	localzone;		/* public copy of minutes-west */
@@ -90,8 +96,8 @@ extern	VEC	environ;
 extern	char	*stralloc();
 	/*ARGSUSED*/
 	def_ALLOC(char *)
-#endif	apollo
-#endif	SYSTEM5
+#endif	/* apollo */
+#endif	/* SYSTEM5 */
 
 /************************************************************************
  *	local procedures						*
@@ -146,11 +152,11 @@ char	*name;
 #ifdef	apollo
 	putenv(name);
 	tzset();
-#else	apollo
+#else	/* !apollo */
 #ifdef	SYSTEM5
 	putenv(name);
 	tzset();
-#else	SYSTEM5
+#else	/* !SYSTEM5 */
 register unsigned j, k;
 register char	*s;
 int	len	= 3;		/* "TZ=" length */
@@ -178,9 +184,9 @@ int	match	= FALSE;	/* true iff we need no change */
 	}
 #ifdef	GOULD_NP1
 	tzset();
-#endif	GOULD_NP1
-#endif	SYSTEM5
-#endif	apollo
+#endif	/* GOULD_NP1 */
+#endif	/* SYSTEM5 */
+#endif	/* apollo */
 }
 
 /*
@@ -227,7 +233,7 @@ char	new_TZ[NAMELEN];
 #ifdef	TEST
 	printf("  newzone(%4d) = '%s'\n", minutes, new_TZ);
 	printf("\t\t\t\t=>%s", ctime(&now));
-#endif	TEST
+#endif
 }
 
 /*
@@ -268,4 +274,4 @@ char	*s;
 	exit(0);
 	/*NOTREACHED*/
 }
-#endif	TEST
+#endif

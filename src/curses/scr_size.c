@@ -1,18 +1,24 @@
 #ifndef	lint
-static	char	Id[] = "$Id: scr_size.c,v 8.1 1991/05/01 08:38:53 dickey Exp $";
-#endif	lint
+static	char	Id[] = "$Id: scr_size.c,v 9.0 1991/05/15 09:52:52 ste_cm Rel $";
+#endif
 
 /*
  * Author:	T.E.Dickey
  * Title:	scr_size.c (obtain screen size)
  * Created:	27 Jul 1988
  * $Log: scr_size.c,v $
- * Revision 8.1  1991/05/01 08:38:53  dickey
- * when rlogin'd from vax/vms to apollo, 'tgetnum()' does not
- * work properly, even though 'tgetent()' returns correct data.
- * Check for error-return from 'tgetnum()' to provide default
- * 24 by 80 screen.
+ * Revision 9.0  1991/05/15 09:52:52  ste_cm
+ * BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
  *
+ *		Revision 8.2  91/05/15  09:52:52  dickey
+ *		apollo sr10.3 cpp complains about tag in #endif
+ *		
+ *		Revision 8.1  91/05/01  08:42:39  dickey
+ *		when rlogin'd from vax/vms to apollo, 'tgetnum()' does not
+ *		work properly, even though 'tgetent()' returns correct data.
+ *		Check for error-return from 'tgetnum()' to provide default
+ *		24 by 80 screen.
+ *		
  *		Revision 8.0  90/05/23  12:26:20  ste_cm
  *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
  *		
@@ -64,9 +70,9 @@ static	char	Id[] = "$Id: scr_size.c,v 8.1 1991/05/01 08:38:53 dickey Exp $";
 #include <apollo/base.h>
 #else
 #include </sys/ins/base.ins.c>
-#endif	apollo_sr10
-#else	unix
-#endif	apollo/unix
+#endif	/* apollo_sr10	*/
+#else	/* unix		*/
+#endif	/* apollo/unix	*/
 
 #ifndef	sr10_bug
 #define	sr10_bug	0
@@ -105,7 +111,7 @@ int	*retval;
 		my_COLS  = screen_size.width;
 		return (1);
 	}
-#endif	apollo
+#endif	/* apollo */
 
 	/*
 	 * If we can get the size from termcap, let's believe it.
@@ -140,4 +146,4 @@ main()
 	if (code <= 0)
 		sleep(3);	/* in case we were in a pad */
 }
-#endif	TEST
+#endif

@@ -1,15 +1,21 @@
 #ifndef	lint
-static	char	Id[] = "$Id: packdate.c,v 8.0 1990/06/28 15:10:46 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: packdate.c,v 9.0 1991/05/15 10:18:46 ste_cm Rel $";
+#endif
 
 /*
  * Title:	packdate.c (pack numbers to make a UNIX date)
  * Author:	T.E.Dickey
  * Created:	26 Mar 1986
  * $Log: packdate.c,v $
- * Revision 8.0  1990/06/28 15:10:46  ste_cm
- * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ * Revision 9.0  1991/05/15 10:18:46  ste_cm
+ * BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
  *
+ *		Revision 8.1  91/05/15  10:18:46  dickey
+ *		apollo sr10.3 cpp complains about tag in #endif
+ *		
+ *		Revision 8.0  90/06/28  15:10:46  ste_cm
+ *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ *		
  *		Revision 7.1  90/06/28  15:10:46  dickey
  *		added a test-driver.
  *		modified (for SunOs 4.1 upgrade) code which adjusts for the
@@ -105,18 +111,18 @@ static	int	m[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 	extern	long	timezone;
 		sec += timezone;
 	}
-#else	!SYSTEM5
+#else	/* !SYSTEM5 */
 #ifdef	sun
 	sec -= tm.tm_gmtoff;
-#else	UNIX
+#else	/* UNIX */
 	{
 	struct	timeval	t;
 	struct	timezone tz;
 		(void)gettimeofday(&t, &tz);
 		sec += (tz.tz_minuteswest * MINUTE);
 	}
-#endif	sun/UNIX
-#endif	SYSTEM5/sun/UNIX
+#endif	/* sun/UNIX */
+#endif	/* SYSTEM5/sun/UNIX */
 
 	/*
 	 * Check to see if the local-time display for a given clock-time
@@ -163,4 +169,4 @@ char	*argv[];
 	exit(SUCCESS);
 	/*NOTREACHED*/
 }
-#endif	TEST
+#endif

@@ -1,6 +1,6 @@
 #ifndef	lint
-static	char	Id[] = "$Id: mem2file.c,v 8.0 1989/10/04 13:10:27 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: mem2file.c,v 9.0 1991/05/15 09:28:06 ste_cm Rel $";
+#endif
 
 /*
  * Title:	mem2file.c (memory-to-file I/O)

@@ -1,15 +1,21 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rawgets.c,v 8.0 1990/03/02 11:41:50 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: rawgets.c,v 9.0 1991/05/15 13:33:18 ste_cm Rel $";
+#endif
 
 /*
  * Author:	T.E.Dickey
  * Title:	rawgets.c (raw-mode 'gets()')
  * Created:	29 Sep 1987 (from 'fl.c')
  * $Log: rawgets.c,v $
- * Revision 8.0  1990/03/02 11:41:50  ste_cm
- * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ * Revision 9.0  1991/05/15 13:33:18  ste_cm
+ * BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
  *
+ *		Revision 8.1  91/05/15  13:33:18  dickey
+ *		mods to compile under apollo sr10.3
+ *		
+ *		Revision 8.0  90/03/02  11:41:50  ste_cm
+ *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ *		
  *		Revision 7.0  90/03/02  11:41:50  ste_cm
  *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
  *		
@@ -239,8 +245,8 @@ char *
 move_end(at,c)
 char	*at;
 {
-	if (c == CTL(B))	at = bbase;
-	else if (c == CTL(F))	at = bbase + strlen(bbase);
+	if (c == CTL('B'))	at = bbase;
+	else if (c == CTL('F'))	at = bbase + strlen(bbase);
 	else			errs++;
 
 	if (!errs)		MoveTo(at);
@@ -296,7 +302,7 @@ int	ec = erasechar(),
 		 * so that we can interlock this with a history-mechanism.
 		 */
 		if (c == '\n' || c == '\r') {
-			(void)move_end(tag,CTL(F));
+			(void)move_end(tag,CTL('F'));
 			if (newline) (void)waddch(Z,'\n');
 			break;
 		}

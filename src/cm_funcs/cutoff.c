@@ -1,15 +1,21 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs/RCS/cutoff.c,v 8.0 1989/07/25 08:56:09 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: cutoff.c,v 9.0 1991/05/15 10:00:59 ste_cm Rel $";
+#endif
 
 /*
  * Title:	cutoff.c (parse SCCS-style cutoff date)
  * Author:	T.E.Dickey
  * Created:	20 May 1988 (from 'sccsdate.c')
  * $Log: cutoff.c,v $
- * Revision 8.0  1989/07/25 08:56:09  ste_cm
- * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ * Revision 9.0  1991/05/15 10:00:59  ste_cm
+ * BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
  *
+ *		Revision 8.1  91/05/15  10:00:59  dickey
+ *		apollo sr10.3 cpp complains about tag in #endif
+ *		
+ *		Revision 8.0  89/07/25  08:56:09  ste_cm
+ *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ *		
  *		Revision 7.0  89/07/25  08:56:09  ste_cm
  *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
  *		

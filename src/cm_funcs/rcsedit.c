@@ -1,15 +1,21 @@
 #ifndef	lint
-static	char	*Id = "$Id: rcsedit.c,v 8.0 1990/04/18 14:10:27 ste_cm Rel $";
-#endif	lint
+static	char	*Id = "$Id: rcsedit.c,v 9.0 1991/05/15 09:34:03 ste_cm Rel $";
+#endif
 
 /*
  * Title:	rcsedit.c (edit RCS file)
  * Author:	T.E.Dickey
  * Created:	26 May 1988
  * $Log: rcsedit.c,v $
- * Revision 8.0  1990/04/18 14:10:27  ste_cm
- * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ * Revision 9.0  1991/05/15 09:34:03  ste_cm
+ * BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
  *
+ *		Revision 8.1  91/05/15  09:34:03  dickey
+ *		apollo sr10.3 cpp complains about tag in #endif
+ *		
+ *		Revision 8.0  90/04/18  14:10:27  ste_cm
+ *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ *		
  *		Revision 7.0  90/04/18  14:10:27  ste_cm
  *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
  *		

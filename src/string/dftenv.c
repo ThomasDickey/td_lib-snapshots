@@ -1,6 +1,6 @@
 #ifndef	lint
-static	char	what[] = "$Id: dftenv.c,v 8.0 1989/08/08 13:59:32 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: dftenv.c,v 9.0 1991/05/15 10:03:16 ste_cm Rel $";
+#endif
 
 /*
  * Title:	dftenv.c (getenv with default)

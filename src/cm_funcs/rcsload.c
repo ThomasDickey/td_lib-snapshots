@@ -1,15 +1,21 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcsload.c,v 8.0 1990/04/18 08:12:27 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: rcsload.c,v 9.0 1991/05/15 09:40:58 ste_cm Rel $";
+#endif
 
 /*
  * Title:	rcsload.c (load delta-tree for an RCS file)
  * Author:	T.E.Dickey
  * Created:	19 Aug 1988
  * $Log: rcsload.c,v $
- * Revision 8.0  1990/04/18 08:12:27  ste_cm
- * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ * Revision 9.0  1991/05/15 09:40:58  ste_cm
+ * BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
  *
+ *		Revision 8.1  91/05/15  09:40:58  dickey
+ *		apollo sr10.3 cpp complains about tag in #endif
+ *		
+ *		Revision 8.0  90/04/18  08:12:27  ste_cm
+ *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ *		
  *		Revision 7.0  90/04/18  08:12:27  ste_cm
  *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
  *		
@@ -83,7 +89,7 @@ loadtext(c)
 #ifdef	TEST
 		static	char	tag[] = ">-=";
 		PRINTF("%c>'%s'\n", tag[log_or_edit+1], bfr);
-#endif	TEST
+#endif
 		len = 0;
 
 		if (log_or_edit > 0) {
@@ -179,7 +185,7 @@ int	verbose;			/* TRUE if we show messages	*/
 					}
 #ifdef	TEST
 				PRINTF("********   %s (%d)\n", key, k);
-#endif	TEST
+#endif
 			}
 			break;
 		case S_NEXT:
@@ -306,4 +312,4 @@ char	*s;
 	perror(s);
 	(void)exit(1);
 }
-#endif	TEST
+#endif

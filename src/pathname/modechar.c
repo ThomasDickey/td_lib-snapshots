@@ -1,15 +1,21 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RCS/modechar.c,v 8.0 1989/07/25 09:07:28 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: modechar.c,v 9.0 1991/05/15 10:04:15 ste_cm Rel $";
+#endif
 
 /*
  * Title:	modechar.c (mode/char convert)
  * Author:	T.E.Dickey
  * Created:	18 Nov 1987
  * $Log: modechar.c,v $
- * Revision 8.0  1989/07/25 09:07:28  ste_cm
- * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ * Revision 9.0  1991/05/15 10:04:15  ste_cm
+ * BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
  *
+ *		Revision 8.1  91/05/15  10:04:15  dickey
+ *		apollo sr10.3 cpp complains about tag in #endif
+ *		
+ *		Revision 8.0  89/07/25  09:07:28  ste_cm
+ *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ *		
  *		Revision 7.0  89/07/25  09:07:28  ste_cm
  *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
  *		
@@ -60,11 +66,11 @@ register int	c;
 	case S_IFSOCK:	c = 's';	break;
 #ifdef	S_IFFIFO
 #undef	S_IFFIFO	/* fix apollo SR10 conflict */
-#endif	S_IFFIFO
-#endif	S_IFSOCK
+#endif
+#endif
 #ifdef	S_IFLNK
 	case S_IFLNK:	c = 'l';	break;
-#endif	S_IFLNK
+#endif
 #ifdef	S_IFFIFO
 	case S_IFFIFO:	c = 'p';	break;
 #endif

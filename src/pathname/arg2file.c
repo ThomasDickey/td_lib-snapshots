@@ -1,6 +1,6 @@
 #ifndef	lint
-static	char	Id[] = "$Id: arg2file.c,v 8.0 1989/10/04 12:05:50 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: arg2file.c,v 9.0 1991/05/15 09:18:30 ste_cm Rel $";
+#endif
 
 /*
  * Title:	argv2file.c

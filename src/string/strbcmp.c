@@ -1,6 +1,6 @@
 #ifndef	lint
-static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/string/RCS/strbcmp.c,v 8.0 1989/04/07 12:51:39 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: strbcmp.c,v 9.0 1991/05/15 09:55:12 ste_cm Rel $";
+#endif
 
 /*
  * Title:	strbcmp.c (string-blank-compare)
@@ -76,4 +76,4 @@ main()
 	(void)exit(0);
 	/*NOTREACHED*/
 }
-#endif	TEST
+#endif

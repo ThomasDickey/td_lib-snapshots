@@ -1,15 +1,21 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RCS/pathcmp.c,v 8.0 1989/03/16 08:46:28 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: pathcmp.c,v 9.0 1991/05/15 10:04:23 ste_cm Rel $";
+#endif
 
 /*
  * Title:	pathcmp.c (pathname compare)
  * Author:	T.E.Dickey
  * Created:	16 Mar 1989
  * $Log: pathcmp.c,v $
- * Revision 8.0  1989/03/16 08:46:28  ste_cm
- * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ * Revision 9.0  1991/05/15 10:04:23  ste_cm
+ * BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
  *
+ *		Revision 8.1  91/05/15  10:04:23  dickey
+ *		apollo sr10.3 cpp complains about tag in #endif
+ *		
+ *		Revision 8.0  89/03/16  08:46:28  ste_cm
+ *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ *		
  *		Revision 7.0  89/03/16  08:46:28  ste_cm
  *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
  *		
@@ -42,7 +48,7 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname
 
 #ifndef	SLASH
 #define	SLASH	'/'	/* divider between levels */
-#endif	SLASH
+#endif
 
 #define	CUT(p,s)	if ((s = strchr(p, SLASH)) != 0) *s = EOS
 
@@ -51,7 +57,7 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname
 #define	TRACE(s)	PRINTF s;
 #else
 #define	TRACE(s)
-#endif	DEBUG
+#endif
 
 #define	LT	-1
 #define	EQ	0
@@ -133,10 +139,10 @@ char	*argv[];
 #ifdef	apollo
 			,"//a"
 			,"//x"
-#endif	apollo
+#endif
 			};
 		do_test(sizeof(vec)/sizeof(vec[0]), vec);
 	}
 	(void)exit(SUCCESS);
 }
-#endif	TEST
+#endif

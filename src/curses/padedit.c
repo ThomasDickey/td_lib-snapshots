@@ -1,15 +1,18 @@
 #ifndef	lint
-static	char	Id[] = "$Id: padedit.c,v 8.0 1989/12/07 14:24:32 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: padedit.c,v 8.1 1991/05/15 13:23:44 dickey Exp $";
+#endif
 
 /*
  * Title:	padedit.c (pad-edit)
  * Author:	T.E.Dickey
  * Created:	14 Dec 1987
  * $Log: padedit.c,v $
- * Revision 8.0  1989/12/07 14:24:32  ste_cm
- * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ * Revision 8.1  1991/05/15 13:23:44  dickey
+ * mods to compile under apollo sr10.3
  *
+ *		Revision 8.0  89/12/07  14:24:32  ste_cm
+ *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ *		
  *		Revision 7.0  89/12/07  14:24:32  ste_cm
  *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
  *		
@@ -58,7 +61,7 @@ static	char	Id[] = "$Id: padedit.c,v 8.0 1989/12/07 14:24:32 ste_cm Rel $";
 #include	"/sys/ins/error.ins.c"
 #include	"/sys/ins/pad.ins.c"
 #include	"/sys/ins/streams.ins.c"
-#endif	apollo
+#endif
 
 #ifndef	SYSTEM5
 #include	<sys/wait.h>
@@ -98,7 +101,7 @@ char	*name;
 	}
 	return(0);
 }
-#endif	apollo
+#endif	/* apollo */
 
 /*
  * Spawn a process which is detached from the current one.
@@ -113,21 +116,21 @@ char	*argv[];
 #ifdef	TEST
 	int	debug	= 0;
 #define	DEBUG(s,a)	if (debug) printf(s,a)
-#else	TEST
+#else	/* TEST */
 #define	DEBUG(s,a)
-#endif	TEST
+#endif	/* TEST */
 
 #ifdef	SYSTEM5
 int	status;
 #define	W_RETCODE	((status >> 8) & 0xff)
-#else	SYSTEM5
+#else	/* SYSTEM5 */
 union	wait	status;
 #define	W_RETCODE	status.w_retcode
-#endif	SYSTEM5
+#endif	/* SYSTEM5 */
 
 	if ((pid = fork()) > 0) {
 		DEBUG("spawn-1st (pid= %d)\n", pid);
-		while (wait(&status) >= 0);
+		while (wait((int *)&status) >= 0);
 		DEBUG("spawn-1st (status= %#x)\n", status);
 		if (errno = W_RETCODE)
 			return (-1);
@@ -159,7 +162,7 @@ int	readonly;
 	if (code > 0)
 		return (apollo_edit(name, readonly));
 	else
-#endif	apollo
+#endif	/* apollo */
 	if (code == 0) {
 		static	char	*vec[] = {
 				"",	/* path */
@@ -211,4 +214,4 @@ char	*s;
 	perror(s);
 	exit(1);
 }
-#endif	TEST
+#endif

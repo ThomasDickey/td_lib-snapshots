@@ -1,3 +1,859 @@
+1991-05-15  dickey@software.org
+
+	* src/curses/rawgets.c: mods to compile under apollo sr10.3
+
+1991-05-15  ste_cm@software.org
+
+	* src/curses/rawgets.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* include/cmdch.h: mods to accommodate apollo sr10.3
+
+1991-05-15  ste_cm@software.org
+
+	* include/cmdch.h:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+	* include/cmdch.h: BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+	* include/cmdch.h: BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1991-05-15  dickey@software.org
+
+	* src/curses/padedit.c, src/process/for_user.c, src/process/execute.c:
+	mods to compile under apollo sr10.3
+
+	* include/ptypes.h: mods to accommodate apollo sr10.3
+
+	* src/pathname/copyback.c: mods to compile under apollo sr10.3
+
+1991-05-15  ste_cm@software.org
+
+	* src/pathname/copyback.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* include/td_lib.h: mods to accommodate apollo sr10.3
+
+	* src/process/catchall.c: mods to compile under apollo sr10.3
+
+	* src/cm_funcs/packdate.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/cm_funcs/packdate.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/cm_funcs/newzone.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/cm_funcs/newzone.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/string/lsbycols.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/string/lsbycols.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/pathname/ftype.c, src/pathname/file2mem.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/pathname/file2mem.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/memory/doalloc.c: apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/memory/doalloc.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/pathname/add2fnam.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/pathname/add2fnam.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/pathname/abspath.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/pathname/abspath.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/cm_funcs/rcs_dir.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/cm_funcs/rcs_dir.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/cm_funcs/rcsdebug.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/cm_funcs/rcsdebug.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/curses/rawterm.c: apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/curses/rawterm.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/pathname/pathcmp.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/pathname/pathcmp.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/pathname/modechar.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/pathname/modechar.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/process/makeargv.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/process/makeargv.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/string/ltostr.c: apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/string/ltostr.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/curses/killchar.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/curses/killchar.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/pathname/fp2argv.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/pathname/fp2argv.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/process/failed.c: apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/process/failed.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/curses/erasechr.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/curses/erasechr.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/string/dftenv.c: apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/string/dftenv.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/pathname/filecopy.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/pathname/filecopy.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/curses/dumpwin.c: apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/curses/dumpwin.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/curses/dumpchr.c: apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/curses/dumpchr.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/pathname/dotname.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/pathname/dotname.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/string/dotcmp.c: apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/string/dotcmp.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/pathname/denode.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/pathname/denode.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/cm_funcs/cutoff.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/cm_funcs/cutoff.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/curses/blip.c: apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/curses/blip.c: BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/process/bldarg.c: apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/process/bldarg.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/curses/beep.c: apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/curses/beep.c: BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/curses/wrepaint.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/curses/wrepaint.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/curses/win2file.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/curses/win2file.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/pathname/which.c: apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/pathname/which.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/pathname/walktree.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/pathname/walktree.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/curses/viewfile.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/curses/viewfile.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/cm_funcs/vercmp.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/cm_funcs/vercmp.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/memory/vecalloc.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/memory/vecalloc.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/cm_funcs/vcs_file.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/cm_funcs/vcs_file.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/process/userprot.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/process/userprot.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/process/usercopy.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/process/usercopy.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/unix/uid2s.c: apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/unix/uid2s.c: BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/memory/txtalloc.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/memory/txtalloc.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/pathname/trimpath.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/pathname/trimpath.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/pathname/track_wd.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/pathname/track_wd.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/string/strucpy.c: apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/string/strucpy.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/string/strucmp.c: apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/string/strucmp.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/string/strtrim.c: apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/string/strtrim.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/string/strclean.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/string/strclean.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/string/strbcmp.c: apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/string/strbcmp.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/memory/stralloc.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/memory/stralloc.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/unix/setmtime.c: apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/unix/setmtime.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/curses/scr_size.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/curses/scr_size.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/cm_funcs/sccsname.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/cm_funcs/sccsname.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/cm_funcs/sccslast.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/cm_funcs/sccslast.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/cm_funcs/sccs_dir.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/cm_funcs/sccs_dir.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/curses/savewin.c: apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/curses/savewin.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/pathname/sameleaf.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/pathname/sameleaf.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/unix/s2uid.c: apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/unix/s2uid.c: BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/unix/s2gid.c: apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/unix/s2gid.c: BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/process/revert.c: apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/process/revert.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/curses/resizwin.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/curses/resizwin.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/pathname/relpath.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/pathname/relpath.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/cm_funcs/rcstemp.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/cm_funcs/rcstemp.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/cm_funcs/rcsperm.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/cm_funcs/rcsperm.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/cm_funcs/rcspath.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/cm_funcs/rcspath.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/cm_funcs/rcsname.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/cm_funcs/rcsname.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/cm_funcs/rcslocks.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/cm_funcs/rcslocks.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/cm_funcs/rcsload.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/cm_funcs/rcsload.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/cm_funcs/rcslast.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/cm_funcs/rcslast.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/cm_funcs/rcskeys.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/cm_funcs/rcskeys.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/cm_funcs/rcsedit.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/cm_funcs/rcsedit.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/pathname/pathleaf.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/pathname/pathleaf.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/pathname/pathhead.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/pathname/pathhead.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/pathname/pathcat.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/pathname/pathcat.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/pathname/name2s.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/pathname/name2s.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/pathname/mem2file.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/pathname/mem2file.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/pathname/istextfl.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/pathname/istextfl.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/unix/gid2s.c: apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/unix/gid2s.c: BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/process/getuser.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/process/getuser.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/process/gethome.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/process/gethome.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/pathname/ftype2.c, src/pathname/file2arg.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/pathname/file2arg.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/curses/cmdch.c: apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/curses/cmdch.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/process/catarg.c: apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/process/catarg.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* src/pathname/arg2file.c:
+	apollo sr10.3 cpp complains about tag in #endif
+
+1991-05-15  ste_cm@software.org
+
+	* src/pathname/arg2file.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* include/sccsdefs.h: apollo sr10.3 cpp complains about #endif tag
+
+1991-05-15  ste_cm@software.org
+
+	* include/sccsdefs.h:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-15  dickey@software.org
+
+	* include/rcsdefs.h: apollo sr10.3 cpp complains about #endif tag
+
+1991-05-15  ste_cm@software.org
+
+	* include/rcsdefs.h: BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
 1991-05-01  dickey@software.org
 
 	* src/curses/scr_size.c:

@@ -1,6 +1,6 @@
 #ifndef	lint
-static	char	Id[] = "$Id: lsbycols.c,v 8.0 1989/12/08 08:21:15 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: lsbycols.c,v 9.0 1991/05/15 10:18:02 ste_cm Rel $";
+#endif
 
 /*
  * Title:	list_by_cols.c
@@ -21,9 +21,9 @@ static	char	Id[] = "$Id: lsbycols.c,v 8.0 1989/12/08 08:21:15 ste_cm Rel $";
 
 #ifdef	lint
 #define	LIST(n)	(*(listp + n))		/* close enough to fool lint */
-#else	!lint
+#else	/* !lint */
 #define	LIST(n)	(*(char **)((char *)listp + (sizep * n)))
-#endif	lint/!lint
+#endif
 #define	MAXCOL	80
 
 /*ARGSUSED*/
@@ -88,4 +88,4 @@ char	*argv[];
 		list_by_cols(tbl, sizeof(tbl[0]), sizeof(tbl)/sizeof(tbl[0]));
 	}
 }
-#endif	TEST
+#endif
