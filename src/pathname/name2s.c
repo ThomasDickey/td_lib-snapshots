@@ -1,12 +1,23 @@
 #ifndef lint
-static  char    sccs_id[] = "@(#)name2s.c	1.2 88/08/18 15:57:30";
+static  char    sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RCS/name2s.c,v 3.0 1988/08/19 06:52:01 ste_cm Rel $";
 #endif  lint
 
 /*
  * Title:	name2s.c (convert name to external string)
  * Author:	T.E.Dickey
  * Created:	18 Aug 1988 (from ded2s.c)
- * Modified:
+ * $Log: name2s.c,v $
+ * Revision 3.0  1988/08/19 06:52:01  ste_cm
+ * BASELINE Mon Jun 19 13:27:01 EDT 1989
+ *
+ *		Revision 2.0  88/08/19  06:52:01  ste_cm
+ *		BASELINE Thu Apr  6 09:45:13 EDT 1989
+ *		
+ *		Revision 1.4  88/08/19  06:52:01  dickey
+ *		sccs2rcs keywords
+ *		
+ *		19 Aug 1988, added 'opt & 4' mode so we can make 'copy' work on
+ *			     things like "/bin/[".
  *
  * Function:	Convert a filename-string to printing form (for display), or
  *		to form useful for shell commands.
@@ -17,6 +28,7 @@ static  char    sccs_id[] = "@(#)name2s.c	1.2 88/08/18 15:57:30";
  *		opt	= options, by bit:
  *			1=escapes,
  *			2=underlying system (e.g., DOMAIN/IX to AEGIS)
+ *			4=underlying escapes (no unix escapes)
  *
  * Returns:	The length of the converted name.
  *
@@ -63,10 +75,10 @@ char	*bfr, *name;
 					&&  in_leaf == 1
 					&&  strchr("./", *name) == 0))
 					*bfr++ = ':';
-				else if (esc) {
+				else if (opt & 5) {
 					if (isAEGIS(c))
 						*bfr++ = '@';
-					if (isshell(c))
+					if ((opt & 1) && isshell(c))
 						*bfr++ = '\\';
 				}
 				*bfr++ = c;

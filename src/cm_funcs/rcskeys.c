@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)rcskeys.c	1.1 88/05/26 14:28:58";
+static	char	sccs_id[] = "@(#)rcskeys.c	1.2 88/08/19 09:49:31";
 #endif	lint
 
 /*
@@ -7,6 +7,8 @@ static	char	sccs_id[] = "@(#)rcskeys.c	1.1 88/05/26 14:28:58";
  * Author:	T.E.Dickey
  * Created:	26 May 1988
  * Modified:
+ *		19 Aug 1988, added 'log', 'text' keywords so we can scan the
+ *			     entire archive-file.
  *
  * Function:	Given a null-terminated string, parse it to see what type of
  *		RCS keyword it may be.  A <num> is legal here, since we may
@@ -37,7 +39,9 @@ char	*keys[] = {
 		"state",	/*7:	state		{<id>};		*/
 		"branches",	/*8:	branches	{<num>}*;	*/
 		"next",		/*9:	next		{<num>};	*/
-		"desc"		/*10: description ends header */
+		"desc",		/*10: description ends header		*/
+		"log",		/*11: delta log-message			*/
+		"text"		/*12: delta text/editing commands	*/
 		};
 register int j;
 	if (*s) {

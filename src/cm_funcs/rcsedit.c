@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)rcsedit.c	1.4 88/08/12 11:24:01";
+static	char	sccs_id[] = "@(#)rcsedit.c	1.6 88/08/19 10:26:40";
 #endif	lint
 
 /*
@@ -7,6 +7,10 @@ static	char	sccs_id[] = "@(#)rcsedit.c	1.4 88/08/12 11:24:01";
  * Author:	T.E.Dickey
  * Created:	26 May 1988
  * Modified:
+ *		19 Aug 1988, modified 'rcsopen()' to properly check that we
+ *			     are opening a file.  Corrected 'rcsparse_str()',
+ *			     which must find delimiter before skipping it!
+ *			     Added 'str_func' argument to 'rcs_parse_str()'.
  *		12 Aug 1988, corrected call on 'copyback()'; wasn't saving the
  *			     file's original protection.
  *		05 Aug 1988, removed 'rcsname()' call (done in callers).
@@ -90,16 +94,18 @@ char	*name;
 	lines	= 0;
 	verbose	= show;
 	VERBOSE("++ rcs-%s(%s)\n", (show > 0) ? "edit" : "scan", fname);
-	if ( ((fpS = fopen(fname, "r")) == 0)
-	||   (stat(fname, &sb) < 0) ) {
-		PRINTF("?? Cannot open \"%s\"\n", fname);
-		return (FALSE);
+	if (	(stat(fname, &sb) >= 0)
+	&&	((sb.st_mode & S_IFMT) == S_IFREG)
+	&&	(fpS = fopen(fname, "r")) ) {
+		fmode	= sb.st_mode & 0555;
+			/* retain protection for copyback */
+		if (!fpT)
+			fpT = tmpfile();
+		rewind(fpT);
+		return (TRUE);
 	}
-	fmode	= sb.st_mode & 0555;	/* retain protection for copyback */
-	if (!fpT)
-		fpT = tmpfile();
-	rewind(fpT);
-	return (TRUE);
+	PRINTF("?? Cannot open \"%s\"\n", fname);
+	return (FALSE);
 }
 
 /*
@@ -205,21 +211,32 @@ char	*d, *s;
  *	Skip over a string, which may cover more than one record.  The string
  *	is delimited by '@' marks, which are doubled to include them.
  */
+#define	STR_FUNC(c)	if (str_func != 0)	str_func(c)
+
 char *
-rcsparse_str(s)
-char	*s;
+rcsparse_str(s, str_func)
+register char	*s;
+int	(*str_func)();		/* copies string as we read it */
 {
-	s = skips(s);
-	if (*s == '@') {	/* don't try to process if not a string */
-		s++;
+	register int c;
+
+	if (s != 0) {
+		s = skips(s);
+		while (*s != '@')
+			if ((s = rcsread(s)) == 0)		goto done;
+		s++;		/* skip past opening '@' */
 		do {
 			while (*s) {
-				if (*s != '@')		s++;
-				else if (s[1] == '@')	s += 2;
-				else
-					return (s+1);
+				if ((c = *s++) == '@') {
+					if (*s != '@')		goto done;
+					s++;
+					STR_FUNC('@');
+				} else {
+					STR_FUNC(c);
+				}
 			}
 		} while (s = rcsread(s));
 	}
+done:	STR_FUNC(EOS);
 	return (s);
 }
