@@ -1,3 +1,9 @@
+1988-05-09  dickey@software.org
+
+	* src/curses/cmdch.c:
+	added a special hack to permit the different flavors of VT100 cursor
+	keys I have seen: \EA, \E[A, \EOA, etc.
+
 1988-05-06  dickey@software.org
 
 	* src/Makefile, src/cm_funcs/packdate.c, src/curses/resizwin.c, src/curses/padedit.c:
