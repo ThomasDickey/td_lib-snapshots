@@ -1,4 +1,4 @@
-/* $Id: td_curse.h,v 12.42 1998/03/01 21:24:51 tom Exp $ */
+/* $Id: td_curse.h,v 12.44 1999/08/10 22:09:42 tom Exp $ */
 
 /*
  * TD_LIB CURSES-related definitions
@@ -78,6 +78,14 @@
 #define	wMaxY(w)	(((w)->_maxy) + (LINES - stdscr->_maxy))
 #endif
 #endif	/* wMaxX */
+
+#if CURSES_LIKE_BSD44
+#define	wBegX(w)	((w)->begx)
+#define	wBegY(w)	((w)->begy)
+#else
+#define	wBegX(w)	((w)->_begx)
+#define	wBegY(w)	((w)->_begy)
+#endif
 
 /*----------------------------------------------------------------------------*/
 #if CURSES_LIKE_BSD

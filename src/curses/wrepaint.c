@@ -24,7 +24,7 @@
 
 #include	"td_curse.h"
 
-MODULE_ID("$Id: wrepaint.c,v 12.12 1997/09/13 14:25:15 tom Exp $")
+MODULE_ID("$Id: wrepaint.c,v 12.13 1999/08/10 21:51:53 tom Exp $")
 
 void	wrepaint(
 	_ARX(WINDOW *,	win)
@@ -47,8 +47,8 @@ void	wrepaint(
 	 * but not however, with BSD 4.4, which has a partially functional
 	 * touchwin.
 	 */
-	auto	int	min_row = win->_begy,
-			min_col = win->_begx,
+	auto	int	min_row = wBegY(win),
+			min_col = wBegX(win),
 			max_col = wMaxX(win) + min_col - 1;
 	register int	col, c;
 

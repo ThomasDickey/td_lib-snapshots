@@ -35,7 +35,7 @@
 #include	<ctype.h>
 #include	<time.h>
 
-MODULE_ID("$Id: win2file.c,v 12.13 1998/03/20 01:20:29 tom Exp $")
+MODULE_ID("$Id: win2file.c,v 12.14 1999/08/10 21:51:25 tom Exp $")
 
 #define	OUT	FPRINTF(fp,
 
@@ -100,7 +100,7 @@ void	MarkIt(
 	_DCL(int,	row)
 	_DCL(chtype,	c)
 {
-	(void)wmove(win, (int)(row + win->_begy), (int)(win->_begx));
+	(void)wmove(win, (int)(row + wBegY(win)), (int)wBegX(win));
 	(void)waddch(win,c);
 }
 

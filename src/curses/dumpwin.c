@@ -26,7 +26,7 @@
 #include	"td_curse.h"
 #include	<time.h>
 
-MODULE_ID("$Id: dumpwin.c,v 12.16 1998/02/15 19:59:40 tom Exp $")
+MODULE_ID("$Id: dumpwin.c,v 12.17 1999/08/10 21:50:38 tom Exp $")
 
 #define	OUT	FPRINTF
 
@@ -85,8 +85,8 @@ void	dumpwin(
 		OUT(fp, "window @ %p (LINES=%d, COLS=%d)\n", w, LINES, COLS);
 
 		OUT(fp, "   _cury:%d, _curx:%d\n", current_y, current_x);
-		OUT(fp, "   _maxy:%d, _maxx:%d\n", w->_maxy, w->_maxx);
-		OUT(fp, "   _begy:%d, _begx:%d\n", w->_begy, w->_begx);
+		OUT(fp, "   _maxy:%d, _maxx:%d\n", wMaxY(w), wMaxX(w));
+		OUT(fp, "   _begy:%d, _begx:%d\n", wBegY(w), wBegX(w));
 
 #if CURSES_LIKE_NCURSES
 		OUT(fp, "   _region %d..%d\n",     w->_regtop, w->_regbottom);

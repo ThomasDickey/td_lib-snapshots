@@ -14,7 +14,7 @@
 #include	"ptypes.h"
 #include	"td_curse.h"
 
-MODULE_ID("$Id: addchnst.c,v 12.3 1995/01/28 14:01:15 tom Exp $")
+MODULE_ID("$Id: addchnst.c,v 12.4 1999/08/10 21:48:58 tom Exp $")
 
 #ifndef OK
 #define OK 0
@@ -41,8 +41,8 @@ int	waddchnstr(
 		if ((code = waddch(win, *s++)) != OK) {
 			return code;
 		}
-		if (++x >= win->_maxx) {
-			x = win->_begx;
+		if (++x >= wMaxX(win)) {
+			x = wBegX(win);
 			y++;
 		}
 		wmove(win, y, x);
