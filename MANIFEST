@@ -1,6 +1,8 @@
-MANIFEST for td_lib, version t19871123
+MANIFEST for td_lib, version t19871124
 --------------------------------------------------------------------------------
 MANIFEST                        this file
+include                         subdirectory
+include/llib-ltd                template for lint-library
 src                             subdirectory
 src/Makefile                    makefile for td_lib/src
 src/cm_funcs                    subdirectory
@@ -8,6 +10,7 @@ src/cm_funcs/packdate.c         pack numbers to make UNIX date
 src/cm_funcs/sccslast.c         scan for last SCCS date & version
 src/curses                      subdirectory
 src/curses/rawgets.c            read a string via curses in raw mode (allow edits)
+src/curses/rawterm.c            set terminal to raw (cooked) mode
 src/memory                      subdirectory
 src/memory/doalloc.c            wrapper for malloc/realloc/free (checks pointers)
 src/pathname                    subdirectory

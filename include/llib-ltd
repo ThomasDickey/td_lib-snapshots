@@ -1,0 +1,44 @@
+/* @(#)llib-ltd	1.1 87/11/24 13:42:45 */
+/*LINTLIBRARY*/
+
+#include	<sys/types.h>
+
+/* bldarg.c ----------------------------------------------------------- */
+	bldarg (argc, argv, string) char *argv[], *string; { }
+
+/* gid2s.c ------------------------------------------------------------ */
+
+char	*gid2s(gid) { return(0); }
+
+/* modechar.c --------------------------------------------------------- */
+int	modechar(mode) unsigned mode; { return(0); }
+
+/* packdate.c --------------------------------------------------------- */
+long	packdate (year, mon, day, hour, min, s) { return (0); }
+
+/* rawgets.c ---------------------------------------------------------- */
+	rawgets (bfr,size,newline) char	*bfr; { }
+
+/* rawterm.c ---------------------------------------------------------- */
+	rawterm() { }
+
+/* s2gid.c ------------------------------------------------------------ */
+int	s2gid(s) char	*s; { return (0); }
+
+/* s2uid.c ------------------------------------------------------------ */
+int	s2uid(s) char	*s; { return (0); }
+
+/* sccslast.c --------------------------------------------------------- */
+	sccslast(wd,n,r_,v_,t_) char *wd,*n; unsigned char *r_,*v_; time_t *t_; { }
+
+/* sccszone.c --------------------------------------------------------- */
+long	sccszone() { return(0); }
+
+/* strclean.c --------------------------------------------------------- */
+int	strclean(string) char	*string; { return(0); }
+
+/* uid2s.c ------------------------------------------------------------ */
+char	*uid2s(uid) { return(0); }
+
+/* which.c ------------------------------------------------------------ */
+int	which(bfr, len, find, dot) char	*bfr, *find, *dot; { return(0); }

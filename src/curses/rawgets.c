@@ -1,9 +1,14 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)rawgets.c	1.1 87/09/29 12:35:55";
+static	char	sccs_id[] = "@(#)rawgets.c	1.2 87/11/24 09:40:35";
 #endif	lint
 
 /*
+ * Author:	T.E.Dickey
+ * Title:	rawgets.c (raw-mode 'gets()')
  * Created:	29 Sep 1987 (from 'fl.c')
+ * Modified:
+ *		24 Nov 1987, moved to my SPC library, use under 'curses'.
+ *
  * Function:	Accept input from the screen, permitting a user to either
  *		alter an existing string, or to enter a new one.  This
  *		procedure is called in raw/noecho mode, and is used by 'fl'
@@ -20,9 +25,8 @@ static	char	sccs_id[] = "@(#)rawgets.c	1.1 87/09/29 12:35:55";
  *		If a kill character is given, 'bfr[]' is nulled, but the
  *		cursor position is not altered.
  */
+#include	<curses.h>
 #include	<ctype.h>
-
-#include	"screen.h"
 
 static	int	xbase,	ybase,	/* base-position of 'bfr[]' */
 		Imode;
