@@ -1,18 +1,23 @@
-# @(#)Makefile	1.60 89/03/16 08:45:49
+# $Header: /users/source/archives/td_lib.vcs/src/RCS/Makefile,v 1.61 1989/03/20 12:31:36 dickey Exp $
 # MAKE-file for miscellaneous library routines
 #
+# $Log: Makefile,v $
+# Revision 1.61  1989/03/20 12:31:36  dickey
+# converted to STE CM-format
+#
+#
 ####### (Development) ##########################################################
-GET	= getdelta
+GET	= checkout
 #
 ####### (Command-line Options) #################################################
-llib	= td
-LLIB	= llib-l$(llib)
+I	= ../interface
+INCLUDES= -I$I
 CFLAGS  = $(DEFINES) $(INCLUDES) -O
 DATE	= echo '****'`date` >> $@
 LINTOPT	= $(DEFINES) $(INCLUDES) -ltd -lcurses -lapollo
 #
 ####### (Standard Lists) #######################################################
-A	= lib.a
+A	= ../lib/lib.a
 CSRC	=\
 	abspath.c\
 	beep.c\
@@ -87,9 +92,7 @@ CSRC	=\
 	which.c\
 	win2file.c
 #
-HSRC	= cmdch.h ptypes.h rcsdefs.h
-SCRIPTS	= makellib.sh
-SRCS	= $(CSRC) $(HSRC) $(SCRIPTS) $(LLIB)
+SOURCES	= $(CSRC)
 #
 OBJS	=\
 	abspath.o\
@@ -165,10 +168,7 @@ OBJS	=\
 	which.o\
 	win2file.o
 #
-ALL	=\
-	$A\
-	$(SCRIPTS)\
-	$(LLIB).ln
+ALL	= $A
 #
 ####### (Standard Productions) #################################################
 all:		$(ALL)
@@ -176,7 +176,7 @@ all:		$(ALL)
 clean:				; rm -f *.o *.out *.ln
 clobber:	clean		; rm -f $(ALL)
 destroy:			; rm -f *
-sources:	$(SRCS)
+sources:	$(SOURCES)
 #
 install: all
 #
@@ -189,46 +189,45 @@ archive: $(OBJS)
 	rm -f $A
 	ar rv $A $(OBJS)
 #
-beep.o:		ptypes.h
-cmdch.o:	ptypes.h	cmdch.h
-copyback.o:	ptypes.h
-cutoff.o:	ptypes.h
-doalloc.o:	ptypes.h
-dumpwin.o:	ptypes.h
-erasechar.o:	ptypes.h
-execute.o:	ptypes.h
-filecopy.o:	ptypes.h
-for_user.o:	ptypes.h
-fp2argv.o:	ptypes.h
-gid2s.o:	ptypes.h
-killchar.o:	ptypes.h
-name2s.o:	ptypes.h
-newzone.o:	ptypes.h
-packdate.o:	ptypes.h
-padedit.o:	ptypes.h
-pathcmp.o:	ptypes.h
-rawgets.o:	ptypes.h	cmdch.h
-rawterm.o:	ptypes.h
-rcsedit.o:	ptypes.h	rcsdefs.h
-rcskeys.o:	rcsdefs.h
-rcslast.o:	ptypes.h	rcsdefs.h
-rcsload.o:	ptypes.h	rcsdefs.h
-rcslocks.o:	ptypes.h	rcsdefs.h
-rcsname.o:	ptypes.h	rcsdefs.h
-rcspermit.o:	ptypes.h	rcsdefs.h
-resizewin.o:	ptypes.h
-sccslast.o:	ptypes.h
-setmtime.o:	ptypes.h
-savewin.o:	ptypes.h
-uid2s.o:	ptypes.h
-usercopy.o:	ptypes.h
-userprot.o:	ptypes.h
-vcs_file.o:	ptypes.h	rcsdefs.h
-walktree.o:	ptypes.h
-win2file.o:	ptypes.h
+beep.o:		$I/ptypes.h
+cmdch.o:	$I/ptypes.h	$I/cmdch.h
+copyback.o:	$I/ptypes.h
+cutoff.o:	$I/ptypes.h
+doalloc.o:	$I/ptypes.h
+dumpwin.o:	$I/ptypes.h
+erasechar.o:	$I/ptypes.h
+execute.o:	$I/ptypes.h
+filecopy.o:	$I/ptypes.h
+for_user.o:	$I/ptypes.h
+fp2argv.o:	$I/ptypes.h
+gid2s.o:	$I/ptypes.h
+killchar.o:	$I/ptypes.h
+name2s.o:	$I/ptypes.h
+newzone.o:	$I/ptypes.h
+packdate.o:	$I/ptypes.h
+padedit.o:	$I/ptypes.h
+pathcmp.o:	$I/ptypes.h
+rawgets.o:	$I/ptypes.h	$I/cmdch.h
+rawterm.o:	$I/ptypes.h
+rcsedit.o:	$I/ptypes.h	$I/rcsdefs.h
+rcskeys.o:	$I/rcsdefs.h
+rcslast.o:	$I/ptypes.h	$I/rcsdefs.h
+rcsload.o:	$I/ptypes.h	$I/rcsdefs.h
+rcslocks.o:	$I/ptypes.h	$I/rcsdefs.h
+rcsname.o:	$I/ptypes.h	$I/rcsdefs.h
+rcspermit.o:	$I/ptypes.h	$I/rcsdefs.h
+resizewin.o:	$I/ptypes.h
+sccslast.o:	$I/ptypes.h
+setmtime.o:	$I/ptypes.h
+savewin.o:	$I/ptypes.h
+uid2s.o:	$I/ptypes.h
+usercopy.o:	$I/ptypes.h
+userprot.o:	$I/ptypes.h
+vcs_file.o:	$I/ptypes.h	$I/rcsdefs.h
+walktree.o:	$I/ptypes.h
+win2file.o:	$I/ptypes.h
 #
 ####### (Development) ##########################################################
-$(LLIB).ln:	ptypes.h rcsdefs.h $(LLIB) ; makellib.sh $(LLIB) $(llib)
-$(SRCS):			; $(GET) -s sccs/s.$@
+$(SOURCES):			; $(GET) $@
 lint.out:	$(CSRC)		; $(DATE); tdlint $(LINTOPT) $? >>$@
 lincnt.out:	$(CSRC)		; $(DATE); lincnt $(CSRC) >>$@
