@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: uid2s.c,v 7.0 1989/10/04 11:38:17 ste_cm Rel $";
+static	char	Id[] = "$Id: uid2s.c,v 8.0 1990/05/15 08:14:46 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,9 +7,16 @@ static	char	Id[] = "$Id: uid2s.c,v 7.0 1989/10/04 11:38:17 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	10 Nov 1987
  * $Log: uid2s.c,v $
- * Revision 7.0  1989/10/04 11:38:17  ste_cm
- * BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+ * Revision 8.0  1990/05/15 08:14:46  ste_cm
+ * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
  *
+ *		Revision 7.1  90/05/15  08:14:46  dickey
+ *		added a hack to read the apollo passwd-file directly to bypass
+ *		a bug in their handling of obsolete accounts
+ *		
+ *		Revision 7.0  89/10/04  11:38:17  ste_cm
+ *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+ *		
  *		Revision 6.0  89/10/04  11:38:17  ste_cm
  *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
  *		
@@ -75,6 +82,37 @@ char	*name;
 	table_uid2s = q;
 }
 
+#ifdef	apollo_sr10
+	int	len_passwd;	/* share with 's2uid.c' */
+	char	**vec_passwd;
+static	find_uid(bfr)
+	char	*bfr;
+{
+	register int	j;
+	register char	*s, *t;
+	auto	 size_t	len = strlen(bfr);
+
+	if (!len_passwd)
+		len_passwd = file2argv("/etc/passwd", &vec_passwd);
+	for (j = 0; j < len_passwd; j++) {
+		if (s = strchr(vec_passwd[j], ':')) {
+			if (t = strchr(s+1, ':')) {
+				if (t[len+1] == ':'
+				&& !strncmp(t+1, bfr, len)) {
+					len = s - vec_passwd[j];
+					(void)strncpy(bfr, vec_passwd[j], len);
+					bfr[len] = EOS;
+					return;
+				}
+			}
+		}
+	}
+}
+#define	unknown_uid	find_uid(bfr);
+#else
+#define	unknown_uid
+#endif
+
 char *
 uid2s(uid)
 int	uid;
@@ -98,6 +136,7 @@ int	uid;
 	else {
 		auto	char	bfr[80];
 		(void)ltostr(bfr, (long)uid, 0);
+		unknown_uid	/* try to recover! */
 		define_uid2s(uid, bfr);
 	}
 	return (uid2s(uid));
