@@ -1,4 +1,4 @@
-# $Id: descrip.mms,v 6.0 1990/03/28 08:26:37 ste_cm Rel $
+# $Id: descrip.mms,v 7.0 1990/04/26 07:54:27 ste_cm Rel $
 # MMS-file for miscellaneous library routines	
 #
 ####### (Development) ##########################################################
@@ -27,6 +27,7 @@ LIBRARYMODULES = -
 	DOTCMP, -
 	DOTNAME, -
 	DUMPCHR, -
+	EXECUTE, -
 	FAILED, -
 	FILE2ARGV, -
 	FILE2MEM, -
@@ -60,7 +61,6 @@ UNUSED_MODULES = -
 	DENODE, 		# only for ABSPATH -
 	DUMPWIN, 		# curses -
 	ERASECHAR, 		# curses -
-	EXECUTE, 		# unix-style fork/exec -
 	FILECOPY, 		# needs unix system-I/O -
 	FOR_USER, 		# only for setuid programs -
 	FTYPE2, 		# unix-style suffix -
@@ -218,6 +218,7 @@ ALL	= $(A)
 ALL :		$(A)($(LIBRARYMODULES))
 		@ WRITE SYS$OUTPUT "** produced $@"
 CLEAN :
+		- purge
 		- remove -vf *.LIS;* *.LOG;* TEST_*.*;*
 CLOBBER :	CLEAN
 		- remove -vf *.OBJ;* $(ALL)
@@ -230,6 +231,7 @@ INSTALL :
 ####### (Details of Productions) ###############################################
 ! Dependencies to archive are done by default rules, e.g.,
 !'$(A)(UNIXDIR) :	UNIXDIR.OBJ
+$(A)($(LIBRARYMODULES)) : $(PTYPES_H)
 ADD2FNAME.obj :		$(PTYPES_H)
 ARGV2FILE.obj :		$(PTYPES_H)
 BEEP.obj :		$(PTYPES_H)
@@ -283,11 +285,13 @@ WIN2FILE.obj :		$(PTYPES_H)
 		$(LINK) $(LINKFLAGS) $(MMS$TARGET_NAME),$(A)/LIB,$(C_RTL)/LIB
 !
 ! Rules for test-programs
+TEST_EXECUTE.EXE :	TEST_EXECUTE.OBJ
 TEST_LTOSTR.EXE :	TEST_LTOSTR.OBJ
 TEST_TXTALLOC.EXE :	TEST_TXTALLOC.OBJ
 TEST_VERCMP.EXE :	TEST_VERCMP.OBJ
 TEST_WALKTREE.EXE :	TEST_WALKTREE.OBJ
 !
+TEST_EXECUTE.OBJ :	EXECUTE.C		; $(TEST_CC)
 TEST_LTOSTR.OBJ :	LTOSTR.C		; $(TEST_CC)
 TEST_TXTALLOC.OBJ :	TXTALLOC.C		; $(TEST_CC)
 TEST_VERCMP.OBJ :	VERCMP.C		; $(TEST_CC)
