@@ -1,3 +1,21 @@
+1992-05-15  dickey@software.org
+
+	* src/pathname/pathcmp.c: oops: fix "EQ" return
+
+1992-05-15  ste_cm@software.org
+
+	* src/pathname/pathcmp.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1992-05-15  dickey@software.org
+
+	* include/port2vms.h:
+	obs: STAT, isDIR, isFILE since I added these to "ptypes.h"
+
+1992-05-15  ste_cm@software.org
+
+	* include/port2vms.h: BASELINE Thu Jul 16 16:14:02 1992 -- CM_TOOLS #11
+
 1992-05-12  dickey@software.org
 
 	* src/pathname/pathcmp.c:

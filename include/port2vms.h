@@ -1,5 +1,5 @@
 /*
- * $Id: port2vms.h,v 6.0 1991/12/13 08:34:55 ste_cm Rel $
+ * $Id: port2vms.h,v 7.0 1992/05/15 15:26:28 ste_cm Rel $
  *
  * VMS-definitions for supporting unix/vms port
  */
@@ -7,15 +7,11 @@
 #ifndef	_PORTUNIX_
 #define	_PORTUNIX_
 
-#define	STAT	struct stat
 #include	"ptypes.h"		/* CM_TOOLS common */
 
 #ifndef	MAXPATHLEN
 #define	MAXPATHLEN	BUFSIZ		/* defined in <stdio.h> */
 #endif
-
-#define	isDIR(m)	((m & S_IFMT) == S_IFDIR)
-#define	isFILE(m)	((m & S_IFMT) == S_IFREG)
 
 #ifdef	vms
 
