@@ -1,4 +1,4 @@
-# $Id: Makefile,v 12.8 1994/07/18 22:29:41 tom Exp $
+# $Id: Makefile,v 12.9 1994/07/29 15:46:50 tom Exp $
 # Top-level makefile for TD_LIB common library
 
 ####### (Development) ##########################################################
@@ -127,11 +127,11 @@ configure:	$(CONFIG_H)		; autoconf
 # config.status might not change config.h
 $(I_CFG): stamp-h
 stamp-h: config.status
-	./config.status
+	sh -c ./config.status
 	touch stamp-h
 
 #? Makefile: Makefile.in config.status
 #? 	./config.status
 
 config.status: configure
-	./config.status --recheck
+	sh -c "./config.status --recheck"

@@ -1,4 +1,4 @@
-/* $Id: td_regex.h,v 12.6 1994/07/23 20:17:29 tom Exp $ */
+/* $Id: td_regex.h,v 12.7 1994/07/29 20:14:44 tom Exp $ */
 
 /*
  * SYSTEM5/BSD4.x differences between native regular-expression handling:
@@ -26,8 +26,11 @@
 #endif
 
 #if HAVE_REGCMP_FUNCS && !defined(REGEX_T)	/* old SYSTEM5 */
-#  if HAVE_PW_H && HAVE_LIBPW_H
+#  if HAVE_PW_H && HAVE_LIBPW
+#    undef index
+#    define index CLIX_index	/* CLIX has conflict here */
 #    include <pw.h>
+#    undef index
 #  else
 	extern	char	*regcmp(_ar1(char *,s) _CDOTS);
 	extern	char	*regex(_ar1(char *,re));
