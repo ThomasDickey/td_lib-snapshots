@@ -2,6 +2,7 @@
  * Author:	T.E.Dickey
  * Created:	17 Sep 1987
  * Modified:
+ *		10 Jan 1996, corrected handling of "~foo/bar/bar" in abshome.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		13 Nov 1992, removed redundant 'index' macro.
@@ -37,7 +38,7 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: abspath.c,v 12.6 1993/12/04 16:57:02 tom Exp $")
+MODULE_ID("$Id: abspath.c,v 12.7 1996/01/11 01:03:00 tom Exp $")
 
 #ifdef	apollo
 #ifdef	apollo_sr10
@@ -173,10 +174,12 @@ void	abshome(
 #else
 			register struct passwd *p;
 			char	user[MAXPATHLEN];
-			if ((s = fleaf_delim(strcpy(user, d+1))) != 0)
-				*s++ = EOS;
-			else
-				s = d + strlen(d);
+			for (s = strcpy(user, d+1); *s != EOS; s++) {
+				if (strchr(PATH_DELIMS, *s) != 0) {
+					*s++ = EOS;
+					break;
+				}
+			}
 			if ((p = getpwnam(user)) != 0) {
 				while ((*d++ = *s++) != EOS)
 					;

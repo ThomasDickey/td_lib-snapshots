@@ -1,3 +1,8 @@
+1996-02-05  dickey@clark.net
+
+	* src/curses/rawgets.c:
+	prevent write to lower-right corner; sysvr4 curses emits a newline...
+
 1996-01-10  dickey@clark.net
 
 	* src/pathname/abspath.c:
