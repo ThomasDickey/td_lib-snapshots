@@ -1,10 +1,19 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)packdate.c	1.10 88/08/10 13:43:59";
+static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs/RCS/packdate.c,v 3.0 1988/08/17 09:44:06 ste_cm Rel $";
 #endif	lint
 
 /*
  * Author:	T.E.Dickey
- * Modified:
+ * $Log: packdate.c,v $
+ * Revision 3.0  1988/08/17 09:44:06  ste_cm
+ * BASELINE Mon Jun 19 13:27:01 EDT 1989
+ *
+ *		Revision 2.0  88/08/17  09:44:06  ste_cm
+ *		BASELINE Thu Apr  6 09:45:13 EDT 1989
+ *		
+ *		Revision 1.12  88/08/17  09:44:06  dickey
+ *		sccs2rcs keywords
+ *		
  *		06 May 1988, port to gould
  *		01 Feb 1988, ooops: wrong computation for leapyear.
  *		24 Nov 1987, made to run on BSD4.2 (as opposed to SYSTEM5).
@@ -33,7 +42,7 @@ extern	struct	tm	*localtime();
 
 long	packdate (year, mon, day, hour, min, s)
 {
-long	sec = s;
+time_t	sec = s;
 register int	j;
 static	int	m[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 /*			  jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec */

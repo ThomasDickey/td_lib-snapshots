@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)rawgets.c	1.7 88/08/12 10:06:00";
+static	char	sccs_id[] = "@(#)rawgets.c	1.8 88/08/17 09:43:14";
 #endif	lint
 
 /*
@@ -31,7 +31,6 @@ static	char	sccs_id[] = "@(#)rawgets.c	1.7 88/08/12 10:06:00";
 #include	"ptypes.h"
 #include	<ctype.h>
 #include	"cmdch.h"
-extern	char	erasechar(), killchar();
 
 #define	WRAP	(COLS-1)
 

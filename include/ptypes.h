@@ -1,4 +1,4 @@
-/* @(#)ptypes.h	1.6 88/08/15 07:00:13 */
+/* @(#)ptypes.h	1.7 88/08/17 09:42:53 */
 
 /*
  * The definitions in this file cover simple cases of bsd4.x/system5 porting,
@@ -47,6 +47,9 @@ extern	V_OR_I	rewind();
 #define	TRUE	(1)
 #define	FALSE	(0)
 #endif	TRUE
+
+#define	SUCCESS	0		/* exit() arg if no error */
+#define	FAIL	1		/* exit() arg if any error */
 
 #define	EOS	'\0'
 
@@ -104,6 +107,12 @@ static	struct	direct	dbfr;
 struct	screen	{ int dummy; };
 #else	SYSTEM5
 typedef char	chtype;		/* sys5-curses data-type */
+#ifndef	erasechar
+extern	char	erasechar();
+#endif	erasechar
+#ifndef	killchar
+extern	char	killchar();
+#endif	killchar
 #endif	SYSTEM5
 #include	<curses.h>
 #endif	CUR_PTYPES
