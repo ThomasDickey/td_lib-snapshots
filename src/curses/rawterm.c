@@ -31,7 +31,7 @@
 #define TRM_PTYPES	/* <termios.h> */
 #include	"td_curse.h"
 
-MODULE_ID("$Id: rawterm.c,v 12.21 1998/02/16 12:10:39 tom Exp $")
+MODULE_ID("$Id: rawterm.c,v 12.22 1998/05/29 21:19:46 tom Exp $")
 
 TermioT	original_tty;
 TermioT	modified_tty;
@@ -113,6 +113,7 @@ static	void	disable_mouse(_AR0)
  * the screen as well.
  */
 #if	HAVE_TIGETSTR && HAVE_PUTP && !defined(NCURSES_VERSION)
+extern	char *tigetstr();	/* FIXME */
 static	void	set_cursor_mode(_AR0)
 {
 	char *s = tigetstr("smkx");

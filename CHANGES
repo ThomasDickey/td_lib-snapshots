@@ -1,3 +1,22 @@
+1998-05-29  dickey@clark.net
+
+	* include/td_ext.h: compile with g++
+
+	* include/sccsdefs.h: fix ifdef of S_FILES_14
+
+	* include/rcsdefs.h: compile:g++
+
+	* src/curses/cmdch.c: missing declaration
+
+	* src/curses/rawterm.c: make sure tigetstr() is at least char*
+
+	* src/curses/savewin.c, src/curses/resizwin.c:
+	make this compile on OSF/1 4.0
+
+	* include/sccsdefs.h: OSF/1 warning about "#define ... defined()"
+
+	* aclocal.m4: add a test for cchar_t, needed for ifdef's for OSF/1 4.0
+
 1998-04-27  dickey@clark.net
 
 	* configure.in: must test for seteuid for HP-UX's checkin
