@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rawgets.c,v 11.14 1992/08/28 13:48:29 dickey Exp $";
+static	char	Id[] = "$Id: rawgets.c,v 11.15 1992/09/03 07:31:25 dickey Exp $";
 #endif
 
 /*
@@ -379,9 +379,13 @@ int	wrawgets (
 		if (xlast >= Z->_maxx)
 			xlast = Z->_maxx - 1;
 
-		if (!wrap)
+		if (wrap) {
+			MoveTo(bfr+strlen(bfr));
+			wclrtobot(Z);
+		} else {
 			while (strlen(bfr) > (shift + xlast - xbase))
 				shift += SHIFT;
+		}
 		if (Imode != first_mode)
 			ToggleMode();
 		else
