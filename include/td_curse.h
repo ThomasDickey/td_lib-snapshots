@@ -1,4 +1,4 @@
-/* $Id: td_curse.h,v 12.29 1995/05/15 19:58:31 tom Exp $ */
+/* $Id: td_curse.h,v 12.31 1995/07/04 16:31:47 tom Exp $ */
 
 /*
  * TD_LIB CURSES-related definitions
@@ -119,6 +119,11 @@
 #if HAVE_BEEP && NEED_BEEP
 extern	int	beep		ARGS((void));
 #endif /* HAVE_BEEP */
+#endif
+
+	/* sysv has, but bsd doesn't */
+#if !HAVE_UNGETCH
+#define ungetch(c) ungetc(c,stdin)
 #endif
 
 #if HAVE_ENDWIN && NEED_ENDWIN
@@ -280,8 +285,13 @@ extern	XtermMouse xt_mouse;	/* state of XTerm-mouse */
 			_fn1(void,	func,(void)))
 			_dcl(void,	(*func)())
 			_nul
+	void	enable_winch(
+			_ar1(int,	enable))
+			_dcl(int,	enable)
+			_nul
 #  else
-#    define	on_winch(func)	/* nothing */
+#    define	on_winch(func)		/* nothing */
+#    define	enable_winch(func)	/* nothing */
 #  endif
 #endif
 	/* rawgets.c -------------------------------------------------- */

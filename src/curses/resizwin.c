@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: resizwin.c,v 12.10 1995/07/03 23:57:55 tom Exp $";
+static	char	Id[] = "$Id: resizwin.c,v 12.11 1995/07/04 18:28:10 tom Exp $";
 #endif
 
 /*
@@ -82,9 +82,6 @@ int	resizewin(_AR0)
 		if (my_LINES != LINES || my_COLS != COLS) {
 #if SYS5_CURSES
 #if HAVE_RESIZETERM	/* ncurses extension */
-			wresize(stdscr, my_LINES, my_COLS);
-			wresize(curscr, my_LINES, my_COLS);
-			wresize(newscr, my_LINES, my_COLS);
 			resizeterm(my_LINES, my_COLS);
 			wrefresh(curscr);
 			return (TRUE);

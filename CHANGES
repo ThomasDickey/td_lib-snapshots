@@ -1,3 +1,17 @@
+1995-07-04  dickey@clark.net
+
+	* src/curses/resizwin.c: moved wresize calls into resizeterm
+
+	* include/td_curse.h:
+	added fallback for 'ungetch()', which we must use with sysv curses instead
+	of 'ungetc()'.
+
+	* configure.in: added test for curses 'ungetch()'
+
+	* include/td_curse.h, src/curses/on_winch.c: added 'enable_winch()'
+
+	* src/curses/on_winch.c: use MODULE_ID
+
 1995-07-03  dickey@clark.net
 
 	* src/curses/resizwin.c:

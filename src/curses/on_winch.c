@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: on_winch.c,v 12.5 1994/10/07 00:03:52 tom Exp $";
-#endif
-
 /*
  * Title:	on_winch.c (on SIGWINCH)
  * Author:	T.E.Dickey
@@ -24,6 +20,8 @@ static	char	Id[] = "$Id: on_winch.c,v 12.5 1994/10/07 00:03:52 tom Exp $";
 #define CUR_PTYPES	/* this is part of my curses extensions */
 #define SIG_PTYPES
 #include "ptypes.h"
+
+MODULE_ID("$Id: on_winch.c,v 12.7 1995/07/04 14:31:46 tom Exp $")
 
 #ifdef SIGWINCH
 #define	ON_WINCH struct OnWinch
@@ -87,6 +85,7 @@ void	handle_resize (_AR0)
 			(*p->func)();
 		}
 		refresh();
+		caught_this = FALSE;
 	}
 }
 
@@ -145,5 +144,23 @@ void	on_winch(
 	if (caught_this)
 		handle_resize();
 	set_handler(catch_winch);
+}
+
+/* This function is called before/after invoking shell processes, to force this
+ * module to ignore interrupts.  We do that because some systems (e.g., Linux)
+ * get confused when there's more than one application in an xterm that has
+ * SIGWINCH enabled (I get a "Level 3 reset").
+ *
+ * Disabling the interrupt in this way means that 'ded' has to query the screen
+ * size when it exits from a subprocess that invokes 'vile', for example.
+ */
+void	enable_winch (
+	_AR1(int,	enabled))
+	_DCL(int,	enabled)
+{
+	if ((disable_this = !enabled))
+		set_handler(SIG_IGN);
+	else
+		set_handler(catch_winch);
 }
 #endif	/* SIGWINCH */
