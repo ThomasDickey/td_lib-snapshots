@@ -1,3 +1,22 @@
+1996-12-27  dickey@clark.net
+
+	* aclocal.m4: add TD_VARARGS
+
+	* configure.in: use TD_VARARGS
+
+	* configure.in: change --with-prototypes to --enable-prototypes
+
+	* configure.in: AC_C_CROSS is obsolete in 2.12
+
+	* configure.in:
+	oops: test for 'rename()' was in the wrong place, breaking existence-check.
+	also, add missing test for 'realpath()'
+
+	* src/unix/gid2s.c: correct comment
+
+	* aclocal.m4:
+	corrected tests for tm.tm_isdst and tm.tm_zone, which somehow ran together
+
 1996-10-20  dickey@clark.net
 
 	* src/curses/wrepaint.c: fix bsd4.4 version on Linux using macros

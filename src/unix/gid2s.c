@@ -23,7 +23,7 @@
 #define	STR_PTYPES
 #include <td_btree.h>
 
-MODULE_ID("$Id: gid2s.c,v 12.8 1995/09/14 23:09:17 tom Exp $")
+MODULE_ID("$Id: gid2s.c,v 12.9 1996/12/27 16:02:42 tom Exp $")
 
 #if HAVE_GETGRGID
 
@@ -143,4 +143,4 @@ _MAIN
 }
 #endif	/* TEST */
 
-#endif	/* HAVE_GETPWGID */
+#endif	/* HAVE_GETGRGID */
