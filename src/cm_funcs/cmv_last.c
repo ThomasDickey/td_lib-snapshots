@@ -22,9 +22,10 @@
 #define	STR_PTYPES
 #define	TIM_PTYPES
 #include	<ptypes.h>
+#include	<sccsdefs.h>
 #include	<cmv_defs.h>
 
-MODULE_ID("$Id: cmv_last.c,v 12.10 2000/01/01 01:38:07 tom Exp $")
+MODULE_ID("$Id: cmv_last.c,v 12.11 2000/01/04 14:49:00 tom Exp $")
 
 /*
  * Set the release.version and date values iff we find a legal sccs-file at
@@ -48,6 +49,7 @@ void	ScanSCCS (
 	auto	int	gotten = 0;
 	auto	int	match  = FALSE;
 	auto	char	bfr[BUFSIZ];
+	auto	char	bfr2[BUFSIZ];
 	auto	char	*s;
 	auto	int	yy, mm, dd, hr, mn, sc;
 	auto	char	ver[80];
@@ -62,11 +64,12 @@ void	ScanSCCS (
 					break;
 				gotten++;
 			}
-			if ((strncmp(bfr+1, "d D ", 3) == 0)
-			 && (sscanf(bfr+4, "%s %d/%d/%d %d:%d:%d ",
+			if (strncmp(bfr+1, "d D ", 3) == 0
+			 && sscanf(bfr+4, "%s %[^/]/%d/%d %d:%d:%d ",
 				ver,
-				&yy, &mm, &dd,
-				&hr, &mn, &sc) == 7)
+				bfr2, &mm, &dd,
+				&hr, &mn, &sc) == 7
+			 && (yy = sccsyear(bfr2)) > 0
 			 && (strcmp(*vers_, ver) == 0)) {
 				match = TRUE;
 				*date_ = packdate (yy, mm, dd, hr, mn, sc);
@@ -112,7 +115,7 @@ void	cmv_last (
 	if (archive != 0) {
 		char *arcleaf = fleaf(archive);
 		get_cmv_lock(working, path, lock_, vers_, date_);
-		if (strncmp(arcleaf, "b-", 2) || isdigit((*vers_)[0]))
+		if (strncmp(arcleaf, "b-", 2) || isdigit((int)(*vers_)[0]))
 			ScanSCCS(archive, vers_, date_);
 	}
 }
