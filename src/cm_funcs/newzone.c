@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)newzone.c	1.2 88/06/09 16:34:06";
+static	char	sccs_id[] = "@(#)newzone.c	1.3 88/06/13 09:29:47";
 #endif	lint
 
 /*
@@ -138,7 +138,9 @@ int	match	= FALSE;	/* true iff we need no change */
 		environ[j] = stralloc(name);
 	}
 #endif	SYSTEM5
+#if	defined(apollo) || defined(gould) || defined(SYSTEM5)
 	tzset();
+#endif
 }
 
 /*

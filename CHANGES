@@ -1,3 +1,23 @@
+1988-06-13  dickey@software.org
+
+	* include/llib-ltd: removed 'adj2est()', 'set2est()'.
+
+	* src/cm_funcs/newzone.c:
+	ifdef-out the 'tzset()' call for SUN MicroSystems (non-SYSTEM5, etc.)
+
+	* src/Makefile: removed 'adj2est()', 'set2est()'.
+
+	* src/cm_funcs/cutoff.c: sccs2rcs keywords
+
+	* src/cm_funcs/cutoff.c:
+	use 'newzone()' rather than 'putenv()' to aid porting.
+
+1988-06-13  ste_cm@software.org
+
+	* src/cm_funcs/cutoff.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+	* src/cm_funcs/cutoff.c: BASELINE Thu Apr  6 09:45:13 EDT 1989
+
 1988-06-10  dickey@software.org
 
 	* src/process/execute.c:
