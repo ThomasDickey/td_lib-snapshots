@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Id: aclocal.m4,v 12.152 2003/11/06 00:46:38 tom Exp $
+dnl $Id: aclocal.m4,v 12.155 2003/11/08 00:50:18 tom Exp $
 dnl vi:set ts=4:
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "CF_" to "AC_"
@@ -323,20 +323,21 @@ if	test $cf_cv_REGEX_H = no && \
 fi
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_CURSES_CCHAR_T version: 2 updated: 1998/07/01 09:41:58
+dnl CF_CURSES_CCHAR_T version: 3 updated: 2003/11/06 19:59:57
 dnl -----------------
 dnl Test if curses defines 'cchar_t' (usually a 'long' type for SysV curses).
 AC_DEFUN([CF_CURSES_CCHAR_T],
 [
+AC_REQUIRE([CF_CURSES_CPPFLAGS])dnl
 AC_CACHE_CHECK(for cchar_t typedef,cf_cv_cchar_t_decl,[
-	AC_TRY_COMPILE([#include <curses.h>],
+	AC_TRY_COMPILE([#include <${cf_cv_ncurses_header-curses.h}>],
 		[cchar_t foo],
 		[cf_cv_cchar_t_decl=yes],
 		[cf_cv_cchar_t_decl=no])])
 if test $cf_cv_cchar_t_decl = yes ; then
 	AC_DEFINE(HAVE_TYPE_CCHAR_T)
 	AC_CACHE_CHECK(if cchar_t is scalar or struct,cf_cv_cchar_t_type,[
-		AC_TRY_COMPILE([#include <curses.h>],
+		AC_TRY_COMPILE([#include <${cf_cv_ncurses_header-curses.h}>],
 			[cchar_t foo; long x = foo],
 			[cf_cv_cchar_t_type=scalar],
 			[cf_cv_cchar_t_type=struct])])
@@ -346,11 +347,12 @@ if test $cf_cv_cchar_t_decl = yes ; then
 fi
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_CURSES_CHTYPE version: 5 updated: 2000/10/07 16:31:51
+dnl CF_CURSES_CHTYPE version: 6 updated: 2003/11/06 19:59:57
 dnl ----------------
 dnl Test if curses defines 'chtype' (usually a 'long' type for SysV curses).
 AC_DEFUN([CF_CURSES_CHTYPE],
 [
+AC_REQUIRE([CF_CURSES_CPPFLAGS])dnl
 AC_CACHE_CHECK(for chtype typedef,cf_cv_chtype_decl,[
 	AC_TRY_COMPILE([#include <${cf_cv_ncurses_header-curses.h}>],
 		[chtype foo],
@@ -425,11 +427,12 @@ CF_STRUCT_SCREEN
 CF_TCAP_CURSOR
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_CURSES_FUNCS version: 11 updated: 2003/08/20 15:23:08
+dnl CF_CURSES_FUNCS version: 12 updated: 2003/11/06 19:59:57
 dnl ---------------
 dnl Curses-functions are a little complicated, since a lot of them are macros.
 AC_DEFUN([CF_CURSES_FUNCS],
 [
+AC_REQUIRE([CF_CURSES_CPPFLAGS])dnl
 AC_REQUIRE([CF_XOPEN_CURSES])
 AC_REQUIRE([CF_CURSES_TERM_H])
 for cf_func in $1
@@ -478,12 +481,13 @@ exit(foo == 0);
 done
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_CURSES_LIBS version: 22 updated: 2002/10/27 18:21:42
+dnl CF_CURSES_LIBS version: 23 updated: 2003/11/06 19:59:57
 dnl --------------
 dnl Look for the curses libraries.  Older curses implementations may require
 dnl termcap/termlib to be linked as well.  Call CF_CURSES_CPPFLAGS first.
 AC_DEFUN([CF_CURSES_LIBS],[
 
+AC_REQUIRE([CF_CURSES_CPPFLAGS])dnl
 AC_MSG_CHECKING(if we have identified curses libraries)
 AC_TRY_LINK([#include <${cf_cv_ncurses_header-curses.h}>],
 	[initscr(); tgoto("?", 0,0)],
@@ -577,15 +581,16 @@ fi
 
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_CURSES_MOUSE version: 2 updated: 1997/09/07 15:13:55
+dnl CF_CURSES_MOUSE version: 3 updated: 2003/11/06 19:59:57
 dnl ---------------
 dnl Test for the existence of SysVr4 mouse support in curses. If we've not got
 dnl it, we'll simulate the interface (for xterm, at least).
 AC_DEFUN([CF_CURSES_MOUSE],
 [
+AC_REQUIRE([CF_CURSES_CPPFLAGS])dnl
 AC_MSG_CHECKING(for curses mouse-support)
 AC_CACHE_VAL(cf_cv_curses_mouse,[
-AC_TRY_LINK([#include <curses.h>],[
+AC_TRY_LINK([#include <${cf_cv_ncurses_header-curses.h}>],[
 	int x, y;
 	getmouse();
 	request_mouse_pos();
@@ -712,7 +717,7 @@ esac
 
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_CURSES_TERM_H version: 5 updated: 2003/08/20 15:23:08
+dnl CF_CURSES_TERM_H version: 6 updated: 2003/11/06 19:59:57
 dnl ----------------
 dnl SVr4 curses should have term.h as well (where it puts the definitions of
 dnl the low-level interface).  This may not be true in old/broken implementations,
@@ -722,6 +727,7 @@ AC_DEFUN([CF_CURSES_TERM_H],
 [
 AC_CACHE_CHECK(for term.h, cf_cv_term_header,[
 
+AC_REQUIRE([CF_CURSES_CPPFLAGS])dnl
 # If we found <ncurses/curses.h>, look for <ncurses/term.h>, but always look
 # for <term.h> if we do not find the variant.
 for cf_header in \
@@ -1476,7 +1482,7 @@ printf("old\n");
 	,[$1=no])
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_NCURSES_CPPFLAGS version: 16 updated: 2002/12/29 18:30:46
+dnl CF_NCURSES_CPPFLAGS version: 17 updated: 2003/11/06 19:59:57
 dnl -------------------
 dnl Look for the SVr4 curses clone 'ncurses' in the standard places, adjusting
 dnl the CPPFLAGS variable so we can include its header.
@@ -1500,6 +1506,7 @@ dnl wide-character version of ncurses is installed.
 AC_DEFUN([CF_NCURSES_CPPFLAGS],
 [AC_REQUIRE([CF_WITH_CURSES_DIR])
 
+AC_PROVIDE([CF_CURSES_CPPFLAGS])dnl
 cf_ncuhdr_root=ifelse($1,,ncurses,$1)
 
 test -n "$cf_cv_curses_dir" && \
@@ -1640,13 +1647,14 @@ CF_UPPER(cf_nculib_ROOT,HAVE_LIB$cf_nculib_root)
 AC_DEFINE_UNQUOTED($cf_nculib_ROOT)
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_NCURSES_VERSION version: 10 updated: 2002/10/27 18:21:42
+dnl CF_NCURSES_VERSION version: 11 updated: 2003/11/06 19:59:57
 dnl ------------------
 dnl Check for the version of ncurses, to aid in reporting bugs, etc.
 dnl Call CF_CURSES_CPPFLAGS first, or CF_NCURSES_CPPFLAGS.  We don't use
 dnl AC_REQUIRE since that does not work with the shell's if/then/else/fi.
 AC_DEFUN([CF_NCURSES_VERSION],
 [
+AC_REQUIRE([CF_CURSES_CPPFLAGS])dnl
 AC_CACHE_CHECK(for ncurses version, cf_cv_ncurses_version,[
 	cf_cv_ncurses_version=no
 	cf_tempfile=out$$
@@ -2186,7 +2194,7 @@ dnl	Remove "-g" option from the compiler options
 AC_DEFUN([CF_STRIP_G_OPT],
 [$1=`echo ${$1} | sed -e 's%-g %%' -e 's%-g$%%'`])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_STRUCT_SCREEN version: 2 updated: 1997/09/07 15:13:55
+dnl CF_STRUCT_SCREEN version: 3 updated: 2003/11/06 19:59:57
 dnl ----------------
 dnl Test if curses defines 'struct screen'.
 dnl
@@ -2195,11 +2203,12 @@ dnl	for that type, since it isn't resolved.
 dnl
 AC_DEFUN([CF_STRUCT_SCREEN],
 [
+AC_REQUIRE([CF_CURSES_CPPFLAGS])dnl
 AC_MSG_CHECKING(if curses uses struct screen)
 AC_CACHE_VAL(cf_cv_have_struct_screen,[
 	AC_TRY_COMPILE([
 #define lint	/* sysvr4 has its own fallback for lint */
-#include <curses.h>],
+#include <${cf_cv_ncurses_header-curses.h}>],
 		[struct screen dummy],
 		[cf_cv_have_struct_screen=yes],
 		[cf_cv_have_struct_screen=no])
@@ -2209,7 +2218,7 @@ AC_MSG_RESULT($cf_cv_have_struct_screen)
 AC_MSG_CHECKING(for definition of struct screen)
 AC_CACHE_VAL(cf_cv_need_struct_screen,[
 	if test $cf_cv_have_struct_screen = yes; then
-		AC_TRY_COMPILE([#include <curses.h>],
+		AC_TRY_COMPILE([#include <${cf_cv_ncurses_header-curses.h}>],
 			[struct screen { int dummy;}],
 			[cf_cv_need_struct_screen=yes],
 			[cf_cv_need_struct_screen=no])
@@ -2296,7 +2305,7 @@ AC_DEFUN([CF_SYS_ERRLIST],
     CF_CHECK_ERRNO(sys_errlist)
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_TCAP_CURSOR version: 2 updated: 1997/09/07 15:13:55
+dnl CF_TCAP_CURSOR version: 3 updated: 2003/11/06 19:59:57
 dnl --------------
 dnl Test if curses defines KD, KU, etc., for cursor keys
 dnl
@@ -2307,9 +2316,10 @@ dnl	curses initializes them in 'initscr()'.
 dnl
 AC_DEFUN([CF_TCAP_CURSOR],
 [
+AC_REQUIRE([CF_CURSES_CPPFLAGS])dnl
 AC_MSG_CHECKING(for termcap-cursor variables)
 AC_CACHE_VAL(cf_cv_termcap_cursor,[
-	AC_TRY_COMPILE([#include <curses.h>],
+	AC_TRY_COMPILE([#include <${cf_cv_ncurses_header-curses.h}>],
 		[char *d=KD, *u=KU, *r=KR, *l=KL],
 		[cf_cv_termcap_cursor=yes],
 		[cf_cv_termcap_cursor=no])])
@@ -2662,24 +2672,48 @@ fi
 fi
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_XOPEN_CURSES version: 6 updated: 2002/11/12 06:55:30
+dnl CF_XOPEN_CURSES version: 8 updated: 2003/11/07 19:47:46
 dnl ---------------
 dnl Test if we should define X/Open source for curses, needed on Digital Unix
 dnl 4.x, to see the extended functions, but breaks on IRIX 6.x.
+dnl
+dnl The getbegyx() check is needed for HPUX, which omits legacy macros such
+dnl as getbegy().  The latter is better design, but the former is standard.
 AC_DEFUN([CF_XOPEN_CURSES],
 [
+AC_REQUIRE([CF_CURSES_CPPFLAGS])dnl
 AC_CACHE_CHECK(if we must define _XOPEN_SOURCE_EXTENDED,cf_cv_need_xopen_extension,[
 AC_TRY_LINK([
 #include <stdlib.h>
 #include <${cf_cv_ncurses_header-curses.h}>],[
-	long x = winnstr(stdscr, "", 0)],
+	long x = winnstr(stdscr, "", 0);
+	int x1, y1;
+	getbegyx(stdscr, y1, x1)],
 	[cf_cv_need_xopen_extension=no],
 	[AC_TRY_LINK([
 #define _XOPEN_SOURCE_EXTENDED
 #include <stdlib.h>
 #include <${cf_cv_ncurses_header-curses.h}>],[
-	long x = winnstr(stdscr, "", 0)],
+	long x = winnstr(stdscr, "", 0);
+	int x1, y1;
+	getbegyx(stdscr, y1, x1)],
 	[cf_cv_need_xopen_extension=yes],
 	[cf_cv_need_xopen_extension=unknown])])])
 test $cf_cv_need_xopen_extension = yes && CPPFLAGS="$CPPFLAGS -D_XOPEN_SOURCE_EXTENDED"
 ])dnl
+dnl ---------------------------------------------------------------------------
+dnl CF_XOPEN_SOURCE version: 1 updated: 2003/11/07 14:32:26
+dnl ---------------
+dnl Try to get _XOPEN_SOURCE defined properly that we can use POSIX functions.
+AC_DEFUN([CF_XOPEN_SOURCE],[
+case $host_os in #(vi
+hpux*) #(vi
+	CPPFLAGS="$CPPFLAGS -D_HPUX_SOURCE"
+	;;
+linux*) #(vi
+	CF_GNU_SOURCE
+	;;
+*)
+	;;
+esac
+])
