@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcstemp.c,v 11.1 1992/09/02 16:04:26 dickey Exp $";
+static	char	Id[] = "$Id: rcstemp.c,v 11.3 1992/12/21 10:28:14 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: rcstemp.c,v 11.1 1992/09/02 16:04:26 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	25 Aug 1988
  * Modified:
+ *		21 Dec 1992, RCS 5 on Posix setuid does not need temp-dir
  *		06 Feb 1992, use 'stat_dir()'
  *		22 Oct 1991, ensure that we unlink the temp-file if it already
  *			     exists.
@@ -51,7 +52,11 @@ _DCL(int,	copy)
 	static	char	tmp[BUFSIZ];
 
 	if (geteuid() != getuid()
-	 && geteuid() != 0) {
+	 && geteuid() != 0
+#if	RCS_VERSION >= 5
+	 && !saves_uid()
+#endif
+	 ) {
 		char	*tf = pathcat(tmp, "/tmp", uid2s((int)getuid()));
 		int	mode = ((getgid() == getegid()) ? 0775 : 0777);
 		STAT	sb;
