@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: vcs_file.c,v 12.1 1993/10/29 17:35:23 dickey Exp $";
-#endif
-
 /*
  * Title:	vcs_file (VCS permission- and temporary-file)
  * Author:	T.E.Dickey
@@ -22,6 +18,8 @@ static	char	Id[] = "$Id: vcs_file.c,v 12.1 1993/10/29 17:35:23 dickey Exp $";
 #include	"ptypes.h"
 #include	"rcsdefs.h"
 
+MODULE_ID("$Id: vcs_file.c,v 12.3 1993/11/27 17:23:32 tom Exp $")
+
 char *
 vcs_file(
 _ARX(char *,	path)		/* pathname to prepend, if nonnull */
@@ -35,7 +33,7 @@ _DCL(int,	temp)
 	register char	*s = pathleaf(rcs_dir());
 
 	if (!strcmp(s, ".")
-	||  (*s == '/'))
+	||  isSlash(*s))
 		s = RCS_DIR;
 	(void)strcpy(name,s);
 	if (!temp)

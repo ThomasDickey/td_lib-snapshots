@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: pathleaf.c,v 12.2 1993/10/29 17:35:25 dickey Exp $";
-#endif
-
 /*
  * Title:	pathleaf.c (obtain leaf from path)
  * Author:	T.E.Dickey
@@ -14,7 +10,7 @@ static	char	Id[] = "$Id: pathleaf.c,v 12.2 1993/10/29 17:35:25 dickey Exp $";
  *		04 Oct 1989, lint (apollo SR10.1)
  *		
  * Function:	Returns the lowest leaf-name on the given path by looking for
- *		the last '/'.
+ *		the last path-delimiter.
  *
  *		This always returns a pointer to a static buffer which is
  *		overwritten by successive calls.  Otherwise, it would have to
@@ -28,6 +24,8 @@ static	char	Id[] = "$Id: pathleaf.c,v 12.2 1993/10/29 17:35:25 dickey Exp $";
 #define	STR_PTYPES
 #include	"ptypes.h"
 
+MODULE_ID("$Id: pathleaf.c,v 12.4 1993/11/27 16:24:16 tom Exp $")
+
 char *
 pathleaf (
 _AR1(char *,	path))
@@ -37,14 +35,16 @@ _DCL(char *,	path)
 	static	char	buffer[BUFSIZ];
 
 	path	= strcpy(buffer, path);
-	while ((s = strrchr(path, '/')) != NULL) {
-		if (s[1] == EOS) {	/* trailing '/' ? */
-			if (!strcmp(path, "/"))		break;
+	while ((s = fleaf_delim(path)) != NULL) {
 #ifdef	apollo
-			if (!strcmp(path, "//"))	break;
+		if (!strcmp(path, "//"))		break;
 #endif
+#ifndef	vms
+		if (s[1] == EOS) {	/* trailing delimiter ? */
+			if (path == s)			break;
 			*s = EOS;	/* trim it */
 		} else
+#endif
 			return (++s);
 	}
 	return (path);
@@ -62,4 +62,4 @@ _MAIN
 	exit(SUCCESS);
 	/*NOTREACHED*/
 }
-#endif
+#endif	/* TEST */

@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: pathcat.c,v 12.2 1993/10/29 17:35:25 dickey Exp $";
-#endif
-
 /*
  * Title:	pathcat.c (path concatenation)
  * Author:	T.E.Dickey
@@ -26,6 +22,8 @@ static	char	Id[] = "$Id: pathcat.c,v 12.2 1993/10/29 17:35:25 dickey Exp $";
 #define	STR_PTYPES
 #include	"ptypes.h"
 
+MODULE_ID("$Id: pathcat.c,v 12.4 1993/11/27 17:01:20 tom Exp $")
+
 char *
 pathcat(
 _ARX(char *,	dst)
@@ -39,7 +37,7 @@ _DCL(char *,	fname)
 	auto	char	tmp[BUFSIZ],
 			*s;
 
-	if (*fname == '/' || *fname == '~' || !dname || !*dname)
+	if (isSlash(*fname) || *fname == '~' || !dname || !*dname)
 		return (strcpy(dst, fname));
 	else if (*fname == EOS) {
 		if (dst != dname)
@@ -47,7 +45,10 @@ _DCL(char *,	fname)
 		return (dst);
 	}
 	(void)strcpy(tmp, dname);
-	if ((s = strrchr(tmp, '/')) && (!strcmp(s, "/")))
-		*s = EOS;		/* trim excess '/' */
-	return (strcpy(dst, (strcat(strcat(tmp, "/"), fname))));
+	if ((s = fleaf_delim(tmp)) != 0 && (s[1] == EOS))
+		*s = EOS;		/* trim excess path-delimiter */
+	s = tmp + strlen(tmp);
+	*s++ = PATH_SLASH;
+	(void)strcpy(s, fname);
+	return (strcpy(dst, tmp));
 }

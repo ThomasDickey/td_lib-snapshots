@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: is_spath.c,v 12.1 1993/10/29 17:35:25 dickey Exp $";
-#endif
-
 /*
  * Title:	is_subpath.c
  * Author:	T.E.Dickey
@@ -20,6 +16,8 @@ static	char	Id[] = "$Id: is_spath.c,v 12.1 1993/10/29 17:35:25 dickey Exp $";
 #define	STR_PTYPES
 #include	"ptypes.h"
 
+MODULE_ID("$Id: is_spath.c,v 12.3 1993/11/27 15:44:34 tom Exp $")
+
 int
 is_subpath(
 _ARX(char *,	name_ref)
@@ -32,7 +30,7 @@ _DCL(char *,	name_tst)
 	size_t	l_tst	= strlen(name_tst);
 
 	if ( l_ref < l_tst
-	 &&  name_tst[l_ref] == '/'
+	 &&  isSlash(name_tst[l_ref])
 	 &&  !strncmp(name_ref, name_tst, l_ref) )
 		return l_ref + 1;
 

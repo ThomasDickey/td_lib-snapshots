@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: relpath.c,v 12.2 1993/10/29 17:35:24 dickey Exp $";
-#endif
-
 /*
  * Title:	relpath.c (convert path to relative-form)
  * Author:	T.E.Dickey
@@ -25,6 +21,8 @@ static	char	Id[] = "$Id: relpath.c,v 12.2 1993/10/29 17:35:24 dickey Exp $";
 
 #define	STR_PTYPES
 #include	"ptypes.h"
+
+MODULE_ID("$Id: relpath.c,v 12.4 1993/11/27 22:19:36 tom Exp $")
 
 char	*
 relpath(
@@ -92,7 +90,7 @@ _DCL(char *,	src)
 		 && !strncmp(cwd, "//", 2)) {
 			size_t	nodelen;
 			for (nodelen = 2; cwd[nodelen]; nodelen++)
-				if (cwd[nodelen] == '/')
+				if (isSlash(cwd[nodelen]))
 					break;
 			if (!strncmp(cwd, src, nodelen)) {
 				cwd += nodelen;
@@ -109,12 +107,12 @@ _DCL(char *,	src)
 
 			if (	((j = strlen(cwd)) < strlen(src))
 			&&	!strncmp(cwd,src,j)
-			&&	src[j] == '/') {
+			&&	isSlash(src[j])) {
 				(void)pathcat(dst, pre, src+j+1);
 				break;
 			}
 
-			if (strchr(src,'/') == 0) {
+			if (fleaf_delim(src) == 0) {
 				if (dotname(src))
 					(void)strcpy(dst, src);
 				else
@@ -127,19 +125,21 @@ _DCL(char *,	src)
 			 * of ".." to prefix:
 			 */
 			(void)strcat(pre, pre[1] ? "/.." : ".");
-			if (j > 0 && cwd[--j] != '/') {
-				while (cwd[j] != '/')
+			if (j > 0 && !isSlash(cwd[j-1])) {
+				j--;
+				while (!isSlash(cwd[j]))
 					cwd[j--] = EOS;
-				if (j > 0 && cwd[j-1] != '/')
+				if (j > 0 && !isSlash(cwd[j-1]))
 					cwd[j] = EOS;
 			} else {
 				(void)strcpy(dst, src);
 				break;
 			}
 		}
-	} else
+	} else {
 		(void)strcpy(dst, src);
-	if (*dst == '.' && dst[1] == '/') {
+	}
+	if (*dst == '.' && isSlash(dst[1])) {
 		register char	*s, *d;
 		for (s = dst+2, d = dst; (*d++ = *s++) != EOS; )
 			;
@@ -194,4 +194,4 @@ _MAIN
 	exit(SUCCESS);
 	/*NOTREACHED*/
 }
-#endif
+#endif	/* TEST */

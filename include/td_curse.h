@@ -1,4 +1,4 @@
-/* $Id: td_curse.h,v 12.5 1993/11/19 19:28:03 dickey Exp $ */
+/* $Id: td_curse.h,v 12.6 1993/11/27 21:35:20 dickey Exp $ */
 
 /*
  * TD_LIB CURSES-related definitions
@@ -12,6 +12,16 @@
 #endif		/* _PTYPES_ */
 
 #include	<curses.h>
+
+#if defined(SYSTEM5) || defined(MSDOS)
+#define SYS5_CURSES 1
+#else
+#define SYS5_CURSES 0
+#endif
+
+#ifdef MSDOS
+#define NO_XTERM_MOUSE
+#endif
 
 /*
  * definitions for 'cmdch()'
@@ -29,7 +39,7 @@
 /*
  * note: System5 curses does not define the 'screen' structure
  */
-#ifdef	SYSTEM5
+#if SYS5_CURSES
 # ifdef	lint
 	struct	screen	{ int dummy; };
 # endif
@@ -91,17 +101,10 @@ extern	int	wrefresh	(WINDOW *);
 #endif
 
 	/* beep.c ----------------------------------------------------- */
-#if	!defined(SYSTEM5)
+#if	!SYS5_CURSES
 	void	beep(_ar0)
 			_nul
 #endif
-
-	/* blip.c ----------------------------------------------------- */
-	void	blip(
-			_ar1(int,	c)
-			)
-			_dcl(int,	c)
-			_nul
 
 	/* cmdch.c ---------------------------------------------------- */
 #ifndef	NO_XTERM_MOUSE
@@ -131,7 +134,7 @@ extern	int	wrefresh	(WINDOW *);
 			_nul
 
 	/* erasechar.c ------------------------------------------------ */
-#if	!defined(SYSTEM5)
+#if	!SYS5_CURSES
 #ifdef	erasechar
 #undef	erasechar
 #endif	/* erasechar */
@@ -142,7 +145,7 @@ extern	int	wrefresh	(WINDOW *);
 			_ret
 
 	/* killchar.c ------------------------------------------------- */
-#if	!defined(SYSTEM5)
+#if	!SYS5_CURSES
 #ifdef	killchar
 #undef	killchar
 #endif	/* killchar */

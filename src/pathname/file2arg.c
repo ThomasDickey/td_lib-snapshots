@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: file2arg.c,v 12.2 1993/10/29 17:35:26 dickey Exp $";
+static	char	Id[] = "$Id: file2arg.c,v 12.3 1993/11/27 15:07:28 dickey Exp $";
 #endif
 
 /*
@@ -57,7 +57,7 @@ int	file2argv(
 	for (s = blob, lines = 0; *s; ++s)
 		if (*s == '\n')
 			lines++;
-	length   = s - blob;
+	length   = (int)(s - blob);
 	newlines = lines;
 	if (length > 0 && blob[length-1] != '\n')
 		lines++;

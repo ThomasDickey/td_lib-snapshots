@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: rcsname.c,v 12.2 1993/10/29 17:35:24 dickey Exp $";
+static	char	Id[] = "$Id: rcsname.c,v 12.3 1993/11/27 16:25:50 dickey Exp $";
 #endif
 
 /*
@@ -74,7 +74,7 @@ void	trim_leaf(
 	_AR1(char *,	name))
 	_DCL(char *,	name)
 {
-	register char *s = strrchr(name, '/');
+	register char *s = fleaf_delim(name);
 	if (s != 0) name = s;
 	*name = EOS;
 }
@@ -85,8 +85,8 @@ leaf(
 _AR1(char *,	name))
 _DCL(char *,	name)
 {
-	register char	*s = strrchr(name, '/');
-	return ((s != 0) ? s+1 : name);
+	register char	*s = fleaf(name);
+	return ((s != 0) ? s : name);
 }
 
 /************************************************************************
@@ -219,4 +219,4 @@ _MAIN
 	do_test(argc, argv, TRUE);
 	exit(SUCCESS);
 }
-#endif
+#endif	/* TEST */

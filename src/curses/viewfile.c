@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: viewfile.c,v 12.3 1993/11/18 20:31:57 dickey Exp $";
-#endif
-
 /*
  * Title:	view_file.c (create window to view file)
  * Author:	T.E.Dickey
@@ -23,6 +19,10 @@ static	char	Id[] = "$Id: viewfile.c,v 12.3 1993/11/18 20:31:57 dickey Exp $";
 
 #include	"td_curse.h"
 
+MODULE_ID("$Id: viewfile.c,v 12.5 1993/11/27 14:04:24 tom Exp $")
+
+#ifdef	unix
+
 int	view_file(
 	_ARX(char *,	fname)
 	_AR1(int,	readonly)
@@ -43,3 +43,5 @@ int	view_file(
 	}
 	return (code);
 }
+
+#endif	/* unix */

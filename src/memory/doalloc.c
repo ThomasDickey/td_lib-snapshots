@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: doalloc.c,v 12.2 1993/10/29 17:35:27 dickey Exp $";
+static	char	Id[] = "$Id: doalloc.c,v 12.3 1993/11/27 13:54:24 dickey Exp $";
 #endif
 
 /*
@@ -42,7 +42,9 @@ void	fail_alloc(
 	_DCL(char *,	ptr)
 {
 	PRINTF("%s: %p\n", msg, ptr);
+#ifdef	unix
 	walkback((char *)0);
+#endif
 	FFLUSH(stdout);
 	FFLUSH(stderr);
 	abort();

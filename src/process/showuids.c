@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: showuids.c,v 12.1 1993/10/29 17:35:23 dickey Exp $";
-#endif
-
 /*
  * Title:	show_uids.c
  * Author:	T.E.Dickey
@@ -16,6 +12,9 @@ static	char	Id[] = "$Id: showuids.c,v 12.1 1993/10/29 17:35:23 dickey Exp $";
 
 #include "ptypes.h"
 
+MODULE_ID("$Id: showuids.c,v 12.3 1993/11/27 14:03:02 tom Exp $")
+
+#ifdef	unix
 void
 show_uids(
 _AR1(FILE *,	fp))
@@ -31,3 +30,5 @@ _DCL(FILE *,	fp)
 
 	FPRINTF(fp, "\n");
 }
+
+#endif	/* unix */

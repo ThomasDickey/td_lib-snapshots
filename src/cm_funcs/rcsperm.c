@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: rcsperm.c,v 12.2 1993/10/29 17:35:24 dickey Exp $";
+static	char	Id[] = "$Id: rcsperm.c,v 12.3 1993/11/27 14:32:58 dickey Exp $";
 #endif
 
 /*
@@ -89,7 +89,7 @@ int	rcspermit(
 	my_file = ((stat(path, &sb) >= 0)	/* ok always! */
 		&& (sb.st_uid == getuid()));
 
-	while (header && (s = rcsread(s, code))) {
+	while (header && (s = rcsread(s, code)) != 0) {
 		s = rcsparse_id(key, s);
 
 		switch (code = rcskeys(key)) {
@@ -111,7 +111,7 @@ int	rcspermit(
 			if (empty) {
 				ok = my_file;
 			}
-			if ((header = ok)
+			if ((header = ok) != 0
 			&&  (base  != 0))
 				(void)strcpy(base, tip);
 			break;

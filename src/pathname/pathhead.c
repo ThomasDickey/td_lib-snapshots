@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: pathhead.c,v 12.2 1993/10/29 17:35:25 dickey Exp $";
+static	char	Id[] = "$Id: pathhead.c,v 12.3 1993/11/27 16:44:38 dickey Exp $";
 #endif
 
 /*
@@ -42,18 +42,18 @@ _DCL(char *,	path)
 _DCL(STAT *,	sb_)
 {
 	auto	int	trimmed	= 0;
-	STAT	sb;
+	auto	STAT	sb;
 	register char  *s;
 	static	char	buffer[BUFSIZ];
 
 	if (sb_ == 0)	sb_ = &sb;
 	path = strcpy(buffer, path);
-	while ((s = strrchr(path, '/')) != NULL) {
-		if (s[1] == EOS) {	/* trailing '/' ? */
-			if (!strcmp(path, "/"))		break;
+	while ((s = fleaf_delim(path)) != NULL) {
 #ifdef	apollo
-			if (!strcmp(path, "//"))	break;
+		if (!strcmp(path, "//"))		break;
 #endif
+		if (s[1] == EOS) {	/* trailing delimiter ? */
+			if (path == s)			break;
 			*s = EOS;	/* trim it */
 			trimmed++;
 		} else {
@@ -84,4 +84,4 @@ _MAIN
 	exit(SUCCESS);
 	/*NOTREACHED*/
 }
-#endif
+#endif	/* TEST */

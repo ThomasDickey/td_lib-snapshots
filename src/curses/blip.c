@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: blip.c,v 12.2 1993/10/29 17:35:27 dickey Exp $";
-#endif
-
 /*
  * Title:	blip.c (write a single character to screen)
  * Author:	T.E.Dickey
@@ -15,7 +11,9 @@ static	char	Id[] = "$Id: blip.c,v 12.2 1993/10/29 17:35:27 dickey Exp $";
  *		20 Jun 1991, changed return-type to 'void'
  */
 
-#include	"td_curse.h"
+#include	"ptypes.h"
+
+MODULE_ID("$Id: blip.c,v 12.4 1993/11/27 22:06:20 tom Exp $")
 
 void blip(
 _AR1(int,	c))

@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: add2fnam.c,v 12.2 1993/10/29 17:35:27 dickey Exp $";
-#endif
-
 /*
  * Title:	add2fname.c
  * Author:	T.E.Dickey
@@ -20,6 +16,8 @@ static	char	Id[] = "$Id: add2fnam.c,v 12.2 1993/10/29 17:35:27 dickey Exp $";
 #define	STR_PTYPES
 #include "ptypes.h"
 
+MODULE_ID("$Id: add2fnam.c,v 12.4 1993/11/27 16:11:44 tom Exp $")
+
 int	add2fname(
 	_ARX(char *,	name)
 	_AR1(char *,	suffix)
@@ -29,7 +27,8 @@ int	add2fname(
 {
 	register char	*s;
 #ifdef	vms
-	if (s = strrchr(name, ']'))	name = s;
+	if (s = fleaf(name))
+		name = s;
 	if (s = strrchr(name, ';')) {
 		auto	char	version[256];
 		(void)strcpy(version, s);
@@ -42,8 +41,8 @@ int	add2fname(
 			return (FALSE);
 		}
 	}
-#else	/* unix */
-	if ((s = strrchr(name, '/')) != 0)
+#else	/* unix or MSDOS */
+	if ((s = fleaf(name)) != 0)
 		name = s;
 #endif	/* vms/unix */
 	if (strlen(name) > strlen(suffix)

@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: ftype.c,v 12.1 1993/10/29 17:35:26 dickey Exp $";
-#endif
-
 /*
  * Title:	ftype.c (file-type/suffix)
  * Author:	T.E.Dickey
@@ -18,11 +14,7 @@ static	char	Id[] = "$Id: ftype.c,v 12.1 1993/10/29 17:35:26 dickey Exp $";
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-#ifdef	vms
-#define	PATH_END	']'
-#else	/* unix */
-#define	PATH_END	'/'
-#endif	/* vms/unix */
+MODULE_ID("$Id: ftype.c,v 12.3 1993/11/27 16:14:10 tom Exp $")
 
 char *
 ftype(
@@ -32,10 +24,8 @@ _DCL(char *,	path)
 	register char	*s,
 			*t;
 
-	if ((s = strrchr(path, PATH_END)) == 0)	/* find leaf */
+	if ((s = fleaf(path)) == 0)		/* find leaf */
 		s = path;
-	else	
-		s++;
 	if ((t = strchr(s, '.')) == 0)		/* ...and suffix in leaf */
 		t = s + strlen(s);
 	return (t);
