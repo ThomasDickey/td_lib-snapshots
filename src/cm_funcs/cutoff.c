@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: cutoff.c,v 10.1 1992/01/08 14:55:24 dickey Exp $";
+static	char	Id[] = "$Id: cutoff.c,v 10.2 1992/02/17 15:28:23 dickey Exp $";
 #endif
 
 /*
@@ -42,7 +42,7 @@ _DCL(int,	argc)
 _DCL(char **,	argv)
 {
 	int	first	= TRUE;
-	long	year	= 1900;
+	int	year	= 1900;
 	time_t	date;
 	char	bfr[80],
 		*d = strcpy(bfr, "991231235959"),

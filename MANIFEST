@@ -1,10 +1,11 @@
-MANIFEST for td_lib, version t19920211
+MANIFEST for td_lib, version t19920217
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 Makefile                        top-level makefile for TD_LIB
 README                          read-me file for this directory
 descrip.mms                     top-level MMS script for this library on VMS
 certify                         subdirectory
+certify/Makefile                makefile for certify directory
 certify/reusable.txt            summary of reusable components
 include                         subdirectory
 include/Makefile                make-file for CM_TOOLS common interface directory
@@ -90,6 +91,7 @@ src/pathname/filesize.c         returns filesize, in bytes
 src/pathname/fp2argv.c          file-pointer to argv-list
 src/pathname/ftype.c            finds filename's suffix
 src/pathname/ftype2.c           finds filename's suffix (style 2)
+src/pathname/is_spath.c         tests a pathname to see if it is a subpath of the other (i.e., one is a
 src/pathname/istextfl.c         tests a file to see if it is normal text vs binary
 src/pathname/mem2file.c         write a blob-string from memory to a file
 src/pathname/modechar.c         translate file-mode (binary) to character

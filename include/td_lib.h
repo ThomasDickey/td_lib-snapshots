@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 10.6 1992/02/10 07:48:38 dickey Exp $ */
+/* $Id: td_lib.h,v 11.0 1992/02/17 15:14:14 ste_cm Rel $ */
 
 /*
  * Combined lint-library/function prototype definitions for CM_TOOLS COMMON
@@ -346,6 +346,15 @@
 
 	/* interactive.c ---------------------------------------------- */
 	int	interactive(_ar0)
+			_ret
+
+	/* is_subpath.c ----------------------------------------------- */
+	int	is_subpath(
+			_arx(char *,	ref)
+			_ar1(char *,	tst)
+			)
+			_dcl(char *,	ref)
+			_dcl(char *,	tst)
 			_ret
 
 	/* istextfile.c ----------------------------------------------- */
