@@ -1,3 +1,9 @@
+1998-02-19  dickey@clark.net
+
+	* src/curses/resizwin.c: fix for SunOS 4.x BSD-curses
+
+	* src/curses/savewin.c: fix for SunOS 4.x BSD curses
+
 1998-02-18  dickey@clark.net
 
 	* include/headers: dropped acl.h, since it is apollo-specific
