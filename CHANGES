@@ -1,3 +1,16 @@
+1988-08-05  dickey@software.org
+
+	* src/cm_funcs/rcsedit.c:
+	'rcsname()' call here is now done in calling procedures.
+
+	* src/cm_funcs/rcsname.c:
+	rewrote to make a bidirectional set of procedures so we can deal intelligently
+	with the cases where a user gives 'checkin' or 'checkout' the name of the archive
+	file rather than the working file.
+
+	* include/llib-ltd:
+	revised 'rcsname.c' module so it does two directions of translation.
+
 1988-08-04  dickey@software.org
 
 	* src/Makefile: don't need NO_SCCS_ID def anymore.
