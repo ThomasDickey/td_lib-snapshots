@@ -1,3 +1,47 @@
+1989-09-06  dickey@software.org
+
+	* src/curses/padedit.c: use getwd definition from "ptypes.h"
+
+1989-09-06  ste_cm@software.org
+
+	* src/curses/padedit.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+1989-09-06  dickey@software.org
+
+	* src/Makefile:
+	use "ptypes.h" in 'abspath.c'; added missing ranlib to 'archive' rule
+
+	* src/pathname/which.c, src/pathname/walktree.c:
+	use 'getwd()' definition from "ptypes.h"
+
+1989-09-06  ste_cm@software.org
+
+	* src/pathname/walktree.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/pathname/walktree.c:
+	BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/pathname/walktree.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/pathname/walktree.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1989-09-06  dickey@software.org
+
+	* src/pathname/abspath.c: use "ptypes.h" to consolidate definitions
+
+1989-09-06  ste_cm@software.org
+
+	* src/pathname/abspath.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+1989-09-06  dickey@software.org
+
+	* include/ptypes.h: moved getwd/getcwd hack here; consolidate
+
 1989-08-28  dickey@software.org
 
 	* support/linkopts.opt: RCS_BASE

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: which.c,v 4.1 1989/08/25 09:50:40 dickey Exp $";
+static	char	Id[] = "$Id: which.c,v 4.2 1989/09/06 15:21:02 dickey Exp $";
 #endif	lint
 
 /*
@@ -7,24 +7,16 @@ static	char	Id[] = "$Id: which.c,v 4.1 1989/08/25 09:50:40 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	18 Nov 1987
  * $Log: which.c,v $
- * Revision 4.1  1989/08/25 09:50:40  dickey
- * force $PATH to be nonnull, in case this is invoked from a
- * non-unix environment!
+ * Revision 4.2  1989/09/06 15:21:02  dickey
+ * use 'getwd()' definition from "ptypes.h"
  *
+ *		Revision 4.1  89/08/25  09:50:40  dickey
+ *		force $PATH to be nonnull, in case this is invoked from a
+ *		non-unix environment!
+ *		
  *		Revision 4.0  88/05/16  13:17:20  ste_cm
  *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
  *		
- *		Revision 3.0  88/05/16  13:17:20  ste_cm
- *		BASELINE Mon Jun 19 13:27:01 EDT 1989
- *		
- *		Revision 2.0  88/05/16  13:17:20  ste_cm
- *		BASELINE Thu Apr  6 09:45:13 EDT 1989
- *		
- *		Revision 1.3  88/05/16  13:17:20  dickey
- *		sccs2rcs keywords
- *		
- *		16 May 1988, use 'abspath()' to expand directory names.
- *
  * Function:	Perform scanning along the PATH environment variable to
  *		find the first instance of a file 'find' which is
  *		executable.
@@ -37,8 +29,7 @@ static	char	Id[] = "$Id: which.c,v 4.1 1989/08/25 09:50:40 dickey Exp $";
 
 #define	STR_PTYPES
 #include	"ptypes.h"
-extern	char	*getcwd(),
-		*getenv();
+extern	char	*getenv();
 
 static
 executable(name)
@@ -97,7 +88,7 @@ int	j;
 char	bfr[BUFSIZ],
 	dot[BUFSIZ];
 
-	getcwd(dot, sizeof(dot)-2);
+	(void)getwd(dot);
 	for (j = 1; j < argc; j++) {
 		which(bfr, sizeof(bfr), argv[j], dot);
 		printf("%d '%s' = '%s'\n", j, argv[j], bfr);

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RCS/walktree.c,v 4.0 1989/07/25 09:31:44 ste_cm Rel $";
+static	char	Id[] = "$Id: walktree.c,v 8.0 1989/09/06 15:20:27 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,25 +7,24 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname
  * Author:	T.E.Dickey
  * Created:	31 Aug 1988
  * $Log: walktree.c,v $
- * Revision 4.0  1989/07/25 09:31:44  ste_cm
- * BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+ * Revision 8.0  1989/09/06 15:20:27  ste_cm
+ * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
  *
- *		Revision 3.1  89/07/25  09:31:44  dickey
- *		recompiled with apollo SR10 -- mods for function prototypes
+ *		Revision 7.0  89/09/06  15:20:27  ste_cm
+ *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
  *		
- *		Revision 3.0  89/06/09  13:40:34  ste_cm
- *		BASELINE Mon Jun 19 13:27:01 EDT 1989
+ *		Revision 6.0  89/09/06  15:20:27  ste_cm
+ *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
  *		
- *		Revision 2.2  89/06/09  13:40:34  dickey
- *		use 'dofree()'
+ *		Revision 5.0  89/09/06  15:20:27  ste_cm
+ *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
  *		
- *		Revision 2.1  89/04/24  16:44:34  dickey
- *		use VMS's string-function prototypes in port.
+ *		Revision 4.1  89/09/06  15:20:27  dickey
+ *		use 'getwd()' definition from "ptypes.h"
  *		
- *		Revision 1.2  88/08/31  13:33:42  dickey
- *		sccs2rcs keywords
+ *		Revision 4.0  89/07/25  09:31:44  ste_cm
+ *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
  *		
- *
  * Function:	Given a pathname, this successively invokes a user-supplied
  *		function, with the following arguments:
  *
@@ -58,15 +57,11 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname
  *		and with the user-specified access.
  */
 
+#define		ACC_PTYPES
 #define		DIR_PTYPES		/* include directory-stuff */
 #define		STR_PTYPES
 #include	"ptypes.h"
-extern	char	*getcwd();
 extern	char	*txtalloc();
-
-#define	R_OK	4
-#define	W_OK	2
-#define	X_OK	1
 
 /************************************************************************
  *	local definitions						*
@@ -136,7 +131,7 @@ int	level;
 		sb_ = 0;
 
 	if (level == 0)		/* do this once, to initialize */
-		path = getcwd(old_wd, sizeof(old_wd)-2);
+		path = getwd(old_wd);
 	else			/* ...and inherit otherwise */
 		(void)strcpy(old_wd, path);
 
