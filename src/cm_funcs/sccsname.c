@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: sccsname.c,v 11.0 1991/10/03 08:44:35 ste_cm Rel $";
+static	char	Id[] = "$Id: sccsname.c,v 11.1 1992/09/02 14:00:22 dickey Exp $";
 #endif
 
 /*
@@ -192,7 +192,7 @@ _DCL(int,	full)
 			"path/SCCS/name",	"path/SCCS/s.name",
 			"SCCS/name",		"SCCS/s.name"
 		};
-		putenv("SCCS_DIR=SCCS");
+		(void)putenv("SCCS_DIR=SCCS");
 		do_test (sizeof(test)/sizeof(test[0]), test, full);
 	}
 }

@@ -1,3 +1,59 @@
+1992-09-02  dickey@software.org
+
+	* src/compare/diffload.c, src/cm_funcs/rcstemp.c, src/process/revert.c:
+	lint
+
+1992-09-02  ste_cm@software.org
+
+	* src/process/revert.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1992-09-02  dickey@software.org
+
+	* include/ptypes.h: updated def of ARG_WAIT for SunOs (int *)
+
+	* src/cm_funcs/rcsedit.c, src/cm_funcs/rcsload.c, src/compare/diffload.c:
+	lint:fputs
+
+	* src/pathname/file2mem.c: LEN_FREAD-lint
+
+1992-09-02  ste_cm@software.org
+
+	* src/pathname/file2mem.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1992-09-02  dickey@software.org
+
+	* src/pathname/mem2file.c: LEN_FREAD-lint
+
+1992-09-02  ste_cm@software.org
+
+	* src/pathname/mem2file.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1992-09-02  dickey@software.org
+
+	* include/ptypes.h: oops: didn't mean to wipe out 'LEN_READ' definition
+
+	* src/pathname/file2mem.c, src/pathname/mem2file.c: lint
+
+	* include/ptypes.h:
+	updated defs of LEN_QSORT, LEN_READ for apollo/std.c
+
+	* src/cm_funcs/sccsname.c, src/cm_funcs/newzone.c, src/sheet/field_of.c:
+	lint
+
+	* include/ptypes.h:
+	corrected/updated ifdef for 'dirent' (Sun4 uses newer form
+	now), and added ifdefs for curses functions (to cover up
+	badly-linted stty calls).
+
+	* include/ptypes.h:
+	corrected defs of 'exit()' and 'perror()' for SunOs (4.1.1)
+
+	* src/string/dyn_copy.c:
+	rewrote in case application copies src to itself.
+
 1992-08-28  dickey@software.org
 
 	* src/curses/rawgets.c:

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: newzone.c,v 11.0 1991/10/04 14:10:13 ste_cm Rel $";
+static	char	Id[] = "$Id: newzone.c,v 11.1 1992/09/02 14:00:10 dickey Exp $";
 #endif
 
 /*
@@ -116,11 +116,11 @@ _AR1(char *,	name))
 _DCL(char *,	name)
 {
 #ifdef	apollo
-	putenv(name);
+	(void)putenv(name);
 	tzset();
 #else	/* !apollo */
 #ifdef	SYSTEM5
-	putenv(name);
+	(void)putenv(name);
 	tzset();
 #else	/* !SYSTEM5 */
 register unsigned j, k;

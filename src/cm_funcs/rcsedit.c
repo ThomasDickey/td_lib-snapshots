@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	*Id = "$Id: rcsedit.c,v 11.0 1992/02/06 10:14:28 ste_cm Rel $";
+static	char	*Id = "$Id: rcsedit.c,v 11.1 1992/09/02 15:36:12 dickey Exp $";
 #endif
 
 /*
@@ -126,7 +126,7 @@ writeit(_AR0)
 {
 	if (*buffer != EOS && fpT != 0) {
 		Show(">", buffer);
-		fputs(buffer, fpT);
+		(void)fputs(buffer, fpT);
 	}
 	*buffer = EOS;
 }

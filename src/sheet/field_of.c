@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	*Id = "$Id: field_of.c,v 11.1 1992/08/03 09:29:10 dickey Exp $";
+static	char	*Id = "$Id: field_of.c,v 11.2 1992/09/02 13:14:30 dickey Exp $";
 #endif
 
 /*
@@ -39,6 +39,7 @@ static	int	opt_Blanks;
 #endif
 
 #ifndef	HAS_MEMMOVE
+#define	memmove	my_memmove
 static
 char *	memmove(
 	_ARX(char *,	s1)

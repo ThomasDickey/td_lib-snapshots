@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcstemp.c,v 11.0 1992/02/06 10:16:05 ste_cm Rel $";
+static	char	Id[] = "$Id: rcstemp.c,v 11.1 1992/09/02 16:04:26 dickey Exp $";
 #endif
 
 /*
@@ -79,7 +79,7 @@ _DCL(int,	copy)
 			(void)umask(oldmask);
 		} else {
 			DEBUG(".. %s group is %d(%s)\n",
-				tf, sb.st_gid, gid2s(sb.st_gid));
+				tf, sb.st_gid, gid2s((int)sb.st_gid));
 
 			if (getgid() != sb.st_gid)
 				mode = 0777;

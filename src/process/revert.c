@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: revert.c,v 11.0 1992/02/07 07:50:22 ste_cm Rel $";
+static	char	Id[] = "$Id: revert.c,v 12.0 1992/09/02 16:03:48 ste_cm Rel $";
 #endif
 
 /*
@@ -34,12 +34,12 @@ _DCL(char *,	msg)
 
 	if ((id = getuid()) != geteuid()) {
 		TELL fmt, "uid", geteuid(), id);
-		(void)setuid(id);
+		(void)setuid((int)id);
 		changed++;
 	}
 	if ((gid = getgid()) != getegid()) {
 		TELL fmt, "gid", getegid(), gid);
-		(void)setgid(gid);
+		(void)setgid((int)gid);
 		changed++;
 	}
 	if (changed)
