@@ -1,4 +1,4 @@
-# $Header: /users/source/archives/td_lib.vcs/src/RCS/descrip.mms,v 2.3 1989/04/27 07:20:39 dickey Exp $
+# $Header: /users/source/archives/td_lib.vcs/src/RCS/descrip.mms,v 2.4 1989/05/17 10:02:35 dickey Exp $
 # MMS-file for miscellaneous library routines	
 #
 ####### (Development) ##########################################################
@@ -26,10 +26,12 @@ LIBRARYMODULES = -
 	DUMPCHR, -
 	FAILED, -
 	FILE2ARGV, -
+	FILE2MEM, -
 	FP2ARGV, -
 	LIST_BY_COLS, -
 	LTOSTR, -
 	MAKEARGV, -
+	MEM2FILE, -
 	MODECHAR -
 	PATHCAT, -
 	PATHLEAF, -
@@ -116,6 +118,7 @@ C_SRC	=-
 	EXECUTE.C -
 	FAILED.C -
 	FILE2ARGV.C -
+	FILE2MEM.C -
 	FILECOPY.C -
 	FOR_USER.C -
 	FP2ARGV.C -
@@ -128,6 +131,7 @@ C_SRC	=-
 	LIST_BY_COLS.C -
 	LTOSTR.C -
 	MAKEARGV.C -
+	MEM2FILE.C -
 	MODECHAR.C -
 	NAME2S.C -
 	NEWZONE.C -
@@ -217,11 +221,14 @@ dumpwin.obj :		$(PTYPES_H)
 erasechar.obj :		$(PTYPES_H)
 execute.obj :		$(PTYPES_H)
 failed.obj :		$(PTYPES_H)
+file2argv.obj :		$(PTYPES_H)
+file2mem.obj :		$(PTYPES_H)
 filecopy.obj :		$(PTYPES_H)
 for_user.obj :		$(PTYPES_H)
 fp2argv.obj :		$(PTYPES_H)
 gid2s.obj :		$(PTYPES_H)
 killchar.obj :		$(PTYPES_H)
+mem2file.obj :		$(PTYPES_H)
 name2s.obj :		$(PTYPES_H)
 newzone.obj :		$(PTYPES_H)
 packdate.obj :		$(PTYPES_H)

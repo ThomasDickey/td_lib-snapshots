@@ -1,3 +1,9 @@
+1989-05-17  dickey@software.org
+
+	* src/descrip.mms: added file2mem and mem2file modules
+
+	* include/td_lib.h: added definitions for file2mem() and mem2file()
+
 1989-05-12  dickey@software.org
 
 	* src/pathname/mem2file.c: RCS_BASE
