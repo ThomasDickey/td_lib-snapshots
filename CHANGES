@@ -1,3 +1,13 @@
+1997-01-04  dickey@clark.net
+
+	* aclocal.m4:
+	when adding subdirectories of .../include to include-path, add the
+	parent also, unless it's already /usr/include.
+
+	* aclocal.m4:
+	oops: ANSI_VARARGS test broke because I declared foo as void.
+	(wasn't an _error_ with gcc)
+
 1997-01-02  dickey@clark.net
 
 	* include/td_ext.h: realpath()

@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.75 1996/12/27 20:13:14 tom Exp $
+dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.77 1997/01/04 15:24:53 tom Exp $
 dnl vi:set ts=4:
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", without change
@@ -388,19 +388,29 @@ AC_DEFUN([TD_INCLUDE_PATH],
 [
 for td_path in $1
 do
-	td_result=""
+	td_result="no"
 	AC_MSG_CHECKING(for directory $td_path)
 	if test -d $td_path
 	then
 		INCLUDES="$INCLUDES -I$td_path"
 		ac_cpp="${ac_cpp} -I$td_path"
 		CFLAGS="$CFLAGS -I$td_path"
-		td_result="$td_result $td_path"
-	fi
-	if test -z "$td_result"; then
-		td_result=no
-	else
-		td_result=yes
+		td_result="yes"
+		case $td_path in
+		/usr/include|/usr/include/*)
+			;;
+		*)
+changequote(,)dnl
+			td_temp=`echo $td_path | sed -e s'%/[^/]*$%%'`
+changequote([,])dnl
+			case $td_temp in
+			*/include)
+				INCLUDES="$INCLUDES -I$td_temp"
+				ac_cpp="${ac_cpp} -I$td_temp"
+				CFLAGS="$CFLAGS -I$td_temp"
+				;;
+			esac
+		esac
 	fi
 	AC_MSG_RESULT($td_result)
 done
@@ -898,7 +908,7 @@ AC_CACHE_VAL(td_cv_ansi_varargs,[
 #endif
 #endif
 		],
-		[return 0;} void foo(char *fmt,...){va_list args;va_start(args,fmt);va_end(args)],
+		[return 0;} int foo(char *fmt,...){va_list args;va_start(args,fmt);va_end(args)],
 		[td_cv_ansi_varargs=yes],
 		[td_cv_ansi_varargs=no])
 	])
