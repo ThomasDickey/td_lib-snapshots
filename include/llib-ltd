@@ -1,4 +1,4 @@
-/* @(#)llib-ltd	1.35 88/08/19 15:38:24 */
+/* @(#)llib-ltd	1.36 88/08/24 11:55:14 */
 /*LINTLIBRARY*/
 
 #define	CUR_PTYPES
@@ -136,6 +136,9 @@ int	rcskeys(s) char *s; { return(0); }
 /* rcsload.c --------------------------------------------------------- */
 RCSTREE *rcsload(name,verbose) char *name; { return(0); }
 	rcsunload(p) RCSTREE *p; { }
+
+/* rcslocks.c -------------------------------------------------------- */
+char *	rcslocks(s, who, rev) char *s, *who, *rev; { return(0); }
 
 /* rcsname.c ---------------------------------------------------------- */
 char *	rcs2name(name) char *name; { return(0); }

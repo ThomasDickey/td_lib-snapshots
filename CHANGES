@@ -1,3 +1,25 @@
+1988-08-24  dickey@software.org
+
+	* src/cm_funcs/rcslocks.c: New file.
+
+	* src/cm_funcs/rcslocks.c: sccs2rcs keywords
+
+1988-08-24  ste_cm@software.org
+
+	* src/cm_funcs/rcslocks.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/cm_funcs/rcslocks.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+	* src/cm_funcs/rcslocks.c: BASELINE Thu Apr  6 09:45:13 EDT 1989
+
+	* src/cm_funcs/rcslocks.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
+1988-08-24  dickey@software.org
+
+	* include/llib-ltd, src/Makefile: added 'rcslocks.c' module.
+
 1988-08-19  dickey@software.org
 
 	* include/llib-ltd: oops: missed 'verbose' argument of 'rcsload()'.
