@@ -1,10 +1,16 @@
-# $Id: Makefile,v 11.1 1992/08/07 14:32:21 dickey Exp $
+# $Id: Makefile,v 11.3 1992/10/09 12:14:39 dickey Exp $
 # Top-level makefile for CM_TOOLS common library
 
 ####### (Development) ##########################################################
-include ../common.mk
+INSTALL_INC = ../install_inc
+INSTALL_LIB = ../install_lib
+INSTALL_MAN = ../install_man
 
-B	= $(TOP)/bin
+PUT	= rm -f $@; cp -p $? $@
+TOP	= ..
+GET	= checkout
+THIS	= cm_library
+
 I	= $(TOP)/interface
 L	= $(TOP)/lib
 
@@ -12,8 +18,10 @@ L	= $(TOP)/lib
 SOURCES	= Makefile descrip.mms README
 
 MFILES	=\
+	certificate/Makefile\
 	interface/Makefile\
 	src/Makefile\
+	support/Makefile\
 	test/Makefile
 
 ALL	=\
@@ -25,7 +33,7 @@ ALL	=\
 	$I/rcsdefs.h\
 	$I/sccsdefs.h\
 	$I/spreadsheet.h\
-	$L/$(THAT).a
+	$L/$(THIS).a
 
 ####### (Standard Productions) #################################################
 all\
@@ -39,6 +47,8 @@ destroy\
 sources\
 lincnt.out\
 lint.out::	$(MFILES)
+	cd support;	$(MAKE) $@
+	cd certificate;	$(MAKE) $@
 	cd interface;	$(MAKE) $@
 	cd src;		$(MAKE) $@
 	cd test;	$(MAKE) $@
@@ -75,4 +85,4 @@ $I/rcsdefs.h:		$i/rcsdefs.h	; $(PUT)
 $I/sccsdefs.h:		$i/sccsdefs.h	; $(PUT)
 $I/spreadsheet.h:	$i/spreadsheet.h; $(PUT)
 
-$L/$(THAT).a:	lib/$(THAT).a		; $(PUT); ranlib $@
+$L/$(THIS).a:	lib/$(THIS).a		; $(PUT); ranlib $@

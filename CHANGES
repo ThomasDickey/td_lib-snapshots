@@ -1,3 +1,31 @@
+1992-10-09  dickey@software.org
+
+	* support/old-td_lib.mk: J-macro is obsolete
+
+	* src/Makefile: forgot to move RCS_PATH here
+
+	* src/Makefile: typo in arc-name
+
+	* Makefile:
+	got this to make split-off from CM_TOOLS (still need to work on the
+	install-rule).
+
+	* certify/README, certify/config.txt, certify/release.txt: RCS_BASE
+
+	* src/Makefile: split off from CM_TOOLS
+
+	* support/old-td_lib.mk: RCS_BASE
+
+	* test/Makefile: split off from cm_tools
+
+	* support/Makefile: RCS_BASE
+
+	* Makefile: split off from CM_TOOLS
+
+	* README: documented split out from CM_TOOLS
+
+	* COPYING: RCS_BASE
+
 1992-09-04  dickey@software.org
 
 	* src/curses/rawgets.c:

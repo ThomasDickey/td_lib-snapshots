@@ -1,8 +1,8 @@
-# $Id: Makefile,v 11.2 1992/08/07 14:46:15 dickey Exp $
+# $Id: Makefile,v 11.3 1992/10/09 11:45:32 dickey Exp $
 # make-file for CM_TOOLS common/test library
 
 ####### (Development) ##########################################################
-include ../../common.mk
+include ../support/cm_library.mk
 
 I	= ../interface
 S	= ../src

@@ -1,11 +1,15 @@
-MANIFEST for td_lib, version t19920904
+MANIFEST for td_lib, version t19921009
 --------------------------------------------------------------------------------
 MANIFEST                        this file
+COPYING                         restrictions on copying/using this software
 Makefile                        top-level makefile for TD_LIB
 README                          read-me file for this directory
 descrip.mms                     top-level MMS script for this library on VMS
 certify                         subdirectory
 certify/Makefile                makefile for certify directory
+certify/README                  description of certify directory
+certify/config.txt              configurations on which TD_LIB is ported
+certify/release.txt             release notes for TD_LIB
 certify/reusable.txt            summary of reusable components
 include                         subdirectory
 include/Makefile                make-file for CM_TOOLS common interface directory
@@ -174,8 +178,10 @@ src/unix/s2uid.c                convert string to user-id
 src/unix/setmtime.c             set mtime/atime of a file
 src/unix/uid2s.c                convert user-id to string
 support                         subdirectory
+support/Makefile                makefile for td_lib/support
 support/lib_top.mms             same as STANDARD_RULES, save that we generate lib-directory, rather than bin
 support/linkopts.opt            default link-options file for PORTUNIX
+support/old-td_lib.mk           =============================================================================
 support/prog_top.mms            VMS MMS include-file defining standard (module-level) rules.
 support/td_lib.mms              VMS MMS include-file defining PORTUNIX library-rules
 support/td_progs.mms            VMS MMS include-file defining program-generation rules above PORTUNIX

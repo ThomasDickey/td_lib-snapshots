@@ -1,14 +1,14 @@
-# $Id: Makefile,v 11.4 1992/08/06 11:20:21 dickey Exp $
+# $Id: Makefile,v 11.7 1992/10/09 12:19:54 dickey Exp $
 # MAKE-file for miscellaneous library routines
 
 ####### (Environment) ##########################################################
-include ../../common.mk
+TOP	= ../..
+include ../support/cm_library.mk
 
-####### (Command-line Options) #################################################
-
+RCS_PATH= `which rcs | sed -e s+/rcs$$+/+`
 
 ####### (Standard Lists) #######################################################
-Z	= $L/$(THAT).a
+Z	= $L/$(CM_LIB).a
 
 CSRC	=\
 	abspath.c\
@@ -254,7 +254,7 @@ OBJS	=\
 	$Z(win2file.o)\
 	$Z(wrepaint.o)
 
-ALL	= $Z
+ALL	= $Z rcspath.h
 
 ####### (Standard Productions) #################################################
 all\
@@ -294,8 +294,8 @@ $Z(rcspermit.o)\
 $Z(samebranch.o)\
 $Z(vcs_file.o):	$(RCSDEFS_H)
 #
-$Z(rcspath.o):	$J/rcspath.h
-	$(CC) $(CPP_OPTS) -I$J $(CFLAGS) -c $*.c
+$Z(rcspath.o):	rcspath.h
+	$(CC) $(CPP_OPTS) -I. $(CFLAGS) -c $*.c
 	@ar r $Z $*.o
 	@rm   -f $*.o
 #
@@ -305,6 +305,16 @@ $Z(sccsname.o):	$(SCCSDEFS_H)
 $Z(count_ss.o)\
 $Z(field_of.o)\
 $Z(ss_field.o):	$I/spreadsheet.h $I/dyn_string.h
+#
+# If the rcs tool is not found in our path, assume that it lies in the same
+# directory as that in which we will install; but the install-directory has
+# been removed from our path as part of a clean-build.
+rcspath.h:		Makefile
+	rm -f $@
+	echo "#define RCS_PATH \"$(RCS_PATH)\"" >$@
+	@sh -c 'if ( grep "\"no\ rcs\ in" $@ )\
+		then echo "#define RCS_PATH \"`cd $(INSTALL_BIN);pwd`/\"" >$@;\
+		else echo ...found rcs-path; fi'
 #
 ####### (Development) ##########################################################
 $(SOURCES):			; $(GET) $@
