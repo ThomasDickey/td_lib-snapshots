@@ -1,5 +1,5 @@
 /*
- * $Id: port2vms.h,v 5.1 1991/10/18 15:17:41 dickey Exp $
+ * $Id: port2vms.h,v 5.2 1991/12/10 09:13:10 dickey Exp $
  *
  * VMS-definitions for supporting unix/vms port
  */
@@ -141,11 +141,13 @@ extern	void	time2vms(
 extern	void	transtree(
 		_arx(char *,		path)
 		_fnx(int,		func)
-		_ar1(int,		recur)
+		_arx(int,		recur)
+		_ar1(int,		links)
 		)
 		_dcl(char *,		path)
 		_dcl(int,		(*func)())
 		_dcl(int,		recur)
+		_dcl(int,		links)
 		_nul
 
 extern	char *	uid2s(
