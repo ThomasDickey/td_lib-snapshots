@@ -1,3 +1,9 @@
+1989-12-11  dickey@software.org
+
+	* src/pathname/which.c: lint
+
+	* src/pathname/which.c: corrected handling to relative pathnames
+
 1989-12-08  dickey@software.org
 
 	* src/pathname/abspath.c:
