@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rawgets.c,v 11.10 1992/08/17 13:17:56 dickey Exp $";
+static	char	Id[] = "$Id: rawgets.c,v 11.11 1992/08/20 09:09:02 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: rawgets.c,v 11.10 1992/08/17 13:17:56 dickey Exp $";
  * Title:	rawgets.c (raw-mode 'gets()')
  * Created:	29 Sep 1987 (from 'fl.c')
  * Modified:
+ *		20 Aug 1992, added 'field_len', 'first_col' arguments.
  *		17 Aug 1992, if 'fast_q' is non-null, start edit in scroll-mode
  *		10 Aug 1992, allow window-arg to be null, for replaying scripts
  *			     to buffers that are not visible.
@@ -84,14 +85,10 @@ static
 void	ClearIt(_AR0)
 {
 	if (Z) {
-		if (wrap) {
-			register int	x;
+		register int	x;
 
-			for (x = Z->_curx; x < xlast; x++)
-				(void)waddch(Z,' ');
-		} else {
-			(void)wclrtoeol(Z);
-		}
+		for (x = Z->_curx; x < xlast; x++)
+			(void)waddch(Z,' ');
 	}
 }
 
@@ -273,7 +270,7 @@ void	ShowPrefix(_AR0)
 		register char	*prefix = Prefix[Imode];
 
 		(void)wstandend(Z);
-		(void)wmove(Z, ybase, xbase-strlen(prefix));
+		(void)wmove(Z, ybase, (int)(xbase-strlen(prefix)));
 		while (*prefix)
 			(void)waddch(Z,*prefix++);
 	}
@@ -281,7 +278,7 @@ void	ShowPrefix(_AR0)
 
 /*
  * Toggle the insert/scroll mode, and show the state of this flag by
- * overwriting the ":" position of the prompt which is written before
+ * overwriting the prefix-string of the prompt which is written before
  * calling this procedure.
  */
 static
@@ -332,8 +329,10 @@ _DCL(int,	c)
 int	wrawgets (
 	_ARX(WINDOW *,	win)
 	_ARX(char *,	bfr)		/* in/out buffer */
-	_ARX(char **,	pref)
-	_ARX(int,	size)		/* maximum length of 'bfr' */
+	_ARX(char **,	pref)		/* prefix, for insert/scroll */
+	_ARX(int,	buffer_len)	/* maximum length of 'bfr' */
+	_ARX(int,	field_len)	/* maximum length of display-field */
+	_ARX(int,	first_col)	/* initial column for editing */
 	_ARX(int,	newline)	/* force newline-echo on completion */
 	_ARX(int,	fast_q)		/* nonnull: extra quit character */
 	_ARX(char **,	command)	/* nonnull: read inputs */
@@ -342,7 +341,9 @@ int	wrawgets (
 	_DCL(WINDOW *,	win)
 	_DCL(char *,	bfr)
 	_DCL(char **,	pref)
-	_DCL(int,	size)
+	_DCL(int,	buffer_len)
+	_DCL(int,	field_len)
+	_DCL(int,	first_col)
 	_DCL(int,	newline)
 	_DCL(int,	fast_q)
 	_DCL(char **,	command)
@@ -368,10 +369,10 @@ int	wrawgets (
 	shift = 0;
 
 	if (Z = win) {
-		getyx(Z,ybase,xbase);		/* get my initial position */
+		getyx(Z,ybase,xbase);	/* get my initial position */
 		ShowPrefix();
 		(void)wmove(Z,ybase,xbase);
-		xlast = xbase + size;
+		xlast = xbase + field_len;
 		if (xlast >= Z->_maxx)
 			xlast = Z->_maxx - 1;
 
@@ -389,8 +390,11 @@ int	wrawgets (
 		xlast = 80;
 	}
 
-	tag += strlen(tag);
-	MoveTo(tag);			/* ...and end-of-string */
+	/* set editing-position to initial column */
+	if ((count = strlen(tag)) < first_col)
+		first_col = count;
+	tag += first_col;
+	MoveTo(tag);
 
 	for (;;) {
 		if (errs) {
@@ -493,7 +497,7 @@ int	wrawgets (
 				(void)DeleteBefore(bfr+count, count);
 				break;
 			} else if (isprint(c)) {
-				if (tag-bfr < size-3)
+				if (tag-bfr < buffer_len)
 					InsertAt(tag++,c);
 				else	errs++;
 			} else

@@ -1,3 +1,10 @@
+1992-08-20  dickey@software.org
+
+	* src/curses/rawgets.c: added args 'field_len' and 'first_col'
+
+	* include/td_lib.h:
+	added args 'field_len' and 'first_col' to 'wrawgets()'
+
 1992-08-17  dickey@software.org
 
 	* src/curses/rawgets.c:
