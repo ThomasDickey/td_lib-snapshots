@@ -1,3 +1,15 @@
+1994-08-01  dickey@clark.net
+
+	* configure.in: try to show result of `uname -a` in config.h header
+
+	* aclocal.m4: try including <libgen.h> for IRIX regcmp
+
+	* include/td_regex.h: IRIX needs <libgen.h> for regcmp
+
+	* include/td_qsort.h: PROTOTYPES is easier to remember for qsort-ansi
+
+	* include/.vilerc: don't assume ~ works w/o glob!
+
 1994-07-29  dickey@clark.net
 
 	* include/td_regex.h: hacks needed for CLIX regex

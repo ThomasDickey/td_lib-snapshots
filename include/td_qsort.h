@@ -1,4 +1,4 @@
-/* $Id: td_qsort.h,v 12.5 1994/07/26 18:56:10 tom Exp $ */
+/* $Id: td_qsort.h,v 12.6 1994/08/01 22:58:32 tom Exp $ */
 
 #ifndef	TD_QSORT_H
 #define	TD_QSORT_H
@@ -28,7 +28,7 @@
 
 #define	QSORT_DST	QSORT_SRC*
 
-#if	defined(__STDC__) || defined(vms) || defined(__TURBOC__)
+#if	PROTOTYPES
 #define	ANSI_QSORT 1
 #define	QSORT_CAST(s,d)	register QSORT_DST d = (QSORT_DST) s;
 #define QSORT_dst const V_OR_P

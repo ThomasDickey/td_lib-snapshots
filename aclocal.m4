@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.40 1994/07/29 20:10:04 tom Exp $
+dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.41 1994/08/01 23:01:05 tom Exp $
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "TD_" to "AC_"
 dnl ---------------------------------------------------------------------------
@@ -225,11 +225,14 @@ dnl Some systems (CLIX) use <pw.h> for this purpose.
 define([TD_REGCMP_FUNCS],
 [save_libs="$LIBS"
 AC_HAVE_LIBRARY(PW)
-AC_HAVE_HEADERS(pw.h)
+AC_HAVE_HEADERS(pw.h, libgen.h)
 AC_TEST_PROGRAM([
 #include <stdio.h>	/* need this for CLIX to define '__' macro */
 #if HAVE_PW_H
 #include <pw.h>		/* _must_ use prototype on CLIX */
+#endif
+#if HAVE_LIBGEN_H
+#include <libgen.h>	/* IRIX defines it here */
 #endif
 int main() {
 	char *e;
