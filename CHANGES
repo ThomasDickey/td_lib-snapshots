@@ -1,3 +1,13 @@
+1991-09-09  dickey@software.org
+
+	* src/curses/padedit.c: lint (actually, ifdef'd out sr9.x dependencies)
+
+	* src/cm_funcs/rcspath.c: lint
+
+	* src/cm_funcs/newzone.c: lint (redefinition of 'clock()')
+
+	* src/Makefile, include/Makefile: fix clean-rule
+
 1991-09-06  dickey@software.org
 
 	* src/cm_funcs/rcsedit.c: added 'readonly' arg to 'rcsopen()'.
