@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	24 Mar 1988
  * Modified:
+ *		01 Jan 2000, 'killchar()' is a macro in bsd4.4 curses
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, converted to ANSI
@@ -13,9 +14,9 @@
 
 #include	"td_curse.h"
 
-MODULE_ID("$Id: killchar.c,v 12.5 1994/05/30 23:10:11 tom Exp $")
+MODULE_ID("$Id: killchar.c,v 12.6 2000/01/01 14:26:43 tom Exp $")
 
-#if	!HAVE_KILLCHAR
+#if	!HAVE_KILLCHAR && !defined(killchar)
 int	killchar(_AR0)
 {
 	int	code	= '\177';
