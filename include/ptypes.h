@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 5.4 1989/12/08 08:04:51 dickey Exp $ */
+/* $Id: ptypes.h,v 5.5 1990/02/14 09:06:05 dickey Exp $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -124,10 +124,10 @@ extern	V_OR_I	exit();
 #ifndef	vms
 extern	V_OR_I	free();
 #endif	/* vms */
-extern	V_OR_I	perror();
 extern	V_OR_I	qsort();
 #ifndef	vms
 #ifndef	__STDC__
+extern	V_OR_I	perror();
 extern	V_OR_I	rewind();
 #endif	/* __STDC__ */
 #endif
