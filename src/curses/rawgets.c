@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: rawgets.c,v 12.4 1993/11/05 17:56:01 dickey Exp $";
+static	char	Id[] = "$Id: rawgets.c,v 12.5 1993/11/24 13:06:16 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: rawgets.c,v 12.4 1993/11/05 17:56:01 dickey Exp $";
  * Title:	rawgets.c (raw-mode 'gets()')
  * Created:	29 Sep 1987 (from 'fl.c')
  * Modified:
+ *		24 Nov 1993, added xterm-mouse support.
  *		05 Nov 1993, absorb "cmdch.h" into "td_curse.h"
  *		29 Oct 1993, ifdef-ident
  *		28 Sep 1993, modified 'InsertAt()' to avoid reading past the
@@ -149,6 +150,50 @@ void	MoveTo(
 		(void)wmove(Z,y,x);
 	}
 }
+
+#ifndef	NO_XTERM_MOUSE
+/*
+ * Given cursor coordinates, computes the resulting position within the
+ * buffer.  Update the display and return the buffer pointer.
+ */
+static
+char *	MoveFrom(
+	_ARX(int,	row)
+	_AR1(int,	col)
+		)
+	_DCL(int,	row)
+	_DCL(int,	col)
+{
+	if (Z) {
+		register char	*s;
+		register int	y = ybase,
+				x = xbase;
+
+		if (row < ybase) {
+			row = ybase;
+			col = xbase;
+		}
+
+		for (s = bbase; *s != EOS; s++) {
+			if (y == row
+			 && x == col)
+			 	break;
+			if (!isprint(*s))
+				x++;
+			if (++x >= xlast) {
+				if (wrap) {
+					x = 0;
+					y++;
+				}
+			}
+		}
+		MoveTo(s);
+		ShowAt(s);
+		return s;
+	}
+	return 0;
+}
+#endif
 
 /*
  * Repaint the string starting at a given position
@@ -454,6 +499,23 @@ int	wrawgets (
 			history = dyn_append(history, temp);
 		}
 
+#ifndef	NO_XTERM_MOUSE
+		/*
+		 * Use the mouse for (re)positioning the cursor within the
+		 * buffer.
+		 */
+		if (c == ARO_MOUSE) {
+			if (xt_mouse.released) {
+				if (xt_mouse.button == 1) {
+					tag = MoveFrom(xt_mouse.row,
+						       xt_mouse.col);
+				} else {
+					errs++;
+				}
+			}
+			continue;
+		}
+#endif
 		/*
 		 * We return only one of three types of thing:
 		 *	up/down arrow,
@@ -517,7 +579,7 @@ int	wrawgets (
 
 		} else if (to_left(c)) {
 			if (tag > bfr) {
-			char	*s = tag;
+				register char	*s = tag;
 				while (count-- > 0)
 					if (--s == bfr)
 						break;
@@ -525,8 +587,8 @@ int	wrawgets (
 			} else
 				errs++;
 		} else if (to_right(c)) {
-			if (*tag) {
-			char	*s = tag;
+			if (*tag != EOS) {
+				register char	*s = tag;
 				while (count-- > 0)
 					if (*(++s) == EOS)
 						break;
