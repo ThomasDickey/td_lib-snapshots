@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/port2vms/RCS/vms2name.c,v 2.0 1989/05/25 15:21:45 ste_cm Rel $";
+static	char	Id[] = "$Id: vms2name.c,v 4.0 1989/09/15 08:36:37 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,6 +7,7 @@ static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/port2vms/RC
  * Author:	T.E.Dickey
  * Created:	02 Nov 1988
  * Modified:
+ *		15 Sep 1989, added IMakefile and AMakefile cases.
  *		25 May 1989, handle special case of "[]".  Lowercase entire
  *			     pathname.  Generate ".." cases.
  *		13 Apr 1989, added special cases for leaf-editing which assume
@@ -36,7 +37,6 @@ static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/port2vms/RC
 #define	STR_PTYPES
 #include	"portunix.h"
 #include	<ctype.h>
-extern	char	*getcwd();
 
 #define	LOWER(p)	((isalpha(*p) && isupper(*p)) ? tolower(*p) : *p)
 
@@ -45,6 +45,8 @@ static	struct	{
 		char	*name;	/* lowercase string to check for */
 	} uc_names[] = {
 		1,	"makefile",
+		2,	"amakefile",
+		2,	"imakefile",
 		6,	"readme",
 		256,	"read.me",
 		256,	"copyright"
@@ -100,7 +102,7 @@ char	*dst, *src;
 	&&	   (base[1] != '-')
 	&&	   (base[1] != '.')
 	&&	   (base[1] != ']'))) {	/* must supply a device */
-		register char	*a = getcwd(current, sizeof(current)),
+		register char	*a = getwd(current),
 				*b = strchr(a ? a : "?", ':');
 		if ((b != 0)
 		&&  (b[1] == ':')) {	/* skip over node specification */
@@ -114,7 +116,7 @@ char	*dst, *src;
 				a++;
 			}
 			have_dev = TRUE;
-		}			/* else, no device in getcwd! */
+		}			/* else, no device in getwd! */
 	}
 
 	/* translate directory-syntax */
@@ -228,7 +230,7 @@ char	*argv[];
 {
 	auto	char	current[MAXPATHLEN];
 
-	(void)getcwd(current, sizeof(current));
+	(void)getwd(current);
 	printf("current directory = \"%s\"\n", current);
 	if (argc > 1)
 		dotest(argc, argv);

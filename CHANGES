@@ -1,3 +1,77 @@
+1989-09-15  dickey@software.org
+
+	* src/port2vms/rmsio.c:
+	c$$translate() does not live in vms's sharable library; hacked to fix.
+
+1989-09-15  ste_cm@software.org
+
+	* src/port2vms/rmsio.c:
+	BASELINE Mon Sep 18 08:24:15 EDT 1989 -- support:ada_pits_000(rel3)
+
+	* src/port2vms/rmsio.c: BASELINE Tue Aug 14 16:27:44 1990
+
+1989-09-15  dickey@software.org
+
+	* src/port2vms/utimes.c:
+	c$$translate() does not live in vms's sharable library; hacked to fix.
+
+1989-09-15  ste_cm@software.org
+
+	* src/port2vms/utimes.c:
+	BASELINE Mon Sep 18 08:24:15 EDT 1989 -- support:ada_pits_000(rel3)
+
+	* src/port2vms/utimes.c: BASELINE Tue Aug 14 16:27:44 1990
+
+1989-09-15  dickey@software.org
+
+	* src/port2vms/utimes.c:
+	removed redundant include (from changes to "ptypes.h")
+
+	* include/ptypes.h: VMS does not define access()-modes in <file.h>
+
+	* src/descrip.mms: corrected continuation-line syntax in UNUSED_MODULES
+
+	* src/pathname/trnstree.c:
+	use new definition of 'getwd()' in "ptypes.h"
+
+1989-09-15  ste_cm@software.org
+
+	* src/pathname/trnstree.c:
+	BASELINE Mon Sep 18 08:24:15 EDT 1989 -- support:ada_pits_000(rel3)
+
+1989-09-15  dickey@software.org
+
+	* src/pathname/edittree.c:
+	use new definition of 'getwd()' in "ptypes.h"
+
+1989-09-15  ste_cm@software.org
+
+	* src/pathname/edittree.c:
+	BASELINE Mon Sep 18 08:24:15 EDT 1989 -- support:ada_pits_000(rel3)
+
+1989-09-15  dickey@software.org
+
+	* src/pathname/dlettree.c:
+	use new definition of 'getwd()' in "ptypes.h"
+
+1989-09-15  ste_cm@software.org
+
+	* src/pathname/dlettree.c:
+	BASELINE Mon Sep 18 08:24:15 EDT 1989 -- support:ada_pits_000(rel3)
+
+1989-09-15  dickey@software.org
+
+	* src/port2vms/vms2name.c:
+	use new definition of 'getwd()' in "ptypes.h"
+	added cases for IMakefile and AMakefile
+
+1989-09-15  ste_cm@software.org
+
+	* src/port2vms/vms2name.c:
+	BASELINE Mon Sep 18 08:24:15 EDT 1989 -- support:ada_pits_000(rel3)
+
+	* src/port2vms/vms2name.c: BASELINE Tue Aug 14 16:27:44 1990
+
 1989-09-14  dickey@software.org
 
 	* include/td_lib.h, src/descrip.mms, src/pathname/ftype.c:

@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 4.1 1989/09/06 15:13:59 dickey Exp $ */
+/* $Id: ptypes.h,v 4.2 1989/09/15 09:17:22 dickey Exp $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -213,11 +213,18 @@ extern	char	killchar();
  * Define symbols used in 'access()' function
  */
 #ifdef	ACC_PTYPES
+#ifdef	vms
+#define	F_OK	0	/* file-exists */
+#define	X_OK	1	/* executable */
+#define	W_OK	2	/* writeable */
+#define	R_OK	4	/* readable */
+#else	unix
 #ifdef	SYSTEM5
 #include	<unistd.h>
 #else	SYSTEM5
 #include	<sys/file.h>
 #endif	SYSTEM5
+#endif	vms/unix
 #endif	ACC_PTYPES
 
 /*

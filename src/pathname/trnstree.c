@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	what[] = "$Id: trnstree.c,v 2.1 1989/07/26 13:18:23 dickey Exp $";
+static	char	Id[] = "$Id: trnstree.c,v 3.0 1989/09/15 08:39:19 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -15,7 +15,6 @@ static	char	what[] = "$Id: trnstree.c,v 2.1 1989/07/26 13:18:23 dickey Exp $";
 #define		STR_PTYPES
 #include	"portunix.h"
 #include	<errno.h>
-extern	char	*getcwd();
 
 transtree(oldname,func,recur)
 char	*oldname;
@@ -43,7 +42,7 @@ int	(*func)();
 				if (isDIR(sb.st_mode)) {
 					if (!recur)
 						continue;
-					if (getcwd(oldpath,sizeof(oldpath)-2)
+					if (getwd(oldpath)
 					&&  chdir(DIR2PATH(newname)) >= 0) {
 						transtree(
 							OPENDIR_ARG,
