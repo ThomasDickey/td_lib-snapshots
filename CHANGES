@@ -1,3 +1,54 @@
+1992-02-03  dickey@software.org
+
+	* src/sheet/field_of.c: cleaning up blocking in 'get_field_of()'
+
+	* src/sheet/field_of.c:
+	have an (almost) working version of 'set_field_of()'
+
+	* src/sheet/field_of.c: 2nd cut of 'set_field_of()'
+
+	* src/sheet/ss_field.c: return value in 'set_ss_field()'
+
+	* include/td_sheet.h:
+	make set_field_of & set_ss_field return value (of allocate buffer)
+
+	* src/sheet/field_of.c:
+	recoded 'get_field_of()' with littler routines that I can use
+	in 'set_field_of()'
+
+	* src/sheet/ss_field.c: RCS_BASE
+
+	* Makefile: added "spreadsheet.h"
+
+	* src/sheet/field_of.c: RCS_BASE
+
+	* include/td_sheet.h: added 'field_uses_quotes()'
+
+	* src/Makefile: typo
+
+	* src/descrip.mms: added modules 'count_ss', 'field_of' and 'ss_field'
+
+	* src/sheet/count_ss.c: RCS_BASE
+
+1992-02-03  ste_cm@software.org
+
+	* src/sheet/count_ss.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1992-02-03  dickey@software.org
+
+	* include/td_sheet.h: reordered args for consistency
+
+	* src/Makefile: added modules 'count_ss', 'field_of' and 'ss_field'
+
+	* include/td_sheet.h: RCS_BASE
+
+	* include/Makefile: make 'lintlib' rule
+
+	* include/llib-ltd: added spreadsheet.h
+
+	* include/Makefile: added "spreadsheet.h"
+
 1992-01-28  dickey@software.org
 
 	* src/pathname/pathcat.c:

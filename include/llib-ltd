@@ -1,4 +1,4 @@
-/* $Header: /users/source/archives/td_lib.vcs/include/RCS/llib-ltd,v 10.0 1991/05/24 08:42:53 ste_cm Rel $ */
+/* $Id: llib-ltd,v 10.1 1992/02/03 10:19:45 dickey Exp $ */
 /*LINTLIBRARY*/
 
 #define	LINTLIBRARY
@@ -7,4 +7,5 @@
 #include	"ptypes.h"
 #include	"rcsdefs.h"
 #include	"sccsdefs.h"
+#include	"spreadsheet.h"
 #include	"common.h"

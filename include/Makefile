@@ -1,4 +1,4 @@
-# $Id: Makefile,v 10.0 1991/10/03 10:34:16 ste_cm Rel $
+# $Id: Makefile,v 10.2 1992/02/03 10:23:28 dickey Exp $
 # make-file for CM_TOOLS common interface directory
 #
 ####### (Development) ##########################################################
@@ -17,20 +17,25 @@ H_SRC	=\
 	deltree.h\
 	ptypes.h\
 	rcsdefs.h\
-	sccsdefs.h
+	sccsdefs.h\
+	spreadsheet.h
+
 L_SRC	=\
 	llib-ltd
+
 SOURCES	= Makefile $(H_SRC) $(L_SRC)
 
-ALL	= $L/$(LLIB).ln
+IT	= $L/$(LLIB).ln
+ALL	=
 
 ####### (Standard Productions) #################################################
-all:		sources $(ALL)
-clean:			; rm -f *.out *.ln *.bak core
-clobber:	clean	; rm -f $(ALL)
+all:		$(SOURCES) $(ALL)
+clean:			; rm -f *.bak *.log *.out *.ln core
+clobber:	clean	; rm -f $(ALL) $(IT)
 destroy:
 	sh -c 'for i in *;do case $$i in RCS);; *) rm -f $$i;;esac;done;exit 0'
 sources:	$(SOURCES)
+lintlib:	$(IT)
 lint.out:
 lincnt.out:	$(H_SRC)	; lincnt $(H_SRC) >$@
 

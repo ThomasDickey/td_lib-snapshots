@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19920128
+MANIFEST for td_lib, version t19920203
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 Makefile                        top-level makefile for TD_LIB
@@ -17,6 +17,7 @@ include/ptypes.h                principal include-file for TD_LIB
 include/rcsdefs.h               interface for rcs functions
 include/sccsdefs.h              interface for sccs functions
 include/td_lib.h                interface of common TD_LIB functions
+include/td_sheet.h              interface for spreadsheet (CSV) functions
 include/vms_dirs.h              VMS unix-style directory-interface definitions
 src                             subdirectory
 src/Makefile                    makefile for td_lib/src
@@ -130,6 +131,10 @@ src/process/revert.c            reset/disable setuid mode
 src/process/shoarg.c            shows arguments built with 'catarg()'
 src/process/usercopy.c          copy file for set-uid user
 src/process/userprot.c          set file protection for set-uid user
+src/sheet                       subdirectory
+src/sheet/count_ss.c            counts fields in in-memory spreadsheet
+src/sheet/field_of.c            'get_field_of()' from 'hist2ileaf.c'
+src/sheet/ss_field.c            insert/extract data in "spreadsheet" table
 src/string                      subdirectory
 src/string/dftenv.c             returns 'getenv()' with a default (non-null) value
 src/string/dotcmp.c             compare dot-separated strings

@@ -1,4 +1,4 @@
-# $Id: descrip.mms,v 10.0 1991/10/11 07:47:16 ste_cm Rel $
+# $Id: descrip.mms,v 10.1 1992/02/03 12:06:52 dickey Exp $
 # MMS-file for miscellaneous library routines	
 #
 ####### (Development) ##########################################################
@@ -22,6 +22,7 @@ LIBRARYMODULES = -
 	CATARG, -
 	CATCHALL, -
 	COPYBACK, -
+	COUNT_SS, -
 	DFTENV, -
 	DOALLOC, -
 	DOTCMP, -
@@ -29,6 +30,7 @@ LIBRARYMODULES = -
 	DUMPCHR, -
 	EXECUTE, -
 	FAILED, -
+	FIELD_OF, -
 	FILE2ARGV, -
 	FILE2MEM, -
 	FILESIZE, -
@@ -45,6 +47,7 @@ LIBRARYMODULES = -
 	PATHLEAF, -
 	SAMELEAF, -
 	SHOARG, -
+	SS_FIELD, -
 	STRALLOC, -
 	STRBCMP, -
 	STRCLEAN, -
@@ -125,6 +128,7 @@ C_SRC	=-
 	CATCHALL.C -
 	CMDCH.C -
 	COPYBACK.C -
+	COUNT_SS.C -
 	CUTOFF.C -
 	DENODE.C -
 	DFTENV.C -
@@ -136,6 +140,7 @@ C_SRC	=-
 	ERASECHAR.C -
 	EXECUTE.C -
 	FAILED.C -
+	FIELD_OF.C -
 	FILE2ARGV.C -
 	FILE2MEM.C -
 	FILECOPY.C -
@@ -190,6 +195,7 @@ C_SRC	=-
 	SCR_SIZE.C -
 	SETMTIME.C -
 	SHOARG.C -
+	SS_FIELD.C -
 	STRALLOC.C -
 	STRBCMP.C -
 	STRCLEAN.C -
@@ -309,6 +315,10 @@ USERPROT.obj :		$(PTYPES_H)
 # vcs_file.obj :	$(PTYPES_H)	$(I)rcsdefs.h
 WALKTREE.OBJ :		$(PTYPES_H)
 WIN2FILE.obj :		$(PTYPES_H)
+#
+COUNT_SS.obj :		$(PTYPES_H)	$(I)spreadsheet.h
+FIELD_OF.obj :		$(PTYPES_H)	$(I)spreadsheet.h
+SS_FIELD.obj :		$(PTYPES_H)	$(I)spreadsheet.h
 #
 ####### (Development) ##########################################################
 !

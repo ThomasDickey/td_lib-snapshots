@@ -1,4 +1,4 @@
-# $Id: Makefile,v 10.0 1991/10/21 09:17:30 ste_cm Rel $
+# $Id: Makefile,v 10.1 1992/02/03 12:34:03 dickey Exp $
 # Top-level makefile for CM_TOOLS common library
 
 ####### (Development) ##########################################################
@@ -7,7 +7,7 @@ B	= $(TOP)/bin
 I	= $(TOP)/interface
 L	= $(TOP)/lib
 
-COPY	= cp -p
+COPY	= rm -f $@; cp -p
 MAKE	= make $(MFLAGS) -k$(MAKEFLAGS)	CFLAGS="$(CFLAGS)" COPY="$(COPY)"
 
 ####### (Standard Lists) #######################################################
@@ -25,6 +25,7 @@ ALL	=\
 	$I/ptypes.h\
 	$I/rcsdefs.h\
 	$I/sccsdefs.h\
+	$I/spreadsheet.h\
 	$L/lib.a
 
 ####### (Standard Productions) #################################################
@@ -61,10 +62,12 @@ $(MFILES)\
 $(SOURCES):				; checkout -x $@
 lib:					; mkdir $@
 
-$I/cmdch.h:	interface/cmdch.h	; $(COPY) $? $@
-$I/common.h:	interface/common.h	; $(COPY) $? $@
-$I/deltree.h:	interface/deltree.h	; $(COPY) $? $@
-$I/ptypes.h:	interface/ptypes.h	; $(COPY) $? $@
-$I/rcsdefs.h:	interface/rcsdefs.h	; $(COPY) $? $@
-$I/sccsdefs.h:	interface/sccsdefs.h	; $(COPY) $? $@
+i=interface
+$I/cmdch.h:		$i/cmdch.h	; $(COPY) $? $@
+$I/common.h:		$i/common.h	; $(COPY) $? $@
+$I/deltree.h:		$i/deltree.h	; $(COPY) $? $@
+$I/ptypes.h:		$i/ptypes.h	; $(COPY) $? $@
+$I/rcsdefs.h:		$i/rcsdefs.h	; $(COPY) $? $@
+$I/sccsdefs.h:		$i/sccsdefs.h	; $(COPY) $? $@
+$I/spreadsheet.h:	$i/spreadsheet.h; $(COPY) $? $@
 $L/lib.a:	lib/lib.a		; $(COPY) $? $@; ranlib $@
