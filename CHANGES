@@ -1,3 +1,9 @@
+2003-10-23  dickey@invisible-island.net
+
+	* config.sub: 2003-08-18
+
+	* config.guess: update
+
 2003-07-02  dickey@invisible-island.net
 
 	* src/curses/cmdch.c: add a check for KEY_RESIZE
