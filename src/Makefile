@@ -1,4 +1,4 @@
-# $Id: Makefile,v 11.14 1992/12/04 11:49:26 ste_cm Exp $
+# $Id: Makefile,v 11.15 1992/12/21 09:57:35 dickey Exp $
 # MAKE-file for miscellaneous library routines
 
 ####### (Environment) ##########################################################
@@ -96,6 +96,7 @@ CSRC	=\
 	revert.c\
 	samebranch.c\
 	sameleaf.c\
+	saves_uid.c\
 	savewin.c\
 	scomp.c\
 	sccs_dir.c\
@@ -223,6 +224,7 @@ OBJS	=\
 	$Z(revert.o)\
 	$Z(samebranch.o)\
 	$Z(sameleaf.o)\
+	$Z(saves_uid.o)\
 	$Z(savewin.o)\
 	$Z(sccs_dir.o)\
 	$Z(sccslast.o)\

@@ -1,4 +1,4 @@
-# $Id: descrip.mms,v 11.5 1992/11/19 15:10:36 dickey Exp $
+# $Id: descrip.mms,v 11.6 1992/12/21 09:58:06 dickey Exp $
 # MMS-file for miscellaneous library routines	
 #
 ####### (Development) ##########################################################
@@ -122,6 +122,7 @@ UNUSED_MODULES = -
 	REVERT,			# unix setuid -
 	S2GID,			# unix-passwd -
 	S2UID,			# unix-passwd -
+	SAVES_UID,		# unix -
 	SAVEWIN,		# curses -
 	SCCS_DIR,		# sccs (unix-only) -
 	SCCSLAST,		# sccs (unix-only) -

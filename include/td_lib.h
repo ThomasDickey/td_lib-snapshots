@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 11.10 1992/11/19 15:04:16 dickey Exp $ */
+/* $Id: td_lib.h,v 11.11 1992/12/21 09:53:52 dickey Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for CM_TOOLS COMMON
@@ -561,6 +561,10 @@
 			_ret
 
 #ifdef	unix
+	/* saves_uid.c ------------------------------------------------ */
+	int	saves_uid(_ar0)
+			_nul
+
 	/* scr_size.c ------------------------------------------------- */
 	int	scr_size(
 			_ar1(int *,	lc)

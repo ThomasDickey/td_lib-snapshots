@@ -1,3 +1,25 @@
+1992-12-21  dickey@software.org
+
+	* src/cm_funcs/rcstemp.c:
+	forgot to ifdef the last change properly, for RCS 4 on SunOs
+
+	* src/cm_funcs/rcstemp.c:
+	added test with 'saves_uid()' to suppress unnecessary creation
+	of temp-file & temp-directory
+
+	* src/descrip.mms: added (unused)module SAVES_UID
+
+	* src/Makefile: added 'saves_uid.c'
+
+	* include/td_lib.h: added 'saves_uid()'
+
+	* src/process/savesuid.c: RCS_BASE
+
+1992-12-21  ste_cm@software.org
+
+	* src/process/savesuid.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
 1992-12-04  ste_cm@software.org
 
 	* test/pathname/walktree.ref: filtered out RCS
