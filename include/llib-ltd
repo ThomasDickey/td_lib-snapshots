@@ -1,4 +1,4 @@
-/* @(#)llib-ltd	1.5 88/04/21 08:34:09 */
+/* @(#)llib-ltd	1.6 88/04/22 06:47:38 */
 /*LINTLIBRARY*/
 
 #include	<curses.h>
@@ -67,6 +67,9 @@ long	packdate (year, mon, day, hour, min, s) { return (0); }
 /* rawterm.c ---------------------------------------------------------- */
 	rawterm() { }
 
+/* resizewin.c -------------------------------------------------------- */
+int	resizewin() { return(0); }
+
 /* s2gid.c ------------------------------------------------------------ */
 int	s2gid(s) char	*s; { return (0); }
 
@@ -75,8 +78,8 @@ int	s2uid(s) char	*s; { return (0); }
 
 /* savewin.c ---------------------------------------------------------- */
 	savewin() { }
-	lastwin(redo) { }
-	unsavewin(redo) { }
+	lastwin(redo,top) { }
+	unsavewin(redo,top) { }
 
 /* sccslast.c --------------------------------------------------------- */
 	sccslast(wd,n,r_,v_,t_) char *wd,*n; unsigned char *r_,*v_; time_t *t_; { }

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)resizewin.c	1.1 88/04/21 14:19:25";
+static	char	sccs_id[] = "@(#)resizewin.c	1.2 88/04/22 06:48:33";
 #endif	lint
 
 /*
@@ -93,7 +93,7 @@ long	st	= 0;
 			LINES = my_LINES;
 			COLS  = my_COLS;
 			savewin();
-			unsavewin(TRUE);
+			unsavewin(TRUE,0);
 			return (1);
 		}
 	} else

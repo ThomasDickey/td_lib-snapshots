@@ -1,3 +1,12 @@
+1988-04-22  dickey@software.org
+
+	* src/curses/savewin.c:
+	added top-row arg to lastwin, unsavewin (for ' ' command of ded)
+
+	* src/curses/resizwin.c: modified interface of 'unsavewin()'
+
+	* include/llib-ltd: modified interface of 'unsavewin()'.
+
 1988-04-21  dickey@software.org
 
 	* src/curses/resizwin.c: New file.
