@@ -1,6 +1,8 @@
-MANIFEST for td_lib, version t19860109
+MANIFEST for td_lib, version t19860326
 --------------------------------------------------------------------------------
 MANIFEST                        this file
+src/cm_funcs                    subdirectory
+src/cm_funcs/packdate.c         pack numbers to make UNIX date
 src/memory                      subdirectory
 src/memory/doalloc.c            wrapper for malloc/realloc/free (checks pointers)
 src/pathname                    subdirectory
