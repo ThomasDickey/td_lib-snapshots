@@ -1,3 +1,23 @@
+1988-08-09  dickey@software.org
+
+	* src/unix/uid2s.c, src/unix/gid2s.c:
+	make 'def_doalloc()' unique for linting where static-procedures unknown.
+
+	* src/process/execute.c, src/pathname/fp2argv.c, src/unix/uid2s.c:
+	absorbed definitions into "ptypes.h"
+
+	* include/ptypes.h: added some definitions which facilitate linting.
+
+	* src/Makefile: use "ptypes.h" in more modules, to use new definitions.
+
+	* src/cm_funcs/newzone.c, src/unix/gid2s.c:
+	absorbed definitions into "ptypes.h"
+
+	* src/Makefile: "lintit.sh" is obsolete.
+
+	* src/memory/doalloc.c, src/cm_funcs/newzone.c, src/process/execute.c:
+	lint
+
 1988-08-08  dickey@software.org
 
 	* src/cm_funcs/packdate.c, src/curses/win2file.c, src/curses/dumpwin.c:

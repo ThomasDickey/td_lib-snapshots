@@ -1,4 +1,4 @@
-# @(#)Makefile	1.35 88/08/04 15:18:53
+# @(#)Makefile	1.37 88/08/09 09:37:56
 # MAKE-file for miscellaneous library routines
 #
 ####### (Development) ##########################################################
@@ -65,7 +65,7 @@ CSRC	=\
 	win2file.c
 #
 HSRC	= cmdch.h ptypes.h rcsdefs.h
-SCRIPTS	= lintit.sh makellib.sh
+SCRIPTS	= makellib.sh
 SRCS	= $(CSRC) $(HSRC) $(SCRIPTS) $(LLIB)
 #
 OBJS	=\
@@ -140,6 +140,8 @@ archive: $(OBJS)
 cmdch.o:	cmdch.h
 cutoff.o:	ptypes.h
 execute.o:	ptypes.h
+fp2argv.o:	ptypes.h
+gid2s.o:	ptypes.h
 newzone.o:	ptypes.h
 packdate.o:	ptypes.h
 rawgets.o:	cmdch.h
@@ -148,6 +150,7 @@ rcsedit.o:	rcsdefs.h
 rcskeys.o:	rcsdefs.h
 rcsname.o:	rcsdefs.h
 setmtime.o:	ptypes.h
+uid2s.o:	ptypes.h
 win2file.o:	ptypes.h
 #
 ####### (Development) ##########################################################

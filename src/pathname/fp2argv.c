@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)fp2argv.c	1.3 88/07/27 08:18:05";
+static	char	sccs_id[] = "@(#)fp2argv.c	1.4 88/08/09 10:10:57";
 #endif	lint
 
 /*
@@ -17,16 +17,12 @@ static	char	sccs_id[] = "@(#)fp2argv.c	1.3 88/07/27 08:18:05";
  * Returns:	the number of lines allocated.
  */
 
+#include	"ptypes.h"
 #include	<stdio.h>
-extern	char	*doalloc();
 extern	char	*stralloc();
 
+	def_DOALLOC(char *)
 #define	CHUNK	32
-#ifdef	lint
-/*ARGSUSED*/	char **ALLOC(old,num) char **old; { return(0); }
-#else	lint
-#define	ALLOC(old,num)	(char **)doalloc((char *)old, sizeof(char *)*num)
-#endif	lint
 
 fp2argv(fp, argv_)
 FILE	*fp;
@@ -38,15 +34,15 @@ char	***argv_;
 	char	buffer[BUFSIZ];
 
 	while (fgets(buffer, sizeof(buffer), fp)) {
-		int	need	= (++lines | (CHUNK-1)) + 1;
+		unsigned need	= (++lines | (CHUNK-1)) + 1;
 		if (need != have) {
-			vec  = ALLOC(vec, need);
+			vec  = DOALLOC(vec, char *, need);
 			have = need;
 		}
 		vec[lines-1] = stralloc(buffer);
 	}
 	if (lines == 0)
-		vec = ALLOC(vec, 1);
+		vec = DOALLOC(vec, char *, 1);
 	vec[lines]   = 0;
 	*argv_ = vec;
 	return (lines);
