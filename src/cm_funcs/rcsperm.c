@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcsperm.c,v 11.2 1992/10/27 07:11:35 dickey Exp $";
+static	char	Id[] = "$Id: rcsperm.c,v 11.3 1992/10/28 09:19:07 dickey Exp $";
 #endif
 
 /*
@@ -72,7 +72,7 @@ _DCL(char *,	base)
 	 */
 	(void)strcpy (user, uid2s((int)getuid()));
 
-	if (!rcsopen(path, FALSE, TRUE))
+	if (!rcsopen(path, RCS_DEBUG, TRUE))
 		return (FALSE);		/* could not open file anyway */
 
 	/*
