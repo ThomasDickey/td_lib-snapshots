@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 9.11 1991/10/21 09:42:28 dickey Exp $ */
+/* $Id: ptypes.h,v 10.0 1991/10/23 10:52:19 ste_cm Rel $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -231,7 +231,8 @@ extern	char	*sprintf();
 /*
  * Useful external-definitions:
  */
-#if	!defined(LINTLIBRARY) && !defined(vms)
+#ifndef	LINTLIBRARY
+#ifndef	vms
 extern	V_OR_I	_exit(_ar1(int,code));
 extern	V_OR_I	exit(_ar1(int,code));
 extern	V_OR_I	qsort(
@@ -255,6 +256,8 @@ extern	long	strtol(
 		_ar1(int,	base));
 extern	time_t	time(_ar1(time_t *,t));
 
+#endif	/* !vms */
+
 extern	int	getopt(
 		_arx(int,	argc)
 		_arx(char **,	argv)
@@ -262,7 +265,7 @@ extern	int	getopt(
 extern	char *	optarg;
 extern	int	optind;
 
-#endif	/* !LINTLIBRARY && !vms */
+#endif	/* !LINTLIBRARY */
 
 #ifdef	unix
 #ifdef	apollo_sr10
