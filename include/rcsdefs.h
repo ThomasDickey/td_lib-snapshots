@@ -1,4 +1,4 @@
-/* @(#)rcsdefs.h	1.9 89/03/13 13:13:44 */
+/* $Header: /users/source/archives/td_lib.vcs/include/RCS/rcsdefs.h,v 2.0 1989/03/15 13:40:39 ste_cm Exp $ */
 
 /*
  * State information for scanning RCS-file header
@@ -34,7 +34,7 @@
  * If the environment variable RCS_DEBUG is defined, we activate additional
  * tracing (e.g., in 'rcsedit.c')
  */
-#define	RCS_DEBUG	(getenv("RCS_DEBUG") != 0)
+#define	RCS_DEBUG	(rcs_debug())
 
 /*
  * Note: since 'rcsload()' uses 'txtalloc()' to allocate the '.revision' and
