@@ -1,3 +1,8 @@
+2001-07-11  dickey@clark.net
+
+	* src/cm_funcs/packdate.c:
+	undef timezone, which is (mis)defined in U/Win's time.h for some macro
+
 2001-06-22  dickey@clark.net
 
 	* install-sh: resync with my-autoconf
