@@ -1,4 +1,4 @@
-/* @(#)llib-ltd	1.7 88/04/27 11:05:57 */
+/* @(#)llib-ltd	1.8 88/05/03 14:27:08 */
 /*LINTLIBRARY*/
 
 #include	<curses.h>
@@ -60,6 +60,9 @@ int	okpnum (number) char *number; { return (0); }
 
 /* packdate.c --------------------------------------------------------- */
 long	packdate (year, mon, day, hour, min, s) { return (0); }
+
+/* padedit.c ---------------------------------------------------------- */
+int	padedit(name, readonly) char *name; { return(0); }
 
 /* rawgets.c ---------------------------------------------------------- */
 	rawgets (bfr,size,newline) char	*bfr; { }

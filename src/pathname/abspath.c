@@ -1,11 +1,12 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)abspath.c	1.2 87/11/23 09:26:21";
+static	char	sccs_id[] = "@(#)abspath.c	1.3 88/05/03 12:34:40";
 #endif	lint
 
 /*
  * Author:	T.E.Dickey
  * Created:	17 Sep 1987
  * Modified:
+ *		03 May 1988, added more Apollo-specific prefixes
  *		23 Nov 1987, to work with Apollo path convention (leading '//')
  *
  * Function:	Modify the argument so that it contains an absolute (beginning
@@ -17,6 +18,12 @@ static	char	sccs_id[] = "@(#)abspath.c	1.2 87/11/23 09:26:21";
  *		The ".." notation may be embedded at any point (we recursively
  *		strip it).
  */
+
+#ifdef	apollo
+#include	</sys/ins/base.ins.c>
+#include	</sys/ins/name.ins.c>
+#include	<ctype.h>
+#endif	apollo
 
 #include	<stdio.h>
 extern	char	*getcwd(),
@@ -45,6 +52,50 @@ register char *s, *d = path;
 		(void)getcwd(nodestr,sizeof(nodestr)-2);
 		(void)denode(nodestr,nodestr,&nodelen);
 	}
+
+	/*
+	 * Convert special Apollo names.  This is necessary because the
+	 * 'readlink()' call does not return a fully-resolved pathname,
+	 * but may begin with "`".
+	 */
+#ifdef	apollo
+	if ((*d == '`')
+	||  (*d == '\\')
+	||  (*d == '~')) {
+	name_$pname_t	in_name, out_name;
+	short		in_len,
+			out_len;
+	status_$t	st;
+	extern	char	*strncpy();
+
+		in_len = strlen(strcpy(in_name, d));
+		name_$get_path(in_name, in_len, out_name, out_len, st);
+
+		if (st.all == status_$ok) {
+			s = out_name;
+			s[out_len] = '\0';
+			/* Convert AEGIS name to UNIX name */
+			while (*d = *s++) {
+				if (*d == ':') {
+					*d = *s++;
+				} else if (*d == '#') {
+				char	tmp[3];
+				int	hex;
+					(void)strncpy(tmp, s, 2);
+					tmp[2] = '\0';
+					s += strlen(tmp);
+					sscanf(tmp, "%x", &hex);
+					*d = hex;
+				} else {
+					if (isalpha(*d))
+						*d = _tolower(*d);
+				}
+				d++;
+			}
+			d = path;
+		}
+	}
+#endif	apollo
 
 	/*
 	 * Strip nodename prefix, if applicable

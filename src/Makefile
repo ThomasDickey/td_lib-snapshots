@@ -1,4 +1,4 @@
-# @(#)Makefile	1.10 88/04/29 09:00:06
+# @(#)Makefile	1.11 88/05/03 14:25:48
 # MAKE-file for miscellaneous library routines
 L=lib.a
 #
@@ -20,6 +20,7 @@ OBJS	=\
 	modechar.o\
 	okpnum.o\
 	packdate.o\
+	padedit.o\
 	rawgets.o\
 	rawterm.o\
 	resizewin.o\
@@ -54,4 +55,4 @@ llib-ltd.ln:	LINT
 	makellib.sh LINT td
 #
 lint.out:	llib-ltd.ln
-	tdlint -lcurses -ltd  -DNO_SCCS_ID *.c >lint.out
+	tdlint -lcurses -ltd -lapollo -DNO_SCCS_ID *.c >lint.out
