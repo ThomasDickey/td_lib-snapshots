@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rawgets.c,v 12.1 1993/09/21 18:54:04 dickey Exp $";
+static	char	Id[] = "$Id: rawgets.c,v 12.2 1993/09/28 17:24:25 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,8 @@ static	char	Id[] = "$Id: rawgets.c,v 12.1 1993/09/21 18:54:04 dickey Exp $";
  * Title:	rawgets.c (raw-mode 'gets()')
  * Created:	29 Sep 1987 (from 'fl.c')
  * Modified:
+ *		28 Sep 1993, modified 'InsertAt()' to avoid reading past the
+ *			     end of the 'at' string (makes Purify happy).
  *		21 Sep 1993, gcc-warnings
  *		04 Sep 1992, modified to allow nonprinting chars in buffer.
  *		25 Aug 1992, added 'first_mode' argument.
@@ -197,10 +199,14 @@ void	InsertAt(
 	register int	d  = c;
 	register char	*s = at;
 
-	do {
-		c = d;
-		d = *s;
-	} while ((*s++ = c) != EOS);
+	for(;;) {
+		if ((c = d) != EOS) {
+			d = *s;
+			*s++ = c;
+		} else
+			break;
+	}
+	*s = EOS;
 	ShowAt(at);
 	MoveTo(at+1);
 }

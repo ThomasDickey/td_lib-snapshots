@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 12.5 1993/09/27 20:31:10 dickey Exp $ */
+/* $Id: ptypes.h,v 12.6 1993/09/28 12:55:18 dickey Exp $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -157,7 +157,9 @@
 #define	_FNX(t,v,a)	_FN1(t,v,a),
 #define	_ARX(t,v)	_AR1(t,v),
 
+	/* shorthand for single-argument */
 #define	_ONE(t,v)	(_AR1(t,v)) _DCL(t,v)
+#define _one(t,a)	(_ar1(t,a))
 
 /*
  * Declare argument for 'exit()' and '_exit()':
