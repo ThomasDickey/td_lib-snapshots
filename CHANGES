@@ -1,3 +1,44 @@
+1994-06-25  dickey@clark.net
+
+	* configure.in: add/use TD_HAVE_FUNCS
+
+	* aclocal.m4: add/use TD_HAVE_FUNCS (bug?)
+
+	* Makefile: got rid of acconfig.h, simplified rules a bit
+
+	* config_h.in: RCS_BASE
+
+	* configure.in:
+	borrowed code from vile 4.5 (kev buettner) for generating config.h
+	without needing my own aclocal.h
+
+	* aclocal.m4: comment
+
+	* include/ptypes.h: unraveled (I hope) the WAI_PTYPES stuff
+
+	* aclocal.m4: added TD_WAIT
+
+	* acconfig.h: added WAIT_USES_UNION
+
+	* include/Makefile: added td_ext.h file
+
+	* configure.in: add/use TD_WAIT
+
+	* include/.vilerc:
+	added macros for inserting/deleting ifdefs in the whole file, so I can
+	work on the clarified source
+
+	* include/.vilerc: fixed a couple of bugs
+
+	* include/ptypes.h: use GNU-style HAVE_CONFIG_H
+
+	* include/deltree.h, include/dyn_str.h, include/rcsdefs.h, include/sccsdefs.h, include/td_curse.h, include/td_lib.h, include/td_qsort.h, include/td_regex.h, include/td_scomp.h, include/acl.h:
+	name-convention
+
+	* include/ptypes.h: first cut of splitting out "td_ext.h"
+
+	* include/td_ext.h, include/.vilerc: RCS_BASE
+
 1994-06-24  dickey@clark.net
 
 	* include/td_curse.h: changed name convention for ifdef

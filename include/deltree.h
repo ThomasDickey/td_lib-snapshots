@@ -1,7 +1,7 @@
-/* $Id: deltree.h,v 12.0 1992/02/25 08:22:35 ste_cm Rel $ */
+/* $Id: deltree.h,v 12.1 1994/06/25 14:16:23 tom Exp $ */
 
-#ifndef	_DELTREE_H_
-#define	_DELTREE_H_
+#ifndef	DELTREE_H
+#define	DELTREE_H
 
 #ifndef	_arx
 #include "ptypes.h"
@@ -43,4 +43,4 @@ typedef	struct	{
 			_dcl(DELTREE *,	p)
 			_nul
 
-#endif	/* _DELTREE_H_ */
+#endif	/* DELTREE_H */

@@ -1,4 +1,4 @@
-# $Id: Makefile,v 12.2 1994/05/30 20:58:53 tom Exp $
+# $Id: Makefile,v 12.3 1994/06/25 23:05:12 tom Exp $
 # Top-level makefile for TD_LIB common library
 
 ####### (Development) ##########################################################
@@ -22,7 +22,6 @@ DESTROY	=sh -c 'for i in *;do case $$i in RCS);; *) $(RM) $$i;;esac;done;exit 0'
 
 ####### (Standard Lists) #######################################################
 CONFIG_H=\
-	acconfig.h\
 	aclocal.m4\
 	configure.in
 
@@ -112,19 +111,11 @@ $I/sccsdefs.h:		$i/sccsdefs.h	; $(PUT)
 
 $L/$(THIS).a:	lib/$(THIS).a		; $(PUT); ranlib $@
 
-$i/config.h:	configure $i/config.h.in; ./configure
-$i/config.h.in:	$(CONFIG_H)		; autoheader
 configure:	$(CONFIG_H)		; autoconf
 
-# autoheader might not change config.h.in
-config.h.in: stamp-h.in
-stamp-h.in: $(CONFIG_H)
-	autoheader
-	touch stamp-h.in
-
 # config.status might not change config.h
-config.h: stamp-h
-stamp-h: config.h.in config.status
+$i/config.h: stamp-h
+stamp-h: config.status
 	./config.status
 	touch stamp-h
 

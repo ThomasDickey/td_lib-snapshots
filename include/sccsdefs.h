@@ -1,8 +1,7 @@
-/* $Id: sccsdefs.h,v 12.2 1994/05/30 21:21:03 tom Exp $ */
+/* $Id: sccsdefs.h,v 12.3 1994/06/25 14:15:25 tom Exp $ */
 
-#ifndef	_SCCSDEFS_H_
-#define	_SCCSDEFS_H_
-
+#ifndef	SCCSDEFS_H
+#define	SCCSDEFS_H
 
 #define	SCCS_DIR	"SCCS"
 #define	SCCS_PREFIX	"s."
@@ -47,4 +46,4 @@
 			_dcl(int,	full)
 			_ret
 
-#endif	/* _SCCSDEFS_H_ */
+#endif	/* SCCSDEFS_H */

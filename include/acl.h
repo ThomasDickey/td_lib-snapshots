@@ -1,4 +1,7 @@
-/* $Id: acl.h,v 12.0 1989/10/04 15:04:29 ste_cm Rel $ */
+/* $Id: acl.h,v 12.1 1994/06/25 14:13:51 tom Exp $ */
+
+#ifndef	ACL_H
+#define	ACL_H
 
 /* apollo sr10.1 acl bits, returned in 'stat()' in the st_rfu[2] field */
 
@@ -48,3 +51,5 @@
 	((rfu4[2] & EXTENDED_ACLS)\
 	|| !(rfu4[2] & ACL_P_N)\
 	|| (rfu4[3] != 0))
+
+#endif	/* ACL_H */

@@ -1,7 +1,7 @@
-/* $Id: rcsdefs.h,v 12.2 1994/05/21 20:15:03 tom Exp $ */
+/* $Id: rcsdefs.h,v 12.3 1994/06/25 14:15:37 tom Exp $ */
 
-#ifndef	_RCSDEFS_H_
-#define	_RCSDEFS_H_
+#ifndef	RCSDEFS_H
+#define	RCSDEFS_H
 
 #define	RCS_VERSION	5	/* current version of rcs we are built over */
 			/* version 5 defines "-M" option of 'ci' */
@@ -294,4 +294,4 @@ typedef	void	(*RcsparseStr)(
 			_dcl(int,	temp)
 			_ret
 
-#endif	/* _RCSDEFS_H_ */
+#endif	/* RCSDEFS_H */

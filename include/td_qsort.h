@@ -1,6 +1,7 @@
-/* $Id: td_qsort.h,v 12.3 1993/12/01 18:53:14 dickey Exp $ */
-#ifndef	_CM_QSORT_H
-#define	_CM_QSORT_H
+/* $Id: td_qsort.h,v 12.4 1994/06/25 14:14:37 tom Exp $ */
+
+#ifndef	TD_QSORT_H
+#define	TD_QSORT_H
 
 #ifndef	PTYPES_H
 #include "ptypes.h"
@@ -63,4 +64,4 @@ extern	int	cmp_qsort(
 		_dcl(QSORT_DST,	b)
 		_ret
 
-#endif/*_CM_QSORT_H*/
+#endif/*TD_QSORT_H*/

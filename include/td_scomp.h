@@ -1,7 +1,7 @@
-/* $Id: td_scomp.h,v 12.2 1993/09/22 21:00:03 dickey Exp $ */
+/* $Id: td_scomp.h,v 12.3 1994/06/25 14:14:11 tom Exp $ */
 
-#ifndef	_CM_SCOMP_H
-#define	_CM_SCOMP_H
+#ifndef	TD_SCOMP_H
+#define	TD_SCOMP_H
 #include	"ptypes.h"
 
 /*
@@ -61,4 +61,4 @@
 extern	SCOMP_CALL(scomp)
 extern	SCOMP_CALL(m2comp)
 
-#endif/*_CM_SCOMP_H*/
+#endif/*TD_SCOMP_H*/

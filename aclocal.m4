@@ -1,11 +1,11 @@
 dnl Extended Macros that test for specific features.
-dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.14 1994/06/24 00:56:53 tom Exp $
+dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.17 1994/06/25 23:57:34 tom Exp $
 dnl ---------------------------------------------------------------------------
-dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4"
+dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "TD_" to "AC_"
 dnl ---------------------------------------------------------------------------
-dnl Tests for a program given by name along the user's path, and sets a variable
-dnl to the program's directory-prefix if found.  Don't match if the directory is
-dnl ".", since we need an absolute path-reference.
+dnl	Tests for a program given by name along the user's path, and sets a
+dnl	variable to the program's directory-prefix if found.  Don't match if
+dnl	the directory is ".", since we need an absolute path-reference.
 define([TD_PROGRAM_PREFIX],
 [if test -z "[$]$1"; then
   # Extract the first word of `$2', so it can be a program name with args.
@@ -73,7 +73,51 @@ if test -n "[$]$1"; then
 fi
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl On both Ultrix and CLIX, I find size_t defined in <stdio.h>
+dnl	Combines AC_HAVE_FUNCS logic with additional test from Kevin Buettner
+dnl	that checks to see if we need a prototype for the given function.
+define([TD_HAVE_FUNCS],
+[
+td_compile=$ac_compile
+ac_compile="$ac_compile -Iinclude"
+for ac_func in $1
+do
+changequote(,)dnl
+ac_tr_func=`echo $ac_func | tr '[a-z]' '[A-Z]'`
+changequote([,])dnl
+AC_FUNC_CHECK(${ac_func},
+AC_DEFINE(HAVE_${ac_tr_func}))dnl
+AC_COMPILE_CHECK([missing "$ac_func" extern],
+[
+#define	ACC_PTYPES
+#define	CHR_PTYPES
+#define	CUR_PTYPES
+#define	DIR_PTYPES
+#define	GRP_PTYPES
+#define	OPN_PTYPES
+#define	PWD_PTYPES
+#define	SIG_PTYPES
+#define	STR_PTYPES
+#define	TIM_PTYPES
+#define	WAI_PTYPES
+
+#include <ptypes.h>
+#include <td_qsort.h>
+#include <td_scomp.h>
+#include <dyn_str.h>
+#include <rcsdefs.h>
+#include <sccsdefs.h>
+#include <td_sheet.h>
+
+#undef $ac_func
+struct zowie { int a; double b; struct zowie *c; char d; };
+extern struct zowie *$ac_func();
+],
+AC_DEFINE(NEED_$ac_tr_func))
+done
+ac_compile=$td_compile
+])dnl
+dnl ---------------------------------------------------------------------------
+dnl	On both Ultrix and CLIX, I find size_t defined in <stdio.h>
 define([TD_SIZE_T],
 [AC_CHECKING(for size_t in <sys/types.h> or <stdio.h>)
  AC_TEST_PROGRAM([
@@ -248,9 +292,45 @@ dnl ---------------------------------------------------------------------------
 dnl Test for interesting things about curses
 define([TD_CURSES],
 [AC_HAVE_LIBRARY(curses)
-AC_HAVE_FUNCS(beep)
-AC_HAVE_FUNCS(keypad)
+TD_HAVE_FUNCS(beep keypad)
 TD_CURSES_CHTYPE
 TD_CURSES_ERASECHAR
 TD_CURSES_KILLCHAR
+])dnl
+dnl ---------------------------------------------------------------------------
+dnl Test for the presence of <sys/wait.h>, 'union wait', arg-type of 'wait()'.
+dnl
+dnl	FIXME: These tests should have been in autoconf 1.11!
+dnl
+dnl	Note that we cannot simply grep for 'union wait' in the wait.h file,
+dnl	because some Posix systems turn this on only when a BSD variable is
+dnl	defined. Since I'm trying to do without special defines, I'll live
+dnl	with the default behavior of the include-file.
+dnl
+dnl	I do _2_ compile checks, because we may have union-wait, but the
+dnl	prototype for 'wait()' may want an int.
+dnl
+dnl	Don't use HAVE_UNION_WAIT, because the autoconf documentation implies
+dnl	that if we've got union-wait, we'll automatically use it.
+dnl
+define([TD_WAIT],
+[AC_CHECKING(wait include/argument type)
+TD_HAVE_FUNCS(wait)
+AC_HAVE_HEADERS(wait.h)
+AC_HAVE_HEADERS(sys/wait.h)td_decl='#include <sys/types.h>
+'
+case $DEFS in
+*_SYS_WAIT_H*)td_decl="$td_decl
+#include <sys/wait.h>
+" ;;
+*_WAIT_H*)td_decl="$td_decl
+#include <wait.h>
+" ;;
+esac
+AC_COMPILE_CHECK([union wait declared], $td_decl,
+[union wait x],
+[AC_COMPILE_CHECK([union wait used as wait-arg], $td_decl,
+ [union wait x; wait(&x)],
+ [AC_DEFINE(WAIT_USES_UNION)])
+ ])
 ])dnl

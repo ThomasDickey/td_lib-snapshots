@@ -1,11 +1,11 @@
-MANIFEST for td_lib, version t19940624
+MANIFEST for td_lib, version t19940625
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         restrictions on copying/using this software
 Makefile                        top-level makefile for TD_LIB
 README                          read-me file for this directory
-acconfig.h                      configuration template file for td_lib using autoconf
 aclocal.m4                      local autoconf macros
+config_h.in                     autoconf template for include/config.h
 configure.in                    autoconf script for td_lib
 descrip.mms                     top-level MMS script for this library on VMS
 certify                         subdirectory
@@ -15,6 +15,7 @@ certify/config.txt              configurations on which TD_LIB is ported
 certify/release.txt             release notes for TD_LIB
 certify/reusable.txt            summary of reusable components
 include                         subdirectory
+include/.vilerc                 macro to use in ifdef'ing td_ext.h for autoconf
 include/Makefile                make-file for CM_TOOLS common interface directory
 include/acl.h                   defines ACL bits for apollo SR10.1
 include/deltree.h               delta-tree function interface
@@ -25,6 +26,7 @@ include/ptypes.h                principal include-file for TD_LIB
 include/rcsdefs.h               interface for rcs functions
 include/sccsdefs.h              interface for sccs functions
 include/td_curse.h              interface for curses functions
+include/td_ext.h                external function definitions used by TD_LIB and related applications
 include/td_lib.h                interface of common TD_LIB functions
 include/td_qsort.h              interface for 'qsort()'
 include/td_regex.h              interface for regular expression functions

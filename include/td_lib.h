@@ -1,15 +1,15 @@
-/* $Id: td_lib.h,v 12.4 1994/05/21 20:15:27 tom Exp $ */
+/* $Id: td_lib.h,v 12.6 1994/06/25 14:14:51 tom Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for TD_LIB common
  * library.
  */
 
-#ifndef		_COMMON_H_
-#define		_COMMON_H_
-#ifndef		_PTYPES_
+#ifndef		TD_LIB_H
+#define		TD_LIB_H
+#ifndef		PTYPES_H
 #include "ptypes.h"
-#endif		/* _PTYPES_ */
+#endif		/* PTYPES_H */
 
 	/* MAIN-PROGRAM *********************************************** */
 	void	failed(
@@ -914,4 +914,4 @@
 			_ret
 #endif	/* unix */
 
-#endif		/* _COMMON_H_ */
+#endif	/* TD_LIB_H */
