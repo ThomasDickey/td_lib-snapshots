@@ -1,3 +1,10 @@
+2000-07-21  dickey@clark.net
+
+	* src/cm_funcs/sccs_dir.c:
+	fix in case we're inside the vault and want to read the path w/o translation
+
+	* src/cm_funcs/sccslast.c: mods to support $SCCS_VAULT
+
 2000-07-18  dickey@clark.net
 
 	* src/cm_funcs/cutoff.c:
