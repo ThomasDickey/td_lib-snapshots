@@ -1,4 +1,4 @@
-/* $Id: td_curse.h,v 12.28 1995/04/19 22:17:27 tom Exp $ */
+/* $Id: td_curse.h,v 12.29 1995/05/15 19:58:31 tom Exp $ */
 
 /*
  * TD_LIB CURSES-related definitions
@@ -72,8 +72,8 @@
 /*----------------------------------------------------------------------------*/
 #if CURSES_LIKE_BSD
 #define CursesLine(win,y)	(win)->_y[y]
-#define CursesFirstCh(win,y)	(win)->_firstch
-#define CursesLastCh(win,y)	(win)->_lastch
+#define CursesFirstCh(win,y)	(win)->_firstch[y]
+#define CursesLastCh(win,y)	(win)->_lastch[y]
 #endif
 #if CURSES_LIKE_SYSV
 #define CursesLine(win,y)	(win)->_line[y]
