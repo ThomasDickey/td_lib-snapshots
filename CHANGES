@@ -1,3 +1,33 @@
+1990-04-24  dickey@software.org
+
+	* src/pathname/abspath.c:
+	added entrypoint 'abshome()', which we use when tilde-expansion
+	is sufficient.
+
+1990-04-24  ste_cm@software.org
+
+	* src/pathname/abspath.c: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/pathname/abspath.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+1990-04-24  dickey@software.org
+
+	* src/process/execute.c:
+	flush stdout, stderr before forking to ensure that we don't
+	get unnecessarily garbled output!
+
+	* src/pathname/pathcat.c:
+	if fname-argument begins with "~", assume caller can expand
+	it ok; simply copy as in '/'-paths.
+
+1990-04-24  ste_cm@software.org
+
+	* src/pathname/pathcat.c: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/pathname/pathcat.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
 1990-04-18  dickey@software.org
 
 	* src/cm_funcs/rcsedit.c: cleanup/lint (apollo sr10.2)

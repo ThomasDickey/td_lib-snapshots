@@ -1,14 +1,24 @@
 #ifndef	lint
-static	char	Id[] = "$Id: abspath.c,v 6.0 1990/03/12 09:07:33 ste_cm Rel $";
+static	char	Id[] = "$Id: abspath.c,v 8.0 1990/04/24 16:40:29 ste_cm Rel $";
 #endif	lint
 
 /*
  * Author:	T.E.Dickey
  * Created:	17 Sep 1987
  * $Log: abspath.c,v $
- * Revision 6.0  1990/03/12 09:07:33  ste_cm
- * BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+ * Revision 8.0  1990/04/24 16:40:29  ste_cm
+ * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
  *
+ *		Revision 7.0  90/04/24  16:40:29  ste_cm
+ *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+ *		
+ *		Revision 6.1  90/04/24  16:40:29  dickey
+ *		added entrypoint 'abshome()', which we use when tilde-expansion
+ *		is sufficient.
+ *		
+ *		Revision 6.0  90/03/12  09:07:33  ste_cm
+ *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+ *		
  *		Revision 5.3  90/03/12  09:07:33  dickey
  *		lint (apollo sr10.1)
  *		
@@ -147,8 +157,35 @@ char	tmp[MAXPATHLEN];
 }
 
 /************************************************************************
- *	main procedure							*
+ *	main procedures							*
  ************************************************************************/
+abshome(path)
+char	*path;
+{
+	register char *s, *d = path;
+
+	if (*d == '~') {	/* my home directory */
+		s = d+1;
+		if ((*s == '\0') || (*s++ == '/')) {
+			while (*d++ = *s++);
+			precat(getenv("HOME"), path);
+		} else {	/* someone else's home */
+		extern	 struct passwd *getpwnam();	/* cf: apollo sys5 */
+		register struct passwd *p;
+		char	user[MAXPATHLEN];
+			if (s = strchr(strcpy(user, d+1), '/'))
+				*s++ = '\0';
+			else
+				s = d + strlen(d);
+			if (p = getpwnam(user)) {
+				while (*d++ = *s++);
+				precat(p->pw_dir, path);
+			}
+			/* else no such home directory! */
+		}
+	}
+}
+
 abspath(path)
 char	*path;
 {
@@ -162,26 +199,7 @@ register char *s, *d = path;
 	/*
 	 * Check for references to someone's home directory in csh-style.
 	 */
-	if (*d == '~') {	/* my home directory */
-		s = d+1;
-		if ((*s == '\0') || (*s++ == '/')) {
-			while (*d++ = *s++);
-			precat(getenv("HOME"), d = path);
-		} else {	/* someone else's home */
-		extern	 struct passwd *getpwnam();	/* cf: apollo sys5 */
-		register struct passwd *p;
-		char	user[MAXPATHLEN];
-			if (s = strchr(strcpy(user, d+1), '/'))
-				*s++ = '\0';
-			else
-				s = d + strlen(d);
-			if (p = getpwnam(user)) {
-				while (*d++ = *s++);
-				precat(p->pw_dir, d = path);
-			}
-			/* else no such home directory! */
-		}
-	}
+	abshome(path);
 
 	/*
 	 * Convert special Apollo names.  This is necessary because the
