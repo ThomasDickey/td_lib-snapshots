@@ -1,4 +1,4 @@
-# $Id: Makefile,v 12.7 1994/08/21 18:03:03 tom Exp $
+# $Id: Makefile,v 12.9 1997/09/07 23:40:41 tom Exp $
 # make-file for CM_TOOLS common interface directory
 
 THIS	= td
@@ -11,6 +11,7 @@ LLIB	= llib-l$(llib)
 
 ####### (Standard Lists) #######################################################
 H_SRC	=\
+	td_config.h \
 	$(THIS)_lib.h\
 	acl.h \
 	cmv_defs.h \
@@ -20,10 +21,12 @@ H_SRC	=\
 	rcsdefs.h \
 	sccsdefs.h \
 	port2vms.h \
+	td_btree.h \
 	td_ext.h \
 	td_curse.h \
 	td_local.h \
 	td_qsort.h \
+	td_regex.h \
 	td_scomp.h \
 	td_sheet.h \
 	vms_dirs.h
@@ -46,6 +49,7 @@ destroy:			; $(DESTROY)
 sources:	$(SOURCES)
 lintlib:	$(IT)
 lint.out:	$(IT)
+headers:			; /bin/ls -1 $(H_SRC) >$@
 
 ####### (Details of Productions) ###############################################
 $(SOURCES):			; $(GET) $@
