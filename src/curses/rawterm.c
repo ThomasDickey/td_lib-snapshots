@@ -3,7 +3,8 @@
  * Author:	T.E.Dickey
  * Created:	24 Nov 1987
  * Modified:
- *		16 Dec 1995, integration with ncurses mouse-support
+ *		16 Dec 1995, integration with ncurses mouse-support; moved
+ *			     'keypad()' call from 'cmdch()'.
  *		16 Jul 1994, made 'dumptty()' a library procedure.
  *		21 May 1994, ClarkNet's Solaris doesn't do savetty/resetty ok.
  *		26 Apr 1994, port to Linux
@@ -28,7 +29,7 @@
 #define TRM_PTYPES	/* <termios.h> */
 #include	"td_curse.h"
 
-MODULE_ID("$Id: rawterm.c,v 12.19 1995/12/16 13:07:13 tom Exp $")
+MODULE_ID("$Id: rawterm.c,v 12.20 1995/12/17 01:32:48 tom Exp $")
 
 TermioT	original_tty;
 TermioT	modified_tty;
@@ -129,6 +130,12 @@ void	rawterm(_AR0)
 {
 	static	int	initialized ;
 
+#if HAVE_INTRFLUSH
+     	intrflush(stdscr, FALSE);
+#endif
+#if HAVE_KEYPAD
+	keypad(stdscr,TRUE);
+#endif
 	show_term("before-raw-");
 #if	HAVE_CBREAK
 	cbreak();

@@ -1,3 +1,7 @@
+1995-12-24  dickey@clark.net
+
+	* src/curses/bindkeys.c: typo
+
 1995-12-16  dickey@clark.net
 
 	* src/curses/rawterm.c:
