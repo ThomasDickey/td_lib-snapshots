@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: doalloc.c,v 12.4 1994/07/02 18:00:08 tom Exp $";
-#endif
-
 /*
  * Author:	T.E.Dickey
  * Created:	09 Jan 1986
@@ -29,6 +25,8 @@ static	char	Id[] = "$Id: doalloc.c,v 12.4 1994/07/02 18:00:08 tom Exp $";
  */
 
 #include	"ptypes.h"
+
+MODULE_ID("$Id: doalloc.c,v 12.5 1994/07/02 18:00:08 tom Exp $")
 
 static	long	count_alloc,
 		count_freed;

@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: scomp.c,v 12.3 1993/10/29 17:35:24 dickey Exp $";
-#endif
-
 /*
  * Title:	scomp.c (simple compare)
  * Author:	T.E.Dickey
@@ -23,6 +19,8 @@ static	char	Id[] = "$Id: scomp.c,v 12.3 1993/10/29 17:35:24 dickey Exp $";
 #define	SCOMP	scomp
 #define STR_PTYPES
 #include	"td_scomp.h"
+
+MODULE_ID("$Id: scomp.c,v 12.4 1993/10/29 17:35:24 tom Exp $")
 
 #ifdef	lint
 #define	REF(v,n)	v[n*size/4]

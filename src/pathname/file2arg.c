@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: file2arg.c,v 12.4 1993/12/01 19:08:57 dickey Exp $";
-#endif
-
 /*
  * Title:	file2argv.c (file to argv-conversion)
  * Author:	T.E.Dickey
@@ -32,6 +28,8 @@ static	char	Id[] = "$Id: file2arg.c,v 12.4 1993/12/01 19:08:57 dickey Exp $";
  */
 
 #include "ptypes.h"
+
+MODULE_ID("$Id: file2arg.c,v 12.5 1993/12/01 19:08:57 tom Exp $")
 
 #define	AVG_LINE	25		/* nominal line-length */
 #define	AMOUNT(n)	(unsigned)(n)

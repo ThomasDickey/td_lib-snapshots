@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: dyn_cata.c,v 12.1 1993/10/29 17:35:22 dickey Exp $";
-#endif
-
 /*
  * Title:	dyn_catarg.c
  * Author:	T.E.Dickey
@@ -15,6 +11,8 @@ static	char	Id[] = "$Id: dyn_cata.c,v 12.1 1993/10/29 17:35:22 dickey Exp $";
 #define	STR_PTYPES
 #include "ptypes.h"
 #include "dyn_str.h"
+
+MODULE_ID("$Id: dyn_cata.c,v 12.2 1993/10/29 17:35:22 tom Exp $")
 
 #define	EMPTY(s)	((s == 0) || (*s == EOS))
 

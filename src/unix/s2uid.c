@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: s2uid.c,v 12.3 1993/11/26 22:27:44 dickey Exp $";
-#endif
-
 /*
  * Title:	s2uid.c (string to uid)
  * Author:	T.E.Dickey
@@ -22,6 +18,8 @@ static	char	Id[] = "$Id: s2uid.c,v 12.3 1993/11/26 22:27:44 dickey Exp $";
 #define	PWD_PTYPES
 #define	STR_PTYPES
 #include "ptypes.h"
+
+MODULE_ID("$Id: s2uid.c,v 12.4 1993/11/26 22:27:44 tom Exp $")
 
 #ifdef	unix
 

@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: ss_field.c,v 12.1 1993/10/29 17:35:24 dickey Exp $";
-#endif
-
 /*
  * Title:	ss_field.c
  * Author:	T.E.Dickey
@@ -14,6 +10,8 @@ static	char	Id[] = "$Id: ss_field.c,v 12.1 1993/10/29 17:35:24 dickey Exp $";
  */
 
 #include "td_sheet.h"
+
+MODULE_ID("$Id: ss_field.c,v 12.2 1993/10/29 17:35:24 tom Exp $")
 
 char *	get_ss_field(
 	_ARX(char **,	vec)

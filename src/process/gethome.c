@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: gethome.c,v 12.4 1993/12/01 19:16:22 dickey Exp $";
-#endif
-
 /*
  * Title:	gethome.c (get home name)
  * Author:	T.E.Dickey
@@ -18,6 +14,8 @@ static	char	Id[] = "$Id: gethome.c,v 12.4 1993/12/01 19:16:22 dickey Exp $";
 
 #define PWD_PTYPES
 #include	"ptypes.h"
+
+MODULE_ID("$Id: gethome.c,v 12.5 1993/12/01 19:16:22 tom Exp $")
 
 char *
 gethome(_AR0)

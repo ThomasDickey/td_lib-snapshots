@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: vcs_file.c,v 12.2 1993/11/27 17:23:32 dickey Exp $";
-#endif
-
 /*
  * Title:	vcs_file (VCS permission- and temporary-file)
  * Author:	T.E.Dickey
@@ -21,6 +17,8 @@ static	char	Id[] = "$Id: vcs_file.c,v 12.2 1993/11/27 17:23:32 dickey Exp $";
 #define	STR_PTYPES
 #include	"ptypes.h"
 #include	"rcsdefs.h"
+
+MODULE_ID("$Id: vcs_file.c,v 12.3 1993/11/27 17:23:32 tom Exp $")
 
 char *
 vcs_file(

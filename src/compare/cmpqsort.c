@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: cmpqsort.c,v 12.2 1993/11/27 13:53:12 dickey Exp $";
-#endif
-
 /*
  * Title:	cmp_qsort.c (default comparison for qsort)
  * Author:	T.E.Dickey
@@ -19,6 +15,8 @@ static	char	Id[] = "$Id: cmpqsort.c,v 12.2 1993/11/27 13:53:12 dickey Exp $";
 
 #define STR_PTYPES
 #include	"td_qsort.h"
+
+MODULE_ID("$Id: cmpqsort.c,v 12.3 1993/11/27 13:53:12 tom Exp $")
 
 QSORT_FUNC(cmp_qsort)
 {

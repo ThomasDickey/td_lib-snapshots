@@ -1,3 +1,10 @@
+1995-02-26  dickey@clark.net
+
+	* include/td_ext.h:
+	use 'getcwd()' if we've got it -- not if we don't have getwd!
+
+	* configure.in: solaris's -lucb is afu'd.
+
 1995-02-17  dickey@clark.net
 
 	* src/cm_funcs/sccslast.c:

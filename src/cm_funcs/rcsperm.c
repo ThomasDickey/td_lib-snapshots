@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: rcsperm.c,v 12.4 1994/05/21 20:18:44 tom Exp $";
-#endif
-
 /*
  * Title:	rcspermit.c
  * Author:	T.E.Dickey
@@ -35,6 +31,8 @@ static	char	Id[] = "$Id: rcsperm.c,v 12.4 1994/05/21 20:18:44 tom Exp $";
 #include	"rcsdefs.h"
 #include	"dyn_str.h"
 #include	<ctype.h>
+
+MODULE_ID("$Id: rcsperm.c,v 12.5 1994/05/21 20:18:44 tom Exp $")
 
 int	rcspermit(
 	_ARX(char *,	path)

@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: samebr.c,v 12.3 1993/11/27 14:29:04 dickey Exp $";
-#endif
-
 /*
  * Title:	samebranch.c
  * Author:	T.E.Dickey
@@ -17,6 +13,8 @@ static	char	Id[] = "$Id: samebr.c,v 12.3 1993/11/27 14:29:04 dickey Exp $";
 #define STR_PTYPES
 #include "ptypes.h"
 #include "rcsdefs.h"
+
+MODULE_ID("$Id: samebr.c,v 12.4 1993/11/27 14:29:04 tom Exp $")
 
 static
 size_t	two_dots(

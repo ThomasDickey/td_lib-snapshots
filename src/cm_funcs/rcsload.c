@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: rcsload.c,v 12.5 1994/07/02 17:23:57 tom Exp $";
-#endif
-
 /*
  * Title:	rcsload.c (load delta-tree for an RCS file)
  * Author:	T.E.Dickey
@@ -48,6 +44,8 @@ static	char	Id[] = "$Id: rcsload.c,v 12.5 1994/07/02 17:23:57 tom Exp $";
 #include	"rcsdefs.h"
 #include	<ctype.h>
 #include	<time.h>
+
+MODULE_ID("$Id: rcsload.c,v 12.6 1994/07/02 17:23:57 tom Exp $")
 
 #ifdef	TEST
 #define	DEBUG(s) PRINTF s;

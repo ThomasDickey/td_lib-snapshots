@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: failed.c,v 12.2 1993/10/29 17:35:26 dickey Exp $";
-#endif
-
 /*
  * Title:	failed.c (generic exit from program)
  * Author:	T.E.Dickey
@@ -21,6 +17,8 @@ static	char	Id[] = "$Id: failed.c,v 12.2 1993/10/29 17:35:26 dickey Exp $";
  */
 
 #include "ptypes.h"
+
+MODULE_ID("$Id: failed.c,v 12.3 1993/10/29 17:35:26 tom Exp $")
 
 void	failed(
 	_AR1(char *,	s))

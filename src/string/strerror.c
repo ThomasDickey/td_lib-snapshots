@@ -1,7 +1,3 @@
-#ifndef	NO_IDENT
-static	char	Id[] = "$Id: strerror.c,v 12.4 1995/02/18 00:04:00 tom Exp $";
-#endif
-
 /*
  * Title:	strerror.c (unix compatibility)
  * Author:	T.E.Dickey
@@ -11,6 +7,8 @@ static	char	Id[] = "$Id: strerror.c,v 12.4 1995/02/18 00:04:00 tom Exp $";
  */
 #define STR_PTYPES
 #include "ptypes.h"
+
+MODULE_ID("$Id: strerror.c,v 12.5 1995/02/18 00:04:00 tom Exp $")
 
 #if !HAVE_STRERROR
 char	*strerror (

@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: cutoff.c,v 12.2 1993/10/29 17:35:27 dickey Exp $";
-#endif
-
 /*
  * Title:	cutoff.c (parse SCCS-style cutoff date)
  * Author:	T.E.Dickey
@@ -26,6 +22,8 @@ static	char	Id[] = "$Id: cutoff.c,v 12.2 1993/10/29 17:35:27 dickey Exp $";
 #include	<ptypes.h>
 #include	<ctype.h>
 #include	<time.h>
+
+MODULE_ID("$Id: cutoff.c,v 12.3 1993/10/29 17:35:27 tom Exp $")
 
 #define	Z(n)	twod(&bfr[n+n])
 

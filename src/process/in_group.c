@@ -1,7 +1,3 @@
-#ifndef NO_IDENT
-static char *Id = "$Id: in_group.c,v 12.3 1994/12/15 15:48:22 tom Exp $";
-#endif
-
 /*
  * Title:	in_group.c (test if given group is in user's group-list)
  * Author:	T.E.Dickey
@@ -13,6 +9,8 @@ static char *Id = "$Id: in_group.c,v 12.3 1994/12/15 15:48:22 tom Exp $";
 
 #include <ptypes.h>
 #include <grp.h>
+
+MODULE_ID("$Id: in_group.c,v 12.4 1994/12/15 15:48:22 tom Exp $")
 
 #if HAVE_GETGROUPS
 #  if HAVE_SYS_PARAM_H

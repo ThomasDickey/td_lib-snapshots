@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: which.c,v 12.5 1994/05/21 20:18:44 tom Exp $";
-#endif
-
 /*
  * Title:	which.c (which-executable scanner)
  * Author:	T.E.Dickey
@@ -33,6 +29,8 @@ static	char	Id[] = "$Id: which.c,v 12.5 1994/05/21 20:18:44 tom Exp $";
 #define	ACC_PTYPES
 #define	STR_PTYPES
 #include	"ptypes.h"
+
+MODULE_ID("$Id: which.c,v 12.6 1994/05/21 20:18:44 tom Exp $")
 
 static
 int	executable(

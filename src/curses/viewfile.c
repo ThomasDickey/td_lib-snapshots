@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: viewfile.c,v 12.4 1993/11/27 14:04:24 dickey Exp $";
-#endif
-
 /*
  * Title:	view_file.c (create window to view file)
  * Author:	T.E.Dickey
@@ -22,6 +18,8 @@ static	char	Id[] = "$Id: viewfile.c,v 12.4 1993/11/27 14:04:24 dickey Exp $";
  */
 
 #include	"td_curse.h"
+
+MODULE_ID("$Id: viewfile.c,v 12.5 1993/11/27 14:04:24 tom Exp $")
 
 #ifdef	unix
 

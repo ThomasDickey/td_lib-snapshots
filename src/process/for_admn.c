@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: for_admn.c,v 12.3 1993/11/26 21:55:26 dickey Exp $";
-#endif
-
 /*
  * Title:	for_admin.c (carry out function for set-uid effective-user)
  * Author:	T.E.Dickey
@@ -25,6 +21,8 @@ static	char	Id[] = "$Id: for_admn.c,v 12.3 1993/11/26 21:55:26 dickey Exp $";
 #define	WAI_PTYPES
 #include	"ptypes.h"
 #include	<errno.h>
+
+MODULE_ID("$Id: for_admn.c,v 12.4 1993/11/26 21:55:26 tom Exp $")
 
 #ifdef	unix
 int	for_admin2(

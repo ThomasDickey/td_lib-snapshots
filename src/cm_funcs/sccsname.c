@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: sccsname.c,v 12.5 1994/07/13 19:22:54 tom Exp $";
-#endif
-
 /*
  * Title:	sccsname.c (derive name of SCCS file)
  * Author:	T.E.Dickey
@@ -38,6 +34,8 @@ static	char	Id[] = "$Id: sccsname.c,v 12.5 1994/07/13 19:22:54 tom Exp $";
 #include	"sccsdefs.h"
 
 #include	<ctype.h>
+
+MODULE_ID("$Id: sccsname.c,v 12.6 1994/07/13 19:22:54 tom Exp $")
 
 #define	LEN_PREFIX	(sizeof(prefix)-1)
 

@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: killchar.c,v 12.4 1994/05/30 23:10:11 tom Exp $";
-#endif
-
 /*
  * Title:	killchar.c (return kill-char value)
  * Author:	T.E.Dickey
@@ -16,6 +12,8 @@ static	char	Id[] = "$Id: killchar.c,v 12.4 1994/05/30 23:10:11 tom Exp $";
  */
 
 #include	"td_curse.h"
+
+MODULE_ID("$Id: killchar.c,v 12.5 1994/05/30 23:10:11 tom Exp $")
 
 #if	!HAVE_KILLCHAR
 int	killchar(_AR0)

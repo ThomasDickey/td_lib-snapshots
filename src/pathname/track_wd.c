@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: track_wd.c,v 12.2 1993/10/29 17:35:23 dickey Exp $";
-#endif
-
 /*
  * Title:	trace_wd.c (track working-directory)
  * Author:	T.E.Dickey
@@ -16,6 +12,8 @@ static	char	Id[] = "$Id: track_wd.c,v 12.2 1993/10/29 17:35:23 dickey Exp $";
 
 #define	STR_PTYPES
 #include	"ptypes.h"
+
+MODULE_ID("$Id: track_wd.c,v 12.3 1993/10/29 17:35:23 tom Exp $")
 
 void	track_wd(
 	_AR1(char *,	path))

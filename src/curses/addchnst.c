@@ -1,7 +1,3 @@
-#ifndef NO_IDENT
-static char *Id = "$Id: addchnst.c,v 12.2 1995/01/28 14:01:15 tom Exp $";
-#endif
-
 /*
  * Title:	addchnst.c (addchnstr)
  * Author:	T.E.Dickey
@@ -17,6 +13,8 @@ static char *Id = "$Id: addchnst.c,v 12.2 1995/01/28 14:01:15 tom Exp $";
 
 #include	"ptypes.h"
 #include	"td_curse.h"
+
+MODULE_ID("$Id: addchnst.c,v 12.3 1995/01/28 14:01:15 tom Exp $")
 
 #ifndef OK
 #define OK 0

@@ -1,7 +1,3 @@
-#ifndef	NO_IDENT
-static	char	Id[] = "$Id: edittree.c,v 12.2 1994/08/21 22:43:37 tom Exp $";
-#endif
-
 /*
  * Title:	edittree.c
  * Author:	T.E.Dickey
@@ -30,6 +26,8 @@ static	char	Id[] = "$Id: edittree.c,v 12.2 1994/08/21 22:43:37 tom Exp $";
 #define	STR_PTYPES
 #include	"port2vms.h"
 #include	"td_qsort.h"
+
+MODULE_ID("$Id: edittree.c,v 12.3 1994/08/21 22:43:37 tom Exp $")
 
 typedef	char	*PTR;
 	/*ARGSUSED*/

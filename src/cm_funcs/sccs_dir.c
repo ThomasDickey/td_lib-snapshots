@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: sccs_dir.c,v 12.4 1994/07/18 22:24:19 tom Exp $";
-#endif
-
 /*
  * Title:	sccs_dir.c (returns name of SCCS-directory)
  * Author:	T.E.Dickey
@@ -38,6 +34,8 @@ static	char	Id[] = "$Id: sccs_dir.c,v 12.4 1994/07/18 22:24:19 tom Exp $";
 #define	STR_PTYPES
 #include "ptypes.h"
 #include "sccsdefs.h"
+
+MODULE_ID("$Id: sccs_dir.c,v 12.5 1994/07/18 22:24:19 tom Exp $")
 
 #define	WORKING	struct	Working
 	WORKING	{

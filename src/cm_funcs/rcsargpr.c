@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: rcsargpr.c,v 12.3 1994/05/21 20:16:53 tom Exp $";
-#endif
-
 /*
  * Title:	rcsargpair.c
  * Author:	T.E.Dickey
@@ -80,6 +76,8 @@ static	char	Id[] = "$Id: rcsargpr.c,v 12.3 1994/05/21 20:16:53 tom Exp $";
 #include "ptypes.h"
 #include "rcsdefs.h"
 #include <errno.h>
+
+MODULE_ID("$Id: rcsargpr.c,v 12.4 1994/05/21 20:16:53 tom Exp $")
 
 /************************************************************************
  *	local data							*

@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: rcspath.c,v 12.3 1994/05/30 11:19:50 tom Exp $";
-#endif
-
 /*
  * Title:	rcspath.c (rcs-utility to path-name)
  * Author:	T.E.Dickey
@@ -21,6 +17,8 @@ static	char	Id[] = "$Id: rcspath.c,v 12.3 1994/05/30 11:19:50 tom Exp $";
 
 #include	"ptypes.h"
 #include	"rcsdefs.h"
+
+MODULE_ID("$Id: rcspath.c,v 12.4 1994/05/30 11:19:50 tom Exp $")
 
 char *	rcspath(
 	_AR1(char *,	utility))

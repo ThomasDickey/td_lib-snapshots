@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: strcount.c,v 12.1 1993/10/29 17:35:23 dickey Exp $";
-#endif
-
 /*
  * Title:	strcount.c
  * Author:	T.E.Dickey
@@ -13,6 +9,8 @@ static	char	Id[] = "$Id: strcount.c,v 12.1 1993/10/29 17:35:23 dickey Exp $";
  */
 
 #include "ptypes.h"
+
+MODULE_ID("$Id: strcount.c,v 12.2 1993/10/29 17:35:23 tom Exp $")
 
 int
 strcount(

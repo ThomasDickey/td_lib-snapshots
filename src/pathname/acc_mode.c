@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: acc_mode.c,v 12.5 1995/02/11 19:21:05 tom Exp $";
-#endif
-
 /*
  * Title:	access_mode.c
  * Author:	T.E.Dickey
@@ -17,6 +13,8 @@ static	char	Id[] = "$Id: acc_mode.c,v 12.5 1995/02/11 19:21:05 tom Exp $";
 #define	ACC_PTYPES
 #define	STR_PTYPES
 #include "ptypes.h"
+
+MODULE_ID("$Id: acc_mode.c,v 12.6 1995/02/11 19:21:05 tom Exp $")
 
 char *	access_mode(
 	_AR1(int,	mode))

@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: add2fnam.c,v 12.3 1993/11/27 16:11:44 dickey Exp $";
-#endif
-
 /*
  * Title:	add2fname.c
  * Author:	T.E.Dickey
@@ -19,6 +15,8 @@ static	char	Id[] = "$Id: add2fnam.c,v 12.3 1993/11/27 16:11:44 dickey Exp $";
 
 #define	STR_PTYPES
 #include "ptypes.h"
+
+MODULE_ID("$Id: add2fnam.c,v 12.4 1993/11/27 16:11:44 tom Exp $")
 
 int	add2fname(
 	_ARX(char *,	name)

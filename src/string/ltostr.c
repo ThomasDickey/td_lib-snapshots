@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: ltostr.c,v 12.4 1995/02/11 19:21:05 tom Exp $";
-#endif
-
 /*
  * Title:	ltostr.c (long-to-string)
  * Author:	T.E.Dickey
@@ -27,6 +23,8 @@ static	char	Id[] = "$Id: ltostr.c,v 12.4 1995/02/11 19:21:05 tom Exp $";
  */
 
 #include "ptypes.h"
+
+MODULE_ID("$Id: ltostr.c,v 12.5 1995/02/11 19:21:05 tom Exp $")
 
 char *
 l2str(

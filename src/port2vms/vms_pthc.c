@@ -1,7 +1,3 @@
-#ifndef	NO_IDENT
-static	char	Id[] = "$Id: vms_pthc.c,v 12.1 1994/08/21 18:39:51 tom Exp $";
-#endif
-
 /*
  * Title:	vms_pathcat.c (VMS path concatenation)
  * Author:	T.E.Dickey
@@ -23,6 +19,8 @@ static	char	Id[] = "$Id: vms_pthc.c,v 12.1 1994/08/21 18:39:51 tom Exp $";
 
 #define	STR_PTYPES
 #include	"port2vms.h"
+
+MODULE_ID("$Id: vms_pthc.c,v 12.2 1994/08/21 18:39:51 tom Exp $")
 
 #define	A_NODE	8
 #define	A_DEV	4

@@ -1,7 +1,3 @@
-#ifndef	NO_IDENT
-static	char	Id[] = "$Id: dir2path.c,v 12.1 1994/08/21 18:39:51 tom Exp $";
-#endif
-
 /*
  * Title:	dir2path.c
  * Author:	T.E.Dickey
@@ -21,6 +17,8 @@ static	char	Id[] = "$Id: dir2path.c,v 12.1 1994/08/21 18:39:51 tom Exp $";
 #define	CHR_PTYPES
 #define	STR_PTYPES
 #include	"port2vms.h"
+
+MODULE_ID("$Id: dir2path.c,v 12.2 1994/08/21 18:39:51 tom Exp $")
 
 static
 void	insert(

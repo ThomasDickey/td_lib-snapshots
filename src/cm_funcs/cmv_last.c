@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: cmv_last.c,v 12.6 1995/02/18 00:04:00 tom Exp $";
-#endif
-
 /*
  * Title:	cmv_last.c (scan for last CmVision date)
  * Author:	T.E.Dickey
@@ -25,6 +21,8 @@ static	char	Id[] = "$Id: cmv_last.c,v 12.6 1995/02/18 00:04:00 tom Exp $";
 #define	TIM_PTYPES
 #include	<ptypes.h>
 #include	<cmv_defs.h>
+
+MODULE_ID("$Id: cmv_last.c,v 12.7 1995/02/18 00:04:00 tom Exp $")
 
 /*
  * Set the release.version and date values iff we find a legal sccs-file at

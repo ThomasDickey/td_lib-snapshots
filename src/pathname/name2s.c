@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static  char    Id[] = "$Id: name2s.c,v 12.4 1993/11/27 17:18:40 dickey Exp $";
-#endif 
-
 /*
  * Title:	name2s.c (convert name to external string)
  * Author:	T.E.Dickey
@@ -42,6 +38,8 @@ static  char    Id[] = "$Id: name2s.c,v 12.4 1993/11/27 17:18:40 dickey Exp $";
 #define	CHR_PTYPES
 #define	STR_PTYPES
 #include "ptypes.h"
+
+MODULE_ID("$Id: name2s.c,v 12.5 1993/11/27 17:18:40 tom Exp $")
 
 #define	isshell(c)	(strchr("*%?$()[]{}|<>^&;#\\\"`'", c) != 0)
 #define	isAEGIS(c)	(strchr("*%?()[]{}\\", c) != 0)

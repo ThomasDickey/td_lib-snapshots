@@ -1,4 +1,4 @@
-/* $Id: td_ext.h,v 12.10 1995/02/11 19:21:04 tom Exp $ */
+/* $Id: td_ext.h,v 12.11 1995/02/26 21:42:13 tom Exp $ */
 
 #ifndef	TD_EXT_H
 #define	TD_EXT_H
@@ -439,7 +439,7 @@ extern	int	symlink	 ARGS((const char *s, const char *d));
 extern	int	vfork	 ARGS((void));
 #endif /* HAVE_VFORK */
 
-#if !HAVE_GETWD
+#if HAVE_GETCWD		/* prefer Posix functions */
 #define	getwd(p)	getcwd(p,MAXPATHLEN)
 #endif
 

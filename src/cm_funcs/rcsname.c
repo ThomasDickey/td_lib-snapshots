@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: rcsname.c,v 12.5 1994/07/02 17:18:14 tom Exp $";
-#endif
-
 /*
  * Title:	rcsname.c (derive name of RCS file)
  * Author:	T.E.Dickey
@@ -46,6 +42,8 @@ static	char	Id[] = "$Id: rcsname.c,v 12.5 1994/07/02 17:18:14 tom Exp $";
 #include	"rcsdefs.h"
 
 #include	<ctype.h>
+
+MODULE_ID("$Id: rcsname.c,v 12.6 1994/07/02 17:18:14 tom Exp $")
 
 #define	LEN_SUFFIX	(sizeof(suffix)-1)
 
