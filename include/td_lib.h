@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 4.2 1989/09/07 15:09:53 dickey Exp $ */
+/* $Id: td_lib.h,v 4.3 1989/09/14 15:03:28 dickey Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for CM_TOOLS COMMON
@@ -254,7 +254,6 @@
 			_RET
 
 	/* ftype.c ---------------------------------------------------- */
-#ifdef	unix
 	char	*ftype(
 			_AR1(char *,	path)
 			)
@@ -262,6 +261,7 @@
 			_RET
 
 	/* ftype2.c --------------------------------------------------- */
+#ifdef	unix
 	char	*ftype2(
 			_AR1(char *,	path)
 			)

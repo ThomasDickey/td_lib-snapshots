@@ -1,4 +1,4 @@
-# $Header: /users/source/archives/td_lib.vcs/src/RCS/descrip.mms,v 4.2 1989/09/07 15:07:26 dickey Exp $
+# $Header: /users/source/archives/td_lib.vcs/src/RCS/descrip.mms,v 4.3 1989/09/14 15:01:21 dickey Exp $
 # MMS-file for miscellaneous library routines	
 #
 ####### (Development) ##########################################################
@@ -31,6 +31,7 @@ LIBRARYMODULES = -
 	FILE2ARGV, -
 	FILE2MEM, -
 	FP2ARGV, -
+	FTYPE, -
 	LIST_BY_COLS, -
 	LTOSTR, -
 	MAKEARGV, -
@@ -60,7 +61,6 @@ UNUSED_MODULES = -
 	EXECUTE, 		# unix-style fork/exec -
 	FILECOPY, 		# needs unix system-I/O -
 	FOR_USER, 		# only for setuid programs -
-	FTYPE, 			# unix-style suffix -
 	FTYPE2, 		# unix-style suffix -
 	GETHOME, 		# unix-passwd -
 	GETUSER, 		# unix-passwd -
