@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: scomp.c,v 11.3 1992/11/20 13:41:11 dickey Exp $";
+static	char	Id[] = "$Id: scomp.c,v 11.4 1993/04/26 16:29:57 dickey Exp $";
 #endif
 
 /*
@@ -19,7 +19,7 @@ static	char	Id[] = "$Id: scomp.c,v 11.3 1992/11/20 13:41:11 dickey Exp $";
  */
 
 #define	SCOMP	scomp
-#include	"cm_scomp.h"
+#include	"td_scomp.h"
 
 #ifdef	lint
 #define	REF(v,n)	v[n*size/4]

@@ -1,14 +1,14 @@
-/* $Id: llib-ltd,v 11.2 1992/11/19 15:17:10 dickey Exp $ */
+/* $Id: llib-ltd,v 12.0 1993/04/26 15:29:14 ste_cm Rel $ */
 /*LINTLIBRARY*/
 
 #define	LINTLIBRARY
 #define	CUR_PTYPES
 #define	SIG_PTYPES
 #include	"ptypes.h"
-#include	"cm_qsort.h"
-#include	"cm_scomp.h"
-#include	"dyn_string.h"
+#include	"td_qsort.h"
+#include	"td_scomp.h"
+#include	"dyn_str.h"
 #include	"rcsdefs.h"
 #include	"sccsdefs.h"
-#include	"spreadsheet.h"
-#include	"common.h"
+#include	"td_sheet.h"
+#include	"td_lib.h"

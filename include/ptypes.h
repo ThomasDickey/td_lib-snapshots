@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 11.10 1992/12/01 13:52:41 dickey Exp $ */
+/* $Id: ptypes.h,v 11.12 1993/04/26 15:38:17 dickey Exp $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -69,7 +69,7 @@ extern	char	*sprintf();
 
 /*
  * Definitions for files which are combined lint-library/function-prototype
- * declarations (e.g., "common.h"):
+ * declarations (e.g., "td_lib.h"):
  */
 #ifdef	LINTLIBRARY
 #define	_fn1(t,v,a)	v
@@ -405,10 +405,10 @@ extern	char	*strrchr(_arx(char *,s) _ar1(int,c));
 #endif	/* STR_PTYPES */
 
 /*
- * Definitions of procedures in CM_TOOLS common library
+ * Definitions of procedures in TD_LIB common library
  */
 #ifndef	LINTLIBRARY
-#include "common.h"
+#include "td_lib.h"
 
 #ifndef	lint
 extern		main(_arx(int,argc) _arx(char **,argv) _ar1(char **,envp));

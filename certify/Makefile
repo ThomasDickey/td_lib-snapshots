@@ -1,14 +1,14 @@
-# $Id: Makefile,v 11.2 1992/10/16 12:23:06 dickey Exp $
+# $Id: Makefile,v 12.0 1993/04/26 16:35:53 ste_cm Rel $
 
 TOP	= ../..
-include $(TOP)/cm_library/support/cm_library.mk
+include $(TOP)/td_lib/support/td_lib.mk
 
 ####### (Standard Lists) #######################################################
 SOURCES	=\
 	README\
-	config_sheet.txt\
-	release_notes.txt\
-	reusable_parts.txt
+	config.txt\
+	release.txt\
+	reusable.txt
 
 ####### (Standard Productions) #################################################
 all:		$(SOURCES) $(ALL)
@@ -18,7 +18,7 @@ destroy:			; $(DESTROY)
 sources:	$(SOURCES)
 lint.out\
 lintlib\
-run_tests\
+run_test\
 install\
 deinstall:
 

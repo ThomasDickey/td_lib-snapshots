@@ -1,4 +1,4 @@
-# $Id: descrip.mms,v 11.6 1992/12/21 09:58:06 dickey Exp $
+# $Id: descrip.mms,v 11.7 1993/04/26 16:23:56 dickey Exp $
 # MMS-file for miscellaneous library routines	
 #
 ####### (Development) ##########################################################
@@ -14,15 +14,15 @@ TEST_CC =	$(CC) $(CFLAGS) /DEFINE="TEST" $(MMS$SOURCE)
 #
 ####### (Standard Lists) #######################################################
 LIBRARYMODULES = -
-	ACCESS_MODE, -
-	ADD2FNAME, -
-	ARGV2FILE, -
+	ACC_MODE, -
+	ADD2FNAM, -
+	ARG2FILE, -
 	BEEP, -
 	BLDARG, -
 	BLIP, -
 	CATARG, -
 	CATCHALL, -
-	CMP_QSORT, -
+	CMPQSORT, -
 	COPYBACK, -
 	COUNT_SS, -
 	DFTENV, -
@@ -30,37 +30,37 @@ LIBRARYMODULES = -
 	DOTCMP, -
 	DOTNAME, -
 	DUMPCHR, -
-	DYN_APPEND, -
-	DYN_APPEND_C, -
-	DYN_CATARG, -
+	DYN_APP, -
+	DYN_APPC, -
+	DYN_CATA, -
 	DYN_COPY, -
-	DYN_STRING, -
+	DYN_STR, -
 	EXECUTE, -
 	FAILED, -
 	FIELD_OF, -
-	FILE2ARGV, -
+	FILE2ARG, -
 	FILE2MEM, -
 	FILESIZE, -
 	FP2ARGV, -
 	FTYPE, -
-	IS_SUBPATH, -
-	ISTEXTFILE, -
-	LIST_BY_COLS, -
+	IS_SPATH, -
+	ISTEXTFL, -
+	LSBYCOLS, -
 	LTOSTR, -
 	M2COMP, -
 	MAKEARGV, -
 	MEM2FILE, -
 	MODECHAR, -
-	NEXT_VERSION, -
+	NEXT_VER, -
 	PATHCAT, -
 	PATHLEAF, -
 	SAMELEAF, -
 	SCOMP, -
 	SHOARG, -
-	SHOW_UIDS, -
+	SHOWUIDS, -
 	SS_FIELD, -
 	STAT_DIR, -
-	STAT_FILE, -
+	STAT_FIL, -
 	STRALLOC, -
 	STRBCMP, -
 	STRCLEAN, -
@@ -84,15 +84,15 @@ UNUSED_MODULES = -
 	DENODE, 		# only for ABSPATH -
 	DIFFLOAD,		# unix-diff -
 	DUMPWIN, 		# curses -
-	ERASECHAR, 		# curses -
+	ERASECHR, 		# curses -
 	FILECOPY, 		# needs unix system-I/O -
-	FOR_ADMIN, 		# only for setuid programs -
+	FOR_ADMN, 		# only for setuid programs -
 	FOR_USER, 		# only for setuid programs -
 	FTYPE2, 		# unix-style suffix -
 	GETHOME, 		# unix-passwd -
 	GETUSER, 		# unix-passwd -
 	GID2S, 			# PORTUNIX -
-	INTERACTIVE,		# unix filesystem -
+	INTERACT,		# unix filesystem -
 	KILLCHAR 		# curses -
 	LOGCH, 			# curses/ded -
 	NAME2S,			# unix-style names only -
@@ -103,9 +103,9 @@ UNUSED_MODULES = -
 	PATHHEAD,		# unix-style pathnames -
 	RAWGETS,		# curses -
 	RAWTERM,		# curses -
-	RCS_DEBUG,		# rcs (unix-only) -
+	RCSDEBUG,		# rcs (unix-only) -
 	RCS_DIR,		# rcs (unix-only) -
-	RCSARGPAIR,		# rcs (unix-only) -
+	RCSARGPR,		# rcs (unix-only) -
 	RCSEDIT,		# rcs (unix-only) -
 	RCSKEYS,		# rcs (unix-only) -
 	RCSLAST,		# rcs (unix-only) -
@@ -113,16 +113,16 @@ UNUSED_MODULES = -
 	RCSLOCKS,		# rcs (unix-only) -
 	RCSNAME,		# rcs (unix-only) -
 	RCSPATH,		# rcs (unix-only) -
-	RCSPERMIT,		# rcs (unix-only) -
-	RCSSYMBOLS,		# rcs (unix-only) -
+	RCSPERM,		# rcs (unix-only) -
+	RCSSYMBS,		# rcs (unix-only) -
 	RCSTEMP,		# rcs (unix-only) -
 	RCSTIME,		# rcs (unix-only) -
 	RELPATH,		# unix-style 'getwd()' -
-	RESIZEWIN,		# curses (apollo) -
+	RESIZWIN,		# curses (apollo) -
 	REVERT,			# unix setuid -
 	S2GID,			# unix-passwd -
 	S2UID,			# unix-passwd -
-	SAVES_UID,		# unix -
+	SAVESUID,		# unix -
 	SAVEWIN,		# curses -
 	SCCS_DIR,		# sccs (unix-only) -
 	SCCSLAST,		# sccs (unix-only) -
@@ -134,23 +134,23 @@ UNUSED_MODULES = -
 	USERCOPY 		# uses FOR_USER -
 	USERPROT 		# uses FOR_USER -
 	VCS_FILE,		# rcs (unix-only) -
-	VIEW_FILE,		# curses/unix -
+	VIEWFILE,		# curses/unix -
 	WHICH,			# unix-style PATH-variable -
 	WIN2FILE,		# curses -
 	WREPAINT		# curses
 #
 C_SRC	=-
 	ABSPATH.C -
-	ACCESS_MODE.C -
-	ADD2FNAME.C -
-	ARGV2FILE.C -
+	ACC_MODE.C -
+	ADD2FNAM.C -
+	ARG2FILE.C -
 	BEEP.C -
 	BLDARG.C -
 	BLIP.C -
 	CATARG.C -
 	CATCHALL.C -
 	CMDCH.C -
-	CMP_QSORT.C, -
+	CMPQSORT.C, -
 	COPYBACK.C -
 	COUNT_SS.C -
 	CUTOFF.C -
@@ -162,20 +162,20 @@ C_SRC	=-
 	DOTNAME.C -
 	DUMPCHR.C -
 	DUMPWIN.C -
-	DYN_APPEND.C -
-	DYN_APPEND_C.C -
-	DYN_CATARG.C -
+	DYN_APP.C -
+	DYN_APPC.C -
+	DYN_CATA.C -
 	DYN_COPY.C -
-	DYN_STRING.C -
-	ERASECHAR.C -
+	DYN_STR.C -
+	ERASECHR.C -
 	EXECUTE.C -
 	FAILED.C -
 	FIELD_OF.C -
-	FILE2ARGV.C -
+	FILE2ARG.C -
 	FILE2MEM.C -
 	FILECOPY.C -
 	FILESIZE.C -
-	FOR_ADMIN.C -
+	FOR_ADMN.C -
 	FOR_USER.C -
 	FP2ARGV.C -
 	FTYPE.C -
@@ -183,18 +183,18 @@ C_SRC	=-
 	GETHOME.C -
 	GETUSER.C -
 	GID2S.C -
-	IS_SUBPATH.C -
-	INTERACTIVE.C -
-	ISTEXTFILE.C -
+	IS_SPATH.C -
+	INTERACT.C -
+	ISTEXTFL.C -
 	KILLCHAR.C -
-	LIST_BY_COLS.C -
+	LSBYCOLS.C -
 	LOGCH.C -
 	LTOSTR.C -
 	M2COMP.C -
 	MAKEARGV.C -
 	MEM2FILE.C -
 	MODECHAR.C -
-	NEXT_VERSION.C -
+	NEXT_VER.C -
 	NAME2S.C -
 	NEWZONE.C -
 	PACKDATE.C -
@@ -205,9 +205,9 @@ C_SRC	=-
 	PATHLEAF.C -
 	RAWGETS.C -
 	RAWTERM.C -
-	RCS_DEBUG.C -
+	RCSDEBUG.C -
 	RCS_DIR.C -
-	RCSARGPAIR.C -
+	RCSARGPR.C -
 	RCSEDIT.C -
 	RCSKEYS.C -
 	RCSLAST.C -
@@ -215,16 +215,16 @@ C_SRC	=-
 	RCSLOCKS.C -
 	RCSNAME.C -
 	RCSPATH.C -
-	RCSPERMIT.C -
-	RCSSYMBOLS.C -
+	RCSPERM.C -
+	RCSSYMBS.C -
 	RCSTEMP.C -
 	RCSTIME.C -
 	RELPATH.C -
-	RESIZEWIN.C -
+	RESIZWIN.C -
 	REVERT.C -
 	S2GID.C -
 	S2UID.C -
-	SAMEBRANCH.C -
+	SAMEBR.C -
 	SAMELEAF.C -
 	SAVEWIN.C -
 	SCCS_DIR.C -
@@ -234,10 +234,10 @@ C_SRC	=-
 	SCR_SIZE.C -
 	SETMTIME.C -
 	SHOARG.C -
-	SHOW_UIDS.C -
+	SHOWUIDS.C -
 	SS_FIELD.C -
 	STAT_DIR.C -
-	STAT_FILE.C -
+	STAT_FIL.C -
 	STRALLOC.C -
 	STRBCMP.C -
 	STRCLEAN.C -
@@ -257,7 +257,7 @@ C_SRC	=-
 	VECEDIT.C -
 	VECLEN.C -
 	VERCMP.C -
-	VIEW_FILE.C -
+	VIEWFILE.C -
 	WALKBACK.C -
 	WALKTREE.C -
 	WHICH.C -
@@ -297,40 +297,40 @@ INSTALL :
 ! Dependencies to archive are done by default rules, e.g.,
 !'$(A)(UNIXDIR) :	UNIXDIR.OBJ
 $(A)($(LIBRARYMODULES)) : $(PTYPES_H)
-ACCESS_MODE.obj :	$(PTYPES_H)
-ADD2FNAME.obj :		$(PTYPES_H)
-ARGV2FILE.obj :		$(PTYPES_H)
+ACC_MODE.obj :		$(PTYPES_H)
+ADD2FNAM.obj :		$(PTYPES_H)
+ARG2FILE.obj :		$(PTYPES_H)
 BEEP.obj :		$(PTYPES_H)
 CATARG.obj :		$(PTYPES_H)
 CATCHALL.obj :		$(PTYPES_H)
 CMDCH.obj :		$(PTYPES_H)	$(I)cmdch.h
-CMP_QSORT.obj :		$(PTYPES_H)	$(I)cm_qsort.h
+CMPQSORT.obj :		$(PTYPES_H)	$(I)td_qsort.h
 COPYBACK.obj :		$(PTYPES_H)
 CUTOFF.obj :		$(PTYPES_H)
 DOALLOC.OBJ :		$(PTYPES_H)
 DUMPWIN.obj :		$(PTYPES_H)
-DYN_APPEND.obj \
-DYN_APPEND_C.obj \
-DYN_CATARG.obj \
+DYN_APP.obj \
+DYN_APPC.obj \
+DYN_CATA.obj \
 DYN_COPY.obj \
-DYN_STRING.obj :	$(PTYPES_H)	$(I)dyn_string.h
-ERASECHAR.obj :		$(PTYPES_H)
+DYN_STR.obj :		$(PTYPES_H)	$(I)dyn_str.h
+ERASECHR.obj :		$(PTYPES_H)
 EXECUTE.obj :		$(PTYPES_H)
 FAILED.obj :		$(PTYPES_H)
-FILE2ARGV.obj :		$(PTYPES_H)
+FILE2ARG.obj :		$(PTYPES_H)
 FILE2MEM.obj :		$(PTYPES_H)
 FILECOPY.obj :		$(PTYPES_H)
 FILESIZE.obj :		$(PTYPES_H)
-FOR_ADMIN.obj :		$(PTYPES_H)
+FOR_ADMN.obj :		$(PTYPES_H)
 FOR_USER.obj :		$(PTYPES_H)
 FP2ARGV.obj :		$(PTYPES_H)
 FTYPE.obj :		$(PTYPES_H)
 FTYPE2.obj :		$(PTYPES_H)
 GID2S.obj :		$(PTYPES_H)
-IS_SUBPATH.obj :	$(PTYPES_H)
-ISTEXTFILE.obj :	$(PTYPES_H)
+IS_SPATH.obj :		$(PTYPES_H)
+ISTEXTFL.obj :		$(PTYPES_H)
 KILLCHAR.obj :		$(PTYPES_H)
-LIST_BY_COLS.obj :	$(PTYPES_H)
+LSBYCOLS.obj :		$(PTYPES_H)
 LOGCH.obj :		$(PTYPES_H)	$(I)cmdch.h
 MEM2FILE.obj :		$(PTYPES_H)
 NAME2S.obj :		$(PTYPES_H)
@@ -342,7 +342,7 @@ PATHCMP.obj :		$(PTYPES_H)
 PATHLEAF.obj :		$(PTYPES_H)
 RAWGETS.obj :		$(PTYPES_H)	$(I)cmdch.h
 RAWTERM.obj :		$(PTYPES_H)
-# rcsargpair.obj :	$(PTYPES_H)	$(I)rcsdefs.h
+# rcsargpr.obj :	$(PTYPES_H)	$(I)rcsdefs.h
 # rcsedit.obj :		$(PTYPES_H)	$(I)rcsdefs.h
 # rcskeys.obj :		$(PTYPES_H)	$(I)rcsdefs.h
 # rcslast.obj :		$(PTYPES_H)	$(I)rcsdefs.h
@@ -350,17 +350,17 @@ RAWTERM.obj :		$(PTYPES_H)
 # rcslocks.obj :	$(PTYPES_H)	$(I)rcsdefs.h
 # rcsname.obj :		$(PTYPES_H)	$(I)rcsdefs.h
 # rcspath.obj :		$J/rcspath.h	; $(CC) -I$J -c $*.c
-# rcspermit.obj :	$(PTYPES_H)	$(I)rcsdefs.h
+# rcsperm.obj :		$(PTYPES_H)	$(I)rcsdefs.h
 RESIZWWIN.obj :		$(PTYPES_H)
-# samebranch.obj :	$(PTYPES_H)	$(I)rcsdefs.h
+# samebr.obj :		$(PTYPES_H)	$(I)rcsdefs.h
 SAMELEAF.obj :		$(PTYPES_H)
 SAVEWIN.obj :		$(PTYPES_H)
 SCCSLAST.obj :		$(PTYPES_H)
 SETMTIME.obj :		$(PTYPES_H)
 SHOARG.obj :		$(PTYPES_H)
-SHOW_UIDS.obj :		$(PTYPES_H)
+SHOWUIDS.obj :		$(PTYPES_H)
 STAT_DIR.obj :		$(PTYPES_H)
-STAT_FILE.obj :		$(PTYPES_H)
+STAT_FIL.obj :		$(PTYPES_H)
 STRALLOC.obj :		$(PTYPES_H)
 STRCLEAN.obj :		$(PTYPES_H)
 STRCOUNT.obj :		$(PTYPES_H)
@@ -376,12 +376,12 @@ WALKBACK.OBJ :		$(PTYPES_H)
 WALKTREE.OBJ :		$(PTYPES_H)
 WIN2FILE.obj :		$(PTYPES_H)
 #
-M2COMP.obj :		$(PTYPES_H)	$(I)cm_scomp.h
-SCOMP.obj :		$(PTYPES_H)	$(I)cm_scomp.h
+M2COMP.obj :		$(PTYPES_H)	$(I)td_scomp.h
+SCOMP.obj :		$(PTYPES_H)	$(I)td_scomp.h
 #
-COUNT_SS.obj :		$(PTYPES_H)	$(I)spreadsheet.h	$(I)dyn_string.h
-FIELD_OF.obj :		$(PTYPES_H)	$(I)spreadsheet.h	$(I)dyn_string.h
-SS_FIELD.obj :		$(PTYPES_H)	$(I)spreadsheet.h	$(I)dyn_string.h
+COUNT_SS.obj :		$(PTYPES_H)	$(I)td_sheet.h	$(I)dyn_str.h
+FIELD_OF.obj :		$(PTYPES_H)	$(I)td_sheet.h	$(I)dyn_str.h
+SS_FIELD.obj :		$(PTYPES_H)	$(I)td_sheet.h	$(I)dyn_str.h
 #
 ####### (Development) ##########################################################
 !

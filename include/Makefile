@@ -1,8 +1,9 @@
-# $Id: Makefile,v 11.4 1992/12/04 11:51:08 ste_cm Exp $
+# $Id: Makefile,v 12.0 1993/04/26 15:11:28 ste_cm Rel $
 # make-file for CM_TOOLS common interface directory
 
+THIS	= td
 TOP	= ../..
-include $(TOP)/cm_library/support/cm_library.mk
+include $(TOP)/td_lib/support/td_lib.mk
 
 ####### (Command-line Options) #################################################
 llib	= td
@@ -10,21 +11,21 @@ LLIB	= llib-l$(llib)
 
 ####### (Standard Lists) #######################################################
 H_SRC	=\
+	$(THIS)_lib.h\
 	acl.h \
 	cmdch.h\
-	cm_curses.h\
-	cm_qsort.h\
-	cm_scomp.h\
-	common.h\
 	deltree.h\
-	dyn_string.h\
+	dyn_str.h\
 	ptypes.h\
 	rcsdefs.h\
 	sccsdefs.h\
-	spreadsheet.h
+	td_curse.h\
+	td_qsort.h\
+	td_scomp.h\
+	td_sheet.h
 
 L_SRC	=\
-	llib-ltd
+	llib-l$(THIS)
 
 SOURCES	= Makefile $(H_SRC) $(L_SRC)
 
@@ -33,7 +34,7 @@ ALL	=
 
 ####### (Standard Productions) #################################################
 all\
-run_tests\
+run_test\
 install:	$(SOURCES) $(ALL)
 clean:				; rm -f $(CLEAN) *.ln
 clobber:	clean		; rm -f $(ALL) $(IT)

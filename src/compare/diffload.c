@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: diffload.c,v 11.2 1992/09/02 16:05:26 dickey Exp $";
+static	char	Id[] = "$Id: diffload.c,v 12.0 1993/04/26 16:15:29 ste_cm Rel $";
 #endif
 
 /*
@@ -16,7 +16,7 @@ static	char	Id[] = "$Id: diffload.c,v 11.2 1992/09/02 16:05:26 dickey Exp $";
 #define	STR_PTYPES
 #include	"ptypes.h"
 #include	"deltree.h"
-#include	"dyn_string.h"
+#include	"dyn_str.h"
 #include	<ctype.h>
 #include	<time.h>
 
