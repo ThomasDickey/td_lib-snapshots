@@ -1,10 +1,14 @@
-# $Id: Makefile,v 4.4 1989/09/07 15:06:47 dickey Exp $
+# $Id: Makefile,v 4.5 1989/10/04 12:13:16 dickey Exp $
 # MAKE-file for miscellaneous library routines
 #
 # $Log: Makefile,v $
-# Revision 4.4  1989/09/07 15:06:47  dickey
-# added module "relpath.c"
+# Revision 4.5  1989/10/04 12:13:16  dickey
+# made "ptypes.h" and "common.h" dependencies for all objects (most
+# needed it anyway).
 #
+#	Revision 4.4  89/09/07  15:06:47  dickey
+#	added module "relpath.c"
+#	
 #	Revision 4.3  89/09/06  15:22:34  dickey
 #	use "ptypes.h" in 'abspath.c'; added missing ranlib to 'archive' rule
 #	
@@ -235,56 +239,18 @@ archive: $(OBJS)
 	ar rv $A $(OBJS)
 	ranlib $A
 #
-abspath.o:	$I/ptypes.h
-add2fname.o:	$I/ptypes.h
-argv2file.o:	$I/ptypes.h
-beep.o:		$I/ptypes.h
-catchall.o:	$I/ptypes.h
-cmdch.o:	$I/ptypes.h	$I/cmdch.h
-copyback.o:	$I/ptypes.h
-cutoff.o:	$I/ptypes.h
-doalloc.o:	$I/ptypes.h
-dumpwin.o:	$I/ptypes.h
-erasechar.o:	$I/ptypes.h
-execute.o:	$I/ptypes.h
-failed.o:	$I/ptypes.h
-file2argv.o:	$I/ptypes.h
-file2mem.o:	$I/ptypes.h
-filecopy.o:	$I/ptypes.h
-for_user.o:	$I/ptypes.h
-fp2argv.o:	$I/ptypes.h
-gid2s.o:	$I/ptypes.h
-killchar.o:	$I/ptypes.h
-mem2file.o:	$I/ptypes.h
-name2s.o:	$I/ptypes.h
-newzone.o:	$I/ptypes.h
-packdate.o:	$I/ptypes.h
-padedit.o:	$I/ptypes.h
-pathcmp.o:	$I/ptypes.h
-rawgets.o:	$I/ptypes.h	$I/cmdch.h
-rawterm.o:	$I/ptypes.h
-rcsedit.o:	$I/ptypes.h	$I/rcsdefs.h
-rcskeys.o:	$I/ptypes.h	$I/rcsdefs.h
-rcslast.o:	$I/ptypes.h	$I/rcsdefs.h
-rcsload.o:	$I/ptypes.h	$I/rcsdefs.h
-rcslocks.o:	$I/ptypes.h	$I/rcsdefs.h
-rcsname.o:	$I/ptypes.h	$I/rcsdefs.h
+$(OBJS):	$I/ptypes.h	$I/common.h
+cmdch.o:	$I/cmdch.h
+rawgets.o:	$I/cmdch.h
+rcsedit.o:	$I/rcsdefs.h
+rcskeys.o:	$I/rcsdefs.h
+rcslast.o:	$I/rcsdefs.h
+rcsload.o:	$I/rcsdefs.h
+rcslocks.o:	$I/rcsdefs.h
+rcsname.o:	$I/rcsdefs.h
 rcspath.o:	$J/rcspath.h	; $(CC) -I$J -c $*.c
-rcspermit.o:	$I/ptypes.h	$I/rcsdefs.h
-relpath.o:	$I/ptypes.h
-resizewin.o:	$I/ptypes.h
-sccslast.o:	$I/ptypes.h
-setmtime.o:	$I/ptypes.h
-savewin.o:	$I/ptypes.h
-trimpath.o:	$I/ptypes.h
-uid2s.o:	$I/ptypes.h
-usercopy.o:	$I/ptypes.h
-userprot.o:	$I/ptypes.h
-vcs_file.o:	$I/ptypes.h	$I/rcsdefs.h
-view_file.o:	$I/ptypes.h
-walktree.o:	$I/ptypes.h
-which.o:	$I/ptypes.h
-win2file.o:	$I/ptypes.h
+rcspermit.o:	$I/rcsdefs.h
+vcs_file.o:	$I/rcsdefs.h
 #
 ####### (Development) ##########################################################
 $(SOURCES):			; $(GET) $@

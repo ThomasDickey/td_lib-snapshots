@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RCS/arg2file.c,v 4.0 1989/05/18 11:19:49 ste_cm Rel $";
+static	char	Id[] = "$Id: arg2file.c,v 8.0 1989/10/04 12:05:50 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -10,6 +10,7 @@ static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RC
  * Function:	Write an argv-style text vector to a file, with the given mode.
  */
 
+#define	STR_PTYPES
 #include	"ptypes.h"
 
 argv2file(vec, name, mode)

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs/RCS/rcstemp.c,v 4.1 1989/08/24 16:06:36 dickey Exp $";
+static	char	Id[] = "$Id: rcstemp.c,v 5.0 1989/10/04 13:09:32 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,11 +7,17 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs
  * Author:	T.E.Dickey
  * Created:	25 Aug 1988
  * $Log: rcstemp.c,v $
- * Revision 4.1  1989/08/24 16:06:36  dickey
- * recoded to ensure that if the directory's group-id is not
- * consistent with the process's group-id, then we must relax
- * the directory protection.
+ * Revision 5.0  1989/10/04 13:09:32  ste_cm
+ * BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
  *
+ *		Revision 4.2  89/10/04  13:09:32  dickey
+ *		lint (apollo SR10.1)
+ *		
+ *		Revision 4.1  89/08/24  16:06:36  dickey
+ *		recoded to ensure that if the directory's group-id is not
+ *		consistent with the process's group-id, then we must relax
+ *		the directory protection.
+ *		
  *		Revision 4.0  89/04/07  16:26:34  ste_cm
  *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
  *		
@@ -43,11 +49,9 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs
  *		the real uid, rather than resolving directory and file owners.
  */
 
-#include	<stdio.h>
+#define	STR_PTYPES
+#include	"ptypes.h"
 #include	<errno.h>
-#include	<string.h>
-#include	<sys/types.h>
-#include	<sys/stat.h>
 extern	int	errno;
 extern	char	*uid2s();
 extern	char	*pathcat();
@@ -62,7 +66,7 @@ char	*working;
 	static	char	tmp[BUFSIZ];
 
 	if (getuid() != geteuid()) {
-		char	*tf = pathcat(tmp, "/tmp", uid2s(getuid()));
+		char	*tf = pathcat(tmp, "/tmp", uid2s((int)getuid()));
 		int	mode = ((getgid() == getegid()) ? 0775 : 0777);
 		struct	stat	sb;
 

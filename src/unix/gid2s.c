@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/unix/RCS/gid2s.c,v 4.0 1989/07/25 09:03:38 ste_cm Rel $";
+static	char	Id[] = "$Id: gid2s.c,v 8.0 1989/10/04 11:37:50 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,9 +7,24 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/unix/RCS
  * Author:	T.E.Dickey
  * Created:	10 Nov 1987
  * $Log: gid2s.c,v $
- * Revision 4.0  1989/07/25 09:03:38  ste_cm
- * BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+ * Revision 8.0  1989/10/04 11:37:50  ste_cm
+ * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
  *
+ *		Revision 7.0  89/10/04  11:37:50  ste_cm
+ *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+ *		
+ *		Revision 6.0  89/10/04  11:37:50  ste_cm
+ *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+ *		
+ *		Revision 5.0  89/10/04  11:37:50  ste_cm
+ *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+ *		
+ *		Revision 4.1  89/10/04  11:37:50  dickey
+ *		speedup (?) by reading ids only as needed
+ *		
+ *		Revision 4.0  89/07/25  09:03:38  ste_cm
+ *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+ *		
  *		Revision 3.1  89/07/25  09:03:38  dickey
  *		recompiled with apollo SR10 -- mods for function prototypes
  *		
@@ -29,59 +44,86 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/unix/RCS
  *		defining the name.
  */
 
+#define	STR_PTYPES
 #include	"ptypes.h"
-#include	<stdio.h>
 #include	<grp.h>
 extern	char	*ltostr(),
-		*stralloc(),
-		*strcpy();
+		*txtalloc();
 
-typedef	struct {
-	int	t_gid;
-	char	*t_name;
+#ifdef	SYSTEM5
+extern	 struct group  *getgrent();		/* cf: apollo sys5 */
+extern		V_OR_I	setgrent();
+extern		V_OR_I	endgrent();
+#endif	SYSTEM5
+
+typedef	struct	_table	{
+	struct	_table	*link;
+	int	group;
+	char	*name;
 	} TABLE;
 
-#define	Q(j)	(q+j)->
-#define	def_doalloc	def_GID_TABLE	/* lint (gould) */
+#define	def_alloc	def_GID_TABLE	/* lint (gould) */
 	/*ARGSUSED*/
-	def_DOALLOC(TABLE)
+	def_ALLOC(TABLE)
+
+static	TABLE	*table_gid2s;
+
+static
+define_gid2s(gid, name)
+int	gid;
+char	*name;
+{
+	register TABLE	*q = ALLOC(TABLE,1);
+	q->link  = table_gid2s;
+	q->group = gid;
+	q->name  = txtalloc(name);
+	table_gid2s = q;
+}
 
 char *
 gid2s(gid)
 int	gid;
 {
-extern	 struct group  *getgrent();		/* cf: apollo sys5 */
-#ifndef	__STDC__
-extern		V_OR_I	setgrent();
-extern		V_OR_I	endgrent();
-#endif	__STDC__
-register struct group *p;
-register int	j;
-static   TABLE	*q;
-static   char	bfr[10];
-static	unsigned qmax = 0;
+	register struct group *p;
+	register TABLE	*q;
 
-	if (qmax == 0) {
-		(void)setgrent();
-		while (p = getgrent()) {
-		register char *s = p->gr_name;
-			q = DOALLOC(q,TABLE,qmax+1);
-			Q(qmax)t_gid  = p->gr_gid;
-			Q(qmax)t_name = stralloc(s);
-			qmax++;
-		}
-		(void)endgrent();
-	}
+	/* search the table for previously-known items */
+	for (q = table_gid2s; q; q = q->link)
+		if (q->group == gid)
+			return(q->name);
 
-	for (j = 0; j < qmax; j++) {
-		if (Q(j)t_gid == gid)
-			return(Q(j)t_name);
-	}
+	/* if not found, lookup/translate it for future use */
 #ifdef	apollo
-	if (gid == -3)
-		(void)strcpy(bfr, "<none>");
-	else
-#endif	apollo
-	(void)ltostr(bfr, (long)gid, 0);
-	return(bfr);
+	if (gid == -3) {
+		define_gid2s(gid, "<none>");
+	} else
+#endif
+	if (p = getgrgid(gid))
+		define_gid2s(gid, p->gr_name);
+	else {
+		auto	char	bfr[80];
+		(void)ltostr(bfr, (long)gid, 0);
+		define_gid2s(gid, bfr);
+	}
+	return (gid2s(gid));
 }
+
+#ifdef	TEST
+main(argc, argv)
+char	*argv[];
+{
+	register int	j;
+	auto	 char	*d;
+	auto	 int	group;
+
+	for (j = 1; j < argc; j++) {
+		group = strtol(argv[j], &d, 0);
+		if (*d) {
+			printf("? illegal character /%s/\n", d);
+			continue;
+		}
+		printf("%d => \"%s\"\n", group, gid2s(group));
+	}
+	exit(SUCCESS);
+}
+#endif	TEST

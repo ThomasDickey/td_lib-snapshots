@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RCS/pathhead.c,v 4.0 1988/08/25 15:07:07 ste_cm Rel $";
+static	char	Id[] = "$Id: pathhead.c,v 5.0 1989/10/04 12:14:05 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,9 +7,15 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname
  * Author:	T.E.Dickey
  * Created:	25 Aug 1988
  * $Log: pathhead.c,v $
- * Revision 4.0  1988/08/25 15:07:07  ste_cm
- * BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+ * Revision 5.0  1989/10/04 12:14:05  ste_cm
+ * BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
  *
+ *		Revision 4.1  89/10/04  12:14:05  dickey
+ *		lint (apollo SR10.1)
+ *		
+ *		Revision 4.0  88/08/25  15:07:07  ste_cm
+ *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+ *		
  *		Revision 3.0  88/08/25  15:07:07  ste_cm
  *		BASELINE Mon Jun 19 13:27:01 EDT 1989
  *		
@@ -34,13 +40,8 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname
  *		is permitted as an argument.
  */
 
-#include	<stdio.h>
-#include	<sys/types.h>
-#include	<sys/stat.h>
-extern	char	*strcpy();
-extern	char	*strrchr();
-
-#define	EOS	'\0'
+#define	STR_PTYPES
+#include	"ptypes.h"
 
 #define	notDIR(path)	((stat(path, sb_) < 0)\
 			||  ((sb_->st_mode & S_IFMT) != S_IFDIR))

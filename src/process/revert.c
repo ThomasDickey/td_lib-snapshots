@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/process/RCS/revert.c,v 4.0 1989/03/08 13:38:01 ste_cm Rel $";
+static	char	Id[] = "$Id: revert.c,v 5.0 1989/10/04 12:17:10 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,9 +7,15 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/process/
  * Author:	T.E.Dickey
  * Created:	08 Mar 1989
  * $Log: revert.c,v $
- * Revision 4.0  1989/03/08 13:38:01  ste_cm
- * BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+ * Revision 5.0  1989/10/04 12:17:10  ste_cm
+ * BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
  *
+ *		Revision 4.1  89/10/04  12:17:10  dickey
+ *		lint (apollo SR10.1)
+ *		
+ *		Revision 4.0  89/03/08  13:38:01  ste_cm
+ *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+ *		
  *		Revision 3.0  89/03/08  13:38:01  ste_cm
  *		BASELINE Mon Jun 19 13:27:01 EDT 1989
  *		
@@ -25,15 +31,16 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/process/
  *		an application program.
  */
 
-#include	<stdio.h>
+#include	"ptypes.h"
 
 #define	TELL	if (msg) fprintf(stderr,
 
 revert(msg)
 char	*msg;
 {
-	register int	changed = 0,
-			id;
+	register int	changed = 0;
+	register uid_t	id;
+	register gid_t	gid;
 	static	char	fmt[] = "** reset %s from %d to %d\n";
 
 	if ((id = getuid()) != geteuid()) {
@@ -41,9 +48,9 @@ char	*msg;
 		(void)setuid(id);
 		changed++;
 	}
-	if ((id = getgid()) != getegid()) {
-		TELL fmt, "gid", getegid(), id);
-		(void)setgid(id);
+	if ((gid = getgid()) != getegid()) {
+		TELL fmt, "gid", getegid(), gid);
+		(void)setgid(gid);
 		changed++;
 	}
 	if (changed)

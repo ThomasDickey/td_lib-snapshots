@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/curses/RCS/cmdch.c,v 4.0 1988/08/11 07:13:14 ste_cm Rel $";
+static	char	Id[] = "$Id: cmdch.c,v 5.0 1989/10/04 11:32:28 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,9 +7,16 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/curses/R
  * Author:	T.E.Dickey
  * Created:	01 Dec 1987 (broke out of 'ded.c')
  * $Log: cmdch.c,v $
- * Revision 4.0  1988/08/11 07:13:14  ste_cm
- * BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+ * Revision 5.0  1989/10/04 11:32:28  ste_cm
+ * BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
  *
+ *		Revision 4.1  89/10/04  11:32:28  dickey
+ *		apollo SR10.1 curses (like sun) has KD, KU, KR and KL data.
+ *		don't ask for it twice!
+ *		
+ *		Revision 4.0  88/08/11  07:13:14  ste_cm
+ *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+ *		
  *		Revision 3.0  88/08/11  07:13:14  ste_cm
  *		BASELINE Mon Jun 19 13:27:01 EDT 1989
  *		
@@ -30,17 +37,25 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/curses/R
  *		(see "cmdch.h").
  */
 
+#define		STR_PTYPES
 #define		CUR_PTYPES
 #include	"ptypes.h"
 #include	<ctype.h>
 #include	"cmdch.h"
-extern	char	*getenv(),
-		*tgetstr();
+extern	char	*getenv();
 
 #define	ESC(c)	((c) == '\033')
 #define	END(s)	s[strlen(s)-1]
 #define	if_C(c)	if (i_blk[j] == c)
 #define	EQL(s)	(!strcmp(i_blk,((s)?(s):"")))
+
+/* pre-SR10 apollo systems do not have cursor-codes in curses */
+#define	HAS_CURSOR
+#ifdef	apollo
+#ifndef	__STDC__
+#undef	HAS_CURSOR
+#endif
+#endif
 
 int
 cmdch(cnt_)
@@ -53,18 +68,25 @@ char	i_blk[1024];
 static
 int	init	= FALSE,
 	ansi	= FALSE;
+#ifndef	HAS_CURSOR
 static
 char	*KU, *KD, *KR, *KL;
+#endif
 
 	if (!init) {
-	static	char	o_blk[1024], *a_ = o_blk;
 		init = TRUE;
-		if (tgetent(i_blk,getenv("TERM")) <= 0)
-			failed("cmdch/tgetent");
-		KD = tgetstr("kd", &a_);
-		KU = tgetstr("ku", &a_);
-		KR = tgetstr("kr", &a_);
-		KL = tgetstr("kl", &a_);
+#ifndef	HAS_CURSOR
+		{
+		extern	char	*tgetstr();
+		static	char	o_blk[1024], *a_ = o_blk;
+			if (tgetent(i_blk,getenv("TERM")) <= 0)
+				failed("cmdch/tgetent");
+			KD = tgetstr("kd", &a_);
+			KU = tgetstr("ku", &a_);
+			KR = tgetstr("kr", &a_);
+			KL = tgetstr("kl", &a_);
+		}
+#endif
 		if (KD && KU && KR && KL) {
 			if (ESC(*KD) && ESC(*KU) && ESC(*KR) && ESC(*KL))
 				ansi	=  END(KU) == 'A'

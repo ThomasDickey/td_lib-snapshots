@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RCS/mem2file.c,v 4.0 1989/05/12 09:39:20 ste_cm Rel $";
+static	char	Id[] = "$Id: mem2file.c,v 8.0 1989/10/04 13:10:27 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -14,6 +14,7 @@ static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RC
  *		is found.
  */
 
+#define	STR_PTYPES
 #include	"ptypes.h"
 
 mem2file(blob, name, mode)
@@ -38,7 +39,7 @@ char	*blob,*name,*mode;
 
 	if (fp = fopen(name, mode)) {
 
-		len = fwrite(blob, sizeof(char), strlen(blob), fp);
+		len = fwrite(blob, sizeof(char), (int)strlen(blob), fp);
 		(void)fclose(fp);
 
 		if ((save >= 0)

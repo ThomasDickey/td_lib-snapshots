@@ -1,5 +1,5 @@
 #ifndef lint
-static  char    sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RCS/name2s.c,v 4.0 1989/07/25 09:08:47 ste_cm Rel $";
+static  char    Id[] = "$Id: name2s.c,v 5.0 1989/10/04 11:57:47 ste_cm Rel $";
 #endif  lint
 
 /*
@@ -7,9 +7,15 @@ static  char    sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/path
  * Author:	T.E.Dickey
  * Created:	18 Aug 1988 (from ded2s.c)
  * $Log: name2s.c,v $
- * Revision 4.0  1989/07/25 09:08:47  ste_cm
- * BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+ * Revision 5.0  1989/10/04 11:57:47  ste_cm
+ * BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
  *
+ *		Revision 4.1  89/10/04  11:57:47  dickey
+ *		lint (apollo SR10.1)
+ *		
+ *		Revision 4.0  89/07/25  09:08:47  ste_cm
+ *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+ *		
  *		Revision 3.1  89/07/25  09:08:47  dickey
  *		recompiled with apollo SR10 -- mods for function prototypes
  *		
@@ -50,9 +56,9 @@ static  char    sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/path
  *		This does not escape filenames containing a newline.
  */
 
+#define	STR_PTYPES
 #include	"ptypes.h"
 #include	<ctype.h>
-extern	char	*strchr();
 
 #define	isshell(c)	(strchr("*%?$()[]{}|<>^&;#\\\"`'", c) != 0)
 #define	isAEGIS(c)	(strchr("*%?()[]{}\\", c) != 0)

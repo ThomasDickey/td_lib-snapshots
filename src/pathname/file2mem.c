@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RCS/file2mem.c,v 4.0 1989/06/09 13:41:04 ste_cm Rel $";
+static	char	Id[] = "$Id: file2mem.c,v 8.0 1989/10/04 12:05:28 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -16,6 +16,7 @@ static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RC
  *		error occurred).
  */
 
+#define	STR_PTYPES
 #include "ptypes.h"
 #include <errno.h>
 extern	FILE	*tmpfile();

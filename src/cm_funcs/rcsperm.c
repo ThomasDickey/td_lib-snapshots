@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs/RCS/rcsperm.c,v 4.0 1989/07/25 09:24:30 ste_cm Rel $";
+static	char	Id[] = "$Id: rcsperm.c,v 8.0 1989/10/04 11:59:46 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,14 +7,30 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs
  * Author:	T.E.Dickey
  * Created:	08 Mar 1989
  * $Log: rcsperm.c,v $
- * Revision 4.0  1989/07/25 09:24:30  ste_cm
- * BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+ * Revision 8.0  1989/10/04 11:59:46  ste_cm
+ * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
  *
+ *		Revision 7.0  89/10/04  11:59:46  ste_cm
+ *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+ *		
+ *		Revision 6.0  89/10/04  11:59:46  ste_cm
+ *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+ *		
+ *		Revision 5.0  89/10/04  11:59:46  ste_cm
+ *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+ *		
+ *		Revision 4.1  89/10/04  11:59:46  dickey
+ *		lint (apollo SR10.1)
+ *		
+ *		Revision 4.0  89/07/25  09:24:30  ste_cm
+ *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+ *		
  *		Revision 3.2  89/07/25  09:24:30  dickey
  *		recompiled with apollo SR10 -- mods for function prototypes
  *		
  *		Revision 3.1  89/07/05  09:48:44  dickey
- *		if the access-list is empty, we must own the file to operate upon it.
+ *		if the access-list is empty, we must own the file to operate
+ *		upon it.
  *		
  *		Revision 3.0  89/04/04  11:01:24  ste_cm
  *		BASELINE Mon Jun 19 13:27:01 EDT 1989
@@ -82,7 +98,7 @@ char	*path,*base;
 	 * (or if the access list is blank)
 	 * set the corresponding copy of $RCS_BASE and return true.
 	 */
-	(void)strcpy (user, uid2s(getuid()));
+	(void)strcpy (user, uid2s((int)getuid()));
 
 	if (!rcsopen(path, FALSE))
 		return (FALSE);		/* could not open file anyway */
