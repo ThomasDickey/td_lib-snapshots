@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 12.43 2000/01/24 11:33:50 tom Exp $ */
+/* $Id: ptypes.h,v 12.44 2000/11/02 00:31:27 tom Exp $ */
 
 #ifndef	PTYPES_H
 #define	PTYPES_H
@@ -94,7 +94,7 @@ typedef	short	ino_t;
 #define isSlash(c)   not_implemented
 #endif
 
-#ifdef	MSDOS
+#if defined(MSDOS) || defined(__EMX__)
 #define PATHLIST_SEP ';'
 #define PATH_DELIMS  "\\/"
 #define PATH_SLASH   '\\'

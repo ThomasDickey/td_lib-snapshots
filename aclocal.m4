@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Id: aclocal.m4,v 12.126 2000/10/19 01:13:22 tom Exp $
+dnl $Id: aclocal.m4,v 12.127 2000/11/02 01:30:43 tom Exp $
 dnl vi:set ts=4:
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "CF_" to "AC_"
@@ -936,6 +936,7 @@ dnl $1 = variable to set
 AC_DEFUN([CF_LIB_PREFIX],
 [
 	case $cf_cv_system_name in
+	OS/2*)	LIB_PREFIX=''     ;;
 	os2)	LIB_PREFIX=''     ;;
 	*)	LIB_PREFIX='lib'  ;;
 	esac
@@ -1278,62 +1279,6 @@ changequote([,])dnl
 AC_MSG_RESULT($cf_cv_ncurses_version)
 ])
 dnl ---------------------------------------------------------------------------
-dnl Check for the version of ncurses, to aid in reporting bugs, etc.
-AC_DEFUN([CF_NCURSES_VERSION],
-[AC_MSG_CHECKING(for ncurses version)
-AC_CACHE_VAL(cf_cv_ncurses_version,[
-	cf_cv_ncurses_version=no
-	cf_tempfile=out$$
-	AC_TRY_RUN([
-#include <${cf_cv_ncurses_header-curses.h}>
-int main()
-{
-	FILE *fp = fopen("$cf_tempfile", "w");
-#ifdef NCURSES_VERSION
-# ifdef NCURSES_VERSION_PATCH
-	fprintf(fp, "%s.%d\n", NCURSES_VERSION, NCURSES_VERSION_PATCH);
-# else
-	fprintf(fp, "%s\n", NCURSES_VERSION);
-# endif
-#else
-# ifdef __NCURSES_H
-	fprintf(fp, "old\n");
-# else
-	make an error
-# endif
-#endif
-	exit(0);
-}],[
-	cf_cv_ncurses_version=`cat $cf_tempfile`
-	rm -f $cf_tempfile],,[
-
-	# This will not work if the preprocessor splits the line after the
-	# Autoconf token.  The 'unproto' program does that.
-	cat > conftest.$ac_ext <<EOF
-#include <${cf_cv_ncurses_header-curses.h}>
-#undef Autoconf
-#ifdef NCURSES_VERSION
-Autoconf NCURSES_VERSION
-#else
-#ifdef __NCURSES_H
-Autoconf "old"
-#endif
-;
-#endif
-EOF
-	cf_try="$ac_cpp conftest.$ac_ext 2>&AC_FD_CC | grep '^Autoconf ' >conftest.out"
-	AC_TRY_EVAL(cf_try)
-	if test -f conftest.out ; then
-changequote(,)dnl
-		cf_out=`cat conftest.out | sed -e 's@^Autoconf @@' -e 's@^[^"]*"@@' -e 's@".*@@'`
-changequote([,])dnl
-		test -n "$cf_out" && cf_cv_ncurses_version="$cf_out"
-		rm -f conftest.out
-	fi
-])])
-AC_MSG_RESULT($cf_cv_ncurses_version)
-])
-dnl ---------------------------------------------------------------------------
 dnl Within AC_OUTPUT, check if the given file differs from the target, and
 dnl update it if so.  Otherwise, remove the generated file.
 dnl
@@ -1353,17 +1298,30 @@ else
 fi
 ])dnl
 dnl ---------------------------------------------------------------------------
+dnl Provide a value for the $PATH and similar separator
+AC_DEFUN([CF_PATHSEP],
+[
+	case $cf_cv_system_name in
+	os2)	PATHSEP=';'  ;;
+	*)	PATHSEP=':'  ;;
+	esac
+ifelse($1,,,[$1=$PATHSEP])
+	AC_SUBST(PATHSEP)
+])dnl
+dnl ---------------------------------------------------------------------------
 dnl Tests for one or more programs given by name along the user's path, and
 dnl sets a variable to the program's full-path if found.
 AC_DEFUN([CF_PROGRAM_FULLPATH],
 [
+AC_REQUIRE([CF_PATHSEP])
+AC_REQUIRE([CF_PROG_EXT])
 AC_MSG_CHECKING(full path of $1)
 AC_CACHE_VAL(cf_cv_$1,[
 	cf_cv_$1="[$]$1"
 	if test -z "[$]cf_cv_$1"; then
 		set -- $2;
 		while test [$]# != 0; do
-			cf_word=[$]1
+			cf_word=[$]1${PROG_EXT}
 			case [$]1 in
 			-*)
 				;;
@@ -1371,7 +1329,7 @@ AC_CACHE_VAL(cf_cv_$1,[
 				if test -f "$cf_word" && test ! -f "./$cf_word" && test -x "$cf_word"; then
 					cf_cv_$1="$cf_word"
 				else
-					IFS="${IFS= 	}"; cf_save_ifs="$IFS"; IFS="${IFS}:"
+					IFS="${IFS= 	}"; cf_save_ifs="$IFS"; IFS="${IFS}${PATHSEP}"
 					for cf_dir in $PATH; do
 						test -z "$cf_dir" && cf_dir=.
 						if test "$cf_dir" != "." && test -f $cf_dir/$cf_word && test -x $cf_dir/$cf_word; then
@@ -1414,6 +1372,7 @@ dnl	variable to the program's directory-prefix if found.  Don't match if
 dnl	the directory is ".", since we need an absolute path-reference.
 AC_DEFUN([CF_PROGRAM_PREFIX],
 [
+AC_REQUIRE([CF_PATHSEP])
 # Extract the first word of `$2', so it can be a program name with args.
 set cf_dummy $2; cf_word=[$]2
 AC_MSG_CHECKING(for $cf_word prefix ($1))
@@ -1421,7 +1380,7 @@ AC_CACHE_VAL([cf_cv_$1],[
 	# allow import from environment-variable
 	cf_cv_$1="[$]$1"
 	if test -z "[$]cf_cv_$1"; then
-		IFS="${IFS= 	}"; cf_save_ifs="$IFS"; IFS="${IFS}:"
+		IFS="${IFS= 	}"; cf_save_ifs="$IFS"; IFS="${IFS}${PATHSEP}"
 		for cf_dir in $PATH; do
 			test -z "$cf_dir" && cf_dir=.
 			if test "$cf_dir" != "." && test -f $cf_dir/$cf_word && test -x $cf_dir/$cf_word; then

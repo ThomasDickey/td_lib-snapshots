@@ -1,3 +1,11 @@
+2000-11-01  dickey@clark.net
+
+	* aclocal.m4: various changes to port to OS/2 EMX
+
+	* src/pathname/abspath.c: OS/2 EMX has DOS-style drive prefix
+
+	* include/ptypes.h: OS/2 EMX has DOS-style path-separator
+
 2000-10-25  dickey@clark.net
 
 	* config.guess, config.sub: resync
