@@ -1,3 +1,8 @@
+2002-04-30  dickey@invisible-island.net
+
+	* src/cm_funcs/sccslast.c:
+	jedmics/config/make_dll.w95 used ":0" for "2000", so I tweaked to workaround
+
 2002-04-26  dickey@invisible-island.net
 
 	* aclocal.m4:
