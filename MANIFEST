@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19881028
+MANIFEST for td_lib, version t19881121
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 include                         subdirectory
@@ -74,6 +74,7 @@ src/process/catchall.c          catch all signals
 src/process/execute.c           portable 'system()' call
 src/process/for_user.c          carry out function for set-uid user
 src/process/gethome.c           get $HOME path
+src/process/getopt.c            'getopt()', for systems that don't have it
 src/process/getuser.c           get user name
 src/process/usercopy.c          copy file for set-uid user
 src/process/userprot.c          set file protection for set-uid user
