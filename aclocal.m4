@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Id: aclocal.m4,v 12.132 2001/04/15 17:31:48 tom Exp $
+dnl $Id: aclocal.m4,v 12.133 2001/07/15 15:56:01 tom Exp $
 dnl vi:set ts=4:
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "CF_" to "AC_"
@@ -332,6 +332,44 @@ if test $cf_cv_chtype_decl = yes ; then
 fi
 ])dnl
 dnl ---------------------------------------------------------------------------
+dnl Look for the curses headers.
+AC_DEFUN([CF_CURSES_CPPFLAGS],[
+
+AC_CACHE_CHECK(for extra include directories,cf_cv_curses_incdir,[
+cf_cv_curses_incdir=no
+case $host_os in #(vi
+hpux10.*|hpux11.*) #(vi
+	test -d /usr/include/curses_colr && \
+	cf_cv_curses_incdir="-I/usr/include/curses_colr"
+	;;
+sunos3*|sunos4*)
+	test -d /usr/5lib && \
+	test -d /usr/5include && \
+	cf_cv_curses_incdir="-I/usr/5include"
+	;;
+esac
+])
+test "$cf_cv_curses_incdir" != no && CPPFLAGS="$CPPFLAGS $cf_cv_curses_incdir"
+
+AC_CACHE_CHECK(if we have identified curses headers,cf_cv_ncurses_header,[
+cf_cv_ncurses_header=curses.h
+for cf_header in \
+	curses.h \
+	ncurses.h \
+	ncurses/curses.h \
+	ncurses/ncurses.h
+do
+AC_TRY_COMPILE([#include <${cf_header}>],
+	[initscr(); tgoto("?", 0,0)],
+	[cf_cv_ncurses_header=$cf_header; break],[])
+done
+])
+
+# cheat, to get the right #define's for HAVE_NCURSES_H, etc.
+AC_CHECK_HEADERS($cf_cv_ncurses_header)
+
+])
+dnl ---------------------------------------------------------------------------
 dnl Test for curses data/types
 AC_DEFUN([CF_CURSES_DATA],
 [
@@ -385,7 +423,7 @@ done
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Look for the curses libraries.  Older curses implementations may require
-dnl termcap/termlib to be linked as well.
+dnl termcap/termlib to be linked as well.  Call CF_CURSES_CPPFLAGS first.
 AC_DEFUN([CF_CURSES_LIBS],[
 
 AC_MSG_CHECKING(if we have identified curses libraries)
@@ -403,7 +441,6 @@ freebsd*) #(vi
 hpux10.*|hpux11.*) #(vi
 	AC_CHECK_LIB(cur_colr,initscr,[
 		LIBS="-lcur_colr $LIBS"
-		CPPFLAGS="-I/usr/include/curses_colr $CPPFLAGS"
 		ac_cv_func_initscr=yes
 		],[
 	AC_CHECK_LIB(Hcurses,initscr,[
@@ -416,15 +453,12 @@ hpux10.*|hpux11.*) #(vi
 linux*) # Suse Linux does not follow /usr/lib convention
 	LIBS="$LIBS -L/lib"
 	;;
+sunos3*|sunos4*)
+	test -d /usr/5lib && \
+	LIBS="$LIBS -L/usr/5lib -lcurses -ltermcap"
+	ac_cv_func_initscr=yes
+	;;
 esac
-
-if test ".$With5lib" != ".no" ; then
-if test -d /usr/5lib ; then
-	# SunOS 3.x or 4.x
-	CPPFLAGS="$CPPFLAGS -I/usr/5include"
-	LIBS="$LIBS -L/usr/5lib"
-fi
-fi
 
 if test ".$ac_cv_func_initscr" != .yes ; then
 	cf_save_LIBS="$LIBS"
@@ -533,9 +567,7 @@ AC_DEFINE_UNQUOTED(CURSES_LIKE_${cf_tr_type})
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl "dirname" is not portable, so we fake it with a shell script.
-AC_DEFUN([CF_DIRNAME],[
-$1=`echo $2 | sed -e 's:/[[^/]]*$::'`
-])dnl
+AC_DEFUN([CF_DIRNAME],[$1=`echo $2 | sed -e 's:/[[^/]]*$::'`])dnl
 dnl ---------------------------------------------------------------------------
 dnl You can always use "make -n" to see the actual options, but it's hard to
 dnl pick out/analyze warning messages when the compile-line is long.
@@ -1016,6 +1048,7 @@ cf_dir=subd$$
 cf_cv_ar_rules=unknown
 mkdir $cf_dir
 cat >$cf_dir/makefile <<CF_EOF
+SHELL = /bin/sh
 AR = ar crv
 CC = $CC
 
@@ -1030,6 +1063,7 @@ all:  conf.a
 conf.a : conf.a(conftest.o)
 CF_EOF
 touch $cf_dir/conftest.c
+CDPATH=; export CDPATH
 if ( cd $cf_dir && ${MAKE-make} 2>&AC_FD_CC >&AC_FD_CC && test -f conf.a )
 then
 	cf_cv_ar_rules=yes
@@ -1037,6 +1071,7 @@ else
 echo ... did not find archive >&AC_FD_CC
 rm -f $cf_dir/conftest.o
 cat >$cf_dir/makefile <<CF_EOF
+SHELL = /bin/sh
 AR = ar crv
 CC = $CC
 
@@ -1051,6 +1086,7 @@ all:  conf.a
 conf.a : conftest.o
 	\$(AR) \$[]@ \$?
 CF_EOF
+CDPATH=; export CDPATH
 if ( cd $cf_dir && ${MAKE-make} 2>&AC_FD_CC >&AC_FD_CC && test -f conf.a )
 then
 	cf_cv_ar_rules=no
@@ -1089,6 +1125,7 @@ all :
 	@echo 'cf_make_include=\$(RESULT)'
 CF_EOF
 	cf_make_include=""
+	CDPATH=; export CDPATH
 	eval `(cd $cf_dir && ${MAKE-make}) 2>&AC_FD_CC | grep cf_make_include=OK`
 	if test -n "$cf_make_include"; then
 		make_include_left="$cf_include"
@@ -1144,12 +1181,14 @@ dnl ---------------------------------------------------------------------------
 dnl Look for the SVr4 curses clone 'ncurses' in the standard places, adjusting
 dnl the CPPFLAGS variable so we can include its header.
 dnl
-dnl The header files may be installed as either curses.h, or ncurses.h
-dnl (obsolete).  If not installed for overwrite, the curses.h file would be
-dnl in an ncurses subdirectory (e.g., /usr/include/ncurses), but someone may
-dnl have installed overwriting the vendor's curses.  Only very old versions
-dnl (pre-1.9.2d, the first autoconf'd version) of ncurses don't define
-dnl either __NCURSES_H or NCURSES_VERSION in the header.
+dnl The header files may be installed as either curses.h, or ncurses.h (would
+dnl be obsolete, except that some packagers prefer this name to distinguish it
+dnl from a "native" curses implementation).  If not installed for overwrite,
+dnl the curses.h file would be in an ncurses subdirectory (e.g.,
+dnl /usr/include/ncurses), but someone may have installed overwriting the
+dnl vendor's curses.  Only very old versions (pre-1.9.2d, the first autoconf'd
+dnl version) of ncurses don't define either __NCURSES_H or NCURSES_VERSION in
+dnl the header.
 dnl
 dnl If the installer has set $CFLAGS or $CPPFLAGS so that the ncurses header
 dnl is already in the include-path, don't even bother with this, since we cannot
@@ -1159,10 +1198,10 @@ AC_DEFUN([CF_NCURSES_CPPFLAGS],
 [
 AC_CACHE_CHECK(for ncurses header in include-path, cf_cv_ncurses_h,[
 	for cf_header in \
+		curses.h \
 		ncurses.h \
-		ncurses/ncurses.h \
 		ncurses/curses.h \
-		curses.h
+		ncurses/ncurses.h
 	do
 	AC_TRY_COMPILE([#include <$cf_header>],[
 #ifdef NCURSES_VERSION
@@ -1286,13 +1325,17 @@ fi
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Check for the version of ncurses, to aid in reporting bugs, etc.
+dnl Call CF_CURSES_CPPFLAGS first, or CF_NCURSES_CPPFLAGS.  We don't use
+dnl AC_REQUIRE since that does not work with the shell's if/then/else/fi.
 AC_DEFUN([CF_NCURSES_VERSION],
-[AC_MSG_CHECKING(for ncurses version)
-AC_CACHE_VAL(cf_cv_ncurses_version,[
+[
+AC_CACHE_CHECK(for ncurses version, cf_cv_ncurses_version,[
 	cf_cv_ncurses_version=no
 	cf_tempfile=out$$
+	rm -f $cf_tempfile
 	AC_TRY_RUN([
 #include <${cf_cv_ncurses_header-curses.h}>
+#include <stdio.h>
 int main()
 {
 	FILE *fp = fopen("$cf_tempfile", "w");
@@ -1311,8 +1354,7 @@ int main()
 #endif
 	exit(0);
 }],[
-	cf_cv_ncurses_version=`cat $cf_tempfile`
-	rm -f $cf_tempfile],,[
+	cf_cv_ncurses_version=`cat $cf_tempfile`],,[
 
 	# This will not work if the preprocessor splits the line after the
 	# Autoconf token.  The 'unproto' program does that.
@@ -1335,8 +1377,10 @@ EOF
 		test -n "$cf_out" && cf_cv_ncurses_version="$cf_out"
 		rm -f conftest.out
 	fi
-])])
-AC_MSG_RESULT($cf_cv_ncurses_version)
+])
+	rm -f $cf_tempfile
+])
+test "$cf_cv_ncurses_version" = no || AC_DEFINE(NCURSES)
 ])
 dnl ---------------------------------------------------------------------------
 dnl Within AC_OUTPUT, check if the given file differs from the target, and
@@ -1479,6 +1523,7 @@ cygwin*)
     ;;
 esac
 AC_SUBST(PROG_EXT)
+test -n "$PROG_EXT" && AC_DEFINE_UNQUOTED(PROG_EXT,"$PROG_EXT")
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Tests for the ensemble of programs that are used in RCS, SCCS, VCS, CVS.
@@ -2020,7 +2065,9 @@ AC_MSG_RESULT($cf_cv_test_modules)
 dnl ---------------------------------------------------------------------------
 dnl Make an absolute symbol for the top of the configuration.
 AC_DEFUN([CF_TOP_SRCDIR],
-[TOP_SRCDIR=`cd $srcdir;pwd`
+[
+CDPATH=; export CDPATH
+TOP_SRCDIR=`cd $srcdir;pwd`
 AC_SUBST(TOP_SRCDIR)
 ])dnl
 dnl ---------------------------------------------------------------------------

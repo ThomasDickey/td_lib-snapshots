@@ -1,3 +1,14 @@
+2001-07-15  dickey@clark.net
+
+	* src/curses/dumpwin.c:
+	fix for unknown curses style (struct ldat not defined in ncurses)
+
+	* aclocal.m4: add CF_CURSES_CPPFLAGS
+	cancel CDPATH when needed
+
+	* configure.in: split-out CF_CURSES_CPPFLAGS
+	use AC_FUNC_VFORK rather than AC_VFORK
+
 2001-07-11  dickey@clark.net
 
 	* src/cm_funcs/packdate.c:
