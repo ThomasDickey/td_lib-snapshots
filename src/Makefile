@@ -1,10 +1,13 @@
-# $Id: Makefile,v 4.0 1989/08/23 13:49:43 ste_cm Rel $
+# $Id: Makefile,v 4.1 1989/08/24 16:50:43 dickey Exp $
 # MAKE-file for miscellaneous library routines
 #
 # $Log: Makefile,v $
-# Revision 4.0  1989/08/23 13:49:43  ste_cm
-# BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+# Revision 4.1  1989/08/24 16:50:43  dickey
+# added 'wrepaint.c'
 #
+#	Revision 4.0  89/08/23  13:49:43  ste_cm
+#	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+#	
 #	Revision 3.3  89/08/23  13:49:43  dickey
 #	added 'view_file.c'
 #	
@@ -116,7 +119,8 @@ CSRC	=\
 	view_file.c\
 	walktree.c\
 	which.c\
-	win2file.c
+	win2file.c\
+	wrepaint.c
 #
 SOURCES	= Makefile descrip.mms $(CSRC)
 #
@@ -206,7 +210,8 @@ OBJS	=\
 	view_file.o\
 	walktree.o\
 	which.o\
-	win2file.o
+	win2file.o\
+	wrepaint.o
 #
 ALL	= $A
 #

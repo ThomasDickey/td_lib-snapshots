@@ -1,4 +1,4 @@
-# $Header: /users/source/archives/td_lib.vcs/src/RCS/descrip.mms,v 4.0 1989/08/08 14:00:31 ste_cm Rel $
+# $Header: /users/source/archives/td_lib.vcs/src/RCS/descrip.mms,v 4.1 1989/08/24 16:52:26 dickey Exp $
 # MMS-file for miscellaneous library routines	
 #
 ####### (Development) ##########################################################
@@ -98,8 +98,10 @@ UNUSED_MODULES = -
 	USERCOPY 		# uses FOR_USER -
 	USERPROT 		# uses FOR_USER -
 	VCS_FILE,		# rcs (unix-only) -
+	VIEW_FILE,		# curses/unix
 	WHICH,			# unix-style PATH-variable -
-	WIN2FILE		# curses
+	WIN2FILE,		# curses
+	WREPAINT		# curses
 #
 C_SRC	=-
 	ABSPATH.C -
@@ -184,9 +186,11 @@ C_SRC	=-
 	VCS_FILE.C -
 	VECALLOC.C -
 	VERCMP.C -
+	VIEW_FILE.C -
 	WALKTREE.C -
 	WHICH.C -
-	WIN2FILE.C
+	WIN2FILE.C -
+	WREPAINT.C
 #
 PTYPES_H = $(I)PTYPES.H $(I)COMMON.H
 #

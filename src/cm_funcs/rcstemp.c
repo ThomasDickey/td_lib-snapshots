@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs/RCS/rcstemp.c,v 4.0 1989/04/07 16:26:34 ste_cm Rel $";
+static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs/RCS/rcstemp.c,v 4.1 1989/08/24 16:06:36 dickey Exp $";
 #endif	lint
 
 /*
@@ -7,9 +7,14 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs
  * Author:	T.E.Dickey
  * Created:	25 Aug 1988
  * $Log: rcstemp.c,v $
- * Revision 4.0  1989/04/07 16:26:34  ste_cm
- * BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+ * Revision 4.1  1989/08/24 16:06:36  dickey
+ * recoded to ensure that if the directory's group-id is not
+ * consistent with the process's group-id, then we must relax
+ * the directory protection.
  *
+ *		Revision 4.0  89/04/07  16:26:34  ste_cm
+ *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+ *		
  *		Revision 3.0  89/04/07  16:26:34  ste_cm
  *		BASELINE Mon Jun 19 13:27:01 EDT 1989
  *		
@@ -48,6 +53,8 @@ extern	char	*uid2s();
 extern	char	*pathcat();
 extern	char	*pathleaf();
 
+#define	DEBUG	if (rcs_debug()) printf
+
 char *
 rcstemp(working, copy)
 char	*working;
@@ -56,34 +63,48 @@ char	*working;
 
 	if (getuid() != geteuid()) {
 		char	*tf = pathcat(tmp, "/tmp", uid2s(getuid()));
-		int	mode = getgid() == getegid() ? 0775 : 0777;
+		int	mode = ((getgid() == getegid()) ? 0775 : 0777);
 		struct	stat	sb;
 
+		DEBUG("mode:%o gid:%d/%d\n", mode, getgid(),getegid());
 		if (stat(tf, &sb) < 0) {
-			if (rcs_debug())
-				printf(".. mkdir %s (mode=%o)\n", tf, mode);
-			if (mkdir(tf, mode) < 0)
+			DEBUG(".. mkdir %s (mode=%o)\n", tf, mode);
+			if (mkdir(tf, mode) < 0) {
 				failed(tf);
+				/*NOTREACHED*/
+			}
 #ifdef	apollo
-			if (chmod(tf, mode) < 0) /* mkdir ignores mode */
+			if (chmod(tf, mode) < 0) { /* mkdir ignores mode */
 				failed(tf);
+				/*NOTREACHED*/
+			}
 #endif	apollo
-		} else if ((sb.st_mode & S_IFMT) != S_IFDIR) {
-			errno = ENOTDIR;
-			failed(tf);
-		} else if ((sb.st_mode &= 0777)   != mode) {
-			if (rcs_debug())
-				printf(".. chmod %o %s (was %o)\n",
-					mode, tf, sb.st_mode);
-			if (chmod(tf, mode) < 0) {
-				if (sb.st_mode != 0777)
-					failed(tf);
+		} else {
+			if ((sb.st_mode & S_IFMT) != S_IFDIR) {
+				errno = ENOTDIR;
+				failed(tf);
+				/*NOTREACHED*/
+			}
+			DEBUG("group:%d\n", sb.st_gid);
+			if (getgid() != sb.st_gid)
+				mode = 0777;
+			if ((sb.st_mode &= 0777)   != mode) {
+				DEBUG(".. chmod %o %s (was %o)\n",
+						mode, tf, sb.st_mode);
+				if (chmod(tf, mode) < 0) {
+					if (sb.st_mode != 0777) {
+						failed(tf);
+						/*NOTREACHED*/
+					}
+				}
 			}
 		}
 
 		tf = pathcat(tmp, tf, pathleaf(working));
-		if (filecopy(working, tf, copy) < 0)
+		if (filecopy(working, tf, copy) < 0) {
 			failed(tf);
+			/*NOTREACHED*/
+		}
 		working = tf;
 	}
 	return (working);

@@ -1,3 +1,14 @@
+1989-08-24  dickey@software.org
+
+	* src/descrip.mms: added VIEW_FILE, WREPAINT
+
+	* src/Makefile: added 'wrepaint.c'
+
+	* src/cm_funcs/rcstemp.c:
+	recoded to ensure that if the directory's group-id is not
+	consistent with the process's group-id, then we must relax
+	the directory protection.
+
 1989-08-23  dickey@software.org
 
 	* src/curses/viewfile.c: RCS_BASE
