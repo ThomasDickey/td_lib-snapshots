@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: relpath.c,v 5.0 1989/09/07 15:03:37 ste_cm Rel $";
+static	char	Id[] = "$Id: relpath.c,v 5.1 1989/11/30 10:44:52 dickey Exp $";
 #endif	lint
 
 /*
@@ -27,6 +27,9 @@ char	*dst, *cwd, *src;
 	src = strcpy(tmp, src);	/* dst may be the same as src; copy it */
 	if (cwd == 0)		/* if cwd not given, get the actual path */
 		cwd = getwd(current);
+	else
+		cwd = strcpy(current, cwd);
+
 	if (cwd != 0) {
 		(void)strcpy(pre, ".");
 		for (;;) {
