@@ -1,3 +1,7 @@
+1999-08-16  dickey@clark.net
+
+	* configure.in: add test for ttyname(), needed for BeOS port
+
 1999-08-10  dickey@clark.net
 
 	* include/td_curse.h: oops - wrong place for the last definitions
