@@ -1,11 +1,13 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)abspath.c	1.3 88/05/03 12:34:40";
+static	char	sccs_id[] = "@(#)abspath.c	1.4 88/05/06 07:12:52";
 #endif	lint
 
 /*
  * Author:	T.E.Dickey
  * Created:	17 Sep 1987
  * Modified:
+ *		05 May 1988, make "/tmp" translate ok on Apollo (must provide
+ *			     missing node-name).  Also, translate csh-like "~".
  *		03 May 1988, added more Apollo-specific prefixes
  *		23 Nov 1987, to work with Apollo path convention (leading '//')
  *
@@ -26,7 +28,10 @@ static	char	sccs_id[] = "@(#)abspath.c	1.3 88/05/03 12:34:40";
 #endif	apollo
 
 #include	<stdio.h>
+#include	<pwd.h>
 extern	char	*getcwd(),
+		*getenv(),
+		*index(),
 		*strcat(),
 		*strcpy();
 
@@ -43,6 +48,64 @@ extern	char	*denode();
 static	char	nodestr[MAXPATHLEN];	/* will hold nodename, if any */
 static	int	nodelen = -1;
 
+#ifdef	apollo
+static
+apollo_name(path)
+char	*path;
+{
+register char	*s, *d = path;
+name_$pname_t	in_name, out_name;
+short		in_len,
+		out_len;
+status_$t	st;
+extern	char	*strncpy();
+
+	in_len = strlen(strcpy(in_name, d));
+	name_$get_path(in_name, in_len, out_name, out_len, st);
+
+	if (st.all == status_$ok) {
+		s = out_name;
+		s[out_len] = '\0';
+		/* Convert AEGIS name to UNIX name */
+		while (*d = *s++) {
+			if (*d == ':') {
+				*d = *s++;
+			} else if (*d == '#') {
+			char	tmp[3];
+			int	hex;
+				(void)strncpy(tmp, s, 2);
+				tmp[2] = '\0';
+				s += strlen(tmp);
+				sscanf(tmp, "%x", &hex);
+				*d = hex;
+			} else {
+				if (isalpha(*d))
+					*d = _tolower(*d);
+			}
+			d++;
+		}
+	}
+}
+#endif	apollo
+
+/*
+ * Concatenate two pathnames to make a longer one.
+ */
+static
+precat(prefix, string)
+char	*prefix, *string;
+{
+register char *s;
+	s = prefix + strlen(prefix);
+	if (*string)
+		(void)strcat(strcat(s, "/"), string);
+	(void)strcpy(string, prefix);
+	*s = '\0';
+}
+
+/************************************************************************
+ *	main procedure							*
+ ************************************************************************/
 abspath(path)
 char	*path;
 {
@@ -54,51 +117,41 @@ register char *s, *d = path;
 	}
 
 	/*
+	 * Check for references to someone's home directory in csh-style.
+	 */
+	if (*d == '~') {	/* my home directory */
+		s = d+1;
+		if ((*s == '\0') || (*s++ == '/')) {
+			while (*d++ = *s++);
+			precat(getenv("HOME"), d = path);
+		} else {	/* someone else's home */
+		register struct passwd *p;
+		char	user[MAXPATHLEN];
+			if (s = index(strcpy(user, d+1), '/'))
+				*s++ = '\0';
+			else
+				s = d + strlen(d);
+			if (p = getpwnam(user)) {
+				while (*d++ = *s++);
+				precat(p->pw_dir, d = path);
+			}
+			/* else no such home directory! */
+		}
+	}
+
+	/*
 	 * Convert special Apollo names.  This is necessary because the
 	 * 'readlink()' call does not return a fully-resolved pathname,
 	 * but may begin with "`".
 	 */
 #ifdef	apollo
 	if ((*d == '`')
-	||  (*d == '\\')
-	||  (*d == '~')) {
-	name_$pname_t	in_name, out_name;
-	short		in_len,
-			out_len;
-	status_$t	st;
-	extern	char	*strncpy();
-
-		in_len = strlen(strcpy(in_name, d));
-		name_$get_path(in_name, in_len, out_name, out_len, st);
-
-		if (st.all == status_$ok) {
-			s = out_name;
-			s[out_len] = '\0';
-			/* Convert AEGIS name to UNIX name */
-			while (*d = *s++) {
-				if (*d == ':') {
-					*d = *s++;
-				} else if (*d == '#') {
-				char	tmp[3];
-				int	hex;
-					(void)strncpy(tmp, s, 2);
-					tmp[2] = '\0';
-					s += strlen(tmp);
-					sscanf(tmp, "%x", &hex);
-					*d = hex;
-				} else {
-					if (isalpha(*d))
-						*d = _tolower(*d);
-				}
-				d++;
-			}
-			d = path;
-		}
-	}
+	||  (*d == '\\'))
+		apollo_name(d);
 #endif	apollo
 
 	/*
-	 * Strip nodename prefix, if applicable
+	 * Strip altos-style nodename prefix, if applicable
 	 */
 	if (nodelen > 0) {
 		if (strcmp(d, nodestr)) {
@@ -111,9 +164,19 @@ register char *s, *d = path;
 	/*
 	 * Convert this to an absolute path somehow
 	 */
-	if (*path == '/')
+	if (*path == '/') {
+#ifdef	apollo
+	static
+	char	thisnode[MAXPATHLEN];
+		if (path[1] != '/') {
+			if (!thisnode[0])
+				apollo_name(strcpy(thisnode, "/"));
+			precat(thisnode, path);
+		}
+#else	apollo
 		;
-	else if (*path) {
+#endif	apollo
+	} else if (*path) {
 	char	cwdpath[MAXPATHLEN];
 		(void)getcwd(cwdpath,sizeof(cwdpath)-2);
 		s = path;
