@@ -1,5 +1,5 @@
-#ifndef	lint
-static	char	Id[] = "$Id: utimes.c,v 8.0 1992/11/20 08:17:52 ste_cm Rel $";
+#ifndef	NO_IDENT
+static	char	Id[] = "$Id: utimes.c,v 8.1 1993/12/01 19:50:42 tom Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: utimes.c,v 8.0 1992/11/20 08:17:52 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	29 Sep 1988
  * Modified:
+ *		01 Dec 1993, ifdefs.
  *		20 Nov 1992, use prototypes
  *
  * Function:	Sets VMS file creation and revision times to correspond with
@@ -16,6 +17,8 @@ static	char	Id[] = "$Id: utimes.c,v 8.0 1992/11/20 08:17:52 ste_cm Rel $";
  */
 
 #include	"portunix.h"
+
+#ifdef	vms
 #include	<rms.h>
 #include	<iodef.h>
 #include	<errno.h>
@@ -117,4 +120,6 @@ _MAIN
 	exit(SUCCESS);
 	/*NOTREACHED*/
 }
-#endif
+#endif	/* TEST */
+
+#endif	/* vms */

@@ -1,11 +1,13 @@
-#ifndef	lint
-static	char	Id[] = "$Id: vms_dirs.c,v 8.0 1991/10/21 15:08:02 ste_cm Rel $";
+#ifndef	NO_IDENT
+static	char	Id[] = "$Id: vms_dirs.c,v 8.1 1993/12/01 19:49:44 tom Exp $";
 #endif
 
 /*
  * Title:	unixdir.c
  * Author:	T.E.Dickey
  * Created:	28 Sep 1988
+ * Modified:
+ *		01 Dec 1993, ifdefs.
  *
  * Function:	This implements (in a crude way!) the unix-compatible directory
  *		scanning procedures.
@@ -13,6 +15,7 @@ static	char	Id[] = "$Id: vms_dirs.c,v 8.0 1991/10/21 15:08:02 ste_cm Rel $";
 #define		DIR_PTYPES
 #include	"portunix.h"
 
+#ifdef	vms
 #define	zfab	dirp->dd_fab
 #define	znam	dirp->dd_nam
 #define	zrsa	dirp->dd_ret.d_name
@@ -119,4 +122,6 @@ _MAIN
 	exit(SUCCESS);
 	/*NOTREACHED*/
 }
-#endif
+#endif	/* TEST */
+
+#endif	/* vms */

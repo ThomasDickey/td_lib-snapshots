@@ -1,5 +1,5 @@
-#ifndef	lint
-static	char	Id[] = "$Id: editfile.c,v 8.1 1993/09/22 17:37:47 dickey Exp $";
+#ifndef	NO_IDENT
+static	char	Id[] = "$Id: editfile.c,v 8.2 1993/12/01 19:43:14 tom Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: editfile.c,v 8.1 1993/09/22 17:37:47 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	03 Oct 1988
  * Modified:
+ *		01 Dec 1993, ifdefs, TurboC warnings.
  *		22 Sep 1993, gcc warnings
  *		20 Nov 1992, added 3rd arg to _FNX macros.
  *		13 Dec 1991, pass 'sb' arg down to 'func', from initial stat on
@@ -55,7 +56,7 @@ int	editfile(
 #endif	/* vms/unix */
 
 	if ((ifp != 0)
-	&&  (ofp = fopen(NEWVER(newname), "w")) ) {
+	&&  (ofp = fopen(NEWVER(newname), "w")) != 0) {
 		TELL "** edit \"%s\" => \"%s\"\n", oldname, newname);
 		changes += (*func)(ofp, ifp, sb);
 		(void)fclose(ifp);

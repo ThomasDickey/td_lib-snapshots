@@ -1,5 +1,5 @@
-#ifndef	lint
-static	char	Id[] = "$Id: path2vms.c,v 8.0 1992/11/20 11:27:12 ste_cm Rel $";
+#ifndef	NO_IDENT
+static	char	Id[] = "$Id: path2vms.c,v 8.1 1993/12/01 19:39:50 tom Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: path2vms.c,v 8.0 1992/11/20 11:27:12 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	30 Sep 1988
  * Modified:
+ *		01 Dec 1993, ifdefs.
  *		20 Nov 1992, use prototypes.  Added a test-driver
  *		28 Oct 1988, return destination buffer
  *

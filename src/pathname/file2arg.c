@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: file2arg.c,v 12.3 1993/11/27 15:07:28 dickey Exp $";
-#endif
-
 /*
  * Title:	file2argv.c (file to argv-conversion)
  * Author:	T.E.Dickey
@@ -33,6 +29,8 @@ static	char	Id[] = "$Id: file2arg.c,v 12.3 1993/11/27 15:07:28 dickey Exp $";
 
 #include "ptypes.h"
 
+MODULE_ID("$Id: file2arg.c,v 12.5 1993/12/01 19:08:57 tom Exp $")
+
 #define	AVG_LINE	25		/* nominal line-length */
 #define	AMOUNT(n)	(unsigned)(n)
 
@@ -51,7 +49,7 @@ int	file2argv(
 	register char	*s, *d;
 
 	*vec = 0;	/* in case we find an error */
-	if (!(blob = file2mem(name)))
+	if ((blob = file2mem(name)) == 0)
 		return (-1);
 
 	for (s = blob, lines = 0; *s; ++s)
@@ -66,7 +64,7 @@ int	file2argv(
 	 * Reallocate space for the file counting the nulls inserted
 	 * after each newline.
 	 */
-	if (!(blob = doalloc(blob, AMOUNT(length + lines + 1))))
+	if ((blob = doalloc(blob, AMOUNT(length + lines + 1))) == 0)
 		return (-1);
 
 	/*

@@ -1,3 +1,47 @@
+1993-12-01  dickey@software.org
+
+	* src/port2vms/vms_rpth.c: ifdefs/TurboC-warnings
+
+	* src/port2vms/zone2vms.c, src/port2vms/vms_wild.c: ifdefs
+
+	* src/port2vms/vms_pthc.c, src/port2vms/vms2name.c:
+	ifdefs/TurboC-warnings
+
+	* src/port2vms/utimes.c, src/port2vms/vms_dirs.c, src/port2vms/uid2s.c, src/pathname/trnstree.c, src/port2vms/time2vms.c, src/port2vms/rmsio.c:
+	ifdefs
+
+	* src/pathname/editfile.c: ifdefs/TurboC-warnings
+
+	* src/port2vms/path2vms.c, src/port2vms/path2dir.c: ifdefs
+
+	* src/port2vms/name2vms.c: ifdefs/TurboC-warnings
+
+	* src/pathname/edittree.c, src/pathname/dlettree.c, src/port2vms/dir2path.c:
+	ifdefs
+
+1993-12-01  dickey@software.org
+
+	* src/process/gethome.c: compiler-warning (clcc)
+
+1993-12-01  dickey@software.org
+
+	* src/process/gethome.c: use MODULE_ID
+
+1993-12-01  dickey@software.org
+
+	* src/cm_funcs/packdate.c, src/pathname/file2mem.c, src/pathname/file2arg.c:
+	CLCC-warnings
+
+1993-12-01  dickey@software.org
+
+	* src/pathname/file2arg.c: use MODULE_ID
+
+1993-12-01  dickey@software.org
+
+	* include/td_qsort.h: defined ANSI_QSORT
+
+	* include/ptypes.h: some CLCC-warnings
+
 1993-11-30  dickey@software.org
 
 	* src/cm_funcs/packdate.c:

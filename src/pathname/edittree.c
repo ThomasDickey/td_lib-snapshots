@@ -1,5 +1,5 @@
-#ifndef	lint
-static	char	Id[] = "$Id: edittree.c,v 8.1 1993/09/22 17:58:15 dickey Exp $";
+#ifndef	NO_IDENT
+static	char	Id[] = "$Id: edittree.c,v 8.2 1993/12/01 19:38:36 tom Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: edittree.c,v 8.1 1993/09/22 17:58:15 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	06 Oct 1988
  * Modified:
+ *		01 Dec 1993, ifdefs.
  *		22 Sep 1993, gcc warnings
  *		29 Apr 1993, sort _all_ leaves before doing translation.
  *		20 Nov 1992, added 3rd arg to _FNX macros.
