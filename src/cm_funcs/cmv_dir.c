@@ -35,7 +35,7 @@
 #include "ptypes.h"
 #include "cmv_defs.h"
 
-MODULE_ID("$Id: cmv_dir.c,v 12.19 1998/08/21 13:10:27 tom Exp $")
+MODULE_ID("$Id: cmv_dir.c,v 12.20 1998/08/22 12:08:11 tom Exp $")
 
 /******************************************************************************/
 #ifdef	lint
@@ -269,7 +269,7 @@ cmv_date _ONE(char *, src)
 	 && (src = strchr(src, '\001')) != 0) {
 		int owner, group, prot;
 		long modtime;
-		if (sscanf(++src, "O%d:G%d:P%d:M%d:",
+		if (sscanf(++src, "O%d:G%d:P%d:M%ld:",
 			&owner, &group, &prot, &modtime) == 4)
 			result = modtime;
 	}
