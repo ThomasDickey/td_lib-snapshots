@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.41 1994/08/01 23:01:05 tom Exp $
+dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.42 1994/10/05 23:57:38 tom Exp $
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "TD_" to "AC_"
 dnl ---------------------------------------------------------------------------
@@ -277,9 +277,10 @@ dnl Tests for the ensemble of programs that are used in RCS, SCCS, VCS, CVS.
 define([TD_RCS_SCCS],
 [AC_CHECKING(for SCCS/RCS programs)
 TD_PROGRAM_PREFIX(RCS_PATH, rcs)
-TD_PROGRAM_PREFIX(SCCS_PATH, admin)
-TD_PROGRAM_PREFIX(VCS_PATH, vcs)
-TD_PROGRAM_PREFIX(CVS_PATH, cvs)
+TD_PROGRAM_PREFIX(SCCS_PATH, admin)dnl the SCCS tool
+TD_PROGRAM_PREFIX(VCS_PATH, vcs)dnl VCS is my RCS application
+TD_PROGRAM_PREFIX(CVS_PATH, cvs)dnl CVS is a layer above RCS
+TD_PROGRAM_PREFIX(CMV_PATH, cmv)dnl CmVision combines RCS and SCCS archives
 ])dnl
 dnl ---------------------------------------------------------------------------
 define([TD_GMTOFF],
