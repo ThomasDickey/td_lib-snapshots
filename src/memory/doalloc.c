@@ -1,11 +1,13 @@
+#define	DEBUG	10000
 #ifndef	lint
-static	char	Id[] = "$Id: doalloc.c,v 11.0 1992/04/02 16:18:34 ste_cm Rel $";
+static	char	Id[] = "$Id: doalloc.c,v 11.1 1992/11/16 11:23:01 dickey Exp $";
 #endif
 
 /*
  * Author:	T.E.Dickey
  * Created:	09 Jan 1986
  * Modified:
+ *		16 Nov 1992, added 'show_alloc()'; revised debug-code.
  *		02 Apr 1992, don't append to log-file. Write error message there
  *			     too.
  *		03 Oct 1991, converted to ANSI
@@ -27,31 +29,128 @@ static	char	Id[] = "$Id: doalloc.c,v 11.0 1992/04/02 16:18:34 ste_cm Rel $";
 
 #include	"ptypes.h"
 
+static	int	count_alloc,
+		count_freed;
+
+static
+void	walkback(_AR0)
+{
+#ifdef	apollo
+	char	msg[80];
+	FORMAT(msg, "/com/tb %d", getpid());
+	(void)system(msg);
+#endif	/* apollo */
+#ifdef	vms
+	*((char *)0) = 0;
+#endif	/* vms */
+}
+
+static
+void	fail_alloc(
+	_ARX(char *,	msg)
+	_AR1(char *,	ptr)
+		)
+	_DCL(char *,	msg)
+	_DCL(char *,	ptr)
+{
+	PRINTF("%s: %#x\n", msg, ptr);
+	walkback();
+	abort();
+}
+
 #ifdef	DEBUG
-static	char	*allocated[DEBUG];
-static	int	used;
-#endif
+static	char	*Area[DEBUG];
+static	long	Size[DEBUG];
+static	int	now_pending;
+
+static
+int	FindArea(
+	_AR1(char *,	ptr))
+	_DCL(char *,	ptr)
+{
+	register int j;
+	for (j = 0; j < DEBUG; j++)
+		if (Area[j] == ptr) {
+			if ((ptr != 0) && (j >= now_pending))
+				now_pending = j+1;
+			return j;
+		}
+	return -1;
+}
+
+static
+int	record_freed(
+	_AR1(char *,	ptr))
+	_DCL(char *,	ptr)
+{
+	register int j;
+	if ((j = FindArea(ptr)) >= 0) {
+		Size[j] = 0;
+		Area[j] = 0;
+		if (j+1 == now_pending) {
+			register int	k;
+			for (k = j; k >= 0; k--)
+				if (!Size[k])
+					now_pending = k;
+		}
+	}
+	return j;
+}
+
+static
+int	record_alloc(
+	_ARX(char *,	newp)
+	_ARX(char *,	oldp)
+	_AR1(unsigned,	len)
+		)
+	_DCL(char *,	newp)
+	_DCL(char *,	oldp)
+	_DCL(unsigned,	len)
+{
+	register int	j;
+	if (newp == oldp) {
+		if ((j = FindArea(oldp)) >= 0)
+			Size[j] = len;
+		else
+			fail_alloc("could not find", oldp);
+	} else {
+		if (oldp != 0)
+			record_freed(oldp);
+		if ((j = FindArea((char *)0)) >= 0) {
+			Area[j] = newp;
+			Size[j] = len;
+		} else
+			fail_alloc("no room in table", newp);
+	}
+}
+
+#define	OK_ALLOC(p,q,n)	((p != 0) && (record_alloc(p,q,n) >= 0))
+#define	OK_FREE(p)	((p != 0) && (record_freed(p) >= 0))
+#else
+#define	OK_ALLOC(p,q,n)	(p != 0)
+#define	OK_FREE(p)	(p != 0)
+#endif	/* DEBUG */
 
 #ifdef	DEBUG_LOG
 static
-logit(
-_ARX(char *,	msg)
-_AR1(int,	num)
-	)
-_DCL(char *,	msg)
-_DCL(int,	num)
+void	logit(
+	_ARX(char *,	msg)
+	_AR1(int,	num)
+		)
+	_DCL(char *,	msg)
+	_DCL(int,	num)
 {
 	static	FILE	*log;
 
 	if (!log)
 		log = fopen("doalloc.log", "w");
-	fprintf(log, "%s %#x\n", msg, num);
+	FPRINTF(log, "%s %#x\n", msg, num);
 	fflush(log);
 }
 #define	LOGIT(msg,num)	logit(msg, (long)num);
 #else
-#ifdef	DEBUG
-#define	LOGIT(msg,num)	printf("%s %#x\n", msg, num);
+#ifdef	DEBUG2
+#define	LOGIT(msg,num)	PRINTF("%s %#x\n", msg, num);
 #else
 #define	LOGIT(msg,num)
 #endif
@@ -60,28 +159,20 @@ _DCL(int,	num)
 /************************************************************************
  *	public entrypoints						*
  ************************************************************************/
-char	*
-doalloc (
-_ARX(char *,	oldp)
-_AR1(unsigned,	amount)
-	)
-_DCL(register char *,	oldp)
-_DCL(register unsigned,	amount)
+char *	doalloc (
+	_ARX(char *,	oldp)
+	_AR1(unsigned,	amount)
+		)
+	_DCL(register char *,	oldp)
+	_DCL(register unsigned,	amount)
 {
-register char	*newp = (oldp != 0) ? realloc(oldp, amount) : malloc(amount);
+	register char	*newp;
 
-	if (!newp) failed("doalloc");
-#ifdef	DEBUG
-	{
-	register int	j;
-		for (j = 0; j < used; j++)
-			if (allocated[j] == 0)
-				break;
-		allocated[j] = newp;
-		if (j >= used && j < DEBUG)
-			used = ++j;
-	}
-#endif	/* DEBUG */
+	count_alloc++;
+	newp = (oldp != 0) ? realloc(oldp, amount) : malloc(amount);
+	if (!OK_ALLOC(newp,oldp,amount))
+		failed("doalloc");
+
 	LOGIT("allocate", amount)
 	LOGIT("  old = ", oldp)
 	LOGIT("  new = ", newp)
@@ -91,41 +182,27 @@ register char	*newp = (oldp != 0) ? realloc(oldp, amount) : malloc(amount);
 /*
  * Entrypoint so we can validate pointers
  */
-dofree(
-_AR1(char *,	oldp))
-_DCL(char *,	oldp)
+void	dofree(
+	_AR1(char *,	oldp))
+	_DCL(char *,	oldp)
 {
+	count_freed++;
 	LOGIT("dealloc ", oldp)
-	if (oldp) {
-#ifdef	DEBUG
-		register int j;
-		for (j = 0; j < used; j++) {
-			if (allocated[j] == oldp) {
-				free(oldp);
-				allocated[j] = 0;
-				return;
-			}
-		}
-#else	/* !DEBUG */
+
+	if (OK_FREE(oldp)) {
 		free(oldp);
 		return;
-#endif	/* DEBUG */
 	}
-	(void)printf("free(%#x) not found\r\n", oldp);
-	LOGIT("free (not found)", oldp);
+
+	fail_alloc("free (not found)", oldp);
+}
+
+void	show_alloc(_AR0)
+{
+	PRINTF("%d allocs, %d frees\n", count_alloc, count_freed);
 #ifdef	DEBUG
-#ifdef	apollo
-	/* force a walkback */
-	{
-	char	msg[80];
-		(void)sprintf(msg, "/com/tb %d", getpid());
-		(void)system(msg);
-	}
-#endif	/* apollo */
-#ifdef	vms
-	*((char *)0) = 0;
-#endif	/* vms */
-#endif	/* DEBUG */
+	PRINTF("...%d segments allocated\n", now_pending);
+#endif
 }
 
 #ifdef	TEST
