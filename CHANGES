@@ -1,3 +1,39 @@
+1995-01-28  dickey@clark.net
+
+	* test/cm_funcs/Makefile, test/compare/Makefile, test/curses/Makefile, test/memory/Makefile, test/pathname/Makefile, test/port2dos/Makefile, test/port2vms/Makefile, test/process/Makefile, test/sheet/Makefile, test/string/Makefile, test/unix/Makefile, test/td_defns.mk:
+	osf1-port
+
+	* td_make.in: use SHELL variable within makefile
+	also, added .c.a direct rule
+
+	* td_make.in:
+	split up .c.a rule into .c.o, .o.a to try to make osf1 work properly
+	some minor cleanup.
+
+	* src/cm_funcs/Makefile, src/compare/Makefile, src/curses/Makefile, src/memory/Makefile, src/pathname/Makefile, src/port2dos/Makefile, src/port2vms/Makefile, src/process/Makefile, src/sheet/Makefile, src/string/Makefile, src/unix/Makefile, src/td_defns.mk:
+	osf1-port
+
+	* configure.in: added resizeterm (for ncurses extension)
+
+	* configure.in: added setvbuf
+
+	* aclocal.m4:
+	modified treatment of -lPW so we don't put it into libs-list unless we
+	need it for regex stuff.
+
+	* include/td_curse.h: added addchnst.c
+
+	* src/curses/addchnst.c: added interpretation of len < 0
+
+	* src/curses/addchnst.c: use MODULE_ID
+
+	* src/curses/addchnst.c: RCS_BASE
+
+	* src/curses/descrip.mms, src/curses/Makefile: added addchnst.c
+
+	* src/cm_funcs/cmv_dir.c:
+	oops: not-found values for lockedby, revision are "?", not null.
+
 1995-01-27  dickey@clark.net
 
 	* src/cm_funcs/cmv_dir.c: quick fix for binary-file version parsing

@@ -1,8 +1,9 @@
-# $Id: Makefile,v 12.4 1994/11/12 22:38:14 tom Exp $
+# $Id: Makefile,v 12.5 1995/01/28 21:10:25 tom Exp $
 # MAKE-file for process-management library routines
 
 ####### (Environment) ##########################################################
 include ../td_defns.mk
+include ../../support/td_lib.mk
 
 ####### (Standard Lists) #######################################################
 CSRC	=\

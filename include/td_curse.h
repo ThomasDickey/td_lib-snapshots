@@ -1,4 +1,4 @@
-/* $Id: td_curse.h,v 12.24 1994/12/15 18:09:10 tom Exp $ */
+/* $Id: td_curse.h,v 12.25 1995/01/28 14:05:33 tom Exp $ */
 
 /*
  * TD_LIB CURSES-related definitions
@@ -169,6 +169,20 @@ extern	int	wstandout	ARGS((WINDOW *w));
 #if LINTLIBRARY
 #define extern	/* nothing */
 #endif
+	/* addchnst.c ------------------------------------------------- */
+#if	!HAVE_ADDCHNSTR
+	int	waddchnstr(
+			_arx(WINDOW *,	w)
+			_arx(chtype *,	s)
+			_ar1(int,	n)
+				)
+			_dcl(WINDOW *,	w)
+			_dcl(chtype *,	s)
+			_dcl(int,	n)
+			_ret
+#define addchnstr(str,n)	waddchnstr(stdscr,str, n)
+#endif
+
 	/* beep.c ----------------------------------------------------- */
 #if	!HAVE_BEEP
 	void	beep(_ar0)
@@ -212,7 +226,6 @@ extern	XtermMouse xt_mouse;	/* state of XTerm-mouse */
 			_dcl(char *,	s)
 			_nul
 
-	/* erasechar.c ------------------------------------------------ */
 	/* erasechar.c ------------------------------------------------ */
 #if	!HAVE_ERASECHAR && !defined(erasechar)
 	int	erasechar(_ar0)

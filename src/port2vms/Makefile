@@ -1,8 +1,9 @@
-# $Id: Makefile,v 12.1 1994/08/21 18:36:52 tom Exp $
+# $Id: Makefile,v 12.2 1995/01/28 21:10:25 tom Exp $
 # MAKE-file for functions supporting VAX/VMS porting
 
 ####### (Environment) ##########################################################
 include ../td_defns.mk
+include ../../support/td_lib.mk
 
 ####### (Standard Lists) #######################################################
 

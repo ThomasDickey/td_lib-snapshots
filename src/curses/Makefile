@@ -1,12 +1,14 @@
-# $Id: Makefile,v 12.3 1994/07/23 00:25:05 tom Exp $
+# $Id: Makefile,v 12.5 1995/01/28 21:10:25 tom Exp $
 # MAKE-file for miscellaneous library routines
 
 ####### (Environment) ##########################################################
 include ../td_defns.mk
+include ../../support/td_lib.mk
 
 ####### (Standard Lists) #######################################################
 
 CSRC	=\
+	addchnst.c \
 	beep.c \
 	bindkeys.c \
 	blip.c \
@@ -32,6 +34,7 @@ CSRC	=\
 SOURCES	= Makefile descrip.mms $(CSRC)
 
 OBJS	=\
+	$Z(addchnst.o) \
 	$Z(beep.o) \
 	$Z(bindkeys.o) \
 	$Z(blip.o) \

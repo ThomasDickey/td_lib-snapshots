@@ -1,8 +1,9 @@
-# $Id: Makefile,v 12.1 1994/07/02 15:30:21 tom Exp $
+# $Id: Makefile,v 12.2 1995/01/28 21:10:25 tom Exp $
 # MAKE-file for spreadsheet-data library routines
 
 ####### (Environment) ##########################################################
 include ../td_defns.mk
+include ../../support/td_lib.mk
 
 ####### (Standard Lists) #######################################################
 CSRC	=\
