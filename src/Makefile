@@ -1,4 +1,4 @@
-# @(#)Makefile	1.22 88/05/27 07:02:57
+# @(#)Makefile	1.23 88/06/01 09:58:43
 # MAKE-file for miscellaneous library routines
 L=lib.a
 #
@@ -63,6 +63,7 @@ cmdch.o:	cmdch.h
 cutoff.o:	ptypes.h
 packdate.o:	ptypes.h
 rawgets.o:	cmdch.h
+rcslast.o:	rcsdefs.h
 rcsedit.o:	rcsdefs.h
 rcskeys.o:	rcsdefs.h
 rcsname.o:	rcsdefs.h
