@@ -46,7 +46,7 @@
 #include	"td_curse.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: cmdch.c,v 12.25 1998/02/16 00:12:51 tom Exp $")
+MODULE_ID("$Id: cmdch.c,v 12.26 1998/02/17 23:37:07 tom Exp $")
 
 #define	ESC(c)	((c) == '\033')
 #define	END(s)	s[strlen(s)-1]
@@ -87,6 +87,31 @@ static	int	double_click (_AR0)
 #endif	/* !NCURSES_MOUSE_VERSION */
 #endif	/* !NO_XTERM_MOUSE */
 
+#if !HAVE_KEYPAD
+# if !HAVE_TCAP_CURSOR
+static	char	*KU, *KD, *KR, *KL;
+static	char	*KH;
+# endif
+static	char	*kH, *KP, *KN;		/* not generally in BSD curses */
+static	int	ansi	= FALSE;
+
+static
+int	known_key(
+	_AR1(char *,	i_blk))
+	_DCL(char *,	i_blk)
+{
+	if	(EQL(KU))	return KEY_UP;
+	else if	(EQL(KD))	return KEY_DOWN;
+	else if	(EQL(KL))	return KEY_LEFT;
+	else if	(EQL(KR))	return KEY_RIGHT;
+	else if	(EQL(KH))	return KEY_HOME;
+	else if	(EQL(kH))	return KEY_END;
+	else if	(EQL(KP))	return KEY_PPAGE;
+	else if	(EQL(KN))	return KEY_NPAGE;
+	return EOS;
+}
+#endif	/* HAVE_KEYPAD */
+
 int	cmdch(
 	_AR1(int *,	cnt_))
 	_DCL(int *,	cnt_)
@@ -98,14 +123,6 @@ int	cmdch(
 			count	= 0;
 	auto	char	i_blk[1024];
 	static	int	init	= FALSE;
-#if !HAVE_KEYPAD
-# if !HAVE_TCAP_CURSOR
-	static	char	*KU, *KD, *KR, *KL;
-	static	char	*KH, *KE;
-# endif
-	static	char	*KP, *KN;	/* not generally in BSD curses */
-	static	int	ansi	= FALSE;
-#endif	/* HAVE_KEYPAD */
 #if NCURSES_MOUSE_VERSION && !NO_XTERM_MOUSE
 	MEVENT	myevent;
 #endif
@@ -123,8 +140,8 @@ int	cmdch(
 			KR = tgetstr("kr", &a_);
 			KL = tgetstr("kl", &a_);
 			KH = tgetstr("kh", &a_);
-			KE = tgetstr("ke", &a_);
 # endif
+			kH = tgetstr("kH", &a_);
 			KP = tgetstr("kP", &a_);
 			KN = tgetstr("kN", &a_);
 		}
@@ -218,21 +235,16 @@ int	cmdch(
 		if (ESC(c)) {	/* assume "standard" escapes */
 			do {
 				i_blk[j++] = c = getch();
-			} while (!isalpha(c));
+				i_blk[j] = EOS;
+			} while (!isalpha(c) && !known_key(i_blk));
 		}
 #endif
 		if (j) {
 			i_blk[j] = EOS;
 			done	= TRUE;
 #if !HAVE_KEYPAD
-			if	(EQL(KU))	c = KEY_UP;
-			else if	(EQL(KD))	c = KEY_DOWN;
-			else if	(EQL(KL))	c = KEY_LEFT;
-			else if	(EQL(KR))	c = KEY_RIGHT;
-			else if	(EQL(KH))	c = KEY_HOME;
-			else if	(EQL(KE))	c = KEY_END;
-			else if	(EQL(KP))	c = KEY_PPAGE;
-			else if	(EQL(KN))	c = KEY_NPAGE;
+			if (known_key(i_blk))
+				c = known_key(i_blk);
 			else
 #endif /* !HAVE_KEYPAD */
 			if (j > 1) {	/* extended escapes */

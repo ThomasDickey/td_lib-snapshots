@@ -35,7 +35,7 @@
 #include	<ctype.h>
 #include	<time.h>
 
-MODULE_ID("$Id: win2file.c,v 12.11 1998/02/15 18:54:47 tom Exp $")
+MODULE_ID("$Id: win2file.c,v 12.12 1998/02/17 21:04:45 tom Exp $")
 
 #define	OUT	FPRINTF(fp,
 
@@ -51,7 +51,7 @@ MODULE_ID("$Id: win2file.c,v 12.11 1998/02/15 18:54:47 tom Exp $")
 #define A_STANDOUT   0200
 #endif
 
-#if TYPE_CHTYPE_IS_SCALAR
+#if TYPE_CHTYPE_IS_SCALAR || !HAVE_TYPE_CHTYPE
 #  if CURSES_LIKE_BSD44
 #    define CursesBold(win,y,x) CursesLine(win,y)[x].attr
 #  else

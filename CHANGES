@@ -1,3 +1,26 @@
+1998-02-17  dickey@clark.net
+
+	* src/curses/cmdch.c:
+	make this actually work for bsd4.4 curses on Linux (the home/end/ppage/npage
+	keys do not end with an alphabetic character, so I have to do strcmp's)
+
+	* aclocal.m4:
+	add tgoto to check for curses+termcap libraries (like the test in Lynx)
+
+	* aclocal.m4: make sure we have a value for $cf_cv_ncurses_header
+
+	* configure.in:
+	add --enable-5lib, so we can control use of bsd or 5lib curses on SunOS
+
+	* aclocal.m4: oops: typo in code that adds $cf_term_lib to library-list
+	also, add logic to let --enable-5lib override use of /usr/5lib and /usr/5include
+
+	* src/curses/win2file.c:
+	if we don't have chtype, this is probably BSD curses (e.g., SunOS), so
+	we don't want to compile with prototypes
+
+	* src/string/strerror.c: must define ERR_PTYPES to get extern sys_nerr
+
 1998-02-16  dickey@clark.net
 
 	* include/Makefile: drop acl.h from list
