@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	20 Oct 1986
  * Modified:
+ *		04 Jan 2000, decode Solaris' 2-digit post-Y2K years.
  *		31 Dec 1999, move 1900's to packdate().
  *		03 Sep 1996, ignore removed-revisions
  *		14 Oct 1995, mods for 14-character names
@@ -32,12 +33,37 @@
  *		for directory-editor.
  */
 
+#define	CHR_PTYPES
 #define	STR_PTYPES
 #include	<ptypes.h>
 #include	<sccsdefs.h>
 #include	<ctype.h>
 
-MODULE_ID("$Id: sccslast.c,v 12.12 2000/01/01 01:37:40 tom Exp $")
+MODULE_ID("$Id: sccslast.c,v 12.13 2000/01/04 14:49:38 tom Exp $")
+
+/*
+ * Post-Y2K years require special decoding
+ */
+int	sccsyear (
+	_AR1(char *,	src))
+	_DCL(char *,	src)
+{
+	char *	p = 0;
+	long	value;
+
+	if ((value = strtol(src, &p, 10)) <= 0
+	 || p == 0
+	 || *p == EOS) {
+		value = 0;
+		if (strlen(src) == 2) {
+			int tens = (*src++) - '0';
+			if (tens >= 0 && isdigit((int)*src)) {
+				value = 10 * tens + (*src - '0');
+			}
+		}
+	}
+	return value;
+}
 
 /*
  * Set the release.version and date values iff we find a legal sccs-file at
@@ -58,6 +84,7 @@ void	trysccs (
 	auto	FILE	*fp;
 	auto	int	gotten = 0;
 	auto	char	bfr[BUFSIZ];
+	auto	char	bfr2[BUFSIZ];
 	auto	char	*s;
 	auto	int	yy, mm, dd, hr, mn, sc;
 	auto	char	ver[80];
@@ -82,10 +109,12 @@ void	trysccs (
 				gotten++;
 			}
 			if (!strncmp(bfr, "\001d D ", 4)) {
-				if (sscanf(bfr+4, "%s %d/%d/%d %d:%d:%d ",
+				if (sscanf(bfr+4, "%s %[^/]/%d/%d %d:%d:%d ",
 					ver,
-					&yy, &mm, &dd,
-					&hr, &mn, &sc) != 7)	break;
+					bfr2, &mm, &dd,
+					&hr, &mn, &sc) != 7
+				 || ((yy = sccsyear(bfr2)) <= 0))
+					break;
 				if (strchr(ver, '.') != strrchr(ver, '.'))
 					continue;
 				*vers_ = txtalloc(ver);
@@ -175,7 +204,7 @@ void	sccslast (
 	 */
 	if (is_sccs			/* the_leaf => filename */
 	&&  (strlen(the_leaf) > LEN_PREFIX)
-	&&  (isalpha(*the_leaf) && islower(*the_leaf))
+	&&  (isalpha((int)*the_leaf) && islower((int)*the_leaf))
 	&&  (the_leaf[1] == '.')) {
 		char	xx = *the_leaf;
 

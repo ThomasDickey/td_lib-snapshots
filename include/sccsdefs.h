@@ -1,4 +1,4 @@
-/* $Id: sccsdefs.h,v 12.7 1998/05/30 01:23:00 tom Exp $ */
+/* $Id: sccsdefs.h,v 12.8 2000/01/04 14:48:18 tom Exp $ */
 
 #ifndef	SCCSDEFS_H
 #define	SCCSDEFS_H
@@ -26,6 +26,10 @@
 			_ret
 
 	/* sccslast.c ------------------------------------------------- */
+	int	sccsyear(
+			_ar1(char *,	yy))
+			_ret
+
 	void	sccslast(
 			_arx(char *,	wd)
 			_arx(char *,	n)
