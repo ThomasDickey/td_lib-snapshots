@@ -1,3 +1,186 @@
+1993-04-27  dickey@software.org
+
+	* support/lib_top.mms: shortened-filenames
+
+1993-04-27  ste_cm@software.org
+
+	* support/lib_top.mms:
+	BASELINE Fri Apr 30 08:53:28 1993 -- TD_LIB split, VAX-shutdown
+
+1993-04-27  dickey@software.org
+
+	* support/prog_top.mms: shortened-filenames
+
+1993-04-27  ste_cm@software.org
+
+	* support/prog_top.mms:
+	BASELINE Fri Apr 30 08:53:28 1993 -- TD_LIB split, VAX-shutdown
+
+1993-04-27  dickey@software.org
+
+	* include/ptypes.h: make V_OR_I void for apollo sr10
+
+	* support/old-td_lib.mk: took ".a" files out of CLEAN macro
+
+1993-04-27  ste_cm@software.org
+
+	* support/old-td_lib.mk:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1993-04-27  dickey@software.org
+
+	* test/run_test.sh: shorten-filenames
+
+1993-04-27  ste_cm@software.org
+
+	* test/run_test.sh:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1993-04-27  dickey@software.org
+
+	* test/Makefile: shorten-filenames
+
+1993-04-27  ste_cm@software.org
+
+	* test/Makefile:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1993-04-27  dickey@software.org
+
+	* test/pathname/walktree.ref: shorten-filenames
+
+1993-04-27  ste_cm@software.org
+
+	* test/pathname/walktree.ref:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1993-04-27  dickey@software.org
+
+	* test/cm_funcs/samebr.sh: shorten-filenames
+
+1993-04-27  ste_cm@software.org
+
+	* test/cm_funcs/samebr.sh:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1993-04-27  dickey@software.org
+
+	* test/pathname/relpath.ref: shorten-filenames
+
+1993-04-27  ste_cm@software.org
+
+	* test/pathname/relpath.ref:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1993-04-27  dickey@software.org
+
+	* test/cm_funcs/rcsargpr.sh: shorten-filenames
+
+1993-04-27  ste_cm@software.org
+
+	* test/cm_funcs/rcsargpr.sh:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1993-04-27  dickey@software.org
+
+	* test/string/lsbycols.sh: shorten-filenames
+
+1993-04-27  ste_cm@software.org
+
+	* test/string/lsbycols.sh:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1993-04-27  dickey@software.org
+
+	* test/pathname/file2arg.sh: shorten-filenames
+
+1993-04-27  ste_cm@software.org
+
+	* test/pathname/file2arg.sh:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1993-04-27  dickey@software.org
+
+	* test/pathname/abspath.ref: shorten-filenames
+
+1993-04-27  ste_cm@software.org
+
+	* test/pathname/abspath.ref:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1993-04-27  dickey@software.org
+
+	* src/cm_funcs/vercmp.c: shorten-filenames
+
+1993-04-27  ste_cm@software.org
+
+	* src/cm_funcs/vercmp.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1993-04-27  dickey@software.org
+
+	* src/memory/vecedit.c: shorten-filenames
+
+1993-04-27  ste_cm@software.org
+
+	* src/memory/vecedit.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1993-04-27  dickey@software.org
+
+	* src/compare/scomp.c: shorten-filenames
+
+1993-04-27  ste_cm@software.org
+
+	* src/compare/scomp.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1993-04-27  dickey@software.org
+
+	* src/compare/m2comp.c: shorten-filenames
+
+1993-04-27  ste_cm@software.org
+
+	* src/compare/m2comp.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1993-04-27  dickey@software.org
+
+	* src/string/dotcmp.c: shorten-filenames
+
+1993-04-27  ste_cm@software.org
+
+	* src/string/dotcmp.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1993-04-27  dickey@software.org
+
+	* COPYING: fixed the year-of-copyrite
+
+	* COPYING: shorten-filenames
+
+1993-04-27  ste_cm@software.org
+
+	* COPYING: BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1993-04-27  dickey@software.org
+
+	* certify/release.txt: shorten-filenames
+
+1993-04-27  ste_cm@software.org
+
+	* certify/release.txt:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1993-04-27  dickey@software.org
+
+	* certify/config.txt: shorten-filenames
+
+1993-04-27  ste_cm@software.org
+
+	* certify/config.txt:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
 1993-04-26  dickey@software.org
 
 	* src/Makefile: shorten-filenames

@@ -1,4 +1,4 @@
-# $Id: prog_top.mms,v 7.1 1992/11/04 07:19:04 dickey Exp $
+# $Id: prog_top.mms,v 8.0 1993/04/27 16:42:51 ste_cm Rel $
 # MMS top-level reusable rules for PORTUNIX, and programs built with it.
 #
 .INCLUDE PORTUNIX_ROOT:[SUPPORT]LIBRARY_RULES
@@ -31,7 +31,7 @@ DEINSTALL :
 	mms $(MMSQUALIFIERS) $@ /Macro=(B="$(B)")
 	set default [-]
 
-RUN_TESTS :	ALL
+RUN_TEST :	ALL
 	set default [.test]
 	mms $(MMSQUALIFIERS) $@ /Macro=(B="$(B)")
 	set default [-]

@@ -1,3 +1,4 @@
 #!/bin/sh
-# $Id: samebr.sh,v 11.2 1992/11/18 13:30:41 dickey Exp $
-./samebranch >samebranch.tmp
+# $Id: samebr.sh,v 12.0 1993/04/27 08:14:13 ste_cm Rel $
+ME=samebr
+./$ME >$ME.tmp

@@ -1,8 +1,9 @@
 #!/bin/sh
-# $Id: run_test.sh,v 11.4 1992/11/18 11:45:32 dickey Exp $
+# $Id: run_test.sh,v 12.0 1993/04/27 08:25:21 ste_cm Rel $
 if test $# != 0
 then
 	echo '** '`date`
+	rm -f *.tmp
 	for n in $*
 	do
 		N=`basename $n .ref`

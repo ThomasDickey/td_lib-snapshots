@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: scomp.c,v 11.4 1993/04/26 16:29:57 dickey Exp $";
+static	char	Id[] = "$Id: scomp.c,v 12.0 1993/04/27 07:49:56 ste_cm Rel $";
 #endif
 
 /*
@@ -100,5 +100,5 @@ void	SCOMP(
  *	test-driver							*
  ************************************************************************/
 #ifdef	TEST
-#include "test_scomp.c"
+#include "test_cmp.c"
 #endif

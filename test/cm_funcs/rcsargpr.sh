@@ -1,11 +1,12 @@
 #!/bin/sh
-# $Id: rcsargpr.sh,v 11.2 1992/11/18 13:53:15 dickey Exp $
+# $Id: rcsargpr.sh,v 12.0 1993/04/27 08:04:52 ste_cm Rel $
+ME=rcsargpr
 RCS_DIR=FOO; export RCS_DIR
 (
-./rcsargpair xxx
-./rcsargpair xxx,v
-./rcsargpair xxx xxx,v
-./rcsargpair xxx xxx,v yyy
-./rcsargpair xxx yyy
-./rcsargpair xxx,v xxx yyy
-) >rcsargpair.tmp
+./$ME xxx
+./$ME xxx,v
+./$ME xxx xxx,v
+./$ME xxx xxx,v yyy
+./$ME xxx yyy
+./$ME xxx,v xxx yyy
+) >$ME.tmp

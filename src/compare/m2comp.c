@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: m2comp.c,v 11.4 1993/04/26 16:23:01 dickey Exp $";
+static	char	Id[] = "$Id: m2comp.c,v 12.0 1993/04/27 07:45:55 ste_cm Rel $";
 #endif
 
 /*
@@ -280,5 +280,5 @@ void	m2comp(
  *	test-driver: test_scomp.c					*
  ************************************************************************/
 #ifdef	TEST
-#include "test_scomp.c"
+#include "test_cmp.c"
 #endif
