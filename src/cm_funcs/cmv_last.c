@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	02 Aug 1994, from 'sccslast.c'
  * Modified:
+ *		31 Dec 1999, move 1900's to packdate().
  *		21 Aug 1998, change cmv_lock to return binary file's mod-times.
  *		05 Jan 1995, CMVision stores all branches in the main trunk,
  *			     must use r-curr file to find the actual tip-version
@@ -23,7 +24,7 @@
 #include	<ptypes.h>
 #include	<cmv_defs.h>
 
-MODULE_ID("$Id: cmv_last.c,v 12.9 1998/09/17 15:45:35 tom Exp $")
+MODULE_ID("$Id: cmv_last.c,v 12.10 2000/01/01 01:38:07 tom Exp $")
 
 /*
  * Set the release.version and date values iff we find a legal sccs-file at
@@ -68,7 +69,7 @@ void	ScanSCCS (
 				&hr, &mn, &sc) == 7)
 			 && (strcmp(*vers_, ver) == 0)) {
 				match = TRUE;
-				*date_ = packdate (1900+yy, mm, dd, hr, mn, sc);
+				*date_ = packdate (yy, mm, dd, hr, mn, sc);
 			}
 			if (match
 			 && !strncmp(bfr+1, "c ", 2)) {

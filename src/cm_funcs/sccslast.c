@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	20 Oct 1986
  * Modified:
+ *		31 Dec 1999, move 1900's to packdate().
  *		03 Sep 1996, ignore removed-revisions
  *		14 Oct 1995, mods for 14-character names
  *		11 Aug 1994, decode CMVision date in comment.
@@ -36,7 +37,7 @@
 #include	<sccsdefs.h>
 #include	<ctype.h>
 
-MODULE_ID("$Id: sccslast.c,v 12.11 1996/09/03 15:05:16 tom Exp $")
+MODULE_ID("$Id: sccslast.c,v 12.12 2000/01/01 01:37:40 tom Exp $")
 
 /*
  * Set the release.version and date values iff we find a legal sccs-file at
@@ -88,7 +89,7 @@ void	trysccs (
 				if (strchr(ver, '.') != strrchr(ver, '.'))
 					continue;
 				*vers_ = txtalloc(ver);
-				*date_ = packdate (1900+yy, mm, dd, hr, mn, sc);
+				*date_ = packdate (yy, mm, dd, hr, mn, sc);
 				have_rev = TRUE;
 			}
 #ifdef CMV_PATH		/* for CmVision */

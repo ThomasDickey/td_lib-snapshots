@@ -1,4 +1,4 @@
-# $Id: td_make.in,v 12.20 1998/03/01 23:59:49 tom Exp $
+# $Id: td_make.in,v 12.21 2000/01/01 00:59:26 tom Exp $
 # common definitions for makefiles built over TD_LIB library.
 
 SHELL	= /bin/sh
@@ -34,7 +34,8 @@ INSTALL_LIB	= $(exec_prefix)/lib
 INSTALL_MAN	= $(prefix)/man
 
 ####### (Command-line Options) #################################################
-CPP_OPTS	= -I. -I$(TD_INC) -DHAVE_CONFIG_H @CPPFLAGS@
+CPP_CONFIG	= -I. -I$(TD_INC) -DHAVE_CONFIG_H @CPPFLAGS@
+CPP_OPTS	= $(CPP_CONFIG)
 
 x		= @PROG_EXT@
 LIB_DEPS	= $(TD_LIB)/@LIB_PREFIX@td.a
