@@ -1,10 +1,13 @@
-# $Id: Makefile,v 8.0 1990/05/08 13:28:12 ste_cm Rel $
+# $Id: Makefile,v 8.1 1991/06/03 14:07:38 dickey Exp $
 # MAKE-file for miscellaneous library routines
 #
 # $Log: Makefile,v $
-# Revision 8.0  1990/05/08 13:28:12  ste_cm
-# BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+# Revision 8.1  1991/06/03 14:07:38  dickey
+# added rule for ".i"
 #
+#	Revision 8.0  90/05/08  13:28:12  ste_cm
+#	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+#	
 #	Revision 7.1  90/05/08  13:28:12  dickey
 #	added module 'sccsname.c'
 #	
@@ -263,7 +266,7 @@ lint2.out:	$(CSRC)
 		tdlint $(LINTOPT) $$i >>$@;done'
 lincnt.out:	$(CSRC)		; $(DATE); lincnt $(CSRC) >>$@
 #
-.SUFFIXES: .lint .tst
+.SUFFIXES: .lint .tst .i
 .c.lint:
 	tdlint $(LINTOPT) $< >$@
 .c.tst:
@@ -271,3 +274,5 @@ lincnt.out:	$(CSRC)		; $(DATE); lincnt $(CSRC) >>$@
 	rm -f $*.o
 .c.o:
 	$(CC) $(CFLAGS) $(INCLUDES) $(DEFINES) -c $<
+.c.i:
+	$(CC) -P -C $(INCLUDES) $(DEFINES) -c $<
