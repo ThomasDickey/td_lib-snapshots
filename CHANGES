@@ -1,3 +1,44 @@
+1992-02-25  dickey@software.org
+
+	* src/pathname/fp2argv.c:
+	recoded so I don't have to worry about input record-size
+
+1992-02-25  ste_cm@software.org
+
+	* src/pathname/fp2argv.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1992-02-25  dickey@software.org
+
+	* src/compare/diffload.c: looks almost ok
+
+1992-02-25  ste_cm@software.org
+
+	* src/compare/diffload.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1992-02-25  dickey@software.org
+
+	* src/compare/diffload.c:
+	make resulting vector for 2nd & following files
+
+	* src/compare/diffload.c: RCS_BASE
+
+	* include/deltree.h: added definition of 'diffload()'
+
+1992-02-25  ste_cm@software.org
+
+	* include/deltree.h:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+	* include/deltree.h: BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1992-02-25  dickey@software.org
+
+	* test/Makefile: added program 'diffload'
+
+	* src/Makefile, src/descrip.mms: added module 'diffload'
+
 1992-02-18  dickey@software.org
 
 	* src/pathname/abspath.c: lint

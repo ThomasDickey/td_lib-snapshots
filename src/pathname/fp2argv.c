@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: fp2argv.c,v 10.0 1991/10/04 16:38:04 ste_cm Rel $";
+static	char	Id[] = "$Id: fp2argv.c,v 11.0 1992/02/25 13:52:40 ste_cm Rel $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: fp2argv.c,v 10.0 1991/10/04 16:38:04 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	18 Jul 1988
  * Modified:
+ *		25 Feb 1992, allow input-records to be arbitrarily wide.
  *		04 Oct 1991, conversion to ANSI
  *		20 Jun 1991, added trace-arg for 'ded'
  *
@@ -20,11 +21,36 @@ static	char	Id[] = "$Id: fp2argv.c,v 10.0 1991/10/04 16:38:04 ste_cm Rel $";
  */
 
 #include	"ptypes.h"
+#include	"dyn_string.h"
 
 	/*ARGSUSED*/
 	def_DOALLOC(char *)
 #define	CHUNK	32
 
+static
+char *
+get_line(
+_AR1(FILE *,	fp))
+_DCL(FILE *,	fp)
+{
+	static	DYN	*bfr;
+	static	char	tmp[] = "?";
+
+	dyn_init(&bfr, BUFSIZ);
+
+	do {
+		tmp[0] = fgetc(fp);
+		if (feof(fp))
+			break;
+		(void)dyn_append(bfr, tmp);
+		if (tmp[0] == '\n')
+			break;
+	} while (!ferror(fp));
+
+	return dyn_length(bfr) ? dyn_string(bfr) : 0;
+}
+
+int
 fp2argv(
 _ARX(FILE *,	fp)
 _ARX(char ***,	argv_)
@@ -37,9 +63,9 @@ _DCL(void,	(*trace)())
 	register char **vec = 0;
 	register int  lines = 0;
 	register int  have  = 0;
-	char	buffer[BUFSIZ];
+	char	*buffer;
 
-	while (fgets(buffer, sizeof(buffer), fp)) {
+	while (buffer = get_line(fp)) {
 		unsigned need	= (++lines | (CHUNK-1)) + 1;
 		if (need != have) {
 			vec  = DOALLOC(vec, char *, need);

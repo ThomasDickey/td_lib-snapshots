@@ -1,4 +1,4 @@
-# $Id: descrip.mms,v 10.11 1992/02/17 14:48:27 dickey Exp $
+# $Id: descrip.mms,v 10.12 1992/02/25 08:01:58 dickey Exp $
 # MMS-file for miscellaneous library routines	
 #
 ####### (Development) ##########################################################
@@ -76,6 +76,7 @@ UNUSED_MODULES = -
 	CMDCH, 			# curses -
 	CUTOFF, 		# uses PACKDATE -
 	DENODE, 		# only for ABSPATH -
+	DIFFLOAD,		# unix-diff -
 	DUMPWIN, 		# curses -
 	ERASECHAR, 		# curses -
 	FILECOPY, 		# needs unix system-I/O -
@@ -85,7 +86,7 @@ UNUSED_MODULES = -
 	GETHOME, 		# unix-passwd -
 	GETUSER, 		# unix-passwd -
 	GID2S, 			# PORTUNIX -
-	INTERACTIVE,		# unix filesystem
+	INTERACTIVE,		# unix filesystem -
 	KILLCHAR 		# curses -
 	NAME2S,			# unix-style names only -
 	NEWZONE,		# unix environment -
@@ -146,6 +147,7 @@ C_SRC	=-
 	CUTOFF.C -
 	DENODE.C -
 	DFTENV.C -
+	DIFFLOAD.C -
 	DOALLOC.C -
 	DOTCMP.C -
 	DOTNAME.C -

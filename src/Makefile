@@ -1,4 +1,4 @@
-# $Id: Makefile,v 10.12 1992/02/17 14:48:27 dickey Exp $
+# $Id: Makefile,v 10.13 1992/02/25 08:01:58 dickey Exp $
 # MAKE-file for miscellaneous library routines
 #
 ####### (Development) ##########################################################
@@ -34,6 +34,7 @@ CSRC	=\
 	cutoff.c\
 	denode.c\
 	dftenv.c\
+	diffload.c\
 	doalloc.c\
 	dotcmp.c\
 	dotname.c\
@@ -152,6 +153,7 @@ OBJS	=\
 	cutoff.o\
 	denode.o\
 	dftenv.o\
+	diffload.o\
 	doalloc.o\
 	dotcmp.o\
 	dotname.o\

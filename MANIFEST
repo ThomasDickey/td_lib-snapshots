@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19920218
+MANIFEST for td_lib, version t19920225
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 Makefile                        top-level makefile for TD_LIB
@@ -47,6 +47,8 @@ src/cm_funcs/sccslast.c         scan for last SCCS date & version
 src/cm_funcs/sccsname.c         SCCS working/archive name translation (like 'rcsname.c').
 src/cm_funcs/vcs_file.c         encapsulates name of directory-level RCS permissions file
 src/cm_funcs/vercmp.c           compare version-strings
+src/compare                     subdirectory
+src/compare/diffload.c          load delta-tree from difference of files
 src/curses                      subdirectory
 src/curses/beep.c               sound audible alarm
 src/curses/blip.c               write 1 character to screen, bypassing curses
