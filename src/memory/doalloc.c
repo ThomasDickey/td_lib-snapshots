@@ -1,11 +1,13 @@
 #ifndef	lint
-static	char	Id[] = "$Id: doalloc.c,v 10.0 1991/10/04 16:37:12 ste_cm Rel $";
+static	char	Id[] = "$Id: doalloc.c,v 11.0 1992/04/02 16:18:34 ste_cm Rel $";
 #endif
 
 /*
  * Author:	T.E.Dickey
  * Created:	09 Jan 1986
  * Modified:
+ *		02 Apr 1992, don't append to log-file. Write error message there
+ *			     too.
  *		03 Oct 1991, converted to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
  *		09 Jun 1989, provided walkback-case for vms; made trace &
@@ -42,7 +44,7 @@ _DCL(int,	num)
 	static	FILE	*log;
 
 	if (!log)
-		log = fopen("doalloc.log", "a+");
+		log = fopen("doalloc.log", "w");
 	fprintf(log, "%s %#x\n", msg, num);
 	fflush(log);
 }
@@ -110,6 +112,7 @@ _DCL(char *,	oldp)
 #endif	/* DEBUG */
 	}
 	(void)printf("free(%#x) not found\r\n", oldp);
+	LOGIT("free (not found)", oldp);
 #ifdef	DEBUG
 #ifdef	apollo
 	/* force a walkback */

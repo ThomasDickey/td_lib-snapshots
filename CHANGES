@@ -1,3 +1,12 @@
+1992-04-02  dickey@software.org
+
+	* src/memory/doalloc.c: adjustments to logging in debug-mode
+
+1992-04-02  ste_cm@software.org
+
+	* src/memory/doalloc.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
 1992-03-18  dickey@software.org
 
 	* src/Makefile: silent
