@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)packdate.c	1.1 86/03/26 13:12:03";
+static	char	sccs_id[] = "@(#)packdate.c	1.3 86/10/07 15:39:55";
 #endif	lint
 
 /*
@@ -13,6 +13,8 @@ static	char	sccs_id[] = "@(#)packdate.c	1.1 86/03/26 13:12:03";
  */
 
 #include	<time.h>
+extern	struct	tm	*localtime();
+extern	long	timezone;
 
 #define	MINUTE	60
 #define	HOUR	(60*MINUTE)
@@ -21,8 +23,9 @@ static	char	sccs_id[] = "@(#)packdate.c	1.1 86/03/26 13:12:03";
 
 #define	LEAP(y)	(!(y&3))
 
-long	packdate (year, mon, day, hour, min, sec)
+long	packdate (year, mon, day, hour, min, s)
 {
+long	sec = s;
 register int	j;
 static	int	m[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 /*			  jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec */
