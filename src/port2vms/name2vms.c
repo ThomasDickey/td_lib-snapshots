@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: name2vms.c,v 4.1 1991/05/20 17:16:42 dickey Exp $";
+static	char	Id[] = "$Id: name2vms.c,v 5.0 1991/06/04 13:55:00 ste_cm Rel $";
 #endif
 
 /*
@@ -56,9 +56,11 @@ char	*s;
 static	char
 translate(c)
 {
-	if (isalpha(c))
-		c = toupper(c);
-	else if (c == '.') {
+	int d = c;
+	if (isalpha(c)) {
+		if (islower(c))
+			c = toupper(c);
+	} else if (c == '.') {
 		if (leaf_dot++)
 			c = '$';
 	} else if (!strchr("0123456789_-", c))
