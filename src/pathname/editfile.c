@@ -1,6 +1,6 @@
 #ifndef	lint
-static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RCS/editfile.c,v 4.0 1989/04/24 15:40:45 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: editfile.c,v 5.0 1991/05/20 17:15:39 ste_cm Rel $";
+#endif
 
 /*
  * Title:	editfile.c
@@ -24,10 +24,10 @@ static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RC
 
 #ifdef	vms
 #define	NEWVER(name)	(name)
-#else	unix
+#else	/* unix */
 extern	char	*mktemp();
 #define	NEWVER(name)	mktemp(name)
-#endif	vms/unix
+#endif	/* vms/unix */
 
 editfile(oldname,func)
 char	*oldname;
@@ -42,9 +42,9 @@ int	(*func)();
 	(void)strcpy(newname, oldname);
 	if (s = strrchr(newname, ';'))	s[1] = '\0';
 	else				(void)strcat(newname, ";");
-#else	unix
+#else	/* unix */
 	static	char	newname[] = "fileXXXXXX";
-#endif	vms/unix
+#endif	/* vms/unix */
 
 	if ((ifp != 0)
 	&&  (ofp = fopen(NEWVER(newname), "w")) ) {
@@ -65,7 +65,7 @@ int	(*func)();
 				return(0);
 			}
 		}
-#endif	vms
+#endif
 		if (changes > 0) {
 			TELL "** %d change(s) made\n", changes);
 		}
@@ -96,4 +96,4 @@ char	*argv[];
 		editfile(argv[j], do_copy);
 	exit(SUCCESS);
 }
-#endif	TEST
+#endif	/* TEST */

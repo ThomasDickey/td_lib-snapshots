@@ -1,6 +1,6 @@
 #ifndef	lint
-static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/port2vms/RCS/path2vms.c,v 4.0 1988/10/28 17:18:39 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: path2vms.c,v 7.0 1991/05/20 17:17:03 ste_cm Rel $";
+#endif
 
 /*
  * Title:	path2vms.c

@@ -1,6 +1,6 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rmsio.c,v 4.0 1989/09/15 11:39:01 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: rmsio.c,v 5.0 1991/05/20 17:17:10 ste_cm Rel $";
+#endif
 
 /*
  * Title:	rmsio.c
@@ -420,4 +420,4 @@ char	*argv[];
 	}
 	exit (SUCCESS);
 }
-#endif	TEST
+#endif

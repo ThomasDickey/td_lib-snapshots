@@ -1,6 +1,6 @@
 #ifndef	lint
-static	char	Id[] = "$Id: edittree.c,v 4.0 1989/10/06 14:39:39 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: edittree.c,v 5.0 1991/05/20 17:16:10 ste_cm Rel $";
+#endif
 
 /*
  * Title:	edittree.c
@@ -29,16 +29,16 @@ static	char	Id[] = "$Id: edittree.c,v 4.0 1989/10/06 14:39:39 ste_cm Rel $";
 #define	TELL_FILE(name)	TELL "%d\t%s => %s\n", changes, nesting, name);
 #define	TELL_DIR(name)	TELL "%d\t%s directory %s\n", changes, nesting, name); 
 static	editfile(n,f)	char *n; int (*f)(); { return 1;}
-#else	TEST
+#else
 #define	TELL_FILE(name)
 #define	TELL_DIR(name)
-#endif	TEST
+#endif
 
 #ifdef	vms
 #define	EDITDIR_ARG	"*.*;"
-#else	unix
+#else	/* unix */
 #define	EDITDIR_ARG	"."
-#endif	vms/unix
+#endif	/* vms/unix */
 
 edittree(oldname,func,recur)
 char	*oldname;
@@ -57,7 +57,7 @@ int	recur;
 #ifdef	TEST
 	static	char		stack[]	= ". . . . . . . ";
 	auto	char		*nesting = &stack[sizeof(stack)-(recur*2)];
-#endif	TEST
+#endif
 
 	if (stat(oldname, &sb) < 0) {
 		errno = ENOENT;		/* bypass vms-bug */
@@ -77,7 +77,7 @@ int	recur;
 		if (vms_iswild(oldname))
 			newpath = oldname;
 		else
-#endif	vms
+#endif
 		if (chdir(DIR2PATH(oldname)) < 0) {
 			perror(oldname);
 			return(0);
@@ -88,7 +88,7 @@ int	recur;
 				(void)strcpy(newname, dp->d_name);
 #ifndef	vms
 				if (dotname(newname))	continue;
-#endif	vms
+#endif
 				if (lstat(newname, &sb) < 0) {
 					perror(newname);
 					continue;
@@ -147,12 +147,12 @@ char	*argv[];
 					"?",
 #ifdef	vms
 					"[-]", "-r", "[-]"
-#else	unix
+#else	/* unix */
 					"..",  "-r", ".."
-#endif	vms/unix
+#endif	/* vms/unix */
 					};
 		do_test(sizeof(tbl)/sizeof(tbl[0]), tbl);
 	}
 	exit(SUCCESS);
 }
-#endif	TEST
+#endif	/* TEST */

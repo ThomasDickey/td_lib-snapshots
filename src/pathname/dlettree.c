@@ -1,6 +1,6 @@
 #ifndef	lint
-static	char	Id[] = "$Id: dlettree.c,v 4.0 1989/10/06 14:38:35 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: dlettree.c,v 5.0 1991/05/20 17:14:42 ste_cm Rel $";
+#endif
 
 /*
  * Title:	deletetree.c
@@ -31,11 +31,11 @@ static	char	Id[] = "$Id: dlettree.c,v 4.0 1989/10/06 14:38:35 ste_cm Rel $";
 #define	TELL_SCAN(name)	TELL "%d\t%s scan directory %s\n", TELL_(name))
 static	deletedir()	{ return 1;}
 static	deletefile()	{ return 1;}
-#else	TEST
+#else
 #define	TELL_FILE(name)
 #define	TELL_SCAN(name)
 #define	TELL_DIR(name)
-#endif	TEST
+#endif
 
 
 deletetree(oldname,recur)
@@ -55,7 +55,7 @@ int	recur;
 #ifdef	TEST
 	static	char		stack[]	= ". . . . . . . ";
 	auto	char		*nesting = &stack[sizeof(stack)-(recur*2)-1];
-#endif	TEST
+#endif
 
 	if (stat(oldname, &sb) < 0) {
 		errno = ENOENT;		/* bypass vms-bug */
@@ -74,7 +74,7 @@ int	recur;
 		if (vms_iswild(oldname))
 			newpath = oldname;
 		else
-#endif	vms
+#endif
 		if (chdir(DIR2PATH(oldname)) < 0) {
 			fail(oldname);
 			return(0);
@@ -86,7 +86,7 @@ int	recur;
 				(void)strcpy(newname, dp->d_name);
 #ifndef	vms
 				if (dotname(newname))	continue;
-#endif	vms
+#endif
 				if (lstat(newname, &sb) < 0) {
 					fail(newname);
 					continue;
@@ -150,12 +150,12 @@ char	*argv[];
 					"?",
 #ifdef	vms
 					"[-]", "-r", "[-]"
-#else	unix
+#else	/* unix */
 					"..",  "-r", ".."
-#endif	vms/unix
+#endif	/* vms/unix */
 					};
 		do_test(sizeof(tbl)/sizeof(tbl[0]), tbl);
 	}
 	exit(SUCCESS);
 }
-#endif	TEST
+#endif
