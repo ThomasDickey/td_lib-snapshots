@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: rawterm.c,v 12.4 1993/11/18 20:51:56 dickey Exp $";
+static	char	Id[] = "$Id: rawterm.c,v 12.5 1993/11/22 18:41:39 dickey Exp $";
 #endif
 
 /*
@@ -52,7 +52,7 @@ static	void	enable_mouse(_AR0)
 static	void	disable_mouse(_AR0)
 {
 	if (xterm_mouse) {
-		Puts(XTERM_ENABLE_TRACKING);
+		Puts(XTERM_DISABLE_TRACKING);
 	}
 }
 #endif
