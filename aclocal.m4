@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Id: aclocal.m4,v 12.131 2001/01/29 23:39:52 tom Exp $
+dnl $Id: aclocal.m4,v 12.132 2001/04/15 17:31:48 tom Exp $
 dnl vi:set ts=4:
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "CF_" to "AC_"
@@ -367,6 +367,7 @@ char * XCursesProgramName = "test";
 			[
 #ifndef ${cf_func}
 long foo = (long)(&${cf_func});
+exit(foo == 0);
 #endif
 			],
 			[cf_result=yes],
@@ -529,6 +530,11 @@ AC_CACHE_VAL(cf_cv_curses_style,[
 AC_MSG_RESULT($cf_cv_curses_style)
 CF_UPPER(cf_tr_type,$cf_cv_curses_style)
 AC_DEFINE_UNQUOTED(CURSES_LIKE_${cf_tr_type})
+])dnl
+dnl ---------------------------------------------------------------------------
+dnl "dirname" is not portable, so we fake it with a shell script.
+AC_DEFUN([CF_DIRNAME],[
+$1=`echo $2 | sed -e 's:/[[^/]]*$::'`
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl You can always use "make -n" to see the actual options, but it's hard to
@@ -1136,7 +1142,7 @@ echo "(line __oline__) testing $* ..." 1>&AC_FD_CC
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Look for the SVr4 curses clone 'ncurses' in the standard places, adjusting
-dnl the CPPFLAGS variable.
+dnl the CPPFLAGS variable so we can include its header.
 dnl
 dnl The header files may be installed as either curses.h, or ncurses.h
 dnl (obsolete).  If not installed for overwrite, the curses.h file would be
@@ -1151,9 +1157,14 @@ dnl easily determine which file it is.  In this case, it has to be <curses.h>.
 dnl
 AC_DEFUN([CF_NCURSES_CPPFLAGS],
 [
-AC_MSG_CHECKING(for ncurses header file)
-AC_CACHE_VAL(cf_cv_ncurses_header,[
-	AC_TRY_COMPILE([#include <curses.h>],[
+AC_CACHE_CHECK(for ncurses header in include-path, cf_cv_ncurses_h,[
+	for cf_header in \
+		ncurses.h \
+		ncurses/ncurses.h \
+		ncurses/curses.h \
+		curses.h
+	do
+	AC_TRY_COMPILE([#include <$cf_header>],[
 #ifdef NCURSES_VERSION
 printf("%s\n", NCURSES_VERSION);
 #else
@@ -1163,46 +1174,64 @@ printf("old\n");
 make an error
 #endif
 #endif
-	],
-	[cf_cv_ncurses_header=predefined],[
+	]
+	,[cf_cv_ncurses_h=$cf_header; break]
+	,[cf_cv_ncurses_h=no])
+	done
+])
+
+if test "$cf_cv_ncurses_h" != no ; then
+	cf_cv_ncurses_header=$cf_cv_ncurses_h
+else
+AC_CACHE_CHECK(for ncurses include-path, cf_cv_ncurses_h2,[
 	CF_HEADER_PATH(cf_search,ncurses)
 	test -n "$verbose" && echo
 	for cf_incdir in $cf_search
 	do
 		for cf_header in \
-			curses.h \
-			ncurses.h
+			ncurses.h \
+			curses.h
 		do
 			if egrep "NCURSES_[[VH]]" $cf_incdir/$cf_header 1>&AC_FD_CC 2>&1; then
-				cf_cv_ncurses_header=$cf_incdir/$cf_header
+				cf_cv_ncurses_h2=$cf_incdir/$cf_header
 				test -n "$verbose" && echo $ac_n "	... found $ac_c" 1>&AC_FD_MSG
 				break
 			fi
 			test -n "$verbose" && echo "	... tested $cf_incdir/$cf_header" 1>&AC_FD_MSG
 		done
-		test -n "$cf_cv_ncurses_header" && break
+		test -n "$cf_cv_ncurses_h2" && break
 	done
-	test -z "$cf_cv_ncurses_header" && AC_ERROR(not found)
-	])])
-AC_MSG_RESULT($cf_cv_ncurses_header)
+	test -z "$cf_cv_ncurses_h2" && AC_ERROR(not found)
+	])
+
+	CF_DIRNAME(cf_1st_incdir,$cf_cv_ncurses_h2)
+	CF_DIRNAME(cf_2nd_incdir,$cf_1st_incdir)
+	cf_cv_ncurses_header=`basename $cf_cv_ncurses_h2`
+	echo cf_1st_include=$cf_1st_incdir
+	echo cf_2nd_include=$cf_2nd_incdir
+	if test `basename $cf_1st_incdir` = ncurses ; then
+		cf_cv_ncurses_header=ncurses/$cf_cv_ncurses_header
+		CF_ADD_INCDIR($cf_2nd_incdir)
+	fi
+	CF_ADD_INCDIR($cf_1st_incdir)
+
+fi
+
 AC_DEFINE(NCURSES)
 
-cf_incdir=`echo $cf_cv_ncurses_header | sed -e 's:/[[^/]]*$::'`
 
 case $cf_cv_ncurses_header in # (vi
-*/ncurses.h)
+*ncurses.h)
 	AC_DEFINE(HAVE_NCURSES_H)
 	;;
 esac
 
 case $cf_cv_ncurses_header in # (vi
-predefined) # (vi
-	cf_cv_ncurses_header=curses.h
-	;;
-*)
-	CF_ADD_INCDIR($cf_incdir)
+ncurses/curses.h|ncurses/ncurses.h)
+	AC_DEFINE(HAVE_NCURSES_NCURSES_H)
 	;;
 esac
+
 CF_NCURSES_VERSION
 ])dnl
 dnl ---------------------------------------------------------------------------

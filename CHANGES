@@ -1,3 +1,13 @@
+2001-04-15  dickey@clark.net
+
+	* aclocal.m4:
+	fixes for CF_NCURSES_CPPFLAGS to work around conflicting header files in
+	standard/nonstandard locations.
+
+	* include/td_curse.h: add HAVE_NCURSES_NCURSES_H ifdef
+
+	* configure.in: use "sort -u" anyway...
+
 2001-02-13  dickey@clark.net
 
 	* config.sub, config.guess: resync with my-autoconf
