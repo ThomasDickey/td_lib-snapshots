@@ -3,6 +3,8 @@
  * Author:	T.E.Dickey
  * Created:	20 Apr 1988 (from code written 13 Nov 1987)
  * Modified:
+ *		18 Oct 2000, don't bother with _leave/_leaveok except for the
+ *			     known cases.
  *		15 Feb 1998, make this work with non-scalar chtype, use winnstr.
  *		04 Sep 1995, make this work with bsd4.4 curses
  *		15 May 1995, removed _orig/_nextp -- too obscure to bother with
@@ -26,7 +28,7 @@
 #include	"td_curse.h"
 #include	<time.h>
 
-MODULE_ID("$Id: dumpwin.c,v 12.17 1999/08/10 21:50:38 tom Exp $")
+MODULE_ID("$Id: dumpwin.c,v 12.18 2000/10/19 01:20:40 tom Exp $")
 
 #define	OUT	FPRINTF
 
@@ -91,6 +93,10 @@ void	dumpwin(
 #if CURSES_LIKE_NCURSES
 		OUT(fp, "   _region %d..%d\n",     w->_regtop, w->_regbottom);
 		OUT(fp, "   _pary:%d  _parx:%d\n", w->_pary, w->_parx);
+		OUT(fp, "   _flags:   %#x\n", w->_flags);
+		OUT(fp, "   _clear:   %#x\n", w->_clear);
+		OUT(fp, "   _scroll:  %#x\n", w->_scroll);
+		OUT(fp, "   _leave:   %#x\n", w->_leaveok);
 #endif
 #if CURSES_LIKE_BSD44
 		OUT(fp, "   _flags:   %#x\n", w->flags);
@@ -98,15 +104,6 @@ void	dumpwin(
 		OUT(fp, "   _flush:   %#x\n", w->flags & __FLUSH);
 		OUT(fp, "   _leave:   %#x\n", w->flags & __LEAVEOK);
 		OUT(fp, "   _scroll:  %#x\n", w->flags & __SCROLLOK);
-#else
-		OUT(fp, "   _flags:   %#x\n", w->_flags);
-		OUT(fp, "   _clear:   %#x\n", w->_clear);
-		OUT(fp, "   _scroll:  %#x\n", w->_scroll);
-#if CURSES_LIKE_NCURSES
-		OUT(fp, "   _leave:   %#x\n", w->_leaveok);
-#else
-		OUT(fp, "   _leave:   %#x\n", w->_leave);
-#endif
 #endif
 
 		OUT(fp, "   _y @ %p\n", &(CursesLine(w,0)));
