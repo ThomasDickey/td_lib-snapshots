@@ -32,10 +32,10 @@
  *		We do not process quotes ' or "
  */
 
+#define CHR_PTYPES
 #include	"ptypes.h"
-#include	<ctype.h>
 
-MODULE_ID("$Id: bldarg.c,v 12.3 1993/10/29 17:35:27 tom Exp $")
+MODULE_ID("$Id: bldarg.c,v 12.4 2000/12/23 16:43:44 tom Exp $")
 
 #define	blank(c)	(isascii(c) && isspace(c))
 

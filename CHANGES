@@ -1,3 +1,14 @@
+2000-12-23  dickey@clark.net
+
+	* src/process/bldarg.c:
+	use CHR_PTYPES to resolve toascii() properly on QNX
+
+	* src/curses/win2file.c:
+	include CHR_PTYPES to make toascii() resolve properly on QNX
+
+	* include/ptypes.h:
+	add quick hack for toascii() to make this build on QNX
+
 2000-12-02  dickey@clark.net
 
 	* include/td_lib.h:
