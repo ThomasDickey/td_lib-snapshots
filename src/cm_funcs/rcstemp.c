@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs/RCS/rcstemp.c,v 1.4 1989/03/20 09:31:04 dickey Exp $";
+static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs/RCS/rcstemp.c,v 4.0 1989/04/07 16:26:34 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,9 +7,26 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs
  * Author:	T.E.Dickey
  * Created:	25 Aug 1988
  * $Log: rcstemp.c,v $
- * Revision 1.4  1989/03/20 09:31:04  dickey
- * sccs2rcs keywords
+ * Revision 4.0  1989/04/07 16:26:34  ste_cm
+ * BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
  *
+ *		Revision 3.0  89/04/07  16:26:34  ste_cm
+ *		BASELINE Mon Jun 19 13:27:01 EDT 1989
+ *		
+ *		Revision 2.0  89/04/07  16:26:34  ste_cm
+ *		BASELINE Fri Apr  7 16:41:37 EDT 1989
+ *		
+ *		Revision 1.6  89/04/07  16:26:34  dickey
+ *		if attempt to make tmp-directory more restrictive fails, don't
+ *		give up (after all, if we have world-access, it still works).
+ *		
+ *		Revision 1.5  89/04/07  16:12:49  dickey
+ *		bypassed bug in apollo SR9 (mkdir ignores mode) by explicitly
+ *		setting protection after doing 'mkdir()'.
+ *		
+ *		Revision 1.4  89/03/20  09:31:04  dickey
+ *		sccs2rcs keywords
+ *		
  *		20 Mar 1989, create user-level directory under /tmp to avoid
  *			     conflicts between users.
  *		30 Aug 1988, invoke 'filecopy()' to make temp-file look more
@@ -43,14 +60,25 @@ char	*working;
 		struct	stat	sb;
 
 		if (stat(tf, &sb) < 0) {
+			if (rcs_debug())
+				printf(".. mkdir %s (mode=%o)\n", tf, mode);
 			if (mkdir(tf, mode) < 0)
 				failed(tf);
+#ifdef	apollo
+			if (chmod(tf, mode) < 0) /* mkdir ignores mode */
+				failed(tf);
+#endif	apollo
 		} else if ((sb.st_mode & S_IFMT) != S_IFDIR) {
 			errno = ENOTDIR;
 			failed(tf);
-		} else if ((sb.st_mode & 0777)   != mode) {
-			if (chmod(tf, mode) < 0)
-				failed(tf);
+		} else if ((sb.st_mode &= 0777)   != mode) {
+			if (rcs_debug())
+				printf(".. chmod %o %s (was %o)\n",
+					mode, tf, sb.st_mode);
+			if (chmod(tf, mode) < 0) {
+				if (sb.st_mode != 0777)
+					failed(tf);
+			}
 		}
 
 		tf = pathcat(tmp, tf, pathleaf(working));
