@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: resizwin.c,v 12.2 1993/10/29 17:35:24 dickey Exp $";
+static	char	Id[] = "$Id: resizwin.c,v 12.3 1994/07/23 11:58:41 tom Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: resizwin.c,v 12.2 1993/10/29 17:35:24 dickey Exp $";
  * Title:	resizewin.c (change size of curses window)
  * Created:	21 Apr 1988
  * Modified:
+ *		23 Jul 1994, adaptations for ncurses and HP/UX curses.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, conversion to ANSI
@@ -18,95 +19,78 @@ static	char	Id[] = "$Id: resizwin.c,v 12.2 1993/10/29 17:35:24 dickey Exp $";
  *		11 May 1988, reallocate firstch/lastch arrays (did not know what
  *			     they were til looking at curses source).
  *
- * Function:	inquire to see if the terminal's screen has changed
- *		size since curses was initialized.  If so, adjust stdscr and
- *		curscr to match.
+ * Function:	Inquire to see if the terminal's screen has changed size since
+ *		curses was initialized.  If so, adjust stdscr and curscr to
+ *		match.
  *
  * Returns:	TRUE if a change has been made.
+ *
+ * Notes:
+ *		This scheme works well with BSD curses, which has its state
+ *		clearly defined in stdscr/curscr.  It doesn't always work well
+ *		for SYS5 curses, which may have hidden state (e.g., ncurses has
+ *		'newscr' and cached copies of lines/columns values).
+ *
+ *		If we (or curses) don't reset the state, the application will
+ *		either crash or not repaint the screen properly.
  */
 
 #include	"td_curse.h"
 
-static	unsigned	size[2];
+#if HAVE_LIBNCURSES
+extern	WINDOW	*newscr;
+#endif
 
 #define	my_LINES	size[0]
 #define	my_COLS		size[1]
 
-#ifdef	lint
-#define	_BODY(f,c)	static c *f(p,n) c *p; unsigned n; { return(0); }
-/*ARGSUSED */		_BODY(pc_ALLOC,chtype *)
-/*ARGSUSED */		_BODY(c_ALLOC, chtype)
-/*ARGSUSED */		_BODY(s_ALLOC, short)
-#else
-#define	pc_ALLOC(p,n)	DOALLOC(p,chtype *,n)
-#define	c_ALLOC(p,n)	DOALLOC(p,chtype,n)
-#define	s_ALLOC(p,n)	DOALLOC(p,short,n)
-#endif
-
-static
-void	doit(
-	_AR1(WINDOW *,	w))
-	_DCL(WINDOW *,	w)
-{
-	register int	row;
-
-
-	/*
-	 * If the number of lines has changed, adjust the size of the overall
-	 * vector:
-	 */
-	if (my_LINES != LINES) {
-		for (row = my_LINES; row < LINES; row++)
-			free((char *)(w->_y[row]));
-
-		w->_y       = pc_ALLOC(w->_y,      my_LINES);
-		w->_firstch = s_ALLOC(w->_firstch, my_LINES);
-		w->_lastch  = s_ALLOC(w->_lastch,  my_LINES);
-
-		for (row = LINES; row < my_LINES; row++)
-			w->_y[row] = 0;
-	}
-
-	/*
-	 * Adjust the width of the columns:
-	 */
-	for (row = 0; row < my_LINES; row++) {
-	chtype	*s	= w->_y[row];
-	int	begin	= (s == 0) ? 0 : COLS,
-		end	= my_COLS;
-
-		if (my_COLS != begin) {
-			w->_y[row] = s = c_ALLOC(s, my_COLS+1);
-			s[end] = 0;
-			while (end-- > begin)
-				s[end] = ' ';
-		}
-	}
-
-	/*
-	 * Finally, adjust the parameters showing screen size and cursor
-	 * position:
-	 */
-	w->_maxx = my_COLS;  if (w->_curx >= my_COLS)  w->_curx = 0;
-	w->_maxy = my_LINES; if (w->_cury >= my_LINES) w->_cury = 0;
-}
-
 int	resizewin(_AR0)
 {
-	int	lc[2];
+	static	int	size[2];
+	auto	int	lc[2];
+#ifdef __hpux
+	if (scr_size(lc) >= 0) {
+		dlog_comment("resizewin called\n");
+		dlog_comment("..., LINES %d, COLS %d\n", LINES, COLS);
+		dlog_comment("..., scr_size (%d, %d)\n", lc[0], lc[1]);
+		dlog_flush();
+	}
+	return	TRUE;	/* HP/UX curses does the resizing already */
+#else	/* !__hpux */
+
 	if (scr_size(lc) >= 0) {
 		my_LINES = lc[0];
 		my_COLS  = lc[1];
 		if (my_LINES != LINES || my_COLS != COLS) {
-			doit(stdscr);
-			doit(curscr);
+#if SYS5_CURSES
+			wresize(stdscr, my_LINES, my_COLS);
+			wresize(curscr, my_LINES, my_COLS);
+#if HAVE_LIBNCURSES
+			wresize(newscr, my_LINES, my_COLS);
+			resizeterm(my_LINES, my_COLS);
+#else
+			dlog_comment("resizewin called\n");
+			dlog_comment("... was %dx%d\n", LINES, COLS);
+			dlog_comment("... now %dx%d\n", my_LINES, my_COLS);
+			dlog_flush();
+			LINES = my_LINES;
+			COLS  = my_COLS;
+#endif
+			savewin();
+			unsavewin(TRUE,0);
+#else	/* BSD curses */
+			wresize(stdscr, my_LINES, my_COLS);
+			wresize(curscr, my_LINES, my_COLS);
 			LINES = my_LINES;
 			COLS  = my_COLS;
 			savewin();
 			unsavewin(TRUE,0);
-			return (1);
+#endif
+			return (TRUE);
 		}
-	} else
-		beep();
-	return (0);
+	} else {
+		beep();	/* couldn't get the screen size! */
+	}
+	return (FALSE);
+#endif	/* __hpux/!__hpux */
 }

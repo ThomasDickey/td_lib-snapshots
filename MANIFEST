@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19940722
+MANIFEST for td_lib, version t19940723
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         restrictions on copying/using this software
@@ -96,6 +96,7 @@ src/curses/scr_size.c           obtain screen-size
 src/curses/viewfile.c           portable (curses) wrapper for padedit
 src/curses/win2file.c           dump curses window to file
 src/curses/wrepaint.c           repaint window w/o clearing it, if possible
+src/curses/wresize.c            basic algorithm for resizing a curses-window.
 src                             subdirectory
 src/descrip.mms                 VMS build script for td_lib/src
 src/memory                      subdirectory

@@ -1,3 +1,36 @@
+1994-07-23  dickey@clark.net
+
+	* src/curses/scr_size.c:
+	patch to make ded work on ClarkNet (termcap breaks curses)
+
+	* src/curses/resizwin.c: don't beep if this doesn't work!
+
+	* include/td_regex.h: had compile/step interchanged on Solaris (oops)
+
+	* include/td_regex.h: include <pw.h> if I think we need it.
+
+	* aclocal.m4: added conditional test for -lPW for CLIX's regcmp
+
+	* configure.in: test for pw.h (for CLIX's regcmp)
+
+	* aclocal.m4:
+	defined new macros TD_INCLUDE_PATH, TD_LIBRARY_PATH to use in testing for
+	SunOS version of SYS5-curses
+
+	* configure.in: clarified messages about reconfig (a little)
+
+	* src/curses/dumpwin.c:
+	dump a couple of ncurses-stuff that I wasn't paying attention to
+
+	* src/curses/wresize.c: refined the firstch/lastch logic.
+	remembered to set ncurses' scrolling region limits (caused crash!)
+
+	* src/curses/on_winch.c:
+	mods to make this (hopefully) port to HP/UX curses
+
+	* src/curses/resizwin.c:
+	intermediate adaptation for ncurses 1.8.6 and HP/UX
+
 1994-07-22  dickey@clark.net
 
 	* src/curses/wresize.c: RCS_BASE

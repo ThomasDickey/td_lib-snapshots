@@ -1,4 +1,4 @@
-/* $Id: td_regex.h,v 12.4 1994/07/12 18:53:16 tom Exp $ */
+/* $Id: td_regex.h,v 12.6 1994/07/23 20:17:29 tom Exp $ */
 
 /*
  * SYSTEM5/BSD4.x differences between native regular-expression handling:
@@ -21,13 +21,17 @@
 #  include <regexpr.h>
 #  define REGEX_T char *
 #  define OLD_REGEX(expr)		free(&expr)
-#  define NEW_REGEX(expr,pattern)	(step(pattern, expr) != 0)
-#  define GOT_REGEX(expr,string)	((expr = compile(string, NULL, NULL)) != 0)
+#  define NEW_REGEX(expr,pattern)	((expr = compile(pattern, NULL, NULL)) != 0)
+#  define GOT_REGEX(expr,string)	(step(string, expr) != 0)
 #endif
 
 #if HAVE_REGCMP_FUNCS && !defined(REGEX_T)	/* old SYSTEM5 */
+#  if HAVE_PW_H && HAVE_LIBPW_H
+#    include <pw.h>
+#  else
 	extern	char	*regcmp(_ar1(char *,s) _CDOTS);
 	extern	char	*regex(_ar1(char *,re));
+#  endif
 #  define REGEX_T char *
 #  define OLD_REGEX(expr)		if (expr) free(expr)
 #  define NEW_REGEX(expr,pattern)	((expr = regcmp(pattern,0)) != 0)

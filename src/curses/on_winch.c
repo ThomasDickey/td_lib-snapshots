@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: on_winch.c,v 12.2 1994/06/27 23:53:58 tom Exp $";
+static	char	Id[] = "$Id: on_winch.c,v 12.3 1994/07/23 12:42:51 tom Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: on_winch.c,v 12.2 1994/06/27 23:53:58 tom Exp $";
  * Author:	T.E.Dickey
  * Created:	27 Jun 1994
  * Modified:
+ *		23 Jul 1994, retain 'saved_winch' to use for HP/UX curses.
  *
  * Function:	Maintains a list of functions to invoke when a SIGWINCH
  *		occurs.  The SIGWINCH signal tells an application when the
@@ -33,14 +34,52 @@ static	char	Id[] = "$Id: on_winch.c,v 12.2 1994/06/27 23:53:58 tom Exp $";
 
 /*ARGSUSED*/def_ALLOC(ON_WINCH)
 
+static	RETSIGTYPE catch_winch (SIGNAL_ARGS);
+
+static	DCL_SIGNAL(saved_winch);
 static	ON_WINCH	*list;
 static	int		disable_this;
 static	int		caught_this;
 
+/*
+ * The 'signal' function returns the last function associated with the given
+ * signal.  We assume that if there's another function than ours, that it is
+ * the signal handler of either the application, or of a library function such
+ * as in HP/UX curses which does display resizing.
+ *
+ * This scheme will not work if the application sets/clears the signal handler
+ * within the calls bracketed by this module.  That is, we assume that HP/UX
+ * curses sets its signal handler (only one!) in 'initscr()', and doesn't do
+ * anything fancy (like have multiple signal handlers).
+ */
+static
+void	set_handler(
+	_FN1(RETSIGTYPE,	new_handler,	(SIGNAL_ARGS)))
+	_DCL(RETSIGTYPE,	(*new_handler)())
+{
+	DCL_SIGNAL(old_handler);
+
+	old_handler = signal(SIGWINCH, new_handler);
+
+	if (old_handler != SIG_DFL
+	 && old_handler != SIG_IGN
+	 && old_handler != SIG_ERR
+	 && old_handler != catch_winch) {
+		saved_winch = old_handler;
+	}
+}
+
+/*
+ * Handle the resize by calling the application's resize handler (if any), and
+ * then the handlers registered with this module.
+ */
 static
 void	handle_resize (_AR0)
 {
-	(void)signal(SIGWINCH, SIG_IGN);
+	if (saved_winch != 0)
+		(*saved_winch)(SIGWINCH);
+
+	set_handler(SIG_IGN);
 	if (list != 0 && resizewin()) {
 		register ON_WINCH *p;
 		for (p = list; p != 0; p = p->next) {
@@ -65,7 +104,7 @@ SIGNAL_FUNC(catch_winch)
 	caught_this = TRUE;
 	if (!disable_this)
 		handle_resize();
-	(void)signal(SIGWINCH, catch_winch);
+	set_handler(catch_winch);
 }
 
 void	on_winch(
@@ -104,6 +143,6 @@ void	on_winch(
 	disable_this = FALSE;
 	if (caught_this)
 		handle_resize();
-	(void)signal(SIGWINCH, catch_winch);
+	set_handler(catch_winch);
 }
 #endif	/* SIGWINCH */

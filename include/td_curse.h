@@ -1,4 +1,4 @@
-/* $Id: td_curse.h,v 12.21 1994/07/20 22:34:36 tom Exp $ */
+/* $Id: td_curse.h,v 12.22 1994/07/23 00:23:59 tom Exp $ */
 
 /*
  * TD_LIB CURSES-related definitions
@@ -333,4 +333,14 @@ extern	int	y_rawgets;
 			_dcl(int,	row)
 			_nul
 
+	/* wresize.c -------------------------------------------------- */
+	void	wresize(
+			_arx(WINDOW *,	win)
+			_arx(int,	rows)
+			_ar1(int,	cols)
+			)
+			_dcl(WINDOW *,	win)
+			_dcl(int,	rows)
+			_dcl(int,	cols)
+			_nul
 #endif	/* TD_CURSE_H */
