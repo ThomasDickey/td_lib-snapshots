@@ -1,4 +1,4 @@
-# $Id: Makefile,v 10.0 1991/10/17 08:01:45 ste_cm Rel $
+# $Id: Makefile,v 10.2 1992/02/03 12:24:10 dickey Exp $
 # MAKE-file for miscellaneous library routines
 #
 ####### (Development) ##########################################################
@@ -29,6 +29,7 @@ CSRC	=\
 	catchall.c\
 	cmdch.c\
 	copyback.c\
+	count_ss.c\
 	cutoff.c\
 	denode.c\
 	dftenv.c\
@@ -40,6 +41,7 @@ CSRC	=\
 	erasechar.c\
 	execute.c\
 	failed.c\
+	field_of.c\
 	file2argv.c\
 	file2mem.c\
 	filecopy.c\
@@ -92,6 +94,7 @@ CSRC	=\
 	scr_size.c\
 	setmtime.c\
 	shoarg.c\
+	ss_field.c\
 	stralloc.c\
 	strbcmp.c\
 	strclean.c\
@@ -131,6 +134,7 @@ OBJS	=\
 	catchall.o\
 	cmdch.o\
 	copyback.o\
+	count_ss.o\
 	cutoff.o\
 	denode.o\
 	dftenv.o\
@@ -142,6 +146,7 @@ OBJS	=\
 	erasechar.o\
 	execute.o\
 	failed.o\
+	field_of.o\
 	file2argv.o\
 	file2mem.o\
 	filecopy.o\
@@ -194,6 +199,7 @@ OBJS	=\
 	scr_size.o\
 	setmtime.o\
 	shoarg.o\
+	ss_field.o\
 	stralloc.o\
 	strbcmp.o\
 	strclean.o\
@@ -261,6 +267,10 @@ rcspermit.o:	$(RCSDEFS_H)
 sccslast.o:	$I/sccsdefs.h
 sccsname.o:	$I/sccsdefs.h
 vcs_file.o:	$(RCSDEFS_H)
+#
+count_ss.o\
+field_of.o\
+ss_field.o:	$I/spreadsheet.h
 #
 ####### (Development) ##########################################################
 $(SOURCES):			; $(GET) $@
