@@ -1,3 +1,17 @@
+1989-04-04  dickey@software.org
+
+	* src/cm_funcs/rcsperm.c:
+	if access list of permit-file is empty, assume that we are
+	using it solely for the baseline-version.  In this case,
+	return the baseline version just as we would for permission
+	checking.
+
+1989-04-04  ste_cm@software.org
+
+	* src/cm_funcs/rcsperm.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+	* src/cm_funcs/rcsperm.c: BASELINE Thu Apr  6 09:45:13 EDT 1989
+
 1989-03-31  dickey@software.org
 
 	* src/process/for_user.c:
