@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	what[] = "$Id: wrepaint.c,v 4.1 1989/08/25 08:13:42 dickey Exp $";
+static	char	what[] = "$Id: wrepaint.c,v 8.0 1989/09/28 10:49:03 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -21,6 +21,7 @@ static	char	what[] = "$Id: wrepaint.c,v 4.1 1989/08/25 08:13:42 dickey Exp $";
 
 wrepaint(win, row)
 WINDOW	*win;
+int	row;
 {
 	auto	int	min_row	= win->_begy,
 			min_col	= win->_begx,
