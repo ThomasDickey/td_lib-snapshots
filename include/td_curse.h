@@ -1,4 +1,4 @@
-/* $Id: td_curse.h,v 12.32 1995/07/06 00:29:00 tom Exp $ */
+/* $Id: td_curse.h,v 12.34 1995/07/30 19:55:23 tom Exp $ */
 
 /*
  * TD_LIB CURSES-related definitions
@@ -97,12 +97,21 @@
 #define	CTL(c)		(c&037)
 #define	ARO(c)		(CTL(c)|0200)
 
-#define	ARO_UP		ARO('U')
-#define	ARO_DOWN	ARO('D')
-#define	ARO_LEFT	ARO('L')
-#define	ARO_RIGHT	ARO('R')
-
-#define ARO_MOUSE       ARO('M')
+#ifndef KEY_UP
+#define KEY_UP          ARO('U')
+#endif
+#ifndef KEY_DOWN
+#define KEY_DOWN        ARO('D')
+#endif
+#ifndef KEY_LEFT
+#define KEY_LEFT        ARO('L')
+#endif
+#ifndef KEY_RIGHT
+#define KEY_RIGHT       ARO('R')
+#endif
+#ifndef KEY_MOUSE
+#define KEY_MOUSE       ARO('M')
+#endif
 
 /*
  * note: System5 curses does not define the 'screen' structure
@@ -271,6 +280,12 @@ extern	XtermMouse xt_mouse;	/* state of XTerm-mouse */
 #endif
 	int	eraseword(_ar0)
 			_ret
+
+	/* is_xterm.c ------------------------------------------------- */
+#if	!HAVE_IS_XTERM
+	int	is_xterm(_ar0)
+			_ret
+#endif
 
 	/* killchar.c ------------------------------------------------- */
 #if	!HAVE_KILLCHAR && !defined(killchar) && !defined(TESTING_CONFIG_H)
