@@ -31,11 +31,12 @@
  * Returns:	nothing.
  */
 
+#define CHR_PTYPES
 #include	"td_curse.h"
 #include	<ctype.h>
 #include	<time.h>
 
-MODULE_ID("$Id: win2file.c,v 12.14 1999/08/10 21:51:25 tom Exp $")
+MODULE_ID("$Id: win2file.c,v 12.15 2000/12/23 16:43:05 tom Exp $")
 
 #define	OUT	FPRINTF(fp,
 
