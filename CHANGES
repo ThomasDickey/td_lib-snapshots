@@ -1,3 +1,29 @@
+1989-06-05  dickey@software.org
+
+	* src/descrip.mms: added ADD2FNAME module
+
+1989-06-05  ste_cm@software.org
+
+	* src/descrip.mms: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+1989-06-05  dickey@software.org
+
+	* src/Makefile: added module 'add2fname'
+
+1989-06-05  ste_cm@software.org
+
+	* src/Makefile: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+1989-06-05  dickey@software.org
+
+	* src/pathname/add2fnam.c: RCS_BASE
+
+	* include/td_lib.h: added 'add2fname.c'
+
+1989-06-05  ste_cm@software.org
+
+	* include/td_lib.h: BASELINE Mon Jun 19 13:22:44 EDT 1989
+
 1989-06-01  dickey@software.org
 
 	* src/port2vms/name2vms.c:

@@ -1,10 +1,16 @@
-# $Header: /users/source/archives/td_lib.vcs/src/RCS/Makefile,v 2.5 1989/05/18 11:12:40 dickey Exp $
+# $Header: /users/source/archives/td_lib.vcs/src/RCS/Makefile,v 3.0 1989/06/05 13:23:58 ste_cm Rel $
 # MAKE-file for miscellaneous library routines
 #
 # $Log: Makefile,v $
-# Revision 2.5  1989/05/18 11:12:40  dickey
-# added argv2file
+# Revision 3.0  1989/06/05 13:23:58  ste_cm
+# BASELINE Mon Jun 19 13:27:01 EDT 1989
 #
+#	Revision 2.6  89/06/05  13:23:58  dickey
+#	added module 'add2fname'
+#	
+#	Revision 2.5  89/05/18  11:12:40  dickey
+#	added argv2file
+#	
 #	Revision 2.4  89/05/11  15:32:12  dickey
 #	added file2mem & mem2file modules.  added ptypes.h-dependency for
 #	catchall.c; revised destroy-rule.
@@ -36,6 +42,7 @@ LINTOPT	= $(DEFINES) $(INCLUDES) -I$J -ltd -lcurses -lapollo
 A	= ../lib/lib.a
 CSRC	=\
 	abspath.c\
+	add2fname.c\
 	argv2file.c\
 	beep.c\
 	bldarg.c\
@@ -123,6 +130,7 @@ SOURCES	= Makefile descrip.mms $(CSRC)
 #
 OBJS	=\
 	abspath.o\
+	add2fname.o\
 	argv2file.o\
 	beep.o\
 	bldarg.o\
@@ -228,6 +236,7 @@ archive: $(OBJS)
 	rm -f $A
 	ar rv $A $(OBJS)
 #
+add2fname.o:	$I/ptypes.h
 argv2file.o:	$I/ptypes.h
 beep.o:		$I/ptypes.h
 catchall.o:	$I/ptypes.h
