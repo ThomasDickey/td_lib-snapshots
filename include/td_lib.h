@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 6.1 1990/04/25 07:56:15 dickey Exp $ */
+/* $Id: td_lib.h,v 7.0 1990/04/27 16:32:35 ste_cm Rel $ */
 
 /*
  * Combined lint-library/function prototype definitions for CM_TOOLS COMMON
@@ -206,7 +206,6 @@
 #endif	CUR_PTYPES
 
 	/* execute.c -------------------------------------------------- */
-#ifdef	unix
 	int	execute(
 			_ARX(char *,	verb)
 			_AR1(char *,	args)
@@ -214,7 +213,6 @@
 			_DCL(char *,	verb)
 			_DCL(char *,	args)
 			_RET
-#endif	unix
 
 	/* file2argv.c ------------------------------------------------ */
 	int	file2argv(
