@@ -1,3 +1,98 @@
+1989-04-25  dickey@software.org
+
+	* Makefile: added common.h to install-list
+
+	* include/port2vms.h: added 'PATH2DIR', 'malloc' definitions
+
+	* Makefile:
+	ported subset of this library to VMS; added descrip.mms for that purpose
+
+	* descrip.mms: RCS_BASE
+
+1989-04-25  ste_cm@software.org
+
+	* descrip.mms:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+	* descrip.mms:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+	* descrip.mms:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* descrip.mms: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* descrip.mms: BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* descrip.mms: BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+	* descrip.mms: BASELINE Mon Jun 19 13:20:43 EDT 1989
+
+	* descrip.mms:
+	BASELINE Thu Aug 24 09:34:01 EDT 1989 -- support:navi_011(rel2)
+
+	* descrip.mms: BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+	* descrip.mms:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1989-04-25  dickey@software.org
+
+	* descrip.mms: added Ident
+
+1989-04-25  dickey@software.org
+
+	* support/lib_top.mms: RCS_BASE
+
+1989-04-25  ste_cm@software.org
+
+	* support/lib_top.mms:
+	BASELINE Fri Oct  6 15:23:19 EDT 1989 -- support:ada_pits_000(rel3)
+
+	* support/lib_top.mms: BASELINE Mon Jun 12 09:07:53 EDT 1989
+
+	* support/lib_top.mms:
+	BASELINE Mon Oct 21 13:09:39 1991 -- adapt to CM_TOOLS #10
+
+	* support/lib_top.mms:
+	BASELINE Thu Jul 16 16:14:02 1992 -- CM_TOOLS #11
+
+	* support/lib_top.mms: BASELINE Tue Aug 14 16:27:44 1990
+
+	* support/lib_top.mms:
+	BASELINE Tue Jun 11 16:44:53 1991 -- apollo sr10.3
+
+1989-04-25  dickey@software.org
+
+	* support/td_lib.mms: integration with CM_TOOLS's include-files
+
+	* include/ptypes.h:
+	mods so this works with "unix.dir" include-file on VMS.
+
+	* src/port2vms/vms_dirs.c: integration with CM_TOOLS's "ptypes.h"
+
+1989-04-25  ste_cm@software.org
+
+	* src/port2vms/vms_dirs.c: BASELINE Mon Jun 12 08:56:43 EDT 1989
+
+	* src/port2vms/vms_dirs.c:
+	BASELINE Mon Sep 18 08:24:15 EDT 1989 -- support:ada_pits_000(rel3)
+
+	* src/port2vms/vms_dirs.c: BASELINE Tue Aug 14 16:27:44 1990
+
+1989-04-25  dickey@software.org
+
+	* include/vms_dirs.h: integration with CM_TOOLS's "ptypes.h"
+
+1989-04-25  ste_cm@software.org
+
+	* include/vms_dirs.h: BASELINE Mon Jun 12 08:53:03 EDT 1989
+
+1989-04-25  dickey@software.org
+
+	* include/port2vms.h:
+	integration with CM_TOOLS's "ptypes.h" (avoid repeated descrip.h)
+
 1989-04-24  dickey@software.org
 
 	* src/pathname/walktree.c:

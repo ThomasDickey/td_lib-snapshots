@@ -1,4 +1,4 @@
-/* $Header: /users/source/archives/td_lib.vcs/include/RCS/ptypes.h,v 2.4 1989/04/24 14:00:00 dickey Exp $ */
+/* $Header: /users/source/archives/td_lib.vcs/include/RCS/ptypes.h,v 2.5 1989/04/25 08:08:27 dickey Exp $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -24,6 +24,38 @@
 #ifndef	S_IFLNK
 #define	lstat	stat
 #endif	S_IFLNK
+
+/*
+ * Definitions for files which are combined lint-library/function-prototype
+ * declarations (e.g., "common.h"):
+ */
+#if	defined(__STDC__) || defined(vms)
+#define	_FN1(t,v)	t (*v)()
+#define	_FNX(t,v)	_FN1(t,v),
+#define	_AR1(t,v)	t v
+#define	_ARX(t,v)	_AR1(t,v),
+#define	_DCL(t,v)
+#define	_RET		;
+#define	_NUL		;
+#else
+#ifdef	LINTLIBRARY
+#define	_FN1(t,v)	v
+#define	_FNX(t,v)	_FN1(t,v),
+#define	_AR1(t,v)	v
+#define	_ARX(t,v)	_AR1(t,v),
+#define	_DCL(t,v)	t v;
+#define	_RET		{return(0);}
+#define	_NUL		{}
+#else
+#define	_FN1(t,v)
+#define	_FNX(t,v)
+#define	_AR1(t,v)
+#define	_ARX(t,v)
+#define	_DCL(t,v)
+#define	_RET		;
+#define	_NUL		;
+#endif	LINTLIBRARY
+#endif	__STDC__
 
 /*
  * Declare argument for 'exit()' and '_exit()':
@@ -61,7 +93,9 @@
 
 extern	V_OR_I	_exit();
 extern	V_OR_I	exit();
+#ifndef	vms
 extern	V_OR_I	free();
+#endif	vms
 extern	V_OR_I	perror();
 extern	V_OR_I	qsort();
 #ifndef	vms
@@ -118,7 +152,6 @@ extern	char	*doalloc();
 #include	"unixdir.h"	/* get this from PORTUNIX */
 #else	unix
 #include	<sys/dir.h>
-#endif	vms/unix
 #ifdef	SYSTEM5
 #define	DIR	FILE
 #define	opendir(n)	fopen(n,"r")
@@ -128,6 +161,7 @@ extern	char	*doalloc();
 #define	closedir(fp)	FCLOSE(fp)
 static	struct	direct	dbfr;
 #endif	SYSTEM5
+#endif	vms/unix
 #endif	DIR_PTYPES
 
 /*
@@ -171,37 +205,5 @@ extern	char	killchar();
 extern	char	*strchr();
 extern	char	*strrchr();
 #endif	STR_PTYPES
-
-/*
- * Definitions for files which are combined lint-library/function-prototype
- * declarations (e.g., "common.h"):
- */
-#if	defined(__STDC__) || defined(vms)
-#define	_FN1(t,v)	t (*v)()
-#define	_FNX(t,v)	_FN1(t,v),
-#define	_AR1(t,v)	t v
-#define	_ARX(t,v)	_AR1(t,v),
-#define	_DCL(t,v)
-#define	_RET		;
-#define	_NUL		;
-#else
-#ifdef	LINTLIBRARY
-#define	_FN1(t,v)	v
-#define	_FNX(t,v)	_FN1(t,v),
-#define	_AR1(t,v)	v
-#define	_ARX(t,v)	_AR1(t,v),
-#define	_DCL(t,v)	t v;
-#define	_RET		{return(0);}
-#define	_NUL		{}
-#else
-#define	_FN1(t,v)
-#define	_FNX(t,v)
-#define	_AR1(t,v)
-#define	_ARX(t,v)
-#define	_DCL(t,v)
-#define	_RET		;
-#define	_NUL		;
-#endif	LINTLIBRARY
-#endif	__STDC__
 
 #endif	_PTYPES_

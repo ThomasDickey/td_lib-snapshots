@@ -1,8 +1,9 @@
-MANIFEST for td_lib, version t19890424
+MANIFEST for td_lib, version t19890425
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 Makefile                        top-level makefile for TD_LIB
 README                          read-me file for this directory
+descrip.mms                     top-level MMS script for this library on VMS
 include                         subdirectory
 include/Makefile                make-file for CM_TOOLS common interface directory
 include/cmdch.h                 
@@ -120,6 +121,7 @@ src/unix/s2uid.c                convert string to user-id
 src/unix/setmtime.c             set mtime/atime of a file
 src/unix/uid2s.c                convert user-id to string
 support                         subdirectory
+support/lib_top.mms             same as STANDARD_RULES, save that we generate lib-directory, rather than bin
 support/prog_top.mms            VMS MMS include-file defining standard (module-level) rules.
 support/td_lib.mms              VMS MMS include-file defining PORTUNIX library-rules
 support/td_progs.mms            VMS MMS include-file defining program-generation rules above PORTUNIX

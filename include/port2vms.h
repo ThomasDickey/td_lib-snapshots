@@ -1,5 +1,5 @@
 /*
- * $Header: /users/source/archives/td_lib.vcs/include/RCS/port2vms.h,v 1.5 1989/04/24 13:17:58 dickey Exp $
+ * $Header: /users/source/archives/td_lib.vcs/include/RCS/port2vms.h,v 1.7 1989/04/25 10:59:17 dickey Exp $
  *
  * VMS-definitions for supporting unix/vms port
  */
@@ -29,7 +29,9 @@ typedef	struct	timeval {
 #define	_OPENDIR(s,m)	(isDIR(m) || strchr(s,'*') || strchr(s,'%'))
 #define	OPENDIR_ARG	"*.*;*"
 
+#ifndef		$DESCRIPTOR
 #include	<descrip.h>
+#endif
 		/* (try doing strings w/o descriptors!) */
 
 #else	unix
@@ -38,6 +40,8 @@ typedef	struct	timeval {
 
 #define	_OPENDIR(s,m)	(isDIR(m))
 #define	OPENDIR_ARG	"."
+
+extern	char	*malloc();
 
 #endif	vms/unix
 
@@ -168,6 +172,8 @@ time_t	zone2vms(
 /* conversions that assume native-system is VMS */
 #ifdef	vms
 #define	DIR2PATH(path)		dir2path(path)
+#define	PATH2DIR(path)		path2dir(path)
 #else	unix
 #define	DIR2PATH(path)		path
+#define	PATH2DIR(path)		path
 #endif	vms/unix

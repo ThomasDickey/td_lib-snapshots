@@ -1,10 +1,16 @@
-# $Header: /users/source/archives/td_lib.vcs/RCS/Makefile,v 2.1 1989/04/24 11:42:17 dickey Exp $
+# $Header: /users/source/archives/td_lib.vcs/RCS/Makefile,v 2.3 1989/04/25 12:48:12 dickey Exp $
 # Top-level makefile for CM_TOOLS common library
 #
 # $Log: Makefile,v $
-# Revision 2.1  1989/04/24 11:42:17  dickey
-# added README file
+# Revision 2.3  1989/04/25 12:48:12  dickey
+# added common.h to install-list
 #
+#	Revision 2.2  89/04/25  08:35:36  dickey
+#	ported subset of this library to VMS; added descrip.mms for that purpose
+#	
+#	Revision 2.1  89/04/24  11:42:17  dickey
+#	added README file
+#	
 #	Revision 2.0  89/03/28  10:20:53  ste_cm
 #	BASELINE Thu Apr  6 09:37:24 EDT 1989
 #	
@@ -16,7 +22,7 @@ PUT	= copy -v -d ../$@
 MAKE	= make $(MFLAGS) -k$(MAKEFLAGS)	GET=$(GET)
 
 ####### (Standard Lists) #######################################################
-SOURCES	= README
+SOURCES	= Makefile descrip.mms README
 FIRST	=\
 	$(SOURCES)\
 	lib\
@@ -25,6 +31,7 @@ FIRST	=\
 
 ALL	=\
 	$I/cmdch.h\
+	$I/common.h\
 	$I/ptypes.h\
 	$I/rcsdefs.h\
 	$L/lib.a
@@ -59,6 +66,7 @@ interface/Makefile:			; cd interface;	$(GET) Makefile
 src/Makefile:				; cd src;	$(GET) Makefile
 
 $I/cmdch.h:	interface/cmdch.h	; cd interface;	$(PUT)
+$I/common.h:	interface/common.h	; cd interface;	$(PUT)
 $I/ptypes.h:	interface/ptypes.h	; cd interface;	$(PUT)
 $I/rcsdefs.h:	interface/rcsdefs.h	; cd interface;	$(PUT)
 $L/lib.a:	lib/lib.a		; cd lib;	$(PUT)
