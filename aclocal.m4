@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.43 1994/11/06 21:51:55 tom Exp $
+dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.45 1995/01/06 01:39:19 tom Exp $
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "TD_" to "AC_"
 dnl ---------------------------------------------------------------------------
@@ -304,6 +304,12 @@ AC_COMPILE_CHECK(tm_zone in tm, $ac_decl,
 [struct tm tm; tm.tm_isdst;], AC_DEFINE(HAVE_TM_ISDST))
 ])dnl
 dnl ---------------------------------------------------------------------------
+dnl Test if curses defines 'addchnstr()' (maybe a macro or function)
+define([TD_CURSES_ADDCHNSTR],
+[AC_COMPILE_CHECK([function/macro addchnstr],[#include <curses.h>
+], [addchnstr(0,0)], [AC_DEFINE(HAVE_ADDCHNSTR)])
+])dnl
+dnl ---------------------------------------------------------------------------
 dnl Test if curses defines 'chtype' (usually a 16-bit type for SysV curses).
 define([TD_CURSES_CHTYPE],
 [AC_CHECKING(chtype typedef)
@@ -360,7 +366,8 @@ int main() { char *d=KD, *u=KU, *r=KR, *l=KL; exit(0); }
 dnl ---------------------------------------------------------------------------
 dnl Test for interesting things about curses functions/datatypes
 define([TD_CURSES_FUNCS],
-[TD_CURSES_CHTYPE
+[TD_CURSES_ADDCHNSTR
+TD_CURSES_CHTYPE
 TD_CURSES_CBREAK
 TD_CURSES_ERASECHAR
 TD_CURSES_KILLCHAR
@@ -384,7 +391,7 @@ dnl
 define([TD_CURSES_LIBS],
 [
 AC_PROVIDE([$0])
-dnl:td_save_LIBS="${LIBS}"
+td_save_LIBS="${LIBS}"
 dnl:if test -d /usr/5lib -a -d /usr/5include
 dnl:then
 dnl:	TD_INCLUDE_PATH(/usr/5include)
@@ -409,9 +416,17 @@ then
 	case "$DEFS" in
 	*HAVE_LIBNCURSES*)
 		# Linux installs NCURSES's include files in a separate
-		# directory to avoid confusion with the native curses.
-		TD_INCLUDE_PATH(/usr/include/ncurses)
-		AC_HAVE_HEADERS(ncurses.h)
+		# directory to avoid confusion with the native curses.  Some
+		# versions have <ncurses.h>, while newer ones have it renamed
+		# to <curses.h> -- in either case it's linked, but we use the
+		# definition in <td_curse.h>
+		if test -d /usr/include/ncurses
+		then
+			TD_INCLUDE_PATH(/usr/include/ncurses)
+			AC_DEFINE(HAVE_NCURSES_H)
+		else
+			AC_HAVE_HEADERS(ncurses.h)
+		fi
 		;;
 	*)
 		LIBS="${td_save2LIBS}"

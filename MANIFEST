@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19950105
+MANIFEST for td_lib, version t19950106
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         restrictions on copying/using this software
@@ -8,6 +8,7 @@ aclocal.m4                      local autoconf macros
 config_h.in                     autoconf template for include/config.h
 configure.in                    autoconf script for td_lib
 descrip.mms                     top-level MMS script for this library on VMS
+install-sh                      install-script
 td_make.in                      autoconf template for support/td_lib.mk
 certify                         subdirectory
 certify/Makefile                makefile for certify directory
