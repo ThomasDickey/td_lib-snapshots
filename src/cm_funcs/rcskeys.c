@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcskeys.c,v 9.1 1991/09/06 07:54:18 dickey Exp $";
+static	char	Id[] = "$Id: rcskeys.c,v 11.0 1991/10/04 12:32:29 ste_cm Rel $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: rcskeys.c,v 9.1 1991/09/06 07:54:18 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	26 May 1988
  * Modified:
+ *		04 Oct 1991, conversion to ANSI
  *		06 Sep 1991, added debug-trace
  *		20 Apr 1989, include "ptypes.h" before "rcsdefs.h" because of
  *			     function-prototypes there.
@@ -27,8 +28,9 @@ static	char	Id[] = "$Id: rcskeys.c,v 9.1 1991/09/06 07:54:18 dickey Exp $";
 #include	"rcsdefs.h"
 #include	<ctype.h>
 
-rcskeys(arg)
-char	*arg;
+rcskeys(
+_AR1(char *,	arg))
+_DCL(char *,	arg)
 {
 	static	struct	{
 		int	code;

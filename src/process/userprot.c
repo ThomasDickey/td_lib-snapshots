@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: userprot.c,v 9.2 1991/09/12 08:00:55 dickey Exp $";
+static	char	Id[] = "$Id: userprot.c,v 11.0 1991/10/04 10:13:13 ste_cm Rel $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: userprot.c,v 9.2 1991/09/12 08:00:55 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	30 Aug 1988
  * Modified:
+ *		04 Oct 1991, conversion to ANSI
  *		12 Sep 1991, removed redundant def for 'errno' (VMS C 3.2)
  *		11 Jul 1991, if effective-user is root, set ownership and act
  *			     within the current process.
@@ -27,15 +28,19 @@ static	int	upr_mode;
 static	time_t	upr_time;
 
 static	
-upr_func() { 
+upr_func(_AR0) { 
 	if (chmod(upr_name, upr_mode) >= 0)
 		(void)setmtime(upr_name, upr_time);
 }
 
-userprot(name, mode, mtime)
-char	*name;
-int	mode;
-time_t	mtime;
+userprot(
+_ARX(char *,	name)
+_ARX(int,	mode)
+_AR1(time_t,	mtime)
+	)
+_DCL(char *,	name)
+_DCL(int,	mode)
+_DCL(time_t,	mtime)
 {
 	upr_name = name;
 	upr_mode = mode;

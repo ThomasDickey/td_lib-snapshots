@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: newzone.c,v 9.1 1991/09/09 08:20:57 dickey Exp $";
+static	char	Id[] = "$Id: newzone.c,v 11.0 1991/10/04 14:10:13 ste_cm Rel $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: newzone.c,v 9.1 1991/09/09 08:20:57 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	09 Jun 1988
  * Modified:
+ *		04 Oct 1991, conversion to ANSI
  *		09 Sep 1991, lint (apollo SR10.3)
  *		04 Oct 1989, lint (apollo SR10.1)
  *		25 Jul 1989, recompiled with apollo SR10 -- mods for function
@@ -37,9 +38,6 @@ static	char	Id[] = "$Id: newzone.c,v 9.1 1991/09/09 08:20:57 dickey Exp $";
 #define	STR_PTYPES
 #include	"ptypes.h"
 #include	<time.h>
-extern	time_t	time();
-extern	char	*getenv();
-extern	char	*ctime();
 
 #define	MINUTE	60
 #define	HOUR	(60 * MINUTE)
@@ -60,7 +58,6 @@ int	localzone;		/* public copy of minutes-west */
 #ifndef	apollo
 typedef	char	**VEC;
 extern	VEC	environ;
-extern	char	*stralloc();
 	/*ARGSUSED*/
 	def_ALLOC(char *)
 #endif	/* apollo */
@@ -76,8 +73,9 @@ extern	char	*stralloc();
  */
 static
 char *
-name_of_tz(minutes)
-int	minutes;
+name_of_tz(
+_AR1(int,	minutes))
+_DCL(int,	minutes)
 {
 	register int	hours	= (minutes/60);
 	static	 char	computed[NAMELEN];
@@ -113,8 +111,9 @@ int	minutes;
  * Set the time-zone environment with the specified string.
  */
 static
-reset_tz(name)
-char	*name;
+reset_tz(
+_AR1(char *,	name))
+_DCL(char *,	name)
 {
 #ifdef	apollo
 	putenv(name);
@@ -162,7 +161,7 @@ int	match	= FALSE;	/* true iff we need no change */
  * (0000 hours on 1 Jan 1970).
  */
 static
-init_tz()
+init_tz(_AR0)
 {
 	if (!*old_TZ) {
 	time_t	zero = 0;
@@ -186,8 +185,14 @@ init_tz()
 /*
  * Set our timezone to a specified value
  */
-newzone(hours, minutes, apres)
-int	hours, minutes, apres;
+newzone(
+_ARX(int,	hours)
+_ARX(int,	minutes)
+_AR1(int,	apres)
+	)
+_DCL(int,	hours)
+_DCL(int,	minutes)
+_DCL(int,	apres)
 {
 char	new_TZ[NAMELEN];
 
@@ -206,7 +211,7 @@ char	new_TZ[NAMELEN];
 /*
  * Restore the original timezone (from before invoking 'newzone()')
  */
-oldzone()
+oldzone(_AR0)
 {
 	init_tz();
 	reset_tz(old_TZ);
@@ -216,7 +221,7 @@ oldzone()
  *	test driver							*
  ************************************************************************/
 #ifdef	TEST
-test()
+test(_AR0)
 {
 	newzone(5, 0, FALSE);
 	newzone(8, 0, FALSE);
@@ -224,7 +229,7 @@ test()
 	newzone(4, 30, FALSE);
 }
 
-main()
+_MAIN
 {
 	now = EST_REF;
 	printf("** now = %s", ctime(&now));
@@ -232,13 +237,7 @@ main()
 	printf("** six-months ago\n");
 	now -= SIX_MM;
 	test();
-}
-
-failed(s)
-char	*s;
-{
-	perror(s);
-	exit(0);
+	exit(SUCCESS);
 	/*NOTREACHED*/
 }
 #endif

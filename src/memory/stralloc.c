@@ -1,45 +1,15 @@
 #ifndef	lint
-static	char	Id[] = "$Id: stralloc.c,v 9.0 1991/05/15 09:54:33 ste_cm Rel $";
+static	char	Id[] = "$Id: stralloc.c,v 12.0 1991/10/04 07:59:27 ste_cm Rel $";
 #endif
 
 /*
  * Title:	stralloc.c (string-allocator)
  * Author:	T.E.Dickey
  * Created:	01 Dec 1987
- * $Log: stralloc.c,v $
- * Revision 9.0  1991/05/15 09:54:33  ste_cm
- * BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
- *
- *		Revision 8.1  91/05/15  09:54:33  dickey
- *		apollo sr10.3 cpp complains about tag in #endif
- *		
- *		Revision 8.0  89/10/04  12:53:52  ste_cm
- *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
- *		
- *		Revision 7.0  89/10/04  12:53:52  ste_cm
- *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
- *		
- *		Revision 6.0  89/10/04  12:53:52  ste_cm
- *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
- *		
- *		Revision 5.0  89/10/04  12:53:52  ste_cm
- *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
- *		
- *		Revision 4.1  89/10/04  12:53:52  dickey
- *		lint (apollo SR10.1)
- *		
- *		Revision 4.0  88/05/10  13:16:06  ste_cm
- *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
- *		
- *		Revision 3.0  88/05/10  13:16:06  ste_cm
- *		BASELINE Mon Jun 19 13:27:01 EDT 1989
- *		
- *		Revision 2.0  88/05/10  13:16:06  ste_cm
- *		BASELINE Thu Apr  6 09:45:13 EDT 1989
- *		
- *		Revision 1.3  88/05/10  13:16:06  dickey
- *		sccs2rcs keywords
- *		
+ * Modified:
+ *		03 Oct 1991, converted to ANSI
+ *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
+ *		04 Oct 1989, lint (apollo SR10.1)
  *		10 May 1988, route 'free' via 'dofree()'.
  *
  * Function:	Allocate space for a given string, copy it to the
@@ -60,14 +30,16 @@ static	char	Id[] = "$Id: stralloc.c,v 9.0 1991/05/15 09:54:33 ste_cm Rel $";
 #include	"ptypes.h"
 
 char *
-stralloc(s)
-char	*s;
+stralloc(
+_AR1(char *,	s))
+_DCL(char *,	s)
 {
 	return(strcpy(doalloc((char *)0, (unsigned)strlen(s)+1), s));
 }
 
-strfree(s)
-char	*s;
+strfree(
+_AR1(char *,	s))
+_DCL(char *,	s)
 {
 	dofree(s);
 }

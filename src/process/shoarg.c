@@ -1,11 +1,12 @@
 #ifndef	lint
-static	char	Id[] = "$Id: shoarg.c,v 9.4 1991/07/22 14:38:13 dickey Exp $";
+static	char	Id[] = "$Id: shoarg.c,v 12.0 1991/10/04 13:56:30 ste_cm Rel $";
 #endif
 
 /*
  * Title:	shoarg.c (display argv-array)
  * Created:	20 Jun 1991
  * Modified:
+ *		04 Oct 1991, conversion to ANSI
  *		22 Jul 1991, don't assume that 'command' contains no spaces.
  *			     Added entrypoint 'bldcmd()'.
  */

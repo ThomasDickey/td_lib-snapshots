@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: doalloc.c,v 9.1 1991/10/03 14:58:14 dickey Exp $";
+static	char	Id[] = "$Id: doalloc.c,v 10.0 1991/10/04 16:37:12 ste_cm Rel $";
 #endif
 
 /*
@@ -128,7 +128,7 @@ _DCL(char *,	oldp)
 #ifdef	TEST
 _MAIN
 {
-	dofree(-1);		/* make sure walkback works */
+	dofree((char *)-1);		/* make sure walkback works */
 	exit(SUCCESS);
 	/*NOTREACHED*/
 }

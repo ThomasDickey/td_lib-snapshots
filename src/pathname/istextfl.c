@@ -1,11 +1,13 @@
 #ifndef	lint
-static	char	Id[] = "$Id: istextfl.c,v 9.0 1991/05/15 09:26:28 ste_cm Rel $";
+static	char	Id[] = "$Id: istextfl.c,v 12.0 1991/10/04 07:34:20 ste_cm Rel $";
 #endif
 
 /*
  * Title:	istextfile.c (is this a text-file?)
  * Author:	T.E.Dickey
  * Created:	24 Oct 1989
+ * Modified:
+ *		03 Oct 1991, converted to ANSI
  *
  * Function:	Test a given file to see if if contains characters which are
  *		not normally considered printable ASCII.  If so (or if the
@@ -17,8 +19,9 @@ static	char	Id[] = "$Id: istextfl.c,v 9.0 1991/05/15 09:26:28 ste_cm Rel $";
 #include	"ptypes.h"
 #include	<ctype.h>
 
-istextfile(name)
-char	*name;
+istextfile(
+_AR1(char *,	name))
+_DCL(char *,	name)
 {
 	auto	FILE	*fp;
 	auto	char	bfr[BUFSIZ];

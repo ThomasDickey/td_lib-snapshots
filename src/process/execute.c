@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: execute.c,v 9.1 1991/09/12 07:36:20 dickey Exp $";
+static	char	Id[] = "$Id: execute.c,v 11.0 1991/10/04 10:14:52 ste_cm Rel $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: execute.c,v 9.1 1991/09/12 07:36:20 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	21 May 1988
  * Modified:
+ *		04 Oct 1991, conversion to ANSI
  *		12 Sep 1991, removed redundant def for 'errno' (VMS C 3.2)
  *		31 May 1991, lint (SunOs)
  *		15 May 1991, mods to compile under apollo sr10.3
@@ -52,9 +53,12 @@ extern	char	**environ;
 	/*ARGSUSED*/
 	def_DOALLOC(char *)
 
-execute(verb, args)
-char	*verb;
-char	*args;
+execute(
+_ARX(char *,	verb)
+_AR1(char *,	args)
+	)
+_DCL(char *,	verb)
+_DCL(char *,	args)
 {
 	char	cmds[BUFSIZ],
 		*s	= strcat(strcat(strcpy(cmds, verb), " "), args);
@@ -181,8 +185,12 @@ int	count	= 3,		/* minimum needed for 'bldarg()' */
 
 #ifdef	TEST
 static
-dump_exec(verb, args)
-char	*verb, *args[];
+dump_exec(
+_ARX(char *,	verb)
+_AR1(char **,	args)
+	)
+_DCL(char *,	verb)
+_DCL(char **,	args)
 {
 	register int	j;
 	fprintf(stderr, "-> %s\n", verb);
@@ -190,8 +198,7 @@ char	*verb, *args[];
 		fprintf(stderr, "%d) %s\n", j, args[j]);
 }
 
-main(argc, argv)
-char	*argv[];
+_MAIN
 {
 	register int	j;
 
@@ -212,5 +219,6 @@ char	*argv[];
 	}
 	fprintf(stderr, "? expected verb+parms\n");
 	exit(FAIL);
+	/*NOTREACHED*/
 }
 #endif	/* TEST */

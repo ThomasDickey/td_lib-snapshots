@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: blip.c,v 9.2 1991/07/22 16:09:10 dickey Exp $";
+static	char	Id[] = "$Id: blip.c,v 9.3 1991/10/04 12:33:22 dickey Exp $";
 #endif
 
 /*
@@ -7,13 +7,15 @@ static	char	Id[] = "$Id: blip.c,v 9.2 1991/07/22 16:09:10 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	11 Aug 1988, from 'beep()'
  * Modified:
+ *		04 Oct 1991, conversion to ANSI
  *		20 Jun 1991, changed return-type to 'void'
  */
 
 #include	"ptypes.h"
 
-void blip(c)
-int	c;
+void blip(
+_AR1(int,	c))
+_DCL(int,	c)
 {
 #ifdef	putc
 	c = putc((unsigned char)c, stderr);
@@ -21,5 +23,5 @@ int	c;
 	c = putc(c, stderr);
 #endif
 	if (c != EOF)
-		(void)fflush(stderr);
+		FFLUSH(stderr);
 }

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: fp2argv.c,v 9.1 1991/06/20 08:09:22 dickey Exp $";
+static	char	Id[] = "$Id: fp2argv.c,v 10.0 1991/10/04 16:38:04 ste_cm Rel $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: fp2argv.c,v 9.1 1991/06/20 08:09:22 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	18 Jul 1988
  * Modified:
+ *		04 Oct 1991, conversion to ANSI
  *		20 Jun 1991, added trace-arg for 'ded'
  *
  * Function:	Reads a file via standard I/O and allocates an argv-like
@@ -19,16 +20,19 @@ static	char	Id[] = "$Id: fp2argv.c,v 9.1 1991/06/20 08:09:22 dickey Exp $";
  */
 
 #include	"ptypes.h"
-extern	char	*stralloc();
 
 	/*ARGSUSED*/
 	def_DOALLOC(char *)
 #define	CHUNK	32
 
-fp2argv(fp, argv_, trace)
-FILE	*fp;
-char	***argv_;
-void	(*trace)();
+fp2argv(
+_ARX(FILE *,	fp)
+_ARX(char ***,	argv_)
+_FN1(void,	trace)
+	)
+_DCL(FILE *,	fp)
+_DCL(char ***,	argv_)
+_DCL(void,	(*trace)())
 {
 	register char **vec = 0;
 	register int  lines = 0;
@@ -53,21 +57,15 @@ void	(*trace)();
 }
 
 #ifdef	TEST
-main(argc, argv)
-char	*argv[];
+_MAIN
 {
 	char	**list;
 	register int j;
 
-	fp2argv(stdin, &list);
+	fp2argv(stdin, &list, 0);
 	for (j = 0; list[j]; j++)
-		printf("%5d:\t%s", j+1, list[j]);
-}
-
-failed(s)
-char	*s;
-{
-	perror(s);
-	exit(1);
+		PRINTF("%5d:\t%s", j+1, list[j]);
+	exit(SUCCESS);
+	/*NOTREACHED*/
 }
 #endif

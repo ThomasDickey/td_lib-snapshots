@@ -1,11 +1,13 @@
 #ifndef	lint
-static	char	Id[] = "$Id: strbcmp.c,v 9.0 1991/05/15 09:55:12 ste_cm Rel $";
+static	char	Id[] = "$Id: strbcmp.c,v 9.1 1991/10/04 07:37:13 dickey Exp $";
 #endif
 
 /*
  * Title:	strbcmp.c (string-blank-compare)
  * Author:	T.E.Dickey
  * Created:	07 Apr 1989
+ * Modified:
+ *		03 Oct 1991, converted to ANSI
  *
  * Function:	compare two strings, treating sequences of embedded whitespace
  *		as a single blank, and ignoring trailing whitespace.  This is
@@ -16,12 +18,17 @@ static	char	Id[] = "$Id: strbcmp.c,v 9.0 1991/05/15 09:55:12 ste_cm Rel $";
  *		otherwise negative).
  */
 
+#include	"ptypes.h"
 #include	<ctype.h>
 
 #define	SKIP(p)	while (isspace(*p))	p++;
 
-strbcmp(a,b)
-register char	*a, *b;
+strbcmp(
+_ARX(register char *,	a)
+_AR1(register char *,	b)
+	)
+_DCL(register char *,	a)
+_DCL(register char *,	b)
 {
 	register int	cmp;
 
@@ -38,9 +45,7 @@ register char	*a, *b;
 }
 
 #ifdef	TEST
-#include	<sys/types.h>
-extern	time_t	time();
-main()
+_MAIN
 {
 	extern	time_t	time();
 	auto	time_t	now;

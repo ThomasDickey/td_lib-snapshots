@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: filecopy.c,v 9.1 1991/09/12 07:33:39 dickey Exp $";
+static	char	Id[] = "$Id: filecopy.c,v 12.0 1991/10/04 12:26:18 ste_cm Rel $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: filecopy.c,v 9.1 1991/09/12 07:33:39 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	30 Aug 1988
  * Modified:
+ *		04 Oct 1991, conversion to ANSI
  *		12 Sep 1991, removed redundant def for 'errno' (VMS C 3.2)
  *		13 Sep 1988, use 'catchall()'
  *		30 Aug 1988, redundant 'chmod()' is needed on Apollo SR9.7 if
@@ -33,10 +34,14 @@ static	char	Id[] = "$Id: filecopy.c,v 9.1 1991/09/12 07:33:39 dickey Exp $";
 #include	<sys/signal.h>
 #include	<errno.h>
 
-filecopy(src, dst, copy)
-char	*src;
-char	*dst;
-int	copy;
+filecopy(
+_ARX(char *,	src)
+_ARX(char *,	dst)
+_AR1(int,	copy)
+	)
+_DCL(char *,	src)
+_DCL(char *,	dst)
+_DCL(int,	copy)
 {
 	struct	stat	sb1, sb2;
 	register int	count,
@@ -94,15 +99,16 @@ int	copy;
 }
 
 #ifdef	TEST
-main(argc, argv)
-char	*argv[];
+_MAIN
 {
 	char	*src, *dst;
 
 	if (argc > 2) {
-		printf("src=%s, dst=%s\n", src = argv[1], dst = argv[2]);
+		PRINTF("src=%s, dst=%s\n", src = argv[1], dst = argv[2]);
 		if (filecopy(src, dst, TRUE) < 0)
 			perror("copy");
 	}
+	exit(SUCCESS);
+	/*NOTREACHED*/
 }
 #endif
