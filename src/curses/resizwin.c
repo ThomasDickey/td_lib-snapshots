@@ -1,12 +1,10 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: resizwin.c,v 12.12 1995/07/06 13:41:12 tom Exp $";
-#endif
-
 /*
  * Author:	T.E.Dickey
  * Title:	resizewin.c (change size of curses window)
  * Created:	21 Apr 1988
  * Modified:
+ *		03 Sep 1995, mods for bsd4.4 curses
+ *		04 Jul 1995, integration with ncurses 1.9.3
  *		23 Jul 1994, adaptations for ncurses and HP/UX curses.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
@@ -37,6 +35,8 @@ static	char	Id[] = "$Id: resizwin.c,v 12.12 1995/07/06 13:41:12 tom Exp $";
 
 #include	"td_curse.h"
 
+MODULE_ID("$Id: resizwin.c,v 12.14 1995/09/04 19:58:52 tom Exp $")
+
 #if HAVE_RESIZETERM
 extern	WINDOW	*newscr;
 #endif
@@ -62,6 +62,13 @@ int	resizewin(_AR0)
 			COLS  = my_COLS;
 			savewin();
 			unsavewin(TRUE,0);
+			return (TRUE);
+#endif
+#if CURSES_LIKE_BSD44
+			wresize(stdscr, my_LINES, my_COLS);
+			wresize(curscr, my_LINES, my_COLS);
+			LINES = my_LINES;
+			COLS  = my_COLS;
 			return (TRUE);
 #endif
 #if CURSES_LIKE_SYSV

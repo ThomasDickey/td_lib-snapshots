@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.66 1995/08/15 13:50:13 tom Exp $
+dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.68 1995/09/04 20:59:06 tom Exp $
 dnl vi:set ts=4:
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "TD_" to "AC_"
@@ -149,14 +149,19 @@ AC_PROVIDE([$0])
 if test $WithNcurses = yes; then
 	AC_CHECK_LIB(ncurses,initscr)
 else
-	ac_cv_lib_ncurses=unknown
+	# Check if we've already got curses functions in our library list
+	# (e.g., if the user is overriding this test by setting $LIBS).
+	AC_TRY_LINK([#include <curses.h>],
+		[initscr()],
+		[ac_cv_lib_ncurses=predefined],
+		[ac_cv_lib_ncurses=unknown])
 fi
 if test $ac_cv_lib_ncurses = yes; then
 	# Linux installs NCURSES's include files in a separate directory to avoid
 	# confusion with the native curses.  NCURSES has its own termcap support.
 	TD_INCLUDE_PATH(/usr/include/ncurses /usr/local/include/ncurses)
 	ac_cv_lib_curses=yes
-else
+elif test $ac_cv_lib_ncurses = unknown; then
 	# The curses library often depends on the termcap library, so we've checked
 	# for it first.  We could make a more complicated test to ensure that we
 	# don't add the termcap library, but some functions use it anyway if it's
@@ -187,7 +192,7 @@ AC_CACHE_VAL(td_cv_curses_style,[
 	td_cv_curses_style=unknown
 	save_CFLAGS="$CFLAGS"
 	CFLAGS="-I./include $CFLAGS"
-	for td_type in ncurses sysv bsd
+	for td_type in ncurses sysv bsd bsd44
 	do
 		TD_UPPERCASE($td_type,td_tr_type)
 		TD_MSG_LOG($td_tr_type curses-struct)

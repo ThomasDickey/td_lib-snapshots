@@ -1,12 +1,9 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: rawgets.c,v 12.15 1995/08/07 00:45:48 tom Exp $";
-#endif
-
 /*
  * Author:	T.E.Dickey
  * Title:	rawgets.c (raw-mode 'gets()')
  * Created:	29 Sep 1987 (from 'fl.c')
  * Modified:
+ *		03 Sep 1995, make this work with bsd4.4 curses
  *		19 Jul 1994, adjustment for ncurses _max[xy] bug.
  *		16 Jul 1994, explicitly call for reverse-video if Sys5-curses.
  *		30 Jun 1994, added CTL/P, CTL/N as synonyms for up/down arrows
@@ -72,6 +69,8 @@ static	char	Id[] = "$Id: rawgets.c,v 12.15 1995/08/07 00:45:48 tom Exp $";
 #include	"td_curse.h"
 #include	"dyn_str.h"
 
+MODULE_ID("$Id: rawgets.c,v 12.17 1995/09/04 15:21:39 tom Exp $")
+
 #define	SHIFT	5
 
 #ifndef KEY_MIN
@@ -128,11 +127,12 @@ static
 void	ClearIt(_AR0)
 {
 	if (Z) {
-		register int	x;
+		register int	x, y;
 		auto	int	highlighted = (!wrap && !Imode);
 
 		if (highlighted)			NoHighlight(Z);
-		for (x = Z->_curx; x < xlast; x++)	(void)waddch(Z,' ');
+		getyx(Z, y, x);
+		for (; x < xlast; x++)			(void)waddch(Z,' ');
 		if (highlighted)			Highlight(Z);
 	}
 }
@@ -312,10 +312,10 @@ char *	DeleteBefore(
 		}
 
 		while ((*d++ = *s++) != EOS)
-			;
+			/*EMPTY*/;
 
 		if (Z) {
-			old = Z->_cury;
+			getyx(Z, old, x);
 			MoveTo(at);
 			ShowAt(at);
 			getyx(Z, new, x);

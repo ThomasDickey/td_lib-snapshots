@@ -1,4 +1,4 @@
-/* $Id: td_curse.h,v 12.34 1995/07/30 19:55:23 tom Exp $ */
+/* $Id: td_curse.h,v 12.35 1995/09/04 19:02:52 tom Exp $ */
 
 /*
  * TD_LIB CURSES-related definitions
@@ -66,14 +66,27 @@
  * The SYS5 clone "ncurses" 1.8.5 has an off-by-one error in the computation of
  * the _maxy/_maxx values.  These macros are used to hide this bug.
  */
+#if CURSES_LIKE_BSD44
+#define	wMaxX(w)	((w)->maxx)
+#define	wMaxY(w)	((w)->maxy)
+#else
 #define	wMaxX(w)	(((w)->_maxx) + (COLS  - stdscr->_maxx))
 #define	wMaxY(w)	(((w)->_maxy) + (LINES - stdscr->_maxy))
+#endif
 
 /*----------------------------------------------------------------------------*/
 #if CURSES_LIKE_BSD
 #define CursesLine(win,y)	(win)->_y[y]
 #define CursesFirstCh(win,y)	(win)->_firstch[y]
 #define CursesLastCh(win,y)	(win)->_lastch[y]
+#endif
+#if CURSES_LIKE_BSD44		/* curses with SlackWare 2.2 (bsd 4.4) */
+#define CursesType              __LDATA
+#define CursesData(win,y,x)	(win)->lines[y]->line[x].ch
+#define CursesLine(win,y)	(win)->lines[y]->line
+#define CursesFirstCh(win,y)	(win)->lines[y]->firstch
+#define CursesLastCh(win,y)	(win)->lines[y]->lastch
+#include <termios.h>
 #endif
 #if CURSES_LIKE_SYSV
 #define CursesLine(win,y)	(win)->_line[y]
@@ -84,6 +97,14 @@
 #define CursesLine(win,y)	(win)->_line[y].text
 #define CursesFirstCh(win,y)	(win)->_line[y].firstchar
 #define CursesLastCh(win,y)	(win)->_line[y].lastchar
+#endif
+
+#ifndef CursesType
+#define CursesType chtype
+#endif
+
+#ifndef CursesData
+#define CursesData(win,y,x) CursesLine(win,y)[x]
 #endif
 
 /*----------------------------------------------------------------------------*/

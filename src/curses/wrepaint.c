@@ -1,12 +1,9 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: wrepaint.c,v 12.6 1995/02/11 19:21:05 tom Exp $";
-#endif
-
 /*
  * Title:	wrepaint.c (repaint-window)
  * Author:	T.E.Dickey
  * Created:	24 Aug 1989
  * Modified:
+ *		04 Sep 1995, make this work with bsd4.4 curses
  *		26 Apr 1994, port to Linux
  *		01 Nov 1993, ported to HP/UX. This works well enough to manage
  *			     the curses output, but not the non-curses output
@@ -26,6 +23,8 @@ static	char	Id[] = "$Id: wrepaint.c,v 12.6 1995/02/11 19:21:05 tom Exp $";
 
 #include	"td_curse.h"
 
+MODULE_ID("$Id: wrepaint.c,v 12.8 1995/09/04 16:08:25 tom Exp $")
+
 void	wrepaint(
 	_ARX(WINDOW *,	win)
 	_AR1(int,	row)
@@ -33,33 +32,9 @@ void	wrepaint(
 	_DCL(WINDOW *,	win)
 	_DCL(int,	row)
 {
-#ifdef _hpux
-	dlog_comment(wrepaint %p/%p @%d\n", win, curscr, __LINE__);
-#endif
-#ifdef hpux
-	dlog_comment(wrepaint %p/%p @%d\n", win, curscr, __LINE__);
-#endif
-#if	SYS5_CURSES
-# if defined(linux) || defined(hpux)
+#if	SYS5_CURSES || CURSES_LIKE_BSD44
 	touchwin(win);
 	wrefresh(curscr);
-# else	/* tested with _hpux in 1993 */
-	WINDOW	*tmp;
-	int	y, x;
-
-	tmp = newwin(LINES-row, COLS, row, 0);
-	getyx(win, y, x);
-
-	overwrite(win,tmp);
-	wmove(win, row, 0);
-	wclrtobot(win);
-
-	wrefresh(tmp);
-	overwrite(tmp,win);
-	delwin(tmp);
-	wmove(win, y, x);
-	wrefresh(win);
-# endif
 #else
 	auto	int	min_row = win->_begy,
 			min_col = win->_begx,

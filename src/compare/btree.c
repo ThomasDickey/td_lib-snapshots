@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: btree.c,v 12.2 1995/07/30 20:57:15 tom Exp $";
-#endif
-
 /*
  * Title:	btree.c (binary-tree)
  * Author:	T.E.Dickey
@@ -15,13 +11,15 @@ static	char	Id[] = "$Id: btree.c,v 12.2 1995/07/30 20:57:15 tom Exp $";
 
 #include	<td_btree.h>
 
+MODULE_ID("$Id: btree.c,v 12.4 1995/09/04 14:00:34 tom Exp $")
+
 #define	llink	links[0]
 #define	rlink	links[1]
 
 			/* definitions to make this simple, like Knuth */
 #define	LLINK(p)	p->llink
 #define	RLINK(p)	p->rlink
-#define	KEY(p)		p->value
+#define	KEY(p)		p->value.text
 #define	B(p)		p->balance
 
 #define	LINK(a,p)	p->links[(a)>0]

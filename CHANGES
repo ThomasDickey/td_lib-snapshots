@@ -1,3 +1,52 @@
+1995-09-04  dickey@clark.net
+
+	* aclocal.m4:
+	added fix to let me override curses libs (since the shared libraries
+	on slak 2.2 override the -L path unless I specify the full name of the
+	".a" file)
+
+	* src/curses/savewin.c: ifdef'd for bsd4.3 _only_
+
+	* src/curses/savewin.c: use MODULE_ID
+
+	* src/curses/wresize.c: mods for bsd4.4 curses
+
+	* src/curses/wresize.c: use MODULE_ID
+
+	* src/curses/resizwin.c: mods for bsd4.4 curses (don't use savewin!)
+
+	* src/curses/resizwin.c: use MODULE_ID
+
+	* include/td_curse.h: added fixes for bsd4.4 curses
+
+	* src/memory/txtalloc.c:
+	modified allocation scheme to avoid alignment problems
+
+	* src/curses/wrepaint.c:
+	drop hpux hack (cannot test it anymore), and added bsd4.4 curses
+
+	* src/curses/wrepaint.c: use MODULE_ID
+
+	* src/curses/win2file.c: make this work with bsd4.4 curses
+
+	* src/curses/win2file.c: use MODULE_ID
+
+	* src/curses/rawgets.c: make this work with bsd4.4 curses
+
+	* src/curses/rawgets.c: use MODULE_ID
+
+	* src/curses/dumpwin.c: make this work with bsd4.4 curses
+
+	* aclocal.m4: added curses-type "bsd44"
+
+	* src/unix/uid2s.c, src/unix/gid2s.c, include/td_btree.h:
+	modified allocation scheme to avoid alignment problems
+
+	* src/compare/btree.c:
+	modified allocation scheme to avoid problems with alignment
+
+	* src/compare/btree.c: use MODULE_ID
+
 1995-09-03  dickey@clark.net
 
 	* src/unix/gid2s.c:

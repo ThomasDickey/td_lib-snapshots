@@ -1,5 +1,5 @@
 #ifndef NO_IDENT
-static	char	Id[] = "$Id: gid2s.c,v 12.5 1995/09/03 21:48:17 tom Exp $";
+static	char	Id[] = "$Id: gid2s.c,v 12.6 1995/09/04 14:09:22 tom Exp $";
 #endif
 
 /*
@@ -28,8 +28,6 @@ static	char	Id[] = "$Id: gid2s.c,v 12.5 1995/09/03 21:48:17 tom Exp $";
 #include <td_btree.h>
 
 #if HAVE_GETGRGID
-
-/*ARGSUSED*/ def_ALLOC(BI_NODE)
 
 typedef	struct {
 	int		user;
@@ -63,10 +61,10 @@ BI_NODE	*new_node (
 	_DCL(void *,	data)
 {
 	GID_DATA *value = (GID_DATA *)data;
-	BI_NODE *result = ALLOC(BI_NODE, sizeof(BI_NODE) + sizeof(GID_DATA));
+	BI_NODE *result = BI_NODE_ALLOC(sizeof(GID_DATA));
 	memset(result, 0, sizeof(*result));
 	value->name = lookup_gid(value->user);
-	memcpy(result->value, data, sizeof(GID_DATA));
+	memcpy((char *)&(result->value), (char *)data, sizeof(GID_DATA));
 	return result;
 }
 

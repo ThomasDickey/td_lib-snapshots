@@ -1,12 +1,9 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: win2file.c,v 12.7 1995/03/31 01:37:39 tom Exp $";
-#endif
-
 /*
  * Title:	win2file.c (window-to-file dump)
  * Author:	T.E.Dickey
  * Created:	07 Jun 1988
  * Modified:
+ *		03 Sep 1995, make this work with bsd4.4 curses
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, converted to ANSI
@@ -37,11 +34,9 @@ static	char	Id[] = "$Id: win2file.c,v 12.7 1995/03/31 01:37:39 tom Exp $";
 #include	<ctype.h>
 #include	<time.h>
 
-#define	OUT	FPRINTF(fp,
+MODULE_ID("$Id: win2file.c,v 12.9 1995/09/04 16:05:38 tom Exp $")
 
-#ifndef A_ATTRIBUTES
-#define A_ATTRIBUTES 0200
-#endif
+#define	OUT	FPRINTF(fp,
 
 #ifndef A_ALTCHARSET
 #define A_ALTCHARSET 0
@@ -53,6 +48,12 @@ static	char	Id[] = "$Id: win2file.c,v 12.7 1995/03/31 01:37:39 tom Exp $";
 
 #ifndef A_STANDOUT
 #define A_STANDOUT   0200
+#endif
+
+#if CURSES_LIKE_BSD44
+#define CursesBold(win,y,x) CursesLine(win,y)[x].attr
+#else
+#define CursesBold(win,y,x) CursesData(win,y,x) & A_STANDOUT
 #endif
 
 static
@@ -81,9 +82,8 @@ void	win2fp(
 	auto	time_t	now	= time((time_t *)0);
 	auto	int	y,x;
 
-	register chtype	*s;
-	register int	j;
-	register chtype	k;
+	register int	j, k;
+	register chtype	khr;
 	int	rows = wMaxY(win);
 
 	OUT "%sscreen saved at %s", *prefix ? prefix : "\f", ctime(&now));
@@ -92,59 +92,60 @@ void	win2fp(
 	getyx(win, y, x);
 	for (j = 0; j < rows; j++) {
 		OUT "%s", prefix);
-		if ((s = CursesLine(win,j)) != NULL) {
-			auto	chtype	*t = s;
+		if (CursesLine(win,j) != NULL) {
+			int	last = 0;
 
 			/* animate this so user can see something */
-			k = *s;
+			khr = CursesData(win,j,0);
 			MarkIt(win, j, A_STANDOUT | '*');
 			(void)wrefresh(win);
-			MarkIt(win, j, k);
+			MarkIt(win, j, khr);
 
 			/* find the last nonblank column */
-			while ((k = toascii(*s++)) != EOS) {
-				if ((s - CursesLine(win,j)) >= wMaxX(win))
+			for (k = 0; k < wMaxX(win); k++) {
+				khr = CursesData(win,j,k);
+				if ((khr = toascii(khr)) == EOS)
 					break;
-				if (!isspace(k))
-					t = s;
+				if (!isspace(khr))
+					last = k;
 			}
 
 			/* dump the line, setting boldface as needed */
-			for (s = CursesLine(win,j); s < t; s++) {
+			for (k = 0; k < last; k++) {
 				auto	int	bold;
 
-				k = *s;
-				bold = (k & A_STANDOUT) != 0;
-				k &= (A_CHARTEXT|A_ALTCHARSET);
+				khr = CursesData(win,j,k);
+				bold = CursesBold(win,j,k);
+				khr &= (A_CHARTEXT|A_ALTCHARSET);
 
 #ifdef ACS_HLINE /* figure we've got the others */
-				if (k == ACS_HLINE)
-					k = '-';
-				else if (k == ACS_VLINE)
-					k = '|';
-				else if (k == ACS_ULCORNER
-				   ||	 k == ACS_LLCORNER
-				   ||	 k == ACS_URCORNER
-				   ||	 k == ACS_LRCORNER
-				   ||	 k == ACS_RTEE
-				   ||	 k == ACS_LTEE
-				   ||	 k == ACS_BTEE
-				   ||	 k == ACS_TTEE
-				   ||	 k == ACS_PLUS)
-				   	k = '+';
+				if (khr == ACS_HLINE)
+					khr = '-';
+				else if (khr == ACS_VLINE)
+					khr = '|';
+				else if (khr == ACS_ULCORNER
+				   ||	 khr == ACS_LLCORNER
+				   ||	 khr == ACS_URCORNER
+				   ||	 khr == ACS_LRCORNER
+				   ||	 khr == ACS_RTEE
+				   ||	 khr == ACS_LTEE
+				   ||	 khr == ACS_BTEE
+				   ||	 khr == ACS_TTEE
+				   ||	 khr == ACS_PLUS)
+				   	khr = '+';
 #if 1
-					else k = toascii(k);
+					else khr = toascii(khr);
 #else
-				else if (!isascii(k))
-					k = '*';
+				else if (!isascii(khr))
+					khr = '*';
 #endif /**/
 #else
-				k = toascii(k);
+				khr = toascii(khr);
 #endif
-				if (isprint(k)) {
+				if (isprint(khr)) {
 					if (bold)
-						OUT "%c\b", (int)k);
-					OUT "%c", (int)k);
+						OUT "%c\b", (int)khr);
+					OUT "%c", (int)khr);
 				} else
 					OUT "?");
 			}
