@@ -1,3 +1,7 @@
+1991-07-23  dickey@software.org
+
+	* Makefile: on SunOs, must ranlib archive after copying it
+
 1991-07-22  dickey@software.org
 
 	* src/curses/blip.c: lint

@@ -1,21 +1,12 @@
-# $Id: Makefile,v 9.0 1991/06/05 14:36:31 ste_cm Rel $
+# $Id: Makefile,v 9.1 1991/07/23 10:01:32 dickey Exp $
 # Top-level makefile for CM_TOOLS common library
 #
 # $Log: Makefile,v $
-# Revision 9.0  1991/06/05 14:36:31  ste_cm
-# BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+# Revision 9.1  1991/07/23 10:01:32  dickey
+# on SunOs, must ranlib archive after copying it
 #
-#	Revision 8.1  91/06/05  14:36:31  dickey
-#	cleanup install-rule
-#	
-#	Revision 8.0  90/05/08  13:53:34  ste_cm
-#	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
-#	
-#	Revision 7.1  90/05/08  13:53:34  dickey
-#	added 'sccsdefs.h' to install-rule; simplified other rules
-#	
-#	Revision 7.0  89/08/22  09:29:58  ste_cm
-#	BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+#	Revision 9.0  91/06/05  14:36:31  ste_cm
+#	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
 #	
 ####### (Development) ##########################################################
 TOP	= ../..
@@ -76,4 +67,4 @@ $I/common.h:	interface/common.h	; cd interface;	$(PUT)
 $I/ptypes.h:	interface/ptypes.h	; cd interface;	$(PUT)
 $I/rcsdefs.h:	interface/rcsdefs.h	; cd interface;	$(PUT)
 $I/sccsdefs.h:	interface/sccsdefs.h	; cd interface;	$(PUT)
-$L/lib.a:	lib/lib.a		; cd lib;	$(PUT)
+$L/lib.a:	lib/lib.a		; cd lib;	$(PUT); ranlib $@
