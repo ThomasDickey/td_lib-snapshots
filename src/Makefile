@@ -1,4 +1,4 @@
-# @(#)Makefile	1.56 89/01/24 14:24:49
+# @(#)Makefile	1.57 89/03/08 13:20:30
 # MAKE-file for miscellaneous library routines
 #
 ####### (Development) ##########################################################
@@ -59,8 +59,10 @@ CSRC	=\
 	rcslocks.c\
 	rcsname.c\
 	rcspath.c\
+	rcspermit.c\
 	rcstemp.c\
 	resizewin.c\
+	revert.c\
 	sameleaf.c\
 	savewin.c\
 	sccs_dir.c\
@@ -69,6 +71,7 @@ CSRC	=\
 	setmtime.c\
 	stralloc.c\
 	strclean.c\
+	strtrim.c\
 	s2gid.c\
 	s2uid.c\
 	txtalloc.c\
@@ -131,8 +134,10 @@ OBJS	=\
 	rcslocks.o\
 	rcsname.o\
 	rcspath.o\
+	rcspermit.o\
 	rcstemp.o\
 	resizewin.o\
+	revert.o\
 	sameleaf.o\
 	savewin.o\
 	sccs_dir.o\
@@ -141,6 +146,7 @@ OBJS	=\
 	setmtime.o\
 	stralloc.o\
 	strclean.o\
+	strtrim.o\
 	s2gid.o\
 	s2uid.o\
 	txtalloc.o\
@@ -202,6 +208,7 @@ rcslast.o:	ptypes.h	rcsdefs.h
 rcsload.o:	ptypes.h	rcsdefs.h
 rcslocks.o:	ptypes.h	rcsdefs.h
 rcsname.o:	ptypes.h	rcsdefs.h
+rcspermit.o:	ptypes.h	rcsdefs.h
 resizewin.o:	ptypes.h
 sccslast.o:	ptypes.h
 setmtime.o:	ptypes.h

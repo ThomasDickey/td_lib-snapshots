@@ -1,4 +1,4 @@
-/* @(#)llib-ltd	1.48 88/12/14 11:27:19 */
+/* @(#)llib-ltd	1.49 89/03/08 13:21:58 */
 /*LINTLIBRARY*/
 
 #define	CUR_PTYPES
@@ -162,11 +162,17 @@ char *	name2rcs(name) char *name; { return(0); }
 /* rcspath.c ---------------------------------------------------------- */
 char *	rcspath(name) char *name; { return(0); }
 
+/* rcspermit.c -------------------------------------------------------- */
+int	rcspermit(path,base) char *path, *base; { return(0); }
+
 /* rcstemp.c ---------------------------------------------------------- */
 char *	rcstemp(name,copy) char *name; { return(0); }
 
 /* resizewin.c -------------------------------------------------------- */
 int	resizewin() { return(0); }
+
+/* revert.c ----------------------------------------------------------- */
+	revert(msg) char *msg; { }
 
 /* s2gid.c ------------------------------------------------------------ */
 int	s2gid(s) char	*s; { return (0); }
@@ -200,6 +206,9 @@ char	*stralloc(string) char *string; { return(0); }
 
 /* strclean.c --------------------------------------------------------- */
 int	strclean(string) char *string; { return(0); }
+
+/* strtrim.c ---------------------------------------------------------- */
+char *	strtrim(string) char *string; { return(0); }
 
 /* txtalloc.c --------------------------------------------------------- */
 char	*txtalloc(string) char *string; { return(0); }

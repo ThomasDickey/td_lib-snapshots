@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)rcsedit.c	1.6 88/08/19 10:26:40";
+static	char	sccs_id[] = "@(#)rcsedit.c	1.7 89/03/08 15:51:39";
 #endif	lint
 
 /*
@@ -7,6 +7,7 @@ static	char	sccs_id[] = "@(#)rcsedit.c	1.6 88/08/19 10:26:40";
  * Author:	T.E.Dickey
  * Created:	26 May 1988
  * Modified:
+ *		08 Mar 1988, use temp-file for copying RCS archive back (safer)
  *		19 Aug 1988, modified 'rcsopen()' to properly check that we
  *			     are opening a file.  Corrected 'rcsparse_str()',
  *			     which must find delimiter before skipping it!
@@ -22,11 +23,10 @@ static	char	sccs_id[] = "@(#)rcsedit.c	1.6 88/08/19 10:26:40";
 #include	"ptypes.h"
 #include	"rcsdefs.h"
 
+#include	<string.h>
 #include	<ctype.h>
 extern	FILE	*tmpfile();
 extern	char	*name2rcs();
-extern	char	*strcat();
-extern	char	*strcpy();
 extern	char	*strchr();
 
 /* local definitions */
@@ -166,12 +166,26 @@ rcsclose()
 {
 	writeit();
 	if (changed) {
+		int	fd;
+		char	tname[BUFSIZ];
+
 		while (readit())
 			writeit();
 		(void)fclose(fpS);
+
 		VERBOSE("++ rcs-copyback %d lines\n", lines);
-		if (!copyback(fpT, fname, fmode, lines))
+		(strcpy(tname, fname))[strlen(fname)-1] = ',';
+		/* give 'copyback' something to work with... */
+		if ((fd = creat(tname, 0644)) < 0) {
+			perror(tname);
+			return;
+		}
+		(void)close(fd);
+
+		if (!copyback(fpT, tname, fmode, lines))
 			perror(fname);
+		else if (rename(tname, fname) < 0)
+			perror("rename");
 	} else
 		(void)fclose(fpS);
 }
