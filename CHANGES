@@ -1,3 +1,11 @@
+1989-03-28  dickey@software.org
+
+	* Makefile: use MAKE-variable to encapsulate recursive-build info.
+
+1989-03-28  ste_cm@software.org
+
+	* Makefile: BASELINE Thu Apr  6 09:37:24 EDT 1989
+
 1989-03-27  dickey@software.org
 
 	* src/Makefile:
