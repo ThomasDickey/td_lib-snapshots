@@ -1,10 +1,16 @@
-# $Id: Makefile,v 8.2 1991/06/05 16:47:20 dickey Exp $
+# $Id: Makefile,v 9.0 1991/06/06 16:57:46 ste_cm Rel $
 # MAKE-file for miscellaneous library routines
 #
 # $Log: Makefile,v $
-# Revision 8.2  1991/06/05 16:47:20  dickey
-# corrected typo in ".i" rule
+# Revision 9.0  1991/06/06 16:57:46  ste_cm
+# BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
 #
+#	Revision 8.3  91/06/06  16:57:46  dickey
+#	make ".i" rule work on apollo sr10.2
+#	
+#	Revision 8.2  91/06/05  16:56:18  dickey
+#	corrected typo in ".i" rule
+#	
 #	Revision 8.1  91/06/05  11:06:19  dickey
 #	added rule for ".i"
 #	
@@ -272,4 +278,4 @@ lincnt.out:	$(CSRC)		; $(DATE); lincnt $(CSRC) >>$@
 .c.o:
 	$(CC) $(CFLAGS) $(INCLUDES) $(DEFINES) -c $<
 .c.i:
-	$(CC) -P -C $(INCLUDES) $(DEFINES) $<
+	$(CC) -E -C $(INCLUDES) $(DEFINES) $< >$@
