@@ -1,4 +1,4 @@
-/* $Id: td_curse.h,v 12.22 1994/07/23 00:23:59 tom Exp $ */
+/* $Id: td_curse.h,v 12.23 1994/08/12 21:21:49 tom Exp $ */
 
 /*
  * TD_LIB CURSES-related definitions
@@ -160,6 +160,9 @@ extern	int	wstandout	ARGS((WINDOW *w));
 #define	resetty()	/* empty */
 #endif
 
+#if LINTLIBRARY
+#define extern	/* nothing */
+#endif
 	/* beep.c ----------------------------------------------------- */
 #if	!HAVE_BEEP
 	void	beep(_ar0)
@@ -343,4 +346,7 @@ extern	int	y_rawgets;
 			_dcl(int,	rows)
 			_dcl(int,	cols)
 			_nul
+
+#undef extern
+
 #endif	/* TD_CURSE_H */

@@ -1,3 +1,7 @@
+1994-08-12  dickey@clark.net
+
+	* include/td_curse.h: hack extern's for lintlibrary
+
 1994-08-10  dickey@clark.net
 
 	* src/cm_funcs/cmv_dir.c:
