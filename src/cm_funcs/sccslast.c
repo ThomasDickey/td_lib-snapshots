@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: sccslast.c,v 12.6 1994/07/15 16:45:40 tom Exp $";
+static	char	Id[] = "$Id: sccslast.c,v 12.7 1994/08/15 23:37:13 tom Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: sccslast.c,v 12.6 1994/07/15 16:45:40 tom Exp $";
  * Author:	T.E.Dickey
  * Created:	20 Oct 1986
  * Modified:
+ *		11 Aug 1994, decode CMVision date in comment.
  *		15 Jul 1994, mods for SCCS_VAULT
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
@@ -76,6 +77,16 @@ void	trysccs (
 					continue;
 				*vers_ = txtalloc(ver);
 				*date_ = packdate (1900+yy, mm, dd, hr, mn, sc);
+			}
+			/* for CmVision */
+			if (!strncmp(bfr, "\001c ", 3)) {
+				time_t	when;
+				if ((s = strstr(bfr, "\\\001O")) != 0) {
+					while (strncmp(s, ":M", 2) && *s)
+						s++;
+					if (sscanf(s, ":M%ld:", &when))
+						*date_ = when;
+				}
 				break;
 			}
 		}

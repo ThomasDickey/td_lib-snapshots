@@ -1,3 +1,11 @@
+1994-08-15  dickey@clark.net
+
+	* src/cm_funcs/cmv_last.c:
+	decode the file-modification time in the change-comment
+
+	* src/cm_funcs/sccslast.c:
+	added logic to decode CMVision's date, which is encoded in the comment
+
 1994-08-12  dickey@clark.net
 
 	* include/td_curse.h: hack extern's for lintlibrary
