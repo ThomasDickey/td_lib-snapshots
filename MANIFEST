@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19920402
+MANIFEST for td_lib, version t19920403
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 Makefile                        top-level makefile for TD_LIB
@@ -153,6 +153,7 @@ src/string/dftenv.c             returns 'getenv()' with a default (non-null) val
 src/string/dotcmp.c             compare dot-separated strings
 src/string/dyn_app.c            append to a dynamic-string
 src/string/dyn_cata.c           dyn-string interface to 'catarg()'
+src/string/dyn_copy.c           copy ordinary string to DYN string
 src/string/dyn_str.c            module for managing dynamic-strings
 src/string/lsbycols.c           list an array of character strings by columns
 src/string/ltostr.c             convert 'long' to a string

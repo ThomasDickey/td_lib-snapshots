@@ -1,4 +1,4 @@
-# $Id: Makefile,v 10.15 1992/03/18 13:53:23 dickey Exp $
+# $Id: Makefile,v 11.0 1992/04/03 07:56:40 ste_cm Rel $
 # MAKE-file for miscellaneous library routines
 
 ####### (Environment) ##########################################################
@@ -44,6 +44,7 @@ CSRC	=\
 	dumpwin.c\
 	dyn_append.c\
 	dyn_catarg.c\
+	dyn_copy.c\
 	dyn_string.c\
 	erasechar.c\
 	execute.c\
@@ -163,6 +164,7 @@ OBJS	=\
 	$Z(dumpwin.o)\
 	$Z(dyn_append.o)\
 	$Z(dyn_catarg.o)\
+	$Z(dyn_copy.o)\
 	$Z(dyn_string.o)\
 	$Z(erasechar.o)\
 	$Z(execute.o)\
@@ -282,6 +284,11 @@ $(OBJS):	$I/ptypes.h	$I/$(THIS).h
 
 $Z(cmdch.o)\
 $Z(rawgets.o):	$I/cmdch.h
+
+$Z(dyn_append.o)\
+$Z(dyn_catarg.o)\
+$Z(dyn_copy.o)\
+$Z(dyn_string.o): $I/dyn_string.h
 
 $Z(rcsargpair.o)\
 $Z(rcsedit.o)\
