@@ -1,4 +1,4 @@
-# @(#)Makefile	1.34 88/08/03 15:34:48
+# @(#)Makefile	1.35 88/08/04 15:18:53
 # MAKE-file for miscellaneous library routines
 #
 ####### (Development) ##########################################################
@@ -9,7 +9,7 @@ llib	= td
 LLIB	= llib-l$(llib)
 CFLAGS  = $(DEFINES) $(INCLUDES) -O
 DATE	= echo '****'`date` >> $@
-LINTOPT	= $(DEFINES) $(INCLUDES) -DNO_SCCS_ID -ltd -lcurses -lapollo
+LINTOPT	= $(DEFINES) $(INCLUDES) -ltd -lcurses -lapollo
 #
 ####### (Standard Lists) #######################################################
 ALL	= $A $(LLIB).ln
