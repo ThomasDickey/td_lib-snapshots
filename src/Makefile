@@ -1,4 +1,4 @@
-# $Id: Makefile,v 9.5 1991/09/17 09:04:07 dickey Exp $
+# $Id: Makefile,v 9.7 1991/10/01 14:07:34 dickey Exp $
 # MAKE-file for miscellaneous library routines
 #
 ####### (Development) ##########################################################
@@ -8,9 +8,10 @@ GET	= checkout
 I	= ../interface
 J	= ../../../interface
 INCLUDES= -I$I
+CPP_OPTS= $(DEFINES) $(INCLUDES)
 CFLAGS  =
 DATE	= echo '****'`date` >> $@
-LINTOPT	= $(DEFINES) $(INCLUDES) -I$J -ltd -lcurses -lapollo
+LINTOPT	= $(CPP_OPTS) -I$J -ltd -lcurses -lapollo
 LIBS	= -lcurses -ltermcap
 #
 ####### (Standard Lists) #######################################################
@@ -57,6 +58,7 @@ CSRC	=\
 	modechar.c\
 	name2s.c\
 	newzone.c\
+	next_version.c\
 	packdate.c\
 	padedit.c\
 	pathcat.c\
@@ -157,6 +159,7 @@ OBJS	=\
 	modechar.o\
 	name2s.o\
 	newzone.o\
+	next_version.o\
 	packdate.o\
 	padedit.o\
 	pathcat.o\
@@ -249,7 +252,7 @@ rcslast.o:	$(RCSDEFS_H)
 rcsload.o:	$(RCSDEFS_H)
 rcslocks.o:	$(RCSDEFS_H)
 rcsname.o:	$(RCSDEFS_H)
-rcspath.o:	$J/rcspath.h	; $(CC) -I$J -c $*.c
+rcspath.o:	$J/rcspath.h	; $(CC) -I$I -I$J -c $*.c
 rcspermit.o:	$(RCSDEFS_H)
 sccsname.o:	$I/sccsdefs.h
 vcs_file.o:	$(RCSDEFS_H)
@@ -267,9 +270,9 @@ lincnt.out:	$(CSRC)		; $(DATE); lincnt $(CSRC) >>$@
 .c.lint:
 	tdlint $(LINTOPT) $< >$@
 .c.tst:
-	$(CC) -o $@ -DTEST $(CFLAGS) $(INCLUDES) $(DEFINES) $< $A $(LIBS)
+	$(CC) -o $@ -DTEST $(CFLAGS) $(CPP_OPTS) $< $A $(LIBS)
 	rm -f $*.o
 .c.o:
-	$(CC) $(CFLAGS) $(INCLUDES) $(DEFINES) -c $<
+	$(CC) $(CFLAGS) $(CPP_OPTS) -c $<
 .c.i:
-	$(CC) -E -C $(INCLUDES) $(DEFINES) $< >$@
+	$(CC) -E -C $(CPP_OPTS) $< >$@

@@ -1,4 +1,4 @@
-# $Id: descrip.mms,v 9.3 1991/09/17 09:03:50 dickey Exp $
+# $Id: descrip.mms,v 9.4 1991/10/01 09:50:12 dickey Exp $
 # MMS-file for miscellaneous library routines	
 #
 ####### (Development) ##########################################################
@@ -39,11 +39,12 @@ LIBRARYMODULES = -
 	LTOSTR, -
 	MAKEARGV, -
 	MEM2FILE, -
-	MODECHAR -
+	MODECHAR, -
+	NEXT_VERSION, -
 	PATHCAT, -
 	PATHLEAF, -
-	SAMELEAF -
-	SHOARG -
+	SAMELEAF, -
+	SHOARG, -
 	STRALLOC, -
 	STRBCMP, -
 	STRCLEAN, -
@@ -152,6 +153,7 @@ C_SRC	=-
 	MAKEARGV.C -
 	MEM2FILE.C -
 	MODECHAR.C -
+	NEXT_VERSION.C -
 	NAME2S.C -
 	NEWZONE.C -
 	PACKDATE.C -
