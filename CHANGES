@@ -1,3 +1,9 @@
+1988-05-25  dickey@software.org
+
+	* src/pathname/copyback.c: New file.
+
+	* src/Makefile, include/llib-ltd: added 'copyback.c' module.
+
 1988-05-24  dickey@software.org
 
 	* src/Makefile: forgot 'install'.

@@ -1,4 +1,4 @@
-/* @(#)llib-ltd	1.18 88/05/23 06:33:49 */
+/* @(#)llib-ltd	1.19 88/05/25 16:06:05 */
 /*LINTLIBRARY*/
 
 #include	<curses.h>
@@ -26,6 +26,9 @@ time_t	adj2est(bug1) { return(0); }
 
 /* cmdch.c ------------------------------------------------------------ */
 int	cmdch(cntp) int *cntp; { return(0); }
+
+/* copyback.c --------------------------------------------------------- */
+int	copyback(fp, name, mode, lines) FILE *fp; char *name; { return(0); }
 
 /* cutoff.c ----------------------------------------------------------- */
 time_t	cutoff(argc, argv) char *argv[]; { return(0); }

@@ -1,4 +1,4 @@
-# @(#)Makefile	1.20 88/05/24 07:56:15
+# @(#)Makefile	1.21 88/05/25 16:06:32
 # MAKE-file for miscellaneous library routines
 L=lib.a
 #
@@ -9,6 +9,7 @@ OBJS	=\
 	bldarg.o\
 	closeall.o\
 	cmdch.o\
+	copyback.o\
 	cutoff.o\
 	denode.o\
 	doalloc.o\
