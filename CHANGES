@@ -1,3 +1,7 @@
+2001-12-12  dickey@invisible-island.net
+
+	* td_make.in: add @CURSES_LIBS@ and @LDFLAGS@ substitutions.
+
 2001-12-11  dickey@invisible-island.net
 
 	* src/cm_funcs/rcslast.c: nit to make rcs_dir() provide $RCS_VAULT info
