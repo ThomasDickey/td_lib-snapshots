@@ -1,3 +1,8 @@
+1998-08-20  dickey@clark.net
+
+	* include/cmv_defs.h:
+	add to cmv_lock's interface so we return binary-file's mod-time.
+
 1998-07-21  dickey@clark.net
 
 	* configure.in: add a check for gethostname()
