@@ -2,6 +2,7 @@
  * Title:	shoarg.c (display argv-array)
  * Created:	20 Jun 1991
  * Modified:
+ *		24 Dec 2000, ctype.h fix for QNX
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		04 Oct 1991, conversion to ANSI
@@ -9,11 +10,11 @@
  *			     Added entrypoint 'bldcmd()'.
  */
 
+#define	CHR_PTYPES
 #define	STR_PTYPES
 #include	"ptypes.h"
-#include	<ctype.h>
 
-MODULE_ID("$Id: shoarg.c,v 12.4 1993/11/27 14:56:46 tom Exp $")
+MODULE_ID("$Id: shoarg.c,v 12.5 2000/12/24 22:18:46 tom Exp $")
 
 /*
  * Function:	Writes a new string with the non-ascii characters escaped.

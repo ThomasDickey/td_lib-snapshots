@@ -14,10 +14,10 @@
  *		If the file is empty, true is returned.
  */
 
+#define CHR_PTYPES
 #include	"ptypes.h"
-#include	<ctype.h>
 
-MODULE_ID("$Id: istextfl.c,v 12.3 1993/10/29 17:35:25 tom Exp $")
+MODULE_ID("$Id: istextfl.c,v 12.4 2000/12/24 22:32:45 tom Exp $")
 
 int	istextfile(
 	_AR1(char *,	name))
