@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19880519
+MANIFEST for td_lib, version t19880520
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 include                         subdirectory
@@ -8,6 +8,7 @@ include/ptypes.h                principal include-file for TD_LIB
 src                             subdirectory
 src/Makefile                    makefile for td_lib/src
 src/cm_funcs                    subdirectory
+src/cm_funcs/cutoff.c           SCCS-style cutoff date parsing
 src/cm_funcs/packdate.c         pack numbers to make UNIX date
 src/cm_funcs/rcslast.c          scan for last RCS date & version
 src/cm_funcs/sccslast.c         scan for last SCCS date & version
@@ -44,4 +45,5 @@ src/unix                        subdirectory
 src/unix/gid2s.c                convert group-id to string
 src/unix/s2gid.c                convert string to group-id
 src/unix/s2uid.c                convert string to user-id
+src/unix/setmtime.c             set mtime/atime of a file
 src/unix/uid2s.c                convert user-id to string
