@@ -1,4 +1,4 @@
-# $Id: Makefile,v 11.8 1992/10/28 08:10:14 dickey Exp $
+# $Id: Makefile,v 11.9 1992/11/12 08:56:48 dickey Exp $
 # MAKE-file for miscellaneous library routines
 
 ####### (Environment) ##########################################################
@@ -277,11 +277,15 @@ $Z(cmdch.o)\
 $Z(logch.o)\
 $Z(rawgets.o):	$I/cmdch.h
 
+$Z(diffload.o)\
 $Z(dyn_append.o)\
 $Z(dyn_append_c.o)\
 $Z(dyn_catarg.o)\
 $Z(dyn_copy.o)\
-$Z(dyn_string.o): $I/dyn_string.h
+$Z(dyn_string.o)\
+$Z(fp2argv.o)\
+$Z(rawgets.o)\
+$Z(rcspermit.o):	$I/dyn_string.h
 
 $Z(rcsargpair.o)\
 $Z(rcsedit.o)\
