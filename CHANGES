@@ -1,3 +1,7 @@
+1986-10-20  Thomas E. Dickey
+
+	* src/cm_funcs/sccslast.c: New file.
+
 1986-10-14  Thomas E. Dickey
 
 	* src/memory/doalloc.c: Added stuff for xenix-lint.
