@@ -3,7 +3,8 @@
  * Author:	T.E.Dickey
  * Created:	20 Oct 1986
  * Modified:
- *		04 Jan 2000, decode Solaris' 2-digit post-Y2K years.
+ *		09 Jan 2000, implement 2037 window for Y2K years.
+ *		04 Jan 2000, decode Solaris' 2-digit pre-Y2K years.
  *		31 Dec 1999, move 1900's to packdate().
  *		03 Sep 1996, ignore removed-revisions
  *		14 Oct 1995, mods for 14-character names
@@ -39,7 +40,7 @@
 #include	<sccsdefs.h>
 #include	<ctype.h>
 
-MODULE_ID("$Id: sccslast.c,v 12.13 2000/01/04 14:49:38 tom Exp $")
+MODULE_ID("$Id: sccslast.c,v 12.14 2000/01/09 20:02:27 tom Exp $")
 
 /*
  * Post-Y2K years require special decoding
@@ -62,6 +63,8 @@ int	sccsyear (
 			}
 		}
 	}
+	if (value < 38)		/* 2037 is last 32-bit date */
+		value += 100;
 	return value;
 }
 

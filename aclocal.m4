@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Id: aclocal.m4,v 12.122 1999/08/10 21:31:06 tom Exp $
+dnl $Id: aclocal.m4,v 12.123 2000/01/09 20:06:45 tom Exp $
 dnl vi:set ts=4:
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "CF_" to "AC_"
@@ -48,7 +48,7 @@ for cf_arg in "-DCC_HAS_PROTOS" \
 	"" \
 	-qlanglvl=ansi \
 	-std1 \
-	"-Aa -D_HPUX_SOURCE +e" \
+	-Ae \
 	"-Aa -D_HPUX_SOURCE" \
 	-Xc
 do
@@ -494,7 +494,7 @@ dnl
 AC_DEFUN([CF_DISABLE_ECHO],[
 AC_MSG_CHECKING(if you want to see long compiling messages)
 CF_ARG_DISABLE(echo,
-	[  --disable-echo          test: display "compiling" commands],
+	[  --disable-echo          display "compiling" commands],
 	[
     ECHO_LD='@echo linking [$]@;'
     RULE_CC='	@echo compiling [$]<'
@@ -605,7 +605,7 @@ cat > conftest.i <<EOF
 EOF
 if test -n "$GCC"
 then
-	AC_CHECKING([for gcc __attribute__ directives])
+	AC_CHECKING([for $CC __attribute__ directives])
 	changequote(,)dnl
 cat > conftest.$ac_ext <<EOF
 #line __oline__ "configure"
@@ -632,7 +632,7 @@ EOF
 	do
 		CF_UPPER(CF_ATTRIBUTE,$cf_attribute)
 		cf_directive="__attribute__(($cf_attribute))"
-		echo "checking for gcc $cf_directive" 1>&AC_FD_CC
+		echo "checking for $CC $cf_directive" 1>&AC_FD_CC
 		case $cf_attribute in
 		scanf|printf)
 		cat >conftest.h <<EOF
@@ -678,7 +678,7 @@ then
 int main(int argc, char *argv[]) { return (argv[argc-1] == 0) ; }
 EOF
 	changequote([,])dnl
-	AC_CHECKING([for gcc warning options])
+	AC_CHECKING([for $CC warning options])
 	cf_save_CFLAGS="$CFLAGS"
 	EXTRA_CFLAGS="-W -Wall"
 	cf_warn_CONST=""
@@ -884,6 +884,8 @@ AC_DEFUN([CF_LIB_PREFIX],
 	os2)	$1=''     ;;
 	*)	$1='lib'  ;;
 	esac
+	LIB_PREFIX=[$]$1
+	AC_SUBST(LIB_PREFIX)
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Some 'make' programs support $(MAKEFLAGS), some $(MFLAGS), to pass 'make'
@@ -895,7 +897,7 @@ AC_DEFUN([CF_MAKEFLAGS],
 AC_MSG_CHECKING([for makeflags variable])
 AC_CACHE_VAL(cf_cv_makeflags,[
 	cf_cv_makeflags=''
-	for cf_option in '-$(MAKEFLAGS)' '$(MFLAGS)' 
+	for cf_option in '-$(MAKEFLAGS)' '$(MFLAGS)'
 	do
 		cat >cf_makeflags.tmp <<CF_EOF
 all :
@@ -1393,7 +1395,11 @@ case $cf_cv_system_name in
 os2*)
     # We make sure -Zexe is not used -- it would interfere with @PROG_EXT@
     CFLAGS="$CFLAGS -Zmt -D__ST_MT_ERRNO__"
+    CXXFLAGS="$CXXFLAGS -Zmt -D__ST_MT_ERRNO__"
     LDFLAGS=`echo "$LDFLAGS -Zmt -Zcrtdll" | sed "s/-Zexe//g"`
+    PROG_EXT=".exe"
+    ;;
+cygwin*)
     PROG_EXT=".exe"
     ;;
 esac
@@ -2050,5 +2056,5 @@ AC_TRY_LINK([
 	long x = winnstr(stdscr, "", 0)],
 	[cf_cv_need_xopen_extension=yes],
 	[cf_cv_need_xopen_extension=no])])])
-test $cf_cv_need_xopen_extension = yes && AC_DEFINE(_XOPEN_SOURCE_EXTENDED)
+test $cf_cv_need_xopen_extension = yes && CFLAGS="$CFLAGS -D_XOPEN_SOURCE_EXTENDED"
 ])dnl
