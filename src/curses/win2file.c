@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)win2file.c	1.1 88/06/07 07:55:11";
+static	char	sccs_id[] = "@(#)win2file.c	1.2 88/08/08 06:59:34";
 #endif	lint
 
 /*
@@ -50,7 +50,7 @@ WINDOW	*win;
 char	*file;
 {
 	FILE	*fp;
-	time_t	now	= time((time_t)0);
+	time_t	now	= time((time_t *)0);
 	register chtype	*s;
 	register int	j;
 	register chtype	k;

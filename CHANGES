@@ -1,3 +1,8 @@
+1988-08-08  dickey@software.org
+
+	* src/cm_funcs/packdate.c, src/curses/win2file.c, src/curses/dumpwin.c:
+	lint
+
 1988-08-05  dickey@software.org
 
 	* src/cm_funcs/rcsedit.c:

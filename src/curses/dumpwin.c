@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)dumpwin.c	1.4 88/05/17 07:56:47";
+static	char	sccs_id[] = "@(#)dumpwin.c	1.5 88/08/08 06:58:48";
 #endif	lint
 
 /*
@@ -35,7 +35,7 @@ FILE	*fp = fopen(s, "a+");
 int	j,k;
 
 	if (fp) {
-	time_t	now = time(0);
+	time_t	now = time((time_t *)0);
 		OUT "%s: %s", tag, ctime(&now));
 		OUT "window @ %#x\n", w);
 
