@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs/RCS/rcsperm.c,v 3.1 1989/07/05 09:48:44 dickey Exp $";
+static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs/RCS/rcsperm.c,v 4.0 1989/07/25 09:24:30 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,9 +7,15 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs
  * Author:	T.E.Dickey
  * Created:	08 Mar 1989
  * $Log: rcsperm.c,v $
- * Revision 3.1  1989/07/05 09:48:44  dickey
- * if the access-list is empty, we must own the file to operate upon it.
+ * Revision 4.0  1989/07/25 09:24:30  ste_cm
+ * BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
  *
+ *		Revision 3.2  89/07/25  09:24:30  dickey
+ *		recompiled with apollo SR10 -- mods for function prototypes
+ *		
+ *		Revision 3.1  89/07/05  09:48:44  dickey
+ *		if the access-list is empty, we must own the file to operate upon it.
+ *		
  *		Revision 3.0  89/04/04  11:01:24  ste_cm
  *		BASELINE Mon Jun 19 13:27:01 EDT 1989
  *		
@@ -51,7 +57,7 @@ char	*path,*base;
 	auto	int	header	= TRUE;
 	auto	char	*s	= 0,
 			tip	[80],
-			user	[L_cuserid+1],
+			user	[BUFSIZ],
 			key	[BUFSIZ],
 			tmp	[BUFSIZ];
 	auto	int	empty	= TRUE,		/* assume access-list empty */

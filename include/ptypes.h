@@ -1,4 +1,4 @@
-/* $Header: /users/source/archives/td_lib.vcs/include/RCS/ptypes.h,v 3.0 1989/05/18 10:02:31 ste_cm Rel $ */
+/* $Header: /users/source/archives/td_lib.vcs/include/RCS/ptypes.h,v 4.0 1989/07/25 08:49:47 ste_cm Rel $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -113,7 +113,9 @@ extern	V_OR_I	free();
 extern	V_OR_I	perror();
 extern	V_OR_I	qsort();
 #ifndef	vms
+#ifndef	__STDC__
 extern	V_OR_I	rewind();
+#endif	__STDC__
 #endif
 
 /*

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/curses/RCS/rawgets.c,v 3.0 1989/01/19 09:21:22 ste_cm Rel $";
+static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/curses/RCS/rawgets.c,v 3.1 1989/07/25 09:17:09 dickey Exp $";
 #endif	lint
 
 /*
@@ -7,9 +7,12 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/curses/R
  * Title:	rawgets.c (raw-mode 'gets()')
  * Created:	29 Sep 1987 (from 'fl.c')
  * $Log: rawgets.c,v $
- * Revision 3.0  1989/01/19 09:21:22  ste_cm
- * BASELINE Mon Jun 19 13:27:01 EDT 1989
+ * Revision 3.1  1989/07/25 09:17:09  dickey
+ * recompiled with apollo SR10 -- mods for function prototypes
  *
+ *		Revision 3.0  89/01/19  09:21:22  ste_cm
+ *		BASELINE Mon Jun 19 13:27:01 EDT 1989
+ *		
  *		Revision 2.0  89/01/19  09:21:22  ste_cm
  *		BASELINE Thu Apr  6 09:45:13 EDT 1989
  *		
@@ -192,6 +195,8 @@ char	*at;
 
 rawgets (bfr,size,newline)
 register char	*bfr;
+int	size;
+int	newline;
 {
 register char	*tag;
 register c;
