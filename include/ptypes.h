@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 11.7 1992/11/17 13:52:00 dickey Exp $ */
+/* $Id: ptypes.h,v 11.9 1992/11/18 08:36:10 dickey Exp $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -260,11 +260,6 @@ extern	char	*sprintf();
 #ifndef	vms
 extern	V_OR_I	_exit(_ar1(int,code));
 extern	V_OR_I2	exit(_ar1(int,code));
-extern	V_OR_I	qsort(
-		_arx(V_OR_P,	base)
-		_arx(size_t,	nel)
-		_arx(size_t,	width)
-		_fn1(int,	compar,	(_ARX(V_OR_P,a) _AR1(V_OR_P,b))));
 extern	V_OR_I	free(_ar1(char *,s));
 extern	V_OR_P	calloc(_arx(size_t,nel) _ar1(size_t,size));
 extern	V_OR_P	malloc(_ar1(size_t,size));
@@ -376,52 +371,6 @@ static	struct	direct	dbfr;
 #endif	/* SYSTEM5 */
 #endif	/* vms/unix */
 #endif	/* DIR_PTYPES */
-
-/*
- * System5 curses does not define the 'screen' structure
- */
-#ifdef	CUR_PTYPES
-#ifdef	SYSTEM5
-struct	screen	{ int dummy; };
-#else	/* SYSTEM5 */
-typedef char	chtype;		/* sys5-curses data-type */
-#ifndef	erasechar
-extern	char	erasechar();
-#endif	/* erasechar */
-#ifndef	killchar
-extern	char	killchar();
-#endif	/* killchar */
-#endif	/* SYSTEM5 */
-#include	<curses.h>
-
-#ifdef	lint
-#undef	raw
-#define raw()		/* empty */
-#undef	noraw
-#define noraw()		/* empty */
-#undef	cbreak
-#define cbreak()	/* empty */
-#undef	nocbreak
-#define nocbreak()	/* empty */
-#undef	crmode
-#define crmode()	/* empty */
-#undef	nocrmode
-#define nocrmode()	/* empty */
-#undef	echo
-#define echo()		/* empty */
-#undef	noecho
-#define noecho()	/* empty */
-#undef	nl
-#define nl()		/* empty */
-#undef	nonl
-#define nonl()		/* empty */
-#undef	savetty
-#define	savetty()	/* empty */
-#undef	resetty
-#define	resetty()	/* empty */
-#endif
-
-#endif	/* CUR_PTYPES */
 
 /*
  * Define symbols used in 'access()' function

@@ -1,0 +1,10 @@
+** local-path
+name2rcs:
+  ./rcsname.sh         => FOO/rcsname.sh,v (*)
+rcs2name:
+  ./rcsname.sh         => ./rcsname.sh
+** full-path
+name2rcs:
+  ./rcsname.sh         => ./FOO/rcsname.sh,v (*)
+rcs2name:
+  ./rcsname.sh         => ./rcsname.sh

@@ -1,0 +1,14 @@
+1: .
+=>  TOP/cm_library/test
+2: ..
+=>  TOP/cm_library
+3: .././..
+=>  TOP
+4: ../.
+=>  TOP/cm_library
+5: ./..
+=>  TOP/cm_library
+6: /
+=>  /
+8: /tmp
+=>  /tmp

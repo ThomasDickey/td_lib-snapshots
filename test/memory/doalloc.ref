@@ -1,0 +1,9 @@
+** allocator metrics:
+.. allocs:                           3
+.. frees:                            3
+.. total bytes allocated:            0
+.. current bytes allocated:          0
+.. maximum bytes allocated:        600
+.. segment-table length:             0
+.. current # of segments:            0
+.. maximum # of segments:            2

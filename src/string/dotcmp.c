@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: dotcmp.c,v 11.0 1991/10/03 16:10:06 ste_cm Rel $";
+static	char	Id[] = "$Id: dotcmp.c,v 11.1 1992/11/18 09:21:00 dickey Exp $";
 #endif
 
 /*
@@ -52,26 +52,26 @@ register int	cmp1, cmp2;
 }
 
 #ifdef	TEST
-compare(
-_ARX(char **,	p1)
-_AR1(char **,	p2)
-	)
-_DCL(char **,	p1)
-_DCL(char **,	p2)
+#include "cm_qsort.h"
+
+static
+QSORT_FUNC(compare)
 {
+	QSORT_CAST(q1,p1)
+	QSORT_CAST(q2,p2)
 	return (dotcmp(*p1, *p2));
 }
 
 _MAIN
 {
-int	j;
+	register int	j;
 
 	if (argc > 1) {
 		qsort((char *)&argv[1], argc-1, sizeof(argv[0]), compare);
 		for (j = 1; j < argc; j++)
 			printf("%3d: %s\n", j, argv[j]);
 	}
-	(void)exit(0);
+	(void)exit(SUCCESS);
 	/*NOTREACHED*/
 }
 #endif

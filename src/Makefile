@@ -1,4 +1,4 @@
-# $Id: Makefile,v 11.9 1992/11/12 08:56:48 dickey Exp $
+# $Id: Makefile,v 11.10 1992/11/18 08:47:11 dickey Exp $
 # MAKE-file for miscellaneous library routines
 
 ####### (Environment) ##########################################################
@@ -21,6 +21,7 @@ CSRC	=\
 	catarg.c\
 	catchall.c\
 	cmdch.c\
+	cmp_qsort.c\
 	copyback.c\
 	count_ss.c\
 	cutoff.c\
@@ -126,6 +127,7 @@ CSRC	=\
 	veclen.c\
 	vercmp.c\
 	view_file.c\
+	walkback.c\
 	walktree.c\
 	which.c\
 	win2file.c\
@@ -144,6 +146,7 @@ OBJS	=\
 	$Z(catarg.o)\
 	$Z(catchall.o)\
 	$Z(cmdch.o)\
+	$Z(cmp_qsort.o)\
 	$Z(copyback.o)\
 	$Z(count_ss.o)\
 	$Z(cutoff.o)\
@@ -249,6 +252,7 @@ OBJS	=\
 	$Z(veclen.o)\
 	$Z(vercmp.o)\
 	$Z(view_file.o)\
+	$Z(walkback.o)\
 	$Z(walktree.o)\
 	$Z(which.o)\
 	$Z(win2file.o)\
@@ -272,6 +276,23 @@ $Z:	$(OBJS)
 .PRECIOUS: $Z
 #
 $(OBJS):	$(PTYPES_H)
+
+$Z(beep.o)\
+$Z(blip.o)\
+$Z(cmdch.o)\
+$Z(dumpwin.o)\
+$Z(erasechar.o)\
+$Z(killchar.o)\
+$Z(logch.o)\
+$Z(rawgets.o)\
+$Z(rawterm.o)\
+$Z(resizewin.o)\
+$Z(savewin.o)\
+$Z(view_file.o)\
+$Z(win2file.o)\
+$Z(wrepaint.o):	$(CURSES_H)
+
+$Z(cm_qsort.o):	$(QSORT_H)
 
 $Z(cmdch.o)\
 $Z(logch.o)\

@@ -1,0 +1,16 @@
+abc
+0:	'abc'
+a bz cx dy w
+0:	'a'
+1:	'bz'
+2:	'cx'
+3:	'dy'
+4:	'w'
+ab ' blank 'appended junk
+0:	'ab'
+1:	' blank appended'
+2:	'junk'
+ab"quoted' 'quote" more stuff
+0:	'abquoted' 'quote'
+1:	'more'
+2:	'stuff'

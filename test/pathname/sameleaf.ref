@@ -1,0 +1,8 @@
+	compare "./sameleaf.sh" "./sameleaf.sh"
+1:	./sameleaf.sh ./sameleaf.sh => 1
+	compare "sameleaf.sh" "test/./sameleaf.sh"
+2:	./sameleaf.sh ../test/./sameleaf.sh => 0
+	compare "sameleaf.sh" "README"
+3:	./sameleaf.sh README => 0
+	compare "sameleaf.sh" "test/README"
+4:	./sameleaf.sh ../test/README => 0

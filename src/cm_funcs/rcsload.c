@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcsload.c,v 11.2 1992/10/26 07:15:55 dickey Exp $";
+static	char	Id[] = "$Id: rcsload.c,v 11.3 1992/11/18 15:22:40 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,8 @@ static	char	Id[] = "$Id: rcsload.c,v 11.2 1992/10/26 07:15:55 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	19 Aug 1988
  * Modified:
+ *		18 Nov 1992, fixed a broken loop in 'eat_text()'.
+ *		26 Oct 1992, changed interface to 'rcsread()'.
  *		07 Feb 1992, use 'rcs2time()'
  *		17 Oct 1991, added logic for computing versions of loaded text
  *			     along branches.
@@ -213,8 +215,8 @@ _DCL(int,	code)
 		for (t = d = base; t < load_last; s++) {
 			if (t != d)
 				(void)strcpy(d,t);
-			d += strlen(d);
-			t += strlen(t);
+			d += strlen(d)+1;
+			t += strlen(t)+1;
 		}
 		load_logged = base;
 		DEBUG(("NOTES:%s\n%s", last_rev, load_logged))

@@ -1,0 +1,38 @@
+** local-path
+name2sccs:
+  name                 => SCCS/s.name
+  s.name               => s.name
+  path/name            => SCCS/s.name (*)
+  path/s.name          => path/s.name
+  path/SCCS/name       => SCCS/s.name (*)
+  path/SCCS/s.name     => path/SCCS/s.name
+  SCCS/name            => SCCS/s.name
+  SCCS/s.name          => SCCS/s.name
+sccs2name:
+  name                 => name
+  s.name               => name
+  path/name            => path/name
+  path/s.name          => name
+  path/SCCS/name       => path/SCCS/name
+  path/SCCS/s.name     => name (*)
+  SCCS/name            => SCCS/name
+  SCCS/s.name          => name
+** full-path
+name2sccs:
+  name                 => SCCS/s.name
+  s.name               => s.name
+  path/name            => path/SCCS/s.name (*)
+  path/s.name          => path/s.name
+  path/SCCS/name       => path/SCCS/s.name (*)
+  path/SCCS/s.name     => path/SCCS/s.name
+  SCCS/name            => SCCS/s.name
+  SCCS/s.name          => SCCS/s.name
+sccs2name:
+  name                 => name
+  s.name               => name
+  path/name            => path/name
+  path/s.name          => name
+  path/SCCS/name       => path/SCCS/name
+  path/SCCS/s.name     => path/name (*)
+  SCCS/name            => SCCS/name
+  SCCS/s.name          => name

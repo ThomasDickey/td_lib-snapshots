@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: packdate.c,v 11.1 1992/10/30 07:20:30 dickey Exp $";
+static	char	Id[] = "$Id: packdate.c,v 12.0 1992/11/18 12:32:13 ste_cm Rel $";
 #endif
 
 /*
@@ -143,8 +143,8 @@ _MAIN
 	printf("  gmtoff=%ld\n", tm.tm_gmtoff);
 #endif
 
-	then = packdate (tm.tm_year+1900, tm.tm_mon, tm.tm_mday,
-			tm.tm_hour,       tm.tm_min, tm.tm_sec);
+	then = packdate (tm.tm_year+1900, tm.tm_mon+1, tm.tm_mday,
+			tm.tm_hour,       tm.tm_min,   tm.tm_sec);
 	printf("Packed time: %s", ctime(&then));
 	exit(SUCCESS);
 	/*NOTREACHED*/

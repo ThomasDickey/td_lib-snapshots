@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: vercmp.c,v 11.0 1991/10/04 08:01:22 ste_cm Rel $";
+static	char	Id[] = "$Id: vercmp.c,v 11.1 1992/11/18 11:24:28 dickey Exp $";
 #endif
 
 /*
@@ -70,28 +70,34 @@ _DCL(int,	wild)
 }
 
 #ifdef	TEST
+#include "cm_qsort.h"
+
 static	int	wild;
 
-compare(
-_ARX(char **,	p1)
-_AR1(char **,	p2)
-	)
-_DCL(char **,	p1)
-_DCL(char **,	p2)
+static
+QSORT_FUNC(compare)
 {
+	QSORT_CAST(q1,p1)
+	QSORT_CAST(q2,p2)
 	return (vercmp(*p1, *p2, wild));
 }
 
 #define	EQL(c)		((c > 0) ? ">" : ((c < 0) ? "<" : "="))
+#ifdef	__STDCPP__
+#define	DO_TEST(a,b)	j = vercmp(#a, #b,  wild);\
+			PRINTF("%s\t%s %s \t(%d)\n", #a,  EQL(j), #b,  j)
+#else
 #define	DO_TEST(a,b)	j = vercmp("a","b", wild);\
 			PRINTF("%s\t%s %s \t(%d)\n", "a", EQL(j), "b", j)
+#endif
 
-do_test(
-_ARX(int,	argc)
-_AR1(char **,	argv)
-	)
-_DCL(int,	argc)
-_DCL(char **,	argv)
+static
+void	do_test(
+	_ARX(int,	argc)
+	_AR1(char **,	argv)
+		)
+	_DCL(int,	argc)
+	_DCL(char **,	argv)
 {
 	register int	j;
 
