@@ -1,3 +1,7 @@
+1998-02-02  dickey@clark.net
+
+	* mkdirs.sh: from autoconf
+
 1997-09-16  dickey@clark.net
 
 	* makefile.in: add dummy $(SOURCES) for stupid 'make' programs
