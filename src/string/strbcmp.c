@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: strbcmp.c,v 11.2 1992/11/18 13:25:27 dickey Exp $";
+static	char	Id[] = "$Id: strbcmp.c,v 12.0 1992/11/20 14:13:31 ste_cm Rel $";
 #endif
 
 /*
@@ -80,7 +80,7 @@ _MAIN
 		}
 	printf("# %d seconds\n", time(0) - now);
 #endif
-	(void)exit(0);
+	(void)exit(SUCCESS);
 	/*NOTREACHED*/
 }
 #endif

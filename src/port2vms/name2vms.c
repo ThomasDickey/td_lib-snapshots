@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: name2vms.c,v 7.0 1991/10/18 15:39:28 ste_cm Rel $";
+static	char	Id[] = "$Id: name2vms.c,v 8.0 1992/11/20 08:31:26 ste_cm Rel $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: name2vms.c,v 7.0 1991/10/18 15:39:28 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	29 Sep 1988
  * Modified:
+ *		20 Nov 1992, use prototypes
  *		01 Jun 1989, if 2nd-char in name is a '.' and 1st is not, only
  *			     change 2nd to a '$' if we expect that the name
  *			     might be an SCCS-file, for example.
@@ -27,7 +28,6 @@ static	char	Id[] = "$Id: name2vms.c,v 7.0 1991/10/18 15:39:28 ste_cm Rel $";
 #define	STR_PTYPES
 #include	"portunix.h"
 #include	<ctype.h>
-extern	char	*getenv();
 
 static	int	leaf_dot;   /* counts dots found in a particular leaf */
 
@@ -39,8 +39,9 @@ static	int	leaf_dot;   /* counts dots found in a particular leaf */
 #define	ONE_CHAR_DOT	"sp"	/* e.g., for SCCS */
 
 static
-prefix(s)
-char	*s;
+int	prefix(
+	_AR1(char *,	s))
+	_DCL(char *,	s)
 {
 	if (s[0] == '.'
 	||    (	   s[0] != EOS
@@ -53,8 +54,10 @@ char	*s;
 	return (0);
 }
 
-static	char
-translate(c)
+static
+char	translate(
+	_AR1(int,	c))
+	_DCL(int,	c)
 {
 	if (isalpha(c)) {
 		if (islower(c))
@@ -68,8 +71,12 @@ translate(c)
 }
 
 static
-leading_uc(dst, src)
-char	*dst, *src;
+int	leading_uc(
+	_ARX(char *,	dst)
+	_AR1(char *,	src)
+		)
+	_DCL(char *,	dst)
+	_DCL(char *,	src)
 {
 	auto	char	*base = dst;
 	register int	c;
@@ -93,9 +100,12 @@ char	*dst, *src;
 	return (0);
 }
 
-char *
-name2vms(dst, src)
-char	*dst, *src;
+char *	name2vms(
+	_ARX(char *,	dst)
+	_AR1(char *,	src)
+		)
+	_DCL(char *,	dst)
+	_DCL(char *,	src)
 {
 	char	tmp[MAXPATHLEN],
 		token[MAXPATHLEN],
@@ -216,8 +226,12 @@ char	*dst, *src;
 }
 
 #ifdef	TEST
-do_test(argc, argv)
-char	*argv[];
+void	do_test(
+	_ARX(int,	argc)
+	_AR1(char **,	argv)
+		)
+	_DCL(int,	argc)
+	_DCL(char **,	argv)
 {
 	register int j;
 	char	buffer[MAXPATHLEN];
@@ -257,7 +271,7 @@ char	*argv[];
 				"REPOS",
 				"REPOS/x"
 			};
-		do_test(sizeof(array)/sizeof(array[0]), array);
+		do_test(SIZEOF(array), array);
 	} else {
 		for (j = 1; j < argc; j++) {
 			name2vms(buffer, argv[j]);

@@ -1,0 +1,16 @@
+foo => FOO
+dev:foo => DEV:FOO
+dev:[bar]foo => DEV:[BAR]FOO
+[bar]foo => [BAR]FOO
+foo.dir => [.FOO]
+dev:foo.dir => DEV:[FOO]
+dev:[bar]foo.dir => DEV:[BAR.FOO]
+[bar]foo.dir => [BAR.FOO]
+foo.dir;1 => [.FOO]
+dev:foo.dir;1 => DEV:[FOO]
+dev:[bar]foo.dir;1 => DEV:[BAR.FOO]
+[bar]foo.dir;1 => [BAR.FOO]
+foo.dir;2 => FOO.DIR;2
+dev:foo.dir;2 => DEV:FOO.DIR;2
+dev:[bar]foo.dir;2 => DEV:[BAR]FOO.DIR;2
+[bar]foo.dir;2 => [BAR]FOO.DIR;2

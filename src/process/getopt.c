@@ -1,15 +1,18 @@
 #ifndef	lint
-static	char	Id[] = "$Id: getopt.c,v 7.0 1991/05/20 17:16:27 ste_cm Rel $";
+static	char	Id[] = "$Id: getopt.c,v 8.0 1992/11/20 10:07:24 ste_cm Rel $";
 #endif
 
 /*
+ * Modified:
+ *		20 Nov 1992, use prototypes
+ *
  * SYSTEM5-like 'getopt()'
  */
 
-#include <stdio.h>
-#include <string.h>
+#define	STR_PTYPES
+#include "ptypes.h"
 
-#ifdef	SYSTEM5
+#ifdef	unix
 #define ERR(s, c)	if(opterr){\
 	char	bfr[BUFSIZ]; register char *p = bfr;\
 	p += strlen(strcat(strcpy(bfr,argv[0]), s));\
@@ -28,10 +31,14 @@ int	optind = 1;
 int	optopt;
 char	*optarg;
 
-int
-getopt(argc, argv, opts)
-int	argc;
-char	**argv, *opts;
+int	getopt(
+	_ARX(int,	argc)
+	_ARX(char **,	argv)
+	_AR1(char *,	opts)
+		)
+	_DCL(int,	argc)
+	_DCL(char **,	argv)
+	_DCL(char *,	opts)
 {
 	static int sp = 1;
 	register int c;

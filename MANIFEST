@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19921119
+MANIFEST for td_lib, version t19921120
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         restrictions on copying/using this software
@@ -218,6 +218,10 @@ test/cm_funcs/vercmp.sh         test-script for vercmp
 test/compare                    subdirectory
 test/compare/diffload.ref       test result
 test/compare/diffload.sh        =============================================================================
+test/compare/m2comp.ref         reference for 'm2comp.sh'
+test/compare/m2comp.sh          test-script for 'm2comp'
+test/compare/scomp.ref          reference for 'scomp.sh'
+test/compare/scomp.sh           test-script for 'scomp'
 test/compare/test_cmp.c         test-driver for scomp/mcomp modules
 test/curses                     subdirectory
 test/curses/padedit.ref         reference for 'padedit'
@@ -242,6 +246,12 @@ test/memory/vecedit.sh          test-script for 'vecedit'
 test/pathname                   subdirectory
 test/pathname/abspath.ref       reference for 'abspath'
 test/pathname/abspath.sh        test-script for 'abspath'
+test/pathname/dlettree.ref      reference for deletetree
+test/pathname/dlettree.sh       test script for deletetree
+test/pathname/editfile.ref      reference for editfile
+test/pathname/editfile.sh       test script for editfile
+test/pathname/edittree.ref      reference for edittree
+test/pathname/edittree.sh       test script for edittree
 test/pathname/file2arg.ref      reference for 'file2arg'
 test/pathname/file2arg.sh       test-script for 'file2arg'
 test/pathname/file2mem.ref      reference for 'file2mem'
@@ -264,14 +274,33 @@ test/pathname/sameleaf.ref      reference for 'sameleaf'
 test/pathname/sameleaf.sh       test-script for 'sameleaf'
 test/pathname/trimpath.ref      reference for 'trimpath'
 test/pathname/trimpath.sh       test-script for 'trimpath'
+test/pathname/trnstree.ref      reference for 'trnstree'
+test/pathname/trnstree.sh       test-script for 'trnstree'
 test/pathname/walktree.ref      reference for 'walktree'
 test/pathname/walktree.sh       test-script for 'walktree'
 test/pathname/which.ref         reference for 'which'
 test/pathname/which.sh          test-script for 'which'
 test/port2vms                   subdirectory
 test/port2vms/README            description of test/port2vms
+test/port2vms/dir2path.ref      reference for 'dir2path'
+test/port2vms/dir2path.sh       test script for dir2path
+test/port2vms/name2vms.ref      reference for 'name2vms'
+test/port2vms/name2vms.sh       test-script for name2vms
+test/port2vms/path2dir.ref      reference for 'path2dir'
+test/port2vms/path2dir.sh       test-script for path2dir
+test/port2vms/path2vms.ref      reference for 'path2vms'
+test/port2vms/path2vms.sh       test script for path2vms
+test/port2vms/run_test.sh       general test-script
+test/port2vms/vms2name.ref      reference for vms2name
+test/port2vms/vms2name.sh       test-script for vms2name
 test/port2vms/vms_pthc.ref      reference for 'vms_pthc'
+test/port2vms/vms_pthc.sh       test-script for 'vms_pthc'
 test/port2vms/vms_rpth.ref      reference for 'vms_rpth'
+test/port2vms/vms_rpth.sh       test-script for 'vms_rpth'
+test/port2vms/vms_wild.ref      reference for 'vms_wild'
+test/port2vms/vms_wild.sh       test-script for 'vms_wild'
+test/port2vms/zone2vms.ref      reference for zone2vms
+test/port2vms/zone2vms.sh       test script for zone2vms
 test/process                    subdirectory
 test/process/execute.ref        reference for 'execute'
 test/process/execute.sh         test-script for 'execute'
@@ -283,6 +312,8 @@ test/process/makeargv.ref       reference for 'makeargv'
 test/process/makeargv.sh        test-script for 'makeargv'
 test/process/usercopy.ref       reference for 'usercopy'
 test/process/usercopy.sh        test-script for 'usercopy'
+test/process/walkback.ref       reference (apollo only) for walkback
+test/process/walkback.sh        test script for walkback
 test                            subdirectory
 test/run_test.sh                =============================================================================
 test/string                     subdirectory

@@ -1,0 +1,13 @@
+0	 directory junk
+0	 => first
+1	 => last
+count = 2
+0	  directory junk
+0	 .  directory bar
+0	 .  => mo3
+1	 .  => moe
+2	 .  => moe2
+0	 .  directory foo
+3	  => first
+4	  => last
+count = 5

@@ -1,13 +1,9 @@
-$Header: /users/source/archives/td_lib.vcs/test/port2vms/RCS/README,v 7.0 1989/05/01 11:22:58 ste_cm Rel $
+$Id: README,v 8.0 1992/11/20 08:42:56 ste_cm Rel $
 
 -------------------------------------------------------------------------------
 
 The procedures in the PORTUNIX library are tested by compiling them with
 the TEST preprocessor variable defined.
-
-A unix regression test-suite has not been constructed because the programs are
-not intended to operate on unix -- they are portability aids, which "run" on
-unix in a limited way.
 
 The modules which contain VMS-specific code (such as 'unixdir.c') cannot be
 run on unix at all.

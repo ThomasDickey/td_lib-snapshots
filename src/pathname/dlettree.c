@@ -1,11 +1,14 @@
 #ifndef	lint
-static	char	Id[] = "$Id: dlettree.c,v 7.0 1991/10/18 15:36:13 ste_cm Rel $";
+static	char	Id[] = "$Id: dlettree.c,v 8.0 1992/11/20 08:29:32 ste_cm Rel $";
 #endif
 
 /*
  * Title:	deletetree.c
  * Author:	T.E.Dickey
  * Created:	17 Nov 1988
+ * Modified:
+ *		20 Nov 1992, use prototypes
+ *
  * Function:	Deletes a tree of files a la "rm -rf".
  *
  *		On VMS, we use this also to hide the fact that DCL does not
@@ -21,7 +24,7 @@ static	char	Id[] = "$Id: dlettree.c,v 7.0 1991/10/18 15:36:13 ste_cm Rel $";
 #include	"portunix.h"
 #include	<errno.h>
 
-#define	TELL		fprintf(stderr,
+#define	TELL		FPRINTF(stderr,
 
 #ifdef	TEST
 #define	fail		perror
@@ -38,9 +41,12 @@ static	deletefile()	{ return 1;}
 #endif
 
 
-deletetree(oldname,recur)
-char	*oldname;
-int	recur;
+int	deletetree(
+	_ARX(char *,	oldname)
+	_AR1(int,	recur)
+		)
+	_DCL(char *,	oldname)
+	_DCL(int,	recur)
 {
 	auto	DIR		*dirp;
 	auto	struct	direct	*dp;
@@ -126,8 +132,13 @@ int	recur;
 }
 
 #ifdef	TEST
-do_test(argc, argv)
-char	*argv[];
+static
+void	do_test(
+	_ARX(int,	argc)
+	_AR1(char **,	argv)
+		)
+	_DCL(int,	argc)
+	_DCL(char **,	argv)
 {
 	register int	j;
 	auto	 int	recur = FALSE;
@@ -154,7 +165,7 @@ _MAIN
 					"..",  "-r", ".."
 #endif	/* vms/unix */
 					};
-		do_test(sizeof(tbl)/sizeof(tbl[0]), tbl);
+		do_test(SIZEOF(tbl), tbl);
 	}
 	exit(SUCCESS);
 	/*NOTREACHED*/

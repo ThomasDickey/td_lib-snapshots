@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: pathhead.c,v 11.0 1992/02/06 10:14:03 ste_cm Rel $";
+static	char	Id[] = "$Id: pathhead.c,v 12.0 1992/11/20 14:13:02 ste_cm Rel $";
 #endif
 
 /*
@@ -79,5 +79,7 @@ _MAIN
 			j,
 			argv[j],
 			pathhead(argv[j], (STAT *)0));
+	exit(SUCCESS);
+	/*NOTREACHED*/
 }
 #endif

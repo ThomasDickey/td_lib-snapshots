@@ -1,3 +1,439 @@
+1992-11-20  dickey@software.org
+
+	* src/pathname/which.c: exit-code
+
+1992-11-20  ste_cm@software.org
+
+	* src/pathname/which.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1992-11-20  dickey@software.org
+
+	* src/string/strbcmp.c: exit-code
+
+1992-11-20  ste_cm@software.org
+
+	* src/string/strbcmp.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1992-11-20  dickey@software.org
+
+	* src/curses/rawgets.c, src/pathname/pathleaf.c: exit-code
+
+1992-11-20  ste_cm@software.org
+
+	* src/pathname/pathleaf.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1992-11-20  dickey@software.org
+
+	* src/pathname/pathhead.c: exit-code
+
+1992-11-20  ste_cm@software.org
+
+	* src/pathname/pathhead.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1992-11-20  dickey@software.org
+
+	* src/process/makeargv.c: exit-code
+
+1992-11-20  ste_cm@software.org
+
+	* src/process/makeargv.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1992-11-20  dickey@software.org
+
+	* src/string/ltostr.c: exit-code
+
+1992-11-20  ste_cm@software.org
+
+	* src/string/ltostr.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1992-11-20  dickey@software.org
+
+	* test/process/walkback.ref, test/process/walkback.sh: RCS_BASE
+
+	* src/process/walkback.c: make a clean test case for apollo
+
+	* test/Makefile: added test case for walkback
+
+	* test/compare/m2comp.ref: RCS_BASE
+
+1992-11-20  ste_cm@software.org
+
+	* test/compare/m2comp.ref:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-20  dickey@software.org
+
+	* test/compare/scomp.ref: RCS_BASE
+
+1992-11-20  ste_cm@software.org
+
+	* test/compare/scomp.ref:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-20  dickey@software.org
+
+	* test/compare/m2comp.sh: RCS_BASE
+
+1992-11-20  ste_cm@software.org
+
+	* test/compare/m2comp.sh:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-20  dickey@software.org
+
+	* test/compare/scomp.sh: RCS_BASE
+
+1992-11-20  ste_cm@software.org
+
+	* test/compare/scomp.sh:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-20  dickey@software.org
+
+	* src/compare/scomp.c: make this work with current 'test_scomp.c'
+
+	* src/compare/m2comp.c:
+	modified so this works properly with 'test_scomp.c' again.
+
+	* test/compare/test_cmp.c:
+	SCOMP_TYPE must be a pointer in this test-driver
+
+1992-11-20  ste_cm@software.org
+
+	* test/compare/test_cmp.c:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-20  dickey@software.org
+
+	* test/Makefile: added test cases for m2comp & scomp
+
+	* test/compare/test_cmp.c: make this recompile 'm2comp'
+
+	* test/port2vms/vms_rpth.ref: redirected stderr too
+
+1992-11-20  ste_cm@software.org
+
+	* test/port2vms/vms_rpth.ref:
+	BASELINE Fri Apr 30 11:26:34 1993 -- VAX shutdown
+
+1992-11-20  dickey@software.org
+
+	* src/port2vms/vms_rpth.c:
+	flush stdout in test-driver to avoid merging with stderr
+
+1992-11-20  ste_cm@software.org
+
+	* src/port2vms/vms_rpth.c:
+	BASELINE Fri Apr 30 08:53:28 1993 -- TD_LIB split, VAX-shutdown
+
+1992-11-20  dickey@software.org
+
+	* test/port2vms/vms_rpth.sh: redirected stderr too
+
+	* test/port2vms/vms_wild.ref: RCS_BASE
+
+1992-11-20  ste_cm@software.org
+
+	* test/port2vms/vms_wild.ref:
+	BASELINE Fri Apr 30 11:26:34 1993 -- VAX shutdown
+
+1992-11-20  dickey@software.org
+
+	* src/port2vms/vms_wild.c: use prototypes
+	added a test-driver
+
+1992-11-20  ste_cm@software.org
+
+	* src/port2vms/vms_wild.c:
+	BASELINE Fri Apr 30 08:53:28 1993 -- TD_LIB split, VAX-shutdown
+
+1992-11-20  dickey@software.org
+
+	* test/port2vms/vms_wild.sh: RCS_BASE
+
+	* src/port2vms/rmsio.c: use prototypes
+
+1992-11-20  ste_cm@software.org
+
+	* src/port2vms/rmsio.c:
+	BASELINE Fri Apr 30 08:53:28 1993 -- TD_LIB split, VAX-shutdown
+
+1992-11-20  dickey@software.org
+
+	* test/port2vms/path2dir.ref: RCS_BASE
+
+1992-11-20  ste_cm@software.org
+
+	* test/port2vms/path2dir.ref:
+	BASELINE Fri Apr 30 08:53:28 1993 -- TD_LIB split, VAX-shutdown
+
+1992-11-20  dickey@software.org
+
+	* src/port2vms/path2dir.c: added builtin test-case
+	use prototypes
+
+1992-11-20  ste_cm@software.org
+
+	* src/port2vms/path2dir.c:
+	BASELINE Fri Apr 30 08:53:28 1993 -- TD_LIB split, VAX-shutdown
+
+1992-11-20  dickey@software.org
+
+	* src/port2vms/path2vms.c: shortened-filenames
+
+1992-11-20  ste_cm@software.org
+
+	* src/port2vms/path2vms.c:
+	BASELINE Fri Apr 30 08:53:28 1993 -- TD_LIB split, VAX-shutdown
+
+1992-11-20  dickey@software.org
+
+	* test/port2vms/path2vms.ref: RCS_BASE
+
+1992-11-20  ste_cm@software.org
+
+	* test/port2vms/path2vms.ref:
+	BASELINE Fri Apr 30 08:53:28 1993 -- TD_LIB split, VAX-shutdown
+
+1992-11-20  dickey@software.org
+
+	* src/port2vms/path2vms.c: use prototypes
+	added a test-driver
+
+	* test/port2vms/path2vms.sh: RCS_BASE
+
+1992-11-20  ste_cm@software.org
+
+	* test/port2vms/path2vms.sh:
+	BASELINE Fri Apr 30 08:53:28 1993 -- TD_LIB split, VAX-shutdown
+
+1992-11-20  dickey@software.org
+
+	* test/port2vms/path2dir.sh: RCS_BASE
+
+1992-11-20  ste_cm@software.org
+
+	* test/port2vms/path2dir.sh:
+	BASELINE Fri Apr 30 08:53:28 1993 -- TD_LIB split, VAX-shutdown
+
+1992-11-20  dickey@software.org
+
+	* test/pathname/edittree.ref, test/pathname/edittree.sh: RCS_BASE
+
+1992-11-20  ste_cm@software.org
+
+	* test/pathname/edittree.sh:
+	BASELINE Fri Apr 30 08:53:28 1993 -- TD_LIB split, VAX-shutdown
+
+1992-11-20  dickey@software.org
+
+	* test/pathname/dlettree.ref: RCS_BASE
+
+1992-11-20  ste_cm@software.org
+
+	* test/pathname/dlettree.ref:
+	BASELINE Fri Apr 30 08:53:28 1993 -- TD_LIB split, VAX-shutdown
+
+1992-11-20  dickey@software.org
+
+	* test/pathname/dlettree.sh, test/pathname/editfile.sh: RCS_BASE
+
+1992-11-20  ste_cm@software.org
+
+	* test/pathname/editfile.sh:
+	BASELINE Fri Apr 30 08:53:28 1993 -- TD_LIB split, VAX-shutdown
+
+1992-11-20  dickey@software.org
+
+	* test/pathname/editfile.ref: RCS_BASE
+
+1992-11-20  ste_cm@software.org
+
+	* test/pathname/editfile.ref:
+	BASELINE Fri Apr 30 08:53:28 1993 -- TD_LIB split, VAX-shutdown
+
+1992-11-20  dickey@software.org
+
+	* src/pathname/editfile.c:
+	modified test-driver so I can see if a change occurred
+
+1992-11-20  ste_cm@software.org
+
+	* src/pathname/editfile.c:
+	BASELINE Fri Apr 30 08:53:28 1993 -- TD_LIB split, VAX-shutdown
+
+1992-11-20  dickey@software.org
+
+	* src/pathname/edittree.c: use SIZEOF
+
+	* test/pathname/trnstree.ref: RCS_BASE
+
+1992-11-20  ste_cm@software.org
+
+	* test/pathname/trnstree.ref:
+	BASELINE Fri Apr 30 11:26:34 1993 -- VAX shutdown
+
+1992-11-20  dickey@software.org
+
+	* test/pathname/trnstree.sh, test/port2vms/zone2vms.ref: RCS_BASE
+
+1992-11-20  ste_cm@software.org
+
+	* test/port2vms/zone2vms.ref:
+	BASELINE Fri Apr 30 08:53:28 1993 -- TD_LIB split, VAX-shutdown
+
+1992-11-20  dickey@software.org
+
+	* test/port2vms/zone2vms.sh: RCS_BASE
+
+1992-11-20  ste_cm@software.org
+
+	* test/port2vms/zone2vms.sh:
+	BASELINE Fri Apr 30 08:53:28 1993 -- TD_LIB split, VAX-shutdown
+
+1992-11-20  dickey@software.org
+
+	* src/port2vms/zone2vms.c: use prototypes
+	also, nailed down test-case so I can regress it
+
+1992-11-20  ste_cm@software.org
+
+	* src/port2vms/zone2vms.c:
+	BASELINE Fri Apr 30 08:53:28 1993 -- TD_LIB split, VAX-shutdown
+
+1992-11-20  dickey@software.org
+
+	* test/port2vms/vms_rpth.sh, test/port2vms/vms_pthc.sh, test/port2vms/dir2path.ref:
+	RCS_BASE
+
+1992-11-20  ste_cm@software.org
+
+	* test/port2vms/dir2path.ref:
+	BASELINE Fri Apr 30 08:53:28 1993 -- TD_LIB split, VAX-shutdown
+
+1992-11-20  dickey@software.org
+
+	* test/port2vms/dir2path.sh: RCS_BASE
+
+1992-11-20  ste_cm@software.org
+
+	* test/port2vms/dir2path.sh:
+	BASELINE Fri Apr 30 08:53:28 1993 -- TD_LIB split, VAX-shutdown
+
+1992-11-20  dickey@software.org
+
+	* src/port2vms/dir2path.c: use prototypes
+	added default test-case.
+
+1992-11-20  ste_cm@software.org
+
+	* src/port2vms/dir2path.c:
+	BASELINE Fri Apr 30 08:53:28 1993 -- TD_LIB split, VAX-shutdown
+
+1992-11-20  dickey@software.org
+
+	* src/process/getopt.c: use prototypes
+
+1992-11-20  ste_cm@software.org
+
+	* src/process/getopt.c:
+	BASELINE Fri Apr 30 08:53:28 1993 -- TD_LIB split, VAX-shutdown
+
+1992-11-20  dickey@software.org
+
+	* test/port2vms/vms2name.ref: RCS_BASE
+
+1992-11-20  ste_cm@software.org
+
+	* test/port2vms/vms2name.ref:
+	BASELINE Fri Apr 30 08:53:28 1993 -- TD_LIB split, VAX-shutdown
+
+1992-11-20  dickey@software.org
+
+	* test/port2vms/vms2name.sh: RCS_BASE
+
+1992-11-20  ste_cm@software.org
+
+	* test/port2vms/vms2name.sh:
+	BASELINE Fri Apr 30 08:53:28 1993 -- TD_LIB split, VAX-shutdown
+
+1992-11-20  dickey@software.org
+
+	* test/port2vms/name2vms.ref, test/port2vms/name2vms.sh, test/port2vms/run_test.sh:
+	RCS_BASE
+
+1992-11-20  ste_cm@software.org
+
+	* test/port2vms/run_test.sh:
+	BASELINE Fri Apr 30 08:53:28 1993 -- TD_LIB split, VAX-shutdown
+
+1992-11-20  dickey@software.org
+
+	* test/port2vms/README: we have unix regression tests now
+
+1992-11-20  ste_cm@software.org
+
+	* test/port2vms/README:
+	BASELINE Fri Apr 30 08:53:28 1993 -- TD_LIB split, VAX-shutdown
+
+1992-11-20  dickey@software.org
+
+	* src/port2vms/name2vms.c: use prototypes
+
+1992-11-20  ste_cm@software.org
+
+	* src/port2vms/name2vms.c:
+	BASELINE Fri Apr 30 08:53:28 1993 -- TD_LIB split, VAX-shutdown
+
+1992-11-20  dickey@software.org
+
+	* src/pathname/dlettree.c: use prototypes
+
+1992-11-20  ste_cm@software.org
+
+	* src/pathname/dlettree.c:
+	BASELINE Fri Apr 30 08:53:28 1993 -- TD_LIB split, VAX-shutdown
+
+1992-11-20  dickey@software.org
+
+	* src/port2vms/uid2s.c: use prototypes
+
+1992-11-20  ste_cm@software.org
+
+	* src/port2vms/uid2s.c:
+	BASELINE Fri Apr 30 08:53:28 1993 -- TD_LIB split, VAX-shutdown
+
+1992-11-20  dickey@software.org
+
+	* src/port2vms/utimes.c: use prototypes
+
+1992-11-20  ste_cm@software.org
+
+	* src/port2vms/utimes.c:
+	BASELINE Fri Apr 30 08:53:28 1993 -- TD_LIB split, VAX-shutdown
+
+1992-11-20  dickey@software.org
+
+	* src/port2vms/vms2name.c, src/port2vms/vms_pthc.c: use prototypes
+
+1992-11-20  ste_cm@software.org
+
+	* src/port2vms/vms_pthc.c:
+	BASELINE Fri Apr 30 08:53:28 1993 -- TD_LIB split, VAX-shutdown
+
+1992-11-20  dickey@software.org
+
+	* src/port2vms/vms_rpth.c: use prototypes
+
+	* src/pathname/trnstree.c, src/pathname/edittree.c, include/port2vms.h, src/pathname/editfile.c:
+	_FNX-macro
+
 1992-11-19  dickey@software.org
 
 	* support/old-td_lib.mk: added *.lint to CLEAN

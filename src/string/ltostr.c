@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: ltostr.c,v 11.0 1991/10/03 16:03:17 ste_cm Rel $";
+static	char	Id[] = "$Id: ltostr.c,v 12.0 1992/11/20 14:12:22 ste_cm Rel $";
 #endif
 
 /*
@@ -116,7 +116,7 @@ _MAIN
 			(void)ltostr(bfr, value, -16); printf("%s\n", bfr);
 		}
 	}
-	exit(0);
+	exit(SUCCESS);
 	/*NOTREACHED*/
 }
 #endif

@@ -1,5 +1,5 @@
 /*
- * $Id: port2vms.h,v 7.0 1992/05/15 15:26:28 ste_cm Rel $
+ * $Id: port2vms.h,v 7.1 1992/11/20 07:55:54 dickey Exp $
  *
  * VMS-definitions for supporting unix/vms port
  */
@@ -71,7 +71,7 @@ extern	char *	dir2path(
 
 extern	int	editfile(
 		_arx(char *,		name)
-		_fnx(int,		func)
+		_fnx(int,		func,	(_ARX(FILE*,o) _ARX(FILE*,i) _AR1(STAT*,s)))
 		_ar1(STAT *,		sb)
 		)
 		_dcl(char *,		name)
@@ -81,7 +81,7 @@ extern	int	editfile(
 
 extern	int	edittree(
 		_arx(char *,		name)
-		_fnx(int,		func)
+		_fnx(int,		func,	(_ARX(FILE*,o) _ARX(FILE*,i) _AR1(STAT*,s)))
 		_arx(int,		recur)
 		_ar1(int,		links)
 		)
@@ -143,7 +143,7 @@ extern	void	time2vms(
 
 extern	void	transtree(
 		_arx(char *,		path)
-		_fnx(int,		func)
+		_fnx(int,		func,	(_ARX(char*,n) _AR1(STAT*,s)))
 		_arx(int,		recur)
 		_ar1(int,		links)
 		)

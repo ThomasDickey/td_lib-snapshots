@@ -1,0 +1,4 @@
+foo => [.FOO]
+foo/bar => [.FOO.BAR]
+foo.bar => [.FOO.BAR]
+foo/bar.twice => [.FOO.BAR.TWICE]

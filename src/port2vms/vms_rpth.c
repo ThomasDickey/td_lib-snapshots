@@ -1,35 +1,17 @@
 #ifndef	lint
-static	char	Id[] = "$Id: vms_rpth.c,v 7.0 1991/10/18 15:35:50 ste_cm Rel $";
+static	char	Id[] = "$Id: vms_rpth.c,v 8.0 1992/11/20 12:02:23 ste_cm Rel $";
 #endif
 
 /*
  * Title:	vms_relpath.c (convert VMS path to relative-form)
  * Author:	T.E.Dickey
  * Created:	26 Jun 1990
- * $Log: vms_rpth.c,v $
- * Revision 7.0  1991/10/18 15:35:50  ste_cm
- * BASELINE Thu Jul 16 16:14:02 1992 -- CM_TOOLS #11
- *
- *		Revision 6.0  91/10/18  15:35:50  ste_cm
- *		BASELINE Mon Oct 21 13:09:39 1991 -- adapt to CM_TOOLS #10
- *		
- *		Revision 5.1  91/10/18  15:35:50  dickey
- *		use macro _MAIN
- *		
- *		Revision 5.0  91/05/20  17:18:26  ste_cm
- *		BASELINE Tue Jun 11 16:44:53 1991 -- apollo sr10.3
- *		
- *		Revision 4.1  91/05/20  17:18:26  dickey
- *		apollo sr10.3 cpp complains about endif-tags
- *		
- *		Revision 4.0  90/06/27  09:59:09  ste_cm
- *		BASELINE Tue Aug 14 16:27:44 1990
- *		
- *		Revision 3.2  90/06/27  09:59:09  dickey
- *		use 'strlcpy()' to ensure that all pathnames are lowercased
- *		
- *		Revision 3.1  90/06/27  08:29:24  dickey
- *		RCS_BASE
+ * Modified:
+ *		20 Nov 1992, use prototypes
+ *		18 Oct 1991, use macro _MAIN
+ *		20 May 1991, apollo sr10.3 cpp complains about endif-tags
+ *		27 Jun 1990, use 'strlcpy()' to ensure that all pathnames are
+ *			     lowercased
  *		
  * Function:	Converts a pathname from (presumably absolute form) to relative
  *		form.
@@ -40,9 +22,9 @@ static	char	Id[] = "$Id: vms_rpth.c,v 7.0 1991/10/18 15:35:50 ste_cm Rel $";
 extern	char	*strlcpy();
 
 static
-char	*
-after_leaf(path)
-char	*path;
+char *	after_leaf(
+	_AR1(char *,	path))
+	_DCL(char *,	path)
 {
 	while (*path) {
 		if (*path == '.' || *path == ']')
@@ -52,9 +34,14 @@ char	*path;
 	return (path);
 }
 
-char	*
-vms_relpath(dst, cwd, src)
-char	*dst, *cwd, *src;
+char *	vms_relpath(
+	_ARX(char *,	dst)
+	_ARX(char *,	cwd)
+	_AR1(char *,	src)
+		)
+	_DCL(char *,	dst)
+	_DCL(char *,	cwd)
+	_DCL(char *,	src)
 {
 	auto	char	current[BUFSIZ];
 	auto	char	source[BUFSIZ];
@@ -149,9 +136,13 @@ char	*dst, *cwd, *src;
 }
 
 #ifdef	TEST
-do_test(s,wd)
-char	*s;
-char	*wd;
+static
+void	do_test(
+	_ARX(char *,	s)
+	_AR1(char *,	wd)
+		)
+	_DCL(char *,	s)
+	_DCL(char *,	wd)
 {
 	auto	char	dst[BUFSIZ];
 	if (wd == 0) wd = "(getwd)";
@@ -176,14 +167,15 @@ _MAIN
 		for (j = 1; j < argc; j++)
 			do_test(argv[j], (char *)0);
 	} else {
-		fprintf(stderr, "Testing...\n");
-		for (j = 0; j < sizeof(tbl)/sizeof(tbl[0]); j++) {
-			for (k = 0; k < sizeof(tbl)/sizeof(tbl[0]); k++) {
+		FPRINTF(stderr, "Testing...\n");
+		for (j = 0; j < SIZEOF(tbl); j++) {
+			for (k = 0; k < SIZEOF(tbl); k++) {
 				do_test(strcpy(src, tbl[k]), tbl[j]);
 				do_test(strcat(src, "name"), tbl[j]);
 			}
 		}
-		fprintf(stderr, "...done\n");
+		FFLUSH(stdout);
+		FPRINTF(stderr, "...done\n");
 	}
 	exit(SUCCESS);
 	/*NOTREACHED*/

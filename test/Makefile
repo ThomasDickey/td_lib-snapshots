@@ -1,4 +1,4 @@
-# $Id: Makefile,v 11.7 1992/11/19 15:13:22 dickey Exp $
+# $Id: Makefile,v 11.9 1992/11/20 13:52:36 dickey Exp $
 # make-file for CM_TOOLS common/test library
 
 ####### (Development) ##########################################################
@@ -36,6 +36,7 @@ REF_FILES = \
 	gid2s.ref \
 	list_by_cols.ref \
 	ltostr.ref \
+	m2comp.ref \
 	makeargv.ref \
 	name2s.ref \
 	newzone.ref \
@@ -53,6 +54,7 @@ REF_FILES = \
 	samebranch.ref \
 	sameleaf.ref \
 	sccsname.ref \
+	scomp.ref \
 	scr_size.ref \
 	strbcmp.ref \
 	strucmp.ref \
@@ -64,6 +66,7 @@ REF_FILES = \
 	vcs_file.ref \
 	vecedit.ref \
 	vercmp.ref \
+	walkback.ref \
 	walktree.ref \
 	which.ref
 
@@ -84,6 +87,7 @@ SCRIPTS	= \
 	gid2s.sh \
 	list_by_cols.sh \
 	ltostr.sh \
+	m2comp.sh \
 	makeargv.sh \
 	name2s.sh \
 	newzone.sh \
@@ -101,6 +105,7 @@ SCRIPTS	= \
 	samebranch.sh \
 	sameleaf.sh \
 	sccsname.sh \
+	scomp.sh \
 	scr_size.sh \
 	strbcmp.sh \
 	strucmp.sh \
@@ -112,6 +117,7 @@ SCRIPTS	= \
 	vcs_file.sh \
 	vecedit.sh \
 	vercmp.sh \
+	walkback.sh \
 	walktree.sh \
 	which.sh
 
@@ -136,6 +142,7 @@ PROGS	=\
 	gid2s\
 	list_by_cols\
 	ltostr\
+	m2comp\
 	makeargv\
 	name2s\
 	newzone\
@@ -153,6 +160,7 @@ PROGS	=\
 	samebranch\
 	sameleaf\
 	sccsname\
+	scomp\
 	scr_size\
 	strbcmp\
 	strucmp\
@@ -164,6 +172,7 @@ PROGS	=\
 	vcs_file\
 	vecedit\
 	vercmp\
+	walkback\
 	walktree\
 	which
 
@@ -199,6 +208,7 @@ gethome.c\
 gid2s.c\
 list_by_cols.c\
 ltostr.c\
+m2comp.c\
 makeargv.c\
 name2s.c\
 newzone.c\
@@ -216,6 +226,7 @@ s2uid.c\
 samebranch.c\
 sameleaf.c\
 sccsname.c\
+scomp.c\
 scr_size.c\
 strbcmp.c\
 strucmp.c\
@@ -227,5 +238,6 @@ usercopy.c\
 vcs_file.c\
 vecedit.c\
 vercmp.c\
+walkback.c\
 walktree.c\
 which.c:

@@ -1,11 +1,13 @@
 #ifndef	lint
-static	char	Id[] = "$Id: utimes.c,v 7.0 1991/10/18 15:37:01 ste_cm Rel $";
+static	char	Id[] = "$Id: utimes.c,v 8.0 1992/11/20 08:17:52 ste_cm Rel $";
 #endif
 
 /*
  * Title:	utimes.c
  * Author:	T.E.Dickey
  * Created:	29 Sep 1988
+ * Modified:
+ *		20 Nov 1992, use prototypes
  *
  * Function:	Sets VMS file creation and revision times to correspond with
  *		the unix modification and change times.
@@ -31,12 +33,17 @@ static	char	Id[] = "$Id: utimes.c,v 7.0 1991/10/18 15:37:01 ste_cm Rel $";
 			return(-1);\
 		}
 
+#define	TIMEVAL	struct	timeval
+
 /*
  * Lookup/Modify attributes using ACP:
  */
-utimes (filespec,tv)
-char	*filespec;
-struct	timeval	tv[2];
+int	utimes (
+	_ARX(char *,	filespec)
+	_AR1(TIMEVAL *,	tv)
+		)
+	_DCL(char *,	filespec)
+	_DCL(TIMEVAL *,	tv)
 {
 	auto	struct	FAB	fab;
 	auto	struct	NAM	nam;
@@ -102,7 +109,7 @@ struct	timeval	tv[2];
 /*ARGSUSED*/
 _MAIN
 {
-	static	struct	timeval	tv[2];
+	static	TIMEVAL	tv[2];
 	int	j;
 	for (j = 1; j < argc; j++)
 		if (utimes(argv[j], tv) < 0)

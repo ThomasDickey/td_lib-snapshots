@@ -1,35 +1,16 @@
 #ifndef	lint
-static	char	Id[] = "$Id: vms_pthc.c,v 7.0 1991/12/12 08:29:52 ste_cm Rel $";
+static	char	Id[] = "$Id: vms_pthc.c,v 8.0 1992/11/20 08:14:49 ste_cm Rel $";
 #endif
 
 /*
  * Title:	vms_pathcat.c (VMS path concatenation)
  * Author:	T.E.Dickey
  * Created:	26 Jun 1990
- * $Log: vms_pthc.c,v $
- * Revision 7.0  1991/12/12 08:29:52  ste_cm
- * BASELINE Thu Jul 16 16:14:02 1992 -- CM_TOOLS #11
- *
- *		Revision 6.0  91/12/12  08:29:52  ste_cm
- *		BASELINE Thu Dec 12 08:31:46 1991
- *		
- *		Revision 5.2  91/12/12  08:29:52  dickey
- *		corrected entrypoint-name
- *		
- *		Revision 5.1  91/10/18  15:35:46  dickey
- *		use macro _MAIN
- *		
- *		Revision 5.0  91/05/20  17:18:21  ste_cm
- *		BASELINE Tue Jun 11 16:44:53 1991 -- apollo sr10.3
- *		
- *		Revision 4.1  91/05/20  17:18:21  dickey
- *		apollo sr10.3 cpp complains about endif-tags
- *		
- *		Revision 4.0  90/06/26  14:47:37  ste_cm
- *		BASELINE Tue Aug 14 16:27:44 1990
- *		
- *		Revision 3.1  90/06/26  14:47:37  dickey
- *		RCS_BASE
+ * Modified:
+ *		20 Nov 1992, use prototypes
+ *		12 Dec 1991, corrected entrypoint-name
+ *		18 Oct 1991, use macro _MAIN
+ *		20 May 1991, apollo sr10.3 cpp complains about endif-tags
  *		
  * Function:	Forms a combined path a la 'pathcat()', but for VMS-style
  *		pathnames.
@@ -46,9 +27,14 @@ static	char	Id[] = "$Id: vms_pthc.c,v 7.0 1991/12/12 08:29:52 ste_cm Rel $";
 #define	A_DIR	2
 #define	A_NAME	1
 
-char *
-vms_pathcat(dst, dname, fname)
-char	*dst, *dname, *fname;
+char *	vms_pathcat(
+	_ARX(char *,	dst)
+	_ARX(char *,	dname)
+	_AR1(char *,	fname)
+		)
+	_DCL(char *,	dst)
+	_DCL(char *,	dname)
+	_DCL(char *,	fname)
 {
 	auto	char	tmp[BUFSIZ],
 			*s;
@@ -101,8 +87,12 @@ char	*dst, *dname, *fname;
 
 #ifdef	TEST
 static
-do_test(path, leaf)
-char	*path, *leaf;
+void	do_test(
+	_ARX(char *,	path)
+	_AR1(char *,	leaf)
+		)
+	_DCL(char *,	path)
+	_DCL(char *,	leaf)
 {
 	auto	char	tmp[BUFSIZ];
 	printf("%s + %s => \"%s\"\n", path, leaf, vms_pathcat(tmp, path, leaf));
@@ -110,9 +100,12 @@ char	*path, *leaf;
 
 #define	DO_NAME	16
 static
-char	*
-do_name(dst, inx)
-char	*dst;
+char *	do_name(
+	_ARX(char *,	dst)
+	_AR1(int,	inx)
+		)
+	_DCL(char *,	dst)
+	_DCL(int,	inx)
 {
 	*dst = EOS;
 	if (inx & A_NODE)	(void)strcat(dst, "node::");

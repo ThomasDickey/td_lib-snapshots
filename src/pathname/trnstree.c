@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: trnstree.c,v 7.0 1991/12/11 07:50:30 ste_cm Rel $";
+static	char	Id[] = "$Id: trnstree.c,v 7.1 1992/11/20 07:58:24 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: trnstree.c,v 7.0 1991/12/11 07:50:30 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	12 Jan 1989
  * Modified:
+ *		20 Nov 1992, added 3rd arg to _FNX macros.
  *		11 Dec 1991, added 'links' argument.  Process entire list of
  *			     files per-directory to avoid possible conflict
  *			     with temporary-files in current-directory.  Also,
@@ -19,6 +20,7 @@ static	char	Id[] = "$Id: trnstree.c,v 7.0 1991/12/11 07:50:30 ste_cm Rel $";
 #define		DIR_PTYPES
 #define		STR_PTYPES
 #include	"portunix.h"
+#include	"cm_qsort.h"
 #include	<errno.h>
 
 typedef	char	*PTR;
@@ -48,40 +50,25 @@ typedef	char	*PTR;
 #define	LOOK(name,sb)	(stat(name,sb))
 #endif
 
-/*
- * Comparison routine for qsort.
- */
-static
-compare(
-_ARX(char **,	p1)
-_AR1(char **,	p2)
-	)
-_DCL(char **,	p1)
-_DCL(char **,	p2)
-{
-	return (-strcmp(*p1, *p2));
-}
-
 /************************************************************************
  *	public entrypoints						*
  ************************************************************************/
 
 /*ARGSUSED*/
-void
-transtree(
-_ARX(char *,	oldname)
-_FNX(int,	func)
-_ARX(int,	recur)
-_AR1(int,	links)
-	)
-_DCL(char *,	oldname)
-_DCL(int,	(*func)())
-_DCL(int,	recur)
-_DCL(int,	links)
+void	transtree(
+	_ARX(char *,	oldname)
+	_FNX(int,	func,	(_ARX(char *,name) _AR1(STAT *,s)))
+	_ARX(int,	recur)
+	_AR1(int,	links)
+		)
+	_DCL(char *,	oldname)
+	_DCL(int,	(*func)())
+	_DCL(int,	recur)
+	_DCL(int,	links)
 {
 	auto	DIR		*dirp;
 	auto	struct	direct	*dp;
-	auto	struct stat	sb;
+	auto	STAT		sb;
 	auto	unsigned	num;
 	auto	PTR		*vec;
 	auto	char		newname[MAXPATHLEN];
@@ -141,7 +128,7 @@ _DCL(int,	links)
 			closedir(dirp);
 			if (num != 0) {
 				qsort((PTR)vec, (LEN_QSORT)num,
-					sizeof(PTR), compare);
+					sizeof(PTR), cmp_qsort);
 				while (num-- != 0) {
 					if (LOOK(vec[num], &sb) < 0) {
 						perror(vec[num]);
@@ -162,9 +149,12 @@ _DCL(int,	links)
 
 #ifdef	TEST
 static
-do_file(
-_AR1(char *,	name))
-_DCL(char *,	name)
+int	do_file(
+	_ARX(char *,	name)
+	_AR1(STAT *,	sb)
+		)
+	_DCL(char *,	name)
+	_DCL(STAT *,	sb)
 {
 }
 

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: vms2name.c,v 7.0 1991/10/18 15:40:15 ste_cm Rel $";
+static	char	Id[] = "$Id: vms2name.c,v 7.1 1992/11/20 08:16:23 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,8 @@ static	char	Id[] = "$Id: vms2name.c,v 7.0 1991/10/18 15:40:15 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	02 Nov 1988
  * Modified:
+ * Modified:
+ *		20 Nov 1992, use prototypes
  *		15 Sep 1989, added IMakefile and AMakefile cases.
  *		25 May 1989, handle special case of "[]".  Lowercase entire
  *			     pathname.  Generate ".." cases.
@@ -52,9 +54,12 @@ static	struct	{
 		256,	"copyright"
 	};
 
-char *
-vms2name(dst, src)
-char	*dst, *src;
+char *	vms2name(
+	_ARX(char *,	dst)
+	_AR1(char *,	src)
+		)
+	_DCL(char *,	dst)
+	_DCL(char *,	src)
 {
 	register int j, uc_len = 0;
 	auto	char	current[MAXPATHLEN];
@@ -194,7 +199,7 @@ char	*dst, *src;
 
 	if (!strncmp(s, "readme.", 7))
 		uc_len = 6;
-	for (j = 0; j < sizeof(uc_names)/sizeof(uc_names[0]); j++) {
+	for (j = 0; j < SIZEOF(uc_names); j++) {
 		if (!strcmp(s, uc_names[j].name)) {
 			uc_len = uc_names[j].len;
 			break;
@@ -211,8 +216,13 @@ char	*dst, *src;
 }
 
 #ifdef	TEST
-dotest(argc, argv)
-char	*argv[];
+static
+void	dotest(
+	_ARX(int,	argc)
+	_AR1(char **,	argv)
+		)
+	_DCL(int,	argc)
+	_DCL(char **,	argv)
 {
 	register int j;
 	char	buffer[MAXPATHLEN];
@@ -270,7 +280,7 @@ _MAIN
 				"NODE::[A]",
 				"NODE::[A.B]"
 				};
-		dotest(sizeof(testv)/sizeof(testv[0]), testv);
+		dotest(SIZEOF(testv), testv);
 	}
 	exit(SUCCESS);
 	/*NOTREACHED*/
