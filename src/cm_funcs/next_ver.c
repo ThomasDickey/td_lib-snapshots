@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: next_ver.c,v 9.1 1991/10/01 09:53:37 dickey Exp $";
+static	char	Id[] = "$Id: next_ver.c,v 10.0 1991/10/17 07:53:33 ste_cm Rel $";
 #endif
 
 /*
@@ -23,7 +23,6 @@ _AR1(char *,	src)
 _DCL(char *,	dst)
 _DCL(char *,	src)
 {
-	extern	long	strtol();
 	char	*t;
 
 	*dst = EOS;

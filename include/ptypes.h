@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 9.6 1991/10/04 17:03:48 dickey Exp $ */
+/* $Id: ptypes.h,v 9.8 1991/10/17 09:50:44 dickey Exp $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -139,6 +139,12 @@ extern	char	*sprintf();
 #endif	/* vms/unix */
 #endif	/* SYSTEM5 */
 
+#ifdef	__STDC__
+#define	V_OR_P		void *
+#else
+#define	V_OR_P		char *
+#endif
+
 /*
  * defines the argument-type for "wait()"
  */
@@ -190,18 +196,36 @@ extern	char	*sprintf();
 #ifndef	LINTLIBRARY
 extern	V_OR_I	_exit(_ar1(int,code));
 extern	V_OR_I	exit(_ar1(int,code));
-extern	V_OR_I	qsort();
+extern	V_OR_I	qsort(
+		_arx(V_OR_P,	base)
+		_arx(size_t,	nel)
+		_arx(size_t,	width)
+		_fn1(int,	compar));
 #ifndef	vms
 extern	V_OR_I	free(_ar1(char *,s));
+extern	V_OR_P	calloc(_arx(size_t,nel) _ar1(size_t,size));
+extern	V_OR_P	malloc(_ar1(size_t,size));
+extern	V_OR_P	realloc(_arx(V_OR_P,ptr) _ar1(size_t,size));
+#endif	/* __STDC__ */
 #if	!defined(__STDC__) && !defined(apollo_sr10)
 extern	V_OR_I	perror(_ar1(char *,s));
-extern	V_OR_I	rewind();
-#endif	/* __STDC__ */
+extern	V_OR_I	rewind(_ar1(FILE *,s));
 #endif
 
 extern	char *	getenv(_ar1(char *,s));
-extern	long	strtol(_arx(char *,s) _arx(char **,d) _ar1(int,base));
+extern	long	strtol(
+		_arx(char *,	s)
+		_arx(char **,	d)
+		_ar1(int,	base));
 extern	time_t	time(_ar1(time_t *,t));
+
+extern	int	getopt(
+		_arx(int,	argc)
+		_arx(char **,	argv)
+		_ar1(char *,	opts));
+extern	char *	optarg;
+extern	int	optind;
+
 #endif	/* LINTLIBRARY */
 
 #ifdef	unix
@@ -260,11 +284,6 @@ typedef	int	gid_t;
 #define	DOALLOC(p,t,n)	(t *)doalloc((char *)p,sizeof(t)*(n))
 #define	ALLOC(t,n)	DOALLOC(0,t,n)
 #endif	/* lint */
-
-#ifndef	vms
-extern	char	*doalloc();
-extern	char	*malloc(), *realloc();
-#endif	/* vms */
 
 /*
  * System5 does not provide the directory manipulation procedures in bsd4.x;
@@ -337,8 +356,8 @@ extern	char	killchar();
 #define	strchr	index
 #define	strrchr	rindex
 #endif	/* SYSTEM5 */
-extern	char	*strchr();
-extern	char	*strrchr();
+extern	char	*strchr(_arx(char *,s) _ar1(int,c));
+extern	char	*strrchr(_arx(char *,s) _ar1(int,c));
 #endif	/* STR_PTYPES */
 
 /*
@@ -348,10 +367,10 @@ extern	char	*strrchr();
 #include "common.h"
 
 #ifndef	lint
-extern		main(_arx(int,argc) _ar1(char **,argv));
+extern		main(_arx(int,argc) _arx(char **,argv) _ar1(char **,envp));
 #endif	/* lint */
-#define	_MAIN	main(_ARX(int,argc) _AR1(char **,argv))\
-		     _DCL(int,argc) _DCL(char **,argv)
+#define	_MAIN	main(_ARX(int,argc) _ARX(char **,argv) _AR1(char **,envp))\
+		     _DCL(int,argc) _DCL(char **,argv) _DCL(char **,envp)
 
 #endif	/* LINTLIBRARY */
 

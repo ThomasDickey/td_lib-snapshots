@@ -1,3 +1,109 @@
+1991-10-17  dickey@software.org
+
+	* src/process/failed.c:
+	oops: put back the flush of stdout that I took out in the
+	last change (did not need that of stderr, tho!)
+
+1991-10-17  ste_cm@software.org
+
+	* src/process/failed.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+	* src/process/failed.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+	* src/process/failed.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1991-10-17  dickey@software.org
+
+	* src/cm_funcs/rcsload.c: lint
+
+1991-10-17  ste_cm@software.org
+
+	* src/cm_funcs/rcsload.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+1991-10-17  dickey@software.org
+
+	* src/cm_funcs/rcsload.c:
+	added first cut of logic to try to do vecedit on branches
+
+	* include/td_lib.h: added macro WALK_FUNC
+
+1991-10-17  ste_cm@software.org
+
+	* include/td_lib.h:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+1991-10-17  dickey@software.org
+
+	* include/ptypes.h: fix definition of 'qsort()' vs lint
+
+	* include/ptypes.h:
+	defined more of the extern-stuff with prototypes (e.g.,
+	getopt, malloc, strchr)
+
+	* src/Makefile:
+	obsoleted 'lint2.out' by making it the default lint.out (too many
+	modules otherwise).
+
+1991-10-17  ste_cm@software.org
+
+	* src/Makefile:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+1991-10-17  dickey@software.org
+
+	* src/string/strbcmp.c: tidy
+
+1991-10-17  ste_cm@software.org
+
+	* src/string/strbcmp.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+	* src/string/strbcmp.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1991-10-17  dickey@software.org
+
+	* src/cm_funcs/cutoff.c: tidy
+
+1991-10-17  ste_cm@software.org
+
+	* src/cm_funcs/cutoff.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+1991-10-17  dickey@software.org
+
+	* src/pathname/walktree.c: tidy
+
+1991-10-17  ste_cm@software.org
+
+	* src/pathname/walktree.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+1991-10-17  dickey@software.org
+
+	* src/cm_funcs/next_ver.c: tidy
+
+1991-10-17  ste_cm@software.org
+
+	* src/cm_funcs/next_ver.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+1991-10-17  dickey@software.org
+
+	* src/pathname/name2s.c: tidy
+
+1991-10-17  ste_cm@software.org
+
+	* src/pathname/name2s.c:
+	BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+	* src/pathname/name2s.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
 1991-10-11  dickey@software.org
 
 	* include/td_lib.h:

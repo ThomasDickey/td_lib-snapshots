@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: strbcmp.c,v 9.1 1991/10/04 07:37:13 dickey Exp $";
+static	char	Id[] = "$Id: strbcmp.c,v 11.0 1991/10/17 07:56:31 ste_cm Rel $";
 #endif
 
 /*
@@ -18,7 +18,7 @@ static	char	Id[] = "$Id: strbcmp.c,v 9.1 1991/10/04 07:37:13 dickey Exp $";
  *		otherwise negative).
  */
 
-#include	"ptypes.h"
+#include	<ptypes.h>
 #include	<ctype.h>
 
 #define	SKIP(p)	while (isspace(*p))	p++;
@@ -45,9 +45,9 @@ _DCL(register char *,	b)
 }
 
 #ifdef	TEST
+/*ARGSUSED*/
 _MAIN
 {
-	extern	time_t	time();
 	auto	time_t	now;
 	static	char	*tbl[] = {
 				"ab",

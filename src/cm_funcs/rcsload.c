@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcsload.c,v 9.14 1991/10/10 09:24:57 dickey Exp $";
+static	char	Id[] = "$Id: rcsload.c,v 10.0 1991/10/17 14:25:03 ste_cm Rel $";
 #endif
 
 /*
@@ -7,6 +7,8 @@ static	char	Id[] = "$Id: rcsload.c,v 9.14 1991/10/10 09:24:57 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	19 Aug 1988
  * Modified:
+ *		17 Oct 1991, added logic for computing versions of loaded text
+ *			     along branches.
  *		10 Oct 1991, got this to compute versions of loaded text on the
  *			     main-trunk.
  *		07 Oct 1991, if file-contents are loaded, provide enough space
@@ -205,13 +207,13 @@ _DCL(int,	code)
 		load_vector[j] = 0;
 		SHOW_VECTOR(log_or_edit ? "DELTA" : "FILE", last_rev, load_vector)
 	} else {
-		register char	*s, *d;
+		register char	*t, *d;
 
-		for (s = d = base; s < load_last; s++) {
-			if (s != d)
-				(void)strcpy(d,s);
+		for (t = d = base; t < load_last; s++) {
+			if (t != d)
+				(void)strcpy(d,t);
 			d += strlen(d);
-			s += strlen(s);
+			t += strlen(t);
 		}
 		load_logged = base;
 		DEBUG(("NOTES:%s\n%s", last_rev, load_logged))
@@ -268,6 +270,29 @@ _DCL(char *,	rev)
 }
 
 /*
+ * Propagate the editing changes from ancestor to descendent
+ */
+static
+ripple(
+_ARX(DELTREE *,	dst)
+_AR1(DELTREE *,	src)
+	)
+_DCL(DELTREE *,	dst)
+_DCL(DELTREE *,	src)
+{
+
+	dst->num_lines = src->num_lines
+			   - dst->num_deleted
+			   + dst->num_added;
+
+	if (dst->vector != 0) {
+		char	**script = dst->vector;
+		dst->vector = vecedit(src->vector, script);
+		vecfree(script);
+	}
+}
+
+/*
  * Given an entry in the rcs-tree, recur back to the point at which the
  * branch leaves the trunk to propagate the line counts.
  */
@@ -301,11 +326,8 @@ _DCL(char *,	root)
 		}
 	}
 
-	if (found) {
-		vector[at].num_lines = vector[j].num_lines
-				    + vector[at].num_added
-				    - vector[at].num_deleted;
-	}
+	if (found)
+		ripple(vector+at, vector+j);
 }
 
 /************************************************************************
@@ -437,18 +459,10 @@ _DCL(int,	verbose)
 		while (strcmp(vec[k].parent, "")) {
 		    for (j = 0; j < total; j++)
 			if (vec[j].revision == vec[k].parent) {
+				ripple(vec+j, vec+k);
 				vec[k].num_added   = vec[j].num_added;
 				vec[k].num_deleted = vec[j].num_deleted;
 				vec[j].num_added   = vec[j].num_deleted = 0;
-				vec[j].num_lines   = vec[k].num_lines
-						   - vec[k].num_deleted
-						   + vec[k].num_added;
-				if (vec[j].vector != 0) {
-					char	**script = vec[j].vector;
-					vec[j].vector =
-						vecedit(vec[k].vector, script);
-					vecfree(script);
-				}
 				k = j;
 				break;
 			}
@@ -527,6 +541,7 @@ _DCL(char *,	revision)
 	(void)unlink(temp);
 }
 
+/*ARGSUSED*/
 _MAIN
 {
 	DELTREE	*p;
