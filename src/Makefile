@@ -1,10 +1,13 @@
-# $Id: Makefile,v 4.1 1989/08/24 16:50:43 dickey Exp $
+# $Id: Makefile,v 4.2 1989/08/25 09:56:12 dickey Exp $
 # MAKE-file for miscellaneous library routines
 #
 # $Log: Makefile,v $
-# Revision 4.1  1989/08/24 16:50:43  dickey
-# added 'wrepaint.c'
+# Revision 4.2  1989/08/25 09:56:12  dickey
+# added ptypes.h dependency to which.o
 #
+#	Revision 4.1  89/08/24  16:50:43  dickey
+#	added 'wrepaint.c'
+#	
 #	Revision 4.0  89/08/23  13:49:43  ste_cm
 #	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
 #	
@@ -281,6 +284,7 @@ userprot.o:	$I/ptypes.h
 vcs_file.o:	$I/ptypes.h	$I/rcsdefs.h
 view_file.o:	$I/ptypes.h
 walktree.o:	$I/ptypes.h
+which.o:	$I/ptypes.h
 win2file.o:	$I/ptypes.h
 #
 ####### (Development) ##########################################################

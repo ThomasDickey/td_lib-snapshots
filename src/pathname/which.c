@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RCS/which.c,v 4.0 1988/05/16 13:17:20 ste_cm Rel $";
+static	char	Id[] = "$Id: which.c,v 4.1 1989/08/25 09:50:40 dickey Exp $";
 #endif	lint
 
 /*
@@ -7,9 +7,13 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname
  * Author:	T.E.Dickey
  * Created:	18 Nov 1987
  * $Log: which.c,v $
- * Revision 4.0  1988/05/16 13:17:20  ste_cm
- * BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+ * Revision 4.1  1989/08/25 09:50:40  dickey
+ * force $PATH to be nonnull, in case this is invoked from a
+ * non-unix environment!
  *
+ *		Revision 4.0  88/05/16  13:17:20  ste_cm
+ *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+ *		
  *		Revision 3.0  88/05/16  13:17:20  ste_cm
  *		BASELINE Mon Jun 19 13:27:01 EDT 1989
  *		
@@ -30,16 +34,11 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname
  *
  * Bugs:	Does not look at csh-aliases.
  */
-#include	<stdio.h>
-#include	<sys/types.h>
-#include	<sys/stat.h>
-extern	char	*getcwd(),
-		*getenv(),
-		*strcat(),
-		*strcpy(),
-		*strncpy();
 
-#define	EOS	'\0'
+#define	STR_PTYPES
+#include	"ptypes.h"
+extern	char	*getcwd(),
+		*getenv();
 
 static
 executable(name)
@@ -49,10 +48,10 @@ struct	stat	sb;
 	if (access(name, 1) >= 0) {
 		if (stat(name, &sb) >= 0) {
 			if ((sb.st_mode & S_IFMT) == S_IFREG)
-				return(1);
+				return(TRUE);
 		}
 	}
-	return(0);
+	return(FALSE);
 }
 
 which(bfr, len, find, dot)
@@ -64,7 +63,7 @@ register char *s, *d;
 char	*path = getenv("PATH");
 char	test[BUFSIZ];
 
-	if (path == 0) path = "";
+	if (path == 0) path = ".";
 	s = path;
 	*test = *bfr = EOS;
 

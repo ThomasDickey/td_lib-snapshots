@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19890824
+MANIFEST for td_lib, version t19890825
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 Makefile                        top-level makefile for TD_LIB
@@ -52,6 +52,7 @@ src/curses/savewin.c            save/unsave curses window
 src/curses/scr_size.c           obtain screen-size
 src/curses/viewfile.c           portable (curses) wrapper for padedit
 src/curses/win2file.c           dump curses window to file
+src/curses/wrepaint.c           repaint window w/o clearing it, if possible
 src                             subdirectory
 src/descrip.mms                 VMS build script for td_lib/src
 src/memory                      subdirectory

@@ -1,3 +1,15 @@
+1989-08-25  dickey@software.org
+
+	* src/Makefile: added ptypes.h dependency to which.o
+
+	* src/pathname/which.c:
+	force $PATH to be nonnull, in case this is invoked from a
+	non-unix environment!
+
+	* src/curses/wrepaint.c: RCS_BASE
+
+	* include/td_lib.h: added 'wrepaint.c'
+
 1989-08-24  dickey@software.org
 
 	* src/descrip.mms: added VIEW_FILE, WREPAINT
