@@ -1,3 +1,25 @@
+1992-08-05  dickey@software.org
+
+	* src/curses/erasechr.c: added 'eraseword()' function
+
+1992-08-05  ste_cm@software.org
+
+	* src/curses/erasechr.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1992-08-05  dickey@software.org
+
+	* src/curses/rawgets.c: make 'rawgets()' a macro.
+	added 'fast_q' argument to use in ded inline commands.
+	interpret 'fast_q' (if nonnull) as immediate-quit command.
+	split out some special characters as macros.
+
+	* src/Makefile: absorbed definitions from 'common.mk'
+
+	* src/curses/rawgets.c:
+	force this to highlight when in scrolling/nowrap mode
+	(a step towards integration with 'ded').
+
 1992-08-03  dickey@software.org
 
 	* include/rcsdefs.h, src/descrip.mms, src/Makefile: samebranch.c

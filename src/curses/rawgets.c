@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rawgets.c,v 11.0 1991/10/03 17:20:37 ste_cm Rel $";
+static	char	Id[] = "$Id: rawgets.c,v 11.2 1992/08/05 15:46:52 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: rawgets.c,v 11.0 1991/10/03 17:20:37 ste_cm Rel $";
  * Title:	rawgets.c (raw-mode 'gets()')
  * Created:	29 Sep 1987 (from 'fl.c')
  * Modified:
+ *		05 Aug 1992, highlight in insert-mode when wrap is disabled.
  *		03 Oct 1991, converted to ANSI
  *		15 May 1991, mods to compile under apollo sr10.3
  *		02 Mar 1990, modified so that if this is invoked in no-wrap
@@ -53,25 +54,42 @@ static	char	Id[] = "$Id: rawgets.c,v 11.0 1991/10/03 17:20:37 ste_cm Rel $";
 
 #define	SHIFT	5
 
+#define	to_home(c)	(((c) == CTL('B')))
+#define	to_left(c)	(((c) == '\b') || ((c) == ARO_LEFT))
+#define	to_right(c)	(((c) == '\f') || ((c) == ARO_RIGHT))
+#define	to_end(c)	(((c) == CTL('F')))
+
 static	WINDOW	*Z;		/* window we use in this module */
 static	int	xbase,	ybase,	/* base-position of 'bfr[]' */
 		xlast,		/* last usable column in screen */
 		shift,		/* amount shifted in no-wrap mode */
 		wrap,		/* if we echo newline, assume wrappable */
 		errs,		/* flag for error/illegal command */
-		Imode;
+		Imode;		/* insert:1, scroll:-1 */
 static	char	*bbase;		/* 'bfr[]' copy */
 
 /*
  * Clear the remainder of the current line to the 'xlast' position.  Don't
- * use wclrtoeol(), since xlast may not be on the end.
+ * use wclrtoeol() when wrapping, since xlast may not be on the end.
  */
 static
-ClearIt(_AR0)
+void	ClearIt(_AR0)
 {
-	register int	x;
-	for (x = Z->_curx; x < xlast; x++)
-		(void)waddch(Z,' ');
+	if (wrap) {
+		register int	x;
+
+		for (x = Z->_curx; x < xlast; x++)
+			(void)waddch(Z,' ');
+	} else {
+		(void)wclrtoeol(Z);
+	}
+}
+
+static
+void	ShowAll(_AR0)
+{
+	(void)wmove(Z, ybase, xbase);
+	ShowAt(bbase+shift);
 }
 
 /*
@@ -80,15 +98,14 @@ ClearIt(_AR0)
  * string.
  */
 static
-MoveTo(
-_AR1(char *,	new))
-_DCL(char *,	new)
+int	MoveTo(
+	_AR1(char *,	new))
+	_DCL(char *,	new)
 {
-register
-int	y = ybase,
-	x = xbase,
-	z = new-(bbase+shift);
-	int	original = shift;
+	register int	y = ybase,
+			x = xbase,
+			z = new-(bbase+shift),
+			original = shift;
 
 	while (z < 0) {		/* nowrap: shift-left */
 		shift -= SHIFT;
@@ -105,10 +122,9 @@ int	y = ybase,
 			}
 		}
 	}
-	if (shift != original) {
-		(void)wmove(Z, ybase, xbase);
-		ShowAt(bbase+shift);
-	}
+	if (shift != original)
+		ShowAll();
+
 	(void)wmove(Z,y,x);
 }
 
@@ -116,11 +132,11 @@ int	y = ybase,
  * Repaint the string starting at a given position
  */
 static
-ShowAt(
-_AR1(char *,	at))
-_DCL(char *,	at)
+int	ShowAt(
+	_AR1(char *,	at))
+	_DCL(char *,	at)
 {
-int	y,x, row, col, len, max;
+	register int	y,x, row, col, len, max;
 
 	getyx(Z, y, x);
 	for (row = y, col = x; *at && (row < Z->_maxy); row++) {
@@ -141,15 +157,15 @@ int	y,x, row, col, len, max;
  * Insert a character in the screen and into 'bfr[]' at the given position.
  */
 static
-insert(
-_ARX(char *,	at)
-_AR1(int,	c)
-	)
-_DCL(char *,	at)
-_DCL(int,	c)
+void	InsertAt(
+	_ARX(char *,	at)
+	_AR1(int,	c)
+		)
+	_DCL(char *,	at)
+	_DCL(int,	c)
 {
-register int	d  = c;
-register char	*s = at;
+	register int	d  = c;
+	register char	*s = at;
 
 	do {
 		c = d;
@@ -163,13 +179,12 @@ register char	*s = at;
  * Delete the character(s) before the given position in 'bfr[]'.
  */
 static
-char *
-delete(
-_ARX(char *,	at)
-_AR1(int,	count)
-	)
-_DCL(char *,	at)
-_DCL(int,	count)
+char *	DeleteBefore(
+	_ARX(char *,	at)
+	_AR1(int,	count)
+		)
+	_DCL(char *,	at)
+	_DCL(int,	count)
 {
 	if (at > bbase) {
 	int	old, new, x;
@@ -204,13 +219,22 @@ _DCL(int,	count)
  * calling this procedure.
  */
 static
-toggle(_AR0)
+void	ToggleMode(_AR0)
 {
-int	y,x;
+	register int	y,x;
+
 	Imode = !Imode;
 	getyx(Z,y,x);
+	standend();
 	(void)wmove(Z,ybase,xbase-2);
 	(void)waddch(Z,Imode ? ':' : '^');
+
+	if (!wrap) {
+		if (!Imode)
+			standout();
+		ShowAll();
+	}
+
 	(void)wmove(Z,y,x);
 }
 
@@ -226,8 +250,8 @@ _AR1(int,	c)
 _DCL(char *,	at)
 _DCL(int,	c)
 {
-	if (c == CTL('B'))	at = bbase;
-	else if (c == CTL('F'))	at = bbase + strlen(bbase);
+	if (to_home(c))		at = bbase;
+	else if (to_end(c))	at = bbase + strlen(bbase);
 	else			errs++;
 
 	if (!errs)		MoveTo(at);
@@ -238,22 +262,24 @@ _DCL(int,	c)
  *	main procedure							*
  ************************************************************************/
 
-wrawgets (
-_ARX(WINDOW *,	win)
-_ARX(char *,	bfr)
-_ARX(int,	size)
-_AR1(int,	newline)
-	)
-_DCL(WINDOW *,	win)
-_DCL(char *,	bfr)
-_DCL(int,	size)
-_DCL(int,	newline)
+int	wrawgets (
+	_ARX(WINDOW *,	win)
+	_ARX(char *,	bfr)
+	_ARX(int,	size)
+	_ARX(int,	newline)
+	_AR1(int,	fast_q)
+		)
+	_DCL(WINDOW *,	win)
+	_DCL(char *,	bfr)
+	_DCL(int,	size)
+	_DCL(int,	newline)
+	_DCL(int,	fast_q)
 {
-register char	*tag;
-register c;
-int	ec = erasechar(),
-	kc = killchar(),
-	count;
+	register char	*tag;
+	register int	c,
+			ec = erasechar(),
+			kc = killchar();
+	auto	 int	count;
 
 	Z = win;
 	Imode = 1;
@@ -296,12 +322,17 @@ int	ec = erasechar(),
 			break;
 
 		if (c == '\t') {
-			toggle();
+			ToggleMode();
 		} else if (!Imode || !isascii(c)) {
 			/* process scroll-mode ops */
 			if (Imode)
 				count = 1;
-			if ((c == '\b') || (c == ARO_LEFT)) {
+
+			if (fast_q) {
+				if (c == fast_q || c == 'q')
+					break;
+			}
+			if (to_left(c)) {
 				if (tag > bfr) {
 				char	*s = tag;
 					while (count-- > 0)
@@ -310,7 +341,7 @@ int	ec = erasechar(),
 					MoveTo(tag = s);
 				} else
 					errs++;
-			} else if ((c == '\f') || (c == ARO_RIGHT)) {
+			} else if (to_right(c)) {
 				if (*tag) {
 				char	*s = tag;
 					while (count-- > 0)
@@ -319,35 +350,33 @@ int	ec = erasechar(),
 					MoveTo(tag = s);
 				} else
 					errs++;
-			} else if (c == ec || c == kc) {
-				tag = delete(tag,count);
+			} else if (c == ec) {
+				tag = DeleteBefore(tag,count);
+			} else if (c == kc) {
+				tag = DeleteBefore(tag,tag - bfr);
 			} else
 				tag = move_end(tag,c);
 		} else {	/* process insert-mode ops */
 			if (c == ec) {
-				tag = delete(tag,1);
+				tag = DeleteBefore(tag,1);
 			} else if (c == kc) {
 				count = strlen(bfr);
-				(void)delete(bfr+count, count);
+				(void)DeleteBefore(bfr+count, count);
 				break;
 			} else if (isprint(c)) {
 				if (tag-bfr < size-3)
-					insert(tag++,c);
+					InsertAt(tag++,c);
 				else	errs++;
 			} else
 				tag = move_end(tag,c);
 		}
 	}
+	if (!wrap && !Imode) {
+		standend();
+		ShowAll();
+	}
 	(void)wrefresh(Z);
 	return (c);	/* returns character which terminated this call */
-}
-
-rawgets (bfr,size,newline)
-char	*bfr;
-int	size;
-int	newline;
-{
-	return (wrawgets (stdscr, bfr,size,newline));
 }
 
 /************************************************************************
@@ -372,7 +401,7 @@ _MAIN
 		clrtobot();
 		move(j,0);
 		printw("%05d> ", j);
-		rawgets(bfr, sizeof(bfr), wrap);
+		rawgets(bfr, sizeof(bfr), wrap, 'q');
 	}
 	endwin();
 }
