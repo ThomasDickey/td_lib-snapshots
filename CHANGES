@@ -1,3 +1,28 @@
+1989-03-31  dickey@software.org
+
+	* src/process/for_user.c:
+	if we are not running in set-uid mode, don't do the fork.
+
+1989-03-31  ste_cm@software.org
+
+	* src/process/for_user.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/process/for_user.c: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/process/for_user.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/process/for_user.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+	* src/process/for_user.c: BASELINE Thu Apr  6 09:45:13 EDT 1989
+
+	* src/process/for_user.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
+	* src/process/for_user.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
 1989-03-29  dickey@software.org
 
 	* src/Makefile: fixed lint for 'rcspath.c'
