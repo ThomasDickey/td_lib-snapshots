@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	09 Jun 1988
  * Modified:
+ *		16 Feb 1996, 'new_TZ' has to be static for compat with 'putenv'
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		24 Nov 1992, local copy of 'putenv()' is obsolete
@@ -35,7 +36,7 @@
 #define	TIM_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: newzone.c,v 12.5 1994/07/04 10:26:15 tom Exp $")
+MODULE_ID("$Id: newzone.c,v 12.6 1996/02/16 19:16:06 tom Exp $")
 
 #define	SIX_MM	(6 * (30 * DAY))
 
@@ -46,6 +47,7 @@ MODULE_ID("$Id: newzone.c,v 12.5 1994/07/04 10:26:15 tom Exp $")
 static	time_t	now;
 #endif
 
+static	char	new_TZ[NAMELEN];
 static	char	old_TZ[NAMELEN];
 #if	!LOCALZONE_DECLARED
 int	localzone;		/* public copy of minutes-west */
@@ -145,8 +147,6 @@ void	newzone(
 	_DCL(int,	minutes)
 	_DCL(int,	apres)
 {
-	char	new_TZ[NAMELEN];
-
 	init_tz();
 	minutes += (hours * 60);
 	if (apres)

@@ -1,3 +1,7 @@
+1996-02-16  dickey@clark.net
+
+	* src/cm_funcs/newzone.c: args to 'putenv()' cannot be on the stack...
+
 1996-02-05  dickey@clark.net
 
 	* src/curses/rawgets.c:
