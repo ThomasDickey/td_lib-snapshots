@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: cmdch.c,v 12.12 1994/07/11 00:00:55 tom Exp $";
+static	char	Id[] = "$Id: cmdch.c,v 12.13 1995/04/06 23:36:43 tom Exp $";
 #endif
 
 /*
@@ -130,8 +130,6 @@ int	cmdch(
 		register j = 0;
 
 		c = getch();
-		if (iscntrl(c))
-			i_blk[j++] = c;
 #if HAVE_KEYPAD
 		switch (c) {
 		/*
@@ -160,6 +158,8 @@ int	cmdch(
 		case KEY_RIGHT:	c = ARO_RIGHT;	done = TRUE;	break;
 		}
 #endif /* HAVE_KEYPAD */
+		if (iscntrl(c))
+			i_blk[j++] = c;
 
 		if (ESC(c)) {	/* assume "standard" escapes */
 			do {
