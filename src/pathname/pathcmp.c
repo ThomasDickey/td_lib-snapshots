@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: pathcmp.c,v 10.0 1991/10/03 15:02:02 ste_cm Rel $";
+static	char	Id[] = "$Id: pathcmp.c,v 10.1 1992/05/12 14:56:34 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,8 @@ static	char	Id[] = "$Id: pathcmp.c,v 10.0 1991/10/03 15:02:02 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	16 Mar 1989
  * Modified:
+ *		12 May 1992, assume arguments are absolute pathnames (eliminate
+ *			     time-consuming call to 'abspath()').
  *		03 Oct 1991, converted to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
  *
@@ -48,8 +50,8 @@ _DCL(char *,	p2)
 			tmp2[BUFSIZ];
 
 	/* put the names into canonical form if they are not */
-	abspath(p1 = strcpy(tmp1, p1));
-	abspath(p2 = strcpy(tmp2, p2));
+	p1 = strcpy(tmp1, p1);
+	p2 = strcpy(tmp2, p2);
 
 	TRACE(("\n\t(%s %s)", p1, p2))
 	while (*p1 == SLASH && *p2 == SLASH)
