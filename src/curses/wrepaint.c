@@ -23,7 +23,7 @@
 
 #include	"td_curse.h"
 
-MODULE_ID("$Id: wrepaint.c,v 12.8 1995/09/04 16:08:25 tom Exp $")
+MODULE_ID("$Id: wrepaint.c,v 12.9 1995/11/04 23:23:25 tom Exp $")
 
 void	wrepaint(
 	_ARX(WINDOW *,	win)
@@ -32,7 +32,7 @@ void	wrepaint(
 	_DCL(WINDOW *,	win)
 	_DCL(int,	row)
 {
-#if	SYS5_CURSES || CURSES_LIKE_BSD44
+#if	!CURSES_LIKE_BSD
 	touchwin(win);
 	wrefresh(curscr);
 #else

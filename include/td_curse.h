@@ -1,4 +1,4 @@
-/* $Id: td_curse.h,v 12.37 1995/10/20 10:55:47 tom Exp $ */
+/* $Id: td_curse.h,v 12.38 1995/11/04 23:22:52 tom Exp $ */
 
 /*
  * TD_LIB CURSES-related definitions
@@ -55,17 +55,18 @@
  *
  * On MS-DOS, I've used PDCurses 2.x, which is derived from NCurses.
  */
-#if defined(MSDOS) || HAVE_KEYPAD
-#define SYS5_CURSES 1
-#else
-#define SYS5_CURSES 0
-#endif
 
 /*----------------------------------------------------------------------------*/
 /*
  * The SYS5 clone "ncurses" 1.8.5 has an off-by-one error in the computation of
  * the _maxy/_maxx values.  These macros are used to hide this bug.
  */
+#if  defined(getmaxx) && defined(getmaxy)
+#define wMaxX(w) getmaxx(w)
+#define wMaxY(w) getmaxy(w)
+#endif
+
+#ifndef wMaxX
 #if CURSES_LIKE_BSD44
 #define	wMaxX(w)	((w)->maxx)
 #define	wMaxY(w)	((w)->maxy)
@@ -73,6 +74,7 @@
 #define	wMaxX(w)	(((w)->_maxx) + (COLS  - stdscr->_maxx))
 #define	wMaxY(w)	(((w)->_maxy) + (LINES - stdscr->_maxy))
 #endif
+#endif	/* wMaxX */
 
 /*----------------------------------------------------------------------------*/
 #if CURSES_LIKE_BSD

@@ -3,6 +3,7 @@
  * Title:	rawgets.c (raw-mode 'gets()')
  * Created:	29 Sep 1987 (from 'fl.c')
  * Modified:
+ *		02 Nov 1995, mods to display on 80th column.
  *		03 Sep 1995, make this work with bsd4.4 curses
  *		19 Jul 1994, adjustment for ncurses _max[xy] bug.
  *		16 Jul 1994, explicitly call for reverse-video if Sys5-curses.
@@ -69,7 +70,7 @@
 #include	"td_curse.h"
 #include	"dyn_str.h"
 
-MODULE_ID("$Id: rawgets.c,v 12.17 1995/09/04 15:21:39 tom Exp $")
+MODULE_ID("$Id: rawgets.c,v 12.18 1995/11/03 01:32:05 tom Exp $")
 
 #define	SHIFT	5
 
@@ -248,6 +249,8 @@ void	ShowAt(
 				register chtype	c = *at++ & 0xff;
 				if (!isprint(c)) {
 					(void)waddch(Z, '^');
+					if (len-- <= 0)
+						break;
 					if (c == '\177')
 						c = '?';
 					else
@@ -419,8 +422,8 @@ void	Redisplay (_AR0)
 	(void) wmove(win, y_rawgets, x_rawgets);
 	if (wrap) {
 		xlast = x_rawgets + FieldLen;
-		if (xlast >= wMaxX(Z))
-			xlast = wMaxX(Z) - 1;
+		if (xlast > wMaxX(Z))
+			xlast = wMaxX(Z);
 		(void) wclrtobot(win);
 		(void) wmove(win, y_rawgets, x_rawgets);
 	} else {
@@ -486,8 +489,8 @@ int	wrawgets (
 		ShowPrefix();
 		(void)wmove(Z, y_rawgets, x_rawgets);
 		xlast = x_rawgets + FieldLen;
-		if (xlast >= wMaxX(Z))
-			xlast = wMaxX(Z) - 1;
+		if (xlast > wMaxX(Z))
+			xlast = wMaxX(Z);
 
 		MoveTo(bfr+strlen(bfr));
 		if (wrap)

@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.69 1995/09/16 13:03:20 tom Exp $
+dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.71 1995/11/03 00:34:27 tom Exp $
 dnl vi:set ts=4:
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", without change
@@ -171,15 +171,27 @@ AC_DEFUN([TD_CURSES_LIBS],
 [
 AC_PROVIDE([$0])
 if test $WithNcurses = yes; then
+	TD_MSG_LOG(ncurses library, by option)
 	AC_CHECK_LIB(ncurses,initscr)
 else
 	# Check if we've already got curses functions in our library list
 	# (e.g., if the user is overriding this test by setting $LIBS).
+	TD_MSG_LOG(curses library, by default)
 	AC_TRY_LINK([#include <curses.h>],
 		[initscr()],
-		[ac_cv_lib_ncurses=predefined],
+		[case "$LIBS" in
+		 *libncurses.*|*-lncurses*)
+		 	ac_cv_lib_ncurses=predefined
+		 	ac_cv_lib_curses=no
+		 	;;
+		 *)
+		 	ac_cv_lib_ncurses=no
+		 	ac_cv_lib_curses=yes
+		 	;;
+		 esac],
 		[ac_cv_lib_ncurses=unknown])
 fi
+TD_MSG_LOG(ncurses state $ac_cv_lib_ncurses)
 if test $ac_cv_lib_ncurses = yes; then
 	# Linux installs NCURSES's include files in a separate directory to avoid
 	# confusion with the native curses.  NCURSES has its own termcap support.
@@ -196,6 +208,7 @@ fi
 # The main distinction between bsd- and sysv-curses is that the latter has a
 # keypad function.
 AC_MSG_CHECKING(BSD vs SYSV curses)
+TD_MSG_LOG(curses-type BSD/SYSV)
 AC_CACHE_VAL(td_cv_curses_type,[
 	td_cv_curses_type=unknown
 	if test .$ac_cv_lib_curses = .yes; then
