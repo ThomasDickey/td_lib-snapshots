@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: rawterm.c,v 12.11 1994/05/22 23:56:20 tom Exp $";
+static	char	Id[] = "$Id: rawterm.c,v 12.12 1994/05/24 00:50:05 tom Exp $";
 #endif
 
 /*
@@ -145,11 +145,13 @@ static	void	disable_mouse(_AR0)
  */
 void	save_terminal(_AR0)
 {
+	show_term("save-terminal");
 	GetTerminal(&original_tty);
 }
 
 void	restore_terminal(_AR0)
 {
+	show_term("restore-terminal");
 	SetTerminal(&original_tty);
 }
 
