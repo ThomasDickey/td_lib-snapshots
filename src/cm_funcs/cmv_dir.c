@@ -1,5 +1,5 @@
 #ifndef	NO_IDENT
-static	char	Id[] = "$Id: cmv_dir.c,v 12.8 1995/01/05 23:20:35 tom Exp $";
+static	char	Id[] = "$Id: cmv_dir.c,v 12.9 1995/01/27 11:46:18 tom Exp $";
 #endif
 
 /*
@@ -22,9 +22,6 @@ static	char	Id[] = "$Id: cmv_dir.c,v 12.8 1995/01/05 23:20:35 tom Exp $";
  *
  *		We assume that the caller doesn't modify our return value;
  *		this lets us use 'txtalloc()'.
- *
- * FIXME:	this doesn't seem to pick up filenames at the top-level
- * FIXME:	this doesn't seem to handle multiple vaults
  */
 
 #define	STR_PTYPES
@@ -286,6 +283,11 @@ void	read_r_curr(
 
 			p = typealloc(CMFILE);
 			p->lockedby = description;
+			/* some revision-fields, for binary files, contain
+			 * other info.
+			 */
+			if ((s = strchr(d, ' ')) != 0)
+				*s = EOS;
 			p->revision = txtalloc(d);
 			p->internal = NewInternal(parent, internal);
 			p->external = NewExternal(parent, external);
