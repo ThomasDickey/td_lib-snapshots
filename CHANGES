@@ -1,3 +1,26 @@
+2002-12-21  dickey@invisible-island.net
+
+	* aclocal.m4:
+	fixes to make --with-ncursesw configure not be confused by older curses.h's
+
+	* aclocal.m4: typos in CF_WITH_WARNINGS
+
+	* configure.in: oops - move --with-warnings past the compiler lookup
+
+	* aclocal.m4, configure.in: add CF_LOCALE
+
+	* aclocal.m4: ded: use '%' as sed-delimiter
+
+	* configure.in: check for locale.h
+
+	* aclocal.m4:
+	add a check to ensure we don't try to add /usr/local/include to $CPPFLAGS
+	when gcc 3.2 disagrees.
+
+	* aclocal.m4: resync with my-autoconf
+
+	* configure.in: first cut of cleanup for --with-ncursesw option
+
 2002-12-04  dickey@invisible-island.net
 
 	* config.sub, config.guess: resync with my-autoconf
