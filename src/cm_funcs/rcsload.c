@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcsload.c,v 12.2 1993/09/23 15:08:34 dickey Exp $";
+static	char	Id[] = "$Id: rcsload.c,v 12.3 1993/09/27 20:26:57 dickey Exp $";
 #endif
 
 /*
@@ -7,7 +7,8 @@ static	char	Id[] = "$Id: rcsload.c,v 12.2 1993/09/23 15:08:34 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	19 Aug 1988
  * Modified:
- *		21 Sep 1993, gcc-warnings.  Fixes for unintialized-memory with
+ *		27 Sep 1993, forgot to allow EOS in 'append()'.
+ *		21 Sep 1993, gcc-warnings.  Fixes for uninitialized-memory with
  *			     Purify.
  *		18 Nov 1992, fixed a broken loop in 'eat_text()'.  Plugged
  *			     memory leaks.
@@ -110,6 +111,7 @@ void	append(
 	if (load_last != 0 && s != 0) {
 		while ((*load_last = *s++) != EOS)
 			load_last++;
+		load_last++;			/* skip the EOS I just copied */
 	}
 }
 
@@ -179,12 +181,6 @@ void	loadtext(
 	}
 	if (c == EOS)
 		skip = 0;
-
-#ifdef	NO_LEAKS
-	dofree(my_buffer);
-	my_buffer = 0;
-	my_limit = 0;
-#endif
 }
 
 /*
@@ -356,16 +352,17 @@ _DCL(int,	verbose)
 
 	if (load) {
 		unsigned length = 0;
+		register char *t;
+
 		load_buffer = file2mem(name);
 		if (load_buffer == 0)
 			return vec;
-		for (s = load_buffer; *s; s++)
-			if (*s == '\n')
+		for (t = load_buffer; *t; t++)
+			if (*t == '\n')
 				length++;
-		DEBUG(("%d newlines, filesize=%d\n", length, s - load_buffer))
-		length += (s - load_buffer) + 2;
+		DEBUG(("%d newlines, filesize=%d\n", length, t - load_buffer))
+		length += (t - load_buffer) + 2;
 		load_buffer = doalloc(load_buffer, length);
-		s = 0;
 	} else
 		load_buffer = 0;
 	load_last = load_buffer;
@@ -491,6 +488,14 @@ void	rcsunload(
 		}
 		dofree((char *)p);
 	}
+
+#ifdef	NO_LEAKS
+	if (my_buffer != 0) {
+		dofree(my_buffer);
+		my_buffer = 0;
+		my_limit = 0;
+	}
+#endif
 }
 
 #ifdef	TEST

@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 12.2 1993/09/24 19:15:17 dickey Exp $ */
+/* $Id: ptypes.h,v 12.5 1993/09/27 20:31:10 dickey Exp $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -342,10 +342,6 @@ extern	int	vfork	(void);
 
 #define NULL_FUNC (int (*)())0
 
-#ifndef NO_LEAKS
-#define NO_LEAKS 1
-#endif
-
 /*
  * Functions we (usually) ignore the return value from:
  */
@@ -407,7 +403,7 @@ extern	int	toupper(int);
 #define UpperMacro(c) toupper(c)
 #endif
 
-#ifdef _tolower
+#if defined(_tolower) && !defined(LowerMacro)
 #define LowerMacro(c) _tolower(c)
 #define UpperMacro(c) _toupper(c)
 #endif

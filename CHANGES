@@ -1,3 +1,20 @@
+1993-09-27  dickey@software.org
+
+	* include/ptypes.h: I don't want to define NO_LEAKS at all...
+
+	* src/cm_funcs/rcsload.c:
+	completed the correction that I started with Purify.  Somewhere I had dropped
+	the EOS between strings created in 'append()', which caused the program
+	to really get screwed up (by overwriting gobs of memory). Also, fixed the
+	NO_LEAKS code to free 'my_buffer' in the _right_ place.  Finally, separated
+	the use of 's' from the code that computes the number of newlines for
+	adjusting the size of 'load_buffer' (which was what Purify told me about).
+
+	* include/ptypes.h: turned off default leak-testing
+
+	* src/curses/padedit.c, src/cm_funcs/packdate.c, src/process/walkback.c, include/ptypes.h:
+	SR10.3-lint
+
 1993-09-24  dickey@software.org
 
 	* include/ptypes.h: clean-compile with SunOs & gcc

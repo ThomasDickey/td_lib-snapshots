@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: walkback.c,v 12.1 1993/09/21 18:54:02 dickey Exp $";
+static	char	Id[] = "$Id: walkback.c,v 12.2 1993/09/27 17:06:55 dickey Exp $";
 #endif
 
 /*
@@ -13,6 +13,7 @@ static	char	Id[] = "$Id: walkback.c,v 12.1 1993/09/21 18:54:02 dickey Exp $";
  */
 
 #define	SIG_PTYPES
+#define	STR_PTYPES
 #include	"ptypes.h"
 #include	<errno.h>
 
