@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	*Id = "$Id: rcsedit.c,v 9.2 1991/09/05 10:18:17 dickey Exp $";
+static	char	*Id = "$Id: rcsedit.c,v 9.3 1991/09/06 12:06:10 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,8 @@ static	char	*Id = "$Id: rcsedit.c,v 9.2 1991/09/05 10:18:17 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	26 May 1988
  * Modified:
+ *		06 Sep 1991, added 'readonly' arg; suppress tempfile-creation
+ *			     if true.
  *		10 Jul 1991, write directly into lock-file to avoid redundant
  *			     copying, unless we have no permission in the RCS
  *			     directory.
@@ -109,9 +111,10 @@ writeit()
 /*
  * Open the RCS file corresponding to 'name'.
  */
-rcsopen(name, show)
+rcsopen(name, show, readonly)
 char	*name;
 int	show;
+int	readonly;
 {
 	struct	stat	sb;
 	int	fd;
@@ -120,13 +123,13 @@ int	show;
 	fpT     = 0;
 	changed	= FALSE;
 	verbose	= show;
-	VERBOSE("++ rcs-%s(%s)\n", (show > 0) ? "edit" : "scan", fname);
+	VERBOSE("++ rcs-%s(%s)\n", readonly ? "scan" : "edit", fname);
 	if (	(stat(fname, &sb) >= 0)
 	&&	((sb.st_mode & S_IFMT) == S_IFREG)
 	&&	(fpS = fopen(fname, "r")) ) {
 		int	fmode;
 
-		if (show < 0)
+		if (readonly)
 			return (TRUE);
 		else if (dir_access())
 			strcpy(tmp_name, fname)[strlen(fname)-1] = 'V';
@@ -202,14 +205,17 @@ char	tmp[BUFSIZ];
 rcsclose()
 {
 	writeit();
-	if (changed && fpT != 0) {
-		while (readit())
-			writeit();
-		FCLOSE(fpT);
-		if (rename(tmp_name, fname) < 0) {
-			perror("rename");
-			(void)unlink(tmp_name);
-		}
+	if (changed) {
+		if (fpT != 0) {
+			while (readit())
+				writeit();
+			FCLOSE(fpT);
+			if (rename(tmp_name, fname) < 0) {
+				perror("rename");
+				(void)unlink(tmp_name);
+			}
+		} else if (RCS_DEBUG)
+			FPRINTF(stderr, "?? changes lost (readonly)\n");
 	} else {
 		if (fpT != 0) {
 			FCLOSE(fpT);

@@ -1,4 +1,4 @@
-/* $Id: rcsdefs.h,v 9.1 1991/09/05 08:54:56 dickey Exp $ */
+/* $Id: rcsdefs.h,v 9.3 1991/09/06 11:18:46 dickey Exp $ */
 
 #ifndef	_RCSDEFS_H_
 #define	_RCSDEFS_H_
@@ -8,6 +8,7 @@
  */
 #define	S_HEAD		0
 #define	S_ACCESS	1
+#define	S_BRANCH	20	/* (from rcs 3.0) */
 #define	S_SYMBOLS	2
 #define	S_LOCKS		3
 #define	S_COMMENT	4
@@ -47,6 +48,7 @@
 #ifdef	S_IFMT
 typedef	struct	{
 		char	*revision;
+		char	*author;
 		char	*parent;
 		time_t	tstamp;		/* checkin time		*/
 		int	num_lines;	/* total lines in file	*/
@@ -71,10 +73,12 @@ extern	char *	getenv();
 	/* rcsedit.c ------------------------------------------------- */
 	int	rcsopen(
 			_ARX(char *,	name)
-			_AR1(int,	show)
+			_ARX(int,	show)
+			_AR1(int,	readonly)
 			)
 			_DCL(char *,	name)
 			_DCL(int,	show)
+			_DCL(int,	readonly)
 			_RET
 
 	char *	rcsread(
