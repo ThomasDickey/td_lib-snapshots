@@ -1,3 +1,7 @@
+1988-09-01  dickey@software.org
+
+	* src/Makefile: added missing include-file dependencies.
+
 1988-08-31  dickey@software.org
 
 	* src/pathname/walktree.c: New file.
