@@ -15,9 +15,10 @@
  *		11 Aug 1988, don't use on system5, since we want to use curses.
  */
 
-#include	"td_curse.h"
+#define  TRM_PTYPES
+#include "td_curse.h"
 
-MODULE_ID("$Id: erasechr.c,v 12.8 1994/07/04 11:58:27 tom Exp $")
+MODULE_ID("$Id: erasechr.c,v 12.9 1995/10/21 20:23:48 tom Exp $")
 
 #define	STDIN_FD 0
 
@@ -48,6 +49,7 @@ int	eraseword(_AR0)
 {
 	int	code	= CTL('W');	/* default value */
 #if USING_TERMIOS_H
+	TermioT buf;
 # ifdef VWERASE				/* SunOS has it */
 	if (tcgetattr(0, &buf) >= 0)
 		code = buf.c_cc[VWERASE];
