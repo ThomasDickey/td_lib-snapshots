@@ -1,7 +1,3 @@
-#ifndef NO_IDENT
-static	char	Id[] = "$Id: dumpwin.c,v 12.13 1995/09/04 15:20:46 tom Exp $";
-#endif
-
 /*
  * Title:	dumpwin.c (dump curses window)
  * Author:	T.E.Dickey
@@ -28,6 +24,8 @@ static	char	Id[] = "$Id: dumpwin.c,v 12.13 1995/09/04 15:20:46 tom Exp $";
 #include	"ptypes.h"
 #include	"td_curse.h"
 #include	<time.h>
+
+MODULE_ID("$Id: dumpwin.c,v 12.15 1995/10/14 20:51:45 tom Exp $")
 
 #define	OUT	FPRINTF
 
@@ -70,8 +68,12 @@ void	dumpwin(
 #else
 		OUT(fp, "   _flags:   %#x\n", w->_flags);
 		OUT(fp, "   _clear:   %#x\n", w->_clear);
-		OUT(fp, "   _leave:   %#x\n", w->_leave);
 		OUT(fp, "   _scroll:  %#x\n", w->_scroll);
+#if CURSES_LIKE_NCURSES
+		OUT(fp, "   _leave:   %#x\n", w->_leaveok);
+#else
+		OUT(fp, "   _leave:   %#x\n", w->_leave);
+#endif
 #endif
 
 		OUT(fp, "   _y @ %p\n", &(CursesLine(w,0)));

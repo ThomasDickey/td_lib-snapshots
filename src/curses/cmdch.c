@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: cmdch.c,v 12.16 1995/08/01 23:20:28 tom Exp $";
-#endif
-
 /*
  * Title:	cmdch.c (command-character decoder)
  * Author:	T.E.Dickey
@@ -47,6 +43,8 @@ static	char	Id[] = "$Id: cmdch.c,v 12.16 1995/08/01 23:20:28 tom Exp $";
 #include	"td_curse.h"
 #include	<ctype.h>
 
+MODULE_ID("$Id: cmdch.c,v 12.18 1995/10/14 16:35:36 tom Exp $")
+
 #define	ESC(c)	((c) == '\033')
 #define	END(s)	s[strlen(s)-1]
 #define	if_C(c)	if (i_blk[j] == c)
@@ -60,6 +58,7 @@ XtermMouse xt_mouse;	/* state of XTerm-mouse */
 
 static	int	double_click (_AR0)
 {
+#if HAVE_GETTIMEOFDAY
 	static	struct	timeval	last_time;
 	auto	struct	timeval	this_time;
 	auto	struct	timezone this_zone;
@@ -77,6 +76,9 @@ static	int	double_click (_AR0)
 
 	last_time = this_time;
 	return event;
+#else
+	return FALSE;
+#endif
 }
 #endif
 

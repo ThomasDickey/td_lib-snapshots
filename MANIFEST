@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19950920
+MANIFEST for td_lib, version t19951014
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         restrictions on copying/using this software
@@ -138,6 +138,7 @@ src/pathname/fileblox.c         computes # of blocks used by a file
 src/pathname/filecopy.c         copy a file
 src/pathname/filesize.c         returns filesize, in bytes
 src/pathname/fleaf.c            file-leaf (cf pathleaf)
+src/pathname/fleaf14.c          truncates leaf of path to 14-chars
 src/pathname/fp2argv.c          file-pointer to argv-list
 src/pathname/ftype.c            finds filename's suffix
 src/pathname/ftype2.c           finds filename's suffix (style 2)

@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 12.14 1995/04/22 20:50:45 tom Exp $ */
+/* $Id: td_lib.h,v 12.15 1995/10/14 15:05:17 tom Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for TD_LIB common
@@ -316,6 +316,13 @@
 			_dcl(char *,	path)
 			_ret
 	char *	fleaf(
+			_ar1(char *,	path)
+			)
+			_dcl(char *,	path)
+			_ret
+
+	/* fleaf14.c -------------------------------------------------- */
+	char *	fleaf14(
 			_ar1(char *,	path)
 			)
 			_dcl(char *,	path)
