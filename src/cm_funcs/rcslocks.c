@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcslocks.c,v 9.1 1991/10/03 11:49:03 dickey Exp $";
+static	char	Id[] = "$Id: rcslocks.c,v 12.0 1991/10/10 10:16:16 ste_cm Rel $";
 #endif
 
 /*
@@ -18,7 +18,7 @@ static	char	Id[] = "$Id: rcslocks.c,v 9.1 1991/10/03 11:49:03 dickey Exp $";
  *
  *		who	=> obtain revision which is locked
  *		rev	=> obtain user who has locked it
- *		<nil>	=> obtain any lock; override if we find one for the
+ *		(both)	=> obtain any lock; override if we find one for the
  *			   current user.
  *
  * Returns:	the scan position past the last lock; the arguments are updated
