@@ -1,12 +1,12 @@
 dnl Extended Macros that test for specific features.
-dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.12 1994/05/30 23:11:09 tom Exp $
+dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.14 1994/06/24 00:56:53 tom Exp $
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4"
 dnl ---------------------------------------------------------------------------
 dnl Tests for a program given by name along the user's path, and sets a variable
 dnl to the program's directory-prefix if found.  Don't match if the directory is
 dnl ".", since we need an absolute path-reference.
-define([AC_PROGRAM_PREFIX],
+define([TD_PROGRAM_PREFIX],
 [if test -z "[$]$1"; then
   # Extract the first word of `$2', so it can be a program name with args.
   set ac_dummy $2; ac_word=[$]2
@@ -27,7 +27,7 @@ test -n "[$]$1" && AC_DEFINE_UNQUOTED($1,[\"$]$1[\"])
 dnl ---------------------------------------------------------------------------
 dnl Tests for one or more programs given by name along the user's path, and
 dnl sets a variable to the program's full-path if found.
-define([AC_PROGRAM_FULLPATH],
+define([TD_PROGRAM_FULLPATH],
 [if test -z "[$]$1"; then
   set -- $2;
   while test [$]# != 0
@@ -73,17 +73,27 @@ if test -n "[$]$1"; then
 fi
 ])dnl
 dnl ---------------------------------------------------------------------------
-define([AC_DEV_T],
+dnl On both Ultrix and CLIX, I find size_t defined in <stdio.h>
+define([TD_SIZE_T],
+[AC_CHECKING(for size_t in <sys/types.h> or <stdio.h>)
+ AC_TEST_PROGRAM([
+#include <sys/types.h>
+#include <stdio.h>
+int main() { size_t x; exit (0);}
+], ,
+[AC_DEFINE(size_t, unsigned)])])dnl
+dnl ---------------------------------------------------------------------------
+define([TD_DEV_T],
 [AC_PROVIDE([$0])AC_CHECKING(for dev_t in sys/types.h)
 AC_HEADER_EGREP(dev_t, sys/types.h, , AC_DEFINE(dev_t, unsigned short))])dnl
 dnl ---------------------------------------------------------------------------
-define([AC_INO_T],
+define([TD_INO_T],
 [AC_PROVIDE([$0])AC_CHECKING(for ino_t in sys/types.h)
 AC_HEADER_EGREP(ino_t, sys/types.h, , AC_DEFINE(ino_t, unsigned short))])dnl
 dnl ---------------------------------------------------------------------------
 dnl Test if "##" is substituted properly, or failing that, if /**/ can do
 dnl the trick.
-define([AC_ANSI_CPP],
+define([TD_ANSI_CPP],
 [AC_CHECKING(for ANSI CPP token-splicing/quoting)
 AC_TEST_PROGRAM([
 #define cat(a,b) a##b
@@ -108,7 +118,7 @@ int main() { char *y = quote(a); exit (*y != 'a');}
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Tests for the <regex.h> include-file, and the functions associated with it.
-define([AC_REGEX_H_FUNCS],
+define([TD_REGEX_H_FUNCS],
 [AC_TEST_PROGRAM([
 #include <sys/types.h>
 #include <regex.h>
@@ -126,7 +136,7 @@ int main() {
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Tests for the <regexpr.h> include-file, and the functions associated with it.
-define([AC_REGEXPR_H_FUNCS],
+define([TD_REGEXPR_H_FUNCS],
 [AC_TEST_PROGRAM([
 #include <sys/types.h>
 #include <regexpr.h>
@@ -144,7 +154,7 @@ int main() {
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Tests for the presence of regcmp/regex functions (no include-file?)
-define([AC_REGCMP_FUNCS],
+define([TD_REGCMP_FUNCS],
 [AC_TEST_PROGRAM([
 int main() {
 	char *e;
@@ -160,7 +170,7 @@ int main() {
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Tests for the presence of re_comp/re_exec functions (no include-file?)
-define([AC_RE_COMP_FUNCS],
+define([TD_RE_COMP_FUNCS],
 [AC_TEST_PROGRAM([
 int main() {
 	char *p = "foo";
@@ -175,24 +185,24 @@ int main() {
 dnl ---------------------------------------------------------------------------
 dnl Tests for the ensemble of include-files and functions that make up the
 dnl host's regular expression parsing.
-define([AC_REGEX],
+define([TD_REGEX],
 [AC_CHECKING(for regular-expression library support)
-AC_REGEX_H_FUNCS
-AC_REGEXPR_H_FUNCS
-AC_REGCMP_FUNCS
-AC_RE_COMP_FUNCS
+TD_REGEX_H_FUNCS
+TD_REGEXPR_H_FUNCS
+TD_REGCMP_FUNCS
+TD_RE_COMP_FUNCS
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Tests for the ensemble of programs that are used in RCS, SCCS, VCS, CVS.
-define([AC_RCS_SCCS],
+define([TD_RCS_SCCS],
 [AC_CHECKING(for SCCS/RCS programs)
-AC_PROGRAM_PREFIX(RCS_PATH, rcs)
-AC_PROGRAM_PREFIX(SCCS_PATH, admin)
-AC_PROGRAM_PREFIX(VCS_PATH, vcs)
-AC_PROGRAM_PREFIX(CVS_PATH, cvs)
+TD_PROGRAM_PREFIX(RCS_PATH, rcs)
+TD_PROGRAM_PREFIX(SCCS_PATH, admin)
+TD_PROGRAM_PREFIX(VCS_PATH, vcs)
+TD_PROGRAM_PREFIX(CVS_PATH, cvs)
 ])dnl
 dnl ---------------------------------------------------------------------------
-define([AC_GMTOFF],
+define([TD_GMTOFF],
 [AC_REQUIRE([AC_STRUCT_TM])ac_decl='#include <sys/types.h>
 '
 case "$DEFS" in
@@ -212,7 +222,7 @@ AC_COMPILE_CHECK(tm_zone in tm, $ac_decl,
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Test if curses defines 'chtype' (usually a 16-bit type for SysV curses).
-define([AC_CURSES_CHTYPE],
+define([TD_CURSES_CHTYPE],
 [AC_CHECKING(chtype typedef)
 AC_TEST_PROGRAM([#include <curses.h>
 int main() { chtype foo; exit(0); }
@@ -220,7 +230,7 @@ int main() { chtype foo; exit(0); }
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Test if curses defines 'erasechar()' (maybe a macro or function)
-define([AC_CURSES_ERASECHAR],
+define([TD_CURSES_ERASECHAR],
 [AC_CHECKING(function/macro erasechar)
 AC_TEST_PROGRAM([#include <curses.h>
 int main() { int foo = erasechar(); exit(0); }
@@ -228,7 +238,7 @@ int main() { int foo = erasechar(); exit(0); }
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Test if curses defines 'killchar()' (maybe a macro or function)
-define([AC_CURSES_KILLCHAR],
+define([TD_CURSES_KILLCHAR],
 [AC_CHECKING(function/macro killchar)
 AC_TEST_PROGRAM([#include <curses.h>
 int main() { int foo = killchar(); exit(0); }
@@ -236,11 +246,11 @@ int main() { int foo = killchar(); exit(0); }
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Test for interesting things about curses
-define([AC_CURSES],
+define([TD_CURSES],
 [AC_HAVE_LIBRARY(curses)
 AC_HAVE_FUNCS(beep)
 AC_HAVE_FUNCS(keypad)
-AC_CURSES_CHTYPE
-AC_CURSES_ERASECHAR
-AC_CURSES_KILLCHAR
+TD_CURSES_CHTYPE
+TD_CURSES_ERASECHAR
+TD_CURSES_KILLCHAR
 ])dnl

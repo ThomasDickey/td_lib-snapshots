@@ -1,3 +1,16 @@
+1994-06-24  dickey@clark.net
+
+	* include/td_curse.h: changed name convention for ifdef
+
+	* include/td_lib.h: changed name-convention for ifdef
+
+1994-06-23  dickey@clark.net
+
+	* aclocal.m4, configure.in: added macro TD_SIZE_T
+
+	* aclocal.m4, configure.in:
+	renamed _my_ macros to distinguish them from GNU's
+
 1994-05-30  dickey@clark.net
 
 	* include/ptypes.h: tweaks for compile on Solaris
