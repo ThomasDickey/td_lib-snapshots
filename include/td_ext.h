@@ -1,4 +1,4 @@
-/* $Id: td_ext.h,v 12.11 1995/02/26 21:42:13 tom Exp $ */
+/* $Id: td_ext.h,v 12.12 1997/01/02 22:19:52 tom Exp $ */
 
 #ifndef	TD_EXT_H
 #define	TD_EXT_H
@@ -361,6 +361,9 @@ extern	gid_t	getgid  ARGS((void));
 #if HAVE_GETUID && NEED_GETUID
 extern	uid_t	getuid  ARGS((void));
 #endif /* HAVE_GETUID */
+#if HAVE_REALPATH && NEED_REALPATH
+extern	char *	realpath  ARGS((char *src, char *dst));
+#endif /* HAVE_REALPATH */
 
 /******************************************************************************
  *++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*
