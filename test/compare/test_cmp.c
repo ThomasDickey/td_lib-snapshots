@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	II[] = "$Id: test_cmp.c,v 11.1 1992/11/19 15:16:06 dickey Exp $";
+static	char	II[] = "$Id: test_cmp.c,v 12.0 1992/11/20 13:14:00 ste_cm Rel $";
 #endif/*lint*/
 
 /*
@@ -48,7 +48,7 @@ char **	load(
 static
 SCOMP_MATCH(s_match)
 {
-	return (strcmp(p1,p2) == 0);
+	return (strcmp(*p1,*p2) == 0);
 }
 
 static
@@ -69,11 +69,11 @@ SCOMP_REPORT(s_report)
 
 static
 int	argv_last(
-	_ARX(char **,	v)
+	_ARX(SCOMP_TYPE,v)
 	_ARX(int,	now)
 	_AR1(int,	want)
 		)
-	_DCL(char **,	v)
+	_DCL(SCOMP_TYPE,v)
 	_DCL(int,	now)
 	_DCL(int,	want)
 {

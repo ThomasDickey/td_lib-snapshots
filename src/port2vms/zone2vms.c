@@ -1,11 +1,13 @@
 #ifndef	lint
-static	char	Id[] = "$Id: zone2vms.c,v 7.0 1991/10/18 15:37:24 ste_cm Rel $";
+static	char	Id[] = "$Id: zone2vms.c,v 8.0 1992/11/20 10:27:58 ste_cm Rel $";
 #endif
 
 /*
  * Title:	zone2vms.c
  * Author:	T.E.Dickey
  * Created:	30 Sep 1988
+ * Modified:
+ *		20 Nov 1992, use prototypes
  *
  * Function:	DEC's unix-like time routines do not account for time-zone or
  *		for daylight-savings time.  Returns an adjustment to a unix-
@@ -27,9 +29,9 @@ static	char	Id[] = "$Id: zone2vms.c,v 7.0 1991/10/18 15:37:24 ste_cm Rel $";
 #define	D_APR	30
 #define	D_OCT	31
 
-time_t
-zone2vms(unix_time)
-time_t	unix_time;
+time_t	zone2vms(
+	_AR1(time_t,	unix_time))
+	_DCL(time_t,	unix_time)
 {
 	auto	struct tm   mytm;
 	auto	int	sunday;
@@ -59,13 +61,13 @@ time_t	unix_time;
 _MAIN
 {
 	extern	char	*ctime();
-	auto	time_t	unix_time = time(0),
+	auto	time_t	unix_time = 722271384/* time(0) for Nov 20, 1992 */,
 			real_time;
 	register int	j;
 
 	for (j = 0; j < 27; j++) {
 		real_time = unix_time + zone2vms(unix_time);
-		printf("%2d) %s", j, ctime(&real_time));
+		PRINTF("%2d) %s", j, ctime(&real_time));
 		unix_time -= (DAY * 14);
 	}
 	exit(SUCCESS);

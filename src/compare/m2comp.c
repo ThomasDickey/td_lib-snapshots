@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: m2comp.c,v 11.2 1992/11/19 15:29:48 dickey Exp $";
+static	char	Id[] = "$Id: m2comp.c,v 11.3 1992/11/20 13:18:56 dickey Exp $";
 #endif
 
 /*
@@ -19,13 +19,7 @@ static	char	Id[] = "$Id: m2comp.c,v 11.2 1992/11/19 15:29:48 dickey Exp $";
 
 #define	STR_PTYPES
 #define	SCOMP	m2comp			/* name of this module */
-#define	SCOMP_TYPE	char	*
 #include "cm_scomp.h"
-
-#define	REF(j)	(v1 + ((j) * size))
-#define	TST(j)	(v2 + ((j) * size))
-
-#define	MATCH(ref,tst)	((*match)(REF(ref), TST(tst)))
 
 #define	INSERT	1
 #define	DELETE	2
@@ -49,9 +43,13 @@ typedef	SAVE {
 
 #ifdef	lint
 #define	NEW(cast,n)	(((cast *)0)+(n))
+#define	REF(v,n)	v[n*size/4]
 #else	/* !lint */
 #define	NEW(cast,n)	(cast *)doalloc((char *)0, (n) * sizeof(cast))
+#define	REF(v,n)	(SCOMP_TYPE)(((n)*size)+((char *)v))
 #endif	/* lint/!lint */
+
+#define	MATCH(ref,tst)	((*match)(REF(V1,ref), REF(V2,tst)))
 
 /******************************************************************************/
 
@@ -72,6 +70,8 @@ void	m2comp(
 	_DCL(int,		(*match)())
 	_DCL(int,		(*report)())
 {
+	auto	char	*V1	= (char *)v1;
+	auto	char	*V2	= (char *)v2;
 	auto	int	done	= FALSE;
 	auto	EDIT	*ep, *behind, *ahead, *a, *b, *x, *w;
 	auto	int	change;
@@ -99,7 +99,6 @@ void	m2comp(
 	save_size = (n1 + n2 + 1) / 2;
 	save_SIZE = sizeof(SAVE) + (save_size-1) * sizeof(EDIT);
 
-	size   /= sizeof(v1[0]);	/* make REF, TST macros work ok */
 	ORIGIN	= (n1 > n2) ? n1 : n2;
 	max_d	= 2 * ORIGIN;
 	last_d	= NEW(Line, max_d + 1);

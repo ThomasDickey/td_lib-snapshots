@@ -1,11 +1,13 @@
 #ifndef	lint
-static	char	Id[] = "$Id: dir2path.c,v 7.0 1991/10/18 15:36:19 ste_cm Rel $";
+static	char	Id[] = "$Id: dir2path.c,v 8.0 1992/11/20 10:20:08 ste_cm Rel $";
 #endif
 
 /*
  * Title:	dir2path.c
  * Author:	T.E.Dickey
  * Created:	06 Oct 1988
+ * Modified:
+ *		20 Nov 1992, use prototypes.  Added default test-case.
  *
  * Function:	Convert a VMS directory-name into the name of the corresponding
  *		path.
@@ -19,8 +21,12 @@ static	char	Id[] = "$Id: dir2path.c,v 7.0 1991/10/18 15:36:19 ste_cm Rel $";
 #include	<ctype.h>
 
 static
-insert(dst, src)
-char	*dst, *src;
+void	insert(
+	_ARX(char *,	dst)
+	_AR1(char *,	src)
+		)
+	_DCL(char *,	dst)
+	_DCL(char *,	src)
 {
 	register int	c,d;
 
@@ -31,9 +37,9 @@ char	*dst, *src;
 		*dst++ = c;
 }
 
-char *
-dir2path(src)
-char	*src;
+char *	dir2path(
+	_AR1(char *,	src))
+	_DCL(char *,	src)
 {
 	static	char	buffer[MAXPATHLEN];
 	register char	*s, *t;
@@ -59,12 +65,47 @@ char	*src;
 }
 
 #ifdef	TEST
+static
+void	do_test(
+	_AR1(char *,	path))
+	_DCL(char *,	path)
+{
+	PRINTF("%s => %s\n", path, dir2path(path));
+}
+
 /*ARGSUSED*/
 _MAIN
 {
 	register int	j;
-	for (j = 1; j < argc; j++)
-		printf("%s => %s\n", argv[j], dir2path(argv[j]));
+	if (argc > 1) {
+		for (j = 1; j < argc; j++)
+			do_test(argv[j]);
+	} else {
+		static	char	*tbl[] = {
+				/* non-directory file? */
+			"foo",
+			"dev:foo",
+			"dev:[bar]foo",
+			"[bar]foo",
+				/* has ".dir" */
+			"foo.dir",
+			"dev:foo.dir",
+			"dev:[bar]foo.dir",
+			"[bar]foo.dir",
+				/* version is */
+			"foo.dir;1",
+			"dev:foo.dir;1",
+			"dev:[bar]foo.dir;1",
+			"[bar]foo.dir;1",
+				/* version other-than-1 */
+			"foo.dir;2",
+			"dev:foo.dir;2",
+			"dev:[bar]foo.dir;2",
+			"[bar]foo.dir;2"
+			};
+		for (j = 0; j < SIZEOF(tbl); j++)
+			do_test(tbl[j]);
+	}
 	exit(SUCCESS);
 	/*NOTREACHED*/
 }

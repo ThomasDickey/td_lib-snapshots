@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: which.c,v 11.0 1992/02/06 10:12:07 ste_cm Rel $";
+static	char	Id[] = "$Id: which.c,v 12.0 1992/11/20 14:13:38 ste_cm Rel $";
 #endif
 
 /*
@@ -94,5 +94,7 @@ char	bfr[BUFSIZ],
 		which(bfr, sizeof(bfr), argv[j], dot);
 		printf("%d '%s' = '%s'\n", j, argv[j], bfr);
 	}
+	exit(SUCCESS);
+	/*NOTREACHED*/
 }
 #endif

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: scomp.c,v 11.2 1992/11/19 15:28:59 dickey Exp $";
+static	char	Id[] = "$Id: scomp.c,v 11.3 1992/11/20 13:41:11 dickey Exp $";
 #endif
 
 /*
@@ -21,10 +21,13 @@ static	char	Id[] = "$Id: scomp.c,v 11.2 1992/11/19 15:28:59 dickey Exp $";
 #define	SCOMP	scomp
 #include	"cm_scomp.h"
 
-#define	REF(j)	(v1 + ((j) * size))
-#define	TST(j)	(v2 + ((j) * size))
+#ifdef	lint
+#define	REF(v,n)	v[n*size/4]
+#else	/* !lint */
+#define	REF(v,n)	(SCOMP_TYPE)(((n)*size)+((char *)v))
+#endif	/* lint/!lint */
 
-#define	MATCH(ref,tst)	((*match)(REF(ref), TST(tst)))
+#define	MATCH(ref,tst)	((*match)(REF(V1,ref), REF(V2,tst)))
 
 #define	SYNC	3
 
@@ -47,6 +50,8 @@ void	SCOMP(
 {
 	register int	x,y,z;
 	register int	j1,j2;
+	auto	 char	*V1 = (char *)v1;
+	auto	 char	*V2 = (char *)v2;
 	auto	 int	diag, bottom, corner, ok;
 
 	j1 = j2 = 0;

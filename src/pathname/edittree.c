@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: edittree.c,v 7.0 1992/07/16 16:41:12 ste_cm Rel $";
+static	char	Id[] = "$Id: edittree.c,v 7.2 1992/11/20 10:39:52 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: edittree.c,v 7.0 1992/07/16 16:41:12 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	06 Oct 1988
  * Modified:
+ *		20 Nov 1992, added 3rd arg to _FNX macros.
  *		11 Dec 1991, added 'links' argument.  Process entire list of
  *			     files per-directory to avoid possible conflict
  *			     with temporary-files in current-directory.  Also,
@@ -24,6 +25,7 @@ static	char	Id[] = "$Id: edittree.c,v 7.0 1992/07/16 16:41:12 ste_cm Rel $";
 #define	DIR_PTYPES
 #define	STR_PTYPES
 #include	"portunix.h"
+#include	"cm_qsort.h"
 #include	<errno.h>
 
 typedef	char	*PTR;
@@ -51,34 +53,20 @@ static	editfile(n,f,s)	char *n; int (*f)(); STAT *s; { return 1;}
 #define	LOOK(name,sb)	(stat(name,sb))
 #endif
 
-/*
- * Comparison routine for qsort.
- */
-static
-compare(
-_ARX(char **,	p1)
-_AR1(char **,	p2)
-	)
-_DCL(char **,	p1)
-_DCL(char **,	p2)
-{
-	return (-strcmp(*p1, *p2));
-}
-
 /************************************************************************
  *	public entrypoints						*
  ************************************************************************/
 
-edittree(
-_ARX(char *,	oldname)
-_FNX(int,	func)
-_ARX(int,	recur)
-_AR1(int,	links)
-	)
-_DCL(char *,	oldname)
-_DCL(int,	(*func)())
-_DCL(int,	recur)
-_DCL(int,	links)
+int	edittree(
+	_ARX(char *,	oldname)
+	_FNX(int,	func,	(_ARX(FILE *,o) _ARX(FILE *,i) _AR1(STAT *,s)))
+	_ARX(int,	recur)
+	_AR1(int,	links)
+		)
+	_DCL(char *,	oldname)
+	_DCL(int,	(*func)())
+	_DCL(int,	recur)
+	_DCL(int,	links)
 {
 	auto	DIR		*dirp;
 	auto	struct	direct	*dp;
@@ -143,7 +131,7 @@ _DCL(int,	links)
 			closedir(dirp);
 			if (num != 0) {
 				qsort((PTR)vec, (LEN_QSORT)num,
-					sizeof(PTR), compare);
+					sizeof(PTR), cmp_qsort);
 				while (num-- != 0) {
 					if (LOOK(vec[num], &sb) < 0) {
 						perror(vec[num]);
@@ -165,8 +153,14 @@ _DCL(int,	links)
 
 #ifdef	TEST
 static
-do_copy(ofp, ifp)
-FILE	*ofp, *ifp;
+int	do_copy(
+	_ARX(FILE *,	ofp)
+	_ARX(FILE *,	ifp)
+	_AR1(STAT *,	sb)
+		)
+	_DCL(FILE *,	ofp)
+	_DCL(FILE *,	ifp)
+	_DCL(STAT *,	sb)
 {
 	char	buffer[BUFSIZ];
 	while (fgets(buffer, sizeof(buffer), ifp))
@@ -174,8 +168,12 @@ FILE	*ofp, *ifp;
 	return (1);
 }
 
-do_test(argc, argv)
-char	*argv[];
+void	do_test(
+	_ARX(int,	argc)
+	_AR1(char **,	argv)
+		)
+	_DCL(int,	argc)
+	_DCL(char **,	argv)
 {
 	register int	j;
 	auto	 int	recur = FALSE;
@@ -205,7 +203,7 @@ _MAIN
 					"..",  "-r", ".."
 #endif	/* vms/unix */
 					};
-		do_test(sizeof(tbl)/sizeof(tbl[0]), tbl);
+		do_test(SIZEOF(tbl), tbl);
 	}
 	exit(SUCCESS);
 	/*NOTREACHED*/

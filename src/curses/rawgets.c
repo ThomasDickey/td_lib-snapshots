@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rawgets.c,v 11.24 1992/11/18 14:04:37 dickey Exp $";
+static	char	Id[] = "$Id: rawgets.c,v 11.25 1992/11/20 14:13:14 dickey Exp $";
 #endif
 
 /*
@@ -585,5 +585,7 @@ _MAIN
 			j = 1;
 	}
 	endwin();
+	exit(SUCCESS);
+	/*NOTREACHED*/
 }
 #endif	/* TEST */

@@ -1,33 +1,16 @@
 #ifndef	lint
-static	char	Id[] = "$Id: uid2s.c,v 7.0 1991/10/18 15:36:50 ste_cm Rel $";
+static	char	Id[] = "$Id: uid2s.c,v 8.0 1992/11/20 08:19:50 ste_cm Rel $";
 #endif
 
 /*
  * Title:	uid2s.c
  * Author:	T.E.Dickey
  * Created:	15 Dec 1988
- * $Log: uid2s.c,v $
- * Revision 7.0  1991/10/18 15:36:50  ste_cm
- * BASELINE Thu Jul 16 16:14:02 1992 -- CM_TOOLS #11
- *
- *		Revision 6.0  91/10/18  15:36:50  ste_cm
- *		BASELINE Mon Oct 21 13:09:39 1991 -- adapt to CM_TOOLS #10
- *		
- *		Revision 5.1  91/10/18  15:36:50  dickey
- *		use macro _MAIN
- *		
- *		Revision 5.0  91/05/20  17:17:49  ste_cm
- *		BASELINE Tue Jun 11 16:44:53 1991 -- apollo sr10.3
- *		
- *		Revision 4.1  91/05/20  17:17:49  dickey
- *		apollo sr10.3 cpp complains about endif-tags
- *		
- *		Revision 4.0  89/11/16  09:16:28  ste_cm
- *		BASELINE Tue Aug 14 16:27:44 1990
- *		
- *		Revision 3.1  89/11/16  09:16:28  dickey
- *		rewrote, adding gid2s, s2gid, vms_uid2s functions
- *		
+ * Modified:
+ *		20 Nov 1992, use prototypes
+ *		18 Oct 1991, use macro _MAIN
+ *		20 May 1991, apollo sr10.3 cpp complains about endif-tags
+ *		16 Nov 1989, rewrote, adding gid2s, s2gid, vms_uid2s functions
  *		14 Mar 1989, extended test-driver
  *		 9 Jan 1989 added 's2uid()' function
  *
@@ -43,8 +26,8 @@ static	char	Id[] = "$Id: uid2s.c,v 7.0 1991/10/18 15:36:50 ste_cm Rel $";
  *		and group-names.
  */
 
+#define	STR_PTYPES
 #include	"portunix.h"
-#include	<string.h>
 #ifdef	vms
 #include	<ssdef.h>
 #endif
@@ -73,8 +56,9 @@ static	int	numvec;		/* number of items in 'vec[]' */
 
 #ifdef	TEST
 static
-char *
-show(id)
+char *	show(
+	_AR1(int,	id))
+	_DCL(int,	id)
 {
 	static	char	buffer[80];
 	sprintf(buffer, "%o,%o", _ID2GID(id), _ID2UID(id));
@@ -82,7 +66,8 @@ show(id)
 }
 #endif
 
-static	build_vec()
+static
+void	build_vec(_AR0)
 {
 	register int	j;
 
@@ -131,8 +116,9 @@ printf("id = %s, name = %s\n", show(vec[j].id), vec[j].name);
  * Translate a uid to a string, returning a pointer to text-constant.
  * Note that on VAX/VMS we may want to lookup the ordered pair [gid,uid].
  */
-char *
-uid2s(uid)
+char *	uid2s(
+	_AR1(int,	uid))
+	_DCL(int,	uid)
 {
 	auto	 char	buffer[80];
 	register int	j;
@@ -156,8 +142,9 @@ uid2s(uid)
 /*
  * Translate a gid to a string, returning a pointer to text-constant
  */
-char *
-gid2s(gid)
+char *	gid2s(
+	_AR1(int,	gid))
+	_DCL(int,	gid)
 {
 	auto	 char	buffer[80];
 	register int	j;
@@ -179,8 +166,9 @@ gid2s(gid)
 /*
  * Translate a string back to a uid, returning a negative number iff not found
  */
-s2uid(name)
-char	*name;
+int	s2uid(
+	_AR1(char *,	name))
+	_DCL(char *,	name)
 {
 	register int	j;
 
@@ -196,8 +184,9 @@ char	*name;
 /*
  * Translate a string back to a gid, returning a negative number iff not found
  */
-s2gid(name)
-char	*name;
+int	s2gid(
+	_AR1(char *,	name))
+	_DCL(char *,	name)
 {
 	register int	j;
 
@@ -213,8 +202,9 @@ char	*name;
 /*
  * Special VMS-only entrypoint to translate id to string
  */
-char *
-vms_uid2s(id)
+char *	vms_uid2s(
+	_AR1(int,	id))
+	_DCL(int,	id)
 {
 	auto	int	uid = _ID2UID(id),
 			gid = _ID2GID(id),

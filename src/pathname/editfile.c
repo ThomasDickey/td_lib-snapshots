@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: editfile.c,v 7.1 1992/10/14 12:32:28 dickey Exp $";
+static	char	Id[] = "$Id: editfile.c,v 8.0 1992/11/20 10:59:49 ste_cm Rel $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: editfile.c,v 7.1 1992/10/14 12:32:28 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	03 Oct 1988
  * Modified:
+ *		20 Nov 1992, added 3rd arg to _FNX macros.
  *		13 Dec 1991, pass 'sb' arg down to 'func', from initial stat on
  *			     the input-file.
  *		24 Apr 1989, port to unix using 'mktemp()'
@@ -31,14 +32,14 @@ extern	char	*mktemp();
 #define	NEWVER(name)	mktemp(name)
 #endif	/* vms/unix */
 
-editfile(
-_ARX(char *,	oldname)
-_FNX(int,	func)
-_AR1(STAT *,	sb)
-	)
-_DCL(char *,	oldname)
-_DCL(int,	(*func)())
-_DCL(STAT *,	sb)
+int	editfile(
+	_ARX(char *,	oldname)
+	_FNX(int,	func,	(_ARX(FILE*,o) _ARX(FILE*,i) _AR1(STAT*,s)))
+	_AR1(STAT *,	sb)
+		)
+	_DCL(char *,	oldname)
+	_DCL(int,	(*func)())
+	_DCL(STAT *,	sb)
 {
 	auto	FILE	*ifp = fopen(oldname, "r");
 	auto	FILE	*ofp;
@@ -82,8 +83,14 @@ _DCL(STAT *,	sb)
 
 #ifdef	TEST
 static
-do_copy(ofp, ifp)
-FILE	*ofp, *ifp;
+int	do_copy(
+	_ARX(FILE *,	ofp)
+	_ARX(FILE *,	ifp)
+	_AR1(STAT *,	sb)
+		)
+	_DCL(FILE *,	ofp)
+	_DCL(FILE *,	ifp)
+	_DCL(STAT *,	sb)
 {
 	char	buffer[BUFSIZ];
 	while (fgets(buffer, sizeof(buffer), ifp))
@@ -91,10 +98,10 @@ FILE	*ofp, *ifp;
 			perror("do_copy");
 			return (0);
 		}
+	fputs("LAST\n", ofp);
 	return (1);
 }
 
-/*ARGSUSED*/
 _MAIN
 {
 	register int	j;

@@ -1,0 +1,8 @@
+foo => foo
+dev:foo => dev:foo
+dev:[bar]foo => dev:[bar]foo
+[bar]foo => [bar]foo
+[bar] => bar.DIR
+[foo.bar] => [foo]bar.DIR
+dev:[bar] => dev:bar.DIR
+dev:[bar]; => dev:[bar];

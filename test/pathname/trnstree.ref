@@ -1,0 +1,9 @@
+.  scan directory ../support
+.  (directory) ../support
+.  => Makefile
+.  => library_rules.mms
+.  => link_options.opt
+.  => portunix.mk
+.  => program_rules.mms
+.  => standard_rules.mms
+.  => top_lib_rules.mms

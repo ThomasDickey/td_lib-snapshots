@@ -1,0 +1,48 @@
+9,14d8
+<  * Modified:
+<  *		03 Oct 1991, conversion to ANSI
+<  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
+<  *		05 Mar 1990, lint
+<  *		12 Dec 1989, lint (SunOs 4.0.3)
+<  *		
+58,59c52,53
+< 	length   = s - blob;
+< 	newlines = lines;
+---
+> 	newlines = lines;
+> 	length   = s - blob;
+85,87c79,81
+< 	p[lines] = 0;		/* always supply a null-pointer */
+< 	p[0] = blob;
+< 
+---
+> 
+> 	p[lines] = 0;		/* always supply a null-pointer */
+> 	p[0] = blob;
+90,115d83
+< 
+< 
+< #ifdef	TEST
+< _MAIN
+< {
+< 	register int	j, k;
+< 	auto	 int	lines;
+< 	auto	 char	**vec;
+< 	auto	 char	*name;
+< 
+< 	for (j = 1; j < argc; j++) {
+< 		if ((lines = file2argv(name = argv[j], &vec)) > 0) {
+< 			PRINTF("file: %s (%d lines)\n", name, lines);
+< 			for (k=0; vec[k]; k++)
+< 				PRINTF("%d:\t%s", k + 1, vec[k]);
+< 			dofree(vec[0]);	/* frees the blob */
+< 			dofree((char *)vec);
+< 			PRINTF("<EOF>\n");
+< 		} else {
+< 			perror(name);
+< 		}
+< 	}
+< 	(void)exit(SUCCESS);
+< 	/*NOTREACHED*/
+< }
+< #endif

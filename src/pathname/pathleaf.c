@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: pathleaf.c,v 11.0 1991/10/03 08:28:53 ste_cm Rel $";
+static	char	Id[] = "$Id: pathleaf.c,v 12.0 1992/11/20 14:13:07 ste_cm Rel $";
 #endif
 
 /*
@@ -57,5 +57,7 @@ _MAIN
 			j,
 			argv[j],
 			pathleaf(argv[j]));
+	exit(SUCCESS);
+	/*NOTREACHED*/
 }
 #endif

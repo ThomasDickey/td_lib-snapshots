@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: path2vms.c,v 7.0 1991/05/20 17:17:03 ste_cm Rel $";
+static	char	Id[] = "$Id: path2vms.c,v 8.0 1992/11/20 11:27:12 ste_cm Rel $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: path2vms.c,v 7.0 1991/05/20 17:17:03 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	30 Sep 1988
  * Modified:
+ *		20 Nov 1992, use prototypes.  Added a test-driver
  *		28 Oct 1988, return destination buffer
  *
  * Function:	Convert a unix-style pathname to a VMS-style pathname when we
@@ -16,9 +17,12 @@ static	char	Id[] = "$Id: path2vms.c,v 7.0 1991/05/20 17:17:03 ste_cm Rel $";
 #define		STR_PTYPES
 #include	"portunix.h"
 
-char *
-path2vms(dst, src)
-char	*dst, *src;
+char *	path2vms(
+	_ARX(char *,	dst)
+	_AR1(char *,	src)
+		)
+	_DCL(char *,	dst)
+	_DCL(char *,	src)
 {
 	char	tmp[MAXPATHLEN];
 	int	len = strlen(strcpy(tmp, src));
@@ -26,3 +30,34 @@ char	*dst, *src;
 		(void)strcat(tmp, "/");
 	return (name2vms(dst, tmp));
 }
+
+#ifdef	TEST
+static
+void	do_test(
+	_AR1(char *,	path))
+	_DCL(char *,	path)
+{
+	char	tmp[MAXPATHLEN];
+	PRINTF("%s => %s\n", path, path2vms(tmp, path));
+}
+
+_MAIN
+{
+	register int	j;
+	if (argc > 1)
+		for (j = 1; j < argc; j++)
+			do_test(argv[j]);
+	else {
+		static	char	*tbl[] = {
+			"foo",
+			"foo/bar",
+			"foo.bar",
+			"foo/bar.twice"
+			};
+		for (j = 0; j < SIZEOF(tbl); j++)
+			do_test(tbl[j]);
+	}
+	exit(SUCCESS);
+	/*NOTREACHED*/
+}
+#endif

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rmsio.c,v 7.0 1991/10/18 15:49:05 ste_cm Rel $";
+static	char	Id[] = "$Id: rmsio.c,v 8.0 1992/11/20 11:35:15 ste_cm Rel $";
 #endif
 
 /*
@@ -7,10 +7,10 @@ static	char	Id[] = "$Id: rmsio.c,v 7.0 1991/10/18 15:49:05 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	03 Nov 1988 (from earlier version w/o unix-style interface)
  * Modified:
+ *		20 Nov 1992, use prototypes
  *		22 Feb 1989, to permit user to append to existing file.
  *
  * Function:	Provides unix-style interface to VAX/RMS I/O.
- *
  *
  * Entry:	rmsio_open:	Open an RMS-file, returning pointer to buffers
  *		rmsio_open2:	Open a file, providing default-specification.
@@ -133,9 +133,12 @@ static	void	free_fd(fd)
  * For output files, 'mode_' may be suffixed with the record-length.  The
  * file will be assumed fixed in this case.
  */
-int	rmsio_open (name_, mode_)
-	char	*name_;
-	char	*mode_;
+int	rmsio_open (
+	_ARX(char *,	name_)
+	_AR1(char *,	mode_)
+		)
+	_DCL(char *,	name_)
+	_DCL(char *,	mode_)
 {
 	return (rmsio_open2(name_, 0, mode_));
 }
@@ -147,10 +150,14 @@ int	rmsio_open (name_, mode_)
  *	dft_	=> default specification
  *	mode_	=> Unix-style (record/block) mode (see: 'rmsio_open')
  */
-int	rmsio_open2 (name_, dft_, mode_)
-	char	*name_;
-	char	*dft_;
-	char	*mode_;
+int	rmsio_open2 (
+	_ARX(char *,	name_)
+	_ARX(char *,	dft_)
+	_AR1(char *,	mode_)
+		)
+	_DCL(char *,	name_)
+	_DCL(char *,	dft_)
+	_DCL(char *,	mode_)
 {
 	auto	int	fd = alloc_fd();
 	REG	RFILE	*z = find_fd(fd);
@@ -258,10 +265,14 @@ failed:
  * Note that with RMS, we may have zero-length records; test for a negative
  * code to end the file.
  */
-int	rmsio_read (fd, bfr, maxbfr)
-	int	fd;		/* file-descriptor pointer	*/
-	char	*bfr;		/* buffer to load		*/
-	int	maxbfr;		/* ...its size			*/
+int	rmsio_read (
+	_ARX(int,	fd)		/* file-descriptor pointer	*/
+	_ARX(char *,	bfr)		/* buffer to load		*/
+	_AR1(int,	maxbfr)		/* ...its size			*/
+		)
+	_DCL(int,	fd)		/* file-descriptor pointer	*/
+	_DCL(char *,	bfr)		/* buffer to load		*/
+	_DCL(int,	maxbfr)		/* ...its size			*/
 {
 	REG	RFILE	*z	= find_fd(fd);
 	auto	long	status;
@@ -293,10 +304,14 @@ failed:
  * Write a record, given the buffer address and number of characters to
  * write.
  */
-int	rmsio_write (fd, bfr, maxbfr)
-	int	fd;		/* file-descriptor pointer	*/
-	char	*bfr;		/* buffer to load		*/
-	int	maxbfr;		/* ...its size			*/
+int	rmsio_write (
+	_ARX(int,	fd)		/* file-descriptor pointer	*/
+	_ARX(char *,	bfr)		/* buffer to load		*/
+	_AR1(int,	maxbfr)		/* ...its size			*/
+		)
+	_DCL(int,	fd)		/* file-descriptor pointer	*/
+	_DCL(char *,	bfr)		/* buffer to load		*/
+	_DCL(int,	maxbfr)		/* ...its size			*/
 {
 	REG	RFILE	*z	= find_fd(fd);
 	auto	long	status;
@@ -324,8 +339,9 @@ failed:
 /* <rmsio_close>:
  * Close the file, returning negative status iff an error occurs.
  */
-int	rmsio_close (fd)
-	int	fd;
+int	rmsio_close (
+	_AR1(int,	fd))
+	_DCL(int,	fd)
 {
 	REG	RFILE	*z	= find_fd(fd);
 	auto	long	status;
@@ -344,8 +360,9 @@ failed:
 /* <rmsio_perror>:
  * Display the cause of the last error condition, like 'perror'
  */
-rmsio_perror (s)
-char	*s;
+void	rmsio_perror (
+	_AR1(char *,	s))
+	_DCL(char *,	s)
 {
 	auto	char	msg[80+NAM$C_MAXRSS];
 	$DESCRIPTOR(DSCxmsg,msg);
@@ -365,8 +382,9 @@ char	*s;
 /* <rmsio_size>:
  * Return the length of the longest record in (an input) file:
  */
-int	rmsio_size (fd)
-	int	fd;
+int	rmsio_size (
+	_AR1(int,	fd))
+	_DCL(int,	fd)
 {
 	REG	RFILE	*z	= find_fd(fd);
 	auto	struct	XABFHC	*xab_;
