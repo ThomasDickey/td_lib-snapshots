@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 12.17 1994/05/27 22:18:49 tom Exp $ */
+/* $Id: ptypes.h,v 12.18 1994/05/30 23:39:58 tom Exp $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -109,13 +109,17 @@ typedef	short	ino_t;
 #define	HAVE_STDARG_H 1
 #undef  HAVE_UNISTD_H
 #define HAVE_TIMEZONE 1
+#define HAVE_NEW_TOKEN_SPLICE 1
+#define HAVE_NEW_TOKEN_QUOTE  1
 #include <io.h>		/* for 'chmod()' */
 #endif
 
-#if defined(vms)
+#if defined(vms)	/* VAX/VMS 5.3 */
 #define	HAVE_STDLIB_H 1
 #define HAVE_STDARG_H 1
 #undef  HAVE_UNISTD_H
+#define HAVE_OLD_TOKEN_SPLICE 1
+#define HAVE_OLD_TOKEN_QUOTE  1
 #endif
 
 #if HAVE_STDLIB_H
@@ -128,28 +132,6 @@ typedef	short	ino_t;
 
 #if !HAVE_LSTAT
 #define	lstat	stat
-#endif
-
-/*
- * Define a symbol that is true iff we have an ANSI c-preprocessor (i.e., does
- * token substitution with '#').
- */
-#undef	ANSI_CPP
-
-#if defined(apollo)
-#  if defined(__STDCPP__) || defined(__GNUC__)
-#   define ANSI_CPP 1
-#  else
-#   define ANSI_CPP 0
-#  endif
-#endif	/* apollo */
-
-#ifndef ANSI_CPP
-# if defined(__STDC__)
-#  define ANSI_CPP 1
-# else
-#  define ANSI_CPP 0
-# endif
 #endif
 
 /*
@@ -299,7 +281,7 @@ typedef	short	ino_t;
 #if	defined(SYSTEM5) || defined(vms) || defined(__TURBOC__)
 #define	getwd(p)	getcwd(p,sizeof(p)-2)
 #if	!(defined(__hpux) || defined(linux) || defined(__svr4__) || defined(__TURBOC__))
-extern	char	*getcwd(_ar1(char *,p));
+extern	char	*getcwd(_arx(char *,p, _ar1(size_t,n)));
 #endif
 #else	/* !SYSTEM5 */
 extern	char	*getwd(_ar1(char *,p));
@@ -323,7 +305,7 @@ extern	long	strtol(
 #endif
 #if	!(defined(vms) || defined(__TURBOC__))
 #if	!(defined(apollo_sr10) || defined(__hpux) || defined(linux) || defined(__svr4__) || defined(__CLCC__))
-extern	V_OR_I2	perror (_ar1(char *,s));
+extern	V_OR_I2	perror (_ar1(const char *,s));
 extern	V_OR_I	rewind (_ar1(FILE *,s));
 #endif
 
@@ -430,6 +412,7 @@ extern	long	strtol(
 #endif
 
 #if	!defined(FALSE) || (FALSE != 0)
+#undef  FALSE
 #define	FALSE	(0)
 #endif
 

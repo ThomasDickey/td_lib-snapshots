@@ -1,3 +1,81 @@
+1994-05-30  dickey@clark.net
+
+	* include/ptypes.h: tweaks for compile on Solaris
+
+	* include/ptypes.h: got rid of ANSI_CPP symbol
+
+	* src/cm_funcs/vercmp.c: obsoleted ANSI_CPP symbol
+
+	* src/cm_funcs/vercmp.c: use MODULE_ID
+
+	* src/curses/erasechr.c: use HAVE_ERASECHAR ifdef
+
+	* acconfig.h: added HAVE_ERASECHAR, HAVE_KILLCHAR, HAVE_TYPE_CHTYPE
+
+	* include/td_curse.h: use HAVE_ERASECHAR, HAVE_KILLCHAR ifdefs
+
+	* aclocal.m4:
+	support for AC_CURSES: beep, keypad, chtype, erasechar, killchar
+
+	* src/curses/killchar.c: use HAVE_KILLCHAR ifdef
+
+	* src/curses/killchar.c: use MODULE_ID
+
+	* configure.in: moved curses tests into a macro AC_CURSES
+
+	* src/curses/rawgets.c:
+	recognize backspace as an erase-character, so that ded's test-scripts port
+
+	* src/curses/cmdch.c: use HAVE_KEYPAD from autoconf
+
+	* include/td_curse.h: use autoconf symbol HAVE_BEEP
+
+	* include/sccsdefs.h: added 'sccs_debug()'
+
+	* src/process/execute.c: moved a return-statement to avoid gcc warning
+
+	* src/process/execute.c: use MODULE_ID
+
+	* src/cm_funcs/next_ver.c: gcc warning about format
+
+	* src/cm_funcs/next_ver.c: use MODULE_ID
+
+	* Makefile: added first cut of rules for autoconf
+
+	* configure.in:
+	added calls on AC_PROGRAM_FULLPATH to get ded's predefined pathnames
+
+	* aclocal.m4: added macro for AC_PROGRAM_FULLPATH
+
+	* acconfig.h:
+	added variables for DEFAULT_EDITOR, DEFAULT_BROWSE, DEFAULT_PAGER
+
+	* src/Makefile: added sccsdbug.c
+
+	* src/cm_funcs/sccsdbug.c: RCS_BASE
+
+	* src/cm_funcs/sccsdbug.c: use MODULE_ID
+
+	* Makefile:
+	added <td_regex.h> definitions, and autoconf files to SOURCES
+
+	* src/Makefile:
+	derive RCS_PATH definition from autoconf instead of the hack that I was
+	using for rcspath.h
+
+	* src/cm_funcs/rcspath.c:
+	don't need rcspath.h anymore, since I derive this via autoconf
+
+	* src/cm_funcs/rcspath.c: use MODULE_ID
+
+	* configure.in:
+	added logic to determine where RCS is installed (for setuid programs),
+	and added SCCS_PATH, VCS_PATH, CVS_PATH for future ifdef'ing.
+
+	* aclocal.m4: added AC_PROGRAM_PREFIX and AC_RCS_SCCS
+
+	* acconfig.h: added definitions for RCS/SCCS/VCS/CVS paths
+
 1994-05-29  dickey@clark.net
 
 	* configure.in:

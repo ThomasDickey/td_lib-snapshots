@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: erasechr.c,v 12.5 1994/05/21 14:10:10 tom Exp $";
+static	char	Id[] = "$Id: erasechr.c,v 12.6 1994/05/30 23:22:50 tom Exp $";
 #endif
 
 /*
@@ -20,8 +20,7 @@ static	char	Id[] = "$Id: erasechr.c,v 12.5 1994/05/21 14:10:10 tom Exp $";
 
 #include	"td_curse.h"
 
-#ifndef	erasechar
-#if !SYS5_CURSES
+#if	!HAVE_ERASECHAR
 int	erasechar(_AR0)
 {
 	int	code	= '\b';
@@ -31,7 +30,6 @@ int	erasechar(_AR0)
 		code = buf.sg_erase;
 	return (code);
 }
-#endif
 #endif
 
 int	eraseword(_AR0)

@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: execute.c,v 12.5 1994/05/23 00:35:11 tom Exp $";
-#endif
-
 /*
  * Title:	execute.c (execute a command, returning its status)
  * Author:	T.E.Dickey
@@ -40,6 +36,8 @@ static	char	Id[] = "$Id: execute.c,v 12.5 1994/05/23 00:35:11 tom Exp $";
 #include	"ptypes.h"
 #include	<ctype.h>
 #include	<errno.h>
+
+MODULE_ID("$Id: execute.c,v 12.7 1994/05/30 21:19:52 tom Exp $")
 
 #ifdef	vms
 #  include	<descrip.h>
@@ -188,13 +186,13 @@ int	execute(
 		dofree((char *)myargv);
 		myargv = 0;
 #endif	/*NO_LEAKS*/
-		return (0);
 	} else if (pid == 0) {
 		errno = 0;
 		(void)EXECV(what, myargv, environ);
 		(void)_exit(errno);	/* just in case exec-failed */
 		/*NOTREACHED*/
 	}
+	return (0);
 #endif	/* unix */
 	/*
 	 * TurboC 3.0 for MS-DOS doesn't have 'fork()' or 'wait()', but it

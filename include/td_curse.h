@@ -1,4 +1,4 @@
-/* $Id: td_curse.h,v 12.10 1994/05/23 00:09:58 tom Exp $ */
+/* $Id: td_curse.h,v 12.12 1994/05/30 23:11:34 tom Exp $ */
 
 /*
  * TD_LIB CURSES-related definitions
@@ -28,24 +28,6 @@
 #endif
 
 /*----------------------------------------------------------------------------*/
-#if defined(linux)
-#define HAS_CURSES_BEEP 1
-#endif
-
-#ifndef HAS_CURSES_BEEP
-#define HAS_CURSES_BEEP SYS5_CURSES
-#endif
-
-/*----------------------------------------------------------------------------*/
-#if defined(linux) && !defined(USE_NCURSES)
-#define HAS_CURSES_KEYPAD 0
-#endif
-
-#ifndef HAS_CURSES_KEYPAD
-#define HAS_CURSES_KEYPAD SYS5_CURSES
-#endif
-
-/*----------------------------------------------------------------------------*/
 #ifdef MSDOS
 #define NO_XTERM_MOUSE
 #endif
@@ -66,23 +48,14 @@
 /*
  * note: System5 curses does not define the 'screen' structure
  */
-#if SYS5_CURSES
-# if defined(linux) && !USE_NCURSES
+#if !HAVE_TYPE_CHTYPE
 	typedef	char	chtype;		/* sys5-curses data-type */
-# endif
+#endif
+
+#if SYS5_CURSES
 # ifdef	lint
 	struct	screen	{ int dummy; };
 # endif
-#else
-# ifndef __svr4__
-	typedef	char	chtype;		/* sys5-curses data-type */
-# ifndef erasechar
-	extern	int	erasechar(_ar0); */
-# endif
-# ifndef killchar
-	extern	int	killchar(_ar0); */
-# endif
-# endif /* __svr4__ */
 #endif	/* SYSTEM5 */
 
 #if !(defined(__hpux) || defined(linux) || defined(LINTLIBRARY)) /* defined in <curses.h> */
@@ -133,7 +106,7 @@ extern	int	wrefresh	(WINDOW *);
 #endif
 
 	/* beep.c ----------------------------------------------------- */
-#if	!HAS_CURSES_BEEP
+#if	!HAVE_BEEP
 	void	beep(_ar0)
 			_nul
 #endif
@@ -166,10 +139,7 @@ extern	int	wrefresh	(WINDOW *);
 			_nul
 
 	/* erasechar.c ------------------------------------------------ */
-#if	!SYS5_CURSES
-#ifdef	erasechar
-#undef	erasechar
-#endif	/* erasechar */
+#if	!HAVE_ERASECHAR
 	int	erasechar(_ar0)
 			_ret
 #endif
@@ -177,10 +147,7 @@ extern	int	wrefresh	(WINDOW *);
 			_ret
 
 	/* killchar.c ------------------------------------------------- */
-#if	!SYS5_CURSES
-#ifdef	killchar
-#undef	killchar
-#endif	/* killchar */
+#if	!HAVE_KILLCHAR
 	int	killchar(_ar0)
 			_ret
 #endif

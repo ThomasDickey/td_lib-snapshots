@@ -1,4 +1,4 @@
-/* $Id: sccsdefs.h,v 12.1 1993/09/21 14:02:28 dickey Exp $ */
+/* $Id: sccsdefs.h,v 12.2 1994/05/30 21:21:03 tom Exp $ */
 
 #ifndef	_SCCSDEFS_H_
 #define	_SCCSDEFS_H_
@@ -9,6 +9,10 @@
 
 	/* sccs_dir.c ------------------------------------------------- */
 	char *	sccs_dir(_ar0)
+			_ret
+
+	/* sccsdbug.c ------------------------------------------------- */
+	int	sccs_debug(_ar0)
 			_ret
 
 	/* sccslast.c ------------------------------------------------- */

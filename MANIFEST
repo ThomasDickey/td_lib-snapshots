@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19940529
+MANIFEST for td_lib, version t19940530
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         restrictions on copying/using this software
@@ -27,6 +27,7 @@ include/sccsdefs.h              interface for sccs functions
 include/td_curse.h              interface for curses functions
 include/td_lib.h                interface of common TD_LIB functions
 include/td_qsort.h              interface for 'qsort()'
+include/td_regex.h              interface for regular expression functions
 include/td_scomp.h              interface for source-compare functions
 include/td_sheet.h              interface for spreadsheet (CSV) functions
 include/vms_dirs.h              VMS unix-style directory-interface definitions
@@ -53,6 +54,7 @@ src/cm_funcs/rcstemp.c          create temp-file for setuid operations
 src/cm_funcs/rcstime.c          encapsulates how to encode/decode archive-times
 src/cm_funcs/samebr.c           compares two RCS versions to see if they are from the same branch or trunk
 src/cm_funcs/sccs_dir.c         returns name of SCCS directory
+src/cm_funcs/sccsdbug.c         encapsulate SCCS_DEBUG environment variable
 src/cm_funcs/sccslast.c         scan for last SCCS date & version
 src/cm_funcs/sccsname.c         SCCS working/archive name translation (like 'rcsname.c').
 src/cm_funcs/vcs_file.c         encapsulates name of directory-level RCS permissions file

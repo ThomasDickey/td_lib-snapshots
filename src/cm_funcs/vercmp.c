@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: vercmp.c,v 12.4 1993/10/29 20:19:47 dickey Exp $";
-#endif
-
 /*
  * Title:	vercmp.c (compare dot-separated version strings)
  * Author:	T.E.Dickey
@@ -22,6 +18,8 @@ static	char	Id[] = "$Id: vercmp.c,v 12.4 1993/10/29 20:19:47 dickey Exp $";
  */
 
 #include	"ptypes.h"
+
+MODULE_ID("$Id: vercmp.c,v 12.6 1994/05/30 23:36:25 tom Exp $")
 
 #define	DOT	'.'
 
@@ -85,7 +83,7 @@ QSORT_FUNC(compare)
 }
 
 #define	EQL(c)		((c > 0) ? ">" : ((c < 0) ? "<" : "="))
-#if	ANSI_CPP
+#if	HAVE_NEW_TOKEN_QUOTE
 #define	DO_TEST(a,b)	j = vercmp(#a, #b,  wild);\
 			PRINTF("%s\t%s %s \t(%d)\n", #a,  EQL(j), #b,  j)
 #else

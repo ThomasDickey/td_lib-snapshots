@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: rawgets.c,v 12.5 1993/11/24 13:06:16 dickey Exp $";
+static	char	Id[] = "$Id: rawgets.c,v 12.6 1994/05/30 22:41:13 tom Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: rawgets.c,v 12.5 1993/11/24 13:06:16 dickey Exp $";
  * Title:	rawgets.c (raw-mode 'gets()')
  * Created:	29 Sep 1987 (from 'fl.c')
  * Modified:
+ *		30 May 1994, always allow backspace as an erase-character.
  *		24 Nov 1993, added xterm-mouse support.
  *		05 Nov 1993, absorb "cmdch.h" into "td_curse.h"
  *		29 Oct 1993, ifdef-ident
@@ -565,7 +566,7 @@ int	wrawgets (
 			continue;
 		}
 
-		if ((c == EraseChar)) {
+		if ((c == EraseChar) || (c == '\b')) {
 			tag = DeleteBefore(tag,count);
 		} else if (c == EraseWord) {
 			tag = DeleteWordBefore(tag,count);

@@ -1,4 +1,4 @@
-# $Id: Makefile,v 12.0 1993/04/29 09:07:55 ste_cm Rel $
+# $Id: Makefile,v 12.2 1994/05/30 20:58:53 tom Exp $
 # Top-level makefile for TD_LIB common library
 
 ####### (Development) ##########################################################
@@ -6,19 +6,32 @@ INSTALL_INC = ../install_inc
 INSTALL_LIB = ../install_lib
 INSTALL_MAN = ../install_man
 
-PUT	= rm -f $@; cp -p $? $@
+RM	= rm -f
+PUT	= $(RM) $@; cp -p $? $@
 TOP	= ..
 GET	= checkout
 THIS	= td_lib
 
+i	= include
 I	= $(TOP)/include
 L	= $(TOP)/lib
 
-CLEAN	= *.[oai] *.bak *.log *.out *.tst .nfs* core
-DESTROY	=sh -c 'for i in *;do case $$i in RCS);; *) rm -f $$i;;esac;done;exit 0'
+CLEAN	= *.bak *.log *.out *.tst .nfs* core
+PURE	= stamp-* *.status $i/config.*
+DESTROY	=sh -c 'for i in *;do case $$i in RCS);; *) $(RM) $$i;;esac;done;exit 0'
 
 ####### (Standard Lists) #######################################################
-SOURCES	= Makefile descrip.mms README COPYING
+CONFIG_H=\
+	acconfig.h\
+	aclocal.m4\
+	configure.in
+
+SOURCES	=\
+	Makefile\
+	descrip.mms\
+	README\
+	COPYING\
+	$(CONFIG_H)
 
 MFILES	=\
 	certify/Makefile\
@@ -33,6 +46,7 @@ IT	=\
 	$I/$(THIS).h\
 	$I/td_curse.h\
 	$I/td_qsort.h\
+	$I/td_regex.h\
 	$I/td_scomp.h\
 	$I/td_sheet.h\
 	$I/deltree.h\
@@ -45,7 +59,7 @@ IT	=\
 ####### (Standard Productions) #################################################
 all\
 lintlib\
-install::	lib
+install::	lib $i/config.h
 
 all\
 clean\
@@ -68,24 +82,24 @@ all\
 sources::	$(SOURCES)
 
 clean\
-clobber::			; rm -f $(CLEAN)
+clobber::			; $(RM) $(CLEAN)
 clobber\
-destroy::			; rm -rf lib
+destroy::			; $(RM) -r lib
 destroy::			; cd support; $(DESTROY)
 destroy::			; $(DESTROY)
 
 install::	all $(IT)
-deinstall::			; rm -f $(IT)
+deinstall::			; $(RM) $(IT)
 
 ####### (Details of Productions) ###############################################
 $(MFILES)\
 $(SOURCES):				; $(GET) $@
 lib:					; mkdir $@
 
-i=include
 $I/acl.h:		$i/acl.h	; $(PUT)
 $I/cmdch.h:		$i/cmdch.h	; $(PUT)
 $I/td_curse.h:		$i/td_curse.h	; $(PUT)
+$I/td_regex.h:		$i/td_regex.h	; $(PUT)
 $I/td_qsort.h:		$i/td_qsort.h	; $(PUT)
 $I/td_scomp.h:		$i/td_scomp.h	; $(PUT)
 $I/td_sheet.h:		$i/td_sheet.h	; $(PUT)
@@ -97,3 +111,25 @@ $I/rcsdefs.h:		$i/rcsdefs.h	; $(PUT)
 $I/sccsdefs.h:		$i/sccsdefs.h	; $(PUT)
 
 $L/$(THIS).a:	lib/$(THIS).a		; $(PUT); ranlib $@
+
+$i/config.h:	configure $i/config.h.in; ./configure
+$i/config.h.in:	$(CONFIG_H)		; autoheader
+configure:	$(CONFIG_H)		; autoconf
+
+# autoheader might not change config.h.in
+config.h.in: stamp-h.in
+stamp-h.in: $(CONFIG_H)
+	autoheader
+	touch stamp-h.in
+
+# config.status might not change config.h
+config.h: stamp-h
+stamp-h: config.h.in config.status
+	./config.status
+	touch stamp-h
+
+#? Makefile: Makefile.in config.status
+#? 	./config.status
+
+config.status: configure
+	./config.status --recheck
