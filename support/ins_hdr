@@ -1,0 +1,51 @@
+#! /bin/sh
+# $Id: ins_hdr,v 12.1 1997/09/08 01:03:08 tom Exp $
+#
+# This script is used to adjust includes for header files that reside in a
+# subdirectory of /usr/include, etc.
+
+if test $# = 0 ; then
+	echo '? No INSTALL program given'
+	exit 1
+fi
+PRG="$1"
+shift
+
+if test $# = 0 ; then
+	echo '? No DESTINATION given'
+	exit 1
+fi
+DST=$1
+shift
+
+if test $# = 0 ; then
+	echo '? No SOURCE given'
+	exit 1
+fi
+
+SED=${TMPDIR-/tmp}/sed$$
+rm -f $SED
+trap "rm -f $SED" 0 1 2 5 15
+
+END=`basename $DST`
+for SRC in $*
+do
+	echo "s/<$SRC>/<$END\/$SRC>/" >> $SED
+done
+
+for SRC in $*
+do
+	echo installing $SRC in $DST
+	case $DST in
+	/*/include/*)
+		src=`basename $SRC`
+		TMP=${TMPDIR-/tmp}/$src
+		sed -f $SED include/$src > $TMP
+		eval $PRG $TMP $DST
+		rm -f $TMP
+		;;
+	*)
+		eval $PRG $SRC $DST
+		;;
+	esac
+done

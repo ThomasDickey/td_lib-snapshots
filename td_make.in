@@ -1,4 +1,4 @@
-# $Id: td_make.in,v 12.11 1997/09/07 19:38:32 tom Exp $
+# $Id: td_make.in,v 12.13 1997/09/08 23:38:10 tom Exp $
 # common definitions for makefiles built over TD_LIB library.
 
 ####### (Environment) ##########################################################
@@ -6,6 +6,7 @@ TD_LIB	= td_lib
 # TOP	= ../../.. -- must define
 
 SHELL	= /bin/sh
+@SET_MAKE@
 
 B	= ../bin
 I	= $(TOP)/$(TD_LIB)/include
@@ -57,7 +58,7 @@ CLEAN	= *.[oi] *.lint *.bak *.log *.out *.tst .nfs* *.pure* core tags
 DESTROY	=$(SHELL) -c 'for i in *;do case $$i in RCS);; *) $(RM) $$i;;esac;done;exit 0'
 RUN_TESTS=$(SHELL) -c '$@.sh 2>&1 | tee -a $@.out'
 
-PTYPES_H =	$I/ptypes.h	$I/td_ext.h	$I/td_lib.h	$I/config.h
+PTYPES_H =	$I/ptypes.h	$I/td_ext.h	$I/td_lib.h	$I/td_config.h
 CURSES_H =	$(PTYPES_H)	$I/td_curse.h
 QSORT_H =	$(PTYPES_H)	$I/td_qsort.h
 RCSDEFS_H =	$(PTYPES_H)	$I/rcsdefs.h	$I/deltree.h
@@ -72,14 +73,14 @@ LINT_EACH = $(SHELL) -c 'for i in $?;do echo $$i:; $(LINT) $(LINTOPTS) $$i >>$@;
 .SUFFIXES: .c .o .a
 
 .c.o:
-	@echo compile $<
-	@$(CC) $(CPP_OPTS) $(CFLAGS) $(EXTRA_CFLAGS) -c $<
+	@echo compiling $<
+	@ECHO_CC@$(CC) $(CPP_OPTS) $(CFLAGS) $(EXTRA_CFLAGS) -c $<
 .o.a:
 	@$(AR) $@ $*.o
 	-@$(RM) $*.o
 .c.a:
-	@echo compile $<
-	@$(CC) $(CPP_OPTS) $(CFLAGS) $(EXTRA_CFLAGS) -c $<
+	@echo compiling $<
+	@ECHO_CC@$(CC) $(CPP_OPTS) $(CFLAGS) $(EXTRA_CFLAGS) -c $<
 	@$(AR) $@ $*.o
 	-@$(RM) $*.o
 
@@ -89,7 +90,8 @@ LINT_EACH = $(SHELL) -c 'for i in $?;do echo $$i:; $(LINT) $(LINTOPTS) $$i >>$@;
 .c.proto:	; $(CPROTO) $(CPP_OPTS) $< >$@
 .c.lint:	; $(LINT) $(LINTOPTS) $< >$@
 
-.c.tst:		; $(CC) -o $@ -DTEST $(CFLAGS) $(EXTRA_CFLAGS) $(CPP_OPTS) $< $Z $(LIB_ARGS)
+.c.tst:
+	@ECHO_LD@$(CC) -o $@ -DTEST $(CFLAGS) $(EXTRA_CFLAGS) $(CPP_OPTS) $< $Z $(LIB_ARGS)
 
 .SUFFIXES: .man .cat
 

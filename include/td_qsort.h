@@ -1,10 +1,10 @@
-/* $Id: td_qsort.h,v 12.6 1994/08/01 22:58:32 tom Exp $ */
+/* $Id: td_qsort.h,v 12.7 1997/09/08 00:58:29 tom Exp $ */
 
 #ifndef	TD_QSORT_H
 #define	TD_QSORT_H
 
 #ifndef	PTYPES_H
-#include "ptypes.h"
+#include <ptypes.h>
 #endif
 
 /*

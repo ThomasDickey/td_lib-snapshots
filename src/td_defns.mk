@@ -1,4 +1,4 @@
-# $Id: td_defns.mk,v 12.2 1995/01/28 21:09:29 tom Exp $
+# $Id: td_defns.mk,v 12.3 1997/09/08 00:29:39 tom Exp $
 # Common make-definitions for TD_LIB
 
 .SUFFIXES:
@@ -9,7 +9,7 @@ TOP	= ../../..
 
 LINTLIBS = -ltd -lcurses -ltermcap
 
-Z	= $L/$(TD_LIB).a
+Z	= $L/libtd.a
 
 SOURCES	= Makefile descrip.mms $(CSRC)
 

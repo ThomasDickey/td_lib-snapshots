@@ -1,4 +1,4 @@
-/* $Id: dyn_str.h,v 12.1 1994/06/25 14:15:54 tom Exp $
+/* $Id: dyn_str.h,v 12.2 1997/09/08 00:56:42 tom Exp $
  *
  *	Functions which manage dynamic-strings.
  */
@@ -7,7 +7,7 @@
 #define	DYN_STR_H
 
 #ifndef	_arx
-#include "ptypes.h"
+#include <ptypes.h>
 #endif
 
 typedef	struct	{

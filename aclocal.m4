@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.87 1997/09/07 22:35:25 tom Exp $
+dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.89 1997/09/08 23:58:03 tom Exp $
 dnl vi:set ts=4:
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "CF_" to "AC_"
@@ -129,15 +129,22 @@ dnl ---------------------------------------------------------------------------
 dnl Check if we're accidentally using a cache from a different machine.
 dnl Derive the system name, as a check for reusing the autoconf cache.
 dnl
+dnl If we've packaged config.guess and config.sub, run that (since it does a
+dnl better job than uname). 
 AC_DEFUN([CF_CHECK_CACHE],
 [
-system_name="`(uname -s -r) 2>/dev/null`"
-if test -n "$system_name" ; then
-	AC_DEFINE_UNQUOTED(SYSTEM_NAME,"$system_name")
+if test -f $srcdir/config.guess ; then
+	AC_CANONICAL_HOST
+	system_name="$host_os"
 else
-	system_name="`(hostname) 2>/dev/null`"
+	system_name="`(uname -s -r) 2>/dev/null`"
+	if test -z "$system_name" ; then
+		system_name="`(hostname) 2>/dev/null`"
+	fi
 fi
+test -n "$system_name" && AC_DEFINE_UNQUOTED(SYSTEM_NAME,"$system_name")
 AC_CACHE_VAL(cf_cv_system_name,[cf_cv_system_name="$system_name"])
+
 test -z "$system_name" && system_name="$cf_cv_system_name"
 test -n "$cf_cv_system_name" && AC_MSG_RESULT("Configuring for $cf_cv_system_name")
 
@@ -271,7 +278,7 @@ AC_MSG_CHECKING(if you want to see long compiling messages)
 CF_ARG_DISABLE(echo,
 	[  --disable-echo          test: display \"compiling\" commands],
 	[
-    ECHO_LD='@echo linking $@;'
+    ECHO_LD='@echo linking [$]@;'
     SHOW_CC='	@echo compiling [$]@'
     ECHO_CC='@'
 ],[
@@ -624,6 +631,61 @@ CF_EOF
 	rm -f cf_makeflags.tmp])
 AC_MSG_RESULT($cf_cv_makeflags)
 AC_SUBST(cf_cv_makeflags)
+])dnl
+dnl ---------------------------------------------------------------------------
+dnl Check for the use of 'include' in 'make' (BSDI is a special case)
+dnl The symbol $ac_make is set in AC_MAKE_SET, as a side-effect.
+AC_DEFUN([CF_MAKE_INCLUDE],
+[
+AC_MSG_CHECKING(for style of include in makefiles)
+
+make_include_left=""
+make_include_right=""
+make_include_quote="unknown"
+
+cf_inc=head$$
+cf_dir=subd$$
+echo 'RESULT=OK' >$cf_inc
+mkdir $cf_dir
+
+for cf_include in "include" ".include" "!include"
+do
+	for cf_quote in '' '"'
+	do
+		cat >$cf_dir/makefile <<CF_EOF
+SHELL=/bin/sh
+${cf_include} ${cf_quote}../$cf_inc${cf_quote}
+all :
+	@echo 'cf_make_include=\$(RESULT)'
+CF_EOF
+	cf_make_include=""
+	eval `cd $cf_dir && ${MAKE-make} 2>&AC_FD_CC | grep cf_make_include=OK`
+	if test -n "$cf_make_include"; then
+		make_include_left="$cf_include"
+		make_include_quote="$cf_quote"
+		break
+	else
+		echo Tried 1>&AC_FD_CC
+		cat $cf_dir/makefile 1>&AC_FD_CC
+	fi
+	done
+	test -n "$cf_make_include" && break
+done
+
+rm -rf $cf_inc $cf_dir
+
+if test -z "$make_include_left" ; then
+	AC_ERROR(Your $ac_make program does not support includes)
+fi
+if test ".$make_include_quote" != .unknown ; then
+	make_include_left="$make_include_left $make_include_quote"
+	make_include_right="$make_include_quote"
+fi
+
+AC_MSG_RESULT(${make_include_left}file${make_include_right})
+
+AC_SUBST(make_include_left)
+AC_SUBST(make_include_right)
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Write a debug message to config.log, along with the line number in the

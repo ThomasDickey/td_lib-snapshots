@@ -1,8 +1,8 @@
-/* $Id: td_scomp.h,v 12.3 1994/06/25 14:14:11 tom Exp $ */
+/* $Id: td_scomp.h,v 12.4 1997/09/08 00:58:42 tom Exp $ */
 
 #ifndef	TD_SCOMP_H
 #define	TD_SCOMP_H
-#include	"ptypes.h"
+#include	<ptypes.h>
 
 /*
  * Define types used to encapsulate difference algorithms.  These assume that

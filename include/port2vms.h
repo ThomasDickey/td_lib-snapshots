@@ -1,5 +1,5 @@
 /*
- * $Id: port2vms.h,v 12.6 1995/10/31 23:22:05 tom Exp $
+ * $Id: port2vms.h,v 12.7 1997/09/08 00:56:47 tom Exp $
  *
  * VMS-definitions for supporting unix/vms port
  */
@@ -7,7 +7,7 @@
 #ifndef	PORT2VMS_H
 #define	PORT2VMS_H
 
-#include	"ptypes.h"		/* CM_TOOLS common */
+#include	<ptypes.h>		/* CM_TOOLS common */
 
 #ifndef	MAXPATHLEN
 #define	MAXPATHLEN	BUFSIZ		/* defined in <stdio.h> */

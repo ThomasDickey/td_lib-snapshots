@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19970907
+MANIFEST for td_lib, version t19970908
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         restrictions on copying/using this software
@@ -9,6 +9,8 @@ config_h.in                     autoconf template for include/config.h
 configure.in                    autoconf script for td_lib
 descrip.mms                     top-level MMS script for this library on VMS
 install-sh                      install-script
+makefile.in                     template for generated top-level makefile
+mkdirs.sh                       script to make directory-hierarchy
 td_make.in                      autoconf template for support/td_lib.mk
 certify                         subdirectory
 certify/Makefile                makefile for certify directory
@@ -246,6 +248,7 @@ src/unix/setmtime.c             set mtime/atime of a file
 src/unix/uid2s.c                convert user-id to string
 support                         subdirectory
 support/Makefile                makefile for td_lib/support
+support/ins_hdr                 script to install header files
 support/lib_top.mms             same as STANDARD_RULES, save that we generate lib-directory, rather than bin
 support/linkopts.opt            default link-options file for PORTUNIX
 support/prog_top.mms            VMS MMS include-file defining standard (module-level) rules.
