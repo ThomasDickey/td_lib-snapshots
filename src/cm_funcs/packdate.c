@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	26 Mar 1986
  * Modified:
+ *		08 Apr 1996, IRIX 'timezone' doesn't include daylight-savings
  *		29 Oct 1993, ifdef-ident
  *		30 Oct 1992, added entrypoint 'gmt_offset()'
  *		03 Oct 1991, converted to ANSI
@@ -28,7 +29,7 @@
 #define TIM_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: packdate.c,v 12.11 1995/10/14 16:37:14 tom Exp $")
+MODULE_ID("$Id: packdate.c,v 12.12 1996/04/08 16:51:26 tom Exp $")
 
 #define	LEAP(y)	(!(y&3))
 
@@ -49,6 +50,9 @@ long	gmt_offset(
 
 #if	TIMEZONE_DECLARED
 	sec += timezone;
+#  if	DAYLIGHT_DECLARED
+	if (daylight)	sec -= HOUR;
+#  endif
 #else
 #  if	HAVE_TM_GMTOFF
 	sec -= tm.tm_gmtoff;
@@ -60,6 +64,7 @@ long	gmt_offset(
 		(void)gettimeofday(&t2, &tz);
 		sec += (tz.tz_minuteswest * MINUTE);
 	}
+#else
 #    endif
 #  endif
 #endif	/* TIMEZONE_DECLARED */
