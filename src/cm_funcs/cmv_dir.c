@@ -35,7 +35,7 @@
 #include "ptypes.h"
 #include "cmv_defs.h"
 
-MODULE_ID("$Id: cmv_dir.c,v 12.20 1998/08/22 12:08:11 tom Exp $")
+MODULE_ID("$Id: cmv_dir.c,v 12.21 2002/07/03 13:04:43 tom Exp $")
 
 /******************************************************************************/
 #ifdef	lint
@@ -579,7 +579,7 @@ char *	UpInternalDir(
 
 	Debug((stderr, "Up(%s) %s\n", first, last))
 	while (--last >= first) {
-		if (isdigit(*last)) {
+		if (isdigit(UCH(*last))) {
 			if (state != 3)
 				break;
 		} else if (*last == '-') {

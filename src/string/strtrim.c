@@ -17,7 +17,7 @@
 #include	"ptypes.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: strtrim.c,v 12.3 1993/10/29 17:35:23 tom Exp $")
+MODULE_ID("$Id: strtrim.c,v 12.4 2002/07/03 13:07:33 tom Exp $")
 
 char	*
 strtrim(
@@ -27,7 +27,7 @@ _DCL(char *,	s)
 	register char	*base = s;
 	s += strlen(s);
 	while (--s >= base) {
-		if (isspace(*s))
+		if (isspace(UCH(*s)))
 			*s = EOS;
 		else
 			break;

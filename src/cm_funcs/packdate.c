@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	26 Mar 1986
  * Modified:
+ *		03 Jul 2002, make the mktime() changes work on Solaris.
  *		21 Apr 2002, if mktime() is available, use that.  For instance
  *			     cygwin uses 1974 for zero-time.
  *		16 Apr 2002, reorder ifdef's, preferring tm_gmtoff (BSD) over
@@ -43,7 +44,7 @@
 #define TIM_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: packdate.c,v 12.19 2002/05/02 10:37:38 tom Exp $")
+MODULE_ID("$Id: packdate.c,v 12.21 2002/07/03 17:28:10 tom Exp $")
 
 #define	LEAP(y)	(!(y&3))
 
@@ -56,7 +57,7 @@ long	gmt_offset(
 	_DCL(time_t,	t)
 {
 	struct	tm tm;
-	long	sec	= 0;
+	long	result	= 0;
 
 	/*
 	 * Parse the computed time using 'localtime' to avoid the complication
@@ -67,32 +68,32 @@ long	gmt_offset(
 	tm = *localtime(&t);
 
 #if HAVE_TM_GMTOFF
-	sec -= tm.tm_gmtoff;
+	result -= tm.tm_gmtoff;
 #else /* UNIX */
 #if TIMEZONE_DECLARED
-	sec += timezone;
+	result += timezone;
 #else
 #if HAVE_GETTIMEOFDAY
 	{
 	struct	timeval	t2;
 	struct	timezone tz;
 		(void)gettimeofday(&t2, &tz);
-		sec += (tz.tz_minuteswest * MINUTE);
+		result += (tz.tz_minuteswest * MINUTE);
 	}
 #else
 #endif
+#endif	/* TIMEZONE_DECLARED */
 
 	/*
 	 * Check to see if the local-time display for a given clock-time
 	 * (in GMT seconds) would be bumped up an hour for daylight savings
 	 * time.
 	 */
-#if HAVE_TM_ISDST && !HAVE_TM_GMTOFF
-	if (tm.tm_isdst)	sec -= HOUR;
+#if HAVE_TM_ISDST
+	if (tm.tm_isdst)	result -= HOUR;
 #endif
-#endif
-#endif	/* TIMEZONE_DECLARED */
-	return sec;
+#endif	/* HAVE_TM_GMTOFF */
+	return result;
 }
 
 long	packdate (
@@ -101,18 +102,20 @@ long	packdate (
 	_ARX(int,	 day)
 	_ARX(int,	 hour)
 	_ARX(int,	 min)
-	_AR1(int,	 s)
+	_AR1(int,	 sec)
 		)
 	_DCL(int,	 year)
 	_DCL(int,	 mon)
 	_DCL(int,	 day)
 	_DCL(int,	 hour)
 	_DCL(int,	 min)
-	_DCL(int,	 s)
+	_DCL(int,	 sec)
 {
 #if HAVE_MKTIME
-	time_t sec;
+	time_t result;
 	struct tm tm;
+
+	memset(&tm, 0, sizeof(tm));
 	if (year > 1900)
 		year -= 1900;
 	tm.tm_year = year;
@@ -120,11 +123,12 @@ long	packdate (
 	tm.tm_mday = day;
 	tm.tm_hour = hour;
 	tm.tm_min = min;
-	tm.tm_sec = s;
+	tm.tm_sec = sec;
 	tm.tm_isdst = -1;
-	sec = mktime(&tm);
+
+	result = mktime(&tm);
 #else
-	auto	time_t	sec = s;
+	auto	time_t	result = sec;
 	register int	j;
 static	int	m[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 /*			  jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec */
@@ -132,19 +136,19 @@ static	int	m[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 	if (year < 200)
 		year += 1900;
 
-	sec += (MINUTE * min) + (HOUR * hour);
+	result += (MINUTE * min) + (HOUR * hour);
 	for (j = 1970; j < year; j++) {
-		sec += YEAR;
-		if (LEAP(j))	sec += DAY;
+		result += YEAR;
+		if (LEAP(j))	result += DAY;
 	}
 	for (j = 1; j < mon; j++) {
-		sec += DAY * m[j-1];
+		result += DAY * m[j-1];
 	}
-	if (mon > 2 && LEAP(year))	sec += DAY;
-	sec += (day-1) * DAY;
-	sec += gmt_offset(sec);
+	if (mon > 2 && LEAP(year))	result += DAY;
+	result += (day-1) * DAY;
+	result += gmt_offset(result);
 #endif
-	return sec;
+	return result;
 }
 
 /************************************************************************

@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 12.47 2001/05/15 00:57:28 tom Exp $ */
+/* $Id: ptypes.h,v 12.48 2002/07/03 12:50:30 tom Exp $ */
 
 #ifndef	PTYPES_H
 #define	PTYPES_H
@@ -304,6 +304,8 @@ typedef	short	ino_t;
 #define	EOS	'\0'
 
 #define	SIZEOF(v)	(sizeof(v)/sizeof(v[0]))
+
+#define UCH(c)	((unsigned char)(c))
 
 /*
  * Functions we (usually) ignore the return value from:

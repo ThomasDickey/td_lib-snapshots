@@ -38,7 +38,7 @@
 #include	"ptypes.h"
 #include	<errno.h>
 
-MODULE_ID("$Id: execute.c,v 12.9 2001/05/15 00:59:04 tom Exp $")
+MODULE_ID("$Id: execute.c,v 12.10 2002/07/03 13:06:37 tom Exp $")
 
 #ifdef	vms
 #  include	<descrip.h>
@@ -145,9 +145,9 @@ int	execute(
 	 * the 'execv()' procedure:
 	 */
 	while (*s) {
-		if (isspace(*s)) {
+		if (isspace(UCH(*s))) {
 			count++;
-			while (isspace(*s))
+			while (isspace(UCH(*s)))
 				s++;
 		} else
 			s++;

@@ -18,7 +18,7 @@
 #include	"ptypes.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: strclean.c,v 12.3 1993/10/29 17:35:23 tom Exp $")
+MODULE_ID("$Id: strclean.c,v 12.4 2002/07/03 13:07:33 tom Exp $")
 
 int	strclean(
 	_AR1(char *,	string))
@@ -27,8 +27,8 @@ int	strclean(
 	register char	*d, *s = string, *t;
 
 	while (*s) {
-		if (isspace(*s)) {
-			for (t = s; isspace(*t); t++);
+		if (isspace(UCH(*s))) {
+			for (t = s; isspace(UCH(*t)); t++);
 			if (*t) {
 				if (s != string) *s++ = ' ';
 				for (d = s; (*d++ = *t++) != EOS; )
@@ -36,7 +36,7 @@ int	strclean(
 			} else
 				*s = EOS;
 		} else {
-			while (*s && !isspace(*s))
+			while (*s && !isspace(UCH(*s)))
 				s++;
 		}
 	}

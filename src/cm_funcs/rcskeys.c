@@ -26,7 +26,7 @@
 #include	"rcsdefs.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: rcskeys.c,v 12.4 1998/05/30 11:05:19 tom Exp $")
+MODULE_ID("$Id: rcskeys.c,v 12.5 2002/07/03 13:04:43 tom Exp $")
 
 int	rcskeys(
 	_AR1(char *,	arg))
@@ -60,8 +60,8 @@ int	rcskeys(
 	int	code	= -1;
 
 	if (*s) {
-		if (isdigit(*s)) {
-			while (isdigit(*s) || (*s == '.'))	s++;
+		if (isdigit(UCH(*s))) {
+			while (isdigit(UCH(*s)) || (*s == '.'))	s++;
 			if (*s == EOS)
 				code = S_VERS;
 		} else {

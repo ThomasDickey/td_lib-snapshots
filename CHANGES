@@ -1,3 +1,26 @@
+2002-07-03  dickey@invisible-island.net
+
+	* src/cm_funcs/packdate.c:
+	make this work on Solaris (and seems to work still on Linux).
+	Solaris has TIMEZONE_DECLARED and HAVE_TM_ISDST.  The former 'timezone'
+	value is 6 hours for EDT5EDT, and the tm.tm_isdst field does get populated
+	by mktime().
+
+	* src/cm_funcs/packdate.c:
+	rename some variables to make this easier to edit
+
+	* src/string/strbcmp.c, src/string/strclean.c, src/string/strtrim.c, src/process/execute.c, src/process/makeargv.c, src/cm_funcs/cmv_dir.c, src/cm_funcs/cutoff.c, src/cm_funcs/rcsedit.c, src/cm_funcs/rcskeys.c, src/cm_funcs/rcssymbs.c, src/curses/logch.c, src/curses/rawgets.c, src/port2vms/name2vms.c, src/port2vms/vms2name.c, src/process/bldarg.c, src/process/catarg.c:
+	use UCH() to fix char-subscript warnings in gcc.
+
+	* src/memory/doalloc.c:
+	change from char* to void*, to avoid cast-alignment warnings from gcc.
+
+	* include/td_lib.h:
+	change pointer used by doalloc() from char* to void* to eliminate cast-alignement
+	warnings by gcc.
+
+	* include/ptypes.h: use UCH() to fix char-subscript warnings in gcc.
+
 2002-06-29  dickey@invisible-island.net
 
 	* mkdirs.sh: resync with my-autoconf
