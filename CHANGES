@@ -1,3 +1,8 @@
+1992-10-14  dickey@software.org
+
+	* src/pathname/editfile.c:
+	make test-driver compile properly (prototype conflict)
+
 1992-10-09  dickey@software.org
 
 	* support/old-td_lib.mk: J-macro is obsolete

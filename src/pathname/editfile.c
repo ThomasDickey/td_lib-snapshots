@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: editfile.c,v 7.0 1991/12/13 08:46:25 ste_cm Rel $";
+static	char	Id[] = "$Id: editfile.c,v 7.1 1992/10/14 12:32:28 dickey Exp $";
 #endif
 
 /*
@@ -100,7 +100,7 @@ _MAIN
 	register int	j;
 
 	for (j = 1; j < argc; j++)
-		editfile(argv[j], do_copy);
+		editfile(argv[j], do_copy, (STAT *)0);
 	exit(SUCCESS);
 	/*NOTREACHED*/
 }
