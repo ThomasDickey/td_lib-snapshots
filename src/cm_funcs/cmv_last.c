@@ -23,7 +23,7 @@
 #include	<ptypes.h>
 #include	<cmv_defs.h>
 
-MODULE_ID("$Id: cmv_last.c,v 12.8 1998/08/21 13:10:20 tom Exp $")
+MODULE_ID("$Id: cmv_last.c,v 12.9 1998/09/17 15:45:35 tom Exp $")
 
 /*
  * Set the release.version and date values iff we find a legal sccs-file at
@@ -111,7 +111,7 @@ void	cmv_last (
 	if (archive != 0) {
 		char *arcleaf = fleaf(archive);
 		get_cmv_lock(working, path, lock_, vers_, date_);
-		if (strncmp(arcleaf, "b-", 2))
+		if (strncmp(arcleaf, "b-", 2) || isdigit((*vers_)[0]))
 			ScanSCCS(archive, vers_, date_);
 	}
 }
