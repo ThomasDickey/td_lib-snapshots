@@ -1,3 +1,7 @@
+1995-03-13  dickey@clark.net
+
+	* src/cm_funcs/cmv_dir.c: mods to support release-branches
+
 1995-02-26  dickey@clark.net
 
 	* include/td_ext.h:
