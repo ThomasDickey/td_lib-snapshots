@@ -1,4 +1,4 @@
-/* @(#)llib-ltd	1.10 88/05/11 10:40:06 */
+/* @(#)llib-ltd	1.11 88/05/12 09:10:56 */
 /*LINTLIBRARY*/
 
 #include	<curses.h>
@@ -52,6 +52,9 @@ char	*gid2s(gid) { return(0); }
 
 /* killchar.c --------------------------------------------------------- */
 int	killchar() { return(0); }
+
+/* ltostr.c ----------------------------------------------------------- */
+char	*ltostr(bfr, value, base) char *bfr; long value; { return(0); }
 
 /* modechar.c --------------------------------------------------------- */
 int	modechar(mode) unsigned mode; { return(0); }
