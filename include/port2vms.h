@@ -1,5 +1,5 @@
 /*
- * $Id: port2vms.h,v 3.2 1989/11/16 07:53:44 dickey Exp $
+ * $Id: port2vms.h,v 4.0 1990/06/26 10:11:13 ste_cm Rel $
  *
  * VMS-definitions for supporting unix/vms port
  */
@@ -176,6 +176,26 @@ int	vms_iswild(
 		_DCL(char *,		name)
 		_RET
 
+char *	vms_pathcat(
+		_ARX(char *,		dst)
+		_ARX(char *,		p)
+		_AR1(char *,		n)
+		)
+		_DCL(char *,		dst)
+		_DCL(char *,		p)
+		_DCL(char *,		n)
+		_RET
+
+char *	vms_relpath(
+		_ARX(char *,		dst)
+		_ARX(char *,		cwd)
+		_AR1(char *,		src)
+		)
+		_DCL(char *,		dst)
+		_DCL(char *,		cwd)
+		_DCL(char *,		src)
+		_RET
+
 time_t	zone2vms(
 		_AR1(time_t,		reference)
 		)
@@ -203,11 +223,5 @@ time_t	zone2vms(
 #define	DIR2PATH(path)		path
 #define	PATH2DIR(path)		path
 #endif	vms/unix
-
-/* corrections to DEC's runtime library */
-#ifdef	vms
-#define	wgetch	vms_wgetch
-#define	wgetstr	vms_wgetstr
-#endif	vms
  
 #endif	_PORTUNIX_

@@ -1,3 +1,53 @@
+1990-06-26  dickey@software.org
+
+	* src/port2vms/vms_pthc.c: RCS_BASE
+
+1990-06-26  ste_cm@software.org
+
+	* src/port2vms/vms_pthc.c: BASELINE Tue Aug 14 16:27:44 1990
+
+1990-06-26  dickey@software.org
+
+	* test/port2vms/vms_pthc.ref: RCS_BASE
+
+1990-06-26  ste_cm@software.org
+
+	* test/port2vms/vms_pthc.ref:
+	BASELINE Fri Apr 30 11:27:25 1993 -- VAX shutdown
+
+	* test/port2vms/vms_pthc.ref:
+	BASELINE Mon Oct 21 13:09:39 1991 -- adapt to CM_TOOLS #10
+
+	* test/port2vms/vms_pthc.ref:
+	BASELINE Thu Jul 16 16:14:02 1992 -- CM_TOOLS #11
+
+	* test/port2vms/vms_pthc.ref: BASELINE Tue Aug 14 16:27:44 1990
+
+	* test/port2vms/vms_pthc.ref:
+	BASELINE Tue Jun 11 16:44:53 1991 -- apollo sr10.3
+
+1990-06-26  dickey@software.org
+
+	* support/td_progs.mms:
+	added to 'clean' rule some stuff that might be accidentally copied
+	from UNIX in a tar-archive
+
+1990-06-26  ste_cm@software.org
+
+	* support/td_progs.mms: BASELINE Tue Aug 14 16:27:44 1990
+
+	* support/td_progs.mms:
+	BASELINE Tue Jun 11 16:44:53 1991 -- apollo sr10.3
+
+1990-06-26  dickey@software.org
+
+	* include/port2vms.h: added defns for 'vms_pathcat()', 'vms_relpath()'
+	removed defns for 'vms_wgetch.c' module
+
+1990-06-26  ste_cm@software.org
+
+	* include/port2vms.h: BASELINE Tue Aug 14 16:27:44 1990
+
 1990-06-22  dickey@software.org
 
 	* src/cm_funcs/sccslast.c:
