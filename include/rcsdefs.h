@@ -1,4 +1,4 @@
-/* $Id: rcsdefs.h,v 11.3 1992/10/27 07:24:38 dickey Exp $ */
+/* $Id: rcsdefs.h,v 11.4 1992/11/12 08:50:40 dickey Exp $ */
 
 #ifndef	_RCSDEFS_H_
 #define	_RCSDEFS_H_
@@ -225,10 +225,12 @@
 	/* rcspermit.c ------------------------------------------------ */
 	int	rcspermit(
 			_arx(char *,	path)
-			_ar1(char *,	base)
+			_arx(char *,	base)
+			_ar1(char **,	access)
 			)
 			_dcl(char *,	path)
 			_dcl(char *,	base)
+			_dcl(char **,	access)
 			_ret
 
 	/* rcssymbols.c ---------------------------------------------- */

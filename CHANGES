@@ -1,3 +1,15 @@
+1992-11-12  dickey@software.org
+
+	* src/Makefile: updated some include-deps
+
+	* src/sheet/field_of.c: removed redundant-include
+
+	* include/rcsdefs.h: added argument 'access' to 'rcspermit()'
+
+	* src/cm_funcs/rcsperm.c:
+	added argument 'access' so the caller can get the actual
+	access-list if needed.
+
 1992-11-04  dickey@software.org
 
 	* support/lib_top.mms: changed ident to "Id" from "Header"

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcsperm.c,v 11.3 1992/10/28 09:19:07 dickey Exp $";
+static	char	Id[] = "$Id: rcsperm.c,v 11.4 1992/11/12 07:17:42 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: rcsperm.c,v 11.3 1992/10/28 09:19:07 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	08 Mar 1989
  * Modified:
+ *		12 Nov 1992, added 'access' argument.
  *		04 Oct 1991, conversion to ANSI
  *		06 Sep 1991, modified interface to 'rcsopen()'
  *		05 Jul 1989, if the access-list is empty, we must own the file
@@ -30,15 +31,19 @@ static	char	Id[] = "$Id: rcsperm.c,v 11.3 1992/10/28 09:19:07 dickey Exp $";
 #define	STR_PTYPES
 #include	"ptypes.h"
 #include	"rcsdefs.h"
+#include	"dyn_string.h"
 #include	<ctype.h>
 
-rcspermit(
-_ARX(char *,	path)
-_AR1(char *,	base)
-	)
-_DCL(char *,	path)
-_DCL(char *,	base)
+int	rcspermit(
+	_ARX(char *,	path)
+	_ARX(char *,	base)
+	_AR1(char **,	access)
+		)
+	_DCL(char *,	path)
+	_DCL(char *,	base)
+	_DCL(char **,	access)
 {
+	static	DYN *	access_list;
 	auto	STAT	sb;
 	auto	int	header	= TRUE;
 	auto	char	*s	= 0,
@@ -52,6 +57,7 @@ _DCL(char *,	base)
 			ok	= FALSE;	/* assume no permission */
 
 	path = vcs_file(path, tmp, FALSE);
+	dyn_init(&access_list, BUFSIZ);
 
 	/*
 	 * Reset caller's copy of $RCS_BASE in case we are processing more than
@@ -89,12 +95,17 @@ _DCL(char *,	base)
 			s = rcsparse_num(tip, s);
 			break;
 		case S_ACCESS:
-			do {
+			for(;;) {
 				s = rcsparse_id(tmp,s);
 				if (*tmp == EOS)
 					break;
+				if (!empty)
+					APPEND(access_list, ",");
+				APPEND(access_list, tmp);
 				empty = FALSE;
-			} while (!(ok = !strcmp(tmp, user)));
+				if (!ok)
+					ok = !strcmp(tmp, user);
+			}
 			if (empty) {
 				ok = my_file;
 			}
@@ -111,5 +122,7 @@ _DCL(char *,	base)
 		}
 	}
 	rcsclose();
+	if (access != 0)
+		*access = txtalloc(dyn_string(access_list));
 	return(ok);
 }
