@@ -1,3 +1,7 @@
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: rcslocks.c,v 12.1 1993/10/29 17:35:24 dickey Exp $";
+#endif
+
 /*
  * Title:	rcslocks.c (RCS lock-parsing)
  * Author:	T.E.Dickey
@@ -25,8 +29,6 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 #include	"rcsdefs.h"
-
-MODULE_ID("$Id: rcslocks.c,v 12.2 1993/10/29 17:35:24 tom Exp $")
 
 char *
 rcslocks(

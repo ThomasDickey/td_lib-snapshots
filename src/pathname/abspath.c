@@ -1,3 +1,7 @@
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: abspath.c,v 12.5 1993/12/04 16:57:02 tom Exp $";
+#endif
+
 /*
  * Author:	T.E.Dickey
  * Created:	17 Sep 1987
@@ -36,8 +40,6 @@
 #define	PWD_PTYPES
 #define	STR_PTYPES
 #include	"ptypes.h"
-
-MODULE_ID("$Id: abspath.c,v 12.6 1993/12/04 16:57:02 tom Exp $")
 
 #ifdef	apollo
 #ifdef	apollo_sr10

@@ -1,3 +1,7 @@
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: pathcmp.c,v 12.3 1994/07/04 23:26:57 tom Exp $";
+#endif
+
 /*
  * Title:	pathcmp.c (pathname compare)
  * Author:	T.E.Dickey
@@ -17,8 +21,6 @@
 
 #define		STR_PTYPES
 #include	"ptypes.h"
-
-MODULE_ID("$Id: pathcmp.c,v 12.4 1994/07/04 23:26:57 tom Exp $")
 
 #define	CUT(p,s)	if ((s = strchr(p, PATH_SLASH)) != 0) *s = EOS
 

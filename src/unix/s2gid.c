@@ -1,3 +1,7 @@
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: s2gid.c,v 12.3 1993/11/26 22:27:46 dickey Exp $";
+#endif
+
 /*
  * Title:	s2gid.c (string to gid)
  * Author:	T.E.Dickey
@@ -14,8 +18,6 @@
  */
 
 #include	"ptypes.h"
-
-MODULE_ID("$Id: s2gid.c,v 12.4 1993/11/26 22:27:46 tom Exp $")
 
 #ifdef	unix
 #include	<grp.h>

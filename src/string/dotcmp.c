@@ -1,3 +1,7 @@
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: dotcmp.c,v 12.2 1993/10/29 17:35:27 dickey Exp $";
+#endif
+
 /*
  * Title:	dotcmp.c (compare dot-separated strings)
  * Author:	T.E.Dickey
@@ -18,8 +22,6 @@
  */
 
 #include "ptypes.h"
-
-MODULE_ID("$Id: dotcmp.c,v 12.3 1993/10/29 17:35:27 tom Exp $")
 
 #define	DOT	'.'
 #define	LAST(s,l)	for (l = 0; (s[l] != DOT) && (s[l] != EOS); l++)

@@ -1,4 +1,4 @@
-$Id: README,v 12.0 1993/04/26 16:31:51 ste_cm Rel $
+$Id: README,v 12.1 1995/02/18 00:04:00 tom Exp $
 
 TD_LIB
 
@@ -10,3 +10,8 @@ CM_TOOLS.
 
 Portions of this library are portable to VAX/VMS, where it is used for support
 of various programs.
+
+To construct the library, you should first run 'configure'.  Unless you're
+modifying the code, you don't need to use the "-with-warnings" flag (it sets a
+lot more definitions, that causes some sed programs to truncate the
+configuration).

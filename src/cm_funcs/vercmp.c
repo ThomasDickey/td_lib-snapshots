@@ -1,3 +1,7 @@
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: vercmp.c,v 12.5 1994/05/30 23:36:25 tom Exp $";
+#endif
+
 /*
  * Title:	vercmp.c (compare dot-separated version strings)
  * Author:	T.E.Dickey
@@ -18,8 +22,6 @@
  */
 
 #include	"ptypes.h"
-
-MODULE_ID("$Id: vercmp.c,v 12.6 1994/05/30 23:36:25 tom Exp $")
 
 #define	DOT	'.'
 

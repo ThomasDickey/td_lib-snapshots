@@ -1,3 +1,7 @@
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: relpath.c,v 12.3 1993/11/27 22:19:36 dickey Exp $";
+#endif
+
 /*
  * Title:	relpath.c (convert path to relative-form)
  * Author:	T.E.Dickey
@@ -21,8 +25,6 @@
 
 #define	STR_PTYPES
 #include	"ptypes.h"
-
-MODULE_ID("$Id: relpath.c,v 12.4 1993/11/27 22:19:36 tom Exp $")
 
 char	*
 relpath(

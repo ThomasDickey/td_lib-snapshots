@@ -1,3 +1,7 @@
+#ifndef	NO_IDENT
+static	char	Id[] = "$Id: name2vms.c,v 12.2 1994/08/25 23:53:55 tom Exp $";
+#endif
+
 /*
  * Title:	name2vms.c
  * Author:	T.E.Dickey
@@ -27,8 +31,6 @@
 #define	CHR_PTYPES
 #define	STR_PTYPES
 #include	"port2vms.h"
-
-MODULE_ID("$Id: name2vms.c,v 12.3 1994/08/25 23:53:55 tom Exp $")
 
 static	int	leaf_dot;   /* counts dots found in a particular leaf */
 static	int	leaf_ver;   /* set if we found a DECshell version */

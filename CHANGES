@@ -1,3 +1,31 @@
+1995-02-17  dickey@clark.net
+
+	* src/cm_funcs/sccslast.c:
+	added a check for ^A to ensure we don't waste time scanning junk-files
+
+	* README: added a note about 'configure'
+
+	* include/td_curse.h:
+	added some definitions to avoid warnings on SunOS (so I can test -with-warnings)
+	and to avoid conflict with beep/erasechar/killchar
+
+	* src/cm_funcs/cmv_last.c: got rid of redundant tests for ^A
+
+	* configure.in:
+	moved TD_REGEX after TD_CURSES to ensure that CLIX's -lPW follows -lcurses
+	(to avoid conflict with 'move()').
+
+	* src/string/strerror.c: renamed l2str
+
+	* aclocal.m4:
+	resolved a problem with vfork (when autoconf turns it off, we shouldn't
+	try to turn it on!)
+
+	* src/cm_funcs/cmv_last.c, src/string/strerror.c: use MODULE_ID
+
+	* src/cm_funcs/cmv_dir.c:
+	version-string ends with either space or semicolon
+
 1995-02-11  dickey@clark.net
 
 	* configure.in: moved the datatypes up so I can use them in prototypes

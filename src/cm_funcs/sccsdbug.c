@@ -1,3 +1,7 @@
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: sccsdbug.c,v 12.1 1994/05/30 18:34:59 tom Exp $";
+#endif
+
 /*
  * Title:	sccs_debug.c (rcs debug-flag)
  * Author:	T.E.Dickey
@@ -14,8 +18,6 @@
 
 #include "ptypes.h"
 #include "sccsdefs.h"
-
-MODULE_ID("$Id: sccsdbug.c,v 12.2 1994/05/30 18:34:59 tom Exp $")
 
 int	sccs_debug(_AR0)
 {

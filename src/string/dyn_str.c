@@ -1,3 +1,7 @@
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: dyn_str.c,v 12.1 1993/10/29 17:35:23 dickey Exp $";
+#endif
+
 /*
  * Title:	dyn_string.c
  * Author:	T.E.Dickey
@@ -12,8 +16,6 @@
 
 #include "ptypes.h"
 #include "dyn_str.h"
-
-MODULE_ID("$Id: dyn_str.c,v 12.2 1993/10/29 17:35:23 tom Exp $")
 
 #define	def_alloc	DYN_ALLOC
 

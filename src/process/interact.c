@@ -1,3 +1,7 @@
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: interact.c,v 12.3 1994/05/23 22:26:49 tom Exp $";
+#endif
+
 /*
  * Title:	interactive.c
  * Author:	T.E.Dickey
@@ -12,8 +16,6 @@
 
 #define OPN_PTYPES
 #include "ptypes.h"
-
-MODULE_ID("$Id: interact.c,v 12.4 1994/05/23 22:26:49 tom Exp $")
 
 int
 interactive(_AR0)

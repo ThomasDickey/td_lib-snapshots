@@ -1,3 +1,7 @@
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: arg2file.c,v 12.2 1993/10/29 17:35:27 dickey Exp $";
+#endif
+
 /*
  * Title:	argv2file.c
  * Author:	T.E.Dickey
@@ -11,8 +15,6 @@
 
 #define	STR_PTYPES
 #include	"ptypes.h"
-
-MODULE_ID("$Id: arg2file.c,v 12.3 1993/10/29 17:35:27 tom Exp $")
 
 int	argv2file(
 	_ARX(char **,	vec)

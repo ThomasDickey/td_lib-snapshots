@@ -1,3 +1,7 @@
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: ftype2.c,v 12.2 1993/11/27 16:14:28 dickey Exp $";
+#endif
+
 /*
  * Title:	ftype2.c (file-type/suffix #2)
  * Author:	T.E.Dickey
@@ -13,8 +17,6 @@
 
 #define	STR_PTYPES
 #include	"ptypes.h"
-
-MODULE_ID("$Id: ftype2.c,v 12.3 1993/11/27 16:14:28 tom Exp $")
 
 #ifdef	unix
 char *

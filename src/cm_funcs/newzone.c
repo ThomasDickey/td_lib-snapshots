@@ -1,3 +1,7 @@
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: newzone.c,v 12.4 1994/07/04 10:26:15 tom Exp $";
+#endif
+
 /*
  * Title:	newzone.c (set new timezone)
  * Author:	T.E.Dickey
@@ -34,8 +38,6 @@
 #define	STR_PTYPES
 #define	TIM_PTYPES
 #include	"ptypes.h"
-
-MODULE_ID("$Id: newzone.c,v 12.5 1994/07/04 10:26:15 tom Exp $")
 
 #define	SIX_MM	(6 * (30 * DAY))
 

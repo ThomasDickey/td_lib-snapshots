@@ -1,3 +1,7 @@
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: is_spath.c,v 12.2 1993/11/27 15:44:34 dickey Exp $";
+#endif
+
 /*
  * Title:	is_subpath.c
  * Author:	T.E.Dickey
@@ -15,8 +19,6 @@
 
 #define	STR_PTYPES
 #include	"ptypes.h"
-
-MODULE_ID("$Id: is_spath.c,v 12.3 1993/11/27 15:44:34 tom Exp $")
 
 int
 is_subpath(

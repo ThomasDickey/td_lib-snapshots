@@ -1,3 +1,7 @@
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: makeargv.c,v 12.2 1993/10/29 17:35:25 dickey Exp $";
+#endif
+
 /*
  * Title:	makeargv.c
  * Author:	T.E.Dickey
@@ -17,8 +21,6 @@
 
 #include "ptypes.h"
 #include <ctype.h>
-
-MODULE_ID("$Id: makeargv.c,v 12.3 1993/10/29 17:35:25 tom Exp $")
 
 int	makeargv(
 	_ARX(char **,	argv)

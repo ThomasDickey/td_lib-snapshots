@@ -1,3 +1,7 @@
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: count_ss.c,v 12.1 1993/10/29 17:35:22 dickey Exp $";
+#endif
+
 /*
  * Title:	count_ss.c
  * Author:	T.E.Dickey
@@ -11,7 +15,6 @@
 
 #include "td_sheet.h"
 
-MODULE_ID("$Id: count_ss.c,v 12.2 1993/10/29 17:35:22 tom Exp $")
 
 int
 count_ss_cols(

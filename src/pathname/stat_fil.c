@@ -1,3 +1,7 @@
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: stat_fil.c,v 12.3 1994/08/21 19:31:53 tom Exp $";
+#endif
+
 /*
  * Title:	stat_file.c
  * Author:	T.E.Dickey
@@ -12,8 +16,6 @@
 
 #define	ERR_PTYPES
 #include "ptypes.h"
-
-MODULE_ID("$Id: stat_fil.c,v 12.4 1994/08/21 19:31:53 tom Exp $")
 
 int
 stat_file(

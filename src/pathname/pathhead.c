@@ -1,3 +1,7 @@
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: pathhead.c,v 12.4 1994/05/21 20:17:24 tom Exp $";
+#endif
+
 /*
  * Title:	pathhead.c (obtain head from path)
  * Author:	T.E.Dickey
@@ -28,8 +32,6 @@
 
 #define	STR_PTYPES
 #include	"ptypes.h"
-
-MODULE_ID("$Id: pathhead.c,v 12.5 1994/05/21 20:17:24 tom Exp $")
 
 char *
 pathhead (

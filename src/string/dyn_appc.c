@@ -1,3 +1,7 @@
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: dyn_appc.c,v 12.1 1993/10/29 17:35:22 dickey Exp $";
+#endif
+
 /*
  * Title:	dyn_append_c.c
  * Author:	T.E.Dickey
@@ -11,8 +15,6 @@
 #define	STR_PTYPES
 #include "ptypes.h"
 #include "dyn_str.h"
-
-MODULE_ID("$Id: dyn_appc.c,v 12.2 1993/10/29 17:35:22 tom Exp $")
 
 DYN *	dyn_append_c(
 	_ARX(DYN *,	p)

@@ -1,3 +1,7 @@
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: sameleaf.c,v 12.4 1993/12/02 15:52:03 dickey Exp $";
+#endif
+
 /*
  * Title:	sameleaf.c (compare to determine if same-leaf of paths)
  * Author:	T.E.Dickey
@@ -31,8 +35,6 @@
 
 #define	STR_PTYPES
 #include	"ptypes.h"
-
-MODULE_ID("$Id: sameleaf.c,v 12.5 1993/12/02 15:52:03 tom Exp $")
 
 int	sameleaf(
 	_ARX(char *,	path)

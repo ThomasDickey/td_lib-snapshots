@@ -1,4 +1,4 @@
-/* $Id: td_curse.h,v 12.25 1995/01/28 14:05:33 tom Exp $ */
+/* $Id: td_curse.h,v 12.26 1995/02/18 00:04:00 tom Exp $ */
 
 /*
  * TD_LIB CURSES-related definitions
@@ -10,6 +10,28 @@
 #ifndef		PTYPES_H
 #include "ptypes.h"
 #endif		/* PTYPES_H */
+
+#ifdef sun	/* <termios.h> defines stuff in a different way :-( */
+#undef ECHO
+#undef NL0
+#undef NL1
+#undef TAB0
+#undef TAB1
+#undef TAB2
+#undef XTABS
+#undef CR0
+#undef CR1
+#undef CR2
+#undef CR3
+#undef FF0
+#undef FF1
+#undef BS0
+#undef BS1
+#undef TOSTOP
+#undef FLUSHO
+#undef PENDIN
+#undef NOFLSH
+#endif
 
 #include	<curses.h>
 
@@ -170,7 +192,7 @@ extern	int	wstandout	ARGS((WINDOW *w));
 #define extern	/* nothing */
 #endif
 	/* addchnst.c ------------------------------------------------- */
-#if	!HAVE_ADDCHNSTR
+#if	!HAVE_ADDCHNSTR && !defined(TESTING_CONFIG_H)
 	int	waddchnstr(
 			_arx(WINDOW *,	w)
 			_arx(chtype *,	s)
@@ -184,7 +206,7 @@ extern	int	wstandout	ARGS((WINDOW *w));
 #endif
 
 	/* beep.c ----------------------------------------------------- */
-#if	!HAVE_BEEP
+#if	!HAVE_BEEP && !defined(TESTING_CONFIG_H)
 	void	beep(_ar0)
 			_nul
 #endif
@@ -227,7 +249,7 @@ extern	XtermMouse xt_mouse;	/* state of XTerm-mouse */
 			_nul
 
 	/* erasechar.c ------------------------------------------------ */
-#if	!HAVE_ERASECHAR && !defined(erasechar)
+#if	!HAVE_ERASECHAR && !defined(erasechar) && !defined(TESTING_CONFIG_H)
 	int	erasechar(_ar0)
 			_ret
 #endif
@@ -235,7 +257,7 @@ extern	XtermMouse xt_mouse;	/* state of XTerm-mouse */
 			_ret
 
 	/* killchar.c ------------------------------------------------- */
-#if	!HAVE_KILLCHAR && !defined(killchar)
+#if	!HAVE_KILLCHAR && !defined(killchar) && !defined(TESTING_CONFIG_H)
 	int	killchar(_ar0)
 			_ret
 #endif

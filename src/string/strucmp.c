@@ -1,3 +1,7 @@
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: strucmp.c,v 12.2 1993/10/29 17:35:23 dickey Exp $";
+#endif
+
 /*
  * Title:	strucmp.c
  * Created:	05 Oct 1988
@@ -10,8 +14,6 @@
 
 #define CHR_PTYPES
 #include "ptypes.h"
-
-MODULE_ID("$Id: strucmp.c,v 12.3 1993/10/29 17:35:23 tom Exp $")
 
 int	strucmp(
 	_ARX(register char *,	a)

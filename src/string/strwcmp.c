@@ -1,3 +1,7 @@
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: strwcmp.c,v 12.3 1993/10/29 17:35:23 dickey Exp $";
+#endif
+
 /*
  * Title:	strwcmp (compare wildcard-strings)
  * Author:	T.E.Dickey
@@ -12,8 +16,6 @@
  */
 
 #include "ptypes.h"
-
-MODULE_ID("$Id: strwcmp.c,v 12.4 1993/10/29 17:35:23 tom Exp $")
 
 #define	SINGLE	'?'
 #define	MULTI	'*'

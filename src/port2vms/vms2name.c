@@ -1,3 +1,7 @@
+#ifndef	NO_IDENT
+static	char	Id[] = "$Id: vms2name.c,v 12.1 1994/08/21 18:39:51 tom Exp $";
+#endif
+
 /*
  * Title:	vms2name.c
  * Author:	T.E.Dickey
@@ -37,8 +41,6 @@
 #define	CHR_PTYPES
 #define	STR_PTYPES
 #include	"port2vms.h"
-
-MODULE_ID("$Id: vms2name.c,v 12.2 1994/08/21 18:39:51 tom Exp $")
 
 #define	LOWER(p)	((isalpha(*p) && isupper(*p)) ? LowerMacro(*p) : *p)
 

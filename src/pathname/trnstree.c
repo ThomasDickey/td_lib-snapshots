@@ -1,3 +1,7 @@
+#ifndef	NO_IDENT
+static	char	Id[] = "$Id: trnstree.c,v 12.1 1994/08/21 19:36:36 tom Exp $";
+#endif
+
 /*
  * Title:	transtree.c
  * Author:	T.E.Dickey
@@ -21,8 +25,6 @@
 #define		STR_PTYPES
 #include	"port2vms.h"
 #include	"td_qsort.h"
-
-MODULE_ID("$Id: trnstree.c,v 12.2 1994/08/21 19:36:36 tom Exp $")
 
 typedef	char	*PTR;
 	/*ARGSUSED*/

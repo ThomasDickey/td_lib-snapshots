@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.54 1995/02/12 00:58:53 tom Exp $
+dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.55 1995/02/18 00:04:00 tom Exp $
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "TD_" to "AC_"
 dnl ---------------------------------------------------------------------------
@@ -144,6 +144,9 @@ td_tr_func=`echo $td_func | tr '[a-z]' '[A-Z]'`
 changequote([,])dnl
 AC_MSG_CHECKING(for ${td_func})
 AC_CACHE_VAL(td_cv_func_$td_func,[
+	# Test for prior functional test (e.g., vfork).
+eval td_result='$ac_cv_func_'$td_func
+if test ".$td_result" != ".no"; then
 	# GCC won't reliably fail on prototype mismatches unless we make all
 	# warnings into errors.  Of course, _this_ assumes that the config is
 	# otherwise ok.
@@ -168,6 +171,7 @@ else
 fi
 ],
 [td_result=no])
+fi
 eval 'td_cv_func_'$td_func'=$td_result'
 ])
 # use the computed/retrieved cache-value:
@@ -307,6 +311,9 @@ dnl Tests for the presence of regcmp/regex functions (no include-file?)
 dnl Some systems (CLIX) use <pw.h> for this purpose.  CLIX requires the -lPW,
 dnl but HPUX has only a broken version of that library, so we've got to
 dnl try the compile with/without the library.
+dnl
+dnl By the way: CLIX's PW library has a conflict with the curses library's
+dnl "move()" function.
 define([TD_REGCMP_LIBS],
 [
 AC_TRY_RUN([

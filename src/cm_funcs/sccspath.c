@@ -1,3 +1,7 @@
+#ifndef	NO_IDENT
+static	char	Id[] = "$Id: sccspath.c,v 12.1 1994/07/14 01:34:57 tom Exp $";
+#endif
+
 /*
  * Title:	sccspath.c (rcs-utility to path-name)
  * Author:	T.E.Dickey
@@ -11,8 +15,6 @@
 
 #include	"ptypes.h"
 #include	"sccsdefs.h"
-
-MODULE_ID("$Id: sccspath.c,v 12.2 1994/07/14 01:34:57 tom Exp $")
 
 char *	sccspath(
 	_AR1(char *,	utility))

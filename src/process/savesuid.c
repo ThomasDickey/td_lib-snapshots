@@ -1,3 +1,7 @@
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: savesuid.c,v 12.1 1993/10/29 17:35:23 dickey Exp $";
+#endif
+
 /*
  * Title:	saves_uid.c
  * Author:	T.E.Dickey
@@ -10,8 +14,6 @@
  */
 
 #include "ptypes.h"
-
-MODULE_ID("$Id: savesuid.c,v 12.2 1993/10/29 17:35:23 tom Exp $")
 
 int	saves_uid(_AR0)
 {
