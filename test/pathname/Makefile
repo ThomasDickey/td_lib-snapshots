@@ -1,9 +1,10 @@
-# $Id: Makefile,v 12.3 1994/08/21 21:48:29 tom Exp $
+# $Id: Makefile,v 12.4 1995/01/29 00:47:37 tom Exp $
 # make-file for TD_LIB common/test library
 
 ####### (Development) ##########################################################
 THIS	= pathname
 include ../td_defns.mk
+include ../../support/td_lib.mk
 
 ####### (Standard Lists) #######################################################
 REF_FILES = \

@@ -1,3 +1,9 @@
+1995-01-29  dickey@clark.net
+
+	* Makefile: use SHELL variable locally
+
+	* configure.in: touch stamp-h to avoid re-invoking autoconf
+
 1995-01-28  dickey@clark.net
 
 	* test/cm_funcs/Makefile, test/compare/Makefile, test/curses/Makefile, test/memory/Makefile, test/pathname/Makefile, test/port2dos/Makefile, test/port2vms/Makefile, test/process/Makefile, test/sheet/Makefile, test/string/Makefile, test/unix/Makefile, test/td_defns.mk:
