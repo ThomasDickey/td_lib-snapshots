@@ -1,3 +1,8 @@
+1988-06-10  dickey@software.org
+
+	* src/process/execute.c:
+	force a blank between verb and args so caller doesn't have to.
+
 1988-06-09  dickey@software.org
 
 	* src/cm_funcs/newzone.c: oops: was storing wrong value for 'old_TZ'!

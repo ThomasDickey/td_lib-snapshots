@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)execute.c	1.1 88/05/21 11:05:36";
+static	char	sccs_id[] = "@(#)execute.c	1.2 88/06/10 08:23:52";
 #endif	lint
 
 /*
@@ -33,7 +33,7 @@ char	*args;
 {
 static	char	**myargv;	/* argument vector for 'bldarg()' */
 char	cmds[BUFSIZ],
-	*s	= strcat(strcpy(cmds, verb), args);
+	*s	= strcat(strcat(strcpy(cmds, verb), " "), args);
 int	count	= 3,		/* minimum needed for 'bldarg()' */
 	pid,
 	status;
