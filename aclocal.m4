@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Id: aclocal.m4,v 12.116 1998/05/29 21:09:33 tom Exp $
+dnl $Id: aclocal.m4,v 12.117 1998/06/29 17:54:14 tom Exp $
 dnl vi:set ts=4:
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "CF_" to "AC_"
@@ -309,7 +309,10 @@ do
 		if test ".$cf_result" != ".no"; then
 			AC_TRY_LINK([
 #define _XOPEN_SOURCE_EXTENDED
-#include <curses.h>],
+#include <curses.h>
+#ifdef HAVE_TERM_H
+#include <term.h>
+#endif],
 			[
 #ifndef ${cf_func}
 long foo = (long)(&${cf_func});

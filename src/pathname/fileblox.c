@@ -15,7 +15,7 @@
 #define ERR_PTYPES
 #include <ptypes.h>
 
-MODULE_ID("$Id: fileblox.c,v 12.5 1997/09/11 15:23:22 tom Exp $")
+MODULE_ID("$Id: fileblox.c,v 12.6 1998/06/29 18:46:42 tom Exp $")
 
 #ifdef unix
 #if !STAT_HAS_ST_BLOCKS
@@ -35,8 +35,8 @@ MODULE_ID("$Id: fileblox.c,v 12.5 1997/09/11 15:23:22 tom Exp $")
 #define	frac(a,b)	((a) + (b) - 1) / (b)
 
 long	fileblocks (
-	_AR1(Stat_t *,	sb))
-	_DCL(Stat_t *,	sb)
+	_AR1(const Stat_t *,	sb))
+	_DCL(const Stat_t *,	sb)
 {
 	auto	long	bytes = sb->st_size;
 	register long	blocks = frac(bytes, 512);
