@@ -1,3 +1,7 @@
+1989-10-19  dickey@software.org
+
+	* include/td_lib.h: corrected definition of 'relpath()'
+
 1989-10-06  dickey@software.org
 
 	* src/pathname/trnstree.c:
