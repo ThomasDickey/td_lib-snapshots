@@ -1,3 +1,19 @@
+2005-01-24  dickey@invisible-island.net
+
+	* configure: RCS_BASE
+
+	* src/curses/dumptty.c: Intel compiler-warning
+
+	* aclocal.m4: add CF_POSIX_C_SOURCE
+
+	* configure.in:
+	move compiler-characteristics before other checks such as header, to ensure
+	that _XOPEN_SOURCE is consistently defined.
+
+	* aclocal.m4:
+	Fixes from lynx, vile: add check for Intel 8.0 compiler, ensure that
+	_POSIX_C_SOURCE and _XOPEN_SOURCE have values.
+
 2005-01-01  dickey@invisible-island.net
 
 	* config.sub: update to 2004/11/30

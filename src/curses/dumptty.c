@@ -13,7 +13,7 @@
 #define TRM_PTYPES		/* <termios.h> */
 #include <td_curse.h>
 
-MODULE_ID("$Id: dumptty.c,v 12.5 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: dumptty.c,v 12.6 2005/01/25 01:42:31 tom Exp $")
 
 #define	CONTRAST(msg,f) Contrast(msg, (long)(tst.f), (long)(ref.f))
 #define	SHOWMASK(t,m)   ShowMasks(t, SIZEOF(t), m)
@@ -88,7 +88,7 @@ CtlChar(int c)			/* c_cc[] characters */
     for (n = 0; n < SIZEOF(table); n++)
 	if (table[n].code == c)
 	    return table[n].name;
-    FORMAT(temp, "cc[%d]", n);
+    FORMAT(temp, "cc[%u]", n);
     return temp;
 }
 
