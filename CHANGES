@@ -1,3 +1,7 @@
+1995-06-06  dickey@clark.net
+
+	* aclocal.m4: corrected quoting for 'tr' command
+
 1995-05-15  dickey@clark.net
 
 	* src/curses/dumpwin.c: removed some obscure stuff...

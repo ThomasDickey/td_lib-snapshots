@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.61 1995/04/26 23:36:45 tom Exp $
+dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.62 1995/06/06 20:20:16 tom Exp $
 dnl vi:set ts=4:
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "TD_" to "AC_"
@@ -508,7 +508,9 @@ AC_CACHE_VAL(td_cv_curses_style,[
 	CFLAGS="-I./include $CFLAGS"
 	for td_type in ncurses sysv bsd
 	do
+		changequote(,)dnl
 		td_tr_type=`echo $td_type | tr '[a-z]' '[A-Z]'`
+		changequote([,])dnl
 		TD_MSG_LOG($td_tr_type curses-struct)
 		AC_TRY_COMPILE([
 #define	TESTING_CONFIG_H 1
@@ -520,7 +522,9 @@ AC_CACHE_VAL(td_cv_curses_style,[
 	CFLAGS="$save_CFLAGS"
 ])
 AC_MSG_RESULT($td_cv_curses_style)
+changequote(,)dnl
 td_tr_type=`echo $td_cv_curses_style | tr '[a-z]' '[A-Z]'`
+changequote([,])dnl
 AC_DEFINE_UNQUOTED(CURSES_LIKE_${td_tr_type})
 ])dnl
 dnl ---------------------------------------------------------------------------
