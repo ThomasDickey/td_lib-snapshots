@@ -1,3 +1,31 @@
+1998-03-01  dickey@clark.net
+
+	* configure.in: invoke CF_PROG_EXT, CF_LIB_PREFIX
+
+	* aclocal.m4: add CF_LIB_PREFIX, CF_PROG_EXT
+
+	* td_make.in: add PROG_EXT, LIB_PREFIX
+
+	* configure.in: EMX has no chown/chgrp functions
+
+	* configure.in: EMX doesn't have 'link()'
+
+	* include/td_curse.h:
+	undef 'HZ', which may conflict with some BSD curses headers.
+
+	* configure.in: check for daddr_t, needed for fileblox.c on EMX
+
+	* makefile.in:
+	EMX's makefile/Makefile are the same (avoid removing them)
+
+	* src/pathname/modechar.c: EMX doesn't define S_IFBLK
+
+	* aclocal.m4: EMX puts sys_errlist in <stdlib.h>!
+
+1998-02-20  dickey@clark.net
+
+	* aclocal.m4: update CF_DISABLE_ECHO's help-message
+
 1998-02-19  dickey@clark.net
 
 	* src/curses/resizwin.c: fix for SunOS 4.x BSD-curses

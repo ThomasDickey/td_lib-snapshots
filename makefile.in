@@ -1,4 +1,4 @@
-# $Id: makefile.in,v 12.14 1998/02/15 15:29:19 tom Exp $
+# $Id: makefile.in,v 12.15 1998/03/01 20:45:16 tom Exp $
 # Top-level makefile for TD_LIB common library
 
 SHELL		= /bin/sh
@@ -87,7 +87,7 @@ distclean:	clobber
 	-cd src &&	$(MAKE) $(MAKE_OPTS) $@
 	-cd test &&	$(MAKE) $(MAKE_OPTS) $@
 	-$(RM) $(PURE)
-	-$(RM) makefile */makefile
+	-$(RM) makefile src/makefile test/makefile
 
 install::	all $(bindir) $(my_incdir) $(libdir)
 	$(srcdir)/support/ins_hdr "$(INSTALL_DATA)" $(my_incdir) $(I_LIST)

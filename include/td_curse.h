@@ -1,4 +1,4 @@
-/* $Id: td_curse.h,v 12.41 1998/02/15 23:53:39 tom Exp $ */
+/* $Id: td_curse.h,v 12.42 1998/03/01 21:24:51 tom Exp $ */
 
 /*
  * TD_LIB CURSES-related definitions
@@ -31,6 +31,10 @@
 #undef FLUSHO
 #undef PENDIN
 #undef NOFLSH
+#endif
+
+#ifdef HZ
+#undef HZ	/* conflict with EMX's param.h */
 #endif
 
 #include	<curses.h>

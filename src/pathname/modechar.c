@@ -19,7 +19,7 @@
 
 #include	"ptypes.h"
 
-MODULE_ID("$Id: modechar.c,v 12.3 1993/10/29 17:35:25 tom Exp $")
+MODULE_ID("$Id: modechar.c,v 12.4 1998/03/01 20:31:30 tom Exp $")
 
 #ifdef	apollo
 #define	S_IFFIFO	010000
@@ -34,8 +34,10 @@ int	modechar(
 	switch (mode & S_IFMT) {
 	case S_IFDIR:	c = 'd';	break;
 	case S_IFCHR:	c = 'c';	break;
-	case S_IFBLK:	c = 'b';	break;
 	case S_IFREG:	c = '-';	break;
+#ifdef	S_IFBLK
+	case S_IFBLK:	c = 'b';	break;
+#endif
 #ifdef	S_IFSOCK
 	case S_IFSOCK:	c = 's';	break;
 #ifdef	S_IFFIFO
