@@ -1,4 +1,4 @@
-# @(#)Makefile	1.46 88/08/30 15:22:35
+# @(#)Makefile	1.47 88/08/31 10:24:02
 # MAKE-file for miscellaneous library routines
 #
 ####### (Development) ##########################################################
@@ -72,6 +72,7 @@ CSRC	=\
 	usercopy.c\
 	userprot.c\
 	vecalloc.c\
+	walktree.c\
 	which.c\
 	win2file.c
 #
@@ -137,6 +138,7 @@ OBJS	=\
 	usercopy.o\
 	userprot.o\
 	vecalloc.o\
+	walktree.o\
 	which.o\
 	win2file.o
 #
@@ -187,6 +189,7 @@ savewin.o:	ptypes.h
 uid2s.o:	ptypes.h
 usercopy.o:	ptypes.h
 userprot.o:	ptypes.h
+walktree.o:	ptypes.h
 win2file.o:	ptypes.h
 #
 ####### (Development) ##########################################################
