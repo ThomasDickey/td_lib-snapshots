@@ -1,3 +1,25 @@
+1989-04-19  dickey@software.org
+
+	* test/port2vms/README, src/process/makeargv.c: RCS_BASE
+
+1989-04-19  ste_cm@software.org
+
+	* src/process/makeargv.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/process/makeargv.c: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/process/makeargv.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/process/makeargv.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+	* src/process/makeargv.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
+	* src/process/makeargv.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
 1989-04-17  dickey@software.org
 
 	* src/pathname/trimpath.c: RCS_BASE
