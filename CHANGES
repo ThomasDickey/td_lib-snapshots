@@ -1,3 +1,11 @@
+1988-05-03  dickey@software.org
+
+	* include/llib-ltd, src/Makefile: moved 'padedit()' here.
+
+	* src/pathname/abspath.c:
+	do special handling for Apollo pathname prefixes (except those which
+	would conflict with handling of symbolic links!).
+
 1988-04-29  dickey@software.org
 
 	* src/Makefile: added 'txtalloc.c' module.
