@@ -1,4 +1,4 @@
-/* $Id: cmv_defs.h,v 12.1 1994/08/02 18:36:18 tom Exp $ */
+/* $Id: cmv_defs.h,v 12.2 1994/08/03 13:01:22 tom Exp $ */
 
 #ifndef	CMV_DEFS_H
 #define	CMV_DEFS_H
@@ -24,8 +24,6 @@
 	 *		history.
 	 *
 	 */
-#define	CMV_DIR	"CMV_"
-#define	CMV_PREFIX	"s."
 
 	/* cmv_dir.c ------------------------------------------------- */
 	char *	cmv_dir(
@@ -50,6 +48,21 @@
 
 	/* cmv_last.c ------------------------------------------------- */
 	void	cmv_last(
+			_arx(char *,	wd)
+			_arx(char *,	n)
+			_arx(char **,	v_)
+			_arx(time_t *,	t_)
+			_ar1(char **,	l_)
+			)
+			_dcl(char *,	wd)
+			_dcl(char *,	n)
+			_dcl(char **,	v_)
+			_dcl(time_t *,	t_)
+			_dcl(char **,	l_)
+			_nul
+
+	/* lastrev.c -------------------------------------------------- */
+	void	lastrev(
 			_arx(char *,	wd)
 			_arx(char *,	n)
 			_arx(char **,	v_)
