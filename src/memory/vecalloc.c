@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)vecalloc.c	1.1 87/12/01 07:47:39";
+static	char	sccs_id[] = "@(#)vecalloc.c	1.2 88/05/10 13:15:56";
 #endif	lint
 
 /*
@@ -15,7 +15,6 @@ static	char	sccs_id[] = "@(#)vecalloc.c	1.1 87/12/01 07:47:39";
  */
 
 extern	char	*doalloc();
-extern		free();
 
 char **
 vecalloc(len)
@@ -26,5 +25,5 @@ vecalloc(len)
 vecfree(s)
 char	**s;
 {
-	free((char *)s);
+	dofree((char *)s);
 }
