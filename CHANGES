@@ -1,3 +1,7 @@
+1995-04-26  dickey@clark.net
+
+	* aclocal.m4: fixes for ncurses/normal
+
 1995-04-22  dickey@clark.net
 
 	* src/process/userprot.c: interface change of 'setmtime()'
