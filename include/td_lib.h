@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 9.0 1991/06/05 16:54:06 ste_cm Rel $ */
+/* $Id: td_lib.h,v 9.1 1991/06/20 09:17:13 dickey Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for CM_TOOLS COMMON
@@ -71,7 +71,7 @@
 			_NUL
 
 	/* blip.c ----------------------------------------------------- */
-		blip(
+	void	blip(
 			_AR1(int,	c)
 			)
 			_DCL(int,	c)
@@ -255,10 +255,12 @@
 	/* fp2argv.c -------------------------------------------------- */
 	int	fp2argv(
 			_ARX(FILE *,	fp)
-			_AR1(char ***,	argv_)
+			_ARX(char ***,	argv_)
+			_FN1(void,	trace)
 			)
 			_DCL(FILE *,	fp)
 			_DCL(char ***,	argv_)
+			_DCL(void,	(*trace)())
 			_RET
 
 	/* ftype.c ---------------------------------------------------- */
@@ -575,6 +577,17 @@
 			_DCL(time_t,	mtime)
 			_RET
 #endif	/* unix */
+
+	/* shoarg.c --------------------------------------------------- */
+		shoarg (
+			_ARX(FILE *,	fp)
+			_ARX(char *,	command)
+			_AR1(char *,	args)
+			)
+			_DCL(FILE *,	fp)
+			_DCL(char *,	command)
+			_DCL(char *,	args)
+			_NUL
 
 	/* stralloc.c ------------------------------------------------- */
 	char	*stralloc(

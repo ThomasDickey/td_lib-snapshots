@@ -1,21 +1,12 @@
-# $Id: Makefile,v 9.0 1991/06/06 16:57:46 ste_cm Rel $
+# $Id: Makefile,v 9.1 1991/06/20 08:18:55 dickey Exp $
 # MAKE-file for miscellaneous library routines
 #
 # $Log: Makefile,v $
-# Revision 9.0  1991/06/06 16:57:46  ste_cm
-# BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+# Revision 9.1  1991/06/20 08:18:55  dickey
+# added module 'shoarg.c'
 #
-#	Revision 8.3  91/06/06  16:57:46  dickey
-#	make ".i" rule work on apollo sr10.2
-#	
-#	Revision 8.2  91/06/05  16:56:18  dickey
-#	corrected typo in ".i" rule
-#	
-#	Revision 8.1  91/06/05  11:06:19  dickey
-#	added rule for ".i"
-#	
-#	Revision 8.0  90/05/08  13:28:12  ste_cm
-#	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+#	Revision 9.0  91/06/06  16:57:46  ste_cm
+#	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
 #	
 ####### (Development) ##########################################################
 GET	= checkout
@@ -101,6 +92,7 @@ CSRC	=\
 	sccsname.c\
 	scr_size.c\
 	setmtime.c\
+	shoarg.c\
 	stralloc.c\
 	strbcmp.c\
 	strclean.c\
@@ -197,6 +189,7 @@ OBJS	=\
 	sccsname.o\
 	scr_size.o\
 	setmtime.o\
+	shoarg.o\
 	stralloc.o\
 	strbcmp.o\
 	strclean.o\

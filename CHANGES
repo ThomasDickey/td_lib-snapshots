@@ -1,3 +1,21 @@
+1991-06-20  dickey@software.org
+
+	* src/cm_funcs/rcspath.c:
+	use 'which()' to verify that the utility actually exists
+	(avoids silent failure).
+
+	* include/td_lib.h: added 'shoarg.c', mods to 'blip()' and 'fp2argv()'
+
+	* src/curses/blip.c: changed return-type to 'void'
+
+	* src/process/shoarg.c: RCS_BASE
+
+	* src/descrip.mms: added module SHOARG
+
+	* src/Makefile: added module 'shoarg.c'
+
+	* src/pathname/fp2argv.c: added 'trace' argument
+
 1991-06-07  dickey@software.org
 
 	* src/descrip.mms: brought dependencies on "ptypes.h" up to date

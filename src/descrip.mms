@@ -1,4 +1,4 @@
-# $Id: descrip.mms,v 9.0 1991/06/07 16:43:31 ste_cm Rel $
+# $Id: descrip.mms,v 9.1 1991/06/20 08:20:27 dickey Exp $
 # MMS-file for miscellaneous library routines	
 #
 ####### (Development) ##########################################################
@@ -42,6 +42,7 @@ LIBRARYMODULES = -
 	PATHCAT, -
 	PATHLEAF, -
 	SAMELEAF -
+	SHOARG -
 	STRALLOC, -
 	STRBCMP, -
 	STRCLEAN, -
@@ -180,6 +181,7 @@ C_SRC	=-
 	SCCSNAME.C -
 	SCR_SIZE.C -
 	SETMTIME.C -
+	SHOARG.C -
 	STRALLOC.C -
 	STRBCMP.C -
 	STRCLEAN.C -
@@ -279,9 +281,10 @@ RAWTERM.obj :		$(PTYPES_H)
 # rcspermit.obj :	$(PTYPES_H)	$(I)rcsdefs.h
 RESIZWWIN.obj :		$(PTYPES_H)
 SAMELEAF.obj :		$(PTYPES_H)
+SAVEWIN.obj :		$(PTYPES_H)
 SCCSLAST.obj :		$(PTYPES_H)
 SETMTIME.obj :		$(PTYPES_H)
-SAVEWIN.obj :		$(PTYPES_H)
+SHOARG.obj :		$(PTYPES_H)
 STRALLOC.obj :		$(PTYPES_H)
 STRCLEAN.obj :		$(PTYPES_H)
 STRUCPY.obj :		$(PTYPES_H)
