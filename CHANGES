@@ -1,3 +1,38 @@
+1991-05-31  dickey@software.org
+
+	* src/process/catchall.c: lint (SunOs)
+
+1991-05-31  ste_cm@software.org
+
+	* src/process/catchall.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-31  dickey@software.org
+
+	* include/ptypes.h: made SIG_PTYPES work on SunOs
+
+	* src/curses/padedit.c: lint (SunOS)
+
+	* src/process/for_user.c: lint (SunOs)
+
+1991-05-31  ste_cm@software.org
+
+	* src/process/for_user.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-31  dickey@software.org
+
+	* src/process/execute.c: lint (SunOs)
+
+1991-05-31  ste_cm@software.org
+
+	* src/process/execute.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-05-31  dickey@software.org
+
+	* include/ptypes.h: added WAI_PTYPES block
+
 1991-05-24  dickey@software.org
 
 	* include/td_lib.h: made this work with lint-library for 'catchall()'
