@@ -1,3 +1,7 @@
+1987-12-03  dickey@software.org
+
+	* include/llib-ltd, src/Makefile: added 'okpnum()'
+
 1987-12-02  dickey@software.org
 
 	* src/Makefile: added clean/clobber
