@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 12.0 1993/04/26 15:30:01 ste_cm Rel $ */
+/* $Id: td_lib.h,v 12.1 1993/06/24 17:21:03 dickey Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for TD_LIB common
@@ -563,7 +563,7 @@
 #ifdef	unix
 	/* savesuid.c ------------------------------------------------- */
 	int	saves_uid(_ar0)
-			_nul
+			_ret
 
 	/* scr_size.c ------------------------------------------------- */
 	int	scr_size(

@@ -1,3 +1,7 @@
+1993-06-24  dickey@software.org
+
+	* include/td_lib.h: lint-lib nit
+
 1993-05-03  dickey@software.org
 
 	* support/linkopts.opt:
