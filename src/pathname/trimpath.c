@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: trimpath.c,v 12.0 1992/11/17 12:55:15 ste_cm Rel $";
+static	char	Id[] = "$Id: trimpath.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: trimpath.c,v 12.0 1992/11/17 12:55:15 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	17 Apr 1989 (logic adapted from 'abspath.c')
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, converted to ANSI
  *
  * Function:	Convert a pathname into canonical form.
@@ -40,7 +41,7 @@ _DCL(char *,	cwd)
 		d = strcpy(tmp, cwd);
 		s = path;
 		if (*s == '.')
-			if (s[1] == '\0' || s[1] == '/')
+			if (s[1] == EOS || s[1] == '/')
 				s++;		/* absorb "." */
 		d += strlen(tmp);
 		if (d[-1] != '/')		/* add "/" iff we need it */
@@ -58,7 +59,7 @@ _DCL(char *,	cwd)
 				s++;
 		} else if (*s == '.') {
 			if (s > path && s[-1] == '/') {
-				if (s[1] == '\0')
+				if (s[1] == EOS)
 					break;
 				else if (s[1] == '/') {
 					s++;
@@ -75,7 +76,7 @@ _DCL(char *,	cwd)
 	while (d > path+1)
 		if (d[-1] == '/')	d--;
 		else			break;
-	*d = '\0';
+	*d = EOS;
 
 	/*
 	 * Trim out ".." constructs
@@ -83,7 +84,7 @@ _DCL(char *,	cwd)
 	for (s = path; *s; s++) {
 		if (s[0] == '.' && s[1] == '.')
 			if ((s > path && s[-1] == '/')
-			&&  (s[2] == '\0' || s[2] == '/')) {
+			&&  (s[2] == EOS || s[2] == '/')) {
 				d = s+2;
 				if (s > path) {
 					s -= 2;
@@ -91,7 +92,8 @@ _DCL(char *,	cwd)
 					if (s == path &&  !*d) s++;
 				} else if (*d)
 					s--;
-				while (*s++ = *d++);
+				while ((*s++ = *d++) != EOS)
+					;
 				s = path;	/* rescan */
 			}
 	}
@@ -99,12 +101,16 @@ _DCL(char *,	cwd)
 }
 
 #ifdef	TEST
-do_test(
-_ARX(int,	argc)
-_AR1(char **,	argv)
-	)
-_DCL(int,	argc)
-_DCL(char **,	argv)
+void	do_test(
+	_arx(int,	argc)
+	_ar1(char **,	argv));
+
+void	do_test(
+	_ARX(int,	argc)
+	_AR1(char **,	argv)
+		)
+	_DCL(int,	argc)
+	_DCL(char **,	argv)
 {
 	register int j;
 	auto	 char	bfr[BUFSIZ];

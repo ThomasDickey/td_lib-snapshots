@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: makeargv.c,v 12.0 1992/11/20 14:12:50 ste_cm Rel $";
+static	char	Id[] = "$Id: makeargv.c,v 12.1 1993/09/21 18:54:04 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: makeargv.c,v 12.0 1992/11/20 14:12:50 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	14 Apr 1989
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, converted to ANSI
  *
  * Function:	splits a string into argv-like array of strings.  The maximum
@@ -20,16 +21,16 @@ static	char	Id[] = "$Id: makeargv.c,v 12.0 1992/11/20 14:12:50 ste_cm Rel $";
 #include "ptypes.h"
 #include <ctype.h>
 
-makeargv(
-_ARX(char **,	argv)
-_ARX(int,	maxarg)
-_ARX(char *,	dst)
-_AR1(char *,	src)
-	)
-_DCL(char **,	argv)
-_DCL(int,	maxarg)
-_DCL(char *,	dst)
-_DCL(char *,	src)
+int	makeargv(
+	_ARX(char **,	argv)
+	_ARX(int,	maxarg)
+	_ARX(char *,	dst)
+	_AR1(char *,	src)
+		)
+	_DCL(char **,	argv)
+	_DCL(int,	maxarg)
+	_DCL(char *,	dst)
+	_DCL(char *,	src)
 {
 	auto	int	argc;
 
@@ -37,16 +38,17 @@ _DCL(char *,	src)
 	argv[argc = 0] = dst;
 	argc++;
 
-	while (*dst = *src++) {
+	while ((*dst = *src++) != EOS) {
 		if (isspace(*dst)) {
-			*dst++ = '\0';
-			while (isspace(*src))	src++;
+			*dst++ = EOS;
+			while (isspace(*src))
+				src++;
 			if (argc >= maxarg)
 				break;
 			argv[argc++] = dst;
 		} else if (*dst == '"' || *dst == '\'') {
 			int	delim = *dst;
-			while (*dst = *src++) {
+			while ((*dst = *src++) != EOS) {
 				if (*dst == delim)
 					break;
 				dst++;

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: execute.c,v 12.0 1992/11/24 10:05:58 ste_cm Rel $";
+static	char	Id[] = "$Id: execute.c,v 12.1 1993/09/21 18:54:04 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: execute.c,v 12.0 1992/11/24 10:05:58 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	21 May 1988
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		19 Nov 1992, memory-leak
  *		04 Oct 1991, conversion to ANSI
  *		12 Sep 1991, removed redundant def for 'errno' (VMS C 3.2)
@@ -54,12 +55,18 @@ extern	char	**environ;
 	/*ARGSUSED*/
 	def_DOALLOC(char *)
 
-execute(
-_ARX(char *,	verb)
-_AR1(char *,	args)
-	)
-_DCL(char *,	verb)
-_DCL(char *,	args)
+#ifdef	TEST
+static	void	dump_exec(
+		_arx(char *,	verb)
+		_ar1(char **,	args));
+#endif
+
+int	execute(
+	_ARX(char *,	verb)
+	_AR1(char *,	args)
+		)
+	_DCL(char *,	verb)
+	_DCL(char *,	args)
 {
 	char	cmds[BUFSIZ],
 		*s	= strcat(strcat(strcpy(cmds, verb), " "), args);
@@ -167,7 +174,7 @@ int	count	= 3,		/* minimum needed for 'bldarg()' */
 				break;
 			errno = 0;
 		}
-		if (errno = W_RETCODE(status))
+		if ((errno = W_RETCODE(status)) != 0)
 			return (-1);
 #ifdef	NO_LEAKS
 		dofree((char *)myargv);
@@ -190,12 +197,12 @@ int	count	= 3,		/* minimum needed for 'bldarg()' */
 
 #ifdef	TEST
 static
-dump_exec(
-_ARX(char *,	verb)
-_AR1(char **,	args)
-	)
-_DCL(char *,	verb)
-_DCL(char **,	args)
+void	dump_exec(
+	_ARX(char *,	verb)
+	_AR1(char **,	args)
+		)
+	_DCL(char *,	verb)
+	_DCL(char **,	args)
 {
 	register int	j;
 	FPRINTF(stderr, "-> %s\n", verb);

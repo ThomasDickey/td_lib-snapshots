@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcslast.c,v 12.0 1993/02/01 15:33:27 ste_cm Rel $";
+static	char	Id[] = "$Id: rcslast.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: rcslast.c,v 12.0 1993/02/01 15:33:27 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	18 May 1988, from 'sccslast.c'
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		01 Feb 1993, last change did not properly parse user:id from
  *			     S_LOCKS case.
  *		29 Oct 1992, use 'rcsedit.c'
@@ -155,18 +156,18 @@ void	tryRCS (
  *	main procedure							*
  ************************************************************************/
 
-rcslast (
-_ARX(char *,	working)	/* working directory (absolute) */
-_ARX(char *,	path)		/* pathname to check (may be relative) */
-_ARX(char **,	vers_)
-_ARX(time_t *,	date_)
-_AR1(char **,	lock_)
-	)
-_DCL(char *,	working)
-_DCL(char *,	path)
-_DCL(char **,	vers_)
-_DCL(time_t *,	date_)
-_DCL(char **,	lock_)
+void	rcslast (
+	_ARX(char *,	working)	/* working directory (absolute) */
+	_ARX(char *,	path)		/* pathname to check (may be relative) */
+	_ARX(char **,	vers_)
+	_ARX(time_t *,	date_)
+	_AR1(char **,	lock_)
+		)
+	_DCL(char *,	working)
+	_DCL(char *,	path)
+	_DCL(char **,	vers_)
+	_DCL(time_t *,	date_)
+	_DCL(char **,	lock_)
 {
 	auto	 char	name[BUFSIZ+1],
 			*dname	= rcs_dir();
@@ -183,15 +184,15 @@ _DCL(char **,	lock_)
 	 * If the file resides in an RCS-directory and its name ends with
 	 * an appropriate suffix (i.e., ",v") assume it is an RCS file.
 	 */
-	if (s = strrchr(t = path, '/')) { /* determine directory from path */
+	if ((s = strrchr(t = path, '/')) != NULL) { /* determine directory from path */
 		*(t = s) = EOS;
-		if (s = strrchr(path, '/'))
+		if ((s = strrchr(path, '/')) != NULL)
 			s++;
 		else
 			s = path;
 		is_RCS = !strcmp(s,dname);
 		*t++ = '/';
-	} else if (s = strrchr(working, '/')) {
+	} else if ((s = strrchr(working, '/')) != NULL) {
 		is_RCS = !strcmp(++s,dname);
 	} else
 		return;			/* illegal input: give up */
@@ -210,7 +211,7 @@ _DCL(char **,	lock_)
 
 			if (t != path) {
 				name[t - path - 1] = EOS;
-				if (s = strrchr(name, '/'))
+				if ((s = strrchr(name, '/')) != NULL)
 					s[1] = EOS;
 				else
 					name[0] = EOS;

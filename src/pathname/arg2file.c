@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: arg2file.c,v 12.0 1991/10/04 07:33:34 ste_cm Rel $";
+static	char	Id[] = "$Id: arg2file.c,v 12.1 1993/09/21 12:08:24 dickey Exp $";
 #endif
 
 /*
@@ -15,19 +15,19 @@ static	char	Id[] = "$Id: arg2file.c,v 12.0 1991/10/04 07:33:34 ste_cm Rel $";
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-argv2file(
-_ARX(char **,	vec)
-_ARX(char *,	name)
-_AR1(char *,	mode)
-	)
-_DCL(char **,	vec)
-_DCL(char *,	name)
-_DCL(char *,	mode)
+int	argv2file(
+	_ARX(char **,	vec)
+	_ARX(char *,	name)
+	_AR1(char *,	mode)
+		)
+	_DCL(char **,	vec)
+	_DCL(char *,	name)
+	_DCL(char *,	mode)
 {
 	auto	FILE	*fp;
 	auto	int	count;
 
-	if (fp = fopen(name, mode)) {
+	if ((fp = fopen(name, mode)) != 0) {
 		count	= 0;
 		while (*vec) {
 			count += strlen(*vec);

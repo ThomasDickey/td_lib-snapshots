@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: scr_size.c,v 12.0 1992/11/24 10:06:49 ste_cm Rel $";
+static	char	Id[] = "$Id: scr_size.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: scr_size.c,v 12.0 1992/11/24 10:06:49 ste_cm Rel $";
  * Title:	scr_size.c (obtain screen size)
  * Created:	27 Jul 1988
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, convert to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
  *		01 May 1991, when rlogin'd from vax/vms to apollo, 'tgetnum()'
@@ -46,10 +47,9 @@ static	char	Id[] = "$Id: scr_size.c,v 12.0 1992/11/24 10:06:49 ste_cm Rel $";
 #define	my_LINES	retval[0]
 #define	my_COLS		retval[1]
 
-scr_size(
-_AR1(int *,	retval)
-	)
-_DCL(int *,	retval)
+int	scr_size(
+	_AR1(int *,	retval))
+	_DCL(int *,	retval)
 {
 	char	i_blk[1024];
 

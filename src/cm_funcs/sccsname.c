@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: sccsname.c,v 12.0 1992/11/17 12:54:01 ste_cm Rel $";
+static	char	Id[] = "$Id: sccsname.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: sccsname.c,v 12.0 1992/11/17 12:54:01 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	08 May 1990
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, convert to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
  *		08 May 1990, use 'sccsdefs.h'
@@ -45,10 +46,9 @@ static	char	prefix[] = SCCS_PREFIX;
  ************************************************************************/
 
 static
-char *
-leaf(
-_AR1(char *,	name))
-_DCL(char *,	name)
+char *	leaf(
+	_AR1(char *,	name))
+	_DCL(char *,	name)
 {
 	register char	*s = strrchr(name, '/');
 	return ((s != 0) ? s+1 : name);
@@ -58,18 +58,18 @@ _DCL(char *,	name)
  * Returns TRUE if the name begins with SCCS_PREFIX.
  */
 static
-sccs_prefix(
-_AR1(char *,	name))
-_DCL(char *,	name)
+int	sccs_prefix(
+	_AR1(char *,	name))
+	_DCL(char *,	name)
 {
 	register char	*s = leaf(name);
 	return (strlen(s) > LEN_PREFIX && !strncmp(s, prefix, LEN_PREFIX));
 }
 
 static
-trim_leaf(
-_AR1(char *,	name))
-_DCL(char *,	name)
+void	trim_leaf(
+	_AR1(char *,	name))
+	_DCL(char *,	name)
 {
 	register char *s = strrchr(name, '/');
 	if (s != 0) name = s;
@@ -99,7 +99,8 @@ static	char	fname[BUFSIZ];
 
 		s = leaf(strcpy(fname, name));
 		t = leaf(name) + LEN_PREFIX;
-		while (*s++ = *t++);
+		while ((*s++ = *t++) != EOS)
+			;
 
 		if ((s = leaf(fname)) > fname) {
 			char	*d = fname;
@@ -109,7 +110,8 @@ static	char	fname[BUFSIZ];
 				&&  sameleaf(t, sccs_dir()))
 					d = t;
 			}
-			while (*d++ = *s++);
+			while ((*d++ = *s++) != EOS)
+				;
 		}
 	} else {
 		(void)strcpy(fname, name);
@@ -154,14 +156,19 @@ static	char	fname[BUFSIZ];
 }
 
 #ifdef	TEST
-do_test(
-_ARX(int,	argc)
-_ARX(char **,	argv)
-_AR1(int,	full)
-	)
-_DCL(int,	argc)
-_DCL(char **,	argv)
-_DCL(int,	full)
+void	do_test(
+	_arx(int,	argc)
+	_arx(char **,	argv)
+	_ar1(int,	full));
+
+void	do_test(
+	_ARX(int,	argc)
+	_ARX(char **,	argv)
+	_AR1(int,	full)
+		)
+	_DCL(int,	argc)
+	_DCL(char **,	argv)
+	_DCL(int,	full)
 {
 	int	j;
 	char	old[BUFSIZ], *new;

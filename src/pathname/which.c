@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: which.c,v 12.0 1992/11/20 14:13:38 ste_cm Rel $";
+static	char	Id[] = "$Id: which.c,v 12.1 1993/09/21 18:54:02 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: which.c,v 12.0 1992/11/20 14:13:38 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	18 Nov 1987
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		06 Feb 1992, use 'stat_file()'
  *		03 Oct 1991, converted to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
@@ -32,28 +33,28 @@ static	char	Id[] = "$Id: which.c,v 12.0 1992/11/20 14:13:38 ste_cm Rel $";
 #include	"ptypes.h"
 
 static
-executable(
-_AR1(char *,	name))
-_DCL(char *,	name)
+int	executable(
+	_AR1(char *,	name))
+	_DCL(char *,	name)
 {
 	STAT	sb;
 	return (access(name, X_OK) >= 0) && (stat_file(name, &sb) >= 0);
 }
 
-which(
-_ARX(char *,	bfr)
-_ARX(int,	len)
-_ARX(char *,	find)
-_AR1(char *,	dot)
-	)
-_DCL(char *,	bfr)
-_DCL(int,	len)
-_DCL(char *,	find)
-_DCL(char *,	dot)
+int	which(
+	_ARX(char *,	bfr)
+	_ARX(int,	len)
+	_ARX(char *,	find)
+	_AR1(char *,	dot)
+		)
+	_DCL(char *,	bfr)
+	_DCL(int,	len)
+	_DCL(char *,	find)
+	_DCL(char *,	dot)
 {
-register char *s, *d;
-char	*path = getenv("PATH");
-char	test[BUFSIZ];
+	register char *s, *d;
+	char	*path = getenv("PATH");
+	char	test[BUFSIZ];
 
 	if (path == 0) path = ".";
 	s = path;

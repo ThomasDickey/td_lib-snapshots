@@ -1,11 +1,12 @@
 #ifndef	lint
-static	char	Id[] = "$Id: doalloc.c,v 12.0 1992/11/19 15:12:40 ste_cm Rel $";
+static	char	Id[] = "$Id: doalloc.c,v 12.1 1993/09/21 18:54:05 dickey Exp $";
 #endif
 
 /*
  * Author:	T.E.Dickey
  * Created:	09 Jan 1986
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		16 Nov 1992, added 'show_alloc()'; revised debug-code.
  *		02 Apr 1992, don't append to log-file. Write error message there
  *			     too.
@@ -39,7 +40,7 @@ void	fail_alloc(
 	_DCL(char *,	msg)
 	_DCL(char *,	ptr)
 {
-	PRINTF("%s: %#x\n", msg, ptr);
+	PRINTF("%s: %p\n", msg, ptr);
 	walkback((char *)0);
 	FFLUSH(stdout);
 	FFLUSH(stderr);
@@ -137,6 +138,7 @@ int	record_alloc(
 	nowAllocated += len;
 	if (nowAllocated > maxAllocated)
 		maxAllocated = nowAllocated;
+	return 1;
 }
 
 #define	OK_ALLOC(p,q,n)	((p != 0) && (record_alloc(p,q,n) >= 0))
@@ -228,7 +230,7 @@ void	show_alloc(_AR0)
 		for (j = 0; j < nowPending; j++) {
 			if (area[j].text) {
 				if (count++ < 10)
-					PRINTF("...%d) %d bytes in alloc #%d:%#x\n",
+					PRINTF("...%d) %d bytes in alloc #%d:%p\n",
 						j,
 						area[j].size,
 						area[j].note,

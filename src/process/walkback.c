@@ -1,11 +1,12 @@
 #ifndef	lint
-static	char	Id[] = "$Id: walkback.c,v 12.0 1992/11/24 15:42:18 ste_cm Rel $";
+static	char	Id[] = "$Id: walkback.c,v 12.1 1993/09/21 18:54:02 dickey Exp $";
 #endif
 
 /*
  * Author:	T.E.Dickey
  * Created:	18 Nov 1992, from 'doalloc.c'
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		20 Nov 1992, added test-driver.
  *
  * Function:	Generate a walkback (if possible!)
@@ -99,7 +100,7 @@ void	walkback(
 		}
 
 		FORMAT(bfr, "adb %s", caller);
-		if (pp = popen(bfr, "w")) {
+		if ((pp = popen(bfr, "w")) != NULL) {
 			(void)fputs("$c\n", pp); FFLUSH(pp);
 			(void)fputs("$q\n", pp); FFLUSH(pp);
 			(void)pclose(pp);

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcsload.c,v 12.0 1992/11/24 15:18:44 ste_cm Rel $";
+static	char	Id[] = "$Id: rcsload.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: rcsload.c,v 12.0 1992/11/24 15:18:44 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	19 Aug 1988
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		18 Nov 1992, fixed a broken loop in 'eat_text()'.  Plugged
  *			     memory leaks.
  *		26 Oct 1992, changed interface to 'rcsread()'.
@@ -79,14 +80,14 @@ static	unsigned my_limit;
 
 #ifdef	TEST
 static
-show_vector(
-_ARX(char *,	tag)
-_ARX(char *,	rev)
-_AR1(char **,	v)
-	)
-_DCL(char *,	tag)
-_DCL(char *,	rev)
-_DCL(char **,	v)
+void	show_vector(
+	_ARX(char *,	tag)
+	_ARX(char *,	rev)
+		_AR1(char **,	v)
+		)
+	_DCL(char *,	tag)
+	_DCL(char *,	rev)
+	_DCL(char **,	v)
 {
 	register int	j;
 
@@ -101,19 +102,20 @@ _DCL(char **,	v)
 #endif
 
 static
-append(
-_AR1(char *,	s))
-_DCL(char *,	s)
+void	append(
+	_AR1(char *,	s))
+	_DCL(char *,	s)
 {
 	if (load_last != 0 && s != 0) {
-		while (*load_last++ = *s++);
+		while ((*load_last++ = *s++) != EOS)
+			;
 	}
 }
 
 static
-loadtext(
-_AR1(int,	c))
-_DCL(int,	c)
+void	loadtext(
+	_AR1(int,	c))
+	_DCL(int,	c)
 {
 	static	char	edit_type;		/* editing type */
 	static	int	edit_at, skip;
@@ -246,8 +248,8 @@ _DCL(char *,	rev)
 	register char	*s = strcpy(bfr, rev), *t = bfr;
 
 	while (t != 0) {
-		if (t = strchr(s, '.'))
-			if (t = strchr(t + 1, '.'))
+		if ((t = strchr(s, '.')) != NULL)
+			if ((t = strchr(t + 1, '.')) != NULL)
 				s = t + 1;
 	}
 	if (s != bfr) {
@@ -261,12 +263,12 @@ _DCL(char *,	rev)
  * Propagate the editing changes from ancestor to descendent
  */
 static
-ripple(
-_ARX(DELTREE *,	dst)
-_AR1(DELTREE *,	src)
-	)
-_DCL(DELTREE *,	dst)
-_DCL(DELTREE *,	src)
+void	ripple(
+	_ARX(DELTREE *,	dst)
+	_AR1(DELTREE *,	src)
+		)
+	_DCL(DELTREE *,	dst)
+	_DCL(DELTREE *,	src)
 {
 
 	dst->num_lines = src->num_lines
@@ -285,14 +287,14 @@ _DCL(DELTREE *,	src)
  * branch leaves the trunk to propagate the line counts.
  */
 static
-fill_branch(
-_ARX(DELTREE *,	vector)
-_ARX(int,	at)
-_AR1(char *,	root)
-	)
-_DCL(DELTREE *,	vector)
-_DCL(int,	at)
-_DCL(char *,	root)
+void	fill_branch(
+	_ARX(DELTREE *,	vector)
+	_ARX(int,	at)
+	_AR1(char *,	root)
+		)
+	_DCL(DELTREE *,	vector)
+	_DCL(int,	at)
+	_DCL(char *,	root)
 {
 	register int	j;
 	int	found	= FALSE;
@@ -367,7 +369,7 @@ _DCL(int,	verbose)
 	load_logged = 0;
 
 	k = -1;
-	while (s = rcsread(s, code)) {
+	while ((s = rcsread(s, code)) != NULL) {
 		s = rcsparse_id(key, s);
 
 		switch (code = rcskeys(key)) {
@@ -406,7 +408,7 @@ _DCL(int,	verbose)
 			new.author = txtalloc(tmp);
 			break;
 		case S_DESC:
-			s = rcsparse_str(s, NULL_FUNC);
+			s = rcsparse_str(s, (RcsparseStr)0);
 			delta = 1;
 			break;
 		case S_LOG:
@@ -473,9 +475,9 @@ _DCL(int,	verbose)
  * To release storage, we simply release the vector, since the stuff allocated
  * by 'txtalloc()' is persistent.
  */
-rcsunload(
-_AR1(DELTREE *,	p))			/* vector to release */
-_DCL(DELTREE *,	p)
+void	rcsunload(
+	_AR1(DELTREE *,	p))		/* vector to release */
+	_DCL(DELTREE *,	p)
 {
 	if (p != 0) {
 		register int	j;
@@ -489,16 +491,16 @@ _DCL(DELTREE *,	p)
 
 #ifdef	TEST
 static
-compare(
-_ARX(char *,	name)
-_ARX(char **,	vector)
-_AR1(char *,	revision)
-	)
-_DCL(char *,	name)
-_DCL(char **,	vector)
-_DCL(char *,	revision)
+void	compare(
+	_ARX(char *,	name)
+	_ARX(char **,	vector)
+	_AR1(char *,	revision)
+		)
+	_DCL(char *,	name)
+	_DCL(char **,	vector)
+	_DCL(char *,	revision)
 {
-	extern	char	*mktemp();
+	extern	char	*mktemp(_ar1(char *,tmpl));
 
 	char	temp[BUFSIZ],
 		version[80],
@@ -535,7 +537,7 @@ _MAIN
 
 	for (j = 1; j < argc; j++) {
 		char	*name = argv[j];
-		if (p = rcsload(name, TRUE, TRUE, TRUE)) {
+		if ((p = rcsload(name, TRUE, TRUE, TRUE)) != NULL) {
 			for (k = 0; p[k].tstamp; k++) {
 				PRINTF("%05d/%05d  %3s => %s \t%s",
 					p[k].num_added,

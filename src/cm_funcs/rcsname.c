@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcsname.c,v 12.0 1992/11/17 12:52:39 ste_cm Rel $";
+static	char	Id[] = "$Id: rcsname.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: rcsname.c,v 12.0 1992/11/17 12:52:39 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	27 May 1988
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, conversion to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
  *		18 Apr 1990, added 'full' argument to 'rcs2name()' and
@@ -56,9 +57,9 @@ static	char	suffix[] = RCS_SUFFIX;
  * Returns TRUE if the name ends with RCS_SUFFIX.
  */
 static
-rcs_suffix(
-_AR1(char *,	name))
-_DCL(char *,	name)
+int	rcs_suffix(
+	_AR1(char *,	name))
+	_DCL(char *,	name)
 {
 	int	len = strlen(name);
 	if (len >= LEN_SUFFIX)
@@ -68,9 +69,9 @@ _DCL(char *,	name)
 }
 
 static
-trim_leaf(
-_AR1(char *,	name))
-_DCL(char *,	name)
+void	trim_leaf(
+	_AR1(char *,	name))
+	_DCL(char *,	name)
 {
 	register char *s = strrchr(name, '/');
 	if (s != 0) name = s;
@@ -118,7 +119,8 @@ static	char	fname[BUFSIZ];
 				&&  sameleaf(t, rcs_dir()))
 					d = t;
 			}
-			while (*d++ = *s++);
+			while ((*d++ = *s++) != EOS)
+				;
 		}
 	} else {
 		(void)strcpy(fname, name);
@@ -163,14 +165,19 @@ static	char	fname[BUFSIZ];
 }
 
 #ifdef	TEST
-do_test(
-_ARX(int,	argc)
-_ARX(char **,	argv)
-_AR1(int,	full)
-	)
-_DCL(int,	argc)
-_DCL(char **,	argv)
-_DCL(int,	full)
+void	do_test(
+	_arx(int,	argc)
+	_arx(char **,	argv)
+	_ar1(int,	full));
+
+void	do_test(
+	_ARX(int,	argc)
+	_ARX(char **,	argv)
+	_AR1(int,	full)
+		)
+	_DCL(int,	argc)
+	_DCL(char **,	argv)
+	_DCL(int,	full)
 {
 	int	j;
 	char	old[BUFSIZ], *new;

@@ -1,16 +1,19 @@
 #ifndef	lint
-static	char	*Id = "$Id: samebr.c,v 12.0 1992/11/17 12:53:36 ste_cm Rel $";
+static	char	*Id = "$Id: samebr.c,v 12.1 1993/09/21 18:54:02 dickey Exp $";
 #endif
 
 /*
  * Title:	samebranch.c
  * Author:	T.E.Dickey
  * Created:	03 Aug 1992
+ * Modified:
+ *		21 Sep 1993, gcc-warnings
  *
  * Function:	returns true iff the two revisions are on the same branch or
  *		both are on the trunk.
  */
 
+#define STR_PTYPES
 #include "ptypes.h"
 #include "rcsdefs.h"
 

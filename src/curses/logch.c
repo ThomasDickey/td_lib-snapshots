@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	what[] = "$Id: logch.c,v 12.0 1992/08/12 07:45:08 ste_cm Rel $";
+static	char	Id[] = "$Id: logch.c,v 12.1 1993/09/21 18:54:04 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	what[] = "$Id: logch.c,v 12.0 1992/08/12 07:45:08 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	06 Aug 1992, from ded/dlog.c
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *
  * Function:	Decode/encode log-file characters (e.g., for 'ded').
  */

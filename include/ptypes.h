@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 12.0 1993/04/30 11:40:28 ste_cm Rel $ */
+/* $Id: ptypes.h,v 12.1 1993/09/21 17:54:26 dickey Exp $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -7,6 +7,16 @@
  * The definitions in this file cover simple cases of bsd4.x/system5 porting,
  * as well as definitions useful for linting (e.g., void-casts, malloc pseudo-
  * functions).
+ *
+ * Define any of the following before including this file to turn on special
+ * definitions:
+ *	ACC_PTYPES	<sys/file.h>
+ *	CHR_PTYPES	<ctype.h>
+ *	DIR_PTYPES	<dirent.h>
+ *	PWD_PTYPES	<pwd.h>
+ *	SIG_PTYPES	<signal.h>
+ *	STR_PTYPES	<string.h>
+ *	WAI_PTYPES	<wait.h>
  *
  * We include <stdio.h> here so that 'sprintf()' lints properly.
  * The <sys/types.h> file is needed so that we can include <sys/stat.h>
@@ -73,16 +83,6 @@
 #ifndef	S_IFLNK
 #define	lstat	stat
 #endif	/* S_IFLNK */
-
-#if	defined(SYSTEM5) || defined(vms)
-#define	getwd(p)	getcwd(p,sizeof(p)-2)
-extern	char	*getcwd();
-#else	/* !SYSTEM5 */
-extern	char	*getwd();
-#if	defined(unix) && !defined(apollo)	/* bsd4.x on SunOs? */
-extern	char	*sprintf();
-#endif
-#endif
 
 /*
  * Definition which is true iff we use function-prototypes
@@ -218,74 +218,21 @@ extern	char	*sprintf();
 #define	V_OR_P		char *
 #endif
 
-/*
- * defines the argument-type for "wait()"
- */
-#ifdef	WAI_PTYPES
-#ifdef	vms
-#include <processes.h>
-#else
-#include <sys/wait.h>
-#endif
-
-#undef	ARG_WAIT
-#undef	DCL_WAIT
-
-#if	defined(sun) || defined(apollo_sr10) || defined(SYSTEM5)
-#define	ARG_WAIT(status)	((int *)&status)
-#endif
-#ifdef	SYSTEM5
-#define	DCL_WAIT(status)	int status
-#endif
-
-#ifndef	ARG_WAIT
-#define	ARG_WAIT(status)	((union wait *)&status)
-#endif
-#ifndef	DCL_WAIT
-#define	DCL_WAIT(status)	union wait status
-#endif
-
-#ifdef	SYSTEM5
-#define	W_RETCODE(status)	((status >> 8) & 0xff)
-#else	/* !SYSTEM5 */
-#define	W_RETCODE(status)	(status.w_retcode)
-#endif	/* SYSTEM5/!SYSTEM5 */
-
-#endif	/* WAI_PTYPES */
-
-/*
- * defines the type of return-value from "signal()"
- */
-#ifdef	SIG_PTYPES
-
-#include <signal.h>
-
-#undef	SIG_T
-#undef	SIGNAL_FUNC
-#undef	DCL_SIGNAL
-
-#define	SIG_T	void
-
-#ifdef	apollo
-#  ifdef	__SIG_HANDLER_T
-#    define	SIGNAL_FUNC(f)	SIG_T f (_AR1(int,sig) _CDOTS) _DCL(int,sig)
-#  else	/* sr10.2 or lower */
-#    undef	SIG_T
-#    define	SIG_T	int
-#  endif
-#endif
-
-#ifndef	SIGNAL_FUNC
-#  define	SIGNAL_FUNC(f)	SIG_T f (_AR1(int,sig)) _DCL(int,sig)
-#endif
-
-#define	DCL_SIGNAL(func)	SIG_T	(*func)()
-#endif	/* SIG_PTYPES */
-
-/*
- * Useful external-definitions
- */
+/******************************************************************************
+ * Useful external-definitions                                                *
+ ******************************************************************************/
 #ifndef	LINTLIBRARY
+
+#if	defined(SYSTEM5) || defined(vms)
+#define	getwd(p)	getcwd(p,sizeof(p)-2)
+extern	char	*getcwd();
+#else	/* !SYSTEM5 */
+extern	char	*getwd(_ar1(char *,p));
+#if	defined(unix) && !defined(apollo) && !defined(__GNUC__)	/* bsd4.x on SunOs? */
+extern	char	*sprintf(_arx(char *,fmt) _DOTS);
+#endif
+#endif
+
 #if	!HAS_STDLIB
 extern	V_OR_I	_exit(_ar1(int,code));
 extern	V_OR_I2	exit(_ar1(int,code));
@@ -295,7 +242,7 @@ extern	V_OR_P	malloc(_ar1(size_t,size));
 extern	V_OR_P	realloc(_arx(V_OR_P,ptr) _ar1(size_t,size));
 #endif
 #ifndef	vms
-#if	!defined(__STDC__) && !defined(apollo_sr10)
+#if	!defined(apollo_sr10)
 extern	V_OR_I2	perror(_ar1(char *,s));
 extern	V_OR_I	rewind(_ar1(FILE *,s));
 #endif
@@ -316,8 +263,6 @@ extern	int	getopt(
 extern	char *	optarg;
 extern	int	optind;
 
-#endif	/* !LINTLIBRARY */
-
 #ifdef	unix
 #ifdef	apollo_sr10
 extern	uid_t	getuid(), geteuid();
@@ -328,7 +273,44 @@ typedef	int	uid_t;
 typedef	int	gid_t;
 #endif	/* SunOs 3.5 (fixed in SunOs 4.0) */
 #endif
+
+/*
+ * Common definitions that aren't declared properly
+ */
+#if defined(__GNUC__) && defined(sun)
+extern	int	_filbuf	(FILE *);
+extern	int	_flsbuf	(int, FILE *);
+extern	int	creat	(char *, int);
+extern	int	fclose	(FILE *);
+extern	int	fflush	(FILE *);
+extern	int	fgetc	(FILE *);
+extern	int	fork	(void);
+extern	int	fprintf (FILE *, char *, ...);
+extern	int	fputc	(int, FILE *);
+extern	int	fputs	(char *, FILE *);
+extern	int	fread	(char *, int, int, FILE *);
+extern	int	fseek	(FILE *, long, int);
+extern	int	fwrite	(char *, int, int, FILE *);
+extern	int	ioctl	(int, int, caddr_t);
+extern	int	lstat	(char *, STAT *);
+extern	int	open	(char *, int, int);
+extern	int	pclose	(FILE *);
+extern	int	printf	(char *, ...);
+extern	int	putenv	(char *);
+extern	int	readlink(char *, char *, int);
+extern	int	rename	(char *, char *);
+extern	int	sscanf	(char *, ...);
+extern	void	setbuf	(FILE *, char *);
+extern	int	symlink	(char *, char *);
+extern	int	system	(char *);
+extern	int	tgetent	(char *, char *);
+extern	int	tgetnum	(char *);
+extern	int	vfork	(void);
+#endif
+
 #endif	/* unix */
+
+#endif	/* !LINTLIBRARY */
 
 /*
  * Miscellaneous useful definitions for readability
@@ -377,10 +359,56 @@ typedef	int	gid_t;
 #define	ALLOC(t,n)	DOALLOC(0,t,n)
 #endif	/* lint */
 
-/*
- * System5 does not provide the directory manipulation procedures in bsd4.x;
- * define macros so we can use the bsd4.x names:
- */
+/******************************************************************************
+ * Define symbols used in 'access()' function                                 *
+ ******************************************************************************/
+#ifdef	ACC_PTYPES
+#ifdef	vms
+#define	F_OK	0	/* file-exists */
+#define	X_OK	1	/* executable */
+#define	W_OK	2	/* writeable */
+#define	R_OK	4	/* readable */
+#else	/* unix */
+#ifndef	SYSTEM5
+#include	<sys/file.h>
+#endif	/* SYSTEM5 */
+#endif	/* vms/unix */
+#endif	/* ACC_PTYPES */
+
+/******************************************************************************
+ * character definitions                                                      *
+ ******************************************************************************/
+#ifdef	CHR_PTYPES
+#include <ctype.h>
+
+#if defined(__GNUC__) && defined(sun)
+extern	int	tolower(int);
+extern	int	toupper(int);
+#endif
+
+#if defined(tolower) || defined(sun)
+#define LowerMacro(c) tolower(c)
+#define UpperMacro(c) toupper(c)
+#endif
+
+#ifdef _tolower
+#define LowerMacro(c) _tolower(c)
+#define UpperMacro(c) _toupper(c)
+#define LowerCase(c)  c = tolower(c)
+#define UpperCase(c)  c = toupper(c)
+#endif
+
+#ifndef LowerCase
+#define LowerCase(c) if (isascii(c) && isupper(c)) c = LowerMacro(c)
+#define UpperCase(c) if (isascii(c) && islower(c)) c = UpperMacro(c)
+#endif
+
+#endif	/* CHR_PTYPES */
+
+/******************************************************************************
+ * System5 does not provide the directory manipulation procedures in bsd4.x;  *
+ * define macros so we can use the bsd4.x names:                              *
+ ******************************************************************************/
 #ifdef	DIR_PTYPES
 #ifdef	vms
 #include	"unixdir.h"	/* get this from PORTUNIX */
@@ -404,25 +432,66 @@ static	struct	direct	dbfr;
 #define	DIRENT	struct	direct
 #endif	/* DIR_PTYPES */
 
-/*
- * Define symbols used in 'access()' function
- */
-#ifdef	ACC_PTYPES
-#ifdef	vms
-#define	F_OK	0	/* file-exists */
-#define	X_OK	1	/* executable */
-#define	W_OK	2	/* writeable */
-#define	R_OK	4	/* readable */
-#else	/* unix */
-#ifndef	SYSTEM5
-#include	<sys/file.h>
-#endif	/* SYSTEM5 */
-#endif	/* vms/unix */
-#endif	/* ACC_PTYPES */
+/******************************************************************************
+ * defines externals used in password-file routines                           *
+ ******************************************************************************/
+#ifdef	PWD_PTYPES
 
-/*
- * Define string-procedures
- */
+#include <pwd.h>
+
+extern	struct passwd *	getpwnam(_ar1(char *,name));
+extern	struct passwd *	getpwuid(_ar1(int,uid));
+
+extern	struct passwd *	getpwent(_ar0);
+extern	V_OR_I		setpwent(_ar0);
+extern	V_OR_I		endpwent(_ar0);
+
+#endif	/* PWD_PTYPES */
+
+/******************************************************************************
+ * defines the type of return-value from "signal()"                           *
+ ******************************************************************************/
+#ifdef	SIG_PTYPES
+
+#include <signal.h>
+
+#undef	SIG_T
+#undef	SIGNAL_FUNC
+#undef	DCL_SIGNAL
+
+#define	SIG_T	void
+
+#ifdef	apollo
+#  ifdef	__SIG_HANDLER_T
+#    define	SIGNAL_ARGS _AR1(int,sig) _CDOTS
+#  else	/* sr10.2 or lower */
+#    undef	SIG_T
+#    define	SIG_T	int
+#  endif
+#endif
+
+#ifndef SIGNAL_ARGS
+#  define SIGNAL_ARGS _ar1(int,sig)
+#endif
+
+#ifndef	SIGNAL_FUNC
+#  define	SIGNAL_FUNC(f)	SIG_T f (SIGNAL_ARGS) _DCL(int,sig)
+#endif
+
+#define	DCL_SIGNAL(func)	SIG_T	(*func)(SIGNAL_ARGS)
+
+#if defined(__GNUC__)
+# undef  SIG_DFL
+# undef  SIG_IGN
+# define SIG_DFL	(SIG_T (*)(SIGNAL_ARGS))0
+# define SIG_IGN	(SIG_T (*)(SIGNAL_ARGS))1
+#endif
+
+#endif	/* SIG_PTYPES */
+
+/******************************************************************************
+ * Define string-procedures                                                   *
+ ******************************************************************************/
 #ifdef	STR_PTYPES
 #include	<string.h>
 #if	!defined(SYSTEM5) && !defined(vms) && !defined(apollo) && !defined(sun)
@@ -433,16 +502,52 @@ extern	char	*strchr(_arx(char *,s) _ar1(int,c));
 extern	char	*strrchr(_arx(char *,s) _ar1(int,c));
 #endif	/* STR_PTYPES */
 
-/*
- * Definitions of procedures in TD_LIB common library
- */
+/******************************************************************************
+ * defines the argument-type for "wait()"                                     *
+ ******************************************************************************/
+#ifdef	WAI_PTYPES
+#ifdef	vms
+#include <processes.h>
+#else
+#include <sys/wait.h>
+#endif
+
+#undef	ARG_WAIT
+#undef	DCL_WAIT
+
+#if	defined(sun) || defined(apollo_sr10) || defined(SYSTEM5)
+#define	ARG_WAIT(status)	((int *)&status)
+#endif
+#ifdef	SYSTEM5
+#define	DCL_WAIT(status)	int status
+#endif
+
+#ifndef	ARG_WAIT
+#define	ARG_WAIT(status)	((union wait *)&status)
+#endif
+#ifndef	DCL_WAIT
+#define	DCL_WAIT(status)	union wait status
+#endif
+
+#ifdef	SYSTEM5
+#define	W_RETCODE(status)	((status >> 8) & 0xff)
+#else	/* !SYSTEM5 */
+#define	W_RETCODE(status)	(status.w_retcode)
+#endif	/* SYSTEM5/!SYSTEM5 */
+
+#endif	/* WAI_PTYPES */
+
+/******************************************************************************
+ * Definitions of procedures in TD_LIB common library                         *
+ ******************************************************************************/
 #ifndef	LINTLIBRARY
 #include <td_lib.h>
 
 #ifndef	lint
-extern		main(_arx(int,argc) _arx(char **,argv) _ar1(char **,envp));
+extern	void	main(_arx(int,argc) _arx(char **,argv) _ar1(char **,envp));
 #endif	/* lint */
-#define	_MAIN	main(_ARX(int,argc) _ARX(char **,argv) _AR1(char **,envp))\
+#define	_MAIN\
+	void	main(_ARX(int,argc) _ARX(char **,argv) _AR1(char **,envp))\
 		     _DCL(int,argc) _DCL(char **,argv) _DCL(char **,envp)
 
 #endif	/* LINTLIBRARY */

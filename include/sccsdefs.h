@@ -1,4 +1,4 @@
-/* $Id: sccsdefs.h,v 12.0 1991/10/03 11:25:45 ste_cm Rel $ */
+/* $Id: sccsdefs.h,v 12.1 1993/09/21 14:02:28 dickey Exp $ */
 
 #ifndef	_SCCSDEFS_H_
 #define	_SCCSDEFS_H_
@@ -12,7 +12,7 @@
 			_ret
 
 	/* sccslast.c ------------------------------------------------- */
-		sccslast(
+	void	sccslast(
 			_arx(char *,	wd)
 			_arx(char *,	n)
 			_arx(char **,	v_)

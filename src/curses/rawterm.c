@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rawterm.c,v 12.0 1991/10/03 15:00:23 ste_cm Rel $";
+static	char	Id[] = "$Id: rawterm.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: rawterm.c,v 12.0 1991/10/03 15:00:23 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	24 Nov 1987
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, converted to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
  *		03 Aug 1988, use 'crmode()' rather than 'raw()' so we can see
@@ -16,13 +17,12 @@ static	char	Id[] = "$Id: rawterm.c,v 12.0 1991/10/03 15:00:23 ste_cm Rel $";
  * Function:	Set terminal to single-character mode
  */
 
-#define		CUR_PTYPES
-#include	"ptypes.h"
+#include	"td_curse.h"
 
 /*
  * Set terminal to single-character mode
  */
-rawterm(_AR0)
+void	rawterm(_AR0)
 {
 #ifdef	SYSTEM5
 	cbreak();

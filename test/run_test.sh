@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id: run_test.sh,v 12.0 1993/04/27 08:25:21 ste_cm Rel $
+# $Id: run_test.sh,v 12.1 1993/09/21 19:18:33 dickey Exp $
 if test $# != 0
 then
 	echo '** '`date`
@@ -8,7 +8,10 @@ then
 	do
 		N=`basename $n .ref`
 		N=`basename $N .sh`
-		rm -f $N.tmp
+		LOG=../$N.purelog
+		rm -f $N.tmp $LOG
+		PURIFYOPTIONS="-logfile=$LOG"
+		export PURIFYOPTIONS
 		if ( ./$N.sh )
 		then
 			if test -f $N.tmp

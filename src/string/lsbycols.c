@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: lsbycols.c,v 12.0 1992/11/17 12:50:29 ste_cm Rel $";
+static	char	Id[] = "$Id: lsbycols.c,v 12.1 1993/09/21 18:54:04 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: lsbycols.c,v 12.0 1992/11/17 12:50:29 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	17 Apr 1989
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, converted to ANSI
  *
  * Function:	Given an array of structures whose first member is a pointer
@@ -29,14 +30,14 @@ static	char	Id[] = "$Id: lsbycols.c,v 12.0 1992/11/17 12:50:29 ste_cm Rel $";
 #define	MAXCOL	80
 
 /*ARGSUSED*/
-list_by_cols(
-_ARX(char **,	listp)
-_ARX(int,	sizep)
-_AR1(int,	num)
-	)
-_DCL(char **,	listp)
-_DCL(int,	sizep)
-_DCL(int,	num)
+void	list_by_cols(
+	_ARX(char **,	listp)
+	_ARX(int,	sizep)
+	_AR1(int,	num)
+		)
+	_DCL(char **,	listp)
+	_DCL(int,	sizep)
+	_DCL(int,	num)
 {
 	register int	j, k;
 	auto	 int	maxlen = 0,	/* length of widest column */

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: vecalloc.c,v 12.0 1991/10/04 15:52:45 ste_cm Rel $";
+static	char	Id[] = "$Id: vecalloc.c,v 12.1 1993/09/21 18:54:02 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: vecalloc.c,v 12.0 1991/10/04 15:52:45 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	01 Dec 1987
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		04 Oct 1991, conversion to ANSI
  *
  * Function:	Allocate space for a given vector (of pointers), and
@@ -20,17 +21,16 @@ static	char	Id[] = "$Id: vecalloc.c,v 12.0 1991/10/04 15:52:45 ste_cm Rel $";
 	/*ARGSUSED*/
 	def_ALLOC(char *);
 
-char **
-vecalloc(
-_AR1(unsigned,	len))
-_DCL(unsigned,	len)
+char **	vecalloc(
+	_AR1(unsigned,	len))
+	_DCL(unsigned,	len)
 {
 	return(ALLOC(char *,len));
 }
 
-vecfree(
-_AR1(char **,	s))
-_DCL(char **,	s)
+void	vecfree(
+	_AR1(char **,	s))
+	_DCL(char **,	s)
 {
 	dofree((char *)s);
 }

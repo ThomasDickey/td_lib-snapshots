@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: win2file.c,v 12.0 1991/10/03 16:27:12 ste_cm Rel $";
+static	char	Id[] = "$Id: win2file.c,v 12.1 1993/09/21 18:54:02 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: win2file.c,v 12.0 1991/10/03 16:27:12 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	07 Jun 1988
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, converted to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
  *		23 Jan 1990, limit columns to dump by 'maxx' member (needed for
@@ -31,24 +32,23 @@ static	char	Id[] = "$Id: win2file.c,v 12.0 1991/10/03 16:27:12 ste_cm Rel $";
  * Returns:	nothing.
  */
 
-#define		CUR_PTYPES
-#include	"ptypes.h"
+#include	"td_curse.h"
 #include	<ctype.h>
 #include	<time.h>
 
 #define	OUT	FPRINTF(fp,
 
 static
-mark(
-_ARX(WINDOW *,	win)
-_ARX(int,	row)
-_ARX(int,	c)
-_AR1(int,	bold)
-	)
-_DCL(WINDOW *,	win)
-_DCL(int,	row)
-_DCL(int,	c)
-_DCL(int,	bold)
+void	mark(
+	_ARX(WINDOW *,	win)
+	_ARX(int,	row)
+	_ARX(int,	c)
+	_AR1(int,	bold)
+		)
+	_DCL(WINDOW *,	win)
+	_DCL(int,	row)
+	_DCL(int,	c)
+	_DCL(int,	bold)
 {
 	(void)wmove(win, row + win->_begy, win->_begx);
 	if (bold)	(void)wstandout(win);
@@ -56,14 +56,14 @@ _DCL(int,	bold)
 	if (bold)	(void)wstandend(win);
 }
 
-win2fp(
-_ARX(WINDOW *,	win)
-_ARX(FILE *,	fp)
-_AR1(char *,	prefix)
-	)
-_DCL(WINDOW *,	win)
-_DCL(FILE *,	fp)
-_DCL(char *,	prefix)
+void	win2fp(
+	_ARX(WINDOW *,	win)
+	_ARX(FILE *,	fp)
+	_AR1(char *,	prefix)
+		)
+	_DCL(WINDOW *,	win)
+	_DCL(FILE *,	fp)
+	_DCL(char *,	prefix)
 {
 	auto	time_t	now	= time((time_t *)0);
 	auto	int	y,x;
@@ -78,7 +78,7 @@ _DCL(char *,	prefix)
 	getyx(win, y, x);
 	for (j = 0; j < win->_maxy; j++) {
 		OUT "%s", prefix);
-		if (s = win->_y[j]) {
+		if ((s = win->_y[j]) != NULL) {
 			auto	chtype	*t = s;
 
 			/* animate this so user can see something */
@@ -88,7 +88,7 @@ _DCL(char *,	prefix)
 			mark(win, j, toascii(k), !isascii(k));
 
 			/* find the last nonblank column */
-			while (k = toascii(*s++)) {
+			while ((k = toascii(*s++)) != EOS) {
 				if ((s - win->_y[j]) >= win->_maxx)
 					break;
 				if (!isspace(k))
@@ -114,16 +114,16 @@ _DCL(char *,	prefix)
 	(void)wrefresh(win);
 }
 
-win2file(
-_ARX(WINDOW *,	win)
-_AR1(char *,	file)
-	)
-_DCL(WINDOW *,	win)
-_DCL(char *,	file)
+int	win2file(
+	_ARX(WINDOW *,	win)
+	_AR1(char *,	file)
+		)
+	_DCL(WINDOW *,	win)
+	_DCL(char *,	file)
 {
 	auto	FILE	*fp;
 
-	if (fp = fopen(file, "a+")) {
+	if ((fp = fopen(file, "a+")) != NULL) {
 		win2fp(win, fp, "");
 		FCLOSE(fp);
 		return (0);

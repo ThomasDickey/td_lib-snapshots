@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: catarg.c,v 12.0 1992/02/04 12:05:12 ste_cm Rel $";
+static	char	Id[] = "$Id: catarg.c,v 12.1 1993/09/21 18:54:05 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: catarg.c,v 12.0 1992/02/04 12:05:12 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	26 May 1988
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, conversion to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
  *		07 Dec 1989, lint (Apollo SR10.1)
@@ -22,12 +23,12 @@ static	char	Id[] = "$Id: catarg.c,v 12.0 1992/02/04 12:05:12 ste_cm Rel $";
 #include	"ptypes.h"
 #include	<ctype.h>
 
-catarg(
-_ARX(char *,	dst)
-_AR1(char *,	src)
-	)
-_DCL(char *,	dst)
-_DCL(char *,	src)
+void	catarg(
+	_ARX(char *,	dst)
+	_AR1(char *,	src)
+		)
+	_DCL(char *,	dst)
+	_DCL(char *,	src)
 {
 	dst += strlen(dst);
 	if (*src) {
@@ -38,19 +39,18 @@ _DCL(char *,	src)
 			dst++;
 		}
 		*dst++ = ' ';
-		*dst   = '\0';
+		*dst   = EOS;
 	}
 }
 
-void
-catarg2(
-_ARX(char *,	dst)
-_ARX(char *,	opt)
-_AR1(char *,	arg)
-	)
-_DCL(char *,	dst)
-_DCL(char *,	opt)
-_DCL(char *,	arg)
+void	catarg2(
+	_ARX(char *,	dst)
+	_ARX(char *,	opt)
+	_AR1(char *,	arg)
+		)
+	_DCL(char *,	dst)
+	_DCL(char *,	opt)
+	_DCL(char *,	arg)
 {
 	catarg(dst, opt);
 	dst[strlen(dst)-1] = EOS;

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rawgets.c,v 12.0 1993/04/26 16:17:42 ste_cm Rel $";
+static	char	Id[] = "$Id: rawgets.c,v 12.1 1993/09/21 18:54:04 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: rawgets.c,v 12.0 1993/04/26 16:17:42 ste_cm Rel $";
  * Title:	rawgets.c (raw-mode 'gets()')
  * Created:	29 Sep 1987 (from 'fl.c')
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		04 Sep 1992, modified to allow nonprinting chars in buffer.
  *		25 Aug 1992, added 'first_mode' argument.
  *		20 Aug 1992, added 'field_len', 'first_col' arguments.
@@ -54,10 +55,10 @@ static	char	Id[] = "$Id: rawgets.c,v 12.0 1993/04/26 16:17:42 ste_cm Rel $";
  *		On normal exit, the user provides a newline, which is echoed.
  */
 
-#define		CUR_PTYPES
 #define		STR_PTYPES
 #include	"ptypes.h"
 #include	<ctype.h>
+#include	"td_curse.h"
 #include	"cmdch.h"
 #include	"dyn_str.h"
 
@@ -69,6 +70,9 @@ static	char	Id[] = "$Id: rawgets.c,v 12.0 1993/04/26 16:17:42 ste_cm Rel $";
 #define	to_left(c)	(((c) == '\b') || ((c) == ARO_LEFT))
 #define	to_right(c)	(((c) == '\f') || ((c) == ARO_RIGHT))
 #define	to_end(c)	(((c) == CTL('F')))
+
+static	void	MoveTo(_ar1(char *,new));
+static	void	ShowAt(_ar1(char *,at));
 
 static	WINDOW	*Z;		/* window we use in this module */
 static	char	**Prefix;	/* insert/scrolling prefix, if any */
@@ -113,7 +117,7 @@ void	ShowAll(_AR0)
  * string.
  */
 static
-int	MoveTo(
+void	MoveTo(
 	_AR1(char *,	new))
 	_DCL(char *,	new)
 {
@@ -147,7 +151,7 @@ int	MoveTo(
  * Repaint the string starting at a given position
  */
 static
-int	ShowAt(
+void	ShowAt(
 	_AR1(char *,	at))
 	_DCL(char *,	at)
 {
@@ -196,7 +200,7 @@ void	InsertAt(
 	do {
 		c = d;
 		d = *s;
-	} while (*s++ = c);
+	} while ((*s++ = c) != EOS);
 	ShowAt(at);
 	MoveTo(at+1);
 }
@@ -223,7 +227,8 @@ char *	DeleteBefore(
 				break;
 		}
 
-		while (*d++ = *s++);
+		while ((*d++ = *s++) != EOS)
+			;
 
 		if (Z) {
 			old = Z->_cury;
@@ -363,7 +368,7 @@ int	wrawgets (
 	bbase = tag = bfr;
 	shift = 0;
 
-	if (Z = win) {
+	if ((Z = win) != 0) {
 		getyx(Z,ybase,xbase);	/* get my initial position */
 		ShowPrefix();
 		(void)wmove(Z,ybase,xbase);
@@ -412,7 +417,7 @@ int	wrawgets (
 				*command = s;
 			}
 			c = decode_logch(command, (int *)0);
-			if (literal = to_literal(c))
+			if ((literal = to_literal(c)) == TRUE)
 				c = decode_logch(command, (int *)0);
 		} else {
 			if (Z)
@@ -421,7 +426,7 @@ int	wrawgets (
 			c = cmdch(Imode ? (int *)0 : &count);
 			log_count = (count != 1);
 
-			if (literal = to_literal(c))
+			if ((literal = to_literal(c)) == TRUE)
 				c = wgetch(Z);
 		}
 		if (c == EOS)
@@ -556,7 +561,7 @@ char *	rawgets_log(_AR0)
 _MAIN
 {
 	register int	j	= 0;
-	auto	 int	wrap	= ((argc > 1) && !strcmp(argv[1], "-w"));
+	auto	 int	w_flag	= ((argc > 1) && !strcmp(argv[1], "-w"));
 	auto	 char	bfr[BUFSIZ];
 	static	 char	*pref[] = { "^ ", "> "};
 
@@ -577,7 +582,7 @@ _MAIN
 		printw("%05d> ", j);
 		rawgets(bfr, pref, sizeof(bfr),
 			COLS/2, strlen(bfr), TRUE,
-			wrap, 'q',
+			w_flag, 'q',
 			(char **)0, FALSE);
 		if (!*bfr)
 			break;

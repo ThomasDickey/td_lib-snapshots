@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcsdebug.c,v 12.0 1991/10/04 12:32:48 ste_cm Rel $";
+static	char	Id[] = "$Id: rcsdebug.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: rcsdebug.c,v 12.0 1991/10/04 12:32:48 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	15 Mar 1989
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		04 Oct 1991, conversion to ANSI
  *		06 Sep 1991, return a value, allowing debug-levels
  *
@@ -19,8 +20,9 @@ static	char	Id[] = "$Id: rcsdebug.c,v 12.0 1991/10/04 12:32:48 ste_cm Rel $";
  */
 
 #include "ptypes.h"
+#include "rcsdefs.h"
 
-rcs_debug(_AR0)
+int	rcs_debug(_AR0)
 {
 	static	int	flag = -1;
 	register char	*s;

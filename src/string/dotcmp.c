@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: dotcmp.c,v 12.0 1993/04/27 07:43:40 ste_cm Rel $";
+static	char	Id[] = "$Id: dotcmp.c,v 12.1 1993/09/21 18:54:05 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: dotcmp.c,v 12.0 1993/04/27 07:43:40 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	19 May 1988
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, converted to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
  *
@@ -24,21 +25,21 @@ static	char	Id[] = "$Id: dotcmp.c,v 12.0 1993/04/27 07:43:40 ste_cm Rel $";
 #define	DOT	'.'
 #define	LAST(s,l)	for (l = 0; (s[l] != DOT) && (s[l] != EOS); l++)
 
-dotcmp(
-_ARX(char *,	s1)
-_AR1(char *,	s2)
-	)
-_DCL(char *,	s1)
-_DCL(char *,	s2)
+int	dotcmp(
+	_ARX(char *,	s1)
+	_AR1(char *,	s2)
+		)
+	_DCL(char *,	s1)
+	_DCL(char *,	s2)
 {
-register int	cmp1, cmp2;
+	register int	cmp1, cmp2;
 
 	while ((*s1 != EOS) || (*s2 != EOS)) {
 		LAST(s1,cmp1);
 		LAST(s2,cmp2);
 		if (cmp1 == cmp2) {	/* same lengths, comparable */
 			while (cmp1-- > 0) {
-				if (cmp2 = (*s1++ - *s2++))
+				if ((cmp2 = (*s1++ - *s2++)) != EOS)
 					return (cmp2);
 			}
 			if ((*s1 != EOS) ^ (*s2 != EOS))

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcskeys.c,v 12.0 1992/11/17 12:52:06 ste_cm Rel $";
+static	char	Id[] = "$Id: rcskeys.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: rcskeys.c,v 12.0 1992/11/17 12:52:06 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	26 May 1988
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		04 Oct 1991, conversion to ANSI
  *		06 Sep 1991, added debug-trace
  *		20 Apr 1989, include "ptypes.h" before "rcsdefs.h" because of
@@ -28,32 +29,32 @@ static	char	Id[] = "$Id: rcskeys.c,v 12.0 1992/11/17 12:52:06 ste_cm Rel $";
 #include	"rcsdefs.h"
 #include	<ctype.h>
 
-rcskeys(
-_AR1(char *,	arg))
-_DCL(char *,	arg)
+int	rcskeys(
+	_AR1(char *,	arg))
+	_DCL(char *,	arg)
 {
 	static	struct	{
 		int	code;
 		char	*text;
 		} keys[] = {
 				/* <admin> section			*/
-		S_HEAD,		"head",		/* {<num>};		*/
-		S_BRANCH,	"branch",	/* {<num>}*;		*/
-		S_ACCESS,	"access",	/* {<id>}*;		*/
-		S_SYMBOLS,	"symbols",	/* {<id> : <num>}*;	*/
-		S_LOCKS,	"locks",	/* {<id> : <num>}*;	*/
-		S_COMMENT,	"comment",	/* {<string};		*/
-		S_STRICT,	"strict",	/* strict-locking	*/
+		{S_HEAD,	"head"},	/* {<num>};		*/
+		{S_BRANCH,	"branch"},	/* {<num>}*;		*/
+		{S_ACCESS,	"access"},	/* {<id>}*;		*/
+		{S_SYMBOLS,	"symbols"},	/* {<id> : <num>}*;	*/
+		{S_LOCKS,	"locks"},	/* {<id> : <num>}*;	*/
+		{S_COMMENT,	"comment"},	/* {<string};		*/
+		{S_STRICT,	"strict"},	/* strict-locking	*/
 				/* <delta> section begins with <num>	*/
-		S_DATE,		"date",		/* <num>;		*/
-		S_AUTHOR,	"author",	/* {<id>};		*/
-		S_STATE,	"state",	/* {<id>};		*/
-		S_BRANCHES,	"branches",	/* {<num>}*;		*/
-		S_NEXT,		"next",		/* {<num>};		*/
-		S_DESC,		"desc",		/* ends header		*/
+		{S_DATE,	"date"},	/* <num>;		*/
+		{S_AUTHOR,	"author"},	/* {<id>};		*/
+		{S_STATE,	"state"},	/* {<id>};		*/
+		{S_BRANCHES,	"branches"},	/* {<num>}*;		*/
+		{S_NEXT,	"next"},	/* {<num>};		*/
+		{S_DESC,	"desc"},	/* ends header		*/
 				/* <deltatext> begins with <num>	*/
-		S_LOG,		"log",		/* log-message		*/
-		S_TEXT,		"text"		/* text/editing commands*/
+		{S_LOG,		"log"},		/* log-message		*/
+		{S_TEXT,	"text"}		/* text/editing commands*/
 		};
 	register int j;
 	register char	*s = arg;

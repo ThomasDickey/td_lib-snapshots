@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcstemp.c,v 12.0 1993/04/29 10:16:26 ste_cm Rel $";
+static	char	Id[] = "$Id: rcstemp.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: rcstemp.c,v 12.0 1993/04/29 10:16:26 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	25 Aug 1988
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		21 Dec 1992, RCS 5 on Posix setuid does not need temp-dir
  *		06 Feb 1992, use 'stat_dir()'
  *		22 Oct 1991, ensure that we unlink the temp-file if it already
@@ -36,18 +37,18 @@ static	char	Id[] = "$Id: rcstemp.c,v 12.0 1993/04/29 10:16:26 ste_cm Rel $";
  */
 
 #define	STR_PTYPES
-#include	"ptypes.h"
-#include	<errno.h>
+#include "ptypes.h"
+#include "rcsdefs.h"
+#include <errno.h>
 
-#define	DEBUG	if (rcs_debug()) PRINTF
+#define	DEBUG	if (RCS_DEBUG) PRINTF
 
-char *
-rcstemp(
-_ARX(char *,	working)
-_AR1(int,	copy)
-	)
-_DCL(char *,	working)
-_DCL(int,	copy)
+char *	rcstemp(
+	_ARX(char *,	working)
+	_AR1(int,	copy)
+		)
+	_DCL(char *,	working)
+	_DCL(int,	copy)
 {
 	static	char	tmp[BUFSIZ];
 

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: gid2s.c,v 12.0 1991/10/03 08:35:25 ste_cm Rel $";
+static	char	Id[] = "$Id: gid2s.c,v 12.1 1993/09/21 18:54:04 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: gid2s.c,v 12.0 1991/10/03 08:35:25 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	10 Nov 1987
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, conversion to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
  *		04 Oct 1989, speedup (?) by reading ids only as needed
@@ -42,12 +43,12 @@ typedef	struct	_table	{
 static	TABLE	*table_gid2s;
 
 static
-define_gid2s(
-_ARX(int,	gid)
-_AR1(char *,	name)
-	)
-_DCL(int,	gid)
-_DCL(char *,	name)
+void	define_gid2s(
+	_ARX(int,	gid)
+	_AR1(char *,	name)
+		)
+	_DCL(int,	gid)
+	_DCL(char *,	name)
 {
 	register TABLE	*q = ALLOC(TABLE,1);
 	q->link  = table_gid2s;
@@ -75,7 +76,7 @@ _DCL(int,	gid)
 		define_gid2s(gid, "<none>");
 	} else
 #endif
-	if (p = getgrgid(gid))
+	if ((p = getgrgid(gid)) != 0)
 		define_gid2s(gid, p->gr_name);
 	else {
 		auto	char	bfr[80];

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: s2gid.c,v 12.0 1991/10/03 08:09:40 ste_cm Rel $";
+static	char	Id[] = "$Id: s2gid.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: s2gid.c,v 12.0 1991/10/03 08:09:40 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	16 Nov 1987
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, conversion to ANSI
  *		15 May 1991,
  *		apollo sr10.3 cpp complains about tag in #endif
@@ -18,16 +19,18 @@ static	char	Id[] = "$Id: s2gid.c,v 12.0 1991/10/03 08:09:40 ste_cm Rel $";
 #include	"ptypes.h"
 #include	<grp.h>
 
-s2gid(
-_AR1(char *,	s))
-_DCL(char *,	s)
+int	s2gid(
+	_AR1(char *,	s))
+	_DCL(char *,	s)
 {
-char	*d;
-long	val = strtol(s, &d, 0);
+	char	*d;
+	long	val = strtol(s, &d, 0);
+
 	if (*d) {
-	extern	 struct	group	*getgrnam();	/* cf: apollo sys5 */
-	register struct	group	*p;
-		if (p = getgrnam(s))
+		extern	 struct	group	*getgrnam(_ar1(char *,name));	/* cf: apollo sys5 */
+		register struct	group	*p;
+
+		if ((p = getgrnam(s)) != 0)
 			val = p->gr_gid;
 		else	val = -1;
 	}

@@ -1,4 +1,4 @@
-# $Id: Makefile,v 12.0 1993/04/26 16:38:31 ste_cm Rel $
+# $Id: Makefile,v 12.1 1993/09/21 12:44:17 dickey Exp $
 # MAKE-file for miscellaneous library routines
 
 ####### (Environment) ##########################################################
@@ -358,3 +358,4 @@ rcspath.h:		Makefile
 $(SOURCES):			; $(GET) $@
 lint.out:	$(CSRC)		; $(DATE); $(LINT_EACH)
 lincnt.out:	$(CSRC)		; $(DATE); lincnt $(CSRC) >>$@
+tags:		$(CSRC)		; dotags $(CSRC)

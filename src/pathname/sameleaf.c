@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: sameleaf.c,v 12.0 1991/10/03 08:45:15 ste_cm Rel $";
+static	char	Id[] = "$Id: sameleaf.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: sameleaf.c,v 12.0 1991/10/03 08:45:15 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	19 Sep 1988
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, conversion to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
  *		04 Oct 1989, lint (apollo SR10.1)
@@ -34,12 +35,12 @@ static	char	Id[] = "$Id: sameleaf.c,v 12.0 1991/10/03 08:45:15 ste_cm Rel $";
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-sameleaf(
-_ARX(char *,	path)
-_AR1(char *,	leaf)
-	)
-_DCL(char *,	path)
-_DCL(char *,	leaf)
+int	sameleaf(
+	_ARX(char *,	path)
+	_AR1(char *,	leaf)
+		)
+	_DCL(char *,	path)
+	_DCL(char *,	leaf)
 {
 	auto	 int	adjust;
 	auto	 char	tmp[BUFSIZ];
@@ -48,10 +49,10 @@ _DCL(char *,	leaf)
 	(void)strcpy(tmp, path);
 	while (!strncmp(leaf, "../", 3))
 		leaf += 3;
-	while (s = strrchr(tmp, '/')) {	/* find real leaf-name */
+	while ((s = strrchr(tmp, '/')) != NULL) { /* find real leaf-name */
 		if (*(++s))
 			break;
-		*(--s) = '\0';		/* ...trimming off trailing '/' */
+		*(--s) = EOS;		/* ...trimming off trailing '/' */
 	}
 	if (s == 0)
 		s = tmp;

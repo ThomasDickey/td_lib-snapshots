@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: diffload.c,v 12.0 1993/04/26 16:15:29 ste_cm Rel $";
+static	char	Id[] = "$Id: diffload.c,v 12.1 1993/09/21 18:54:05 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: diffload.c,v 12.0 1993/04/26 16:15:29 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	25 Feb 1992
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *
  * Function:	Loads one or more files and returns an array of DELTREE
  *		structures, which represent the successive differences between
@@ -70,7 +71,7 @@ _DCL(char *,	name2)
 	auto	FILE	*pp;
 	auto	char	tmp1[MAXPATHLEN*2 + 1];
 	auto	char	tmp2[MAXPATHLEN*2 + 1];
-	auto	void	(*trace)() = 0;
+	auto	void	(*trace)(_ar1(char *,s)) = 0;
 
 	(void)name2s(tmp1, sizeof(tmp1), name1, 1);
 	(void)name2s(tmp2, sizeof(tmp2), name2, 1);
@@ -81,7 +82,7 @@ _DCL(char *,	name2)
 	APPEND(cmd, " ");
 	APPEND(cmd, tmp1);
 
-	if (pp = popen(dyn_string(cmd), "r")) {
+	if ((pp = popen(dyn_string(cmd), "r")) != 0) {
 		char	**script;
 		int	length	= fp2argv(pp, &script, trace),
 			n;
@@ -172,12 +173,12 @@ _DCL(DELTREE *,	p)
 
 #ifdef	TEST
 static
-compare(
-_ARX(char **,	vector)
-_AR1(char *,	revision)
-	)
-_DCL(char **,	vector)
-_DCL(char *,	revision)
+void	compare(
+	_ARX(char **,	vector)
+	_AR1(char *,	revision)
+		)
+	_DCL(char **,	vector)
+	_DCL(char *,	revision)
 {
 	char	temp[BUFSIZ],
 		buffer[BUFSIZ];

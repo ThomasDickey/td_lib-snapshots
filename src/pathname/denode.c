@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: denode.c,v 12.0 1991/10/04 07:26:07 ste_cm Rel $";
+static	char	Id[] = "$Id: denode.c,v 12.1 1993/09/21 12:03:12 dickey Exp $";
 #endif
 
 /*
@@ -45,7 +45,7 @@ register char *s = path, *t = node;
 	else {
 		while ((*t != '/') && *t) t++;
 		if (opt) {
-			*t = '\0';
+			*t = EOS;
 			*opt = t - node;
 		}
 	}

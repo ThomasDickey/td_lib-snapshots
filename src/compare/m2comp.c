@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: m2comp.c,v 12.0 1993/04/27 07:45:55 ste_cm Rel $";
+static	char	Id[] = "$Id: m2comp.c,v 12.1 1993/09/21 18:54:04 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: m2comp.c,v 12.0 1993/04/27 07:45:55 ste_cm Rel $";
  * Author:	T.E.Dickey (from MDIFF program)
  * Created:	05 Jul 1989
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		13 Nov 1992, to chunk the allocations of array cells, reducing
  *			     overhead.  Corrected logic that freed cells (had
  *			     freed some more than once).
@@ -27,7 +28,7 @@ static	char	Id[] = "$Id: m2comp.c,v 12.0 1993/04/27 07:45:55 ste_cm Rel $";
 typedef	unsigned short	Line;		/* should not need long for line # */
 
 #define	EDIT	struct	edit
-typedef	EDIT {
+	EDIT {
 	EDIT	*link;		/* previous edit command */
 	Line	line1;		/* line number in file1 */
 	Line	line2;		/* line number in file2 */
@@ -35,7 +36,7 @@ typedef	EDIT {
 };
 
 #define	SAVE	struct	save
-typedef	SAVE {
+	SAVE {
 	SAVE	*link;
 	int	used;
 	EDIT	edit_struct[1];
@@ -60,7 +61,7 @@ void	m2comp(
 	_ARX(int,		n2)	/* ...corresponding length	*/
 	_ARX(int,		size)	/* size of vector-entry		*/
 	_FNX(int,		match,	(SCOMP_MATCH_ARGS))
-	_FN1(int,		report,	(SCOMP_REPORT_ARGS))
+	_FN1(void,		report,	(SCOMP_REPORT_ARGS))
 		)
 	_DCL(SCOMP_TYPE,	v1)
 	_DCL(SCOMP_TYPE,	v2)
@@ -68,16 +69,16 @@ void	m2comp(
 	_DCL(int,		n2)
 	_DCL(int,		size)
 	_DCL(int,		(*match)())
-	_DCL(int,		(*report)())
+	_DCL(void,		(*report)())
 {
 	auto	char	*V1	= (char *)v1;
 	auto	char	*V2	= (char *)v2;
 	auto	int	done	= FALSE;
 	auto	EDIT	*ep, *behind, *ahead, *a, *b, *x, *w;
 	auto	int	change;
-	auto	EDIT	*start;
+	auto	EDIT	*start	= 0;
+	auto	unsigned max_d;		/* bound on size of edit script */
 	auto	Line	ORIGIN,
-			max_d,		/* bound on size of edit script */
 			lower,		/* left-most diagonal under test */
 			upper,		/* right-most diagonal under test */
 			d,		/* current diagonal distance */
@@ -143,8 +144,8 @@ void	m2comp(
 
 			/* find a d on diagonal k */
 			if (	k             == ORIGIN - d
-			    ||  k             != ORIGIN + d
-			    &&  last_d[k + 1] >= last_d[k - 1]) {
+			    || (k             != ORIGIN + d
+			    &&  last_d[k + 1] >= last_d[k - 1])) {
 				/*
 				 * Moving down from the last d-1 on diagonal k+1
 				 * puts you farther along diagonal k than does
@@ -218,7 +219,7 @@ void	m2comp(
 		ep->link = behind;
 	}
 
-	while (b = ep) {
+	while ((b = ep) != NULL) {
 		if (ep->op == INSERT) {
 			do {
 				x = b;

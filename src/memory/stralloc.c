@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: stralloc.c,v 12.0 1991/10/04 07:59:27 ste_cm Rel $";
+static	char	Id[] = "$Id: stralloc.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: stralloc.c,v 12.0 1991/10/04 07:59:27 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	01 Dec 1987
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, converted to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
  *		04 Oct 1989, lint (apollo SR10.1)
@@ -29,17 +30,16 @@ static	char	Id[] = "$Id: stralloc.c,v 12.0 1991/10/04 07:59:27 ste_cm Rel $";
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-char *
-stralloc(
-_AR1(char *,	s))
-_DCL(char *,	s)
+char *	stralloc(
+	_AR1(char *,	s))
+	_DCL(char *,	s)
 {
 	return(strcpy(doalloc((char *)0, (unsigned)strlen(s)+1), s));
 }
 
-strfree(
-_AR1(char *,	s))
-_DCL(char *,	s)
+void	strfree(
+	_AR1(char *,	s))
+	_DCL(char *,	s)
 {
 	dofree(s);
 }

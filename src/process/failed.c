@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: failed.c,v 12.0 1991/10/17 16:30:03 ste_cm Rel $";
+static	char	Id[] = "$Id: failed.c,v 12.1 1993/09/21 18:54:04 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: failed.c,v 12.0 1991/10/17 16:30:03 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	27 Apr 1989
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, converted to ANSI
  *
  * Function:	Provides a known fatal-error exit for procedures (such as
@@ -20,9 +21,9 @@ static	char	Id[] = "$Id: failed.c,v 12.0 1991/10/17 16:30:03 ste_cm Rel $";
 
 #include "ptypes.h"
 
-failed(
-_AR1(char *,	s))
-_DCL(char *,	s)
+void	failed(
+	_AR1(char *,	s))
+	_DCL(char *,	s)
 {
 	FFLUSH(stdout);
 	perror(s);

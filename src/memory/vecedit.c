@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	*Id = "$Id: vecedit.c,v 12.0 1993/04/27 07:52:07 ste_cm Rel $";
+static	char	*Id = "$Id: vecedit.c,v 12.1 1993/09/21 18:54:02 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	*Id = "$Id: vecedit.c,v 12.0 1993/04/27 07:52:07 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	16 Sep 1991
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		10 Oct 1991, corrected off-by-one error in 'e_at' variable.
  *
  * Function:	Processes two lists of pointers to strings.  The first list
@@ -91,16 +92,17 @@ _DCL(char **,	script)
 }
 
 #ifdef	TEST
-void
-show_delta(buffer)
-char	*buffer;
+void	show_delta(
+	_ar1(char *,	buffer));
+
+void	show_delta(
+	_AR1(char *,	buffer))
+	_DCL(char *,	buffer)
 {
 }
 
 _MAIN
 {
-	extern	FILE	*popen();
-
 	FILE	*pp;
 	int	len2,	len4;
 	char	**vec1, **vec2, **vec3, **vec4;
@@ -117,7 +119,7 @@ _MAIN
 	len2 = file2argv(argv[2], &vec2);
 
 	FORMAT(command, "diff -n %s %s", argv[1], argv[2]);
-	if (pp = popen(command, "r")) {
+	if ((pp = popen(command, "r")) != NULL) {
 		(void)fp2argv(pp, &vec3, show_delta);
 		(void)pclose(pp);
 		vec4 = vecedit(vec1, vec3);

@@ -1,4 +1,4 @@
-/* $Id: rcsdefs.h,v 12.0 1992/11/17 13:06:43 ste_cm Rel $ */
+/* $Id: rcsdefs.h,v 12.1 1993/09/21 17:54:06 dickey Exp $ */
 
 #ifndef	_RCSDEFS_H_
 #define	_RCSDEFS_H_
@@ -37,6 +37,12 @@
 #define	FMT_DATE	"%02d.%02d.%02d.%02d.%02d.%02d"
 
 #define NULL_FUNC (int (*)())0
+
+typedef	void	(*RcsparseStr)(
+#if PROTOTYPES
+			int	c
+#endif
+		);
 
 /*
  * If the environment variable RCS_DEBUG is defined, we activate additional
@@ -140,10 +146,10 @@
 
 	char *	rcsparse_str(
 			_arx(char *,	s)
-			_fn1(int,	f,	(_AR1(int,c)))
+			_ar1(RcsparseStr,f)
 			)
 			_dcl(char *,	s)
-			_dcl(int,	(*f)())
+			_dcl(RcsparseStr,f)
 			_ret
 
 	/* rcskeys.c ------------------------------------------------- */
@@ -154,7 +160,7 @@
 			_ret
 
 	/* rcslast.c ------------------------------------------------- */
-		rcslast(
+	void	rcslast(
 			_arx(char *,	wd)
 			_arx(char *,	n)
 			_arx(char **,	v_)
@@ -181,7 +187,7 @@
 			_dcl(int,	verbose)
 			_ret
 
-		rcsunload(
+	void	rcsunload(
 			_ar1(DELTREE *,	p)
 			)
 			_dcl(DELTREE *,	p)
@@ -226,11 +232,11 @@
 	int	rcspermit(
 			_arx(char *,	path)
 			_arx(char *,	base)
-			_ar1(char **,	access)
+			_ar1(char **,	accflag)
 			)
 			_dcl(char *,	path)
 			_dcl(char *,	base)
-			_dcl(char **,	access)
+			_dcl(char **,	accflag)
 			_ret
 
 	/* rcssymbols.c ---------------------------------------------- */

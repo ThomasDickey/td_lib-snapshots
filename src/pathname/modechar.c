@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: modechar.c,v 12.0 1991/10/03 17:18:15 ste_cm Rel $";
+static	char	Id[] = "$Id: modechar.c,v 12.1 1993/09/21 18:54:04 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: modechar.c,v 12.0 1991/10/03 17:18:15 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	18 Nov 1987
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, converted to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
  *		25 Jul 1989, recompiled with apollo SR10 -- mods for function
@@ -25,11 +26,12 @@ static	char	Id[] = "$Id: modechar.c,v 12.0 1991/10/03 17:18:15 ste_cm Rel $";
 #define	S_IFFIFO	010000
 #endif
 
-modechar(
-_AR1(unsigned,	mode))
-_DCL(unsigned,	mode)
+int	modechar(
+	_AR1(unsigned,	mode))
+	_DCL(unsigned,	mode)
 {
-register int	c;
+	register int	c;
+
 	switch (mode & S_IFMT) {
 	case S_IFDIR:	c = 'd';	break;
 	case S_IFCHR:	c = 'c';	break;

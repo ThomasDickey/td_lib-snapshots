@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: strbcmp.c,v 12.0 1992/11/20 14:13:31 ste_cm Rel $";
+static	char	Id[] = "$Id: strbcmp.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: strbcmp.c,v 12.0 1992/11/20 14:13:31 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	07 Apr 1989
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, converted to ANSI
  *
  * Function:	compare two strings, treating sequences of embedded whitespace
@@ -23,12 +24,12 @@ static	char	Id[] = "$Id: strbcmp.c,v 12.0 1992/11/20 14:13:31 ste_cm Rel $";
 
 #define	SKIP(p)	while (isspace(*p))	p++;
 
-strbcmp(
-_ARX(register char *,	a)
-_AR1(register char *,	b)
-	)
-_DCL(register char *,	a)
-_DCL(register char *,	b)
+int	strbcmp(
+	_ARX(register char *,	a)
+	_AR1(register char *,	b)
+		)
+	_DCL(register char *,	a)
+	_DCL(register char *,	b)
 {
 	register int	cmp;
 
@@ -36,7 +37,7 @@ _DCL(register char *,	b)
 		if (isspace(*a) && isspace(*b)) {
 			SKIP(a);
 			SKIP(b);
-		} else if (cmp = (*a++ - *b++))
+		} else if ((cmp = (*a++ - *b++)) != EOS)
 			return (cmp);
 	}
 	SKIP(a);
@@ -48,7 +49,9 @@ _DCL(register char *,	b)
 /*ARGSUSED*/
 _MAIN
 {
+#ifdef	TEST2
 	auto	time_t	now;
+#endif
 	static	char	*tbl[] = {
 				"ab",
 				" ab",

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: resizwin.c,v 12.0 1991/10/03 08:12:19 ste_cm Rel $";
+static	char	Id[] = "$Id: resizwin.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: resizwin.c,v 12.0 1991/10/03 08:12:19 ste_cm Rel $";
  * Title:	resizewin.c (change size of curses window)
  * Created:	21 Apr 1988
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, conversion to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
  *		27 Jul 1988, broke out 'scr_size()' so we can use it to control
@@ -23,8 +24,7 @@ static	char	Id[] = "$Id: resizwin.c,v 12.0 1991/10/03 08:12:19 ste_cm Rel $";
  * Returns:	TRUE if a change has been made.
  */
 
-#define		CUR_PTYPES
-#include	"ptypes.h"
+#include	"td_curse.h"
 
 static	unsigned	size[2];
 
@@ -43,12 +43,11 @@ static	unsigned	size[2];
 #endif
 
 static
-doit(
-_AR1(WINDOW *,	w))
-_DCL(WINDOW *,	w)
+void	doit(
+	_AR1(WINDOW *,	w))
+	_DCL(WINDOW *,	w)
 {
-register
-int	row;
+	register int	row;
 
 
 	/*
@@ -91,7 +90,7 @@ int	row;
 	w->_maxy = my_LINES; if (w->_cury >= my_LINES) w->_cury = 0;
 }
 
-resizewin(_AR0)
+int	resizewin(_AR0)
 {
 	int	lc[2];
 	if (scr_size(lc) >= 0) {

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: txtalloc.c,v 12.0 1992/11/24 15:47:08 ste_cm Rel $";
+static	char	Id[] = "$Id: txtalloc.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: txtalloc.c,v 12.0 1992/11/24 15:47:08 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	29 Apr 1988
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		16 Nov 1992, Added 'free_txtalloc()' for debugging memory leaks.
  *		03 Oct 1991, converted to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
@@ -52,8 +53,8 @@ NODE *	new_NODE(
 	_AR1(char *,	text))
 	_DCL(char *,	text)
 {
-register
-NODE	*p = MYALLOC(NODE, sizeof(NODE) + strlen(text));
+	register NODE	*p = MYALLOC(NODE,
+				sizeof(NODE) + (unsigned)strlen(text));
 	(void)strcpy(KEY(p),text);
 	LLINK(p) =
 	RLINK(p) = 0;
@@ -81,9 +82,9 @@ char	*value;
 		return (KEY(p));
 	}
 				/* (A2:Compare) */
-	while (a = strcmp(text, value = KEY(p))) {
+	while ((a = strcmp(text, value = KEY(p))) != 0) {
 				/* (A3,A4: move left/right accordingly)	*/
-		if (q = LINK(a,p)) {
+		if ((q = LINK(a,p)) != NULL) {
 			if (B(q)) {
 				t = p;
 				s = q;
@@ -106,7 +107,7 @@ char	*value;
 				r = p = RLINK(s);
 
 			while (p != q) {
-				if (a = strcmp(text, KEY(p))) {
+				if ((a = strcmp(text, KEY(p))) != 0) {
 					B(p) = (a < 0) ? -1 : 1;
 					p = LINK(a,p);
 				}
@@ -188,6 +189,10 @@ void	free_txtalloc(_AR0)
 
 /******************************************************************************/
 #ifdef	TEST
+void	txtdump(
+	_arx(NODE *,	p)
+	_ar1(int,	level));
+
 void	txtdump(
 	_ARX(NODE *,	p)
 	_AR1(int,	level)

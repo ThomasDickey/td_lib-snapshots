@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: file2arg.c,v 12.0 1991/10/03 08:47:45 ste_cm Rel $";
+static	char	Id[] = "$Id: file2arg.c,v 12.1 1993/09/21 18:54:04 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: file2arg.c,v 12.0 1991/10/03 08:47:45 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	06 Apr 1989
  * Modified:
+ *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, conversion to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
  *		05 Mar 1990, lint
@@ -34,12 +35,12 @@ static	char	Id[] = "$Id: file2arg.c,v 12.0 1991/10/03 08:47:45 ste_cm Rel $";
 #define	AVG_LINE	25		/* nominal line-length */
 #define	AMOUNT(n)	(unsigned)(n)
 
-file2argv(
-_ARX(char *,	name)
-_AR1(char ***,	vec)
-	)
-_DCL(char *,	name)
-_DCL(char ***,	vec)
+int	file2argv(
+	_ARX(char *,	name)
+	_AR1(char ***,	vec)
+		)
+	_DCL(char *,	name)
+	_DCL(char ***,	vec)
 {
 	auto	 int	j,
 			length,
@@ -78,7 +79,7 @@ _DCL(char ***,	vec)
 	for (j = newlines, s = blob + length, d = s + newlines; d != s; ) {
 		if (*s == '\n') {
 			p[j--] = d + 1;
-			*d-- = '\0';
+			*d-- = EOS;
 		}
 		*d-- = *s--;
 	}
