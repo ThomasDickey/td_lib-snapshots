@@ -6,6 +6,7 @@ dumpchr
 dumptty
 dumpwin
 erasechr
+getmaxx
 is_xterm
 killchar
 lnextchr

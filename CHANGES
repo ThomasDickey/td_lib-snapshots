@@ -1,3 +1,27 @@
+2003-11-06  dickey@invisible-island.net
+
+	* aclocal.m4:
+	ensure we're always using the derived curses.h header include
+
+2003-11-05  dickey@invisible-island.net
+
+	* include/td_curse.h:
+	workaround for HPUX curses, which has no getmaxx(), etc.,
+
+	* src/curses/getmaxx.c: RCS_BASE
+
+	* src/curses/modules: add getmaxx.c
+
+	* configure.in: add checks for getbegyx() and getmaxyx()
+
+	* include/td_curse.h:
+	handle the different ifdef's for term.h wrt ncurses, ncursesw
+
+	* aclocal.m4: fixes for term.h wrt ncurses, ncursesw,
+	broken "POSIX" head -1,
+	case-independent names on cygwin and os/2,
+	use EXEEXT and OBJEXT
+
 2003-10-23  dickey@invisible-island.net
 
 	* config.sub: 2003-08-18
