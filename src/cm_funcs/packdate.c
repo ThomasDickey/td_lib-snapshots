@@ -1,13 +1,24 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs/RCS/packdate.c,v 7.0 1989/07/25 09:12:18 ste_cm Rel $";
+static	char	Id[] = "$Id: packdate.c,v 8.0 1990/06/28 15:10:46 ste_cm Rel $";
 #endif	lint
 
 /*
+ * Title:	packdate.c (pack numbers to make a UNIX date)
  * Author:	T.E.Dickey
+ * Created:	26 Mar 1986
  * $Log: packdate.c,v $
- * Revision 7.0  1989/07/25 09:12:18  ste_cm
- * BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+ * Revision 8.0  1990/06/28 15:10:46  ste_cm
+ * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
  *
+ *		Revision 7.1  90/06/28  15:10:46  dickey
+ *		added a test-driver.
+ *		modified (for SunOs 4.1 upgrade) code which adjusts for the
+ *		timezone, since the 'gettimeofday()' system call was not
+ *		working properly.
+ *		
+ *		Revision 7.0  89/07/25  09:12:18  ste_cm
+ *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+ *		
  *		Revision 6.0  89/07/25  09:12:18  ste_cm
  *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
  *		
@@ -48,6 +59,10 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs
 #endif
 extern	struct	tm	*localtime();
 
+#ifdef	TEST
+#define	DEBUG(s)	printf s;
+#endif
+
 #define	MINUTE	60
 #define	HOUR	(60*MINUTE)
 #define	DAY	(24*HOUR)
@@ -59,6 +74,7 @@ long
 packdate (year, mon, day, hour, min, s)
 int	 year, mon, day, hour, min, s;
 {
+struct	tm tm;
 time_t	sec = s;
 register int	j;
 static	int	m[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
@@ -75,33 +91,76 @@ static	int	m[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 	if (mon > 2 && LEAP(year))	sec += DAY;
 	sec += (day-1) * DAY;
 	/* adjustments for timezone, etc. */
+
+	/*
+	 * Parse the computed time using 'localtime' to avoid the complication
+	 * of determining the range between the last-Sunday-in-April to the
+	 * last-Sunday-in-October. Invoke it here so we can bypass the SunOs
+	 * 'gettimeofday()' procedure, which does not work well.
+	 */
+	tm = *localtime(&sec);
+
 #ifdef	SYSTEM5
 	{
 	extern	long	timezone;
 		sec += timezone;
 	}
-#else	SYSTEM5
+#else	!SYSTEM5
+#ifdef	sun
+	sec -= tm.tm_gmtoff;
+#else	UNIX
 	{
 	struct	timeval	t;
 	struct	timezone tz;
 		(void)gettimeofday(&t, &tz);
 		sec += (tz.tz_minuteswest * MINUTE);
 	}
-#endif	SYSTEM5
-	if (dst(sec))	sec -= HOUR;
+#endif	sun/UNIX
+#endif	SYSTEM5/sun/UNIX
+
+	/*
+	 * Check to see if the local-time display for a given clock-time
+	 * (in GMT seconds) would be bumped up an hour for daylight savings
+	 * time.
+	 */
+#ifndef	sun
+	if (tm.tm_isdst)	sec -= HOUR;
+#endif
+
 	return (sec);
 }
 
-/*
- * Check to see if the local-time display for a given clock-time (in GMT
- * seconds) would be bumped up an hour for daylight savings time.  This uses
- * the procedure 'localtime' to avoid the complication of determining the
- * range between the last-Sunday-in-April to the last-Sunday-in-October!
- */
-static	dst (clock)
-time_t	clock;
+/************************************************************************
+ *	Test Driver							*
+ ************************************************************************/
+#ifdef	TEST
+main(argc,argv)
+char	*argv[];
 {
-struct	tm	tm;
-	tm = *localtime(&clock);
-	return (tm.tm_isdst);
+	auto	time_t	now = time((time_t *)0);
+	auto	time_t	then;
+	auto	struct	tm tm;
+	tm = *localtime(&now);
+
+	printf("Current time: %s", ctime(&now));
+	printf("  sec   =%d\n",  tm.tm_sec);
+	printf("  min   =%d\n",  tm.tm_min);
+	printf("  hour  =%d\n",  tm.tm_hour);
+	printf("  mday  =%d\n",  tm.tm_mday);
+	printf("  mon   =%d\n",  tm.tm_mon);
+	printf("  year  =%d\n",  tm.tm_year);
+	printf("  wday  =%d\n",  tm.tm_wday);
+	printf("  yday  =%d\n",  tm.tm_yday);
+	printf("  isdst =%d\n",  tm.tm_isdst);
+#ifdef	sun
+	printf("  zone  =%s\n",  tm.tm_zone);
+	printf("  gmtoff=%ld\n", tm.tm_gmtoff);
+#endif
+
+	then = packdate (tm.tm_year+1900, tm.tm_mon, tm.tm_mday,
+			tm.tm_hour,       tm.tm_min, tm.tm_sec);
+	printf("Packed time: %s", ctime(&then));
+	exit(SUCCESS);
+	/*NOTREACHED*/
 }
+#endif	TEST
