@@ -1,4 +1,4 @@
-/* $Id: td_regex.h,v 12.10 1995/02/11 19:21:04 tom Exp $ */
+/* $Id: td_regex.h,v 12.11 1996/05/23 10:35:36 tom Exp $ */
 
 /*
  * SYSTEM5/BSD4.x differences between native regular-expression handling:
@@ -20,7 +20,7 @@
 #if HAVE_REGEXPR_H_FUNCS && !defined(REGEX_T)	/* Solaris */
 #  include <regexpr.h>
 #  define REGEX_T char *
-#  define OLD_REGEX(expr)		free(&expr)
+#  define OLD_REGEX(expr)		free(expr)
 #  define NEW_REGEX(expr,pattern)	((expr = compile(pattern, (char *)0, (char *)0)) != 0)
 #  define GOT_REGEX(expr,string)	(step(string, expr) != 0)
 #endif
