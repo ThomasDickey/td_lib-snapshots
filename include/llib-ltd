@@ -1,4 +1,4 @@
-/* @(#)llib-ltd	1.6 88/04/22 06:47:38 */
+/* @(#)llib-ltd	1.7 88/04/27 11:05:57 */
 /*LINTLIBRARY*/
 
 #include	<curses.h>
@@ -50,7 +50,7 @@ int	erasechar() { return(0); }
 char	*gid2s(gid) { return(0); }
 
 /* killchar.c --------------------------------------------------------- */
-int	killchar() { }
+int	killchar() { return(0); }
 
 /* modechar.c --------------------------------------------------------- */
 int	modechar(mode) unsigned mode; { return(0); }

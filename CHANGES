@@ -1,3 +1,44 @@
+1988-04-27  dickey@software.org
+
+	* src/curses/rawgets.c:
+	general cleanup/rewrite to make this do wraparound correctly.
+
+	* include/llib-ltd: forgot return value of 'killchar()'.
+
+	* include/cmdch.h:
+	make the arrow-codes non-ascii so we don't get burned by conflicts with other controls.
+
+	* include/cmdch.h: sccs2rcs keywords
+
+1988-04-27  ste_cm@software.org
+
+	* include/cmdch.h:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* include/cmdch.h: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* include/cmdch.h:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* include/cmdch.h: BASELINE Mon Jun 19 13:22:44 EDT 1989
+
+	* include/cmdch.h: BASELINE Thu Apr  6 09:38:25 EDT 1989
+
+	* include/cmdch.h:
+	BASELINE Thu Aug 24 09:35:35 EDT 1989 -- support:navi_011(rel2)
+
+	* include/cmdch.h:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1988-04-27  dickey@software.org
+
+	* src/curses/rawgets.c:
+	use 'cmdch()' to get repeat-count for left/right movement of cursor.
+
+	* src/Makefile, src/curses/cmdch.c: broke out "cmdch.h" include
+
+	* include/cmdch.h: New file.
+
 1988-04-22  dickey@software.org
 
 	* src/curses/savewin.c:

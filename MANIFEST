@@ -1,7 +1,8 @@
-MANIFEST for td_lib, version t19880422
+MANIFEST for td_lib, version t19880427
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 include                         subdirectory
+include/cmdch.h                 
 include/llib-ltd                template for lint-library
 include/ptypes.h                principal include-file for TD_LIB
 src                             subdirectory
