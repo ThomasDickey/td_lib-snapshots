@@ -1,3 +1,35 @@
+1994-07-12  dickey@clark.net
+
+	* src/pathname/acc_mode.c: typo
+
+	* aclocal.m4: only redefine SIG_IGN if I'm running gcc.
+
+	* include/ptypes.h:
+	don't define 'bzero()' if we've got it as a function.
+	SunOS has no "#error" control
+
+	* include/td_regex.h: fixes for SunOS and IRIX
+
+	* configure.in:
+	generate config.h directly from conftest.h, because SunOS sed cannot
+	handle the long (>4k) line length that my full configuration takes.
+	Also added test for stat.st_blocks
+
+	* aclocal.m4: mods for SunOS, CLIX and IRIX
+
+	* src/port2vms/Makefile:
+	defined dummy value for OBJS to avoid syntax err on CLIX
+
+	* src/port2dos/Makefile:
+	defined dummy value for OBJS to avoid syntax-err on CLIX
+
+	* src/td_rules.mk: use RANLIB
+
+	* support/Makefile: added a dummy action for dumb make programs
+
+	* include/td_curse.h:
+	don't prototype erasechar/killchar if they're macros
+
 1994-07-11  dickey@clark.net
 
 	* include/td_regex.h: corrected test for strwcmp

@@ -1,4 +1,4 @@
-/* $Id: td_curse.h,v 12.18 1994/07/10 22:40:57 tom Exp $ */
+/* $Id: td_curse.h,v 12.19 1994/07/12 13:12:44 tom Exp $ */
 
 /*
  * TD_LIB CURSES-related definitions
@@ -185,7 +185,7 @@ extern	XtermMouse xt_mouse;	/* state of XTerm-mouse */
 			_nul
 
 	/* erasechar.c ------------------------------------------------ */
-#if	!HAVE_ERASECHAR
+#if	!HAVE_ERASECHAR && !defined(erasechar)
 	int	erasechar(_ar0)
 			_ret
 #endif
@@ -193,7 +193,7 @@ extern	XtermMouse xt_mouse;	/* state of XTerm-mouse */
 			_ret
 
 	/* killchar.c ------------------------------------------------- */
-#if	!HAVE_KILLCHAR
+#if	!HAVE_KILLCHAR && !defined(killchar)
 	int	killchar(_ar0)
 			_ret
 #endif

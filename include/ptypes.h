@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 12.28 1994/07/04 11:58:56 tom Exp $ */
+/* $Id: ptypes.h,v 12.30 1994/07/12 18:57:46 tom Exp $ */
 
 #ifndef	PTYPES_H
 #define	PTYPES_H
@@ -465,8 +465,8 @@ static	struct	direct	dbfr;
 #if SIG_IGN_REDEFINEABLE
 # undef  SIG_DFL
 # undef  SIG_IGN
-# define SIG_DFL	(RETSIGTYPE (*)(SIGNAL_ARGS))0
-# define SIG_IGN	(RETSIGTYPE (*)(SIGNAL_ARGS))1
+# define SIG_DFL	((RETSIGTYPE (*)(SIGNAL_ARGS))0)
+# define SIG_IGN	((RETSIGTYPE (*)(SIGNAL_ARGS))1)
 #endif
 
 #ifndef	NSIG		/* e.g., MSDOS */
@@ -488,7 +488,9 @@ static	struct	direct	dbfr;
 #  endif /* not STDC_HEADERS and HAVE_MEMORY_H */
 #  define bcopy(s, d, n) memcpy ((d), (s), (n))
 #  define bcmp(s1, s2, n) memcmp ((s1), (s2), (n))
-#  define bzero(s, n) memset ((s), 0, (n))
+#  if !HAVE_BZERO
+#    define bzero(s, n) memset ((s), 0, (n))
+#  endif
 #else /* not STDC_HEADERS and not HAVE_STRING_H */
 #  include <strings.h>
 #  define strchr index
@@ -555,8 +557,6 @@ extern	long	timezone;
 #      define TermioT struct sgttyb
 #      define GetTerminal gtty(0, p)
 #      define SetTerminal stty(0, p)
-#    else
-#      error "TRM_PTYPES?"
 #    endif
 #  endif
 #endif

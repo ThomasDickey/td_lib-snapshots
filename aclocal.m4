@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.31 1994/07/05 01:10:59 tom Exp $
+dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.34 1994/07/12 18:19:02 tom Exp $
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "TD_" to "AC_"
 dnl ---------------------------------------------------------------------------
@@ -91,7 +91,7 @@ AC_COMPILE_CHECK([missing "$ac_func" extern],
 [
 #undef $ac_func
 struct zowie { int a; double b; struct zowie *c; char d; };
-extern struct zowie *$ac_func();
+extern struct zowie *$ac_func(); $ac_func();
 ],
 AC_DEFINE(NEED_${ac_tr_func})))
 done
@@ -198,10 +198,12 @@ dnl Tests for the presence of re_comp/re_exec functions (no include-file?)
 define([TD_RE_COMP_FUNCS],
 [AC_TEST_PROGRAM([
 int main() {
+	extern char *re_comp();
+	char *e;
 	char *p = "foo";
 	char *s = "foobar";
-	if ((e = re_comp(p, 0)) != 0
-	 || regex(s) == 0)
+	if ((e = re_comp(p)) != 0
+	 || re_exec(s) <= 0)
 	 	exit(1);
 	exit(0);
 }
@@ -304,8 +306,7 @@ int main() { char *d=KD, *u=KU, *r=KR, *l=KL; exit(0); }
 dnl ---------------------------------------------------------------------------
 dnl Test for interesting things about curses functions/datatypes
 define([TD_CURSES_FUNCS],
-[AC_REQUIRE([TD_CURSES_LIBS])
-TD_CURSES_CHTYPE
+[TD_CURSES_CHTYPE
 TD_CURSES_CBREAK
 TD_CURSES_ERASECHAR
 TD_CURSES_KILLCHAR
@@ -450,6 +451,19 @@ AC_COMPILE_CHECK([union wait declared], $td_decl,
  ])
 ])dnl
 dnl ---------------------------------------------------------------------------
+dnl Test if the <sys/stat.h> 'stat' struct defines 'st_blocks' member.
+dnl If not, assume it's some non-BSD system.
+define([TD_STAT_ST_BLOCKS],
+[AC_CHECKING(for .st_blocks in struct stat)
+ AC_TEST_PROGRAM([
+#include <sys/types.h>
+#include <sys/stat.h>
+int main() {exit(0);}
+int t() {struct stat sb; return sb.st_blocks; }
+],
+[AC_DEFINE(STAT_HAS_ST_BLOCKS)])
+])dnl
+dnl ---------------------------------------------------------------------------
 dnl Test for the presence of the 'sys_errlist[]' array if we don't have the
 dnl 'strerror()' function.
 define([TD_SYS_ERRLIST],
@@ -457,6 +471,8 @@ define([TD_SYS_ERRLIST],
  AC_TEST_PROGRAM([
 #include <stdio.h>
 #include <errno.h>
+extern char *sys_errlist[];
+extern int sys_nerr;
 int main() { char *x = sys_errlist[sys_nerr-1]; exit (x==0);}
 ],
 [AC_DEFINE(HAVE_SYS_ERRLIST)])
