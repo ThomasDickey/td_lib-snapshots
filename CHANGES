@@ -1,3 +1,11 @@
+1991-05-01  dickey@software.org
+
+	* src/curses/scr_size.c:
+	when rlogin'd from vax/vms to apollo, 'tgetnum()' does not
+	work properly, even though 'tgetent()' returns correct data.
+	Check for error-return from 'tgetnum()' to provide default
+	24 by 80 screen.
+
 1991-04-04  dickey@software.org
 
 	* src/pathname/abspath.c: try to recover in case 'getwd()' fails.

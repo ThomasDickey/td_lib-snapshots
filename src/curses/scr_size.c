@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: scr_size.c,v 8.0 1990/05/23 12:26:20 ste_cm Rel $";
+static	char	Id[] = "$Id: scr_size.c,v 8.1 1991/05/01 08:38:53 dickey Exp $";
 #endif	lint
 
 /*
@@ -7,9 +7,15 @@ static	char	Id[] = "$Id: scr_size.c,v 8.0 1990/05/23 12:26:20 ste_cm Rel $";
  * Title:	scr_size.c (obtain screen size)
  * Created:	27 Jul 1988
  * $Log: scr_size.c,v $
- * Revision 8.0  1990/05/23 12:26:20  ste_cm
- * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ * Revision 8.1  1991/05/01 08:38:53  dickey
+ * when rlogin'd from vax/vms to apollo, 'tgetnum()' does not
+ * work properly, even though 'tgetent()' returns correct data.
+ * Check for error-return from 'tgetnum()' to provide default
+ * 24 by 80 screen.
  *
+ *		Revision 8.0  90/05/23  12:26:20  ste_cm
+ *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ *		
  *		Revision 7.1  90/05/23  12:26:20  dickey
  *		apollo sr10.2 (X11.3) returns an off-by-one error for the
  *		'termcap' results.
@@ -107,8 +113,12 @@ int	*retval;
 	 * info under X11.2 on Apollo SR9.7
 	 */
 	if (tgetent(i_blk,getenv("TERM")) >= 0) {
-		my_LINES = tgetnum("li") + sr10_bug;
-		my_COLS  = tgetnum("co") + sr10_bug;
+		if ((my_LINES = tgetnum("li")) < 0) my_LINES = 24 - sr10_bug;
+		if ((my_COLS  = tgetnum("co")) < 0) my_COLS  = 80 - sr10_bug;
+#if sr10_bug
+		my_LINES += sr10_bug;
+		my_COLS  += sr10_bug;
+#endif
 		return (0);
 	}
 	return (-1);
