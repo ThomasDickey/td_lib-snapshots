@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: execute.c,v 6.2 1990/04/26 16:22:23 dickey Exp $";
+static	char	Id[] = "$Id: execute.c,v 8.0 1990/04/27 14:09:37 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,10 +7,20 @@ static	char	Id[] = "$Id: execute.c,v 6.2 1990/04/26 16:22:23 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	21 May 1988
  * $Log: execute.c,v $
- * Revision 6.2  1990/04/26 16:22:23  dickey
- * added ifdef'd code to make this work on VAX/VMS.
- * added a test-driver.
+ * Revision 8.0  1990/04/27 14:09:37  ste_cm
+ * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
  *
+ *		Revision 7.0  90/04/27  14:09:37  ste_cm
+ *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+ *		
+ *		Revision 6.3  90/04/27  14:09:37  dickey
+ *		for vms-port, handle escaped-spaces a la 'catarg()'.  This
+ *		makes case8.com for CPROTO work correctly.
+ *		
+ *		Revision 6.2  90/04/26  16:26:06  dickey
+ *		added ifdef'd code to make this work on VAX/VMS.
+ *		added a test-driver.
+ *		
  *		Revision 6.1  90/04/24  13:34:23  dickey
  *		flush stdout, stderr before forking to ensure that we don't
  *		get unnecessarily garbled output!
@@ -93,6 +103,8 @@ char	*args;
 
 	/* Quote mixed-case stuff so that foreign commands work better */
 	while (*t = *s) {
+		if (*t == '\\' && s[1] == ' ')
+			*t = *(++s) | 0200;	/* a la 'catarg()' */
 		if (*t == ' ') {
 			count++;
 			if (quoted) {
@@ -100,12 +112,12 @@ char	*args;
 				*t++ = '"';
 				*t = *s;
 			}
-		} else if (*t == (' ' | 0200) || isupper(*t)) {
+		} else if (!isascii(*t) || isupper(*t)) {
 			if (!quoted && count) {
 				quoted = TRUE;
 				*t++ = '"';
-				*t = toascii(*s);
 			}
+			*t = toascii(*s);	/* strip catarg-flag */
 		}
 		s++;
 		t++;
