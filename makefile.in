@@ -1,4 +1,4 @@
-# $Id: makefile.in,v 12.13 1997/09/16 10:08:08 tom Exp $
+# $Id: makefile.in,v 12.14 1998/02/15 15:29:19 tom Exp $
 # Top-level makefile for TD_LIB common library
 
 SHELL		= /bin/sh
@@ -87,25 +87,20 @@ distclean:	clobber
 	-cd src &&	$(MAKE) $(MAKE_OPTS) $@
 	-cd test &&	$(MAKE) $(MAKE_OPTS) $@
 	-$(RM) $(PURE)
-	-$(RM) td_config config_h makefile */makefile
+	-$(RM) makefile */makefile
 
-install::	all td_config $(bindir) $(my_incdir) $(libdir)
+install::	all $(bindir) $(my_incdir) $(libdir)
 	$(srcdir)/support/ins_hdr "$(INSTALL_DATA)" $(my_incdir) $(I_LIST)
 	$(srcdir)/support/ins_mak "$(INSTALL_DATA)" $(libdir) $(my_incdir) support/$(THIS).mk
-	$(INSTALL_PROGRAM) -m 755 td_config $(bindir)
 	$(INSTALL_DATA) lib/$(THAT).a $(libdir)
 	$(RANLIB) $(libdir)/$(THAT).a
 
-deinstall::
+uninstall::
 	$(srcdir)/support/rem_hdr $(my_incdir) $(I_LIST)
-	$(RM) $(bindir)/td_config
 	$(RM) $(libdir)/$(THIS).mk
 	$(RM) $(libdir)/$(THAT).a
 
 ####### (Details of Productions) ###############################################
-td_config:	$(srcdir)/support/td_config.c
-	$(CC) -o $@ $(srcdir)/support/td_config.c
-
 $(bindir) \
 $(my_incdir) \
 $(libdir) \

@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19980202
+MANIFEST for td_lib, version t19980215
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         restrictions on copying/using this software
@@ -15,11 +15,11 @@ certify                         subdirectory
 certify/README                  description of certify directory
 certify/config.txt              configurations on which TD_LIB is ported
 certify/release.txt             release notes for TD_LIB
-certify/reusable.txt            summary of reusable components
 include                         subdirectory
 include/.vilerc                 macro to use in ifdef'ing td_ext.h for autoconf
 include/acl.h                   defines ACL bits for apollo SR10.1
 include/cmv_defs.h              definitions for CmVision wrappers
+include/config.hin              template for include/td_config.h
 include/deltree.h               delta-tree function interface
 include/dyn_str.h               dynamic-strings interface
 include/headers                 list of headers, for install/deinstall
@@ -250,7 +250,6 @@ support/lib_top.mms             same as STANDARD_RULES, save that we generate li
 support/linkopts.opt            default link-options file for PORTUNIX
 support/prog_top.mms            VMS MMS include-file defining standard (module-level) rules.
 support/rem_hdr                 script to deinstall headers
-support/td_config.c             utility for editing very-long config.h @DEFS@
 support/td_lib.mms              VMS MMS include-file defining PORTUNIX library-rules
 support/td_progs.mms            VMS MMS include-file defining program-generation rules above PORTUNIX
 test                            subdirectory

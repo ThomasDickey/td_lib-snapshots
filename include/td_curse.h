@@ -1,4 +1,4 @@
-/* $Id: td_curse.h,v 12.40 1997/09/08 00:58:04 tom Exp $ */
+/* $Id: td_curse.h,v 12.41 1998/02/15 23:53:39 tom Exp $ */
 
 /*
  * TD_LIB CURSES-related definitions
@@ -143,6 +143,20 @@
 #ifndef KEY_RIGHT
 #define KEY_RIGHT       ARO('R')
 #endif
+
+#ifndef KEY_HOME
+#define KEY_HOME        ARO('H')
+#endif
+#ifndef KEY_END
+#define KEY_END         ARO('E')
+#endif
+#ifndef KEY_PPAGE
+#define KEY_PPAGE       ARO('P')
+#endif
+#ifndef KEY_NPAGE
+#define KEY_NPAGE       ARO('N')
+#endif
+
 #ifndef KEY_MOUSE
 #define KEY_MOUSE       ARO('M')
 #endif
