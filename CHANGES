@@ -1,3 +1,7 @@
+1996-03-20  dickey@clark.net
+
+	* src/curses/lnextchr.c: both HPUX and CLIX don't have VLNEXT
+
 1996-02-16  dickey@clark.net
 
 	* src/cm_funcs/newzone.c: args to 'putenv()' cannot be on the stack...

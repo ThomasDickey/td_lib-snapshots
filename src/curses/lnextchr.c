@@ -8,19 +8,19 @@
 #define  TRM_PTYPES
 #include "td_curse.h"
 
-MODULE_ID("$Id: lnextchr.c,v 12.1 1995/10/20 10:54:30 tom Exp $")
+MODULE_ID("$Id: lnextchr.c,v 12.2 1996/03/20 15:58:14 tom Exp $")
 
 #define	STDIN_FD 0
 
 int	lnext_char(_AR0)
 {
 	int	code	= CTL('V');		/* default value */
-#if USING_TERMIOS_H
+#if USING_TERMIOS_H && defined(VLNEXT)
 	TermioT buf;
 	if (tcgetattr(0, &buf) >= 0)
 		code = buf.c_cc[VLNEXT];
 #else
-# if USING_TERMIO_H
+# if USING_TERMIO_H && defined(VLNEXT)
 	TermioT buf;
 	if (ioctl(0, TCGETA, (char *)&buf) >= 0)
 		code = buf.c_cc[VLNEXT];
