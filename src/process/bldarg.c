@@ -1,11 +1,37 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)bldarg.c	1.2 88/05/26 10:50:48";
+static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/process/RCS/bldarg.c,v 8.0 1988/07/29 10:47:47 ste_cm Rel $";
 #endif	lint
 
 /*
  * Title:	bldarg.c (build argv-array)
  * Created:	17 Dec 1985
- * Modified:
+ * $Log: bldarg.c,v $
+ * Revision 8.0  1988/07/29 10:47:47  ste_cm
+ * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ *
+ *		Revision 7.0  88/07/29  10:47:47  ste_cm
+ *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+ *		
+ *		Revision 6.0  88/07/29  10:47:47  ste_cm
+ *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+ *		
+ *		Revision 5.0  88/07/29  10:47:47  ste_cm
+ *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+ *		
+ *		Revision 4.0  88/07/29  10:47:47  ste_cm
+ *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+ *		
+ *		Revision 3.0  88/07/29  10:47:47  ste_cm
+ *		BASELINE Mon Jun 19 13:27:01 EDT 1989
+ *		
+ *		Revision 2.0  88/07/29  10:47:47  ste_cm
+ *		BASELINE Thu Apr  6 09:45:13 EDT 1989
+ *		
+ *		Revision 1.4  88/07/29  10:47:47  dickey
+ *		sccs2rcs keywords
+ *		
+ *		29 Jul 1988, if the string has a trailing blank, don't put a
+ *			     "" entry in vector!
  *		26 May 1988, accommodate changes in 'catarg()', which sets
  *			     spaces to non-ASCII characters to pass them thru
  *			     this procedure.
@@ -42,7 +68,7 @@ register char *s = string;
 	while (*s && (j < argc-1)) {
 		while (blank(*s))	
 			*s++ = '\0';
-		argv[j++] = s;
+		argv[j++] = *s ? s : 0;
 		while (*s && !blank(*s)) {
 			*s = toascii(*s);
 			s++;
