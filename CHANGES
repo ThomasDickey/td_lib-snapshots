@@ -1,3 +1,84 @@
+1989-04-24  dickey@software.org
+
+	* src/pathname/walktree.c:
+	use VMS's string-function prototypes in port.
+
+	* src/memory/doalloc.c: ifdef'd for port to vms
+
+	* src/pathname/edittree.c: lint
+
+1989-04-24  ste_cm@software.org
+
+	* src/pathname/edittree.c: BASELINE Mon Jun 12 08:56:43 EDT 1989
+
+1989-04-24  dickey@software.org
+
+	* src/port2vms/vms2name.c: don't uppercase suffix after "readme"
+
+	* src/pathname/edittree.c, src/pathname/editfile.c:
+	mods to make this work properly on unix (apollo SR9.7)
+
+1989-04-24  ste_cm@software.org
+
+	* src/pathname/editfile.c: BASELINE Mon Jun 12 08:56:43 EDT 1989
+
+	* src/pathname/editfile.c:
+	BASELINE Mon Sep 18 08:24:15 EDT 1989 -- support:ada_pits_000(rel3)
+
+	* src/pathname/editfile.c: BASELINE Tue Aug 14 16:27:44 1990
+
+1989-04-24  dickey@software.org
+
+	* src/pathname/dlettree.c:
+	re-coded so this works on unix; added a builtin test-case
+
+1989-04-24  ste_cm@software.org
+
+	* src/pathname/dlettree.c: BASELINE Mon Jun 12 08:56:43 EDT 1989
+
+1989-04-24  dickey@software.org
+
+	* include/ptypes.h: define 'lstat()' for systems that have it.
+
+	* include/port2vms.h: added DIR2PATH definition
+
+	* Makefile: added README file
+
+	* README: RCS_BASE
+
+1989-04-24  ste_cm@software.org
+
+	* README: BASELINE Fri Oct 18 16:46:43 1991 -- ANSI conversion; vcs
+
+	* README:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* README: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* README: BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* README: BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+	* README: BASELINE Mon Jun 19 13:20:43 EDT 1989
+
+	* README:
+	BASELINE Thu Aug 24 09:34:01 EDT 1989 -- support:navi_011(rel2)
+
+	* README: BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+	* README:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1989-04-24  dickey@software.org
+
+	* include/ptypes.h:
+	moved SUCCESS/FAIL definitions here from "portunix.h"
+
+	* include/port2vms.h: moved SUCCESS/FAIL definitions to "ptypes.h"
+
+	* include/port2vms.h: corrected definition of 'transtree()'.
+	added macros for conversions-from-unix-to-native system (changes to DMS)
+
 1989-04-20  dickey@software.org
 
 	* include/ptypes.h:

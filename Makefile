@@ -1,23 +1,13 @@
-# $Header: /users/source/archives/td_lib.vcs/RCS/Makefile,v 2.0 1989/03/28 10:20:53 ste_cm Exp $
+# $Header: /users/source/archives/td_lib.vcs/RCS/Makefile,v 2.1 1989/04/24 11:42:17 dickey Exp $
 # Top-level makefile for CM_TOOLS common library
 #
 # $Log: Makefile,v $
-# Revision 2.0  1989/03/28 10:20:53  ste_cm
-# BASELINE Thu Apr  6 09:37:24 EDT 1989
+# Revision 2.1  1989/04/24 11:42:17  dickey
+# added README file
 #
-#	Revision 1.4  89/03/28  10:20:53  dickey
-#	use MAKE-variable to encapsulate recursive-build info.
+#	Revision 2.0  89/03/28  10:20:53  ste_cm
+#	BASELINE Thu Apr  6 09:37:24 EDT 1989
 #	
-#	Revision 1.3  89/03/27  14:02:59  dickey
-#	integration/cleanup of recursive make
-#	
-#	Revision 1.2  89/03/24  13:13:30  dickey
-#	added install/deinstall rules
-#	
-#	Revision 1.1  89/03/21  16:25:41  dickey
-#	Initial revision
-#	
-#
 ####### (Development) ##########################################################
 I	= ../../interface
 L	= ../../lib
@@ -26,7 +16,9 @@ PUT	= copy -v -d ../$@
 MAKE	= make $(MFLAGS) -k$(MAKEFLAGS)	GET=$(GET)
 
 ####### (Standard Lists) #######################################################
+SOURCES	= README
 FIRST	=\
+	$(SOURCES)\
 	lib\
 	interface/Makefile\
 	src/Makefile
@@ -61,6 +53,7 @@ install:	all $(ALL)
 deinstall:		; rm -f $(ALL)
 
 ####### (Details of Productions) ###############################################
+$(SOURCES):				; $(GET) $@
 lib:					; mkdir $@
 interface/Makefile:			; cd interface;	$(GET) Makefile
 src/Makefile:				; cd src;	$(GET) Makefile

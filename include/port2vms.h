@@ -1,11 +1,10 @@
 /*
+ * $Header: /users/source/archives/td_lib.vcs/include/RCS/port2vms.h,v 1.5 1989/04/24 13:17:58 dickey Exp $
+ *
  * VMS-definitions for supporting unix/vms port
  */
 
 #include	"ptypes.h"		/* CM_TOOLS common */
-
-#undef	SUCCESS
-#undef	FAIL
 
 #define	MAXPATHLEN	BUFSIZ		/* defined in <stdio.h> */
 
@@ -13,11 +12,6 @@
 #define	isFILE(m)	((m & S_IFMT) == S_IFREG)
 
 #ifdef	vms
-
-#include	<stdlib.h>		/* defines lots of useful stuff */
-#include	<stsdef.h>
-#define	SUCCESS	(STS$M_INHIB_MSG | STS$K_SUCCESS)
-#define	FAIL	(STS$M_INHIB_MSG | STS$K_ERROR)
 
 typedef	long	daddr_t;
 
@@ -39,9 +33,6 @@ typedef	struct	timeval {
 		/* (try doing strings w/o descriptors!) */
 
 #else	unix
-
-#define	SUCCESS	(0)
-#define	FAIL	(1)
 
 #include	<sys/time.h>		/* defines 'struct timeval' */
 
@@ -85,7 +76,6 @@ int	edittree(
 		_DCL(int,		recur)
 		_RET
 
-#ifdef	vms
 char *	name2vms(
 		_ARX(char *,		dst)
 		_AR1(char *,		src)
@@ -93,9 +83,6 @@ char *	name2vms(
 		_DCL(char *,		dst)
 		_DCL(char *,		src)
 		_RET
-#else	unix
-#define	name2vms(d,s)	strcpy(d,s)
-#endif	vms/unix
 
 char *	path2dir(
 		_AR1(char *,		src)
@@ -103,7 +90,6 @@ char *	path2dir(
 		_DCL(char *,		src)
 		_RET
 
-#ifdef	vms
 char *	path2vms(
 		_ARX(char *,		dst)
 		_AR1(char *,		src)
@@ -111,9 +97,6 @@ char *	path2vms(
 		_DCL(char *,		dst)
 		_DCL(char *,		src)
 		_RET
-#else	unix
-#define	path2vms(d,s)	strcpy(d,s)
-#endif	vms/unix
 
 int	s2uid(
 		_AR1(char *,		name)
@@ -131,7 +114,7 @@ int	s2uid(
 		_NUL
 #endif	vms
 
-int	transtree(
+	transtree(
 		_ARX(char *,		path)
 		_FNX(int,		func)
 		_AR1(int,		recur)
@@ -139,7 +122,7 @@ int	transtree(
 		_DCL(char *,		path)
 		_DCL(int,		(*func)())
 		_DCL(int,		recur)
-		_RET
+		_NUL
 
 char *	uid2s(
 		_AR1(int,		uid)
@@ -155,7 +138,6 @@ int	utimes(
 		_DCL(struct timeval *,	tv)
 		_NUL
 
-#ifdef	vms
 char *	vms2name(
 		_ARX(char *,		dst)
 		_AR1(char *,		src)
@@ -163,16 +145,29 @@ char *	vms2name(
 		_DCL(char *,		dst)
 		_DCL(char *,		src)
 		_RET
-#else	unix
-#define	vms2name(d,s)	strcpy(d,s)
-#endif	vms/unix
 
-#ifdef	vms
 time_t	zone2vms(
 		_AR1(time_t,		reference)
 		)
 		_DCL(time_t,		reference)
 		_RET
+
+/* conversions from unix-form to native system */
+#ifdef	vms
+#define	NAME2SYS(dst,src)	name2vms(dst,src)
+#define	PATH2SYS(dst,src)	path2vms(dst,src)
+#define	SYS2NAME(dst,src)	vms2name(dst,src)
+#define	ZONE2SYS(n)		zone2vms(n)
 #else	unix
-#define	zone2vms(n)	((time_t)0)
+#define	NAME2SYS(dst,src)	strcpy(dst,src)
+#define	PATH2SYS(dst,src)	strcpy(dst,src)
+#define	SYS2NAME(dst,src)	strcpy(dst,src)
+#define	ZONE2SYS(n)		((time_t)0)
+#endif	vms/unix
+
+/* conversions that assume native-system is VMS */
+#ifdef	vms
+#define	DIR2PATH(path)		dir2path(path)
+#else	unix
+#define	DIR2PATH(path)		path
 #endif	vms/unix

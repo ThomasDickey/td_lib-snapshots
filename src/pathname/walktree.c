@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RCS/walktree.c,v 2.0 1988/08/31 13:33:42 ste_cm Exp $";
+static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RCS/walktree.c,v 2.1 1989/04/24 16:44:34 dickey Exp $";
 #endif	lint
 
 /*
@@ -7,8 +7,8 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname
  * Author:	T.E.Dickey
  * Created:	31 Aug 1988
  * $Log: walktree.c,v $
- * Revision 2.0  1988/08/31 13:33:42  ste_cm
- * BASELINE Thu Apr  6 09:45:13 EDT 1989
+ * Revision 2.1  1989/04/24 16:44:34  dickey
+ * use VMS's string-function prototypes in port.
  *
  *		Revision 1.2  88/08/31  13:33:42  dickey
  *		sccs2rcs keywords
@@ -47,11 +47,9 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname
  */
 
 #define		DIR_PTYPES		/* include directory-stuff */
+#define		STR_PTYPES
 #include	"ptypes.h"
 extern	char	*getcwd();
-extern	char	*strcat();
-extern	char	*strchr();
-extern	char	*strcpy();
 extern	char	*txtalloc();
 
 #define	R_OK	4

@@ -1,4 +1,4 @@
-/* $Header: /users/source/archives/td_lib.vcs/include/RCS/ptypes.h,v 2.2 1989/04/20 16:27:21 dickey Exp $ */
+/* $Header: /users/source/archives/td_lib.vcs/include/RCS/ptypes.h,v 2.4 1989/04/24 14:00:00 dickey Exp $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -20,6 +20,23 @@
 #ifndef	S_IFSOCK
 #define	SYSTEM5
 #endif	S_IFSOCK
+
+#ifndef	S_IFLNK
+#define	lstat	stat
+#endif	S_IFLNK
+
+/*
+ * Declare argument for 'exit()' and '_exit()':
+ */
+#ifdef	vms
+#include	<stdlib.h>	/* defines lots of useful stuff */
+#include	<stsdef.h>
+#define	SUCCESS	(STS$M_INHIB_MSG | STS$K_SUCCESS)
+#define	FAIL	(STS$M_INHIB_MSG | STS$K_ERROR)
+#else	unix
+#define	SUCCESS	(0)		/* if no error */
+#define	FAIL	(1)		/* if any error */
+#endif	vms/unix
 
 /*
  * Declare functions which are int (or implicit) in some systems, but explicitly
@@ -58,9 +75,6 @@ extern	V_OR_I	rewind();
 #define	TRUE	(1)
 #define	FALSE	(0)
 #endif	TRUE
-
-#define	SUCCESS	0		/* exit() arg if no error */
-#define	FAIL	1		/* exit() arg if any error */
 
 #define	EOS	'\0'
 

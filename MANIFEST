@@ -1,7 +1,8 @@
-MANIFEST for td_lib, version t19890420
+MANIFEST for td_lib, version t19890424
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 Makefile                        top-level makefile for TD_LIB
+README                          read-me file for this directory
 include                         subdirectory
 include/Makefile                make-file for CM_TOOLS common interface directory
 include/cmdch.h                 

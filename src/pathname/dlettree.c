@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RCS/dlettree.c,v 1.1 1988/12/12 07:40:30 dickey Exp $";
+static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RCS/dlettree.c,v 2.0 1989/04/24 14:08:48 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -27,9 +27,9 @@ extern	char	*getcwd();
 #ifdef	TEST
 #define	fail		perror
 #define	TELL_(s)	changes,nesting,s
-#define	TELL_FILE(name)	TELL "%d\t%s => %s\n", TELL_(name));
-#define	TELL_DIR(name)	TELL "%d\t%s (directory) %s\n", TELL_(name)); 
-#define	TELL_SCAN(name)	TELL "%d\t%s scan directory %s\n", TELL_(name)); 
+#define	TELL_FILE(name)	TELL "%d\t%s => %s\n", TELL_(name))
+#define	TELL_DIR(name)	TELL "%d\t%s (directory) %s\n", TELL_(name));
+#define	TELL_SCAN(name)	TELL "%d\t%s scan directory %s\n", TELL_(name))
 static	deletedir()	{ return 1;}
 static	deletefile()	{ return 1;}
 #else	TEST
@@ -51,7 +51,7 @@ char	*oldname;
 
 #ifdef	TEST
 	static	char		stack[]	= ". . . . . . . ";
-	auto	char		*nesting = &stack[sizeof(stack)-(recur*2)+1];
+	auto	char		*nesting = &stack[sizeof(stack)-(recur*2)-1];
 #endif	TEST
 
 	if (stat(oldname, &sb) < 0) {
@@ -62,34 +62,39 @@ char	*oldname;
 
 	if (_OPENDIR(oldname,sb.st_mode)) {
 		TELL_SCAN(oldname);
+		if (getcwd(oldpath,sizeof(oldpath)-2) == 0) {
+			fail("(getcwd)");
+			return(0);
+		}
+		if (chdir(DIR2PATH(oldname)) < 0) {
+			fail(oldname);
+			return(0);
+		}
 
-		if (dirp = opendir(oldname)) {
+		if (dirp = opendir(OPENDIR_ARG)) {
 			while (dp = readdir(dirp)) {
 				(void)strcpy(newname, dp->d_name);
-				if (stat(newname, &sb) < 0) {
+#ifndef	vms
+				if (dotname(newname))	continue;
+#endif	vms
+				if (lstat(newname, &sb) < 0) {
 					fail(newname);
 					continue;
 				}
 				if (isDIR(sb.st_mode)) {
 					if (!recur)
 						continue;
-					if (getcwd(oldpath,sizeof(oldpath)-2)
-					&&  chdir(dir2path(newname)) >= 0) {
-						changes += deletetree(
-							OPENDIR_ARG,
-							recur+1);
-						(void)chdir(oldpath);
-						changes += deletedir(newname);
-						TELL_DIR(newname);
-					} else
-						fail(newname);
-				} else if (isFILE(sb.st_mode)) {
+					changes += deletetree(newname, recur+1);
+					changes += deletedir(newname);
+					TELL_DIR(newname);
+				} else {	/* file, link, etc. */
 					TELL_FILE(newname);
 					changes += deletefile(newname);
 				}
 			}
 			closedir(dirp);
 		}
+		(void)chdir(oldpath);
 	} else {
 		TELL_FILE(oldname);
 		changes += deletefile(oldname);
@@ -98,13 +103,36 @@ char	*oldname;
 }
 
 #ifdef	TEST
+do_test(argc, argv)
+char	*argv[];
+{
+	register int	j;
+	auto	 int	recur = FALSE;
+
+	for (j = 1; j < argc; j++) {
+		if (!strcmp(argv[j], "-r"))
+			recur = TRUE;
+		else
+			printf("count = %d\n", deletetree(argv[j],recur));
+	}
+}
+
 main(argc, argv)
 char	*argv[];
 {
-	register int	j, k;
-
-	for (j = 1; j < argc; j++)
-		printf("count = %d\n", deletetree(argv[j],0));
+	if (argc > 1)
+		do_test(argc, argv);
+	else {
+		static	char	*tbl[] = {
+					"?",
+#ifdef	vms
+					"[-]", "-r", "[-]"
+#else	unix
+					"..",  "-r", ".."
+#endif	vms/unix
+					};
+		do_test(sizeof(tbl)/sizeof(tbl[0]), tbl);
+	}
 	exit(SUCCESS);
 }
 #endif	TEST
