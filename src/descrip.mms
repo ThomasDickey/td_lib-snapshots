@@ -1,4 +1,4 @@
-# $Id: descrip.mms,v 11.0 1992/04/03 08:00:05 ste_cm Rel $
+# $Id: descrip.mms,v 11.1 1992/07/24 15:26:59 dickey Exp $
 # MMS-file for miscellaneous library routines	
 #
 ####### (Development) ##########################################################
@@ -30,6 +30,7 @@ LIBRARYMODULES = -
 	DOTNAME, -
 	DUMPCHR, -
 	DYN_APPEND, -
+	DYN_APPEND_C, -
 	DYN_CATARG, -
 	DYN_COPY, -
 	DYN_STRING, -
@@ -155,6 +156,7 @@ C_SRC	=-
 	DUMPCHR.C -
 	DUMPWIN.C -
 	DYN_APPEND.C -
+	DYN_APPEND_C.C -
 	DYN_CATARG.C -
 	DYN_COPY.C -
 	DYN_STRING.C -
@@ -295,6 +297,7 @@ CUTOFF.obj :		$(PTYPES_H)
 DOALLOC.OBJ :		$(PTYPES_H)
 DUMPWIN.obj :		$(PTYPES_H)
 DYN_APPEND.obj \
+DYN_APPEND_C.obj \
 DYN_CATARG.obj \
 DYN_COPY.obj \
 DYN_STRING.obj :	$(PTYPES_H)	$(I)dyn_string.h
@@ -357,9 +360,9 @@ USERPROT.obj :		$(PTYPES_H)
 WALKTREE.OBJ :		$(PTYPES_H)
 WIN2FILE.obj :		$(PTYPES_H)
 #
-COUNT_SS.obj :		$(PTYPES_H)	$(I)spreadsheet.h
-FIELD_OF.obj :		$(PTYPES_H)	$(I)spreadsheet.h
-SS_FIELD.obj :		$(PTYPES_H)	$(I)spreadsheet.h
+COUNT_SS.obj :		$(PTYPES_H)	$(I)spreadsheet.h	$(I)dyn_string.h
+FIELD_OF.obj :		$(PTYPES_H)	$(I)spreadsheet.h	$(I)dyn_string.h
+SS_FIELD.obj :		$(PTYPES_H)	$(I)spreadsheet.h	$(I)dyn_string.h
 #
 ####### (Development) ##########################################################
 !

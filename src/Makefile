@@ -1,4 +1,4 @@
-# $Id: Makefile,v 11.0 1992/04/03 07:56:40 ste_cm Rel $
+# $Id: Makefile,v 11.1 1992/07/24 15:27:12 dickey Exp $
 # MAKE-file for miscellaneous library routines
 
 ####### (Environment) ##########################################################
@@ -43,6 +43,7 @@ CSRC	=\
 	dumpchr.c\
 	dumpwin.c\
 	dyn_append.c\
+	dyn_append_c.c\
 	dyn_catarg.c\
 	dyn_copy.c\
 	dyn_string.c\
@@ -163,6 +164,7 @@ OBJS	=\
 	$Z(dumpchr.o)\
 	$Z(dumpwin.o)\
 	$Z(dyn_append.o)\
+	$Z(dyn_append_c.o)\
 	$Z(dyn_catarg.o)\
 	$Z(dyn_copy.o)\
 	$Z(dyn_string.o)\
@@ -286,6 +288,7 @@ $Z(cmdch.o)\
 $Z(rawgets.o):	$I/cmdch.h
 
 $Z(dyn_append.o)\
+$Z(dyn_append_c.o)\
 $Z(dyn_catarg.o)\
 $Z(dyn_copy.o)\
 $Z(dyn_string.o): $I/dyn_string.h
@@ -310,7 +313,7 @@ $Z(sccsname.o):	$(SCCSDEFS_H)
 #
 $Z(count_ss.o)\
 $Z(field_of.o)\
-$Z(ss_field.o):	$I/spreadsheet.h
+$Z(ss_field.o):	$I/spreadsheet.h $I/dyn_string.h
 #
 ####### (Development) ##########################################################
 $(SOURCES):			; $(GET) $@
