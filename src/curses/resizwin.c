@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)resizewin.c	1.6 88/05/17 14:00:11";
+static	char	sccs_id[] = "@(#)resizewin.c	1.7 88/07/27 13:07:03";
 #endif	lint
 
 /*
@@ -7,33 +7,27 @@ static	char	sccs_id[] = "@(#)resizewin.c	1.6 88/05/17 14:00:11";
  * Title:	resizewin.c (change size of curses window)
  * Created:	21 Apr 1988
  * Modified:
+ *		27 Jul 1988, broke out 'scr_size()' so we can use it to control
+ *			     'padedit()'.
  *		13 May 1988, oops: was using old COLS, not new my_COLS to
  *			     reallocate row-strings.
  *		11 May 1988, reallocate firstch/lastch arrays (did not know what
  *			     they were til looking at curses source).
  *
- * Function:	(Apollo only) inquire to see if the VT100 window has changed
+ * Function:	inquire to see if the terminal's screen has changed
  *		size since curses was initialized.  If so, adjust stdscr and
  *		curscr to match.
- *
- * Notes:	A 'popen()' does not work because Apollo puts it into the
- *		wrong environment, so I made this hack using an undocumented
- *		call...
  *
  * Returns:	TRUE if a change has been made.
  */
 
-#ifdef	apollo
-#include </sys/ins/base.ins.c>
 #include	<curses.h>
 extern	char	*doalloc();
-#endif	apollo
 
 #ifndef	SYSTEM5
 typedef char	chtype;		/* sys5-curses data-type */
 #endif	SYSTEM5
 
-#ifdef	apollo
 static	short	size[2];
 
 #define	my_LINES	size[0]
@@ -92,24 +86,13 @@ int	row;
 	w->_maxx = my_COLS;  if (w->_curx >= my_COLS)  w->_curx = 0;
 	w->_maxy = my_LINES; if (w->_cury >= my_LINES) w->_cury = 0;
 }
-#endif	apollo
 
 resizewin()
 {
-#ifdef	apollo
-extern	void	vte_$inq_screen_size();
-stream_$id_t	id	= ios_$stdout;
-status_$t	st;
-
-struct	{
-	short	height;
-	short	width;
-	} screen_size;
-
-	vte_$inq_screen_size(&id, &screen_size, &st);
-	if (st.all == status_$ok) {
-		size[0] = screen_size.height;
-		size[1] = screen_size.width;
+	int	lc[2];
+	if (scr_size(lc) >= 0) {
+		my_LINES = lc[0];
+		my_COLS  = lc[1];
 		if (my_LINES != LINES || my_COLS != COLS) {
 			doit(stdscr);
 			doit(curscr);
@@ -121,6 +104,5 @@ struct	{
 		}
 	} else
 		beep();
-#endif	apollo
 	return (0);
 }

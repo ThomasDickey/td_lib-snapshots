@@ -1,3 +1,45 @@
+1988-07-27  dickey@software.org
+
+	* src/curses/padedit.c:
+	modified so that it will first check to see if we are running under
+	Apollo DM (permitting a pad!), and then for xterm (to spawn an X-window).
+
+	* include/llib-ltd: added 'editor' argument to 'padedit()'
+
+	* src/curses/scr_size.c: New file.
+
+	* src/curses/scr_size.c: sccs2rcs keywords
+
+1988-07-27  ste_cm@software.org
+
+	* src/curses/scr_size.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+	* src/curses/scr_size.c: BASELINE Thu Apr  6 09:45:13 EDT 1989
+
+	* src/curses/scr_size.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
+1988-07-27  dickey@software.org
+
+	* include/llib-ltd, src/Makefile:
+	broke module 'scr_size.c' out of 'resizewin.c'
+
+	* src/curses/resizwin.c:
+	broke out code to find how big screen is into 'scr_size()'
+
+	* src/Makefile:
+	added ptypes.h to 'execute.c' to handle vfork/fork conditional compile.
+
+	* src/process/execute.c:
+	added code to use 'vfork()' on bsd4.x systems, for faster execution.
+
+	* src/pathname/fp2argv.c:
+	removed 'fclose()', since we should use 'pclose()' if it happened to be a pipe.
+
+	* src/unix/uid2s.c: show "<none>" code; use 'stralloc()'
+
+	* src/pathname/fp2argv.c: optimized slightly; added 'fclose()'
+
 1988-07-18  dickey@software.org
 
 	* include/llib-ltd: added 'fp2argv.c' moduel

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)fp2argv.c	1.1 88/07/18 07:38:50";
+static	char	sccs_id[] = "@(#)fp2argv.c	1.3 88/07/27 08:18:05";
 #endif	lint
 
 /*
@@ -34,14 +34,19 @@ char	***argv_;
 {
 	register char **vec = 0;
 	register int  lines = 0;
+	register int  have  = 0;
 	char	buffer[BUFSIZ];
 
 	while (fgets(buffer, sizeof(buffer), fp)) {
-		int	need	= (++lines | (CHUNK-1));
-		vec = ALLOC(vec, need);
+		int	need	= (++lines | (CHUNK-1)) + 1;
+		if (need != have) {
+			vec  = ALLOC(vec, need);
+			have = need;
+		}
 		vec[lines-1] = stralloc(buffer);
 	}
-	vec = ALLOC(vec, lines + 1);
+	if (lines == 0)
+		vec = ALLOC(vec, 1);
 	vec[lines]   = 0;
 	*argv_ = vec;
 	return (lines);

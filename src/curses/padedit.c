@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)padedit.c	1.2 88/05/06 14:58:27";
+static	char	sccs_id[] = "@(#)padedit.c	1.3 88/07/27 15:33:33";
 #endif	lint
 
 /*
@@ -7,6 +7,8 @@ static	char	sccs_id[] = "@(#)padedit.c	1.2 88/05/06 14:58:27";
  * Author:	T.E.Dickey
  * Created:	14 Dec 1987
  * Modified:
+ *		27 Jul 1988, if we don't have Apollo pad, assume we may open
+ *			     xterm-window.
  *
  * Function:	Open an edit-pad on the specified pathname.  If the pad
  *		is not read-only, suspend the calling process until the
@@ -16,24 +18,25 @@ static	char	sccs_id[] = "@(#)padedit.c	1.2 88/05/06 14:58:27";
  *		This is probably due to an APOLLO bug.
  */
 
+#include	<stdio.h>
 #ifdef	apollo
 #include	"/sys/ins/base.ins.c"
 #include	"/sys/ins/error.ins.c"
 #include	"/sys/ins/pad.ins.c"
 #include	"/sys/ins/streams.ins.c"
-extern	char	*strcpy();
 #endif	apollo
+extern	char	*strcat();
+extern	char	*strcpy();
 
-/*ARGSUSED*/
-padedit(name, readonly)
+#ifdef	apollo
+apollo_edit(name, readonly)
 char	*name;
 {
-#ifdef	apollo
-name_$pname_t		in_name;
-pinteger		in_len;
-status_$t		st;
-pad_$window_desc_t	window;
-stream_$id_t		stream_id;
+	name_$pname_t		in_name;
+	pinteger		in_len;
+	status_$t		st;
+	pad_$window_desc_t	window;
+	stream_$id_t		stream_id;
 
 	in_len = strlen(strcpy(in_name, name));
 
@@ -57,8 +60,97 @@ stream_$id_t		stream_id;
 		}
 		stream_$close(stream_id, st);
 	}
-#endif	apollo
 	return(0);
+}
+#endif	apollo
+
+/*
+ * Spawn a process which is detached from the current one.
+ */
+static
+spawn(cmd, argv)
+char	*cmd;
+char	*argv[];
+{
+	extern	int	errno;
+	int	pid, status;
+#ifdef	TEST
+	int	debug	= 0;
+#define	DEBUG(s,a)	if (debug) printf(s,a)
+#else	TEST
+#define	DEBUG(s,a)
+#endif	TEST
+#define	ERRNO	((status >> 8) & 0xff)
+
+	if ((pid = fork()) > 0) {
+		DEBUG("spawn-1st (pid= %d)\n", pid);
+		while (wait(&status) >= 0);
+		DEBUG("spawn-1st (status= %#x)\n", status);
+		if (errno = ERRNO)
+			return (-1);
+		return (0);
+	} else if (pid == 0) {
+		DEBUG("spawn-1st\n",0);
+		if ((pid = fork()) > 0) {
+			DEBUG("spawn-2nd\n",0);
+			(void)_exit(0);		/* abandon exec'ing process */
+			/*NOTREACHED*/
+		} else if (pid == 0) {
+			DEBUG("exec'ing process\n",0);
+			(void)execvp(cmd, argv);
+			(void)_exit(errno);	/* just in case exec-failed */
+			/*NOTREACHED*/
+		}
+	}
+	return (-1);
+}
+
+padedit(name, readonly, editor)
+char	*name, *editor;
+{
+	extern	char	*getwd();
+	int	lc[2];
+	int	code = scr_size(lc);
+
+#ifdef	apollo
+	if (code > 0)
+		return (apollo_edit(name, readonly));
+	else
+#endif	apollo
+	if (code == 0) {
+		static	char	*vec[] = {
+				"",	/* path */
+				"-e",
+				"",	/* editor */
+				"",	/* name */
+				0
+			};
+
+		char	wd[BUFSIZ],
+			xt[BUFSIZ];
+
+		if (getwd(wd) == 0)
+			return (-1);
+		if (which(xt, sizeof(xt), "xterm", wd) <= 0)
+			return (-1);
+
+		vec[0] = xt;
+		vec[2] = editor;
+		vec[3] = name;
+
+		if (readonly) {	/* spawn and run away */
+			return (spawn(xt, vec));
+		} else {
+			char	args[BUFSIZ];
+			int	j;
+
+			*args = '\0';
+			for (j = 1; vec[j]; j++)
+				(void)strcat(strcat(args, " "), vec[j]);
+			return (execute(xt, args));
+		}
+	}
+	return (-1);
 }
 
 #ifdef	TEST
@@ -67,6 +159,13 @@ char	*argv[];
 {
 register j;
 	for (j = 1; j < argc; j++)
-		padedit(argv[j], 0);
+		padedit(argv[j], 1, "view");
+}
+
+failed(s)
+char	*s;
+{
+	perror(s);
+	exit(1);
 }
 #endif	TEST

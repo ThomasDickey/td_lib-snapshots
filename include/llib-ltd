@@ -1,4 +1,4 @@
-/* @(#)llib-ltd	1.26 88/07/18 07:41:59 */
+/* @(#)llib-ltd	1.28 88/07/27 15:26:59 */
 /*LINTLIBRARY*/
 
 #include	<curses.h>
@@ -100,7 +100,7 @@ int	okpnum (number) char *number; { return (0); }
 long	packdate (year, mon, day, hour, min, s) { return (0); }
 
 /* padedit.c ---------------------------------------------------------- */
-int	padedit(name, readonly) char *name; { return(0); }
+int	padedit(name, readonly, editor) char *name, *editor; { return(0); }
 
 /* rawgets.c ---------------------------------------------------------- */
 	rawgets (bfr,size,newline) char	*bfr; { }
@@ -145,6 +145,9 @@ int	s2uid(s) char	*s; { return (0); }
 
 /* sccszone.c --------------------------------------------------------- */
 long	sccszone() { return(0); }
+
+/* scr_size.c --------------------------------------------------------- */
+int	scr_size(lc) int *lc; { return(0); }
 
 /* setmtime.c --------------------------------------------------------- */
 int	setmtime(name, mtime) char *name; time_t mtime; { return(0); }

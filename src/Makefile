@@ -1,4 +1,4 @@
-# @(#)Makefile	1.28 88/07/18 07:33:34
+# @(#)Makefile	1.30 88/07/27 13:08:05
 # MAKE-file for miscellaneous library routines
 L=lib.a
 GET=sccsget
@@ -41,6 +41,7 @@ SRCS	=\
 	resizewin.c\
 	savewin.c\
 	sccslast.c\
+	scr_size.c\
 	setmtime.c\
 	stralloc.c\
 	strclean.c\
@@ -90,6 +91,7 @@ OBJS	=\
 	resizewin.o\
 	savewin.o\
 	sccslast.o\
+	scr_size.o\
 	setmtime.o\
 	stralloc.o\
 	strclean.o\
@@ -114,6 +116,7 @@ archive: $(OBJS)
 #
 cmdch.o:	cmdch.h
 cutoff.o:	ptypes.h
+execute.o:	ptypes.h
 newzone.o:	ptypes.h
 packdate.o:	ptypes.h
 rawgets.o:	cmdch.h
@@ -125,7 +128,7 @@ setmtime.o:	ptypes.h
 win2file.o:	ptypes.h
 #
 clean:
-	rm *.o
+	rm *.o *.out
 clobber: clean
 	rm *.a
 destroy:
