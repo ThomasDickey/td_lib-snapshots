@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19881122
+MANIFEST for td_lib, version t19881130
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 include                         subdirectory
@@ -6,6 +6,7 @@ include/cmdch.h
 include/llib-ltd                template for lint-library
 include/ptypes.h                principal include-file for TD_LIB
 include/rcsdefs.h               interface for rcs functions
+include/vms_dirs.h              VMS unix-style directory-interface definitions
 src                             subdirectory
 src/Makefile                    makefile for td_lib/src
 src/cm_funcs                    subdirectory
@@ -66,6 +67,8 @@ src/port2vms                    subdirectory
 src/port2vms/dir2path.c         VMS directory/pathname conversion
 src/port2vms/path2dir.c         convert VMS pathname to directory
 src/port2vms/path2vms.c         convert unix pathname (directory!) to VMS format
+src/port2vms/time2vms.c         convert unix time to VMS format
+src/port2vms/utimes.c           VMS hack to provide unix-compatible 'utimes()' function.
 src/port2vms/vms_dirs.c         VMS hack to provide unix-style directory access
 src/port2vms/zone2vms.c         compute timezone adjustment for VMS/unix time conversion
 src/process                     subdirectory
