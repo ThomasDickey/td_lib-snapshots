@@ -1,4 +1,4 @@
-/* $Id: td_ext.h,v 12.8 1994/11/12 21:50:26 tom Exp $ */
+/* $Id: td_ext.h,v 12.9 1994/12/15 16:13:58 tom Exp $ */
 
 #ifndef	TD_EXT_H
 #define	TD_EXT_H
@@ -175,7 +175,7 @@ extern	V_OR_I         endgrent ARGS((void));
 #endif	/* HAVE_GRP_H */
 
 #if HAVE_GETGROUPS && NEED_GETGROUPS
-extern	int getgroups ARGS((int size, gid_t *list));
+extern	int getgroups ARGS((int size, GETGROUPS_T *list));
 #endif /* HAVE_GETGROUPS */
 
 #endif	/* GRP_PTYPES */
@@ -439,12 +439,6 @@ extern	int	setruid	 ARGS((uid_t u));
 #if HAVE_SYMLINK && NEED_SYMLINK
 extern	int	symlink	 ARGS((const char *s, const char *d));
 #endif /* HAVE_SYMLINK */
-#if HAVE_TGETENT && NEED_TGETENT
-extern	int	tgetent	 ARGS((char *b, char *s));
-#endif /* HAVE_TGETENT */
-#if HAVE_TGETNUM && NEED_TGETNUM
-extern	int	tgetnum	 ARGS((char *s));
-#endif /* HAVE_TGETNUM */
 #if HAVE_VFORK && NEED_VFORK
 extern	int	vfork	 ARGS((void));
 #endif /* HAVE_VFORK */

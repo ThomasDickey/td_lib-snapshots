@@ -1,3 +1,13 @@
+1994-12-15  dickey@clark.net
+
+	* include/td_curse.h: added def for 'beep()'
+
+	* include/td_ext.h: redundant/conflicting defs from solaris-port
+
+	* src/process/in_group.c: tinkering with how to get NGROUPS_MAX
+
+	* src/process/in_group.c: use MODULE_ID
+
 1994-12-14  dickey@clark.net
 
 	* configure.in: added test for limits.h

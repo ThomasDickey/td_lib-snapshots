@@ -1,7 +1,3 @@
-#ifndef NO_IDENT
-static char *Id = "$Id: in_group.c,v 12.2 1994/11/12 22:06:21 tom Exp $";
-#endif
-
 /*
  * Title:	in_group.c (test if given group is in user's group-list)
  * Author:	T.E.Dickey
@@ -14,9 +10,14 @@ static char *Id = "$Id: in_group.c,v 12.2 1994/11/12 22:06:21 tom Exp $";
 #include <ptypes.h>
 #include <grp.h>
 
+MODULE_ID("$Id: in_group.c,v 12.4 1994/12/15 15:48:22 tom Exp $")
+
 #if HAVE_GETGROUPS
 #  if HAVE_SYS_PARAM_H
 #    include <sys/param.h>
+#  endif
+#  if HAVE_LIMITS_H
+#    include <limits.h>
 #  endif
 #endif
 
@@ -35,7 +36,7 @@ int	in_group (
 	static int ngroups_max;
 	if (groups == 0)
 	{
-		ngroups_max = GET_NGROUPS_MAX;
+		ngroups_max = NGROUPS_MAX;
 		groups = (GETGROUPS_T *) malloc (ngroups_max * sizeof (GETGROUPS_T));
 	}
 #endif
