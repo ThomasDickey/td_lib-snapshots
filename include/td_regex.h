@@ -1,4 +1,4 @@
-/* $Id: td_regex.h,v 12.7 1994/07/29 20:14:44 tom Exp $ */
+/* $Id: td_regex.h,v 12.8 1994/08/01 23:00:13 tom Exp $ */
 
 /*
  * SYSTEM5/BSD4.x differences between native regular-expression handling:
@@ -32,8 +32,12 @@
 #    include <pw.h>
 #    undef index
 #  else
+#    if HAVE_LIBGEN_H		/* IRIX */
+#      include <libgen.h>
+#    else
 	extern	char	*regcmp(_ar1(char *,s) _CDOTS);
 	extern	char	*regex(_ar1(char *,re));
+#    endif
 #  endif
 #  define REGEX_T char *
 #  define OLD_REGEX(expr)		if (expr) free(expr)

@@ -1,3 +1,4 @@
+set glob=on
 source ~/.vilerc
 
 ; If the current line contains the string "ARGS(", pick up the word before
