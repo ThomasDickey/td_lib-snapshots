@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: cmv_last.c,v 12.1 1994/08/02 18:43:04 tom Exp $";
+static	char	Id[] = "$Id: cmv_last.c,v 12.2 1994/08/15 23:39:38 tom Exp $";
 #endif
 
 /*
@@ -7,6 +7,8 @@ static	char	Id[] = "$Id: cmv_last.c,v 12.1 1994/08/02 18:43:04 tom Exp $";
  * Author:	T.E.Dickey
  * Created:	02 Aug 1994, from 'sccslast.c'
  * Modified:
+ *		11 Aug 1994, CMVision encodes file modification time in the
+ *			     change-comment.
  *
  * Function:	Lookup the last sccs-delta date, and its release.version number
  *		for directory-editor.
@@ -21,7 +23,9 @@ static	char	Id[] = "$Id: cmv_last.c,v 12.1 1994/08/02 18:43:04 tom Exp $";
 /*
  * Set the release.version and date values iff we find a legal sccs-file at
  * 'path[]'.
- * FIXME: patch: this is copied from 'sccslast.c'
+ * this is copied from 'sccslast.c', but adapted for CmVision's special
+ * change-comment:
+ *	\{number}\{comment}\^AO{uid}:G{gid}:P{protection}:M{modified}:
  */
 static
 void	trysccs (
@@ -58,6 +62,15 @@ void	trysccs (
 					continue;
 				*vers_ = txtalloc(ver);
 				*date_ = packdate (1900+yy, mm, dd, hr, mn, sc);
+			}
+			if (!strncmp(bfr, "\001c ", 3)) {
+				time_t	when;
+				if ((s = strstr(bfr, "\\\001O")) != 0) {
+					while (strncmp(s, ":M", 2) && *s)
+						s++;
+					if (sscanf(s, ":M%ld:", &when))
+						*date_ = when;
+				}
 				break;
 			}
 		}
@@ -81,9 +94,6 @@ void	trysccs (
 }
 
 /******************************************************************************/
-
-static	char	the_prefix[] = CMV_PREFIX;
-#define	LEN_PREFIX	sizeof(the_prefix)-1
 
 void	cmv_last (
 	_ARX(char *,	working)	/* working directory (absolute) */
