@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 11.9 1992/11/18 08:23:36 dickey Exp $ */
+/* $Id: td_lib.h,v 11.10 1992/11/19 15:04:16 dickey Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for CM_TOOLS COMMON
@@ -833,7 +833,10 @@
 #endif	/* unix */
 
 	/* walkback.c ------------------------------------------------- */
-	void	walkback(_ar0)
+	void	walkback(
+			_ar1(char *,	program)
+			)
+			_dcl(char *,	program)
 			_nul
 
 	/* walktree.c ------------------------------------------------- */

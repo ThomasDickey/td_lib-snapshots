@@ -1,0 +1,27 @@
+head     11.1;
+branch   ;
+access   ste_cm dickey;
+symbols  ;
+locks    dickey:11.1; strict;
+comment  @# @;
+
+
+11.1
+date     92.11.18.10.55.17;  author dickey;  state Exp;
+branches ;
+next     ;
+
+
+desc
+@@
+
+
+11.1
+log
+@RCS_BASE
+@
+text
+@#!/bin/sh
+# &Id&
+./rcsload
+@

@@ -1,3 +1,129 @@
+1992-11-19  dickey@software.org
+
+	* support/old-td_lib.mk: added *.lint to CLEAN
+
+	* support/old-td_lib.mk: corrected .c.lint rule
+
+	* src/compare/m2comp.c, src/compare/scomp.c:
+	compile with CM_LIBRARY, not DDIF
+
+	* certify/release.txt: moved SCOMP & M2COMP here from DDIF
+
+	* include/llib-ltd: added 'cm_scomp.h'
+
+	* test/compare/test_cmp.c: RCS_BASE
+
+	* test/Makefile: moved test_scomp.c here from DDIF
+
+	* src/memory/doalloc.c: modified interface to 'walkback()'
+
+1992-11-19  ste_cm@software.org
+
+	* src/memory/doalloc.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1992-11-19  dickey@software.org
+
+	* src/process/walkback.c:
+	added 'program' arg so I can initialize this with the
+	program's path & later (null pointer) dump core & invoke
+	adb.
+
+	* src/Makefile: moved m2comp & scomp here from DDIF
+
+	* src/descrip.mms: moved M2COMP & SCOMP here from DDIF
+
+	* include/td_lib.h:
+	added 'program' argument to 'walkback()' so I could make a kludge on
+	SunOs to construct a walkback
+
+	* include/Makefile: added 'cm_scomp.h'
+
+	* include/td_scomp.h: RCS_BASE
+
+1992-11-19  ste_cm@software.org
+
+	* include/td_scomp.h:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1992-11-19  dickey@software.org
+
+	* certify/release.txt: added new stuff...
+
+	* test/curses/rawgets.sh:
+	make this pipe to the terminal, so we don't get it in the log-file
+
+1992-11-19  ste_cm@software.org
+
+	* test/curses/rawgets.sh:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-19  dickey@software.org
+
+	* test/pathname/walktree.sh: assume we use "make-out"
+
+1992-11-19  ste_cm@software.org
+
+	* test/pathname/walktree.sh:
+	BASELINE Fri Apr 30 08:11:54 1993 -- split off from CM_TOOLS
+
+1992-11-19  dickey@software.org
+
+	* test/pathname/walktree.ref:
+	got rid of line numbers so this will be more stable as a reference
+
+	* src/pathname/walktree.c: split out 'compare()' as 'cmp_qsort()'
+	remove line #'s from test-driver trace so I can make stable
+	lists for regression.
+
+	* src/cm_funcs/rcsedit.c:
+	got rid of null-char in debug-trace (was getting lost in
+	'ci' program)
+
+	* test/Makefile: added lists for REF_FILES and SCRIPTS
+
+	* test/cm_funcs/rcsload.sh: implemented an interesting test!
+
+1992-11-19  ste_cm@software.org
+
+	* test/cm_funcs/rcsload.sh:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-19  dickey@software.org
+
+	* src/cm_funcs/rcsload.c:
+	ifdef'd out the part of the test-driver that shows the
+	entire file to be compared.
+
+	* src/cm_funcs/rcsload.c: comment about memory-leaks
+
+	* test/dummy3.txt: RCS_BASE
+
+1992-11-19  ste_cm@software.org
+
+	* test/dummy3.txt:
+	BASELINE Fri Apr 30 07:53:10 1993 -- split off from CM_TOOLS
+
+1992-11-19  dickey@software.org
+
+	* src/cm_funcs/rcsload.c:
+	plugged a memory leak (for testing) in 'loadtext()'
+
+	* src/memory/doalloc.c:
+	corrected the loop that prunes 'nowPending' from the end
+	when we get a free on the end of the table.
+
+	* src/process/execute.c: plugged a memory-leak
+
+	* src/cm_funcs/rcsedit.c:
+	corrected handling of escaped '@' marks (broke in the rewrite).
+	show "-mark in trace when in string (to simplify debugging).
+	added a couple of pointer checks so this doesn't crash as easily.
+
+	* src/cm_funcs/rcsload.c: use 'dofree()' rather than 'free()'
+	flush trace in test-driver before doing comparison.
+	omitted unused S_COMMENT case.
+
 1992-11-18  dickey@software.org
 
 	* test/cm_funcs/rcsload.sh: implemented test (does not work yet)

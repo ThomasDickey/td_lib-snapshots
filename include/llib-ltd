@@ -1,4 +1,4 @@
-/* $Id: llib-ltd,v 11.1 1992/11/18 08:26:15 dickey Exp $ */
+/* $Id: llib-ltd,v 11.2 1992/11/19 15:17:10 dickey Exp $ */
 /*LINTLIBRARY*/
 
 #define	LINTLIBRARY
@@ -6,6 +6,7 @@
 #define	SIG_PTYPES
 #include	"ptypes.h"
 #include	"cm_qsort.h"
+#include	"cm_scomp.h"
 #include	"dyn_string.h"
 #include	"rcsdefs.h"
 #include	"sccsdefs.h"

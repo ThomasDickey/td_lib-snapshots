@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: walktree.c,v 11.2 1992/11/17 15:24:19 dickey Exp $";
+static	char	Id[] = "$Id: walktree.c,v 11.3 1992/11/19 09:44:04 dickey Exp $";
 #endif
 
 /*
@@ -49,6 +49,7 @@ static	char	Id[] = "$Id: walktree.c,v 11.2 1992/11/17 15:24:19 dickey Exp $";
 #define		DIR_PTYPES		/* include directory-stuff */
 #define		STR_PTYPES
 #include	"ptypes.h"
+#include	"cm_qsort.h"
 
 /************************************************************************
  *	local definitions						*
@@ -61,24 +62,6 @@ typedef	char	*PTR;
 #define	CHUNK	127	/* 1 less than a power of 2 */
 #define	v_ALLOC(v,n,s)	v = DOALLOC(v, PTR, ((++n)|CHUNK)+1);\
 			v[n-1] = txtalloc(s)
-
-/*
- * Comparison routine for qsort.
- */
-static
-int	compare(
-	_ARX(V_OR_P,	q1)
-	_AR1(V_OR_P,	q2)
-		)
-	_DCL(char **,	p1)
-	_DCL(char **,	p2)
-{
-#ifdef	__STDC__
-	register char **p1 = (char **)q1;
-	register char **p2 = (char **)q2;
-#endif
-	return (-strcmp(*p1, *p2));
-}
 
 /************************************************************************
  *	public entrypoints						*
@@ -151,7 +134,7 @@ int	walktree(
 			(void)closedir(dp);
 			if (num != 0) {
 				qsort((PTR)vec, (LEN_QSORT)num,
-					sizeof(PTR), compare);
+					sizeof(PTR), cmp_qsort);
 				while (num-- != 0)
 					total += walktree(new_wd, vec[num],
 						func, type, level+1);
@@ -168,16 +151,13 @@ int	walktree(
  ************************************************************************/
 
 #ifdef	TEST
-static	int	lines;
-
 static
 display(path, name, sp, ok_acc, level)
 char	*path;
 char	*name;
 struct	stat	*sp;
 {
-	++lines;
-	PRINTF("%4d:%c\t", lines, (ok_acc < 0) ? '?' : ' ');
+	PRINTF("%c\t", (ok_acc < 0) ? '?' : ' ');
 	while (level-- > 0)
 		PRINTF("|--%c", (level > 0) ? '-' : ' ');
 	if ((sp != 0)
@@ -194,7 +174,6 @@ char	*name;
 char	*type;
 {
 	PRINTF("** path = %s\n", name);
-	lines	= 0;
 	PRINTF("** total= %d\n", walktree((PTR)0, name,display,type,0));
 }
 

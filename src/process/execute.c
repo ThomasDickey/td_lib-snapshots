@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: execute.c,v 11.0 1991/10/04 10:14:52 ste_cm Rel $";
+static	char	Id[] = "$Id: execute.c,v 11.1 1992/11/19 08:27:40 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: execute.c,v 11.0 1991/10/04 10:14:52 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	21 May 1988
  * Modified:
+ *		19 Nov 1992, memory-leak
  *		04 Oct 1991, conversion to ANSI
  *		12 Sep 1991, removed redundant def for 'errno' (VMS C 3.2)
  *		31 May 1991, lint (SunOs)
@@ -168,6 +169,10 @@ int	count	= 3,		/* minimum needed for 'bldarg()' */
 		}
 		if (errno = W_RETCODE(status))
 			return (-1);
+#ifdef	NO_LEAKS
+		dofree((char *)myargv);
+		myargv = 0;
+#endif	/*NO_LEAKS*/
 		return (0);
 	} else if (pid == 0) {
 		errno = 0;

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: walkback.c,v 11.1 1992/11/18 07:24:02 dickey Exp $";
+static	char	Id[] = "$Id: walkback.c,v 11.2 1992/11/19 15:12:20 dickey Exp $";
 #endif
 
 /*
@@ -12,7 +12,9 @@ static	char	Id[] = "$Id: walkback.c,v 11.1 1992/11/18 07:24:02 dickey Exp $";
 
 #include	"ptypes.h"
 
-void	walkback(_AR0)
+void	walkback(
+	_AR1(char *,	program))
+	_DCL(char *,	program)
 {
 #ifdef	apollo
 	char	msg[80];

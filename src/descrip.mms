@@ -1,4 +1,4 @@
-# $Id: descrip.mms,v 11.4 1992/11/18 08:48:59 dickey Exp $
+# $Id: descrip.mms,v 11.5 1992/11/19 15:10:36 dickey Exp $
 # MMS-file for miscellaneous library routines	
 #
 ####### (Development) ##########################################################
@@ -47,6 +47,7 @@ LIBRARYMODULES = -
 	ISTEXTFILE, -
 	LIST_BY_COLS, -
 	LTOSTR, -
+	M2COMP, -
 	MAKEARGV, -
 	MEM2FILE, -
 	MODECHAR, -
@@ -54,6 +55,7 @@ LIBRARYMODULES = -
 	PATHCAT, -
 	PATHLEAF, -
 	SAMELEAF, -
+	SCOMP, -
 	SHOARG, -
 	SHOW_UIDS, -
 	SS_FIELD, -
@@ -187,6 +189,7 @@ C_SRC	=-
 	LIST_BY_COLS.C -
 	LOGCH.C -
 	LTOSTR.C -
+	M2COMP.C -
 	MAKEARGV.C -
 	MEM2FILE.C -
 	MODECHAR.C -
@@ -226,6 +229,7 @@ C_SRC	=-
 	SCCS_DIR.C -
 	SCCSLAST.C -
 	SCCSNAME.C -
+	SCOMP.C -
 	SCR_SIZE.C -
 	SETMTIME.C -
 	SHOARG.C -
@@ -370,6 +374,9 @@ USERPROT.obj :		$(PTYPES_H)
 WALKBACK.OBJ :		$(PTYPES_H)
 WALKTREE.OBJ :		$(PTYPES_H)
 WIN2FILE.obj :		$(PTYPES_H)
+#
+M2COMP.obj :		$(PTYPES_H)	$(I)cm_scomp.h
+SCOMP.obj :		$(PTYPES_H)	$(I)cm_scomp.h
 #
 COUNT_SS.obj :		$(PTYPES_H)	$(I)spreadsheet.h	$(I)dyn_string.h
 FIELD_OF.obj :		$(PTYPES_H)	$(I)spreadsheet.h	$(I)dyn_string.h

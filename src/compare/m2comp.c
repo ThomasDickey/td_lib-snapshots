@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: m2comp.c,v 11.1 1992/11/17 13:34:20 dickey Exp $";
+static	char	Id[] = "$Id: m2comp.c,v 11.2 1992/11/19 15:29:48 dickey Exp $";
 #endif
 
 /*
@@ -20,7 +20,7 @@ static	char	Id[] = "$Id: m2comp.c,v 11.1 1992/11/17 13:34:20 dickey Exp $";
 #define	STR_PTYPES
 #define	SCOMP	m2comp			/* name of this module */
 #define	SCOMP_TYPE	char	*
-#include "ddif.h"
+#include "cm_scomp.h"
 
 #define	REF(j)	(v1 + ((j) * size))
 #define	TST(j)	(v2 + ((j) * size))
@@ -72,9 +72,9 @@ void	m2comp(
 	_DCL(int,		(*match)())
 	_DCL(int,		(*report)())
 {
-	auto	Bool	done	= FALSE;
+	auto	int	done	= FALSE;
 	auto	EDIT	*ep, *behind, *ahead, *a, *b, *x, *w;
-	auto	Bool	change;
+	auto	int	change;
 	auto	EDIT	*start;
 	auto	Line	ORIGIN,
 			max_d,		/* bound on size of edit script */
