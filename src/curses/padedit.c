@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: padedit.c,v 8.2 1991/05/31 16:37:16 dickey Exp $";
+static	char	Id[] = "$Id: padedit.c,v 9.0 1991/06/06 17:12:54 ste_cm Rel $";
 #endif
 
 /*
@@ -7,9 +7,17 @@ static	char	Id[] = "$Id: padedit.c,v 8.2 1991/05/31 16:37:16 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	14 Dec 1987
  * $Log: padedit.c,v $
- * Revision 8.2  1991/05/31 16:37:16  dickey
- * lint (SunOS)
+ * Revision 9.0  1991/06/06 17:12:54  ste_cm
+ * BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
  *
+ *		Revision 8.3  91/06/06  17:12:54  dickey
+ *		modified debug-traces. If xterm is invoked, explicitly add
+ *		display-argument to make this visible in a "ps" command.
+ *		added "-r" to test-driver.
+ *		
+ *		Revision 8.2  91/05/31  16:37:16  dickey
+ *		lint (SunOS)
+ *		
  *		Revision 8.1  91/05/15  13:23:44  dickey
  *		mods to compile under apollo sr10.3
  *		
@@ -77,7 +85,7 @@ char	*name;
 	pad_$window_desc_t	window;
 	stream_$id_t		stream_id;
 
-	in_len = strlen(strcpy(in_name, name));
+	in_len = (size_t)strlen(strcpy(in_name, name));
 
 	/* force default-sized window */
 	window.top =
@@ -123,7 +131,7 @@ char	*argv[];
 	DCL_WAIT(status);
 
 	if ((pid = fork()) > 0) {
-		DEBUG("spawn-1st (pid= %d)\n", pid);
+		DEBUG("** spawn-1st (pid= %d)\r\n", pid);
 		while (wait(ARG_WAIT(status)) >= 0);
 		DEBUG("spawn-1st (status= %#x)\n", status);
 		if (errno = W_RETCODE(status))
@@ -132,11 +140,11 @@ char	*argv[];
 	} else if (pid == 0) {
 		DEBUG("spawn-1st\n",0);
 		if ((pid = fork()) > 0) {
-			DEBUG("spawn-2nd\n",0);
+			DEBUG("** spawn-2nd\r\n",0);
 			(void)_exit(0);		/* abandon exec'ing process */
 			/*NOTREACHED*/
 		} else if (pid == 0) {
-			DEBUG("exec'ing process\n",0);
+			DEBUG("** exec'ing process\r\n",0);
 			(void)execvp(cmd, argv);
 			(void)_exit(errno);	/* just in case exec-failed */
 			/*NOTREACHED*/
@@ -158,13 +166,10 @@ int	readonly;
 	else
 #endif	/* apollo */
 	if (code == 0) {
-		static	char	*vec[] = {
-				"",	/* path */
-				"-e",
-				"",	/* editor */
-				"",	/* name */
-				0
-			};
+		extern	char	*getenv();
+		char	*display;
+		char	*argv[20];
+		int	argc	= 0;
 
 		char	wd[BUFSIZ],
 			xt[BUFSIZ];
@@ -174,19 +179,25 @@ int	readonly;
 		if (which(xt, sizeof(xt), "xterm", wd) <= 0)
 			return (-1);
 
-		vec[0] = xt;
-		vec[2] = editor;
-		vec[3] = name;
+		argv[argc++] = xt;
+		if (display = getenv("DISPLAY")) {
+			argv[argc++] = "-display";
+			argv[argc++] = display;
+		}
+		argv[argc++] = "-e";
+		argv[argc++] = editor;
+		argv[argc++] = name;
+		argv[argc++] = 0;
 
 		if (readonly) {	/* spawn and run away */
-			return (spawn(xt, vec));
+			return (spawn(xt, argv));
 		} else {
 			char	args[BUFSIZ];
 			int	j;
 
-			*args = '\0';
-			for (j = 1; vec[j]; j++)
-				(void)strcat(strcat(args, " "), vec[j]);
+			*args = EOS;
+			for (j = 1; argv[j]; j++)
+				catarg(args, argv[j]);
 			return (execute(xt, args));
 		}
 	}
@@ -197,9 +208,14 @@ int	readonly;
 main(argc, argv)
 char	*argv[];
 {
-register j;
-	for (j = 1; j < argc; j++)
-		padedit(argv[j], 1, "view");
+	register int j;
+	int	readonly = FALSE;
+	for (j = 1; j < argc; j++) {
+		if (!strcmp(argv[j], "-r"))
+			readonly = TRUE;
+		else
+			padedit(argv[j], readonly, "view");
+	}
 }
 
 failed(s)

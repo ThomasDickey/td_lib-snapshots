@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: vms2name.c,v 4.1 1991/05/20 17:18:11 dickey Exp $";
+static	char	Id[] = "$Id: vms2name.c,v 5.0 1991/06/06 16:21:19 ste_cm Rel $";
 #endif
 
 /*
@@ -170,7 +170,7 @@ char	*dst, *src;
 	 */
 	for (s = dst; *d; s++, d++) {
 		if (isalpha(*d) && isupper(*d))
-			*s = _tolower(*d);
+			*s = tolower(*d);
 		else {
 			*s = *d;
 			if (*s == '.' && d[1] == EOS)
@@ -204,7 +204,7 @@ char	*dst, *src;
 	}
 	while (uc_len-- > 0 && *s) {
 		if (isalpha(*s))
-			*s = _toupper(*s);
+			*s = toupper(*s);
 		s++;
 	}
 	if (rcs_suffix)

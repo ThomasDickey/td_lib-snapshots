@@ -1,3 +1,32 @@
+1991-06-06  dickey@software.org
+
+	* src/curses/padedit.c:
+	modified debug-traces. If xterm is invoked, explicitly add
+	display-argument to make this visible in a "ps" command.
+	added "-r" to test-driver.
+
+1991-06-06  ste_cm@software.org
+
+	* src/curses/padedit.c:
+	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-06-06  dickey@software.org
+
+	* src/Makefile: make ".i" rule work on apollo sr10.2
+
+1991-06-06  ste_cm@software.org
+
+	* src/Makefile: BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+
+1991-06-06  dickey@software.org
+
+	* src/port2vms/vms2name.c: make this "work" on SunOs 4.1.1
+
+1991-06-06  ste_cm@software.org
+
+	* src/port2vms/vms2name.c:
+	BASELINE Tue Jun 11 16:44:53 1991 -- apollo sr10.3
+
 1991-06-05  dickey@software.org
 
 	* include/td_lib.h: use new def SIG_T
