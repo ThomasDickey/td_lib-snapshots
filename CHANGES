@@ -1,3 +1,9 @@
+1992-05-12  dickey@software.org
+
+	* src/pathname/pathcmp.c:
+	omit 'abspath()' calls, since I only call this from dedring.c
+	where I know the paths are canonical already
+
 1992-04-09  dickey@software.org
 
 	* src/curses/padedit.c: show filename as part of xterm-title
