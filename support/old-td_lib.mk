@@ -1,4 +1,4 @@
-# $Id: old-td_lib.mk,v 12.1 1993/09/22 13:33:35 dickey Exp $
+# $Id: old-td_lib.mk,v 12.2 1993/09/23 20:29:38 dickey Exp $
 # common definitions for makefiles built over TD_LIB library.
 
 ####### (Environment) ##########################################################
@@ -35,7 +35,7 @@ LINTOPTS= $(CPP_OPTS) $(LINTLIBS)
 
 ####### (Standard Lists) #######################################################
 # don't put .a into CLEAN, because VERDIX-ADA uses that for source!
-CLEAN	= *.[oi] *.lint *.bak *.log *.out *.tst .nfs* core
+CLEAN	= *.[oi] *.lint *.bak *.log *.out *.tst .nfs* *.pure* core
 DESTROY	=sh -c 'for i in *;do case $$i in RCS);; *) rm -f $$i;;esac;done;exit 0'
 RUN_TESTS=sh -c '$@.sh 2>&1 | tee -a $@.out'
 

@@ -1,4 +1,4 @@
-# $Id: Makefile,v 12.1 1993/09/21 18:10:49 dickey Exp $
+# $Id: Makefile,v 12.2 1993/09/23 13:49:58 dickey Exp $
 # make-file for TD_LIB common/test library
 
 ####### (Development) ##########################################################
@@ -194,6 +194,10 @@ lincnt.out:
 $(SOURCES):		; $(GET) $@
 
 # rules to make SunOs 'make' "work" with VPATH
+
+m2comp:	test_cmp.c ../src/m2comp.c ; $(LINK) -o $@ $(CFLAGS) $(CPP_OPTS) ../src/$@.c $(LIBS)
+scomp:	test_cmp.c ../src/scomp.c  ; $(LINK) -o $@ $(CFLAGS) $(CPP_OPTS) ../src/$@.c $(LIBS)
+
 abspath.c\
 cutoff.c\
 diffload.c\

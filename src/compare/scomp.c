@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: scomp.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
+static	char	Id[] = "$Id: scomp.c,v 12.2 1993/09/23 13:54:16 dickey Exp $";
 #endif
 
 /*
@@ -20,6 +20,7 @@ static	char	Id[] = "$Id: scomp.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
  */
 
 #define	SCOMP	scomp
+#define STR_PTYPES
 #include	"td_scomp.h"
 
 #ifdef	lint
@@ -38,8 +39,8 @@ void	SCOMP(
 	_ARX(SCOMP_TYPE,	v2)	/* "new" vector to compare	*/
 	_ARX(int,		n2)	/* ...corresponding length	*/
 	_ARX(int,		size)	/* size of vector-entry		*/
-	_FNX(int,		match,	(SCOMP_MATCH_ARGS))
-	_FN1(void,		report,	(SCOMP_REPORT_ARGS))
+	_FNX(int,		match,	(SCOMP_MATCH_ARGS(p1,p2)))
+	_FN1(void,		report,	(SCOMP_REPORT_ARGS(p1,p2)))
 		)
 	_DCL(SCOMP_TYPE,	v1)
 	_DCL(SCOMP_TYPE,	v2)

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: m2comp.c,v 12.1 1993/09/21 18:54:04 dickey Exp $";
+static	char	Id[] = "$Id: m2comp.c,v 12.2 1993/09/23 13:34:33 dickey Exp $";
 #endif
 
 /*
@@ -60,8 +60,8 @@ void	m2comp(
 	_ARX(SCOMP_TYPE,	v2)	/* "new" vector to compare	*/
 	_ARX(int,		n2)	/* ...corresponding length	*/
 	_ARX(int,		size)	/* size of vector-entry		*/
-	_FNX(int,		match,	(SCOMP_MATCH_ARGS))
-	_FN1(void,		report,	(SCOMP_REPORT_ARGS))
+	_FNX(int,		match,	(SCOMP_MATCH_ARGS(p1,p2)))
+	_FN1(void,		report,	(SCOMP_REPORT_ARGS(p1,p2)))
 		)
 	_DCL(SCOMP_TYPE,	v1)
 	_DCL(SCOMP_TYPE,	v2)
