@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19880524
+MANIFEST for td_lib, version t19880525
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 include                         subdirectory
@@ -31,6 +31,7 @@ src/memory/txtalloc.c           maintain dictionary of string "constants"
 src/memory/vecalloc.c           allocate an array
 src/pathname                    subdirectory
 src/pathname/abspath.c          convert path to absolute form
+src/pathname/copyback.c         copy file back from a temp-file
 src/pathname/denode.c           strip leading node-name from path
 src/pathname/dotname.c          test for "." or ".." names
 src/pathname/modechar.c         translate file-mode (binary) to character
