@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	06 Aug 1992, from ded/dlog.c
  * Modified:
+ *		16 Dec 1995, added mouse codes.
  *		05 Nov 1993, absorb "cmdch.h" into "td_curse.h"
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
@@ -15,9 +16,12 @@
 #include	"td_curse.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: logch.c,v 12.6 1995/08/07 00:44:26 tom Exp $")
+MODULE_ID("$Id: logch.c,v 12.7 1995/12/16 13:44:33 tom Exp $")
 
 #define	CONVERT(base,p,n)	n = (base * n) + (*p++ - '0')
+
+#define L_PAREN '('
+#define R_PAREN ')'
 
 int	decode_logch(
 	_ARX(char **,	buffer)
@@ -28,6 +32,9 @@ int	decode_logch(
 {
 	register char	*pointer = *buffer;
 	register int	c, j;
+#ifndef NO_XTERM_MOUSE
+	char	tmp1, tmp2;
+#endif
 
 	if (count_) {
 		c = 0;
@@ -56,6 +63,23 @@ int	decode_logch(
 		case 'D':	c = KEY_DOWN;		break;
 		case 'L':	c = KEY_LEFT;		break;
 		case 'R':	c = KEY_RIGHT;		break;
+#ifndef NO_XTERM_MOUSE
+		case 'M':
+			c = KEY_MOUSE;
+			if (sscanf(pointer+1, "%d%c%d,%d%c",
+				&(xt_mouse.button),
+				&tmp1,
+				&(xt_mouse.row),
+				&(xt_mouse.col),
+				&tmp2) == 5
+			 && (tmp1 == L_PAREN)
+			 && (tmp2 == R_PAREN)) {
+				xt_mouse.pressed  =
+				xt_mouse.released = TRUE;
+				pointer = strchr(pointer, R_PAREN);
+			}
+			break;
+#endif
 		default:
 			if (isdigit(*pointer)) {
 				c = 0;
@@ -116,6 +140,14 @@ void	encode_logch(
 		case KEY_DOWN:	FORMAT(s, "\\D");	break;
 		case KEY_LEFT:	FORMAT(s, "\\L");	break;
 		case KEY_RIGHT:	FORMAT(s, "\\R");	break;
-		default:	FORMAT(s, "\\%03o", c);
+		default:	FORMAT(s, "\\%03o", c);	break;
+#ifndef NO_XTERM_MOUSE
+		case KEY_MOUSE:
+			FORMAT(s, "\\M%d(%d,%d)",
+				xt_mouse.button,
+				xt_mouse.row,
+				xt_mouse.col);
+			break;
+#endif
 	}
 }

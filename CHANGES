@@ -1,3 +1,28 @@
+1995-12-16  dickey@clark.net
+
+	* src/curses/rawterm.c:
+	moved intrflush & keypad calls from cmdch, just in case spawned process
+	tinkers with the keypad setting (which can change the escape sequences
+	sent by cursor keys)
+
+	* src/curses/cmdch.c: moved intrflush & keypad calls to rawterm.c
+
+	* src/curses/logch.c: added logic to encode/decode mouse events
+
+	* src/curses/cmdch.c, src/curses/rawterm.c:
+	added hooks to use ncurses mouse-support
+
+1995-12-15  dickey@clark.net
+
+	* src/curses/wresize.c:
+	use definition for GOOD_TOUCHWIN to distinguish solaris-curses from
+	bsd-curses
+
+	* src/curses/wrepaint.c:
+	use def for GOOD_TOUCHWIN (solaris's structs look like bsd...)
+
+	* include/td_curse.h: added def for GOOD_TOUCHWIN
+
 1995-11-07  dickey@clark.net
 
 	* src/curses/rawgets.c: corrected loop-limit in ShowAt()

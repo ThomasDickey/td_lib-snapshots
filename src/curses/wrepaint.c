@@ -23,7 +23,7 @@
 
 #include	"td_curse.h"
 
-MODULE_ID("$Id: wrepaint.c,v 12.9 1995/11/04 23:23:25 tom Exp $")
+MODULE_ID("$Id: wrepaint.c,v 12.10 1995/12/16 00:12:58 tom Exp $")
 
 void	wrepaint(
 	_ARX(WINDOW *,	win)
@@ -32,7 +32,12 @@ void	wrepaint(
 	_DCL(WINDOW *,	win)
 	_DCL(int,	row)
 {
-#if	!CURSES_LIKE_BSD
+	/* SysV curses has a workable 'touchwin()'; the older BSD curses
+	 * doesn't.  We test indirectly for this by looking for 'keypad()',
+	 * which generally appears only in combination with a working
+	 * 'touchwin()'.
+	 */
+#if	GOOD_TOUCHWIN
 	touchwin(win);
 	wrefresh(curscr);
 #else
