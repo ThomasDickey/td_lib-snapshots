@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: dlettree.c,v 3.1 1989/09/20 14:37:52 dickey Exp $";
+static	char	Id[] = "$Id: dlettree.c,v 3.2 1989/09/29 15:00:02 dickey Exp $";
 #endif	lint
 
 /*
@@ -40,6 +40,7 @@ static	deletefile()	{ return 1;}
 
 deletetree(oldname,recur)
 char	*oldname;
+int	recur;
 {
 	auto	DIR		*dirp;
 	auto	struct	direct	*dp;
