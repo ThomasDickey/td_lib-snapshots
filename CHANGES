@@ -1,3 +1,11 @@
+1988-08-03  dickey@software.org
+
+	* src/Makefile: rewrote into standardized format.
+
+	* src/curses/rawterm.c:
+	use 'crmode()' instead of 'raw()'.  Chopped out apollo-hack, since I
+	don't need it anymore.
+
 1988-07-29  dickey@software.org
 
 	* src/process/bldarg.c:
