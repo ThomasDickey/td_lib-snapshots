@@ -1,3 +1,10 @@
+1992-08-17  dickey@software.org
+
+	* src/curses/rawgets.c:
+	separated role of 'fast_q' so we can always exit scrolling
+	mode with 'q'.  If 'fast_q' is non-null, initially start in
+	scrolling-mode.
+
 1992-08-12  dickey@software.org
 
 	* src/curses/cmdch.c: map-returns
