@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	24 Aug 1989
  * Modified:
+ *		20 Oct 1996, rework bsd4.4 compatibility with macros.
  *		04 Sep 1995, make this work with bsd4.4 curses
  *		26 Apr 1994, port to Linux
  *		01 Nov 1993, ported to HP/UX. This works well enough to manage
@@ -23,7 +24,7 @@
 
 #include	"td_curse.h"
 
-MODULE_ID("$Id: wrepaint.c,v 12.10 1995/12/16 00:12:58 tom Exp $")
+MODULE_ID("$Id: wrepaint.c,v 12.11 1996/10/20 18:05:31 tom Exp $")
 
 void	wrepaint(
 	_ARX(WINDOW *,	win)
@@ -47,15 +48,14 @@ void	wrepaint(
 	register int	col, c;
 
 	while (row < LINES) {
-		chtype	*y_data = win->_y[row-min_row];
-		win->_firstch[row] = 0;
-		win->_lastch [row] = wMaxX(win) - 1;
+		CursesFirstCh(win,row) = 0;
+		CursesLastCh(win,row)  = wMaxX(win) - 1;
 		for (col = min_col; col < max_col; col++) {
-			if ((c = y_data[col-min_col]) == '~')
+			if ((c = CursesData(win,row-min_row,col-min_col)) == '~')
 				c = '?';
 			else
 				c = '~';
-			curscr->_y[row][col] = c;
+			CursesData(curscr,row,col) = c;
 		}
 		row++;
 	}
