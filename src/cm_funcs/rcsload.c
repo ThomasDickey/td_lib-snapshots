@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcsload.c,v 9.0 1991/05/15 09:40:58 ste_cm Rel $";
+static	char	Id[] = "$Id: rcsload.c,v 9.1 1991/09/05 10:22:55 dickey Exp $";
 #endif
 
 /*
@@ -7,9 +7,12 @@ static	char	Id[] = "$Id: rcsload.c,v 9.0 1991/05/15 09:40:58 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	19 Aug 1988
  * $Log: rcsload.c,v $
- * Revision 9.0  1991/05/15 09:40:58  ste_cm
- * BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+ * Revision 9.1  1991/09/05 10:22:55  dickey
+ * added 'full' argument
  *
+ *		Revision 9.0  91/05/15  09:40:58  ste_cm
+ *		BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
+ *		
  *		Revision 8.1  91/05/15  09:40:58  dickey
  *		apollo sr10.3 cpp complains about tag in #endif
  *		
@@ -144,8 +147,9 @@ RCSTREE	*p;
  ************************************************************************/
 
 RCSTREE *
-rcsload(archive, verbose)
+rcsload(archive, full, verbose)
 char	*archive;			/* name of file to open		*/
+int	full;				/* TRUE if we open full path	*/
 int	verbose;			/* TRUE if we show messages	*/
 {
 	static	RCSTREE	nil;		/* empty struct, for terminator */
@@ -159,7 +163,7 @@ int	verbose;			/* TRUE if we show messages	*/
 	int	delta	= 0;
 	int	yd, md, dd, ht, mt, st;
 
-	if (!rcsopen(name2rcs(archive,TRUE), -verbose))
+	if (!rcsopen(name2rcs(archive,full), -verbose))
 		return(vec);
 
 	k = -1;

@@ -1,3 +1,12 @@
+1991-09-05  dickey@software.org
+
+	* src/cm_funcs/rcsload.c: added 'full' argument
+
+	* src/cm_funcs/rcsedit.c:
+	if opened in read-only mode, don't write temp-file
+
+	* include/rcsdefs.h: added 'full' arg to 'rcsload()'
+
 1991-07-23  dickey@software.org
 
 	* Makefile: on SunOs, must ranlib archive after copying it
