@@ -1,4 +1,4 @@
-# @(#)Makefile	1.55 88/12/14 11:18:04
+# @(#)Makefile	1.56 89/01/24 14:24:49
 # MAKE-file for miscellaneous library routines
 #
 ####### (Development) ##########################################################
@@ -12,7 +12,6 @@ DATE	= echo '****'`date` >> $@
 LINTOPT	= $(DEFINES) $(INCLUDES) -ltd -lcurses -lapollo
 #
 ####### (Standard Lists) #######################################################
-ALL	= $A $(LLIB).ln
 A	= lib.a
 CSRC	=\
 	abspath.c\
@@ -153,6 +152,11 @@ OBJS	=\
 	walktree.o\
 	which.o\
 	win2file.o
+#
+ALL	=\
+	$A\
+	$(SCRIPTS)\
+	$(LLIB).ln
 #
 ####### (Standard Productions) #################################################
 all:		$(ALL)

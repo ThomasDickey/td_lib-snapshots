@@ -1,3 +1,8 @@
+1989-01-24  dickey@software.org
+
+	* src/Makefile:
+	ensure that we have 'makellib.sh' before we try to use it!
+
 1989-01-19  dickey@software.org
 
 	* src/curses/rawgets.c:
