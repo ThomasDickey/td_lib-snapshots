@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 7.0 1990/03/23 14:15:54 ste_cm Rel $ */
+/* $Id: ptypes.h,v 8.0 1990/08/13 13:37:55 ste_cm Rel $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -206,7 +206,12 @@ extern	char	*malloc(), *realloc();
 #ifdef	vms
 #include	"unixdir.h"	/* get this from PORTUNIX */
 #else	/* unix */
+#ifdef	sun3			/* SunOs 4.1 */
+#include	<dirent.h>
+#define	direct	dirent
+#else				/* sun4, apollo & other old bsd's */
 #include	<sys/dir.h>
+#endif
 #ifdef	SYSTEM5
 #define	DIR	FILE
 #define	opendir(n)	fopen(n,"r")
