@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: trnstree.c,v 7.1 1992/11/20 07:58:24 dickey Exp $";
+static	char	Id[] = "$Id: trnstree.c,v 7.2 1993/04/28 14:10:48 dickey Exp $";
 #endif
 
 /*
@@ -20,7 +20,7 @@ static	char	Id[] = "$Id: trnstree.c,v 7.1 1992/11/20 07:58:24 dickey Exp $";
 #define		DIR_PTYPES
 #define		STR_PTYPES
 #include	"portunix.h"
-#include	"cm_qsort.h"
+#include	"td_qsort.h"
 #include	<errno.h>
 
 typedef	char	*PTR;

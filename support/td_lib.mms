@@ -1,9 +1,9 @@
-# $Id: td_lib.mms,v 7.1 1992/11/04 07:18:34 dickey Exp $
+# $Id: td_lib.mms,v 8.0 1993/04/28 14:13:42 ste_cm Rel $
 # MMS reusable rules for PORTUNIX, and programs built with it.
 #
 # Define standard locations in the tree:
-I = PORTUNIX_ROOT:[INTERFACE]	! include-files from PORTUNIX
-J = CM_LIBRARY_ROOT:[INTERFACE]	! include-files from CM_LIBRARY
+I = PORTUNIX_ROOT:[INCLUDE]	! include-files from PORTUNIX
+J = TD_LIB_ROOT:[INCLUDE]	! include-files from TD_LIB
 B = COM:			! program-binaries for installation
 #
 # Override default for CFLAGS and LINKFLAGS to generate useful information
@@ -19,7 +19,7 @@ TEST_CC =	$(CC)/OBJECT=$(MMS$TARGET_NAME)/DEFINE="TEST" $(MMS$SOURCE)
 # Define macros useful for specifying dependencies and arguments for the
 # libraries used here and by simple applications above:
 PORT_LIB=	PORTUNIX_ROOT:[LIB]PORT
-TOOL_LIB=	CM_LIBRARY_ROOT:[LIB]COMMON
+TOOL_LIB=	TD_LIB_ROOT:[LIB]TD_LIB
 #
 OPT_ARGS=	PORTUNIX_ROOT:[SUPPORT]LINK_OPTIONS.OPT
 OPT_DEPS=	$(OPT_ARGS),-
