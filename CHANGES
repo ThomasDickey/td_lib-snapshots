@@ -1,3 +1,7 @@
+1995-04-19  dickey@clark.net
+
+	* include/td_curse.h: correction for CURSES_LIKE_SYSV
+
 1995-04-06  dickey@clark.net
 
 	* src/curses/cmdch.c:
