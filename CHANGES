@@ -1,3 +1,7 @@
+1988-08-04  dickey@software.org
+
+	* src/Makefile: don't need NO_SCCS_ID def anymore.
+
 1988-08-03  dickey@software.org
 
 	* src/Makefile: rewrote into standardized format.
