@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19940625
+MANIFEST for td_lib, version t19940626
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         restrictions on copying/using this software
@@ -28,6 +28,7 @@ include/sccsdefs.h              interface for sccs functions
 include/td_curse.h              interface for curses functions
 include/td_ext.h                external function definitions used by TD_LIB and related applications
 include/td_lib.h                interface of common TD_LIB functions
+include/td_local.h              include-file that includes all of the features in TD_LIB
 include/td_qsort.h              interface for 'qsort()'
 include/td_regex.h              interface for regular expression functions
 include/td_scomp.h              interface for source-compare functions
