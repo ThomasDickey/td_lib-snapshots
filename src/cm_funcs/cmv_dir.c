@@ -1,5 +1,5 @@
 #ifndef	NO_IDENT
-static	char	Id[] = "$Id: cmv_dir.c,v 12.12 1995/02/18 00:04:00 tom Exp $";
+static	char	Id[] = "$Id: cmv_dir.c,v 12.13 1995/03/14 00:18:58 tom Exp $";
 #endif
 
 /*
@@ -289,7 +289,7 @@ void	read_r_curr(
 			if ((s = strpbrk(d, " ;")) != 0)
 				*s = EOS;
 			p->revision = txtalloc(d);
-			p->internal = NewInternal(parent, internal);
+			p->internal = txtalloc(internal);
 			p->external = NewExternal(parent, external);
 			p->next = parent->filelist;
 			parent->filelist = p;
@@ -547,13 +547,20 @@ char *	cmv_file (
 
 		if ((p = FindInternalDir(max_p->cmtree, temp)) != 0
 		 && (q = FindInternalFile(p, pathcat(temp, temp, pathleaf(filename)))) != 0) {
-			(void)pathcat(
-				archive,
-				pathcat(
+			if (q->internal[0] == PATH_SLASH) {
+				(void)strcpy(
+					fleaf(
+						strcpy(archive, max_p->archive)),
+					q->internal);
+			} else {
+				(void)pathcat(
 					archive,
-					strcpy(archive, max_p->archive),
-					p->internal),
-				pathleaf(q->internal));
+					pathcat(
+						archive,
+						strcpy(archive, max_p->archive),
+						p->internal),
+					q->internal);
+			}
 			name = txtalloc(archive);
 		}
 	}
