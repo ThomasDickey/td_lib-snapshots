@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: pathcmp.c,v 11.1 1992/11/17 12:51:38 dickey Exp $";
+static	char	Id[] = "$Id: pathcmp.c,v 12.0 1992/11/24 11:27:34 ste_cm Rel $";
 #endif
 
 /*
@@ -118,10 +118,9 @@ _MAIN
 			,"/x/y/z"
 			,"/x.y"
 			,"/x.y/z"
-#ifdef	apollo
+			/*cf: apollo */
 			,"//a"
 			,"//x"
-#endif
 			};
 		do_test(SIZEOF(vec), vec);
 	}

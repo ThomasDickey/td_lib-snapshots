@@ -53,6 +53,9 @@
  	|-- ltostr
 ?	|-- ltostr.ref
  	|-- ltostr.sh
+ 	|-- m2comp
+?	|-- m2comp.ref
+ 	|-- m2comp.sh
 ?	|-- make.out
  	|-- makeargv
 ?	|-- makeargv.ref
@@ -107,6 +110,9 @@
  	|-- sccsname
 ?	|-- sccsname.ref
  	|-- sccsname.sh
+ 	|-- scomp
+?	|-- scomp.ref
+ 	|-- scomp.sh
  	|-- scr_size
 ?	|-- scr_size.ref
  	|-- scr_size.sh
@@ -119,6 +125,7 @@
  	|-- strwcmp
 ?	|-- strwcmp.ref
  	|-- strwcmp.sh
+?	|-- test_scomp.c
  	|-- trimpath
 ?	|-- trimpath.ref
  	|-- trimpath.sh
@@ -140,6 +147,9 @@
  	|-- vercmp
 ?	|-- vercmp.ref
  	|-- vercmp.sh
+ 	|-- walkback
+?	|-- walkback.ref
+ 	|-- walkback.sh
  	|-- walktree
 ?	|-- walktree.ref
  	|-- walktree.sh
@@ -147,4 +157,4 @@
  	|-- which
 ?	|-- which.ref
  	|-- which.sh
-** total= 92
+** total= 98

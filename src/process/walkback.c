@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: walkback.c,v 11.3 1992/11/20 14:06:37 dickey Exp $";
+static	char	Id[] = "$Id: walkback.c,v 12.0 1992/11/24 15:42:18 ste_cm Rel $";
 #endif
 
 /*
@@ -11,8 +11,12 @@ static	char	Id[] = "$Id: walkback.c,v 11.3 1992/11/20 14:06:37 dickey Exp $";
  * Function:	Generate a walkback (if possible!)
  */
 
+#define	SIG_PTYPES
 #include	"ptypes.h"
+#include	<errno.h>
 
+/******************************************************************************/
+#ifdef	unix
 #ifdef	apollo
 static
 int	contains(
@@ -29,8 +33,13 @@ int	contains(
 	}
 	return FALSE;
 }
+#else	/* assume we can dump-core */
+static	char	*core	= "core";
+static	char	*caller;
 #endif
+#endif	/* unix */
 
+/******************************************************************************/
 	/*ARGSUSED*/
 void	walkback(
 	_AR1(char *,	program))
@@ -42,6 +51,11 @@ void	walkback(
 
 	if (program) {
 #if	defined(unix) && !defined(apollo)
+		char	dot[MAXPATHLEN],
+			bfr[256];
+		(void)getwd(dot);
+		(void)which(bfr, sizeof(bfr), program, dot);
+		caller = stralloc(bfr);
 #endif
 	} else {	/* do the actual walkback */
 #ifdef	vms
@@ -67,10 +81,30 @@ void	walkback(
 				PRINTF("%s", bfr);
 		}
 		FCLOSE(pp);
-#else
-		fprintf(stderr, "walkback not implemented\n");
-		fflush(stderr);
-		abort();
+#else	/* !apollo */
+		FILE	*pp;
+		char	bfr[BUFSIZ];
+		int	pid;
+
+		FFLUSH(stdout);
+		FFLUSH(stderr);
+		(void)unlink(core);
+
+		if ((pid = fork()) > 0) {
+			(void)kill(pid, SIGABRT);
+		} else {
+			catchall(SIG_DFL);
+			for(;;);
+			/*NOTREACHED*/
+		}
+
+		FORMAT(bfr, "adb %s", caller);
+		if (pp = popen(bfr, "w")) {
+			(void)fputs("$c\n", pp); FFLUSH(pp);
+			(void)fputs("$q\n", pp); FFLUSH(pp);
+			(void)pclose(pp);
+			(void)unlink(core);
+		}
 #endif	/* apollo */
 #endif	/* vms/unix */
 	}

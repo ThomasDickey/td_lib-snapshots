@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: newzone.c,v 11.1 1992/09/02 14:00:10 dickey Exp $";
+static	char	Id[] = "$Id: newzone.c,v 12.0 1992/11/24 13:12:58 ste_cm Rel $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: newzone.c,v 11.1 1992/09/02 14:00:10 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	09 Jun 1988
  * Modified:
+ *		24 Nov 1992, local copy of 'putenv()' is obsolete
  *		04 Oct 1991, conversion to ANSI
  *		09 Sep 1991, lint (apollo SR10.3)
  *		04 Oct 1989, lint (apollo SR10.1)
@@ -30,9 +31,6 @@ static	char	Id[] = "$Id: newzone.c,v 11.1 1992/09/02 14:00:10 dickey Exp $";
  *		value returned by 'gettimeofday()' because this uses the
  *		underlying value of timezone set by the AEGIS 'tz' command
  *		which is global to all processes.
- *
- *		The 'putenv()' procedure would simplify some of this, but is not
- *		portable to antique unix systems.
  */
 
 #define	STR_PTYPES
@@ -54,15 +52,6 @@ static	time_t	now;
 static	char	old_TZ[NAMELEN];
 int	localzone;		/* public copy of minutes-west */
 
-#ifndef	SYSTEM5
-#ifndef	apollo
-typedef	char	**VEC;
-extern	VEC	environ;
-	/*ARGSUSED*/
-	def_ALLOC(char *)
-#endif	/* apollo */
-#endif	/* SYSTEM5 */
-
 /************************************************************************
  *	local procedures						*
  ************************************************************************/
@@ -72,10 +61,9 @@ extern	VEC	environ;
  * the resulting time-zone.
  */
 static
-char *
-name_of_tz(
-_AR1(int,	minutes))
-_DCL(int,	minutes)
+char *	name_of_tz(
+	_AR1(int,	minutes))
+	_DCL(int,	minutes)
 {
 	register int	hours	= (minutes/60);
 	static	 char	computed[NAMELEN];
@@ -111,48 +99,12 @@ _DCL(int,	minutes)
  * Set the time-zone environment with the specified string.
  */
 static
-reset_tz(
-_AR1(char *,	name))
-_DCL(char *,	name)
+void	reset_tz(
+	_AR1(char *,	name))
+	_DCL(char *,	name)
 {
-#ifdef	apollo
 	(void)putenv(name);
 	tzset();
-#else	/* !apollo */
-#ifdef	SYSTEM5
-	(void)putenv(name);
-	tzset();
-#else	/* !SYSTEM5 */
-register unsigned j, k;
-register char	*s;
-int	len	= 3;		/* "TZ=" length */
-int	found	= FALSE;	/* set if we find variable */
-int	match	= FALSE;	/* true iff we need no change */
-
-	for (j = 0; s = environ[j]; j++) {
-		if (strlen(s) > len)
-			if (!strncmp(s, name, len)) {
-				found = TRUE;
-				match = !strcmp(s,name);
-				break;
-			}
-	}
-	if (!match) {
-		if (!found) {	/* allocate space for this in environ */
-		VEC	newp = ALLOC(char *,j + 2);
-			for (k = 0; k < j; k++)
-				newp[k] = environ[k];
-			newp[j+1] = 0;
-			environ = newp;
-		} else
-			strfree(s);
-		environ[j] = stralloc(name);
-	}
-#ifdef	GOULD_NP1
-	tzset();
-#endif	/* GOULD_NP1 */
-#endif	/* SYSTEM5 */
-#endif	/* apollo */
 }
 
 /*
@@ -161,7 +113,7 @@ int	match	= FALSE;	/* true iff we need no change */
  * (0000 hours on 1 Jan 1970).
  */
 static
-init_tz(_AR0)
+void	init_tz(_AR0)
 {
 	if (!*old_TZ) {
 	time_t	zero = 0;
@@ -186,15 +138,15 @@ init_tz(_AR0)
  * Set our timezone to a specified value
  */
 newzone(
-_ARX(int,	hours)
-_ARX(int,	minutes)
-_AR1(int,	apres)
-	)
-_DCL(int,	hours)
-_DCL(int,	minutes)
-_DCL(int,	apres)
+	_ARX(int,	hours)
+	_ARX(int,	minutes)
+	_AR1(int,	apres)
+		)
+	_DCL(int,	hours)
+	_DCL(int,	minutes)
+	_DCL(int,	apres)
 {
-char	new_TZ[NAMELEN];
+	char	new_TZ[NAMELEN];
 
 	init_tz();
 	minutes += (hours * 60);
@@ -203,8 +155,8 @@ char	new_TZ[NAMELEN];
 	FORMAT(new_TZ, "TZ=%s", name_of_tz(minutes));
 	reset_tz(new_TZ);
 #ifdef	TEST
-	printf("  newzone(%4d) = '%s'\n", minutes, new_TZ);
-	printf("\t\t\t\t=>%s", ctime(&now));
+	PRINTF("  newzone(%4d) = '%s'\n", minutes, new_TZ);
+	PRINTF("\t\t\t\t=>%s", ctime(&now));
 #endif
 }
 
@@ -232,9 +184,9 @@ test(_AR0)
 _MAIN
 {
 	now = EST_REF;
-	printf("** now = %s", ctime(&now));
+	PRINTF("** now = %s", ctime(&now));
 	test();
-	printf("** six-months ago\n");
+	PRINTF("** six-months ago\n");
 	now -= SIX_MM;
 	test();
 	exit(SUCCESS);

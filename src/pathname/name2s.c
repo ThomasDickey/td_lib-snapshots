@@ -1,5 +1,5 @@
 #ifndef lint
-static  char    Id[] = "$Id: name2s.c,v 11.0 1991/10/17 07:53:27 ste_cm Rel $";
+static  char    Id[] = "$Id: name2s.c,v 12.0 1992/11/24 15:27:47 ste_cm Rel $";
 #endif 
 
 /*
@@ -44,33 +44,38 @@ static  char    Id[] = "$Id: name2s.c,v 11.0 1991/10/17 07:53:27 ste_cm Rel $";
 #define	isshell(c)	(strchr("*%?$()[]{}|<>^&;#\\\"`'", c) != 0)
 #define	isAEGIS(c)	(strchr("*%?()[]{}\\", c) != 0)
 
-name2s(
-_ARX(char *,	bfr)
-_ARX(int,	len)
-_ARX(char *,	name)
-_AR1(int,	opt)
-	)
-_DCL(char *,	bfr)
-_DCL(int,	len)
-_DCL(char *,	name)
-_DCL(int,	opt)
+#undef	doAEGIS
+#if	defined(apollo) || defined(TEST)
+#define	doAEGIS
+#endif
+
+int	name2s(
+	_ARX(char *,	bfr)
+	_ARX(int,	len)
+	_ARX(char *,	name)
+	_AR1(int,	opt)
+		)
+	_DCL(char *,	bfr)
+	_DCL(int,	len)
+	_DCL(char *,	name)
+	_DCL(int,	opt)
 {
 	char	*base = bfr;
 	register int c;
 	int	esc	= opt & 1;
-#ifdef	apollo
+#ifdef	doAEGIS
 	int	in_leaf	= 0;
 #endif
 
 	while ((c = *name++) && len-- > 0) {
-#ifdef	apollo
+#ifdef	doAEGIS
 		if (c == '/')	in_leaf = 0;
 		else		in_leaf++;
 		if (opt & 2) {	/* show underlying apollo filenames */
 			if (isascii(c) && isgraph(c)) {
 				if (isalpha(c) && isupper(c)) {
 					*bfr++ = ':';
-					c = _tolower(c);
+					c = tolower(c);
 				} else if ((c == ':')
 				||	   (c == '.'
 					&&  in_leaf == 1
