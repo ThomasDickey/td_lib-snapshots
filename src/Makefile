@@ -1,4 +1,4 @@
-# @(#)Makefile	1.4 87/12/01 10:02:35
+# @(#)Makefile	1.5 87/12/02 08:55:15
 # MAKE-file for miscellaneous library routines
 L=lib.a
 #
@@ -28,6 +28,11 @@ $L:	$(OBJS)
 #
 $L:
 	ar rv $L $?
+#
+clean:
+	rm *.o
+clobber: clean
+	rm *.a
 #
 llib-ltd.ln:	LINT
 	makellib.sh LINT td
