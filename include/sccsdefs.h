@@ -1,4 +1,4 @@
-/* $Id: sccsdefs.h,v 12.3 1994/06/25 14:15:25 tom Exp $ */
+/* $Id: sccsdefs.h,v 12.4 1994/07/14 01:34:09 tom Exp $ */
 
 #ifndef	SCCSDEFS_H
 #define	SCCSDEFS_H
@@ -7,7 +7,12 @@
 #define	SCCS_PREFIX	"s."
 
 	/* sccs_dir.c ------------------------------------------------- */
-	char *	sccs_dir(_ar0)
+	char *	sccs_dir(
+			_arx(char *,	working_dir)
+			_ar1(char *,	pathname)
+			)
+			_dcl(char *,	working_dir)
+			_dcl(char *,	pathname)
 			_ret
 
 	/* sccsdbug.c ------------------------------------------------- */
@@ -44,6 +49,13 @@
 			)
 			_dcl(char *,	name)
 			_dcl(int,	full)
+			_ret
+
+	/* sccspath.c ------------------------------------------------- */
+	char *	sccspath(
+			_ar1(char *,	name)
+			)
+			_dcl(char *,	name)
 			_ret
 
 #endif	/* SCCSDEFS_H */

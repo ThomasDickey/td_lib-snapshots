@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: sccslast.c,v 12.5 1994/07/13 18:50:42 tom Exp $";
+static	char	Id[] = "$Id: sccslast.c,v 12.6 1994/07/15 16:45:40 tom Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: sccslast.c,v 12.5 1994/07/13 18:50:42 tom Exp $";
  * Author:	T.E.Dickey
  * Created:	20 Oct 1986
  * Modified:
+ *		15 Jul 1994, mods for SCCS_VAULT
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		18 Oct 1991, look only for tip-version, not for "last" version
@@ -97,6 +98,9 @@ void	trysccs (
 	}
 }
 
+static	char	the_prefix[] = SCCS_PREFIX;
+#define	LEN_PREFIX	sizeof(the_prefix)-1
+
 void	sccslast (
 	_ARX(char *,	working)	/* working directory (absolute) */
 	_ARX(char *,	path)		/* pathname to check (may be relative) */
@@ -112,11 +116,12 @@ void	sccslast (
 {
 	auto	 Stat_t	sbfr;
 	auto	 char	fname[MAXPATHLEN],
-			temp[MAXPATHLEN],
+			local[MAXPATHLEN],
 			*dname = sccs_dir(working, path);
 	auto	 int	is_sccs;
-	register char	*s, *t;
+	register char	*s, *the_leaf;
 
+	path   = strcpy(local, path);
 	*lock_ =
 	*vers_ = "?";
 	*date_ = 0;
@@ -126,12 +131,12 @@ void	sccslast (
 	 * an appropriate prefix (lowercase letter followed by '.' and then
 	 * more characters) assume it is an sccs file.
 	 */
-	if ((s = fleaf_delim(t = path)) != NULL) { /* determine directory from path */
-		*(t = s) = EOS;
+	if ((s = fleaf_delim(the_leaf = path)) != NULL) { /* determine directory from path */
+		*(the_leaf = s) = EOS;
 		if ((s = fleaf(path)) == NULL)
 			s = path;
 		is_sccs = sameleaf(s,dname);
-		*t++ = PATH_SLASH;
+		*the_leaf++ = PATH_SLASH;
 	} else if ((s = fleaf(working)) != NULL) {
 		is_sccs = sameleaf(s,dname);
 	} else
@@ -142,27 +147,29 @@ void	sccslast (
 	 * date in the Z-field since this will highlight better files which are
 	 * not checked-in, or which are not checked out (possibly obsolete).
 	 */
-	if (is_sccs			/* t => filename */
-	&&  (strlen(t) > 2)
-	&&  (isalpha(*t) && islower(*t))
-	&&  (t[1] == '.')) {
-	char	xx = *t;
-		*t = 's';
+	if (is_sccs			/* the_leaf => filename */
+	&&  (strlen(the_leaf) > LEN_PREFIX)
+	&&  (isalpha(*the_leaf) && islower(*the_leaf))
+	&&  (the_leaf[1] == '.')) {
+	char	xx = *the_leaf;
+		*the_leaf = 's';
 		(void)strcpy(fname, path);
-		*t = xx;
+		*the_leaf = xx;
 		trysccs(fname, vers_, date_, lock_);
 		if (*date_) {		/* it was an ok sccs file */
 			/* look for checked-out file */
 
-			if (t != path) {
-				fname[t - path - 1] = EOS;
+			if (the_leaf != path) {
+				fname[the_leaf - path - 1] = EOS;
 				if ((s = fleaf(fname)) != NULL)
 					*s = EOS;
 				else
 					fname[0] = EOS;
-				(void)strcat(fname, t+2);
+				(void)strcat(fname, the_leaf+LEN_PREFIX);
 			} else {
-				(void)strcat(strcpy(fname, "../"), t+2);
+				(void)strcat(
+					strcpy(fname, "../"),
+					the_leaf+LEN_PREFIX);
 			}
 			*date_ = 0;	/* use actual modification-date! */
 			if (stat(fname, &sbfr) >= 0)
@@ -174,18 +181,23 @@ void	sccslast (
 	/*
 	 * The file was not itself an sccs-file.  Construct the name of an
 	 * sccs-file assuming the standard naming convention, and try again.
+	 *
+	 * If the value 'dname[]' from 'sccs_dir()' is not a relative path,
+	 * assume that SCCS_VAULT was set.
 	 */
-	(void)strcpy(fname, s = path);
-	(void)strcpy(temp, t);
+	if (the_leaf != path) {
+		the_leaf[-1] = EOS;
+		(void)strcpy(fname, path);
+	} else {
+		fname[0] = EOS;
+	}
 
-	if (t != s)
-		*--t = EOS;
-
-	if (isSlash(*dname) || *dname == '~')
+	if (isSlash(*dname) || *dname == '~') {
 		(void)strcpy(fname, dname);
-	else
+	} else {
 		(void)pathcat(fname, fname, dname);
-	(void)strcat(pathcat(fname, fname, SCCS_PREFIX), temp);
+	}
+	(void)strcat(pathcat(fname, fname, SCCS_PREFIX), the_leaf);
 
 	trysccs(fname, vers_, date_, lock_);
 }

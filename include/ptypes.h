@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 12.30 1994/07/12 18:57:46 tom Exp $ */
+/* $Id: ptypes.h,v 12.31 1994/07/15 12:39:32 tom Exp $ */
 
 #ifndef	PTYPES_H
 #define	PTYPES_H
@@ -408,6 +408,20 @@ static	struct	direct	dbfr;
 #define	DirentT struct	direct
 
 #endif	/* DIR_PTYPES */
+
+/******************************************************************************
+ * defines externals used in error-reporting/handling                         *
+ ******************************************************************************/
+#ifdef	ERR_PTYPES
+
+#include <errno.h>
+
+# if HAVE_SYS_ERRLIST
+extern char *sys_errlist[];
+extern int sys_nerr;
+# endif
+
+#endif
 
 /******************************************************************************
  * defines externals used in low-level I/O routines                           *
