@@ -1,14 +1,11 @@
-$Header: /users/source/archives/td_lib.vcs/RCS/README,v 11.0 1989/04/24 11:40:29 ste_cm Rel $
+$Id: README,v 11.1 1992/10/09 08:55:14 dickey Exp $
+
+CM_LIBRARY
 
 -------------------------------------------------------------------------------
 
-This subtree is used for common library procedures which are shared not only
-among the programs of CM_TOOLS, but also with other programs which are not
-part of CM_TOOLS.
+This is a common library procedures which are shared not only among the programs
+of CM_TOOLS, but also with other programs which are not part of CM_TOOLS.
 
-The programs in CM_TOOLS are built using the archive herein.
-The 'install' rule copies the archive to the public library directory of
-CM_TOOLS.
-
-A copy of this subtree resides on VAX/VMS, where the (VMS-portable) procedures
-are available for use by non-CM_TOOLS programs.
+Portions of this library are portable to VAX/VMS, where it is used for support
+of various programs.
