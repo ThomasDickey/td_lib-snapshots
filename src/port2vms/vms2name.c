@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: vms2name.c,v 7.1 1992/11/20 08:16:23 dickey Exp $";
+static	char	Id[] = "$Id: vms2name.c,v 8.0 1993/04/29 07:24:38 ste_cm Rel $";
 #endif
 
 /*
@@ -7,7 +7,7 @@ static	char	Id[] = "$Id: vms2name.c,v 7.1 1992/11/20 08:16:23 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	02 Nov 1988
  * Modified:
- * Modified:
+ *		29 Apr 1993, added 'copying' to case-conversions.
  *		20 Nov 1992, use prototypes
  *		15 Sep 1989, added IMakefile and AMakefile cases.
  *		25 May 1989, handle special case of "[]".  Lowercase entire
@@ -51,6 +51,7 @@ static	struct	{
 		2,	"imakefile",
 		6,	"readme",
 		256,	"read.me",
+		256,	"copying",
 		256,	"copyright"
 	};
 

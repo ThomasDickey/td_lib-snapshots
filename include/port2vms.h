@@ -1,5 +1,5 @@
 /*
- * $Id: port2vms.h,v 7.1 1992/11/20 07:55:54 dickey Exp $
+ * $Id: port2vms.h,v 8.0 1993/04/29 14:15:31 ste_cm Rel $
  *
  * VMS-definitions for supporting unix/vms port
  */
@@ -118,6 +118,36 @@ extern	char *	path2vms(
 		_dcl(char *,		dst)
 		_dcl(char *,		src)
 		_ret
+
+#ifdef	vms
+extern	int	rmsio_open (
+		_arx(char *,	name_)
+		_ar1(char *,	mode_));
+
+extern	int	rmsio_open2 (
+		_arx(char *,	name_)
+		_arx(char *,	dft_)
+		_ar1(char *,	mode_));
+
+extern	int	rmsio_read (
+		_arx(int,	fd)
+		_arx(char *,	bfr)
+		_ar1(int,	maxbfr));
+
+extern	int	rmsio_write (
+		_arx(int,	fd)
+		_arx(char *,	bfr)
+		_ar1(int,	maxbfr));
+
+extern	int	rmsio_close (
+		_ar1(int,	fd));
+
+extern	void	rmsio_perror (
+		_ar1(char *,	s));
+
+extern	int	rmsio_size (
+		_ar1(int,	fd));
+#endif
 
 extern	int	s2gid(
 		_ar1(char *,		name)

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: edittree.c,v 7.3 1993/04/28 14:10:52 dickey Exp $";
+static	char	Id[] = "$Id: edittree.c,v 8.0 1993/04/29 14:58:00 ste_cm Rel $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: edittree.c,v 7.3 1993/04/28 14:10:52 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	06 Oct 1988
  * Modified:
+ *		29 Apr 1993, sort _all_ leaves before doing translation.
  *		20 Nov 1992, added 3rd arg to _FNX macros.
  *		11 Dec 1991, added 'links' argument.  Process entire list of
  *			     files per-directory to avoid possible conflict
@@ -116,17 +117,7 @@ int	edittree(
 #ifndef	vms
 				if (dotname(newname))	continue;
 #endif
-				if (LOOK(newname, &sb) < 0) {
-					perror(newname);
-					continue;
-				}
-				if (isDIR(sb.st_mode)) {
-					if (!next)
-						continue;
-					changes += edittree(newname, func, next, links);
-				} else if (isFILE(sb.st_mode)) {
-					v_ALLOC(vec,num,newname);
-				}
+				v_ALLOC(vec,num,newname);
 			}
 			closedir(dirp);
 			if (num != 0) {
@@ -137,8 +128,13 @@ int	edittree(
 						perror(vec[num]);
 						continue;
 					}
-					TELL_FILE(vec[num]);
-					changes += editfile(vec[num], func, &sb);
+					if (isDIR(sb.st_mode)) {
+						if (next)
+							changes += edittree(vec[num], func, next, links);
+					} else if (isFILE(sb.st_mode)) {
+						TELL_FILE(vec[num]);
+						changes += editfile(vec[num], func, &sb);
+					}
 				}
 				dofree((PTR)vec);
 			}

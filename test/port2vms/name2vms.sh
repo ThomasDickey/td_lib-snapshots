@@ -1,3 +1,3 @@
 #!/bin/sh
-# $Id: name2vms.sh,v 7.1 1992/11/20 09:59:59 dickey Exp $
-./name2vms >name2vms.tmp
+# $Id: name2vms.sh,v 8.0 1993/04/29 13:41:55 ste_cm Rel $
+./name2vms |sed -e s@$HOME@{HOME}@g >name2vms.tmp

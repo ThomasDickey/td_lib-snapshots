@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 11.13 1993/04/27 15:00:03 dickey Exp $ */
+/* $Id: ptypes.h,v 11.16 1993/04/29 16:39:52 ste_cm Exp $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -43,6 +43,29 @@
 #ifdef	CLASSIC_SYS5_FUNC
 #define	SYSTEM5		/* apollo sr10.x sys5 */
 #endif
+#ifdef	_DECL_FUNC	/* apollo sr10.3 */
+#define	HAS_STDLIB 1
+#endif
+#endif
+
+#ifndef HAS_STDLIB
+#if defined(sun) || defined(vms)
+#define	HAS_STDLIB 1
+#else
+#define HAS_STDLIB 0
+#endif
+#endif
+
+#if defined(sun) || defined(SYSTEM5)
+#define HAS_UNISTD 1
+#endif
+
+#if HAS_STDLIB
+#include	<stdlib.h>
+#endif
+
+#if HAS_UNISTD
+#include	<unistd.h>
 #endif
 
 #ifndef	S_IFLNK
@@ -136,7 +159,6 @@ extern	char	*sprintf();
  * Declare argument for 'exit()' and '_exit()':
  */
 #ifdef	vms
-#include	<stdlib.h>	/* defines lots of useful stuff */
 #include	<stsdef.h>
 #define	SUCCESS	(STS$M_INHIB_MSG | STS$K_SUCCESS)
 #define	FAIL	(STS$M_INHIB_MSG | STS$K_ERROR)
@@ -159,6 +181,7 @@ extern	char	*sprintf();
 #define	V_OR_I		void
 #define	LEN_QSORT	int
 #define	LEN_READ	int
+#define	LEN_FREAD	size_t
 #else	/* unix */
 #define	LEN_QSORT	int
 #define	LEN_READ	int
@@ -258,16 +281,18 @@ extern	char	*sprintf();
 #endif	/* SIG_PTYPES */
 
 /*
- * Useful external-definitions:
+ * Useful external-definitions
  */
 #ifndef	LINTLIBRARY
-#ifndef	vms
+#if	!HAS_STDLIB
 extern	V_OR_I	_exit(_ar1(int,code));
 extern	V_OR_I2	exit(_ar1(int,code));
 extern	V_OR_I	free(_ar1(char *,s));
 extern	V_OR_P	calloc(_arx(size_t,nel) _ar1(size_t,size));
 extern	V_OR_P	malloc(_ar1(size_t,size));
 extern	V_OR_P	realloc(_arx(V_OR_P,ptr) _ar1(size_t,size));
+#endif
+#ifndef	vms
 #if	!defined(__STDC__) && !defined(apollo_sr10)
 extern	V_OR_I2	perror(_ar1(char *,s));
 extern	V_OR_I	rewind(_ar1(FILE *,s));
@@ -387,9 +412,7 @@ static	struct	direct	dbfr;
 #define	W_OK	2	/* writeable */
 #define	R_OK	4	/* readable */
 #else	/* unix */
-#ifdef	SYSTEM5
-#include	<unistd.h>
-#else	/* SYSTEM5 */
+#ifndef	SYSTEM5
 #include	<sys/file.h>
 #endif	/* SYSTEM5 */
 #endif	/* vms/unix */
@@ -412,7 +435,7 @@ extern	char	*strrchr(_arx(char *,s) _ar1(int,c));
  * Definitions of procedures in TD_LIB common library
  */
 #ifndef	LINTLIBRARY
-#include "td_lib.h"
+#include <td_lib.h>
 
 #ifndef	lint
 extern		main(_arx(int,argc) _arx(char **,argv) _ar1(char **,envp));

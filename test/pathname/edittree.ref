@@ -7,7 +7,7 @@ count = 2
 0	 .  => mo3
 1	 .  => moe
 2	 .  => moe2
-0	 .  directory foo
 3	  => first
+0	 .  directory foo
 4	  => last
 count = 5

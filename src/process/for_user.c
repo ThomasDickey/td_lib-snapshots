@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: for_user.c,v 11.2 1992/11/23 13:35:03 dickey Exp $";
+static	char	Id[] = "$Id: for_user.c,v 12.0 1993/04/29 10:16:40 ste_cm Rel $";
 #endif
 
 /*
@@ -80,5 +80,5 @@ int	for_user(
 	_FN1(int,	func,	(_AR0)))
 	_DCL(int,	(*func)())
 {
-	return for_user2(func, getuid(), getgid());
+	return for_user2(func, (int)getuid(), (int)getgid());
 }
