@@ -1,3 +1,9 @@
+1992-11-13  dickey@software.org
+
+	* src/pathname/abspath.c:
+	removed obsolete definition for 'Index' that conflicted
+	when I compiled this with dbmalloc's "malloc.h"
+
 1992-11-12  dickey@software.org
 
 	* src/Makefile: updated some include-deps
