@@ -1,3 +1,7 @@
+1987-11-16  dickey@software.org
+
+	* src/unix/s2gid.c, src/unix/s2uid.c: New file.
+
 1987-11-10  dickey@software.org
 
 	* src/string/strclean.c, src/unix/gid2s.c, src/unix/uid2s.c: New file.
