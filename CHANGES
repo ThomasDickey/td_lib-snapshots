@@ -1,3 +1,43 @@
+1989-03-08  dickey@software.org
+
+	* src/cm_funcs/rcsedit.c:
+	use temp-file for copying back RCS archive to avoid clobbering it...
+
+	* src/process/revert.c: New file.
+
+	* src/process/revert.c: sccs2rcs keywords
+
+1989-03-08  ste_cm@software.org
+
+	* src/process/revert.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+	* src/process/revert.c: BASELINE Thu Apr  6 09:45:13 EDT 1989
+
+	* src/process/revert.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
+1989-03-08  dickey@software.org
+
+	* src/cm_funcs/rcsperm.c, src/string/strtrim.c: New file.
+
+	* src/string/strtrim.c: sccs2rcs keywords
+
+1989-03-08  ste_cm@software.org
+
+	* src/string/strtrim.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+	* src/string/strtrim.c: BASELINE Thu Apr  6 09:45:13 EDT 1989
+
+	* src/string/strtrim.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
+1989-03-08  dickey@software.org
+
+	* include/llib-ltd, src/Makefile:
+	added modules rcspermit, revert, strtrim
+
+	* include/rcsdefs.h: added VCS-level stuff for 'permit' program.
+
 1989-03-02  dickey@software.org
 
 	* src/port2vms/name2vms.c: New file.
