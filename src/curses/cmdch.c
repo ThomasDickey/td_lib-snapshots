@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: cmdch.c,v 12.6 1993/12/02 16:11:37 dickey Exp $";
+static	char	Id[] = "$Id: cmdch.c,v 12.7 1994/05/21 18:42:48 tom Exp $";
 #endif
 
 /*
@@ -28,6 +28,18 @@ static	char	Id[] = "$Id: cmdch.c,v 12.6 1993/12/02 16:11:37 dickey Exp $";
  *
  *		The arrow keys are decoded into mnemonic control-keys
  *		(see "cmdch.h").
+ *
+ * Configure:
+ *		HAS_CURSOR is true iff the curses library defines KD, KU, etc.,
+ *			which are attributes with arrow keys.
+ *
+ *		HAS_CURSES_KEYPAD is true iff the curses library supports
+ *			'keypad()', so that we can assume 'getch()' will
+ *			translate arrow keys, rather than requiring us to do
+ *			so.
+ *
+ *		NO_XTERM_MOUSE is true to suppress the xterm mouse logic, which
+ *			requires a special escape sequence.
  */
 
 #define		STR_PTYPES
@@ -93,6 +105,7 @@ int	cmdch(
 	static	char	*KU, *KD, *KR, *KL;
 #endif
 
+#if !HAS_CURSES_KEYPAD
 	if (!init) {
 		init = TRUE;
 #ifndef	HAS_CURSOR
@@ -114,6 +127,7 @@ int	cmdch(
 					&& END(KL) == 'D';
 		}
 	}
+#endif	/* HAS_CURSES_KEYPAD */
 
 	while (!done) {
 		register j = 0;
@@ -121,6 +135,15 @@ int	cmdch(
 		c = getch();
 		if (iscntrl(c))
 			i_blk[j++] = c;
+#if HAS_CURSES_KEYPAD
+		switch (c) {
+		case KEY_UP:	c = ARO_UP;	done = TRUE;	break;
+		case KEY_DOWN:	c = ARO_DOWN;	done = TRUE;	break;
+		case KEY_LEFT:	c = ARO_LEFT;	done = TRUE;	break;
+		case KEY_RIGHT:	c = ARO_RIGHT;	done = TRUE;	break;
+		}
+#endif /* HAS_CURSES_KEYPAD */
+
 		if (ESC(c)) {	/* assume "standard" escapes */
 			do {
 				i_blk[j++] = c = getch();
@@ -129,11 +152,14 @@ int	cmdch(
 		if (j) {
 			i_blk[j] = EOS;
 			done	= TRUE;
+#if !HAS_CURSES_KEYPAD
 			if	(EQL(KU))	c = ARO_UP;
 			else if	(EQL(KD))	c = ARO_DOWN;
 			else if	(EQL(KL))	c = ARO_LEFT;
 			else if	(EQL(KR))	c = ARO_RIGHT;
-			else if (j > 1) {	/* extended escapes */
+			else
+#endif /* !HAS_CURSES_KEYPAD */
+			if (j > 1) {	/* extended escapes */
 #ifndef	NO_XTERM_MOUSE
 				/* patch: should test for xterm_mouse */
 				if (!strncmp(i_blk, "\033[M", 3)) {
@@ -158,7 +184,8 @@ int	cmdch(
 						last_col = xt_mouse.col;
 					}
 				} else
-#endif
+#endif	/* NO_XTERM_MOUSE */
+#if !HAS_CURSES_KEYPAD
 				if (ansi) {
 					j--;
 					if_C('A')	c = ARO_UP;
@@ -169,7 +196,9 @@ int	cmdch(
 						beep();
 						done = FALSE;
 					}
-				} else {
+				} else
+#endif	/* !HAS_CURSES_KEYPAD */
+				{
 					beep();
 					done = FALSE;
 				}

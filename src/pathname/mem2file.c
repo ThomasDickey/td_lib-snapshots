@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: mem2file.c,v 12.2 1993/10/29 17:35:25 dickey Exp $";
+static	char	Id[] = "$Id: mem2file.c,v 12.3 1994/05/21 20:17:22 tom Exp $";
 #endif
 
 /*
@@ -32,7 +32,7 @@ int	mem2file(
 {
 	auto	int	len	= -1;
 	auto	int	save;
-	auto	STAT	sb;
+	auto	Stat_t	sb;
 	auto	FILE	*fp;
 
 	if (mode[0] != 'a' && mode[0] != 'w')

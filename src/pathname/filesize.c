@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: filesize.c,v 12.1 1993/10/29 17:35:26 dickey Exp $";
-#endif
-
 /*
  * Title:	filesize.c
  * Author:	T.E.Dickey
@@ -16,12 +12,14 @@ static	char	Id[] = "$Id: filesize.c,v 12.1 1993/10/29 17:35:26 dickey Exp $";
 
 #include "ptypes.h"
 
+MODULE_ID("$Id: filesize.c,v 12.3 1994/05/21 20:17:19 tom Exp $")
+
 off_t
 filesize(
 _AR1(char *,	name))
 _DCL(char *,	name)
 {
-	auto	STAT	sb;
+	auto	Stat_t	sb;
 
 	return (stat_file(name, &sb) < 0) ? -1 : sb.st_size;
 }

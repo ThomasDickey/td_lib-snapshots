@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: stat_dir.c,v 12.1 1993/10/29 17:35:23 dickey Exp $";
+static	char	Id[] = "$Id: stat_dir.c,v 12.2 1994/05/21 20:18:44 tom Exp $";
 #endif
 
 /*
@@ -20,10 +20,10 @@ static	char	Id[] = "$Id: stat_dir.c,v 12.1 1993/10/29 17:35:23 dickey Exp $";
 int
 stat_dir(
 _ARX(char *,	path)
-_AR1(STAT *,	sb)
+_AR1(Stat_t *,	sb)
 	)
 _DCL(char *,	path)
-_DCL(STAT *,	sb)
+_DCL(Stat_t *,	sb)
 {
 	if (stat(path, sb) >= 0) {
 		if (isDIR(sb->st_mode))

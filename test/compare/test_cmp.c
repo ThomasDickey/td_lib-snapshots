@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	II[] = "$Id: test_cmp.c,v 12.2 1993/09/23 14:11:49 dickey Exp $";
+static	char	II[] = "$Id: test_cmp.c,v 12.3 1994/05/21 20:33:56 tom Exp $";
 #endif/*lint*/
 
 /*
@@ -27,7 +27,7 @@ char **	load(
 {
 	extern	char *	ctime(_ar1(time_t *,t));
 	auto	char **	v;
-	auto	STAT	sb;
+	auto	Stat_t	sb;
 
 	if (stat(name, &sb) < 0)
 		failed(name);

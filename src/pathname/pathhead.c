@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: pathhead.c,v 12.3 1993/11/27 16:44:38 dickey Exp $";
-#endif
-
 /*
  * Title:	pathhead.c (obtain head from path)
  * Author:	T.E.Dickey
@@ -33,16 +29,18 @@ static	char	Id[] = "$Id: pathhead.c,v 12.3 1993/11/27 16:44:38 dickey Exp $";
 #define	STR_PTYPES
 #include	"ptypes.h"
 
+MODULE_ID("$Id: pathhead.c,v 12.5 1994/05/21 20:17:24 tom Exp $")
+
 char *
 pathhead (
 _ARX(char *,	path)
-_AR1(STAT *,	sb_)
+_AR1(Stat_t *,	sb_)
 	)
 _DCL(char *,	path)
-_DCL(STAT *,	sb_)
+_DCL(Stat_t *,	sb_)
 {
 	auto	int	trimmed	= 0;
-	auto	STAT	sb;
+	auto	Stat_t	sb;
 	register char  *s;
 	static	char	buffer[BUFSIZ];
 
@@ -80,7 +78,7 @@ _MAIN
 		printf("%d:\t\"%s\" => \"%s\"\n",
 			j,
 			argv[j],
-			pathhead(argv[j], (STAT *)0));
+			pathhead(argv[j], (Stat_t *)0));
 	exit(SUCCESS);
 	/*NOTREACHED*/
 }

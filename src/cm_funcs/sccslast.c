@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: sccslast.c,v 12.3 1993/11/27 16:59:48 dickey Exp $";
+static	char	Id[] = "$Id: sccslast.c,v 12.4 1994/05/21 20:18:44 tom Exp $";
 #endif
 
 /*
@@ -110,7 +110,7 @@ void	sccslast (
 	_DCL(time_t *,	date_)
 	_DCL(char **,	lock_)
 {
-	auto	 STAT	sbfr;
+	auto	 Stat_t	sbfr;
 	auto	 char	name[BUFSIZ+1],
 			*dname = sccs_dir();
 	auto	 int	is_sccs;

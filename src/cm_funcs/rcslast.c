@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: rcslast.c,v 12.4 1993/12/02 15:52:46 dickey Exp $";
-#endif
-
 /*
  * Title:	rcslast.c (scan for last RCS date)
  * Author:	T.E.Dickey
@@ -37,6 +33,8 @@ static	char	Id[] = "$Id: rcslast.c,v 12.4 1993/12/02 15:52:46 dickey Exp $";
 #include	<time.h>
 #include	"rcsdefs.h"
 
+MODULE_ID("$Id: rcslast.c,v 12.6 1994/05/21 20:18:44 tom Exp $")
+
 /*
  * Returns the modification date of the given file, or 0 if not found
  */
@@ -45,7 +43,7 @@ time_t	filedate(
 	_AR1(char *,	path))
 	_DCL(char *,	path)
 {
-	STAT	sb;
+	Stat_t	sb;
 	if (stat(path, &sb) >= 0)
 		return sb.st_mtime;
 	return 0;

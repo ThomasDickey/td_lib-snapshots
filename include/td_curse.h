@@ -1,24 +1,48 @@
-/* $Id: td_curse.h,v 12.7 1994/04/26 22:33:24 tom Exp $ */
+/* $Id: td_curse.h,v 12.9 1994/05/21 18:41:39 tom Exp $ */
 
 /*
  * TD_LIB CURSES-related definitions
  */
 
-#ifndef		_CM_CURSES_H
-#define		_CM_CURSES_H
+#ifndef		_TD_CURSE_H
+#define		_TD_CURSE_H
 
 #ifndef		_PTYPES_
 #include "ptypes.h"
 #endif		/* _PTYPES_ */
 
+#ifdef USE_NCURSES
+#include	<ncurses/ncurses.h>
+#else
 #include	<curses.h>
+#endif
 
-#if defined(SYSTEM5) || defined(MSDOS)
+/*----------------------------------------------------------------------------*/
+#if defined(SYSTEM5) || defined(MSDOS) || defined(__svr4__) || defined(USE_NCURSES)
 #define SYS5_CURSES 1
 #else
 #define SYS5_CURSES 0
 #endif
 
+/*----------------------------------------------------------------------------*/
+#if defined(linux)
+#define HAS_CURSES_BEEP 1
+#endif
+
+#ifndef HAS_CURSES_BEEP
+#define HAS_CURSES_BEEP SYS5_CURSES
+#endif
+
+/*----------------------------------------------------------------------------*/
+#if defined(linux) && !defined(USE_NCURSES)
+#define HAS_CURSES_KEYPAD 0
+#endif
+
+#ifndef HAS_CURSES_KEYPAD
+#define HAS_CURSES_KEYPAD SYS5_CURSES
+#endif
+
+/*----------------------------------------------------------------------------*/
 #ifdef MSDOS
 #define NO_XTERM_MOUSE
 #endif
@@ -40,13 +64,14 @@
  * note: System5 curses does not define the 'screen' structure
  */
 #if SYS5_CURSES
-# ifdef linux
+# if defined(linux) && !USE_NCURSES
 	typedef	char	chtype;		/* sys5-curses data-type */
 # endif
 # ifdef	lint
 	struct	screen	{ int dummy; };
 # endif
 #else
+# ifndef __svr4__
 	typedef	char	chtype;		/* sys5-curses data-type */
 # ifndef erasechar
 	extern	int	erasechar(_ar0); */
@@ -54,13 +79,14 @@
 # ifndef killchar
 	extern	int	killchar(_ar0); */
 # endif
+# endif /* __svr4__ */
 #endif	/* SYSTEM5 */
 
-#if !(defined(__hpux) || defined(linux) || defined(LINTLIBRARY))	/* defined in <curses.h> */
+#if !(defined(__hpux) || defined(linux) || defined(LINTLIBRARY)) /* defined in <curses.h> */
 extern	char	*tgetstr(_arx(char *,n) _ar1(char **,p));
 #endif
 
-#if defined(__GNUC__) && defined(sun)
+#if defined(__GNUC__) && defined(sun) && !defined(__svr4__)
 extern	int	stty		(int, struct sgttyb *);
 extern	int	endwin		(void);
 extern	int	printw		(char *, ...);
@@ -104,7 +130,7 @@ extern	int	wrefresh	(WINDOW *);
 #endif
 
 	/* beep.c ----------------------------------------------------- */
-#if	!SYS5_CURSES
+#if	!HAS_CURSES_BEEP
 	void	beep(_ar0)
 			_nul
 #endif
@@ -190,6 +216,12 @@ extern	int	wrefresh	(WINDOW *);
 	wrawgets(stdscr, b, p, bl, fl, fc, fm, nl, q, cmd, log)
 
 	/* rawterm.c -------------------------------------------------- */
+	void	save_terminal(_ar0)
+			_nul
+
+	void	restore_terminal(_ar0)
+			_nul
+
 	void	rawterm(_ar0)
 			_nul
 
@@ -248,4 +280,4 @@ extern	int	wrefresh	(WINDOW *);
 			_dcl(int,	row)
 			_nul
 
-#endif		/* _CM_CURSES_H */
+#endif		/* _TD_CURSE_H */

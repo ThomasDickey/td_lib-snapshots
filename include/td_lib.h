@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 12.3 1993/11/27 21:35:34 dickey Exp $ */
+/* $Id: td_lib.h,v 12.4 1994/05/21 20:15:27 tom Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for TD_LIB common
@@ -527,10 +527,10 @@
 	/* pathhead.c ------------------------------------------------- */
 	char *	pathhead(
 			_arx(char *,	path)
-			_ar1(STAT *,	s)
+			_ar1(Stat_t *,	s)
 			)
 			_dcl(char *,	path)
-			_dcl(STAT *,	s)
+			_dcl(Stat_t *,	s)
 			_ret
 
 	/* pathleaf.c ------------------------------------------------- */
@@ -649,19 +649,19 @@
 	/* stat_dir.c ------------------------------------------------- */
 	int	stat_dir(
 			_arx(char *,	path)
-			_ar1(STAT *,	sb)
+			_ar1(Stat_t *,	sb)
 			)
 			_dcl(char *,	path)
-			_dcl(STAT *,	sb)
+			_dcl(Stat_t *,	sb)
 			_ret
 
 	/* stat_fil.c ------------------------------------------------- */
 	int	stat_file(
 			_arx(char *,	path)
-			_ar1(STAT *,	sb)
+			_ar1(Stat_t *,	sb)
 			)
 			_dcl(char *,	path)
-			_dcl(STAT *,	sb)
+			_dcl(Stat_t *,	sb)
 			_ret
 
 	/* stralloc.c ------------------------------------------------- */
@@ -875,14 +875,14 @@
 #define	WALK_FUNC_ARGS	\
 			_ARX(char *,	path)\
 			_ARX(char *,	name)\
-			_ARX(STAT *,	sp)\
+			_ARX(Stat_t *,	sp)\
 			_ARX(int,	readable)\
 			_AR1(int,	level)
 
 #define	WALK_FUNC(f)	f(WALK_FUNC_ARGS)\
 			_DCL(char *,	path)\
 			_DCL(char *,	name)\
-			_DCL(STAT *,	sp)\
+			_DCL(Stat_t *,	sp)\
 			_DCL(int,	readable)\
 			_DCL(int,	level)
 

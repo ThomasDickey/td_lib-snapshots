@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: rcsedit.c,v 12.3 1993/11/27 16:12:50 dickey Exp $";
+static	char	Id[] = "$Id: rcsedit.c,v 12.4 1994/05/21 20:18:43 tom Exp $";
 #endif
 
 /*
@@ -88,7 +88,7 @@ int	dir_access(_AR0)
 	char	temp[MAXPATHLEN];
 	int	uid = geteuid();
 	int	gid = getegid();
-	STAT	sb;
+	Stat_t	sb;
 
 	if ((s = fleaf_delim(strcpy(temp, fname))) != NULL)
 		*s = EOS;
@@ -212,7 +212,7 @@ int	rcsopen(
 	_DCL(int,	show)
 	_DCL(int,	readonly)
 {
-	STAT	sb;
+	Stat_t	sb;
 	int	fd;
 
 	(void)strcpy(fname, name);

@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: rcstemp.c,v 12.2 1993/10/29 17:35:24 dickey Exp $";
+static	char	Id[] = "$Id: rcstemp.c,v 12.3 1994/05/21 20:18:44 tom Exp $";
 #endif
 
 /*
@@ -61,7 +61,7 @@ char *	rcstemp(
 	 ) {
 		char	*tf = pathcat(tmp, "/tmp", uid2s((int)getuid()));
 		int	mode = ((getgid() == getegid()) ? 0775 : 0777);
-		STAT	sb;
+		Stat_t	sb;
 
 		DEBUG(".. rcstemp mode is %o gid:%d(%s) egid:%d(%s)\n",
 			mode,

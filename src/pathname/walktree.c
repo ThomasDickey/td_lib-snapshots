@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: walktree.c,v 12.3 1993/11/27 17:08:08 dickey Exp $";
+static	char	Id[] = "$Id: walktree.c,v 12.4 1994/05/21 20:18:44 tom Exp $";
 #endif
 
 /*
@@ -89,7 +89,7 @@ int	walktree(
 	int	total	= 0,
 		ok_acc	= -1,
 		mode	= 0;
-	STAT	sb,
+	Stat_t	sb,
 		*sb_	= &sb;
 	register unsigned num;
 	PTR		*vec;
