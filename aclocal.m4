@@ -1,7 +1,13 @@
 dnl Extended Macros that test for specific features.
-dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.56 1995/03/23 02:03:37 tom Exp $
+dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.60 1995/04/01 18:11:25 tom Exp $
+dnl vi:set ts=4:
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "TD_" to "AC_"
+dnl and "td_" to "ac_".
+dnl ---------------------------------------------------------------------------
+define([TD_MSG_LOG],
+echo "(line __oline__) testing $* ..." 1>&5
+)dnl
 dnl ---------------------------------------------------------------------------
 dnl	Tests for a program given by name along the user's path, and sets a
 dnl	variable to the program's directory-prefix if found.  Don't match if
@@ -98,15 +104,21 @@ dnl	the cpp-tests.
 dnl
 define([TD_INCLUDE_PATH],
 [
-for p in $1
+for td_path in $1
 do
-	if test -d $p
+	td_result=""
+	AC_MSG_CHECKING(for extra include-paths)
+	if test -d $td_path
 	then
-		AC_VERBOSE(adding $p to include-path)
-		INCLUDES="$INCLUDES -I$p"
-		ac_cpp="${ac_cpp} -I$p"
-		CFLAGS="$CFLAGS -I$p"
+		INCLUDES="$INCLUDES -I$td_path"
+		ac_cpp="${ac_cpp} -I$td_path"
+		CFLAGS="$CFLAGS -I$td_path"
+		td_result="$td_result $td_path"
 	fi
+	if test -z "$td_result"; then
+		td_result="(none)";
+	fi
+	AC_MSG_RESULT($td_result)
 done
 ])dnl
 dnl ---------------------------------------------------------------------------
@@ -116,13 +128,13 @@ dnl	Some machines have trouble with multiple -L options.
 dnl
 define([TD_LIBRARY_PATH],
 [
-for p in $1
+for td_path in $1
 do
-	if test -d $p
+	if test -d $td_path
 	then
-		AC_VERBOSE(adding $p to library-path)
-		LIBS="$LIBS -L$p"
-		CFLAGS="$CFLAGS -L$p"
+		AC_VERBOSE(adding $td_path to library-path)
+		LIBS="$LIBS -L$td_path"
+		CFLAGS="$CFLAGS -L$td_path"
 	fi
 done
 ])dnl
@@ -143,6 +155,7 @@ changequote(,)dnl
 td_tr_func=`echo $td_func | tr '[a-z]' '[A-Z]'`
 changequote([,])dnl
 AC_MSG_CHECKING(for ${td_func})
+TD_MSG_LOG(${td_func})
 AC_CACHE_VAL(td_cv_func_$td_func,[
 	# Test for prior functional test (e.g., vfork).
 eval td_result='$ac_cv_func_'$td_func
@@ -158,6 +171,7 @@ elif test $WithWarnings = yes; then
 		CFLAGS="$CFLAGS -Werror"
 	fi
 	AC_TRY_COMPILE([
+#undef  HAVE_${td_tr_func}
 #define HAVE_${td_tr_func} 1
 #include <td_local.h>],
 [
@@ -231,14 +245,17 @@ fi
 
 AC_MSG_CHECKING(for ANSI CPP token-quoting)
 AC_CACHE_VAL(td_cv_ansi_quote,[
-	td_cv_ansi_quote=unknown
 	AC_TRY_RUN([#define quote(name) #name
 		int main() { char *y = quote(a); exit (*y != 'a');} ],
-		[td_cv_ansi_quote=new])
+		[td_cv_ansi_quote=new],
+		[td_cv_ansi_quote=unknown],
+		[td_cv_ansi_quote=unknown])
 	if test $td_cv_ansi_quote = unknown; then
 		AC_TRY_RUN([#define quote(name) "name"
 			int main() { char *y = quote(a); exit (*y != 'a');} ],
-			[td_cv_ansi_quote=old])
+			[td_cv_ansi_quote=old],
+			[td_cv_ansi_quote=unknown],
+			[td_cv_ansi_quote=unknown])
 		fi
 	])
 
@@ -270,7 +287,8 @@ AC_CACHE_VAL(td_cv_REGEX_H,[
 			exit(0);
 		} ],
 		[td_cv_REGEX_H=yes],
-		[td_cv_REGEX_H=no])
+		[td_cv_REGEX_H=no],
+		[td_cv_REGEX_H=unknown])
 	])
 AC_MSG_RESULT($td_cv_REGEX_H)
 test $td_cv_REGEX_H = yes && AC_DEFINE(HAVE_REGEX_H_FUNCS)
@@ -297,7 +315,8 @@ AC_CACHE_VAL(td_cv_REGEXPR_H,[
 			exit(0);
 		} ],
 		[td_cv_REGEXPR_H=yes],
-		[td_cv_REGEXPR_H=no])
+		[td_cv_REGEXPR_H=no],
+		[td_cv_REGEXPR_H=unknown])
 	])
 AC_MSG_RESULT($td_cv_REGEXPR_H)
 if test $td_cv_REGEXPR_H = yes; then
@@ -335,7 +354,8 @@ AC_TRY_RUN([
 		exit(0);
 	} ],
 	[td_cv_REGCMP_func=yes],
-	[td_cv_REGCMP_func=no])
+	[td_cv_REGCMP_func=no],
+	[td_cv_REGCMP_func=unknown])
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Test for the presence of regcmp/regex functions.
@@ -378,7 +398,8 @@ AC_CACHE_VAL(td_cv_RE_COMP_func,[
 	}
 	],
 	[td_cv_RE_COMP_func=yes],
-	[td_cv_RE_COMP_func=no])
+	[td_cv_RE_COMP_func=no],
+	[td_cv_RE_COMP_func=unknown])
 	])
 AC_MSG_RESULT($td_cv_RE_COMP_func)
 test $td_cv_RE_COMP_func = yes && AC_DEFINE(HAVE_RE_COMP_FUNCS)
@@ -464,19 +485,6 @@ AC_MSG_RESULT($td_cv_tm_zone_decl)
 test $td_cv_tm_zone_decl = yes && AC_DEFINE(HAVE_TM_ISDST)
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl Test if curses defines 'addchnstr()' (maybe a macro or function)
-define([TD_CURSES_ADDCHNSTR],
-[
-AC_MSG_CHECKING(for function/macro addchnstr)
-AC_CACHE_VAL(td_cv_have_addchnstr,[
-	AC_TRY_LINK([#include <curses.h>],
-		[addchnstr(0,0)],
-		[td_cv_have_addchnstr=yes],
-		[td_cv_have_addchnstr=no])])
-AC_MSG_RESULT($td_cv_have_addchnstr)
-test $td_cv_have_addchnstr = yes && AC_DEFINE(HAVE_ADDCHNSTR)
-])dnl
-dnl ---------------------------------------------------------------------------
 dnl Test if curses defines 'chtype' (usually a 16-bit type for SysV curses).
 define([TD_CURSES_CHTYPE],
 [
@@ -490,43 +498,30 @@ AC_MSG_RESULT($td_cv_chtype_decl)
 test $td_cv_chtype_decl = yes && AC_DEFINE(HAVE_TYPE_CHTYPE)
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl Test if curses defines 'cbreak()' (maybe a macro or function)
-define([TD_CURSES_CBREAK],
+dnl See which (if any!) of the styles of curses' line/row struct fit.
+define([TD_CURSES_STYLE],
 [
-AC_MSG_CHECKING(for function/macro cbreak)
-AC_CACHE_VAL(td_cv_have_cbreak,[
-	AC_TRY_LINK([#include <curses.h>],
-		[cbreak()],
-		[td_cv_have_cbreak=yes],
-		[td_cv_have_cbreak=no])])
-AC_MSG_RESULT($td_cv_have_cbreak)
-test $td_cv_have_cbreak = yes && AC_DEFINE(HAVE_CBREAK)
-])dnl
-dnl ---------------------------------------------------------------------------
-dnl Test if curses defines 'erasechar()' (maybe a macro or function)
-define([TD_CURSES_ERASECHAR],
-[
-AC_MSG_CHECKING(for function/macro erasechar)
-AC_CACHE_VAL(td_cv_have_erasechar,[
-	AC_TRY_LINK([#include <curses.h>],
-		[erasechar()],
-		[td_cv_have_erasechar=yes],
-		[td_cv_have_erasechar=no])])
-AC_MSG_RESULT($td_cv_have_erasechar)
-test $td_cv_have_erasechar = yes && AC_DEFINE(HAVE_ERASECHAR)
-])dnl
-dnl ---------------------------------------------------------------------------
-dnl Test if curses defines 'killchar()' (maybe a macro or function)
-define([TD_CURSES_KILLCHAR],
-[
-AC_MSG_CHECKING(for function/macro killchar)
-AC_CACHE_VAL(td_cv_have_killchar,[
-	AC_TRY_LINK([#include <curses.h>],
-		[killchar()],
-		[td_cv_have_killchar=yes],
-		[td_cv_have_killchar=no])])
-AC_MSG_RESULT($td_cv_have_killchar)
-test $td_cv_have_killchar = yes && AC_DEFINE(HAVE_KILLCHAR)
+AC_MSG_CHECKING(for curses struct-style)
+AC_CACHE_VAL(td_cv_curses_style,[
+	td_cv_curses_style=unknown
+	save_CFLAGS="$CFLAGS"
+	CFLAGS="-I./include $CFLAGS"
+	for td_type in ncurses sysv bsd
+	do
+		td_tr_type=`echo $td_type | tr '[a-z]' '[A-Z]'`
+		TD_MSG_LOG($td_tr_type curses-struct)
+		AC_TRY_COMPILE([
+#define	TESTING_CONFIG_H 1
+#define CURSES_LIKE_$td_tr_type 1
+#include <td_curse.h>],
+			[long test = (long)&(CursesLine(curscr,0))],
+			[td_cv_curses_style=$td_type; break])
+	done
+	CFLAGS="$save_CFLAGS"
+])
+AC_MSG_RESULT($td_cv_curses_style)
+td_tr_type=`echo $td_cv_curses_style | tr '[a-z]' '[A-Z]'`
+AC_DEFINE_UNQUOTED(CURSES_LIKE_${td_tr_type})
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Test if curses defines 'struct screen'.
@@ -579,13 +574,44 @@ AC_MSG_RESULT($td_cv_termcap_cursor)
 test $td_cv_termcap_cursor = yes && AC_DEFINE(HAVE_TCAP_CURSOR)
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl Test for interesting things about curses functions/datatypes
+dnl Curses-functions are a little complicated, since a lot of them are macros.
 define([TD_CURSES_FUNCS],
-[TD_CURSES_ADDCHNSTR
+[
+for td_func in $1
+do
+	changequote(,)dnl
+	td_tr_func=`echo $td_func | tr '[a-z]' '[A-Z]'`
+	changequote([,])dnl
+	AC_MSG_CHECKING(for ${td_func})
+	TD_MSG_LOG(${td_func})
+	AC_CACHE_VAL(td_cv_func_$td_func,[
+		eval td_result='$ac_cv_func_'$td_func
+		if test ".$td_result" != ".no"; then
+			AC_TRY_LINK([#include <curses.h>],
+			[
+#ifndef ${td_func}
+long foo = (long)(&${td_func});
+#endif
+			],
+			[td_result=yes],
+			[td_result=no])
+		fi
+		eval 'td_cv_func_'$td_func'=$td_result'
+	])
+	# use the computed/retrieved cache-value:
+	eval 'td_result=$td_cv_func_'$td_func
+	AC_MSG_RESULT($td_result)
+	if test $td_result != no; then
+		AC_DEFINE_UNQUOTED(HAVE_${td_tr_func})
+	fi
+done
+])dnl
+dnl ---------------------------------------------------------------------------
+dnl Test for curses data/types
+define([TD_CURSES_DATA],
+[
 TD_CURSES_CHTYPE
-TD_CURSES_CBREAK
-TD_CURSES_ERASECHAR
-TD_CURSES_KILLCHAR
+TD_CURSES_STYLE
 TD_STRUCT_SCREEN
 TD_TCAP_CURSOR
 ])dnl
@@ -606,64 +632,36 @@ dnl
 define([TD_CURSES_LIBS],
 [
 AC_PROVIDE([$0])
-td_save_LIBS="${LIBS}"
-dnl:if test -d /usr/5lib -a -d /usr/5include
-dnl:then
-dnl:	TD_INCLUDE_PATH(/usr/5include)
-dnl:	TD_LIBRARY_PATH(/usr/5lib)
-dnl:fi
-AC_CHECK_LIB(termcap, tgetent)
-	# The curses library often depends on the termcap library, so we've
-	# checked for it first.  We could make a more complicated test to
-	# ensure that we don't add the termcap library, but some functions use
-	# it anyway if it's there.
-if test $ac_cv_lib_termcap = yes; then
-	LIBS="-lcurses -ltermcap ${td_save_LIBS}"
-	AC_CHECK_LIB(curses, initscr)
-	if test $ac_cv_lib_curses = yes; then
-		LIBS="-lcurses -ltermcap ${td_save_LIBS}"
-	else
-		LIBS="-ltermcap ${td_save_LIBS}"
+if test $WithNcurses = yes; then
+	AC_CHECK_LIB(ncurses,initscr)
+	if test $ac_cv_lib_ncurses = yes; then
+		# Linux installs NCURSES's include files in a separate directory to
+		# avoid confusion with the native curses.  NCURSES has its own termcap
+		# support.
+		TD_INCLUDE_PATH(/usr/include/ncurses)
+		ac_cv_lib_curses=yes
 	fi
 else
+	# The curses library often depends on the termcap library, so we've checked
+	# for it first.  We could make a more complicated test to ensure that we
+	# don't add the termcap library, but some functions use it anyway if it's
+	# there.
+	AC_CHECK_LIB(termcap, tgetent)
 	AC_CHECK_LIB(curses, initscr)
 fi
-	# The main distinction between bsd- and sysv-curses is that the latter
-	# has a keypad function.
+# The main distinction between bsd- and sysv-curses is that the latter has a
+# keypad function.
 AC_MSG_CHECKING(BSD vs SYSV curses)
 AC_CACHE_VAL(td_cv_curses_type,[
 	td_cv_curses_type=unknown
 	if test $ac_cv_lib_curses = yes; then
-	AC_TRY_LINK([#include <curses.h>],
-		[keypad(curscr,1)],
-		[td_cv_curses_type=sysv],
-		[td_cv_curses_type=bsd])
+		AC_TRY_LINK([#include <curses.h>],
+			[keypad(curscr,1)],
+			[td_cv_curses_type=sysv],
+			[td_cv_curses_type=bsd])
 	fi
 ])
 AC_MSG_RESULT($td_cv_curses_type)
-
-if test $WithNcurses = yes; then
-    if test $td_cv_curses_type = bsd; then
-	td_save2LIBS="${LIBS}"
-	LIBS="${td_save_LIBS}"
-	AC_CHECK_LIB(ncurses,initscr)
-	if test $ac_cv_lib_ncurses = yes; then
-		# Linux installs NCURSES's include files in a separate
-		# directory to avoid confusion with the native curses.  Some
-		# versions have <ncurses.h>, while newer ones have it renamed
-		# to <curses.h> -- in either case it's linked, but we use the
-		# definition in <td_curse.h>
-		if test -d /usr/include/ncurses; then
-			TD_INCLUDE_PATH(/usr/include/ncurses)
-			AC_DEFINE(HAVE_NCURSES_H)
-		else
-			AC_HAVE_HEADERS(ncurses.h)
-		fi
-	else
-		LIBS="${td_save2LIBS}"
-	fi
-    fi
-fi
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Test for non-Posix prototype for 'signal()'
@@ -694,8 +692,10 @@ AC_CACHE_VAL(td_cv_sig_args,[
 			RETSIGTYPE catch(int sig, ...) { exit(1); }
 			main() { signal(SIGINT, catch); exit(0); } ],
 			[td_cv_sig_args=VARYING],
+			[td_cv_sig_args=UNKNOWN],
 			[td_cv_sig_args=UNKNOWN])
-		])
+		],
+		[td_cv_sig_args=UNKNOWN])
 	])
 AC_MSG_RESULT($td_cv_sig_args)
 AC_DEFINE_UNQUOTED(SIG_ARGS_$td_cv_sig_args)
@@ -717,7 +717,9 @@ then
 #undef  NOT
 #define NOT(s,d) ((long)(s) != (long)(d))
 				main() { exit(NOT(SIG_IGN,1) || NOT(SIG_DFL,0) || NOT(SIG_ERR,-1)); } ],
-				[td_cv_sigs_redef=yes])
+				[td_cv_sigs_redef=yes],
+				[td_cv_sigs_redef=no],
+				[td_cv_sigs_redef=unknown])
 		fi
 		])
 		AC_MSG_RESULT($td_cv_sigs_redef)
@@ -806,7 +808,8 @@ AC_CACHE_VAL(td_cv_sys_errlist,[
 		extern int sys_nerr;
 		int main() { char *x = sys_errlist[sys_nerr-1]; exit (x==0);}],
 		[td_cv_sys_errlist=yes],
-		[td_cv_sys_errlist=no])])
+		[td_cv_sys_errlist=no],
+		[td_cv_sys_errlist=unknown])])
 AC_MSG_RESULT($td_cv_sys_errlist)
 test $td_cv_sys_errlist = yes && AC_DEFINE(HAVE_SYS_ERRLIST)
 ])dnl

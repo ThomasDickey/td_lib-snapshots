@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: win2file.c,v 12.6 1994/10/18 22:53:42 tom Exp $";
+static	char	Id[] = "$Id: win2file.c,v 12.7 1995/03/31 01:37:39 tom Exp $";
 #endif
 
 /*
@@ -92,7 +92,7 @@ void	win2fp(
 	getyx(win, y, x);
 	for (j = 0; j < rows; j++) {
 		OUT "%s", prefix);
-		if ((s = win->_y[j]) != NULL) {
+		if ((s = CursesLine(win,j)) != NULL) {
 			auto	chtype	*t = s;
 
 			/* animate this so user can see something */
@@ -103,14 +103,14 @@ void	win2fp(
 
 			/* find the last nonblank column */
 			while ((k = toascii(*s++)) != EOS) {
-				if ((s - win->_y[j]) >= wMaxX(win))
+				if ((s - CursesLine(win,j)) >= wMaxX(win))
 					break;
 				if (!isspace(k))
 					t = s;
 			}
 
 			/* dump the line, setting boldface as needed */
-			for (s = win->_y[j]; s < t; s++) {
+			for (s = CursesLine(win,j); s < t; s++) {
 				auto	int	bold;
 
 				k = *s;

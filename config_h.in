@@ -1,5 +1,5 @@
 /* 
- * $Id: config_h.in,v 12.2 1995/02/03 11:42:22 tom Exp $
+ * $Id: config_h.in,v 12.3 1995/04/01 15:18:53 tom Exp $
  *
  * on host: @OnHost@
  *
@@ -7,5 +7,4 @@
  * config_h is then transformed (by config.status) into the header file 
  * config.h.
  */
-
 @DEFS@

@@ -1,6 +1,6 @@
 dnl Process this file with 'autoconf' to produce a 'configure' script
-dnl $Id: configure.in,v 12.54 1995/03/25 23:57:08 tom Exp $
-AC_REVISION($Revision: 12.54 $)
+dnl $Id: configure.in,v 12.56 1995/04/01 16:18:20 tom Exp $
+AC_REVISION($Revision: 12.56 $)
 AC_INIT(include/td_lib.h)
 
 ###	get special options
@@ -74,7 +74,8 @@ AC_TYPE_GETGROUPS
 AC_VFORK
 TD_WAIT
 TD_SIZE_T
-TD_CURSES_FUNCS
+TD_CURSES_DATA
+TD_CURSES_FUNCS(addchnstr beep cbreak erasechar killchar)
 
 ### DataItems/Structs
 TD_SYS_ERRLIST
@@ -138,7 +139,6 @@ fi
 # Functions whose return type is important, or whose existence must be known
 # to drive ifdefs.
 TD_HAVE_FUNCS(
-beep \
 bzero \
 endgrent \
 endpwent \

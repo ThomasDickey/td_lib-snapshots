@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: dumpwin.c,v 12.9 1994/07/23 13:29:47 tom Exp $";
+static	char	Id[] = "$Id: dumpwin.c,v 12.11 1995/03/31 02:01:21 tom Exp $";
 #endif
 
 /*
@@ -29,12 +29,6 @@ static	char	Id[] = "$Id: dumpwin.c,v 12.9 1994/07/23 13:29:47 tom Exp $";
 
 #define	OUT	FPRINTF
 
-#if HAVE_LIBNCURSES
-# define ADJ 1
-#else
-# define ADJ 0
-#endif
-
 void	dumpwin(
 	_ARX(WINDOW *,	w)
 	_AR1(char *,	tag)
@@ -58,11 +52,11 @@ void	dumpwin(
 		OUT(fp, "   _maxy:%d, _maxx:%d\n", w->_maxy, w->_maxx);
 		OUT(fp, "   _begy:%d, _begx:%d\n", w->_begy, w->_begx);
 
-#if HAVE_LIBNCURSES
+#if CURSES_LIKE_NCURSES
 		OUT(fp, "   _region %d..%d\n",     w->_regtop, w->_regbottom);
 		OUT(fp, "   _pary:%d  _parx:%d\n", w->_pary, w->_parx);
 #endif
-#if !SYS5_CURSES
+#if CURSES_LIKE_BSD
 		OUT(fp, "   _orig:    %p\n", w->_orig);
 		OUT(fp, "   _nextp:   %p\n", w->_nextp);
 #endif
@@ -71,13 +65,15 @@ void	dumpwin(
 		OUT(fp, "   _leave:   %#x\n", w->_leave);
 		OUT(fp, "   _scroll:  %#x\n", w->_scroll);
 
-		OUT(fp, "   _y @ %p\n", w->_y);
-		for (j = 0; j < w->_maxy + ADJ; j++) {
-			p = w->_y[j];
+		OUT(fp, "   _y @ %p\n", &(CursesLine(w,0)));
+		for (j = 0; j < wMaxY(w); j++) {
+			p = CursesLine(w,j);
 			OUT(fp, "%8d) [%3d,%3d] %p: \"",
-				j, w->_firstch[j], w->_lastch[j], p);
+				j,
+				CursesFirstCh(w,j),
+				CursesLastCh(w,j), p);
 			if (p != 0) {
-				for (k = 0; k < w->_maxx + ADJ; k++)
+				for (k = 0; k < wMaxX(w); k++)
 					dumpchr(fp, (int)(p[k]));
 			}
 			OUT(fp, "\"\n");

@@ -1,3 +1,28 @@
+1995-04-01  dickey@clark.net
+
+	* aclocal.m4:
+	look for ncurses's _line first, since it's the most restrictive case.
+	also, cleanup remaining autoconf warnings.
+
+	* aclocal.m4: added check for curses-style
+
+	* configure.in: don't use comma in m4-list
+
+	* aclocal.m4: reordered TD_CURSES_LIBS so I can _get_ ncurses
+
+	* config_h.in: trim extra blank line
+
+	* aclocal.m4:
+	split TD_CURSES_DATA out of TD_CURSES_FUNCS so I can loop on functions.
+	Also, added TD_MSG_LOG macro, use this in loops, other tricky places
+
+	* configure.in:
+	split TD_CURSES_FUNCS's data portion off so I can test multiple functions
+	with one macro
+
+	* src/curses/resizwin.c:
+	make ncurses hack directly depend on resizeterm
+
 1995-03-30  dickey@clark.net
 
 	* src/curses/dumpwin.c: 'nother nit for ncurses

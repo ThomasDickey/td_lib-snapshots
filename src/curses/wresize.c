@@ -1,5 +1,5 @@
 #ifndef	NO_IDENT
-static	char	*Id = "$Id: wresize.c,v 12.3 1994/10/06 23:59:53 tom Exp $";
+static	char	*Id = "$Id: wresize.c,v 12.4 1995/03/31 01:39:56 tom Exp $";
 #endif
 
 /*
@@ -35,6 +35,7 @@ void	wresize(
 	_DCL(int,	ToLines)
 	_DCL(int,	ToCols)
 {
+#if CURSES_LIKE_BSD
 	register int	row;
 	int	adjx	= w->_maxx - COLS;
 	int	adjy	= w->_maxy - LINES;
@@ -45,7 +46,7 @@ void	wresize(
 	 */
 	if (ToLines != LINES) {
 		for (row = ToLines; row < LINES; row++)
-			free((char *)(w->_y[row]));
+			free((char *)(CursesLine(w,row)));
 
 		w->_y       = pc_ALLOC(w->_y,      ToLines);
 		w->_firstch = s_ALLOC(w->_firstch, ToLines);
@@ -88,5 +89,7 @@ void	wresize(
 #if HAVE_LIBNCURSES
 	w->_regtop    = 0;
 	w->_regbottom = w->_maxy;
+#endif
+#else	/* SYSV or NCURSES */
 #endif
 }

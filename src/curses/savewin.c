@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: savewin.c,v 12.4 1994/07/22 23:56:13 tom Exp $";
+static	char	Id[] = "$Id: savewin.c,v 12.5 1995/03/31 01:36:45 tom Exp $";
 #endif
 
 /*
@@ -80,7 +80,7 @@ void	savewin(_AR0)
 	getyx(stdscr, saved->y, saved->x);
 
 	for (row = 0; row < LINES; row++) {
-		chtype	*src = stdscr->_y[row];
+		chtype	*src = CursesLine(stdscr,row);
 
 		for (col = 0; col < COLS; col++)
 			saved->image[j++] = *src++;

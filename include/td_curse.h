@@ -1,4 +1,4 @@
-/* $Id: td_curse.h,v 12.26 1995/02/18 00:04:00 tom Exp $ */
+/* $Id: td_curse.h,v 12.27 1995/03/31 02:00:05 tom Exp $ */
 
 /*
  * TD_LIB CURSES-related definitions
@@ -35,12 +35,6 @@
 
 #include	<curses.h>
 
-#if HAVE_NCURSES_H
-#  define _y       _line
-#  define _firstch _firstchar
-#  define _lastch  _lastchar
-#endif
-
 #if HAVE_TERMCAP_H
 #include <termcap.h>
 #endif
@@ -61,7 +55,7 @@
  *
  * On MS-DOS, I've used PDCurses 2.x, which is derived from NCurses.
  */
-#if defined(MSDOS) || HAVE_KEYPAD || HAVE_NCURSES_H
+#if defined(MSDOS) || HAVE_KEYPAD
 #define SYS5_CURSES 1
 #else
 #define SYS5_CURSES 0
@@ -74,6 +68,23 @@
  */
 #define	wMaxX(w)	(((w)->_maxx) + (COLS  - stdscr->_maxx))
 #define	wMaxY(w)	(((w)->_maxy) + (LINES - stdscr->_maxy))
+
+/*----------------------------------------------------------------------------*/
+#if CURSES_LIKE_BSD
+#define CursesLine(win,y)	(win)->_y[y]
+#define CursesFirstCh(win,y)	(win)->_firstch
+#define CursesLastCh(win,y)	(win)->_lastch
+#endif
+#if CURSES_LIKE_SYSV
+#define CursesLine(win,y)	(win)->_line[y]
+#define CursesFirstCh(win,y)	(win)->_firstchar
+#define CursesLastCh(win,y)	(win)->_lastchar
+#endif
+#if CURSES_LIKE_NCURSES		/* ncurses 1.8.8 and later */
+#define CursesLine(win,y)	(win)->_line[y].text
+#define CursesFirstCh(win,y)	(win)->_line[y].firstchar
+#define CursesLastCh(win,y)	(win)->_line[y].lastchar
+#endif
 
 /*----------------------------------------------------------------------------*/
 #ifdef MSDOS
