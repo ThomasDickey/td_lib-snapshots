@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: diffload.c,v 11.0 1992/02/25 13:11:09 ste_cm Rel $";
+static	char	Id[] = "$Id: diffload.c,v 11.2 1992/09/02 16:05:26 dickey Exp $";
 #endif
 
 /*
@@ -136,7 +136,7 @@ _DCL(int,	verbose)
 			break;	/* patch? */
 
 		vec[j].tstamp   = sb.st_mtime;
-		vec[j].author   = uid2s(sb.st_uid);
+		vec[j].author   = uid2s((int)sb.st_uid);
 		vec[j].revision = txtalloc(names[j]);
 		vec[j].parent   = (j > 0) ? names[j-1] : txtalloc("");
 
@@ -187,7 +187,7 @@ _DCL(char *,	revision)
 		failed(temp);
 
 	while (*vector) {
-		fputs(*vector, fp);
+		(void)fputs(*vector, fp);
 		vector++;
 	}
 	FCLOSE(fp);

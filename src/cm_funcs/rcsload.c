@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcsload.c,v 11.0 1992/02/07 15:16:02 ste_cm Rel $";
+static	char	Id[] = "$Id: rcsload.c,v 11.1 1992/09/02 15:36:09 dickey Exp $";
 #endif
 
 /*
@@ -506,7 +506,7 @@ _DCL(char *,	revision)
 		failed(temp);
 
 	while (*vector) {
-		fputs(*vector, fp);
+		(void)fputs(*vector, fp);
 		vector++;
 	}
 	FCLOSE(fp);

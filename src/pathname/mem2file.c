@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: mem2file.c,v 11.0 1991/10/04 07:35:16 ste_cm Rel $";
+static	char	Id[] = "$Id: mem2file.c,v 12.0 1992/09/02 15:19:41 ste_cm Rel $";
 #endif
 
 /*
@@ -47,7 +47,7 @@ _DCL(char *,	mode)
 
 	if (fp = fopen(name, mode)) {
 
-		len = fwrite(blob, sizeof(char), (int)strlen(blob), fp);
+		len = fwrite(blob, sizeof(char), (LEN_FREAD)strlen(blob), fp);
 		(void)fclose(fp);
 
 		if ((save >= 0)

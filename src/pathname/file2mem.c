@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: file2mem.c,v 11.0 1991/10/04 13:54:34 ste_cm Rel $";
+static	char	Id[] = "$Id: file2mem.c,v 12.0 1992/09/02 15:19:51 ste_cm Rel $";
 #endif
 
 /*
@@ -79,7 +79,7 @@ _DCL(char *,	name)
 		return (0);
 	}
 	errno = 0;		/* in case system does not flag actual err */
-	length = fread(blob, sizeof(char), length, fp);
+	length = fread(blob, sizeof(char), (LEN_FREAD)length, fp);
 	(void)fclose(fp);
 
 	/*

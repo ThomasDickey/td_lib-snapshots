@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 11.0 1992/02/18 08:18:42 ste_cm Rel $ */
+/* $Id: ptypes.h,v 11.5 1992/09/02 15:50:46 dickey Exp $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -151,7 +151,7 @@ extern	char	*sprintf();
  * depending on the system:
  */
 #ifdef	SYSTEM5
-#define	V_OR_I	void
+#define	V_OR_I		void
 #define	LEN_QSORT	unsigned
 #define	LEN_READ	unsigned
 #else
@@ -160,11 +160,28 @@ extern	char	*sprintf();
 #define	LEN_QSORT	int
 #define	LEN_READ	int
 #else	/* unix */
-#define	V_OR_I
 #define	LEN_QSORT	int
 #define	LEN_READ	int
+#if	defined(__STDC__) || defined(apollo)
+#define	LEN_FREAD	size_t
+#else
+#define	LEN_FREAD	int
+#endif	/* apollo */
 #endif	/* vms/unix */
 #endif	/* SYSTEM5 */
+
+#ifdef	sun
+#define	V_OR_I		int
+#define	V_OR_I2		void
+#endif
+
+#ifndef	V_OR_I
+#define	V_OR_I		/**/
+#endif
+
+#ifndef	V_OR_I2
+#define	V_OR_I2		V_OR_I
+#endif
 
 #ifdef	__STDC__
 #define	V_OR_P		void *
@@ -185,7 +202,7 @@ extern	char	*sprintf();
 #undef	ARG_WAIT
 #undef	DCL_WAIT
 
-#if	defined(apollo_sr10) || defined(SYSTEM5)
+#if	defined(sun) || defined(apollo_sr10) || defined(SYSTEM5)
 #define	ARG_WAIT(status)	((int *)&status)
 #endif
 #ifdef	SYSTEM5
@@ -242,7 +259,7 @@ extern	char	*sprintf();
 #ifndef	LINTLIBRARY
 #ifndef	vms
 extern	V_OR_I	_exit(_ar1(int,code));
-extern	V_OR_I	exit(_ar1(int,code));
+extern	V_OR_I2	exit(_ar1(int,code));
 extern	V_OR_I	qsort(
 		_arx(V_OR_P,	base)
 		_arx(size_t,	nel)
@@ -253,7 +270,7 @@ extern	V_OR_P	calloc(_arx(size_t,nel) _ar1(size_t,size));
 extern	V_OR_P	malloc(_ar1(size_t,size));
 extern	V_OR_P	realloc(_arx(V_OR_P,ptr) _ar1(size_t,size));
 #if	!defined(__STDC__) && !defined(apollo_sr10)
-extern	V_OR_I	perror(_ar1(char *,s));
+extern	V_OR_I2	perror(_ar1(char *,s));
 extern	V_OR_I	rewind(_ar1(FILE *,s));
 #endif
 
@@ -340,10 +357,10 @@ typedef	int	gid_t;
 #ifdef	vms
 #include	"unixdir.h"	/* get this from PORTUNIX */
 #else	/* unix */
-#ifdef	sun3			/* SunOs 4.1 */
+#ifdef	sun			/* SunOs 4.1 */
 #include	<dirent.h>
 #define	direct	dirent
-#else				/* sun4, apollo & other old bsd's */
+#else				/* apollo & other old bsd's */
 #include	<sys/dir.h>
 #endif
 #ifdef	SYSTEM5
@@ -374,6 +391,34 @@ extern	char	killchar();
 #endif	/* killchar */
 #endif	/* SYSTEM5 */
 #include	<curses.h>
+
+#ifdef	lint
+#undef	raw
+#define raw()		/* empty */
+#undef	noraw
+#define noraw()		/* empty */
+#undef	cbreak
+#define cbreak()	/* empty */
+#undef	nocbreak
+#define nocbreak()	/* empty */
+#undef	crmode
+#define crmode()	/* empty */
+#undef	nocrmode
+#define nocrmode()	/* empty */
+#undef	echo
+#define echo()		/* empty */
+#undef	noecho
+#define noecho()	/* empty */
+#undef	nl
+#define nl()		/* empty */
+#undef	nonl
+#define nonl()		/* empty */
+#undef	savetty
+#define	savetty()	/* empty */
+#undef	resetty
+#define	resetty()	/* empty */
+#endif
+
 #endif	/* CUR_PTYPES */
 
 /*
