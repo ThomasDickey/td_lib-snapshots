@@ -1,4 +1,4 @@
-# $Id: Makefile,v 10.3 1992/02/06 15:49:22 dickey Exp $
+# $Id: Makefile,v 11.0 1992/02/18 08:15:08 ste_cm Rel $
 # make-file for CM_TOOLS common interface directory
 #
 ####### (Development) ##########################################################
@@ -37,7 +37,7 @@ destroy:
 	sh -c 'for i in *;do case $$i in RCS);; *) rm -f $$i;;esac;done;exit 0'
 sources:	$(SOURCES)
 lintlib:	$(IT)
-lint.out:
+lint.out:	$(IT)
 lincnt.out:	$(H_SRC)	; lincnt $(H_SRC) >$@
 
 ####### (Details of Productions) ###############################################

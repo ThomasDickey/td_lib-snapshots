@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 10.2 1992/02/06 08:03:11 dickey Exp $ */
+/* $Id: ptypes.h,v 11.0 1992/02/18 08:18:42 ste_cm Rel $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -399,7 +399,7 @@ extern	char	killchar();
  */
 #ifdef	STR_PTYPES
 #include	<string.h>
-#if	!defined(SYSTEM5) && !defined(vms)
+#if	!defined(SYSTEM5) && !defined(vms) && !defined(apollo) && !defined(sun)
 #define	strchr	index
 #define	strrchr	rindex
 #endif	/* SYSTEM5 */

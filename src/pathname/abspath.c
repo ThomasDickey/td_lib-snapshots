@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: abspath.c,v 10.0 1991/10/04 13:09:06 ste_cm Rel $";
+static	char	Id[] = "$Id: abspath.c,v 11.0 1992/02/18 10:57:55 ste_cm Rel $";
 #endif
 
 /*
@@ -38,6 +38,9 @@ static	char	Id[] = "$Id: abspath.c,v 10.0 1991/10/04 13:09:06 ste_cm Rel $";
 #ifdef	apollo
 #ifdef	apollo_sr10
 #define	index	Index
+#ifdef	lint
+#define	const
+#endif
 #include	<apollo/base.h>
 #include	<apollo/name.h>
 #undef	index	/* fix for sys5-lint */
