@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: cutoff.c,v 10.4 1992/06/30 07:46:25 dickey Exp $";
+static	char	Id[] = "$Id: cutoff.c,v 12.0 1992/07/16 07:04:23 ste_cm Rel $";
 #endif
 
 /*
@@ -7,7 +7,7 @@ static	char	Id[] = "$Id: cutoff.c,v 10.4 1992/06/30 07:46:25 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	20 May 1988 (from 'sccsdate.c')
  * Modified:
- *		30 Jun 1992, 'optind' should always be index of most recent
+ *		16 Jul 1992, 'optind' should always be index past most recent
  *			     argv-entry parsed.
  *		08 Jan 1992, allow year to be given as "xx", "19xx" or "20xx";
  *		03 Oct 1991, converted to ANSI
@@ -79,8 +79,8 @@ _DCL(char **,	argv)
 				s++;
 			else {
 				if (optind < argc) {
-					if (isdigit(*argv[optind+1]))
-						s = argv[++optind];
+					if (isdigit(*argv[optind]))
+						s = argv[optind++];
 					else
 						break;
 				} else

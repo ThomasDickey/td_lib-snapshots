@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: edittree.c,v 6.0 1991/12/13 08:54:30 ste_cm Rel $";
+static	char	Id[] = "$Id: edittree.c,v 7.0 1992/07/16 16:41:12 ste_cm Rel $";
 #endif
 
 /*
@@ -33,9 +33,6 @@ typedef	char	*PTR;
 #define	CHUNK	127	/* 1 less than a power of 2 */
 #define	v_ALLOC(v,n,s)	v = DOALLOC(v, PTR, ((++n)|CHUNK)+1);\
 			v[n-1] = txtalloc(s)
-
-#define	isDIR(m)	((m & S_IFMT) == S_IFDIR)
-#define	isFILE(m)	((m & S_IFMT) == S_IFREG)
 
 #define	TELL		FPRINTF(stderr,
 
