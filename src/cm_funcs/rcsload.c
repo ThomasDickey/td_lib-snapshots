@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcsload.c,v 9.12 1991/10/07 13:21:04 dickey Exp $";
+static	char	Id[] = "$Id: rcsload.c,v 9.14 1991/10/10 09:24:57 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,8 @@ static	char	Id[] = "$Id: rcsload.c,v 9.12 1991/10/07 13:21:04 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	19 Aug 1988
  * Modified:
+ *		10 Oct 1991, got this to compute versions of loaded text on the
+ *			     main-trunk.
  *		07 Oct 1991, if file-contents are loaded, provide enough space
  *			     to keep newlines on each record, for compat with
  *			     file2argv/vecedit procedures.
@@ -57,7 +59,8 @@ static	int	log_or_edit;		/* -1=log, 0=text, 1=delta */
 static	char	**load_vector,		/* one-shot pointer to line-pointers */
 		*load_buffer,		/* one-shot pointer to file-contents */
 		*load_logged,		/* one-shot pointer to log-comment   */
-		*load_last;		/* => current storage in load_buffer */
+		*load_last,		/* => current storage in load_buffer */
+		*last_rev = "";		/* test-only			     */
 
 					/* buffer maintained by 'loadtext()' */
 static	char	*my_buffer;
@@ -71,19 +74,24 @@ static	unsigned my_limit;
 #ifdef	TEST
 static
 show_vector(
-_AR1(char **,v))
-_DCL(char **,v)
+_ARX(char *,	tag)
+_ARX(char *,	rev)
+_AR1(char **,	v)
+	)
+_DCL(char *,	tag)
+_DCL(char *,	rev)
+_DCL(char **,	v)
 {
 	register int	j;
 
-	PRINTF("TEXT:\n");
+	PRINTF("%s:%s\n", tag, rev);
 	if (v != 0)
 		for (j = 0; v[j]; j++)
 			PRINTF("%5d\t%s", j+1, v[j]);
 }
-#define	SHOW_VECTOR(v)	show_vector(v)
+#define	SHOW_VECTOR(tag,rev,v)	show_vector(tag,rev,v);
 #else
-#define	SHOW_VECTOR(v)
+#define	SHOW_VECTOR(tag,rev,v)
 #endif
 
 static
@@ -195,17 +203,18 @@ _DCL(int,	code)
 		for (j = 0, p = base; p != load_last; p += strlen(p)+1, j++)
 			load_vector[j] = p;
 		load_vector[j] = 0;
-		SHOW_VECTOR(load_vector);
+		SHOW_VECTOR(log_or_edit ? "DELTA" : "FILE", last_rev, load_vector)
 	} else {
-		register char	*p;
+		register char	*s, *d;
 
-		for (p = base; ; *p++ = '\n') {
-			p += strlen(p);
-			if ((p+1) >= load_last)
-				break;
+		for (s = d = base; s < load_last; s++) {
+			if (s != d)
+				(void)strcpy(d,s);
+			d += strlen(d);
+			s += strlen(s);
 		}
 		load_logged = base;
-		DEBUG(("NOTES:\n%s", load_logged))
+		DEBUG(("NOTES:%s\n%s", last_rev, load_logged))
 	}
 
 	return s;
@@ -358,12 +367,13 @@ _DCL(int,	verbose)
 			s = rcsparse_str(s, NULL_FUNC);
 			break;
 		case S_VERS:
+			last_rev = txtalloc(key);
 			if (delta == 0) {
-				new.revision = txtalloc(key);
+				new.revision = last_rev;
 			} else {
 				k = -1;
 				for (j = 0; j < total; j++)
-					if (!strcmp(key, vec[j].revision)) {
+					if (last_rev == vec[j].revision) {
 						k = j;
 						break;
 					}
@@ -532,7 +542,7 @@ _MAIN
 					p[k].parent,
 					p[k].revision,
 					ctime(&p[k].tstamp));
-				SHOW_VECTOR(p[k].vector);
+				SHOW_VECTOR("SHOW", p[k].revision, p[k].vector);
 				compare(name, p[k].vector, p[k].revision);
 			}
 			rcsunload(p);
