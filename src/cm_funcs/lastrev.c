@@ -15,7 +15,7 @@
 #include	"rcsdefs.h"
 #include	"sccsdefs.h"
 
-MODULE_ID("$Id: lastrev.c,v 12.7 1998/05/30 16:34:55 tom Exp $")
+MODULE_ID("$Id: lastrev.c,v 12.8 2000/12/02 18:05:08 tom Exp $")
 
 #if defined(CMV_PATH) && !(defined(RCS_PATH) || defined(SCCS_PATH))
 #undef CMV_PATH
@@ -43,7 +43,7 @@ static	TRY	try_order(
 	if (num_order == 0) {
 		char	*env = getenv("DED_CM_LOOKUP");
 		if (env != 0) {
-			env = strlcpy(temp, env);
+			env = strlwrcpy(temp, env);
 		} else {
 			env = strcpy(temp, "rcs");
 #ifdef SCCS_PATH

@@ -18,7 +18,7 @@
 #define	STR_PTYPES
 #include	"port2vms.h"
 
-MODULE_ID("$Id: vms_rpth.c,v 12.2 1994/08/21 18:39:51 tom Exp $")
+MODULE_ID("$Id: vms_rpth.c,v 12.3 2000/12/02 18:05:06 tom Exp $")
 
 static
 char *	after_leaf(
@@ -48,14 +48,14 @@ char *	vms_relpath(
 	auto	char	*s, *d;
 	auto	int	matched;
 
-	src = strlcpy(source, src);	/* dst may be the same as src */
+	src = strlwrcpy(source, src);	/* dst may be the same as src */
 	if (cwd == 0) {		/* if cwd not given, get the actual path */
 		cwd = getwd(current);
 #ifdef	unix
 		cwd = name2vms(current, strcat(cwd, "/"));
 #endif
 	} else
-		cwd = strlcpy(current, cwd);
+		cwd = strlwrcpy(current, cwd);
 
 	/* We must have a directory-path in 'src' to change, as well as obtain
 	 * a working-directory. Further, VMS pathnames always contain at least
