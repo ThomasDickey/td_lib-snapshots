@@ -1,3 +1,28 @@
+1992-02-18  dickey@software.org
+
+	* src/pathname/abspath.c: lint
+
+1992-02-18  ste_cm@software.org
+
+	* src/pathname/abspath.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1992-02-18  dickey@software.org
+
+	* include/ptypes.h: lint
+
+1992-02-18  ste_cm@software.org
+
+	* include/ptypes.h: BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1992-02-18  dickey@software.org
+
+	* include/Makefile: lint
+
+1992-02-18  ste_cm@software.org
+
+	* include/Makefile: BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
 1992-02-17  dickey@software.org
 
 	* src/cm_funcs/cutoff.c, src/pathname/acc_mode.c: lint
