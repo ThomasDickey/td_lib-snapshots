@@ -44,7 +44,7 @@
 #include	"td_curse.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: cmdch.c,v 12.20 1995/12/16 13:07:56 tom Exp $")
+MODULE_ID("$Id: cmdch.c,v 12.21 1995/12/17 01:23:11 tom Exp $")
 
 #define	ESC(c)	((c) == '\033')
 #define	END(s)	s[strlen(s)-1]
@@ -107,13 +107,7 @@ int	cmdch(
 
 	if (!init) {
 		init = TRUE;
-#if HAVE_KEYPAD
-# if HAVE_INTRFLUSH
-     		intrflush(stdscr, FALSE);
-# endif
-		keypad(stdscr,TRUE);
-		rawterm();
-#else
+#if !HAVE_KEYPAD
 # if !HAVE_TCAP_CURSOR
 		{
 		static	char	o_blk[1024], *a_ = o_blk;

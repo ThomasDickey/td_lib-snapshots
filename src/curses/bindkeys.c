@@ -9,7 +9,7 @@
 
 #include <td_curse.h>
 
-MODULE_ID("$Id: bindkeys.c,v 12.6 1995/11/05 23:10:07 tom Exp $")
+MODULE_ID("$Id: bindkeys.c,v 12.7 1995/12/24 22:39:10 tom Exp $")
 
 #define KEYCODE int
 #define	BINDKEYS struct BindKeys
@@ -24,17 +24,17 @@ int	define_key_binding(
 		_arx(BINDKEYS **,tablep)
 		_arx(KEYCODE *,  definition)
 		_ar1(KEYCODE,    result))
-		_ret;
+		_ret
 
 int	remove_key_binding(
 		_arx(BINDKEYS *, tablep)
 		_ar1(KEYCODE *,  definition))
-		_ret;
+		_ret
 
 KEYCODE lookup_key_binding(
 		_arx(BINDKEYS *, table)
 		_ar1(KEYCODE *,  input))
-		_ret;
+		_ret
 
 #define MAX_HASH 128	/* FIXME: should I use UCHAR_MAX? */
 
