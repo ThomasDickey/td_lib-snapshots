@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: makeargv.c,v 11.0 1991/10/04 16:41:50 ste_cm Rel $";
+static	char	Id[] = "$Id: makeargv.c,v 11.1 1992/11/17 12:51:11 dickey Exp $";
 #endif
 
 /*
@@ -70,7 +70,7 @@ _MAIN
 			"ab\"quoted' 'quote\" more stuff"
 		};
 
-	for (j = 0; j < sizeof(tbl)/sizeof(tbl[0]); j++) {
+	for (j = 0; j < SIZEOF(tbl); j++) {
 		int	last = makeargv(vec, BUFSIZ, tmp,tbl[j]);
 		printf("%s\n", tbl[j]);
 		for (k = 0; k < last; k++)

@@ -1,6 +1,5 @@
-#define	DEBUG	10000
 #ifndef	lint
-static	char	Id[] = "$Id: doalloc.c,v 11.1 1992/11/16 11:23:01 dickey Exp $";
+static	char	Id[] = "$Id: doalloc.c,v 11.2 1992/11/17 15:58:16 dickey Exp $";
 #endif
 
 /*
@@ -29,7 +28,7 @@ static	char	Id[] = "$Id: doalloc.c,v 11.1 1992/11/16 11:23:01 dickey Exp $";
 
 #include	"ptypes.h"
 
-static	int	count_alloc,
+static	long	count_alloc,
 		count_freed;
 
 static
@@ -38,10 +37,12 @@ void	walkback(_AR0)
 #ifdef	apollo
 	char	msg[80];
 	FORMAT(msg, "/com/tb %d", getpid());
+	FFLUSH(stdout);
+	FFLUSH(stderr);
 	(void)system(msg);
 #endif	/* apollo */
 #ifdef	vms
-	*((char *)0) = 0;
+	*((char *)0) = 0;	/* patch */
 #endif	/* vms */
 }
 
@@ -55,13 +56,21 @@ void	fail_alloc(
 {
 	PRINTF("%s: %#x\n", msg, ptr);
 	walkback();
+	FFLUSH(stdout);
+	FFLUSH(stderr);
 	abort();
 }
 
 #ifdef	DEBUG
-static	char	*Area[DEBUG];
-static	long	Size[DEBUG];
-static	int	now_pending;
+typedef	struct	{
+	long	size;	/* ...its size */
+	char	*text;	/* the actual segment */
+	int	note;	/* ...last value of 'count_alloc' */
+	} AREA;
+static	AREA	area[DEBUG];
+static	long	maxAllocated,	/* maximum # of bytes allocated */
+		nowAllocated;	/* current # of bytes allocated */
+static	int	now_pending;	/* current end of 'area[]' table */
 
 static
 int	FindArea(
@@ -70,7 +79,7 @@ int	FindArea(
 {
 	register int j;
 	for (j = 0; j < DEBUG; j++)
-		if (Area[j] == ptr) {
+		if (area[j].text == ptr) {
 			if ((ptr != 0) && (j >= now_pending))
 				now_pending = j+1;
 			return j;
@@ -85,12 +94,14 @@ int	record_freed(
 {
 	register int j;
 	if ((j = FindArea(ptr)) >= 0) {
-		Size[j] = 0;
-		Area[j] = 0;
+		nowAllocated -= area[j].size;
+		area[j].size = 0;
+		area[j].text = 0;
+		area[j].note = count_freed;
 		if (j+1 == now_pending) {
 			register int	k;
 			for (k = j; k >= 0; k--)
-				if (!Size[k])
+				if (!area[k].size)
 					now_pending = k;
 		}
 	}
@@ -108,20 +119,28 @@ int	record_alloc(
 	_DCL(unsigned,	len)
 {
 	register int	j;
+
 	if (newp == oldp) {
-		if ((j = FindArea(oldp)) >= 0)
-			Size[j] = len;
-		else
+		if ((j = FindArea(oldp)) >= 0) {
+			nowAllocated -= area[j].size;
+			area[j].size = len;
+			area[j].note = count_alloc;
+		} else
 			fail_alloc("could not find", oldp);
 	} else {
 		if (oldp != 0)
 			record_freed(oldp);
 		if ((j = FindArea((char *)0)) >= 0) {
-			Area[j] = newp;
-			Size[j] = len;
+			area[j].text = newp;
+			area[j].size = len;
+			area[j].note = count_alloc;
 		} else
 			fail_alloc("no room in table", newp);
 	}
+
+	nowAllocated += len;
+	if (nowAllocated > maxAllocated)
+		maxAllocated = nowAllocated;
 }
 
 #define	OK_ALLOC(p,q,n)	((p != 0) && (record_alloc(p,q,n) >= 0))
@@ -145,7 +164,7 @@ void	logit(
 	if (!log)
 		log = fopen("doalloc.log", "w");
 	FPRINTF(log, "%s %#x\n", msg, num);
-	fflush(log);
+	FFLUSH(log);
 }
 #define	LOGIT(msg,num)	logit(msg, (long)num);
 #else
@@ -168,13 +187,14 @@ char *	doalloc (
 {
 	register char	*newp;
 
-	count_alloc++;
+	count_alloc += (oldp == 0);
+	LOGIT("allocate", amount)
+	LOGIT("  old = ", oldp)
+
 	newp = (oldp != 0) ? realloc(oldp, amount) : malloc(amount);
 	if (!OK_ALLOC(newp,oldp,amount))
 		failed("doalloc");
 
-	LOGIT("allocate", amount)
-	LOGIT("  old = ", oldp)
 	LOGIT("  new = ", newp)
 	return (newp);
 }
@@ -199,9 +219,31 @@ void	dofree(
 
 void	show_alloc(_AR0)
 {
-	PRINTF("%d allocs, %d frees\n", count_alloc, count_freed);
+	static	char	*fmt = ".. %-24.24s %10ld\n";
+
+	PRINTF("** allocator metrics:\n");
+	PRINTF(fmt, "allocs:", count_alloc);
+	PRINTF(fmt, "frees:",  count_freed);
 #ifdef	DEBUG
-	PRINTF("...%d segments allocated\n", now_pending);
+	{
+		register int	j, count = 0;
+		register long	total	= 0;
+
+		for (j = 0; j < now_pending; j++)
+			if (area[j].text) {
+				if (count++ < 10)
+					PRINTF("...%d) %d bytes in alloc #%d:%#x\n",
+						j,
+						area[j].size,
+						area[j].note,
+						area[j].text);
+				total += area[j].size;
+			}
+		PRINTF("...%d:%d segments allocated\n", count, now_pending);
+		PRINTF(fmt, "total bytes allocated:",   total);
+		PRINTF(fmt, "current bytes allocated:", nowAllocated);
+		PRINTF(fmt, "maximum bytes allocated:", maxAllocated);
+	}
 #endif
 }
 

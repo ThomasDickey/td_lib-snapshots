@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: for_user.c,v 11.0 1991/10/04 16:02:41 ste_cm Rel $";
+static	char	Id[] = "$Id: for_user.c,v 11.1 1992/11/17 12:36:40 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: for_user.c,v 11.0 1991/10/04 16:02:41 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	13 Sep 1988
  * Modified:
+ *		17 Nov 1992, modified _FNX macro.
  *		04 Oct 1991, conversion to ANSI
  *		12 Sep 1991, removed redundant def for 'errno' (VMS C 3.2)
  *		25 Jun 1991, added entrypoint 'for_user2()'. Ensure that we
@@ -28,14 +29,14 @@ static	char	Id[] = "$Id: for_user.c,v 11.0 1991/10/04 16:02:41 ste_cm Rel $";
 #include	"ptypes.h"
 #include	<errno.h>
 
-for_user2(
-_FNX(int,	func)
-_ARX(int,	the_uid)
-_AR1(int,	the_gid)
-	)
-_DCL(int,	(*func)())
-_DCL(int,	the_uid)
-_DCL(int,	the_gid)
+int	for_user2(
+	_FNX(int,	func,	(_AR0))
+	_ARX(int,	the_uid)
+	_AR1(int,	the_gid)
+		)
+	_DCL(int,	(*func)())
+	_DCL(int,	the_uid)
+	_DCL(int,	the_gid)
 {
 	register int	count,
 			pid;
@@ -72,9 +73,9 @@ _DCL(int,	the_gid)
 	return (-1);
 }
 
-for_user(
-_FN1(int,	func))
-_DCL(int,	(*func)())
+int	for_user(
+	_FN1(int,	func,	(_AR0)))
+	_DCL(int,	(*func)())
 {
 	return for_user2(func, getuid(), getgid());
 }

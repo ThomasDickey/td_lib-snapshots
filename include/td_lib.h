@@ -1,4 +1,5 @@
-/* $Id: td_lib.h,v 11.7 1992/10/30 08:14:11 dickey Exp $ */
+/* $Id: td_lib.h,v 11.8 1992/11/17 12:34:17 dickey Exp $ */
+#define	NO_LEAKS
 
 /*
  * Combined lint-library/function prototype definitions for CM_TOOLS COMMON
@@ -106,7 +107,7 @@
 	/* catchall.c ------------------------------------------------- */
 #ifdef	SIG_PTYPES
 		catchall (
-			_fn1(SIG_T,	func)
+			_fn1(SIG_T,	func,	(/*patch:SIG_T?*/))
 			)
 			_dcl(SIG_T,	(*func)())
 			_nul
@@ -174,10 +175,13 @@
 			_dcl(unsigned,	len)
 			_ret
 
-		dofree(
+	void	dofree(
 			_ar1(char *,	oldp)
 			)
 			_dcl(char *,	oldp)
+			_nul
+
+	void	show_alloc(_ar0)
 			_nul
 
 	/* dotcmp.c --------------------------------------------------- */
@@ -271,7 +275,7 @@
 
 	/* for_admin.c ------------------------------------------------ */
 	int	for_admin2(
-			_fnx(int,	func)
+			_fnx(int,	func,	(_AR0))
 			_arx(int,	the_uid)
 			_ar1(int,	the_gid)
 			)
@@ -281,14 +285,14 @@
 			_ret
 
 	int	for_admin(
-			_fn1(int,	func)
+			_fn1(int,	func,	(_AR0))
 			)
 			_dcl(int,	(*func)())
 			_ret
 
 	/* for_user.c ------------------------------------------------- */
 	int	for_user2(
-			_fnx(int,	func)
+			_fnx(int,	func,	(_AR0))
 			_arx(int,	the_uid)
 			_ar1(int,	the_gid)
 			)
@@ -298,7 +302,7 @@
 			_ret
 
 	int	for_user(
-			_fn1(int,	func)
+			_fn1(int,	func,	(_AR0))
 			)
 			_dcl(int,	(*func)())
 			_ret
@@ -308,7 +312,7 @@
 	int	fp2argv(
 			_arx(FILE *,	fp)
 			_arx(char ***,	argv_)
-			_fn1(void,	trace)
+			_fn1(void,	trace,	(_AR1(char *,s)))
 			)
 			_dcl(FILE *,	fp)
 			_dcl(char ***,	argv_)
@@ -850,10 +854,13 @@
 			_dcl(char *,	string)
 			_ret
 
-		txtfree(
+	void	txtfree(
 			_ar1(char *,	string)
 			)
 			_dcl(char *,	string)
+			_nul
+
+	void	free_txtalloc(_ar0)
 			_nul
 
 	/* uid2s.c ---------------------------------------------------- */
@@ -943,12 +950,14 @@
 	/* walktree.c ------------------------------------------------- */
 #ifdef	unix
 
-#define	WALK_FUNC(f)	f(\
+#define	WALK_FUNC_ARGS	\
 			_ARX(char *,	path)\
 			_ARX(char *,	name)\
 			_ARX(STAT *,	sp)\
 			_ARX(int,	readable)\
-			_AR1(int,	level)	)\
+			_AR1(int,	level)
+
+#define	WALK_FUNC(f)	f(WALK_FUNC_ARGS)\
 			_DCL(char *,	path)\
 			_DCL(char *,	name)\
 			_DCL(STAT *,	sp)\
@@ -958,7 +967,7 @@
 	int	walktree(
 			_arx(char *,	p)
 			_arx(char *,	n)
-			_fnx(int,	f)
+			_fnx(int,	f,	(WALK_FUNC_ARGS))
 			_arx(char *,	m)
 			_ar1(int,	lvl)
 			)

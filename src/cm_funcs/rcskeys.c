@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcskeys.c,v 11.0 1991/10/04 12:32:29 ste_cm Rel $";
+static	char	Id[] = "$Id: rcskeys.c,v 12.0 1992/11/17 12:52:06 ste_cm Rel $";
 #endif
 
 /*
@@ -66,7 +66,7 @@ _DCL(char *,	arg)
 				code = S_VERS;
 		} else {
 			code = -2;	/* no match at all */
-			for (j = 0; j < sizeof(keys)/sizeof(keys[0]); j++) {
+			for (j = 0; j < SIZEOF(keys); j++) {
 				if (!strcmp(keys[j].text, s)) {
 					code = keys[j].code;
 					break;

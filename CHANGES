@@ -1,3 +1,119 @@
+1992-11-17  dickey@software.org
+
+	* src/memory/doalloc.c: mods to add/support 'show_doalloc()'
+
+	* src/pathname/walktree.c: corrected prototype
+
+	* include/ptypes.h: corrected prototype for 'qsort()'
+
+	* src/compare/scomp.c, src/compare/m2comp.c: RCS_BASE
+
+	* certify/release.txt: today's fixes
+
+	* src/pathname/walktree.c:
+	tighten up prototypes by passing prototypes of function-pointers
+
+	* src/memory/txtalloc.c: changed 'txtfree()' to 'void'
+
+	* src/cm_funcs/rcsedit.c: added 3rd arg to _FNX macro
+
+	* include/rcsdefs.h: added 3rd arg to _FNX/_fnx macros
+
+1992-11-17  ste_cm@software.org
+
+	* include/rcsdefs.h:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1992-11-17  dickey@software.org
+
+	* src/pathname/fp2argv.c, src/process/catchall.c:
+	added 3rd arg to _FNX macro
+
+1992-11-17  ste_cm@software.org
+
+	* src/process/catchall.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1992-11-17  dickey@software.org
+
+	* src/pathname/trimpath.c: use SIZEOF
+
+1992-11-17  ste_cm@software.org
+
+	* src/pathname/trimpath.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1992-11-17  dickey@software.org
+
+	* src/string/strwcmp.c: moved SIZEOF to "ptypes.h"
+
+1992-11-17  ste_cm@software.org
+
+	* src/string/strwcmp.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1992-11-17  dickey@software.org
+
+	* src/string/strbcmp.c, src/cm_funcs/sccsname.c: use SIZEOF
+
+1992-11-17  ste_cm@software.org
+
+	* src/cm_funcs/sccsname.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1992-11-17  dickey@software.org
+
+	* src/cm_funcs/samebr.c: use SIZEOF
+
+1992-11-17  ste_cm@software.org
+
+	* src/cm_funcs/samebr.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1992-11-17  dickey@software.org
+
+	* src/pathname/relpath.c, src/cm_funcs/rcsname.c: use SIZEOF
+
+1992-11-17  ste_cm@software.org
+
+	* src/cm_funcs/rcsname.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1992-11-17  dickey@software.org
+
+	* src/cm_funcs/rcskeys.c: use SIZEOF
+
+1992-11-17  ste_cm@software.org
+
+	* src/cm_funcs/rcskeys.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1992-11-17  dickey@software.org
+
+	* src/pathname/pathcmp.c, src/process/makeargv.c, src/string/lsbycols.c:
+	use SIZEOF
+
+1992-11-17  ste_cm@software.org
+
+	* src/string/lsbycols.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1992-11-17  dickey@software.org
+
+	* src/pathname/abspath.c: use SIZEOF
+
+	* include/ptypes.h:
+	added 3rd arg to _fnx, _FNX macros so we can do better prototypes
+	added SIZEOF macro
+
+	* src/process/for_user.c: added 3rd arg to _FNX
+
+	* src/process/for_admn.c: added 3rd arg to 
+	_FNX
+
+	* include/td_lib.h: added 'show_alloc()' and 'free_txtalloc()'
+	added 3rd arg to _FNX/_fnx macros
+
 1992-11-16  dickey@software.org
 
 	* src/memory/txtalloc.c: added 'free_txtalloc()' -- must test!

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: abspath.c,v 11.1 1992/11/13 10:18:54 dickey Exp $";
+static	char	Id[] = "$Id: abspath.c,v 11.2 1992/11/17 12:49:39 dickey Exp $";
 #endif
 
 /*
@@ -317,7 +317,7 @@ _MAIN
 #endif
 				,"/tmp"
 				};
-		do_test(sizeof(tbl)/sizeof(tbl[0]), tbl);
+		do_test(SIZEOF(tbl), tbl);
 	}
 	exit(SUCCESS);
 	/*NOTREACHED*/

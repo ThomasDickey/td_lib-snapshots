@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: relpath.c,v 11.0 1992/01/21 12:11:48 ste_cm Rel $";
+static	char	Id[] = "$Id: relpath.c,v 11.1 1992/11/17 12:53:04 dickey Exp $";
 #endif
 
 /*
@@ -177,7 +177,7 @@ _MAIN
 		for (j = 1; j < argc; j++)
 			do_test(argv[j]);
 	} else {
-		for (j = 0; j < sizeof(tbl)/sizeof(tbl[0]); j++) {
+		for (j = 0; j < SIZEOF(tbl); j++) {
 			do_test(tbl[j]);
 			abspath(strcpy(tmp, tbl[j]));
 			do_test(tmp);

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcsname.c,v 11.0 1991/10/03 08:46:17 ste_cm Rel $";
+static	char	Id[] = "$Id: rcsname.c,v 12.0 1992/11/17 12:52:39 ste_cm Rel $";
 #endif
 
 /*
@@ -201,7 +201,7 @@ _DCL(int,	full)
 			"path/RCS/name",	"path/RCS/name,v",
 			"RCS/name",		"RCS/name,v"
 		};
-		do_test (sizeof(test)/sizeof(test[0]), test, full);
+		do_test (SIZEOF(test), test, full);
 	}
 }
 

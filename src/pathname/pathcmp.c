@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: pathcmp.c,v 11.0 1992/05/15 16:56:44 ste_cm Rel $";
+static	char	Id[] = "$Id: pathcmp.c,v 11.1 1992/11/17 12:51:38 dickey Exp $";
 #endif
 
 /*
@@ -123,7 +123,7 @@ _MAIN
 			,"//x"
 #endif
 			};
-		do_test(sizeof(vec)/sizeof(vec[0]), vec);
+		do_test(SIZEOF(vec), vec);
 	}
 	(void)exit(SUCCESS);
 }

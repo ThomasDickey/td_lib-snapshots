@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: strbcmp.c,v 11.0 1991/10/17 07:56:31 ste_cm Rel $";
+static	char	Id[] = "$Id: strbcmp.c,v 11.1 1992/11/17 12:54:31 dickey Exp $";
 #endif
 
 /*
@@ -59,7 +59,7 @@ _MAIN
 			};
 	register int	j, k, cmp;
 
-#define	LOOP(j)	for (j = 0; j < sizeof(tbl)/sizeof(tbl[0]); j++)
+#define	LOOP(j)	for (j = 0; j < SIZEOF(tbl); j++)
 #define	CMP(f)	((cmp = f(tbl[j],tbl[k])) ? (cmp > 0 ? ">" : "<") : "=")
 	LOOP(j) {
 		printf("\n");

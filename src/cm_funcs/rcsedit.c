@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	*Id = "$Id: rcsedit.c,v 11.4 1992/10/27 07:56:33 dickey Exp $";
+static	char	*Id = "$Id: rcsedit.c,v 11.5 1992/11/17 13:07:58 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	*Id = "$Id: rcsedit.c,v 11.4 1992/10/27 07:56:33 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	26 May 1988
  * Modified:
+ *		17 Nov 1992, modified _FNX macro
  *		26 Oct 1992, RCS version 5 uses multiline format.
  *		06 Feb 1992, use 'stat_file()'
  *		22 Oct 1991, broke logic of 'rcs_close()' on 6-sep (must always
@@ -377,7 +378,7 @@ char *	rcsparse_id(
 
 char *	rcsparse_str(
 	_ARX(char *,	s)
-	_FN1(int,	str_func) /* copies string as we read it */
+	_FN1(int,	str_func,	(_AR1(int,c)))
 		)
 	_DCL(char *,	s)
 	_DCL(int,	(*str_func)())

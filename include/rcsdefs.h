@@ -1,4 +1,4 @@
-/* $Id: rcsdefs.h,v 11.4 1992/11/12 08:50:40 dickey Exp $ */
+/* $Id: rcsdefs.h,v 12.0 1992/11/17 13:06:43 ste_cm Rel $ */
 
 #ifndef	_RCSDEFS_H_
 #define	_RCSDEFS_H_
@@ -140,7 +140,7 @@
 
 	char *	rcsparse_str(
 			_arx(char *,	s)
-			_fn1(int,	f)
+			_fn1(int,	f,	(_AR1(int,c)))
 			)
 			_dcl(char *,	s)
 			_dcl(int,	(*f)())

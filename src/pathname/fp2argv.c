@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: fp2argv.c,v 11.0 1992/02/25 13:52:40 ste_cm Rel $";
+static	char	Id[] = "$Id: fp2argv.c,v 11.1 1992/11/17 13:02:14 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: fp2argv.c,v 11.0 1992/02/25 13:52:40 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	18 Jul 1988
  * Modified:
+ *		17 Nov 1992, modified _FNX macro.
  *		25 Feb 1992, allow input-records to be arbitrarily wide.
  *		04 Oct 1991, conversion to ANSI
  *		20 Jun 1991, added trace-arg for 'ded'
@@ -50,15 +51,14 @@ _DCL(FILE *,	fp)
 	return dyn_length(bfr) ? dyn_string(bfr) : 0;
 }
 
-int
-fp2argv(
-_ARX(FILE *,	fp)
-_ARX(char ***,	argv_)
-_FN1(void,	trace)
-	)
-_DCL(FILE *,	fp)
-_DCL(char ***,	argv_)
-_DCL(void,	(*trace)())
+int	fp2argv(
+	_ARX(FILE *,	fp)
+	_ARX(char ***,	argv_)
+	_FN1(void,	trace,	(_AR1(char *,s)))
+		)
+	_DCL(FILE *,	fp)
+	_DCL(char ***,	argv_)
+	_DCL(void,	(*trace)())
 {
 	register char **vec = 0;
 	register int  lines = 0;

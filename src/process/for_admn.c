@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: for_admn.c,v 11.0 1991/10/11 07:41:35 ste_cm Rel $";
+static	char	Id[] = "$Id: for_admn.c,v 11.1 1992/11/17 12:35:55 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: for_admn.c,v 11.0 1991/10/11 07:41:35 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	11 Oct 1991 (from 'for_user.c')
  * Modified:
+ *		17 Nov 1992, modified _FNX macro.
  *		
  * Function:	For a set-uid program, invokes a function (presumably a system
  *		call), which sets 'errno' iff it finds an error.
@@ -22,14 +23,14 @@ static	char	Id[] = "$Id: for_admn.c,v 11.0 1991/10/11 07:41:35 ste_cm Rel $";
 #include	"ptypes.h"
 #include	<errno.h>
 
-for_admin2(
-_FNX(int,	func)
-_ARX(int,	the_uid)
-_AR1(int,	the_gid)
-	)
-_DCL(int,	(*func)())
-_DCL(int,	the_uid)
-_DCL(int,	the_gid)
+int	for_admin2(
+	_FNX(int,	func,	(_AR0))
+	_ARX(int,	the_uid)
+	_AR1(int,	the_gid)
+		)
+	_DCL(int,	(*func)())
+	_DCL(int,	the_uid)
+	_DCL(int,	the_gid)
 {
 	register int	count,
 			pid;
@@ -66,9 +67,10 @@ _DCL(int,	the_gid)
 	return (-1);
 }
 
-for_admin(
-_FN1(int,	func))
-_DCL(int,	(*func)())
+int	for_admin(
+	_FN1(int,	func,	(_AR0))
+		)
+	_DCL(int,	(*func)())
 {
 	return for_admin2(func, geteuid(), getegid());
 }
