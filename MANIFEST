@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t20030425
+MANIFEST for td_lib, version t20030426
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         restrictions on copying/using this software
@@ -43,6 +43,7 @@ src/cm_funcs                    subdirectory
 src/cm_funcs/cmv_dir.c          lookup CmVision directory & file paths
 src/cm_funcs/cmv_last.c         lookup file's current version in CmVision
 src/cm_funcs/cutoff.c           SCCS-style cutoff date parsing
+src/cm_funcs/cvslast.c          lookup CVS info
 src/cm_funcs/descrip.mms        MMS file for the TD_LIB/SRC/CM_FUNCS directory
 src/cm_funcs/lastrev.c          combines calls for RCS/SCCS/CMVision last-revision lookup
 src/cm_funcs/makefile.in        template for src/cm_funcs/makefile
@@ -357,6 +358,8 @@ test/pathname/walktree.ref      reference for 'walktree'
 test/pathname/walktree.sh       test-script for 'walktree'
 test/pathname/which.ref         reference for 'which'
 test/pathname/which.sh          test-script for 'which'
+test/port2dos                   subdirectory
+test/port2dos/run_test.sh       general test script
 test/port2vms                   subdirectory
 test/port2vms/README            description of test/port2vms
 test/port2vms/descrip.mms       VMS build-script for test/port2vms
