@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: relpath.c,v 10.0 1991/10/03 08:46:02 ste_cm Rel $";
+static	char	Id[] = "$Id: relpath.c,v 11.0 1992/01/21 12:11:48 ste_cm Rel $";
 #endif
 
 /*
@@ -7,6 +7,11 @@ static	char	Id[] = "$Id: relpath.c,v 10.0 1991/10/03 08:46:02 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	07 Sep 1989
  * Modified:
+ *		21 Jan 1992, If 'cwd[]' is empty, treat it as a null-pointer.
+ *			     Also, force single return-point.
+ *			     Strip special case of apollo node-name.
+ *			     Expand apollo environment-variables.
+ *			     Trim redundant leading "./".
  *		03 Oct 1991, conversion to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
  *		12 Mar 1990, lint (apollo sr10.1)
@@ -35,24 +40,84 @@ _DCL(char *,	src)
 	auto	size_t	j;
 
 	src = strcpy(tmp, src);	/* dst may be the same as src; copy it */
-	if (cwd == 0)		/* if cwd not given, get the actual path */
+	if (cwd == 0 || !*cwd)	/* if cwd not given, get the actual path */
 		cwd = getwd(current);
 	else
 		cwd = strcpy(current, cwd);
 
 	if (cwd != 0) {
+#ifdef	apollo
+		register char	*p;
+
+#define	L_PAREN	'('
+#define	R_PAREN	')'
+		/*
+		 * Substitute environment-variables
+		 */
+		if ((p = strchr(src, '$'))
+		 && (p[1] == L_PAREN)) {
+			char	tmp2[BUFSIZ];
+			register char *s, *d;
+			auto	int	cc;
+
+			for (d = tmp2, s = src; *s; s++) {
+				if (s[0] != '$')
+					*d++ = *s;
+				else if (s[1] != L_PAREN)
+					*d++ = *s;
+				else {
+					s += 2;
+					for (p = s; *p && *p != R_PAREN; p++);
+					cc = *p;
+					*p = EOS;
+					if (s = getenv(s)) {
+						(void)strcpy(d, s);
+						d += strlen(d);
+					}
+					*p = cc;
+					s = p;
+				}
+			}
+			*d = EOS;
+			(void)strcpy(src, tmp2);
+		}
+
+		/*
+		 * Factor-out common node-name
+		 */
+		if ((strlen(src) > 2)
+		 && (strlen(cwd) > 2)
+		 && !strncmp(cwd, "//", 2)) {
+			size_t	nodelen;
+			for (nodelen = 2; cwd[nodelen]; nodelen++)
+				if (cwd[nodelen] == '/')
+					break;
+			if (!strncmp(cwd, src, nodelen)) {
+				cwd += nodelen;
+				src += nodelen;
+			}
+		}
+#endif
 		(void)strcpy(pre, ".");
 		for (;;) {
-			if (	!strcmp(cwd,src))
-				return (strcpy(dst, pre));
+			if (	!strcmp(cwd,src)) {
+				(void)strcpy(dst, pre);
+				break;
+			}
+
 			if (	((j = strlen(cwd)) < strlen(src))
 			&&	!strncmp(cwd,src,j)
-			&&	src[j] == '/')
-				return (pathcat(dst, pre, src+j+1));
+			&&	src[j] == '/') {
+				(void)pathcat(dst, pre, src+j+1);
+				break;
+			}
+
 			if (strchr(src,'/') == 0) {
 				if (dotname(src))
-					return (strcpy(dst, src));
-				return (pathcat(dst, pre, src));
+					(void)strcpy(dst, src);
+				else
+					(void)pathcat(dst, pre, src);
+				break;
 			}
 
 			/*
@@ -62,14 +127,21 @@ _DCL(char *,	src)
 			(void)strcat(pre, pre[1] ? "/.." : ".");
 			if (j > 0 && cwd[--j] != '/') {
 				while (cwd[j] != '/')
-					cwd[j--] = 0;
+					cwd[j--] = EOS;
 				if (j > 0 && cwd[j-1] != '/')
-					cwd[j] = 0;
-			} else
+					cwd[j] = EOS;
+			} else {
+				(void)strcpy(dst, src);
 				break;
+			}
 		}
+	} else
+		(void)strcpy(dst, src);
+	if (*dst == '.' && dst[1] == '/') {
+		register char	*s, *d;
+		for (s = dst+2, d = dst; *d++ = *s++;);
 	}
-	return (strcpy(dst, src));
+	return dst;
 }
 
 #ifdef	TEST
@@ -78,7 +150,7 @@ _AR1(char *,	s))
 _DCL(char *,	s)
 {
 	auto	char	tmp[BUFSIZ];
-	printf("%s <= %s\n", relpath(tmp, (char *)0, s), s);
+	PRINTF("%s <= %s\n", relpath(tmp, (char *)0, s), s);
 }
 
 _MAIN
@@ -89,9 +161,11 @@ _MAIN
 		,".."
 		,"../.."
 		,"../bin"
+		,"/bin"
 		,"../../bin"
 		,"../../bin/RCS"
 #ifdef	apollo
+		,"//dickey"
 		,"$(HOME)"
 		,"$(HOME)/src"
 #endif

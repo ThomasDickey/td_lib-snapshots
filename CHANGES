@@ -1,3 +1,40 @@
+1992-01-21  dickey@software.org
+
+	* src/pathname/relpath.c:
+	if the result has a leading "./", remove this part.
+
+1992-01-21  ste_cm@software.org
+
+	* src/pathname/relpath.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1992-01-21  dickey@software.org
+
+	* src/cm_funcs/next_ver.c: comment
+
+1992-01-21  ste_cm@software.org
+
+	* src/cm_funcs/next_ver.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+	* src/cm_funcs/next_ver.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1992-01-21  dickey@software.org
+
+	* src/pathname/relpath.c:
+	expand apollo environment-variables for further simplification
+
+	* src/pathname/relpath.c: lint
+
+	* src/pathname/relpath.c:
+	if src and cwd have the same node-name, factor it out,
+	so that we get more consistent results.
+
+	* src/pathname/relpath.c:
+	if 'cwd[]' argument is empty, treat it as "." (get-current)
+	also, use single-return for debugging.
+
 1992-01-08  dickey@software.org
 
 	* src/cm_funcs/cutoff.c:
