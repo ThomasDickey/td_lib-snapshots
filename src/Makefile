@@ -1,11 +1,14 @@
-# $Id: Makefile,v 4.5 1989/10/04 12:13:16 dickey Exp $
+# $Id: Makefile,v 4.6 1989/10/24 11:48:43 dickey Exp $
 # MAKE-file for miscellaneous library routines
 #
 # $Log: Makefile,v $
-# Revision 4.5  1989/10/04 12:13:16  dickey
-# made "ptypes.h" and "common.h" dependencies for all objects (most
-# needed it anyway).
+# Revision 4.6  1989/10/24 11:48:43  dickey
+# added module 'istextfile.c'
 #
+#	Revision 4.5  89/10/04  12:13:16  dickey
+#	made "ptypes.h" and "common.h" dependencies for all objects (most
+#	needed it anyway).
+#	
 #	Revision 4.4  89/09/07  15:06:47  dickey
 #	added module "relpath.c"
 #	
@@ -66,6 +69,7 @@ CSRC	=\
 	gethome.c\
 	getuser.c\
 	gid2s.c\
+	istextfile.c\
 	killchar.c\
 	list_by_cols.c\
 	ltostr.c\
@@ -158,6 +162,7 @@ OBJS	=\
 	gethome.o\
 	getuser.o\
 	gid2s.o\
+	istextfile.o\
 	killchar.o\
 	list_by_cols.o\
 	ltostr.o\

@@ -1,4 +1,4 @@
-# $Header: /users/source/archives/td_lib.vcs/src/RCS/descrip.mms,v 4.4 1989/09/15 09:06:15 dickey Exp $
+# $Id: descrip.mms,v 4.5 1989/10/24 11:50:18 dickey Exp $
 # MMS-file for miscellaneous library routines	
 #
 ####### (Development) ##########################################################
@@ -32,6 +32,7 @@ LIBRARYMODULES = -
 	FILE2MEM, -
 	FP2ARGV, -
 	FTYPE, -
+	ISTEXTFILE, -
 	LIST_BY_COLS, -
 	LTOSTR, -
 	MAKEARGV, -
@@ -136,6 +137,7 @@ C_SRC	=-
 	GETHOME.C -
 	GETUSER.C -
 	GID2S.C -
+	ISTEXTFILE.C -
 	KILLCHAR.C -
 	LIST_BY_COLS.C -
 	LTOSTR.C -
@@ -241,6 +243,7 @@ FILECOPY.obj :		$(PTYPES_H)
 FOR_USER.obj :		$(PTYPES_H)
 FP2ARGV.obj :		$(PTYPES_H)
 GID2S.obj :		$(PTYPES_H)
+ISTEXTFILE.obj :	$(PTYPES_H)
 KILLCHAR.obj :		$(PTYPES_H)
 MEM2FILE.obj :		$(PTYPES_H)
 NAME2S.obj :		$(PTYPES_H)
