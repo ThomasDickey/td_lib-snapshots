@@ -1,3 +1,12 @@
+1992-10-30  dickey@software.org
+
+	* include/td_lib.h: split out entrypoint 'gmt_offset()'
+
+	* src/cm_funcs/packdate.c: added entrypoint 'gmt_offset()'
+
+	* src/cm_funcs/rcstime.c:
+	RCS version 5 uses GMT dates, not local-dates!
+
 1992-10-29  dickey@software.org
 
 	* src/cm_funcs/rcslast.c: recoded to use 'rcsedit.c' module
