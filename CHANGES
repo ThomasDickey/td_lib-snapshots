@@ -1,3 +1,7 @@
+1998-12-09  dickey@clark.net
+
+	* install-sh: resync with my-autoconf
+
 1998-09-17  dickey@clark.net
 
 	* src/cm_funcs/cmv_last.c: fix a nit with the binary-files
