@@ -1,4 +1,4 @@
-# $Id: old-td_lib.mk,v 12.3 1993/10/29 17:41:12 dickey Exp $
+# $Id: old-td_lib.mk,v 12.4 1994/05/28 12:15:24 tom Exp $
 # common definitions for makefiles built over TD_LIB library.
 
 ####### (Environment) ##########################################################
@@ -9,9 +9,10 @@ B	= ../bin
 I	= $(TOP)/$(TD_LIB)/include
 L	= $(TOP)/$(TD_LIB)/lib
 
+RM	= rm -f
 GET	= checkout
 COPY	= cp -p
-PUT	= rm -f $@; $(COPY) $? $@
+PUT	= $(RM) $@; $(COPY) $? $@
 
 MAKE	= make $(MFLAGS) -k$(MAKEFLAGS)	CFLAGS="$(CFLAGS)" COPY="$(COPY)"
 
@@ -38,7 +39,7 @@ LINTOPTS= $(CPP_OPTS) -DNO_IDENT $(LINTLIBS)
 ####### (Standard Lists) #######################################################
 # don't put .a into CLEAN, because VERDIX-ADA uses that for source!
 CLEAN	= *.[oi] *.lint *.bak *.log *.out *.tst .nfs* *.pure* core
-DESTROY	=sh -c 'for i in *;do case $$i in RCS);; *) rm -f $$i;;esac;done;exit 0'
+DESTROY	=sh -c 'for i in *;do case $$i in RCS);; *) $(RM) $$i;;esac;done;exit 0'
 RUN_TESTS=sh -c '$@.sh 2>&1 | tee -a $@.out'
 
 PTYPES_H =	$I/ptypes.h	$I/td_lib.h
@@ -59,7 +60,7 @@ LINT_EACH = sh -c 'for i in $?;do echo $$i:; tdlint $(LINTOPTS) $$i >>$@;done'
 	@echo compile $<
 	@$(CC) $(CFLAGS) $(CPP_OPTS) -c $*.c
 	@ar rv $@ $*.o
-	@rm -f $*.o
+	-@$(RM) $*.o
 
 .SUFFIXES: .i .proto .lint .tst
 
@@ -72,5 +73,5 @@ LINT_EACH = sh -c 'for i in $?;do echo $$i:; tdlint $(LINTOPTS) $$i >>$@;done'
 .SUFFIXES: .man .cat
 
 .man.cat:
-	rm -f $@
+	-$(RM) $@
 	nroff -man $? >$@

@@ -1,3 +1,27 @@
+1994-05-28  dickey@clark.net
+
+	* acconfig.h: added HAVE_REGEX_H_FUNCS
+
+	* aclocal.m4: built test for HAVE_REGEX_H_FUNCS
+
+	* acconfig.h: added HAVE_NEW_TOKEN_QUOTE, HAVE_OLD_TOKEN_QUOTE
+
+	* aclocal.m4:
+	finished off the tests for AC_ANSI_CPP by testing for the token-quoting
+	operations also.
+
+	* aclocal.m4:
+	make AC_ANSI_CPP's messages clearer (by using lower-level autoconf macros)
+
+	* configure.in: use correct revision-code
+
+	* aclocal.m4:
+	I learned a hard lesson about quoting in m4: quote everything!
+
+	* aclocal.m4: use my own copy of AC_DEFINE (now TD_DEFINE)
+
+	* certify/Makefile, support/old-td_lib.mk: use new symbol RM
+
 1994-05-27  dickey@clark.net
 
 	* acconfig.h: first cut for AC_ANSI_CPP
