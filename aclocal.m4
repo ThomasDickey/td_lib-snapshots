@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.48 1995/02/02 02:09:50 tom Exp $
+dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.50 1995/02/03 01:51:28 tom Exp $
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "TD_" to "AC_"
 dnl ---------------------------------------------------------------------------
@@ -62,6 +62,10 @@ AC_CACHE_VAL(td_cv_$1,[
 						fi
 					done
 					IFS="$td_save_ifs"
+				fi
+				if test -n "[$]td_cv_$1"; then
+					shift
+					break
 				fi
 				;;
 			esac
@@ -228,50 +232,54 @@ fi
 dnl ---------------------------------------------------------------------------
 dnl Tests for the <regex.h> include-file, and the functions associated with it.
 define([TD_REGEX_H_FUNCS],
-[AC_MSG_CHECKING(regcomp/regexec functions)
-AC_TRY_RUN([
+[
+AC_MSG_CHECKING(regcomp/regexec functions)
+AC_CACHE_VAL(td_cv_REGEX_H,[
+	AC_TRY_RUN([
 #include <sys/types.h>
 #include <regex.h>
-int main() {
-	regex_t e;
-	char *p = "foo";
-	char *s = "foobar";
-	if (regcomp(&e, p, 0) != 0
-	 || regexec(&e, s, 0, (regmatch_t*)0, 0) < 0)
-	 	exit(1);
-	regfree(&e);
-	exit(0);
-}
-],
-[td_have_regex_h_funcs=yes],
-[td_have_regex_h_funcs=no])
-AC_MSG_RESULT($td_have_regex_h_funcs)
-test $td_have_regex_h_funcs && AC_DEFINE(HAVE_REGEX_H_FUNCS)
+		int main() {
+			regex_t e;
+			char *p = "foo";
+			char *s = "foobar";
+			if (regcomp(&e, p, 0) != 0
+			 || regexec(&e, s, 0, (regmatch_t*)0, 0) < 0)
+		 		exit(1);
+			regfree(&e);
+			exit(0);
+		} ],
+		[td_cv_REGEX_H=yes],
+		[td_cv_REGEX_H=no])
+	])
+AC_MSG_RESULT($td_cv_REGEX_H)
+test $td_cv_REGEX_H && AC_DEFINE(HAVE_REGEX_H_FUNCS)
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Tests for the <regexpr.h> include-file, and the functions associated with it.
 define([TD_REGEXPR_H_FUNCS],
-[td_save_libs="$LIBS"
+[
+td_save_libs="$LIBS"
 AC_CHECK_LIB(gen, compile)
 AC_MSG_CHECKING(compile/step functions)
-AC_TRY_RUN([
+AC_CACHE_VAL(td_cv_REGEXPR_H,[
+	AC_TRY_RUN([
 #include <sys/types.h>
 #include <regexpr.h>
-int main() {
-	char *e;
-	char *p = "foo";
-	char *s = "foobar";
-	if ((e = (char *)compile(p, NULL, NULL)) == 0
-	 || step(s, e) == 0)
-	 	exit(1);
-	free(e);
-	exit(0);
-}
-],
-[td_have_rexpr_h_funcs=yes],
-[td_have_rexpr_h_funcs=no])
-AC_MSG_RESULT($td_have_rexpr_h_funcs)
-if test $td_have_rexpr_h_funcs = yes; then
+		int main() {
+			char *e;
+			char *p = "foo";
+			char *s = "foobar";
+			if ((e = (char *)compile(p, NULL, NULL)) == 0
+			 || step(s, e) == 0)
+		 		exit(1);
+			free(e);
+			exit(0);
+		} ],
+		[td_cv_REGEXPR_H=yes],
+		[td_cv_REGEXPR_H=no])
+	])
+AC_MSG_RESULT($td_cv_REGEXPR_H)
+if test $td_cv_REGEXPR_H = yes; then
 	AC_DEFINE(HAVE_REGEXPR_H_FUNCS)
 else
 	LIBS="$td_save_libs"
@@ -283,7 +291,7 @@ dnl Some systems (CLIX) use <pw.h> for this purpose.  CLIX requires the -lPW,
 dnl but HPUX has only a broken version of that library, so we've got to
 dnl try the compile with/without the library.
 define([TD_REGCMP_LIBS],
-[AC_MSG_CHECKING(regcmp/regex functions)
+[
 AC_TRY_RUN([
 #include <stdio.h>	/* need this for CLIX to define '__' macro */
 #if HAVE_PW_H
@@ -292,55 +300,64 @@ AC_TRY_RUN([
 #if HAVE_LIBGEN_H
 #include <libgen.h>	/* IRIX defines it here */
 #endif
-int main() {
-	char *e;
-	char *p = "foo";
-	char *s = "foobar";
-	if ((e = (char *)regcmp(p, 0)) == 0
-	 || regex(e, s, 0) == 0)
-	 	exit(1);
-	free(e);
-	exit(0);
-}
-], [td_have_regcmp_funcs=yes],
-   [td_have_regcmp_funcs=no])
-AC_MSG_RESULT($td_have_regcmp_funcs)
+	int main() {
+		char *e;
+		char *p = "foo";
+		char *s = "foobar";
+		if ((e = (char *)regcmp(p, 0)) == 0
+		 || regex(e, s, 0) == 0)
+		 	exit(1);
+		free(e);
+		exit(0);
+	} ],
+	[td_cv_REGCMP_func=yes],
+	[td_cv_REGCMP_func=no])
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Test for the presence of regcmp/regex functions.
 define([TD_REGCMP_FUNCS],
 [
 AC_HAVE_HEADERS(pw.h libgen.h)
-TD_REGCMP_LIBS
-if test $td_have_regcmp_funcs = no; then
-	AC_CHECK_LIB(PW, regcmp, td_have_lPW=yes, td_have_lPW=no)
-	if test $td_have_lPW = yes; then
+AC_MSG_CHECKING(regcmp/regex functions)
+AC_CACHE_VAL(td_cv_REGCMP_func,[
+	TD_REGCMP_LIBS
+	if test $td_cv_REGCMP_func = no; then
+		td_save_LIBS="$LIBS"
 		LIBS="$LIBS -lPW"
 		TD_REGCMP_LIBS
+		LIBS="${td_save_LIBS}"
+		test $td_cv_REGCMP_func = yes && td_cv_REGCMP_func="yes (-lPW)"
 	fi
+])
+AC_MSG_RESULT($td_cv_REGCMP_func)
+if test $td_cv_REGCMP_func != no; then
+	AC_DEFINE(HAVE_REGCMP_FUNCS)
+	test $td_cv_REGCMP_func != yes && AC_CHECK_LIB(PW, regcmp)
 fi
-test $td_have_regcmp_funcs = yes && AC_DEFINE(HAVE_REGCMP_FUNCS)
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Tests for the presence of re_comp/re_exec functions (no include-file?)
 define([TD_RE_COMP_FUNCS],
-[AC_MSG_CHECKING(re_comp/re_exec functions)
-AC_TRY_RUN([
-int main() {
-	extern char *re_comp();
-	char *e;
-	char *p = "foo";
-	char *s = "foobar";
-	if ((e = (char *)re_comp(p)) != 0
-	 || re_exec(s) <= 0)
-	 	exit(1);
-	exit(0);
-}
-],
-[td_have_re_comp_funcs=yes],
-[td_have_re_comp_funcs=no])
-AC_MSG_RESULT($td_have_re_comp_funcs)
-test $td_have_re_comp_funcs = yes && AC_DEFINE(HAVE_RE_COMP_FUNCS)
+[
+AC_MSG_CHECKING(re_comp/re_exec functions)
+AC_CACHE_VAL(td_cv_RE_COMP_func,[
+	AC_TRY_RUN([
+		int main() {
+		extern char *re_comp();
+		char *e;
+		char *p = "foo";
+		char *s = "foobar";
+		if ((e = (char *)re_comp(p)) != 0
+		 || re_exec(s) <= 0)
+		 	exit(1);
+		exit(0);
+	}
+	],
+	[td_cv_RE_COMP_func=yes],
+	[td_cv_RE_COMP_func=no])
+	])
+AC_MSG_RESULT($td_cv_RE_COMP_func)
+test $td_cv_RE_COMP_func = yes && AC_DEFINE(HAVE_RE_COMP_FUNCS)
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Tests for the ensemble of include-files and functions that make up the
@@ -488,14 +505,28 @@ dnl	for that type, since it isn't resolved.
 dnl
 define([TD_STRUCT_SCREEN],
 [
-AC_MSG_CHECKING(for definition of struct screen)
-AC_CACHE_VAL(td_cv_decl_screen,[
+AC_MSG_CHECKING(if curses uses struct screen)
+AC_CACHE_VAL(td_cv_have_struct_screen,[
 	AC_TRY_COMPILE([#include <curses.h>],
-	[struct screen { int dummy;}],
-	[td_cv_decl_screen=yes],
-	[td_cv_decl_screen=no])])
-AC_MSG_RESULT($td_cv_decl_screen)
-test $td_cv_decl_screen = yes && AC_DEFINE(NEED_STRUCT_SCREEN)
+		[struct screen dummy],
+		[td_cv_have_struct_screen=yes],
+		[td_cv_have_struct_screen=no])
+	])
+AC_MSG_RESULT($td_cv_have_struct_screen)
+
+AC_MSG_CHECKING(for definition of struct screen)
+AC_CACHE_VAL(td_cv_need_struct_screen,[
+	if test $td_cv_have_struct_screen = yes; then
+		AC_TRY_COMPILE([#include <curses.h>],
+			[struct screen { int dummy;}],
+			[td_cv_need_struct_screen=yes],
+			[td_cv_need_struct_screen=no])
+	else
+		td_cv_need_struct_screen=no
+	fi
+	])
+AC_MSG_RESULT($td_cv_need_struct_screen)
+test $td_cv_need_struct_screen = yes && AC_DEFINE(NEED_STRUCT_SCREEN)
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Test if curses defines KD, KU, etc., for cursor keys
@@ -568,20 +599,20 @@ else
 fi
 	# The main distinction between bsd- and sysv-curses is that the latter
 	# has a keypad function.
-td_curses_type=sysv
-if test $ac_cv_lib_curses = yes; then
-	td_decl="#include <curses.h>
-"
-	AC_MSG_CHECKING(BSD vs SYSV curses)
-	AC_TRY_LINK([
-#include <curses.h>
-],
-	[keypad(curscr,1)],,
-	td_curses_type=bsd)
-	AC_MSG_RESULT([$]td_curses_type)
-fi
+AC_MSG_CHECKING(BSD vs SYSV curses)
+AC_CACHE_VAL(td_cv_curses_type,[
+	td_cv_curses_type=unknown
+	if test $ac_cv_lib_curses = yes; then
+	AC_TRY_LINK([#include <curses.h>],
+		[keypad(curscr,1)],
+		[td_cv_curses_type=sysv],
+		[td_cv_curses_type=bsd])
+	fi
+])
+AC_MSG_RESULT($td_cv_curses_type)
+
 if test $WithNcurses = yes; then
-    if test $td_curses_type = bsd; then
+    if test $td_cv_curses_type = bsd; then
 	td_save2LIBS="${LIBS}"
 	LIBS="${td_save_LIBS}"
 	AC_CHECK_LIB(ncurses,initscr)
@@ -638,7 +669,6 @@ AC_CACHE_VAL(td_cv_sig_args,[
 AC_MSG_RESULT($td_cv_sig_args)
 AC_DEFINE_UNQUOTED(SIG_ARGS_$td_cv_sig_args)
 
-echo $WithWarnings
 if test -n "$GCC" && test $WithWarnings = yes
 then
 	AC_CHECKING(redefinable signal handler prototype)
@@ -695,20 +725,24 @@ td_decl="$td_decl
 "
 fi
 AC_MSG_CHECKING(union wait declared)
-AC_TRY_COMPILE($td_decl,
-[union wait x],
-[td_union_wait_decl=yes],
-[td_union_wait_decl=no])
-AC_MSG_RESULT($td_union_wait_decl)
-
-if test $td_union_wait_decl = yes; then
-	AC_MSG_CHECKING(union wait used as wait-arg)
+AC_CACHE_VAL(td_cv_decl_union_wait,[
 	AC_TRY_COMPILE($td_decl,
- 		[union wait x; wait(&x)],
-		[td_union_wait_used=yes],
-		[td_union_wait_used=no])
-	AC_MSG_RESULT($td_union_wait_used)
-	test $td_union_wait_used = yes && AC_DEFINE(WAIT_USES_UNION)
+		[union wait x],
+		[td_cv_decl_union_wait=yes],
+		[td_cv_decl_union_wait=no])
+	])
+AC_MSG_RESULT($td_cv_decl_union_wait)
+
+if test $td_cv_decl_union_wait = yes; then
+	AC_MSG_CHECKING(union wait used as wait-arg)
+	AC_CACHE_VAL(td_cv_arg_union_wait,[
+		AC_TRY_COMPILE($td_decl,
+ 			[union wait x; wait(&x)],
+			[td_cv_arg_union_wait=yes],
+			[td_cv_arg_union_wait=no])
+		])
+	AC_MSG_RESULT($td_cv_arg_union_wait)
+	test $td_cv_arg_union_wait = yes && AC_DEFINE(WAIT_USES_UNION)
 fi
 ])dnl
 dnl ---------------------------------------------------------------------------
@@ -737,9 +771,9 @@ AC_CACHE_VAL(td_cv_sys_errlist,[
 	AC_TRY_RUN([
 #include <stdio.h>
 #include <errno.h>
-		extern char **sys_errlist;
+		extern char *sys_errlist[];
 		extern int sys_nerr;
-		int main() { char *x = *(sys_errlist+sys_nerr-1); exit x==0;}],
+		int main() { char *x = sys_errlist[sys_nerr-1]; exit (x==0);}],
 		[td_cv_sys_errlist=yes],
 		[td_cv_sys_errlist=no])])
 AC_MSG_RESULT($td_cv_sys_errlist)
