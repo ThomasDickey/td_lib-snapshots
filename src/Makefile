@@ -1,16 +1,6 @@
-# $Id: Makefile,v 9.2 1991/07/01 09:17:32 dickey Exp $
+# $Id: Makefile,v 9.3 1991/09/09 07:38:33 dickey Exp $
 # MAKE-file for miscellaneous library routines
 #
-# $Log: Makefile,v $
-# Revision 9.2  1991/07/01 09:17:32  dickey
-# corrected include-path for 'rscpath.o'
-#
-#	Revision 9.1  91/06/20  08:18:55  dickey
-#	added module 'shoarg.c'
-#	
-#	Revision 9.0  91/06/06  16:57:46  ste_cm
-#	BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
-#	
 ####### (Development) ##########################################################
 GET	= checkout
 #
@@ -18,11 +8,9 @@ GET	= checkout
 I	= ../interface
 J	= ../../../interface
 INCLUDES= -I$I
-DEFINES	=
-CPP_OPTS= $(DEFINES) $(INCLUDES)
 CFLAGS  =
 DATE	= echo '****'`date` >> $@
-LINTOPT	= $(CPP_OPTS) -I$J -ltd -lcurses -lapollo
+LINTOPT	= $(DEFINES) $(INCLUDES) -I$J -ltd -lcurses -lapollo
 LIBS	= -lcurses -ltermcap
 #
 ####### (Standard Lists) #######################################################
@@ -224,7 +212,7 @@ ALL	= $A
 ####### (Standard Productions) #################################################
 all:		sources $(ALL)
 #
-clean:				; rm -f core *.o *.out *.ln *.lint *.tst
+clean:				; rm -f core *.o *.out *.ln *.lint *.tst *.bak
 clobber:	clean		; rm -f $(ALL)
 destroy:
 	sh -c 'for i in *;do case $$i in RCS);; *) rm -f $$i;;esac;done;exit 0'
@@ -253,14 +241,15 @@ rcslast.o:	$I/rcsdefs.h
 rcsload.o:	$I/rcsdefs.h
 rcslocks.o:	$I/rcsdefs.h
 rcsname.o:	$I/rcsdefs.h
-rcspath.o:	$J/rcspath.h	; $(CC) $(CFLAGS) $(CPP_OPTS) -I$J -c $*.c
+rcspath.o:	$J/rcspath.h	; $(CC) -I$J -c $*.c
 rcspermit.o:	$I/rcsdefs.h
 sccsname.o:	$I/sccsdefs.h
 vcs_file.o:	$I/rcsdefs.h
 #
 ####### (Development) ##########################################################
 $(SOURCES):			; $(GET) $@
-lint.out:	$(CSRC)
+lint.out:	$(CSRC)		; $(DATE); tdlint $(LINTOPT) $? >>$@
+lint2.out:	$(CSRC)
 	$(DATE)
 	sh -c 'for i in $?;do echo $$i: | tee -a $@;\
 		tdlint $(LINTOPT) $$i >>$@;done'
@@ -270,9 +259,9 @@ lincnt.out:	$(CSRC)		; $(DATE); lincnt $(CSRC) >>$@
 .c.lint:
 	tdlint $(LINTOPT) $< >$@
 .c.tst:
-	$(CC) -o $@ -DTEST $(CFLAGS) $(CPP_OPTS) $< $A $(LIBS)
+	$(CC) -o $@ -DTEST $(CFLAGS) $(INCLUDES) $(DEFINES) $< $A $(LIBS)
 	rm -f $*.o
 .c.o:
-	$(CC) $(CFLAGS) $(CPP_OPTS) -c $<
+	$(CC) $(CFLAGS) $(INCLUDES) $(DEFINES) -c $<
 .c.i:
-	$(CC) -E -C $(CPP_OPTS) $< >$@
+	$(CC) -E -C $(INCLUDES) $(DEFINES) $< >$@

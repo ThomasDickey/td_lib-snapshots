@@ -1,59 +1,23 @@
 #ifndef	lint
-static	char	Id[] = "$Id: padedit.c,v 9.0 1991/06/06 17:12:54 ste_cm Rel $";
+static	char	Id[] = "$Id: padedit.c,v 9.1 1991/09/09 08:58:55 dickey Exp $";
 #endif
 
 /*
  * Title:	padedit.c (pad-edit)
  * Author:	T.E.Dickey
  * Created:	14 Dec 1987
- * $Log: padedit.c,v $
- * Revision 9.0  1991/06/06 17:12:54  ste_cm
- * BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
- *
- *		Revision 8.3  91/06/06  17:12:54  dickey
- *		modified debug-traces. If xterm is invoked, explicitly add
- *		display-argument to make this visible in a "ps" command.
- *		added "-r" to test-driver.
- *		
- *		Revision 8.2  91/05/31  16:37:16  dickey
- *		lint (SunOS)
- *		
- *		Revision 8.1  91/05/15  13:23:44  dickey
- *		mods to compile under apollo sr10.3
- *		
- *		Revision 8.0  89/12/07  14:24:32  ste_cm
- *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
- *		
- *		Revision 7.0  89/12/07  14:24:32  ste_cm
- *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
- *		
- *		Revision 6.0  89/12/07  14:24:32  ste_cm
- *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
- *		
- *		Revision 5.1  89/12/07  14:24:32  dickey
- *		lint (SunOs 3.4)
- *		
- *		Revision 5.0  89/09/06  15:49:36  ste_cm
- *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
- *		
- *		Revision 4.1  89/09/06  15:49:36  dickey
- *		use getwd definition from "ptypes.h"
- *		
- *		Revision 4.0  89/07/25  09:15:21  ste_cm
- *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
- *		
- *		Revision 3.1  89/07/25  09:15:21  dickey
- *		recompiled with apollo SR10 -- mods for function prototypes
- *		
- *		Revision 3.0  88/08/15  09:49:33  ste_cm
- *		BASELINE Mon Jun 19 13:27:01 EDT 1989
- *		
- *		Revision 2.0  88/08/15  09:49:33  ste_cm
- *		BASELINE Thu Apr  6 09:45:13 EDT 1989
- *		
- *		Revision 1.6  88/08/15  09:49:33  dickey
- *		sccs2rcs keywords
- *		
+ * Modified:
+ *		09 Sep 1991, lint (apollo SR10.3)
+ *		06 Jun 1991, modified debug-traces. If xterm is invoked,
+ *			     explicitly add display-argument to make this
+ *			     visible in a "ps" command.  Added "-r" to test-
+ *			     driver.
+ *		31 May 1991, lint (SunOS)
+ *		15 May 1991, mods to compile under apollo sr10.3
+ *		07 Dec 1989, lint (SunOs 3.4)
+ *		06 Sep 1989, use getwd definition from "ptypes.h"
+ *		25 Jul 1989, recompiled with apollo SR10 -- mods for function
+ *			     prototypes
  *		27 Jul 1988, if we don't have Apollo pad, assume we may open
  *			     xterm-window.
  *
@@ -69,16 +33,53 @@ static	char	Id[] = "$Id: padedit.c,v 9.0 1991/06/06 17:12:54 ste_cm Rel $";
 #define	WAI_PTYPES
 #include	"ptypes.h"
 #ifdef	apollo
+#ifdef	apollo_sr10
+#include 	<apollo/base.h>
+#include 	<apollo/error.h>
+#include 	<apollo/pad.h>
+#include 	<apollo/ios.h>
+#else	/* sr9.x */
 #include	"/sys/ins/base.ins.c"
 #include	"/sys/ins/error.ins.c"
 #include	"/sys/ins/pad.ins.c"
 #include	"/sys/ins/streams.ins.c"
+#endif
 #endif
 
 #ifdef	apollo
 apollo_edit(name, readonly)
 char	*name;
 {
+#ifdef	apollo_sr10
+	name_$pname_t		in_name;
+	pinteger		in_len;
+	status_$t		st;
+	pad_$window_desc_t	window;
+	stream_$id_t		stream_id;
+
+	in_len = (size_t)strlen(strcpy(in_name, name));
+
+	/* force default-sized window */
+	window.top =
+	window.left =
+	window.width =
+	window.height = 0;
+	pad_$create_window(
+		in_name, in_len,
+		(pad_$type_t) (readonly ? pad_$read_edit : pad_$edit),
+		(short)1, window,
+		&stream_id, &st);
+
+	if (error_$fail(st)) {
+		error_$print(st);
+		return(-1);
+	} else {
+		if (!readonly) {
+			pad_$edit_wait(stream_id, &st);
+		}
+		ios_$close(stream_id, &st);
+	}
+#else	/* sr9.x */
 	name_$pname_t		in_name;
 	pinteger		in_len;
 	status_$t		st;
@@ -107,6 +108,7 @@ char	*name;
 		}
 		stream_$close(stream_id, st);
 	}
+#endif	/* sr9.x */
 	return(0);
 }
 #endif	/* apollo */
