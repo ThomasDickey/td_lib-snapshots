@@ -1,3 +1,11 @@
+1996-04-10  dickey@clark.net
+
+	* aclocal.m4: check for 'timezone' and 'daylight' symbols
+
+	* src/cm_funcs/cmv_dir.c:
+	corrected a problem with computing the file's path for a branch that
+	is off a subdirectory rather than the whole project-tree
+
 1996-04-08  dickey@clark.net
 
 	* src/cm_funcs/packdate.c:

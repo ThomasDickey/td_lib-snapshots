@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.71 1995/11/03 00:34:27 tom Exp $
+dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.72 1996/04/10 22:37:22 tom Exp $
 dnl vi:set ts=4:
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", without change
@@ -278,7 +278,18 @@ AC_CACHE_VAL(td_cv_decl_timezone,[
 		[td_cv_decl_timezone=yes],
 		[td_cv_decl_timezone=no])])
 AC_MSG_RESULT($td_cv_decl_timezone)
-test $td_cv_decl_timezone = yes && AC_DEFINE(TIMEZONE_DECLARED)
+if test $td_cv_decl_timezone = yes; then
+	AC_DEFINE(TIMEZONE_DECLARED)
+
+	AC_MSG_CHECKING(for daylight declared)
+	AC_CACHE_VAL(td_cv_decl_daylight,[
+		AC_TRY_COMPILE($td_decl,
+			[long x = daylight],
+			[td_cv_decl_daylight=yes],
+			[td_cv_decl_daylight=no])])
+	AC_MSG_RESULT($td_cv_decl_daylight)
+	test $td_cv_decl_daylight = yes && AC_DEFINE(DAYLIGHT_DECLARED)
+fi
 
 AC_MSG_CHECKING(for .tm_gmtoff in struct tm)
 AC_CACHE_VAL(td_cv_tm_gmtoff_decl,[
