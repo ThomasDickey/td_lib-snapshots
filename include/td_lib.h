@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 4.1 1989/08/25 08:05:27 dickey Exp $ */
+/* $Id: td_lib.h,v 4.2 1989/09/07 15:09:53 dickey Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for CM_TOOLS COMMON
@@ -470,6 +470,19 @@
 	/* rawterm.c -------------------------------------------------- */
 		rawterm()
 			_NUL
+
+	/* relpath.c -------------------------------------------------- */
+#ifdef	unix
+		relpath(
+			_ARX(char *,	dst)
+			_ARX(char *,	cwd)
+			_AR1(char *,	src)
+			)
+			_DCL(char *,	dst)
+			_DCL(char *,	cwd)
+			_DCL(char *,	src)
+			_NUL
+#endif	unix
 
 	/* resizewin.c ------------------------------------------------ */
 	int	resizewin()
