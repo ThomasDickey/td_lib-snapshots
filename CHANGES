@@ -1,3 +1,20 @@
+1989-03-29  dickey@software.org
+
+	* src/Makefile: fixed lint for 'rcspath.c'
+
+1989-03-29  ste_cm@software.org
+
+	* src/Makefile: BASELINE Thu Apr  6 09:45:13 EDT 1989
+
+1989-03-29  dickey@software.org
+
+	* include/ptypes.h:
+	sun <string.h> does not define index, rindex (instead, strchr, strrchr)
+
+1989-03-29  ste_cm@software.org
+
+	* include/ptypes.h: BASELINE Thu Apr  6 09:38:25 EDT 1989
+
 1989-03-28  dickey@software.org
 
 	* Makefile: use MAKE-variable to encapsulate recursive-build info.
