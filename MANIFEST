@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19920805
+MANIFEST for td_lib, version t19920806
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 Makefile                        top-level makefile for TD_LIB
@@ -58,6 +58,7 @@ src/curses/dumpchr.c            dump screen character to file
 src/curses/dumpwin.c            dump curses window to file
 src/curses/erasechr.c           returns erase-char value
 src/curses/killchar.c           returns kill-char value
+src/curses/logch.c              abstracts log-character encode/decode for 'ded'; put here so I can use it
 src/curses/padedit.c            opens an edit-pad (or xterm) on a file
 src/curses/rawgets.c            read a string via curses in raw mode (allow edits)
 src/curses/rawterm.c            set terminal to raw (cooked) mode

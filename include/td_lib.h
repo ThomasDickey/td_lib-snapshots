@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 11.0 1992/02/17 15:14:14 ste_cm Rel $ */
+/* $Id: td_lib.h,v 11.3 1992/08/06 11:46:16 dickey Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for CM_TOOLS COMMON
@@ -222,6 +222,8 @@
 	char	erasechar(_ar0)
 			_ret
 #endif	/* CUR_PTYPES */
+	char	eraseword(_ar0)
+			_ret
 
 	/* execute.c -------------------------------------------------- */
 	int	execute(
@@ -384,6 +386,25 @@
 			_dcl(int,	num)
 			_nul
 
+	/* logch.c ---------------------------------------------------- */
+	int	decode_logch(
+			_arx(char **,	buffer)
+			_ar1(int *,	count_)
+			)
+			_dcl(char **,	buffer)
+			_dcl(int *,	count_)
+			_ret
+
+	void	encode_logch(
+			_arx(char *,	buffer)
+			_arx(int *,	count_)
+			_ar1(int,	c)
+			)
+			_dcl(char *,	buffer)
+			_dcl(int *,	count_)
+			_dcl(int,	c)
+			_nul
+
 	/* ltostr.c --------------------------------------------------- */
 	char *	ltostr(
 			_arx(char *,	bfr)
@@ -538,23 +559,25 @@
 			_arx(WINDOW *,	win)
 			_arx(char *,	bfr)
 			_arx(int,	size)
-			_ar1(int,	newline)
+			_arx(int,	newline)
+			_arx(int,	fast_q)
+			_arx(char **,	command)
+			_ar1(int,	logging)
 			)
 			_dcl(WINDOW *,	win)
 			_dcl(char *,	bfr)
 			_dcl(int,	size)
 			_dcl(int,	newline)
+			_dcl(int,	fast_q)
+			_dcl(char **,	command)
+			_dcl(int,	logging)
 			_ret
 
-	int	rawgets (
-			_arx(char *,	bfr)
-			_arx(int,	size)
-			_ar1(int,	newline)
-			)
-			_dcl(char *,	bfr)
-			_dcl(int,	size)
-			_dcl(int,	newline)
+	char *	rawgets_log(_ar0)
 			_ret
+
+#define		 rawgets(bfr, size, newline, fast_q, command, logging) \
+	wrawgets(stdscr, bfr, size, newline, fast_q, command, logging)
 
 	/* rawterm.c -------------------------------------------------- */
 		rawterm(_ar0)
