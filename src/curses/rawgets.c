@@ -3,6 +3,7 @@
  * Title:	rawgets.c (raw-mode 'gets()')
  * Created:	29 Sep 1987 (from 'fl.c')
  * Modified:
+ *		05 Feb 1996, don't write to lower-right corner (sysvr4 bug).
  *		04 Nov 1995, mods to display on 80th column.
  *		03 Sep 1995, make this work with bsd4.4 curses
  *		19 Jul 1994, adjustment for ncurses _max[xy] bug.
@@ -70,7 +71,7 @@
 #include	"td_curse.h"
 #include	"dyn_str.h"
 
-MODULE_ID("$Id: rawgets.c,v 12.21 1995/11/07 23:08:44 tom Exp $")
+MODULE_ID("$Id: rawgets.c,v 12.22 1996/02/05 15:48:48 tom Exp $")
 
 #define	SHIFT	5
 
@@ -130,10 +131,12 @@ void	ClearIt(_AR0)
 	if (Z) {
 		register int	x, y;
 		auto	int	highlighted = (!wrap && !Imode);
+		auto	int	limit;
 
 		if (highlighted)			NoHighlight(Z);
 		getyx(Z, y, x);
-		while (++x <= xlast)			(void)waddch(Z,' ');
+		limit = (y >= LINES-1 && xlast >= COLS-1) ? COLS-2 : xlast;
+		while (++x <= limit)			(void)waddch(Z,' ');
 		if (highlighted)			Highlight(Z);
 	}
 }
