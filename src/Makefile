@@ -1,4 +1,4 @@
-# $Id: Makefile,v 10.2 1992/02/03 12:24:10 dickey Exp $
+# $Id: Makefile,v 10.3 1992/02/04 13:07:36 dickey Exp $
 # MAKE-file for miscellaneous library routines
 #
 ####### (Development) ##########################################################
@@ -54,6 +54,7 @@ CSRC	=\
 	gethome.c\
 	getuser.c\
 	gid2s.c\
+	interactive.c\
 	istextfile.c\
 	killchar.c\
 	list_by_cols.c\
@@ -159,6 +160,7 @@ OBJS	=\
 	gethome.o\
 	getuser.o\
 	gid2s.o\
+	interactive.o\
 	istextfile.o\
 	killchar.o\
 	list_by_cols.o\

@@ -1,3 +1,50 @@
+1992-02-04  dickey@software.org
+
+	* src/process/interact.c: RCS_BASE
+
+	* src/Makefile, src/descrip.mms, include/td_lib.h:
+	added module 'interactive'
+
+	* include/td_lib.h, src/process/catarg.c: added 'catarg2()'
+
+1992-02-04  ste_cm@software.org
+
+	* src/process/catarg.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+	* src/process/catarg.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1992-02-04  dickey@software.org
+
+	* Makefile:
+	defining COPY as "rm -f $@; cp -p $? $@" did not work properly with recursive
+	make (apollo sr10.3.5), so I went back to defining PUT for this purpose.
+
+	* include/td_sheet.h: lintlib
+
+1992-02-04  ste_cm@software.org
+
+	* include/td_sheet.h:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1992-02-04  dickey@software.org
+
+	* src/sheet/ss_field.c: lint
+
+1992-02-04  ste_cm@software.org
+
+	* src/sheet/ss_field.c:
+	BASELINE Thu Jul 16 09:39:01 1992 -- EBPM4 support
+
+1992-02-04  dickey@software.org
+
+	* src/sheet/field_of.c:
+	use new function 'skip_to_field()' to combine logic in
+	'get_field_of()' and 'set_field_of()'
+
+	* Makefile: added 'lintlib' rule
+
 1992-02-03  dickey@software.org
 
 	* src/sheet/field_of.c: cleaning up blocking in 'get_field_of()'

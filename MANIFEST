@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19920203
+MANIFEST for td_lib, version t19920204
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 Makefile                        top-level makefile for TD_LIB
@@ -126,6 +126,7 @@ src/process/for_user.c          carry out function for set-uid user
 src/process/gethome.c           get $HOME path
 src/process/getopt.c            'getopt()', for systems that don't have it
 src/process/getuser.c           get user name
+src/process/interact.c          tests if a process is running interactively by attempting to open /dev/tty
 src/process/makeargv.c          make quick (nonstandard) argv-list list from a string
 src/process/revert.c            reset/disable setuid mode
 src/process/shoarg.c            shows arguments built with 'catarg()'

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	*Id = "$Id: field_of.c,v 10.5 1992/02/03 15:41:13 dickey Exp $";
+static	char	*Id = "$Id: field_of.c,v 10.6 1992/02/04 08:03:44 dickey Exp $";
 #endif
 
 /*
@@ -117,6 +117,41 @@ _DCL(char *,	src)
 }
 
 /*
+ * Computes first/last pointers to the N'th field in a comma-separated list
+ */
+static
+int
+skip_to_field(
+_ARX(char *,	list)
+_ARX(int,	N)
+_ARX(char **,	first)
+_AR1(char **,	last)
+	)
+_DCL(char *,	list)
+_DCL(int,	N)
+_DCL(char **,	first)
+_DCL(char **,	last)
+{
+	if ((*first = list) != 0) {
+		*last	= skip_to_comma(*first);
+		while (N > 0) {
+			if (**last != EOS) {
+				N--;
+				*first	= skip_past_comma(*last);
+				*last	= skip_to_comma(*first);
+			} else {
+				*first	= *last;
+				break;
+			}
+		}
+		return N;
+	}
+	*first	= 0;
+	*last	= "";
+	return -1;
+}
+
+/*
  * Strips quotes and extraneous whitespace from a field
  */
 static
@@ -203,23 +238,12 @@ _DCL(int,	N)
 _DCL(char *,	buffer)
 _DCL(char *,	dftval)
 {
-	if (list != 0) {
-		auto	char	*this	= list;
-		auto	char	*next	= skip_to_comma(this);
+	auto	char	*this,
+			*next;
 
-		while (N > 0) {
-			if (*next) {
-				N--;
-				this = skip_past_comma(next);
-				next = skip_to_comma(this);
-			} else {
-				this = next;
-				break;
-			}
-		}
-		if (N == 0 && *this)
-			return unquoted_field(buffer, this);
-	}
+	if (((N = skip_to_field(list, N, &this, &next)) == 0)
+	 && (*this != EOS))
+		return unquoted_field(buffer, this);
 
 	return dftval;	/* did not find field */
 }
@@ -242,26 +266,11 @@ _DCL(char *,	buffer)
 	auto	char	*this,
 			*next,
 			*last	= list;
-	auto	unsigned need;
+	auto	size_t	need;
 
 	/* find the point at which we replace the field */
-	if (list != 0) {
-		this	= list;
-		next	= skip_to_comma(this);
-		while (N > 0) {
-			if (*next) {
-				N--;
-				this = skip_past_comma(next);
-				next = skip_to_comma(this);
-			} else {
-				this = next;
-				break;
-			}
-		}
-	} else {
-		this	= 0;
-		next	= "";
-	}
+	if ((N = skip_to_field(list, N, &this, &next)) < 0)
+		N = 0;		/* list was null */
 
 	/* ensure that the argument is nonnull */
 	if (buffer == 0)
@@ -273,7 +282,7 @@ _DCL(char *,	buffer)
 
 	/* allocate sufficient space for the new data */
 	need = strlen(buffer) + strlen(next) + (this - list) + N;
-	list = doalloc(list, need + 1);
+	list = doalloc(list, (unsigned)need + 1);
 
 	/*
 	 * If we had prior contents, must reformat
@@ -282,7 +291,7 @@ _DCL(char *,	buffer)
 	if (last != 0) {
 		this	= (this - last) + list;
 		next	= (next - last) + list;
-		memmove(this + N + need, next, strlen(next)+1);
+		(void)memmove(this + N + need, next, strlen(next)+1);
 	} else {
 		this	= list;
 		need++;	/* for trailing null */
@@ -291,7 +300,7 @@ _DCL(char *,	buffer)
 	/*
 	 * Insert the new buffer, and fill in missing commas, if any
 	 */
-	memmove(this + N, buffer, need);
+	(void)memmove(this + N, buffer, need);
 	while (N-- > 0)
 		this[N] = ',';
 
