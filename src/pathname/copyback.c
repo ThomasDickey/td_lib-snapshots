@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: copyback.c,v 12.2 1993/10/29 17:35:27 dickey Exp $";
-#endif
-
 /*
  * Title:	copyback.c (copy file back from temp-file)
  * Author:	T.E.Dickey
@@ -21,6 +17,8 @@ static	char	Id[] = "$Id: copyback.c,v 12.2 1993/10/29 17:35:27 dickey Exp $";
 #define	SIG_PTYPES
 #include	"ptypes.h"
 #include	<signal.h>
+
+MODULE_ID("$Id: copyback.c,v 12.4 1994/07/16 15:23:38 tom Exp $")
 
 int	copyback (
 	_ARX(FILE *,	fpT)		/* temporary-file pointer */
@@ -48,7 +46,7 @@ int	copyback (
 			(void) fputs (bfr, fpS);
 		}
 		(void) fclose (fpS);
-		(void) chmod (name, mode);
+		(void) chmod (name, (mode_t)mode);
 		catchall(SIG_DFL);
 		return (TRUE);
 	}

@@ -1,4 +1,4 @@
-# $Id: Makefile,v 12.1 1994/07/02 18:26:58 tom Exp $
+# $Id: Makefile,v 12.2 1994/07/16 20:11:01 tom Exp $
 # make-file for TD_LIB common/test library
 
 ####### (Development) ##########################################################
@@ -47,6 +47,7 @@ PROGS	= \
 	abspath \
 	file2arg \
 	file2mem \
+	fileblox \
 	filecopy \
 	fp2argv \
 	name2s \
@@ -69,6 +70,7 @@ include ../td_rules.mk
 abspath.c \
 file2arg.c \
 file2mem.c \
+fileblox.c \
 filecopy.c \
 fp2argv.c \
 name2s.c \

@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.35 1994/07/13 01:01:55 tom Exp $
+dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.37 1994/07/16 19:19:02 tom Exp $
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "TD_" to "AC_"
 dnl ---------------------------------------------------------------------------
@@ -116,6 +116,10 @@ define([TD_INO_T],
 [AC_PROVIDE([$0])AC_CHECKING(for ino_t in sys/types.h)
 AC_HEADER_EGREP(ino_t, sys/types.h, , AC_DEFINE(ino_t, unsigned short))])dnl
 dnl ---------------------------------------------------------------------------
+define([TD_MODE_T],
+[AC_PROVIDE([$0])AC_CHECKING(for mode_t in sys/types.h)
+AC_HEADER_EGREP(mode_t, sys/types.h, , AC_DEFINE(mode_t, int))])dnl
+dnl ---------------------------------------------------------------------------
 dnl Test if "##" is substituted properly, or failing that, if /**/ can do
 dnl the trick.
 define([TD_ANSI_CPP],
@@ -162,7 +166,9 @@ int main() {
 dnl ---------------------------------------------------------------------------
 dnl Tests for the <regexpr.h> include-file, and the functions associated with it.
 define([TD_REGEXPR_H_FUNCS],
-[AC_TEST_PROGRAM([
+[save_libs="$LIBS"
+AC_HAVE_LIBRARY(gen, [LIBS="$LIBS -lgen"])
+AC_TEST_PROGRAM([
 #include <sys/types.h>
 #include <regexpr.h>
 int main() {
@@ -175,7 +181,7 @@ int main() {
 	free(e);
 	exit(0);
 }
-], [AC_DEFINE(HAVE_REGEXPR_H_FUNCS)])
+], [AC_DEFINE(HAVE_REGEXPR_H_FUNCS)], [LIBS="$save_libs"])
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Tests for the presence of regcmp/regex functions (no include-file?)
@@ -401,8 +407,8 @@ main() { signal(SIGINT, catch); exit(0); }
 )
 if test -n "$GCC"
 then
-	if test -n "$with_warnings"
-	then
+AC_WITH(warnings,
+	[
 AC_CHECKING([redefinable signal handler prototype])
 	# We're checking the definitions of the commonly-used predefined signal
 	# macros, to see if their values are the ones that we expect.  If so,
@@ -420,7 +426,7 @@ main() { exit(NOT(SIG_IGN,1) || NOT(SIG_DFL,0) || NOT(SIG_ERR,-1)); }
 ],[AC_DEFINE(SIG_IGN_REDEFINEABLE)])
 		;;
 		esac
-	fi
+	])
 fi
 ])dnl
 dnl ---------------------------------------------------------------------------

@@ -1,3 +1,52 @@
+1994-07-16  dickey@clark.net
+
+	* src/curses/rawgets.c:
+	explicitly want reverse-video here (rather than Sys5's bold) for standout,
+	to make it extra visible
+
+	* test/td_defns.mk: use LIB_ARGS macro
+
+	* test/pathname/Makefile:
+	added test-program (but no test script) for fileblox
+
+	* aclocal.m4: use AC_WITH
+
+	* src/curses/rawterm.c: typo
+
+	* src/curses/dumptty.c: RCS_BASE
+
+	* src/curses/dumptty.c: use MODULE_ID
+
+	* include/td_curse.h: added 'dumptty.c'
+
+	* src/curses/Makefile: added dumptty
+
+	* src/curses/rawterm.c: split out 'dump_tty()' logic
+
+	* configure.in: added tests for gettimeofday, mode_t
+
+	* aclocal.m4: added test for -lgen (needed on Solaris for regex)
+	added macro for mode_t (Solaris gcc warnings)
+
+	* src/process/userprot.c: use:mode_t
+
+	* src/cm_funcs/rcstemp.c: use MODULE_ID
+
+	* src/cm_funcs/rcstemp.c: use:mode_t
+
+	* src/pathname/mem2file.c: use MODULE_ID
+
+	* src/pathname/mem2file.c, src/pathname/filecopy.c: use:mode_t
+
+	* src/pathname/copyback.c: use MODULE_ID
+
+	* src/pathname/copyback.c: use:mode_t
+
+	* include/td_ext.h: added def for 'gettimeofday()' for Solaris
+
+	* src/cm_funcs/rcstemp.c:
+	use chmod-symbols; fixed Solaris compiler warning
+
 1994-07-15  dickey@clark.net
 
 	* include/td_lib.h: added strerror if we don't already have it

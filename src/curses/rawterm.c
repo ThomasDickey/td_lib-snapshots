@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: rawterm.c,v 12.14 1994/07/04 22:51:10 tom Exp $";
+static	char	Id[] = "$Id: rawterm.c,v 12.16 1994/07/16 18:47:58 tom Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: rawterm.c,v 12.14 1994/07/04 22:51:10 tom Exp $";
  * Author:	T.E.Dickey
  * Created:	24 Nov 1987
  * Modified:
+ *		16 Jul 1994, made 'dumptty()' a library procedure.
  *		21 May 1994, ClarkNet's Solaris doesn't do savetty/resetty ok.
  *		26 Apr 1994, port to Linux
  *		23 Nov 1993, check environment variable TERM for "xterm".
@@ -34,39 +35,15 @@ TermioT	original_tty;
 TermioT	modified_tty;
 
 #ifdef	TEST
-void	show_term(s)
-	char	*s;
+void	show_term(
+	_AR1(char *,	s))
+	_DCL(char *,	s)
 {
 	static	FILE	*log;
 	if (log == 0)
 		log = fopen("rawterm.log", "w");
 	if (log != 0) {
-#if USING_TERMIOS_H || USING_TERMIO_H
-		int	n;
-		TermioT sb;
-		GetTerminal(&sb);
-		fprintf(log, "%s: \n", s);
-		fprintf(log, "\tiflag %#lo\n", sb.c_iflag);
-		fprintf(log, "\toflag %#lo\n", sb.c_oflag);
-		fprintf(log, "\tcflag %#lo\n", sb.c_cflag);
-		fprintf(log, "\tlflag %#lo\n", sb.c_lflag);
-		fprintf(log, "\tchars\n");
-		for (n = 0; n < NCCS; n++)	/* control chars */
-			if (sb.c_cc[n] != 0)
-				fprintf(log, "\t\t%d: %#o\n", n, sb.c_cc[n]);
-		fprintf(log, "\n");
-#else
-		TermioT sb;
-		GetTerminal(&sb);
-		fprintf(log,
-			"%s: speed %#o/%#o erase %#o kill %#o flags %#o\n", s,
-			sb.sg_ispeed,		/* input speed */
-			sb.sg_ospeed,		/* output speed */
-			sb.sg_erase,		/* erase character */
-			sb.sg_kill,		/* kill character */
-			sb.sg_flags);		/* mode flags */
-#endif
-		fflush(log);
+		dumptty(log, s);
 	}
 }
 #else

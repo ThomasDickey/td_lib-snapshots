@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: rawgets.c,v 12.9 1994/07/01 00:45:49 tom Exp $";
+static	char	Id[] = "$Id: rawgets.c,v 12.10 1994/07/16 23:51:39 tom Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: rawgets.c,v 12.9 1994/07/01 00:45:49 tom Exp $";
  * Title:	rawgets.c (raw-mode 'gets()')
  * Created:	29 Sep 1987 (from 'fl.c')
  * Modified:
+ *		16 Jul 1994, explicitly call for reverse-video if Sys5-curses.
  *		30 Jun 1994, added CTL/P, CTL/N as synonyms for up/down arrows
  *		28 Jun 1994, modified for window-resizing.
  *		30 May 1994, always allow backspace as an erase-character.
@@ -81,6 +82,14 @@ static	char	Id[] = "$Id: rawgets.c,v 12.9 1994/07/01 00:45:49 tom Exp $";
 #define	to_right(c)	(((c) == '\f') || ((c) == ARO_RIGHT))
 #define	to_end(c)	(((c) == CTL('F')))
 
+#ifdef A_REVERSE
+#define Highlight(w)	(void)wattron(w, A_REVERSE)
+#define NoHighlight(w)	(void)wattroff(w, A_REVERSE)
+#else
+#define Highlight(w)	(void)wstandout(w)
+#define NoHighlight(w)	(void)wstandend(w)
+#endif
+
 /*
  * Keep the base-position of 'bfr[]' visible, so that when resizing the
  * window, the calling application can move the 'rawgets()' display area.
@@ -116,9 +125,9 @@ void	ClearIt(_AR0)
 		register int	x;
 		auto	int	highlighted = (!wrap && !Imode);
 
-		if (highlighted)			(void)wstandend(Z);
+		if (highlighted)			NoHighlight(Z);
 		for (x = Z->_curx; x < xlast; x++)	(void)waddch(Z,' ');
-		if (highlighted)			(void)wstandout(Z);
+		if (highlighted)			Highlight(Z);
 	}
 }
 
@@ -355,7 +364,7 @@ void	ShowPrefix(_AR0)
 	if (Z && Prefix) {
 		register char	*prefix = Prefix[Imode];
 
-		(void)wstandend(Z);
+		(void)NoHighlight(Z);
 		(void)wmove(Z, y_rawgets, (int)(x_rawgets-strlen(prefix)));
 		while (*prefix)
 			(void)waddch(Z,(chtype)(*prefix++));
@@ -380,7 +389,7 @@ void	ToggleMode(_AR0)
 
 		if (!wrap) {
 			if (!Imode)
-				(void)wstandout(Z);
+				Highlight(Z);
 			ShowAll();
 		}
 

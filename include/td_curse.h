@@ -1,4 +1,4 @@
-/* $Id: td_curse.h,v 12.19 1994/07/12 13:12:44 tom Exp $ */
+/* $Id: td_curse.h,v 12.20 1994/07/16 16:55:00 tom Exp $ */
 
 /*
  * TD_LIB CURSES-related definitions
@@ -175,6 +175,15 @@ extern	XtermMouse xt_mouse;	/* state of XTerm-mouse */
 			_dcl(int *,	cntp)
 			_ret
 
+	/* dumptty.c -------------------------------------------------- */
+	void	dumptty(
+			_arx(FILE *,	fp)
+			_ar1(char *,	s)
+			)
+			_dcl(FILE *,	fp)
+			_dcl(char *,	s)
+			_nul
+
 	/* dumpwin.c -------------------------------------------------- */
 	void	dumpwin(
 			_arx(WINDOW *,	w)
@@ -184,6 +193,7 @@ extern	XtermMouse xt_mouse;	/* state of XTerm-mouse */
 			_dcl(char *,	s)
 			_nul
 
+	/* erasechar.c ------------------------------------------------ */
 	/* erasechar.c ------------------------------------------------ */
 #if	!HAVE_ERASECHAR && !defined(erasechar)
 	int	erasechar(_ar0)
