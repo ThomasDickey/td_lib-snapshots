@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Id: aclocal.m4,v 12.155 2003/11/08 00:50:18 tom Exp $
+dnl $Id: aclocal.m4,v 12.156 2004/02/21 00:15:18 tom Exp $
 dnl vi:set ts=4:
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "CF_" to "AC_"
@@ -216,7 +216,7 @@ ifelse($3,,[    :]dnl
 ])dnl
   ])])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_CHECK_CACHE version: 7 updated: 2001/12/19 00:50:10
+dnl CF_CHECK_CACHE version: 9 updated: 2004/01/30 15:59:13
 dnl --------------
 dnl Check if we're accidentally using a cache from a different machine.
 dnl Derive the system name, as a check for reusing the autoconf cache.
@@ -225,6 +225,9 @@ dnl If we've packaged config.guess and config.sub, run that (since it does a
 dnl better job than uname).  Normally we'll use AC_CANONICAL_HOST, but allow
 dnl an extra parameter that we may override, e.g., for AC_CANONICAL_SYSTEM
 dnl which is useful in cross-compiles.
+dnl
+dnl Note: we would use $ac_config_sub, but that is one of the places where
+dnl autoconf 2.5x broke compatibility with autoconf 2.13
 AC_DEFUN([CF_CHECK_CACHE],
 [
 if test -f $srcdir/config.guess ; then
@@ -1869,7 +1872,7 @@ else
 fi
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_PROG_EXT version: 9 updated: 2003/10/18 16:36:22
+dnl CF_PROG_EXT version: 10 updated: 2004/01/03 19:28:18
 dnl -----------
 dnl Compute $PROG_EXT, used for non-Unix ports, such as OS/2 EMX.
 AC_DEFUN([CF_PROG_EXT],
@@ -1877,11 +1880,12 @@ AC_DEFUN([CF_PROG_EXT],
 AC_REQUIRE([CF_CHECK_CACHE])
 case $cf_cv_system_name in
 os2*)
-    # We make sure -Zexe is not used -- it would interfere with @PROG_EXT@
     CFLAGS="$CFLAGS -Zmt"
     CPPFLAGS="$CPPFLAGS -D__ST_MT_ERRNO__"
     CXXFLAGS="$CXXFLAGS -Zmt"
-    LDFLAGS=`echo "$LDFLAGS -Zmt -Zcrtdll" | sed -e "s%-Zexe%%g"`
+    # autoconf's macro sets -Zexe and suffix both, which conflict:w
+    LDFLAGS="$LDFLAGS -Zmt -Zcrtdll"
+    ac_cv_exeext=.exe
     ;;
 esac
 
@@ -2702,18 +2706,81 @@ AC_TRY_LINK([
 test $cf_cv_need_xopen_extension = yes && CPPFLAGS="$CPPFLAGS -D_XOPEN_SOURCE_EXTENDED"
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_XOPEN_SOURCE version: 1 updated: 2003/11/07 14:32:26
+dnl CF_XOPEN_SOURCE version: 11 updated: 2004/01/26 20:58:41
 dnl ---------------
-dnl Try to get _XOPEN_SOURCE defined properly that we can use POSIX functions.
+dnl Try to get _XOPEN_SOURCE defined properly that we can use POSIX functions,
+dnl or adapt to the vendor's definitions to get equivalent functionality.
 AC_DEFUN([CF_XOPEN_SOURCE],[
 case $host_os in #(vi
+freebsd*) #(vi
+	CPPFLAGS="$CPPFLAGS -D_BSD_TYPES -D__BSD_VISIBLE -D_POSIX_C_SOURCE=200112 -D_XOPEN_SOURCE=600"
+	;;
 hpux*) #(vi
 	CPPFLAGS="$CPPFLAGS -D_HPUX_SOURCE"
+	;;
+irix6.*) #(vi
+	CPPFLAGS="$CPPFLAGS -D_SGI_SOURCE"
 	;;
 linux*) #(vi
 	CF_GNU_SOURCE
 	;;
+mirbsd*) #(vi
+	# setting _XOPEN_SOURCE or _POSIX_SOURCE breaks <arpa/inet.h>
+	;;
+netbsd*) #(vi
+	# setting _XOPEN_SOURCE breaks IPv6 for lynx on NetBSD 1.6, breaks xterm, is not needed for ncursesw
+	;;
+openbsd*) #(vi
+	# setting _XOPEN_SOURCE breaks xterm on OpenBSD 2.8, is not needed for ncursesw
+	;;
+osf[[45]]*) #(vi
+	CPPFLAGS="$CPPFLAGS -D_OSF_SOURCE"
+	;;
+sco*) #(vi
+	# setting _XOPEN_SOURCE breaks Lynx on SCO Unix / OpenServer
+	;;
+solaris*) #(vi
+	CPPFLAGS="$CPPFLAGS -D__EXTENSIONS__"
+	;;
 *)
+	AC_CACHE_CHECK(if we should define _XOPEN_SOURCE,cf_cv_xopen_source,[
+	AC_TRY_COMPILE([#include <sys/types.h>],[
+#ifndef _XOPEN_SOURCE
+make an error
+#endif],
+	[cf_cv_xopen_source=no],
+	[cf_save="$CPPFLAGS"
+	 CPPFLAGS="$CPPFLAGS -D_XOPEN_SOURCE=500"
+	 AC_TRY_COMPILE([#include <sys/types.h>],[
+#ifdef _XOPEN_SOURCE
+make an error
+#endif],
+	[cf_cv_xopen_source=no],
+	[cf_cv_xopen_source=yes])
+	CPPFLAGS="$cf_save"
+	])
+])
+test "$cf_cv_xopen_source" = yes && CPPFLAGS="$CPPFLAGS -D_XOPEN_SOURCE=500"
+
+	# FreeBSD 5.x headers demand this...
+	AC_CACHE_CHECK(if we should define _POSIX_C_SOURCE,cf_cv_xopen_source,[
+	AC_TRY_COMPILE([#include <sys/types.h>],[
+#ifndef _POSIX_C_SOURCE
+make an error
+#endif],
+	[cf_cv_xopen_source=no],
+	[cf_save="$CPPFLAGS"
+	 CPPFLAGS="$CPPFLAGS -D_POSIX_C_SOURCE"
+	 AC_TRY_COMPILE([#include <sys/types.h>],[
+#ifdef _POSIX_C_SOURCE
+make an error
+#endif],
+	[cf_cv_xopen_source=no],
+	[cf_cv_xopen_source=yes])
+	CPPFLAGS="$cf_save"
+	])
+])
+test "$cf_cv_xopen_source" = yes && CPPFLAGS="$CPPFLAGS -D_POSIX_C_SOURCE"
 	;;
 esac
 ])
