@@ -1,4 +1,4 @@
-/* $Id: cmv_defs.h,v 12.3 1994/09/29 00:00:51 tom Exp $ */
+/* $Id: cmv_defs.h,v 12.4 1994/10/07 00:09:32 tom Exp $ */
 
 #ifndef	CMV_DEFS_H
 #define	CMV_DEFS_H
@@ -60,7 +60,7 @@
 			)
 			_dcl(char *,	working_dir)
 			_dcl(char *,	pathname)
-			_ret
+			_nul
 
 	/* cmv_dbug.c ------------------------------------------------- */
 	int	cmv_debug(_ar0)

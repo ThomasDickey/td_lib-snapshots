@@ -1,4 +1,4 @@
-# $Id: Makefile,v 12.12 1994/08/21 23:41:50 tom Exp $
+# $Id: Makefile,v 12.13 1994/10/07 00:13:58 tom Exp $
 # MAKE-file for miscellaneous library routines
 
 ####### (Environment) ##########################################################
@@ -29,7 +29,8 @@ all \
 clean \
 clobber \
 destroy \
-run_test\
+lint.out \
+run_test \
 sources \
 install ::	$(SOURCES)
 	cd cm_funcs;	$(MAKE) $@

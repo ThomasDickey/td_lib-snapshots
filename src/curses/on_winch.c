@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: on_winch.c,v 12.4 1994/07/26 13:52:28 tom Exp $";
+static	char	Id[] = "$Id: on_winch.c,v 12.5 1994/10/07 00:03:52 tom Exp $";
 #endif
 
 /*
@@ -98,6 +98,7 @@ void	handle_resize (_AR0)
  * This all assumes that 'on_winch()' is called only in places where it's all
  * right to recompute the display, e.g., while waiting for input.
  */
+/*ARGSUSED*/
 static
 SIGNAL_FUNC(catch_winch)
 {

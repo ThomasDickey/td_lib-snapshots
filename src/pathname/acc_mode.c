@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: acc_mode.c,v 12.3 1994/07/13 01:32:50 tom Exp $";
+static	char	Id[] = "$Id: acc_mode.c,v 12.4 1994/10/07 00:06:13 tom Exp $";
 #endif
 
 /*
@@ -28,7 +28,7 @@ char *	access_mode(
 	if (mode == F_OK) {
 		*s++ = 'F';
 	} else if (mode > 7 || mode < 0) {
-		s = ltostr(value, mode, 8);
+		s = ltostr(value, (long)mode, 8);
 	} else {
 		if (mode & R_OK)	*s++ = 'R';
 		if (mode & W_OK)	*s++ = 'W';

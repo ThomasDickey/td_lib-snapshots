@@ -1,5 +1,5 @@
 /*
- * $Id: port2vms.h,v 12.3 1994/08/21 19:37:54 tom Exp $
+ * $Id: port2vms.h,v 12.4 1994/10/07 00:13:04 tom Exp $
  *
  * VMS-definitions for supporting unix/vms port
  */
@@ -53,11 +53,13 @@ extern	char *	dir2path(
 		_dcl(char *,		src)
 		_ret
 
+#ifndef		TD_LIB_H
 extern	char *	gid2s(
 		_ar1(int,		gid)
 		)
 		_dcl(int,		gid)
 		_ret
+#endif
 
 extern	char *	name2vms(
 		_arx(char *,		dst)
@@ -111,17 +113,21 @@ extern	int	rmsio_size (
 		_ar1(int,	fd));
 #endif
 
+#ifndef		TD_LIB_H
 extern	int	s2gid(
 		_ar1(char *,		name)
 		)
 		_dcl(char *,		name)
 		_ret
+#endif
 
+#ifndef		TD_LIB_H
 extern	int	s2uid(
 		_ar1(char *,		name)
 		)
 		_dcl(char *,		name)
 		_ret
+#endif
 
 #ifdef	vms
 extern	void	time2vms(
@@ -133,23 +139,13 @@ extern	void	time2vms(
 		_nul
 #endif	/* vms */
 
-extern	void	transtree(
-		_arx(char *,		path)
-		_fnx(int,		func,	(_ARX(char*,n) _AR1(Stat_t*,s)))
-		_arx(int,		recur)
-		_ar1(int,		links)
-		)
-		_dcl(char *,		path)
-		_dcl(int,		(*func)())
-		_dcl(int,		recur)
-		_dcl(int,		links)
-		_nul
-
+#ifndef		TD_LIB_H
 extern	char *	uid2s(
 		_ar1(int,		uid)
 		)
 		_dcl(int,		uid)
 		_ret
+#endif
 
 #ifdef	vms
 extern	int	utimes(
