@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs/RCS/rcsedit.c,v 3.0 1989/03/15 13:00:22 ste_cm Rel $";
+static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs/RCS/rcsedit.c,v 5.0 1989/07/25 09:19:55 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,9 +7,18 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs
  * Author:	T.E.Dickey
  * Created:	26 May 1988
  * $Log: rcsedit.c,v $
- * Revision 3.0  1989/03/15 13:00:22  ste_cm
- * BASELINE Mon Jun 19 13:27:01 EDT 1989
+ * Revision 5.0  1989/07/25 09:19:55  ste_cm
+ * BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
  *
+ *		Revision 4.0  89/07/25  09:19:55  ste_cm
+ *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+ *		
+ *		Revision 3.1  89/07/25  09:19:55  dickey
+ *		recompiled with apollo SR10 -- mods for function prototypes
+ *		
+ *		Revision 3.0  89/03/15  13:00:22  ste_cm
+ *		BASELINE Mon Jun 19 13:27:01 EDT 1989
+ *		
  *		Revision 2.0  89/03/15  13:00:22  ste_cm
  *		BASELINE Thu Apr  6 09:45:13 EDT 1989
  *		
@@ -95,6 +104,7 @@ writeit()
  */
 rcsopen(name, show)
 char	*name;
+int	show;
 {
 	struct	stat	sb;
 

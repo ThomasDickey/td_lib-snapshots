@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs/RCS/newzone.c,v 3.0 1988/09/13 12:47:57 ste_cm Rel $";
+static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs/RCS/newzone.c,v 4.0 1989/07/25 09:11:02 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,9 +7,15 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs
  * Author:	T.E.Dickey
  * Created:	09 Jun 1988
  * $Log: newzone.c,v $
- * Revision 3.0  1988/09/13 12:47:57  ste_cm
- * BASELINE Mon Jun 19 13:27:01 EDT 1989
+ * Revision 4.0  1989/07/25 09:11:02  ste_cm
+ * BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
  *
+ *		Revision 3.1  89/07/25  09:11:02  dickey
+ *		recompiled with apollo SR10 -- mods for function prototypes
+ *		
+ *		Revision 3.0  88/09/13  12:47:57  ste_cm
+ *		BASELINE Mon Jun 19 13:27:01 EDT 1989
+ *		
  *		Revision 2.0  88/09/13  12:47:57  ste_cm
  *		BASELINE Thu Apr  6 09:45:13 EDT 1989
  *		
@@ -84,6 +90,7 @@ extern	char	*stralloc();
 static
 char *
 name_of_tz(minutes)
+int	minutes;
 {
 	register int	hours	= (minutes/60);
 	static	 char	computed[NAMELEN];
@@ -193,6 +200,7 @@ init_tz()
  * Set our timezone to a specified value
  */
 newzone(hours, minutes, apres)
+int	hours, minutes, apres;
 {
 char	new_TZ[NAMELEN];
 

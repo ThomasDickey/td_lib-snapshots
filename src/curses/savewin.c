@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/curses/RCS/savewin.c,v 3.0 1988/08/11 07:16:55 ste_cm Rel $";
+static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/curses/RCS/savewin.c,v 5.0 1989/07/25 09:26:47 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,9 +7,18 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/curses/R
  * Title:	savewin.c (save/unsave curses window)
  * Created:	25 Mar 1988
  * $Log: savewin.c,v $
- * Revision 3.0  1988/08/11 07:16:55  ste_cm
- * BASELINE Mon Jun 19 13:27:01 EDT 1989
+ * Revision 5.0  1989/07/25 09:26:47  ste_cm
+ * BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
  *
+ *		Revision 4.0  89/07/25  09:26:47  ste_cm
+ *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+ *		
+ *		Revision 3.1  89/07/25  09:26:47  dickey
+ *		recompiled with apollo SR10 -- mods for function prototypes
+ *		
+ *		Revision 3.0  88/08/11  07:16:55  ste_cm
+ *		BASELINE Mon Jun 19 13:27:01 EDT 1989
+ *		
  *		Revision 2.0  88/08/11  07:16:55  ste_cm
  *		BASELINE Thu Apr  6 09:45:13 EDT 1989
  *		
@@ -94,6 +103,7 @@ register int j = 0;
  * Restore the state of the last window saved on the stack.
  */
 lastwin(redo,top)
+int	redo,top;
 {
 chtype	*t,
 	*z = saved->image + (top * COLS);
@@ -157,6 +167,7 @@ register int j, row;
  * Restore the last window, and pop it from the stack.
  */
 unsavewin(redo,top)
+int	redo,top;
 {
 SAVE	*last;
 	if (saved) {

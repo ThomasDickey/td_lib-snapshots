@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs/RCS/cutoff.c,v 3.0 1988/06/13 06:54:53 ste_cm Rel $";
+static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs/RCS/cutoff.c,v 8.0 1989/07/25 08:56:09 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,9 +7,27 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs
  * Author:	T.E.Dickey
  * Created:	20 May 1988 (from 'sccsdate.c')
  * $Log: cutoff.c,v $
- * Revision 3.0  1988/06/13 06:54:53  ste_cm
- * BASELINE Mon Jun 19 13:27:01 EDT 1989
+ * Revision 8.0  1989/07/25 08:56:09  ste_cm
+ * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
  *
+ *		Revision 7.0  89/07/25  08:56:09  ste_cm
+ *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+ *		
+ *		Revision 6.0  89/07/25  08:56:09  ste_cm
+ *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+ *		
+ *		Revision 5.0  89/07/25  08:56:09  ste_cm
+ *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+ *		
+ *		Revision 4.0  89/07/25  08:56:09  ste_cm
+ *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+ *		
+ *		Revision 3.1  89/07/25  08:56:09  dickey
+ *		recompiled with apollo SR10 -- mods for function prototypes
+ *		
+ *		Revision 3.0  88/06/13  06:54:53  ste_cm
+ *		BASELINE Mon Jun 19 13:27:01 EDT 1989
+ *		
  *		Revision 2.0  88/06/13  06:54:53  ste_cm
  *		BASELINE Thu Apr  6 09:45:13 EDT 1989
  *		
@@ -44,7 +62,8 @@ char	*s;
 
 time_t
 cutoff (argc, argv)
-char	*argv[];
+int	argc;
+char	**argv;
 {
 time_t	date;
 char	bfr[80],

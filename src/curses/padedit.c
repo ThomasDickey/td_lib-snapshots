@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/curses/RCS/padedit.c,v 3.0 1988/08/15 09:49:33 ste_cm Rel $";
+static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/curses/RCS/padedit.c,v 4.0 1989/07/25 09:15:21 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,9 +7,15 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/curses/R
  * Author:	T.E.Dickey
  * Created:	14 Dec 1987
  * $Log: padedit.c,v $
- * Revision 3.0  1988/08/15 09:49:33  ste_cm
- * BASELINE Mon Jun 19 13:27:01 EDT 1989
+ * Revision 4.0  1989/07/25 09:15:21  ste_cm
+ * BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
  *
+ *		Revision 3.1  89/07/25  09:15:21  dickey
+ *		recompiled with apollo SR10 -- mods for function prototypes
+ *		
+ *		Revision 3.0  88/08/15  09:49:33  ste_cm
+ *		BASELINE Mon Jun 19 13:27:01 EDT 1989
+ *		
  *		Revision 2.0  88/08/15  09:49:33  ste_cm
  *		BASELINE Thu Apr  6 09:45:13 EDT 1989
  *		
@@ -116,6 +122,7 @@ char	*argv[];
 
 padedit(name, readonly, editor)
 char	*name, *editor;
+int	readonly;
 {
 	extern	char	*getcwd();
 	int	lc[2];

@@ -1,3 +1,214 @@
+1989-07-25  dickey@software.org
+
+	* src/cm_funcs/rcspath.c:
+	use 'pathcat()' so we don't have to worry about supplying trailing '/' in
+	the RCS_PATH definition.
+
+1989-07-25  ste_cm@software.org
+
+	* src/cm_funcs/rcspath.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/cm_funcs/rcspath.c: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/cm_funcs/rcspath.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/cm_funcs/rcspath.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
+	* src/cm_funcs/rcspath.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1989-07-25  dickey@software.org
+
+	* src/pathname/walktree.c:
+	recompiled with apollo SR10 -- mods for function prototypes
+
+1989-07-25  ste_cm@software.org
+
+	* src/pathname/walktree.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
+1989-07-25  dickey@software.org
+
+	* src/unix/uid2s.c:
+	recompiled with apollo SR10 -- mods for function prototypes
+
+1989-07-25  ste_cm@software.org
+
+	* src/unix/uid2s.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
+1989-07-25  dickey@software.org
+
+	* src/curses/savewin.c:
+	recompiled with apollo SR10 -- mods for function prototypes
+
+1989-07-25  ste_cm@software.org
+
+	* src/curses/savewin.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/curses/savewin.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
+1989-07-25  dickey@software.org
+
+	* src/cm_funcs/rcsperm.c:
+	recompiled with apollo SR10 -- mods for function prototypes
+
+1989-07-25  ste_cm@software.org
+
+	* src/cm_funcs/rcsperm.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
+1989-07-25  dickey@software.org
+
+	* src/cm_funcs/rcsedit.c:
+	recompiled with apollo SR10 -- mods for function prototypes
+
+1989-07-25  ste_cm@software.org
+
+	* src/cm_funcs/rcsedit.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/cm_funcs/rcsedit.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
+1989-07-25  dickey@software.org
+
+	* src/curses/rawgets.c, src/curses/padedit.c:
+	recompiled with apollo SR10 -- mods for function prototypes
+
+1989-07-25  ste_cm@software.org
+
+	* src/curses/padedit.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
+1989-07-25  dickey@software.org
+
+	* src/cm_funcs/packdate.c:
+	recompiled with apollo SR10 -- mods for function prototypes
+
+1989-07-25  ste_cm@software.org
+
+	* src/cm_funcs/packdate.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/cm_funcs/packdate.c:
+	BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/cm_funcs/packdate.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
+	* src/cm_funcs/packdate.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1989-07-25  dickey@software.org
+
+	* src/cm_funcs/newzone.c:
+	recompiled with apollo SR10 -- mods for function prototypes
+
+1989-07-25  ste_cm@software.org
+
+	* src/cm_funcs/newzone.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
+1989-07-25  dickey@software.org
+
+	* src/pathname/name2s.c:
+	recompiled with apollo SR10 -- mods for function prototypes
+
+1989-07-25  ste_cm@software.org
+
+	* src/pathname/name2s.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
+1989-07-25  dickey@software.org
+
+	* src/pathname/modechar.c:
+	recompiled with apollo SR10 -- mods for function prototypes
+
+1989-07-25  ste_cm@software.org
+
+	* src/pathname/modechar.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/pathname/modechar.c:
+	BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/pathname/modechar.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/pathname/modechar.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
+	* src/pathname/modechar.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1989-07-25  dickey@software.org
+
+	* src/unix/gid2s.c:
+	recompiled with apollo SR10 -- mods for function prototypes
+
+1989-07-25  ste_cm@software.org
+
+	* src/unix/gid2s.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
+1989-07-25  dickey@software.org
+
+	* src/pathname/filecopy.c:
+	recompiled with apollo SR10 -- mods for function prototypes
+
+1989-07-25  ste_cm@software.org
+
+	* src/pathname/filecopy.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/pathname/filecopy.c:
+	BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/pathname/filecopy.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/pathname/filecopy.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
+	* src/pathname/filecopy.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1989-07-25  dickey@software.org
+
+	* src/cm_funcs/cutoff.c:
+	recompiled with apollo SR10 -- mods for function prototypes
+
+1989-07-25  ste_cm@software.org
+
+	* src/cm_funcs/cutoff.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/cm_funcs/cutoff.c: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/cm_funcs/cutoff.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/cm_funcs/cutoff.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
+	* src/cm_funcs/cutoff.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1989-07-25  dickey@software.org
+
+	* include/ptypes.h: ifdef'd out rewind-definition for apollo SR10
+
+1989-07-25  ste_cm@software.org
+
+	* include/ptypes.h:
+	BASELINE Thu Aug 24 09:35:35 EDT 1989 -- support:navi_011(rel2)
+
 1989-07-05  dickey@software.org
 
 	* src/cm_funcs/rcsperm.c:

@@ -1,5 +1,5 @@
 #ifndef lint
-static  char    sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RCS/name2s.c,v 3.0 1988/08/19 06:52:01 ste_cm Rel $";
+static  char    sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RCS/name2s.c,v 4.0 1989/07/25 09:08:47 ste_cm Rel $";
 #endif  lint
 
 /*
@@ -7,9 +7,15 @@ static  char    sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/path
  * Author:	T.E.Dickey
  * Created:	18 Aug 1988 (from ded2s.c)
  * $Log: name2s.c,v $
- * Revision 3.0  1988/08/19 06:52:01  ste_cm
- * BASELINE Mon Jun 19 13:27:01 EDT 1989
+ * Revision 4.0  1989/07/25 09:08:47  ste_cm
+ * BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
  *
+ *		Revision 3.1  89/07/25  09:08:47  dickey
+ *		recompiled with apollo SR10 -- mods for function prototypes
+ *		
+ *		Revision 3.0  88/08/19  06:52:01  ste_cm
+ *		BASELINE Mon Jun 19 13:27:01 EDT 1989
+ *		
  *		Revision 2.0  88/08/19  06:52:01  ste_cm
  *		BASELINE Thu Apr  6 09:45:13 EDT 1989
  *		
@@ -53,6 +59,7 @@ extern	char	*strchr();
 
 name2s(bfr, len, name, opt)
 char	*bfr, *name;
+int	len, opt;
 {
 	char	*base = bfr;
 	register int c;

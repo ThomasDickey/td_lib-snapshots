@@ -1,13 +1,28 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs/RCS/packdate.c,v 3.0 1988/08/17 09:44:06 ste_cm Rel $";
+static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs/RCS/packdate.c,v 7.0 1989/07/25 09:12:18 ste_cm Rel $";
 #endif	lint
 
 /*
  * Author:	T.E.Dickey
  * $Log: packdate.c,v $
- * Revision 3.0  1988/08/17 09:44:06  ste_cm
- * BASELINE Mon Jun 19 13:27:01 EDT 1989
+ * Revision 7.0  1989/07/25 09:12:18  ste_cm
+ * BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
  *
+ *		Revision 6.0  89/07/25  09:12:18  ste_cm
+ *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+ *		
+ *		Revision 5.0  89/07/25  09:12:18  ste_cm
+ *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+ *		
+ *		Revision 4.0  89/07/25  09:12:18  ste_cm
+ *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+ *		
+ *		Revision 3.1  89/07/25  09:12:18  dickey
+ *		recompiled with apollo SR10 -- mods for function prototypes
+ *		
+ *		Revision 3.0  88/08/17  09:44:06  ste_cm
+ *		BASELINE Mon Jun 19 13:27:01 EDT 1989
+ *		
  *		Revision 2.0  88/08/17  09:44:06  ste_cm
  *		BASELINE Thu Apr  6 09:45:13 EDT 1989
  *		
@@ -40,7 +55,9 @@ extern	struct	tm	*localtime();
 
 #define	LEAP(y)	(!(y&3))
 
-long	packdate (year, mon, day, hour, min, s)
+long
+packdate (year, mon, day, hour, min, s)
+int	 year, mon, day, hour, min, s;
 {
 time_t	sec = s;
 register int	j;

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RCS/walktree.c,v 3.0 1989/06/09 13:40:34 ste_cm Rel $";
+static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RCS/walktree.c,v 4.0 1989/07/25 09:31:44 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,9 +7,15 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname
  * Author:	T.E.Dickey
  * Created:	31 Aug 1988
  * $Log: walktree.c,v $
- * Revision 3.0  1989/06/09 13:40:34  ste_cm
- * BASELINE Mon Jun 19 13:27:01 EDT 1989
+ * Revision 4.0  1989/07/25 09:31:44  ste_cm
+ * BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
  *
+ *		Revision 3.1  89/07/25  09:31:44  dickey
+ *		recompiled with apollo SR10 -- mods for function prototypes
+ *		
+ *		Revision 3.0  89/06/09  13:40:34  ste_cm
+ *		BASELINE Mon Jun 19 13:27:01 EDT 1989
+ *		
  *		Revision 2.2  89/06/09  13:40:34  dickey
  *		use 'dofree()'
  *		
@@ -97,6 +103,7 @@ char	*path;
 char	*name;
 int	(*func)();
 char	*type;
+int	level;
 {
 	int	total	= 0,
 		ok_acc	= -1,

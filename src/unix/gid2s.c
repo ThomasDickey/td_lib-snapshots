@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/unix/RCS/gid2s.c,v 3.0 1988/08/12 09:36:30 ste_cm Rel $";
+static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/unix/RCS/gid2s.c,v 4.0 1989/07/25 09:03:38 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,9 +7,15 @@ static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/unix/RCS
  * Author:	T.E.Dickey
  * Created:	10 Nov 1987
  * $Log: gid2s.c,v $
- * Revision 3.0  1988/08/12 09:36:30  ste_cm
- * BASELINE Mon Jun 19 13:27:01 EDT 1989
+ * Revision 4.0  1989/07/25 09:03:38  ste_cm
+ * BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
  *
+ *		Revision 3.1  89/07/25  09:03:38  dickey
+ *		recompiled with apollo SR10 -- mods for function prototypes
+ *		
+ *		Revision 3.0  88/08/12  09:36:30  ste_cm
+ *		BASELINE Mon Jun 19 13:27:01 EDT 1989
+ *		
  *		Revision 2.0  88/08/12  09:36:30  ste_cm
  *		BASELINE Thu Apr  6 09:45:13 EDT 1989
  *		
@@ -42,10 +48,13 @@ typedef	struct {
 
 char *
 gid2s(gid)
+int	gid;
 {
 extern	 struct group  *getgrent();		/* cf: apollo sys5 */
+#ifndef	__STDC__
 extern		V_OR_I	setgrent();
 extern		V_OR_I	endgrent();
+#endif	__STDC__
 register struct group *p;
 register int	j;
 static   TABLE	*q;
