@@ -1,0 +1,141 @@
+#ifndef	lint
+static	char	sccs_id[] = "@(#)savewin.c	1.1 88/04/21 13:24:51";
+#endif	lint
+
+/*
+ * Author:	T.E.Dickey
+ * Title:	savewin.c (save/unsave curses window)
+ * Created:	25 Mar 1988
+ * Modified:
+ *
+ * Function:	Save/unsave the curses window state on a stack (actually a
+ *		linked list).
+ *
+ * Notes:	The bsd4.2 curses stores highlighting in the high-order bit of
+ *		the screen-image characters.  When we do an 'addstr()' with
+ *		this bit set, it retains highlighting.
+ */
+#include	<curses.h>
+#include	<ctype.h>
+extern	char	*doalloc();
+
+#ifndef	SYSTEM5
+typedef char	chtype;		/* sys5-curses data-type */
+#endif	SYSTEM5
+
+typedef	struct	_save {
+	struct	_save	*link;
+	int		x,y;
+	chtype		*image;
+	} SAVE;
+
+static	SAVE	*saved;
+
+#define	highlighted(c)	((c) & 0200)
+#define	unhighlight(c)	((c) & 0177)
+
+/*
+ * Force a character to be different
+ */
+static
+newC(c)
+{
+	c++;
+	if (!isprint(c))
+		c = '.';
+	if (c == ' ')
+		c = '.';
+	return (c);
+}
+
+/*
+ * Save a window on the stack.
+ */
+savewin()
+{
+register int row, col;
+SAVE	*last;
+register int j = 0;
+
+#define	ALLOC(n,c)	(c *)doalloc((char *)0, (n) * sizeof(c))
+	last         = saved;
+	saved        = ALLOC(1, SAVE);
+	saved->image = ALLOC(LINES * COLS, chtype);
+	saved->link  = last;
+	getyx(stdscr, saved->y, saved->x);
+
+	for (row = 0; row < LINES; row++) {
+	chtype	*src = stdscr->_y[row];
+		for (col = 0; col < COLS; col++)
+			saved->image[j++] = *src++;
+	}
+}
+
+/*
+ * Restore the state of the last window saved on the stack.
+ */
+lastwin(redo)
+{
+chtype	*s, *t;
+char	bfr[BUFSIZ];
+register int j, row;
+
+	if (saved) {
+		t = saved->image;
+
+		if (redo) {
+			/* "touch" cursor position */
+			wmove(stdscr, LINES, COLS);
+			wmove(curscr, LINES, COLS);
+
+			for (row = 0; row < LINES; row++) {
+				/* retrieve saved-image */
+				for (j = 0; j < COLS; bfr[j++] = *t++);
+				bfr[j] = '\0';
+
+				/*
+				 * Change curses' window state
+				 * ...leaving last column alone because of
+				 * wrap-forward bug!
+				 */
+				for (s = stdscr->_y[row], j = 0; s[j+1]; j++)
+					s[j] = newC(bfr[j]);
+				for (s = curscr->_y[row], j = 0; s[j+1]; j++)
+					s[j] = newC(newC(bfr[j]));
+			}
+			t = saved->image;
+		}
+
+		for (row = 0; row < LINES; row++) {
+
+			/* retrieve saved-image */
+			for (j = 0; j < COLS; bfr[j++] = *t++);
+			bfr[j] = '\0';
+			while ((--j >= 0) && (bfr[j] == ' '))
+				bfr[j] = '\0';
+
+			/* ...and then restore it */
+			move(row,0);
+			if (*bfr) addstr(bfr);
+			/*else	addstr(" ");*/
+			clrtoeol();
+		}
+		move(saved->y, saved->x);
+		refresh();
+	}
+}
+
+/*
+ * Restore the last window, and pop it from the stack.
+ */
+unsavewin(redo)
+{
+SAVE	*last;
+	if (saved) {
+		lastwin(redo);
+		last = saved->link;
+		free(saved->image);
+		free(saved);
+		saved = last;
+	}
+}
