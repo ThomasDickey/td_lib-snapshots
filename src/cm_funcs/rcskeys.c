@@ -1,12 +1,19 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)rcskeys.c	1.2 88/08/19 09:49:31";
+static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/cm_funcs/RCS/rcskeys.c,v 2.0 1988/09/28 09:31:03 ste_cm Exp $";
 #endif	lint
 
 /*
  * Title:	rcskeys.c (decode RCS keywords)
  * Author:	T.E.Dickey
  * Created:	26 May 1988
- * Modified:
+ * $Log: rcskeys.c,v $
+ * Revision 2.0  1988/09/28 09:31:03  ste_cm
+ * BASELINE Thu Apr  6 09:45:13 EDT 1989
+ *
+ *		Revision 1.4  88/09/28  09:31:03  dickey
+ *		sccs2rcs keywords
+ *		
+ *		28 Sep 1988, added 'strict' keyword.
  *		19 Aug 1988, added 'log', 'text' keywords so we can scan the
  *			     entire archive-file.
  *
@@ -31,17 +38,19 @@ char	*keys[] = {
 		"head",		/*0:	head	{<num>};		*/
 		"access",	/*1:	access	{<id>}*;		*/
 		"symbols",	/*2:	symbols	{<id> : <num>}*;	*/
-		"locks",	/*3:	*/
-		"comment",	/*4:	*/
+		"locks",	/*3:	locks	{<id> : <num>}*;	*/
+		"comment",	/*4:	comment	{<string};		*/
+		"strict",	/*5:	strict-locking in effect	*/
 				/* <delta> section begins with <num>	*/
-		"date",		/*5:	date		<num>;		*/
-		"author",	/*6:	author		{<id>};		*/
-		"state",	/*7:	state		{<id>};		*/
-		"branches",	/*8:	branches	{<num>}*;	*/
-		"next",		/*9:	next		{<num>};	*/
-		"desc",		/*10: description ends header		*/
-		"log",		/*11: delta log-message			*/
-		"text"		/*12: delta text/editing commands	*/
+		"date",		/*6:	date		<num>;		*/
+		"author",	/*7:	author		{<id>};		*/
+		"state",	/*8:	state		{<id>};		*/
+		"branches",	/*9:	branches	{<num>}*;	*/
+		"next",		/*10:	next		{<num>};	*/
+		"desc",		/*11: description ends header		*/
+				/* <deltatext> begins with <num>	*/
+		"log",		/*12: delta log-message			*/
+		"text"		/*13: delta text/editing commands	*/
 		};
 register int j;
 	if (*s) {
