@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 11.16 1993/04/29 16:39:52 ste_cm Exp $ */
+/* $Id: ptypes.h,v 12.0 1993/04/30 11:40:28 ste_cm Rel $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -44,7 +44,9 @@
 #define	SYSTEM5		/* apollo sr10.x sys5 */
 #endif
 #ifdef	_DECL_FUNC	/* apollo sr10.3 */
+#ifndef	lint		/* too many void *'s */
 #define	HAS_STDLIB 1
+#endif
 #endif
 #endif
 

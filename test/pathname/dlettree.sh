@@ -1,7 +1,7 @@
 #!/bin/sh
-# $Id: dlettree.sh,v 7.1 1992/11/20 11:11:27 dickey Exp $
+# $Id: dlettree.sh,v 8.0 1993/04/30 11:20:07 ste_cm Rel $
 #
-ME=deletetree
+ME=dlettree
 #
 rm -rf junk
 trap "rm -rf junk" 0 1 2 5 15

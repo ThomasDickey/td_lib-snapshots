@@ -1,3 +1,58 @@
+1993-04-30  dickey@software.org
+
+	* include/ptypes.h:
+	don't include <stdlib.h> when linting apollo sr10.3, because
+	of the void-* stuff
+
+1993-04-30  ste_cm@software.org
+
+	* include/ptypes.h: BASELINE Fri Apr 30 11:42:07 1993
+
+1993-04-30  dickey@software.org
+
+	* test/port2vms/vms_wild.sh: shortened-filenames
+
+1993-04-30  ste_cm@software.org
+
+	* test/port2vms/vms_wild.sh:
+	BASELINE Fri Apr 30 11:26:34 1993 -- VAX shutdown
+
+1993-04-30  dickey@software.org
+
+	* test/port2vms/vms_rpth.sh: shortened-filenames
+
+1993-04-30  ste_cm@software.org
+
+	* test/port2vms/vms_rpth.sh:
+	BASELINE Fri Apr 30 11:25:09 1993 -- VAX shutdown
+
+1993-04-30  dickey@software.org
+
+	* test/port2vms/vms_pthc.sh: shortened-filenames
+
+1993-04-30  ste_cm@software.org
+
+	* test/port2vms/vms_pthc.sh:
+	BASELINE Fri Apr 30 11:26:34 1993 -- VAX shutdown
+
+1993-04-30  dickey@software.org
+
+	* test/pathname/trnstree.sh: shortened-filenames
+
+1993-04-30  ste_cm@software.org
+
+	* test/pathname/trnstree.sh:
+	BASELINE Fri Apr 30 11:28:41 1993 -- VAX shutdown
+
+1993-04-30  dickey@software.org
+
+	* test/pathname/dlettree.sh: shortened-filenames
+
+1993-04-30  ste_cm@software.org
+
+	* test/pathname/dlettree.sh:
+	BASELINE Fri Apr 30 11:25:09 1993 -- VAX shutdown
+
 1993-04-29  ste_cm@software.org
 
 	* include/ptypes.h: fix include-path by using <> rather than ""
