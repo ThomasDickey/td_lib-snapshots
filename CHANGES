@@ -1,3 +1,7 @@
+1988-11-22  dickey@software.org
+
+	* src/pathname/edittree.c: New file.
+
 1988-11-21  dickey@software.org
 
 	* src/process/getopt.c: New file.
