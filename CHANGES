@@ -1,3 +1,7 @@
+1991-07-01  dickey@software.org
+
+	* src/Makefile: corrected include-path for 'rscpath.o'
+
 1991-06-25  ste_cm@software.org
 
 	* src/process/for_user.c:
