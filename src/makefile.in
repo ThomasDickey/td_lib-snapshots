@@ -1,8 +1,8 @@
-# $Id: makefile.in,v 12.3 1997/09/09 21:44:38 tom Exp $
+# $Id: makefile.in,v 12.4 1997/09/11 10:38:35 tom Exp $
 # MAKE-file for miscellaneous library routines
 
 ####### (Environment) ##########################################################
-TOP	= ../..
+TOP	= ..
 @make_include_left@../support/td_lib.mk@make_include_right@
 
 ####### (Standard Lists) #######################################################

@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.94 1997/09/10 00:50:52 tom Exp $
+dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.96 1997/09/11 00:55:00 tom Exp $
 dnl vi:set ts=4:
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "CF_" to "AC_"
@@ -633,6 +633,63 @@ AC_MSG_RESULT($cf_cv_makeflags)
 AC_SUBST(cf_cv_makeflags)
 ])dnl
 dnl ---------------------------------------------------------------------------
+dnl Check if the 'make' program knows how to interpret archive rules.  Though
+dnl this is common practice since the mid-80's, there are some holdouts (1997).
+AC_DEFUN([CF_MAKE_AR_RULES],
+[
+AC_MSG_CHECKING(if ${MAKE-make} program knows about archives)
+AC_CACHE_VAL(cf_cv_ar_rules,[
+cf_dir=subd$$
+cf_cv_ar_rules=unknown
+mkdir $cf_dir
+cat >$cf_dir/makefile <<CF_EOF
+AR = ar crv
+CC = $CC
+
+.SUFFIXES:
+.SUFFIXES: .c .o .a
+
+all:  conf.a
+
+.c.a:
+	\$(CC) -c $<
+	\$(AR) \$[]@ \$[]*.o
+conf.a : conf.a(conftest.o)
+CF_EOF
+touch $cf_dir/conftest.c
+if ( cd $cf_dir && ${MAKE-make} 2>&AC_FD_CC >&AC_FD_CC && test -f conf.a )
+then
+	cf_cv_ar_rules=yes
+else
+echo ... did not find archive >&AC_FD_CC
+rm -f $cf_dir/conftest.o
+cat >$cf_dir/makefile <<CF_EOF
+AR = ar crv
+CC = $CC
+
+.SUFFIXES:
+.SUFFIXES: .c .o
+
+all:  conf.a
+
+.c.o:
+	\$(CC) -c $<
+
+conf.a : conftest.o
+	\$(AR) \$[]@ \$?
+CF_EOF
+if ( cd $cf_dir && ${MAKE-make} 2>&AC_FD_CC >&AC_FD_CC && test -f conf.a )
+then
+	cf_cv_ar_rules=no
+else
+	AC_ERROR(I do not know how to construct a library)
+fi
+fi
+rm -rf $cf_dir
+])
+AC_MSG_RESULT($cf_cv_ar_rules)
+])dnl
+dnl ---------------------------------------------------------------------------
 dnl Check for the use of 'include' in 'make' (BSDI is a special case)
 dnl The symbol $ac_make is set in AC_MAKE_SET, as a side-effect.
 AC_DEFUN([CF_MAKE_INCLUDE],
@@ -1232,6 +1289,8 @@ dnl Append predefined lists to src/*/makefile.
 dnl
 dnl Also, make a series of "cd XXX && make" statements, which is understood by
 dnl all "make -n" commands.
+dnl
+dnl The library is named $Z, to avoid problems with parentheses.
 AC_DEFUN([CF_TD_SRC_MAKEFILES],
 [
 for p in $cf_cv_src_modules
@@ -1252,6 +1311,7 @@ BEGIN	{
 		printf " \\\n\t%s.c", [$]1
 	}
 '
+	if test $cf_cv_ar_rules = yes ; then
 ${AWK-awk} <$q >>$cf_out '
 BEGIN	{
 		found = 0;
@@ -1265,12 +1325,43 @@ BEGIN	{
 		printf " \\\n\t$Z(%s.o)", [$]1
 	}
 '
+	else
+${AWK-awk} <$q >>$cf_out '
+BEGIN	{
+		found = 0;
+	}
+	{
+		if ( found == 0 )
+		{
+			printf "\nOBJS="
+			found = 1;
+		}
+		printf " \\\n\t%s.o", [$]1
+	}
+'
+	fi
 	cat >>$cf_out <<CF_EOF
 
 
 ${make_include_left}../td_rules.mk${make_include_right}
 CF_EOF
 	echo "	cd $p &&	\$(MAKE) \[$]@" >>src/makefile
+
+	if test $cf_cv_ar_rules = yes ; then
+cat >>$cf_out <<CF_EOF
+
+\$Z:	\$(OBJS)
+	\$(RANLIB) \$Z
+CF_EOF
+	else
+cat >>$cf_out <<CF_EOF
+
+\$Z:	\$(OBJS)
+	\$(AR) \$Z \$(OBJS)
+	\$(RANLIB) \$Z
+CF_EOF
+	fi
+
 	fi
 done
 test -f $srcdir/src/makefile.end && \
@@ -1280,7 +1371,7 @@ dnl ---------------------------------------------------------------------------
 dnl Make a list of src/*/modules so that AC_OUTPUT has the list on-hand.
 AC_DEFUN([CF_TD_SRC_MODULES],
 [
-AC_MSG_CHECKING(for source modules)
+AC_MSG_CHECKING(for src modules)
 AC_CACHE_VAL(cf_cv_src_modules,[
 cf_cv_src_modules=""
 cf_cv_src_makefiles=""
@@ -1376,7 +1467,7 @@ dnl ---------------------------------------------------------------------------
 dnl Make a list of test/*/modules so that AC_OUTPUT has the list on-hand.
 AC_DEFUN([CF_TD_TEST_MODULES],
 [
-AC_MSG_CHECKING(for source modules)
+AC_MSG_CHECKING(for test modules)
 AC_CACHE_VAL(cf_cv_test_modules,[
 cf_cv_test_modules=""
 cf_cv_test_makefiles=""

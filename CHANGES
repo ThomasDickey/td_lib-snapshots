@@ -1,3 +1,67 @@
+1997-09-11  dickey@clark.net
+
+	* makefile.in: add td_config to install/deinstall rules
+
+	* aclocal.m4: implement CF_TD_CONFIG
+
+	* support/td_config.c: implement quoted() and escape().
+
+	* configure.in: use CF_TD_CONFIG for hard-core throwbacks such as SCO.
+
+	* aclocal.m4: reorder AC_VERBOSE
+
+	* support/td_config.c: RCS_BASE
+
+	* aclocal.m4: change SHOW_CC to work with .c.o rule
+	use $(MAKE_OPTS)
+
+	* test/td_rules.mk: remove sources-rule
+
+	* td_make.in: use $(MAKE_OPTS)
+
+	* include/Makefile, certify/Makefile, support/Makefile:
+	remove sources-rule
+
+	* makefile.in: use $(MAKE_OPTS)
+
+	* td_make.in: use SHOW_CC variable
+
+	* makefile.in: HP-UX doesn't understand if I follow '-' with a space
+
+	* src/curses/scr_size.c: hack for SCO
+
+	* src/pathname/fileblox.c: force errno to be declared
+
+	* include/ptypes.h:
+	prop up PROTOTYPES definition with autoconf'd variable
+
+	* test/pathname/fileblox.ref, test/pathname/fileblox.sh, test/cm_funcs/cmv_last.ref, test/cm_funcs/cmv_dir.ref:
+	RCS_BASE
+
+	* test/td_defns.mk: add definition of SOURCES
+
+	* test/td_rules.mk: remove programs when cleaning
+
+	* certify/Makefile: fix relative-TOP
+
+	* test/sub_vars.in: RCS_BASE
+
+	* aclocal.m4: fix location of test/sub_vars.in
+
+	* support/ins_mak: RCS_BASE
+
+	* makefile.in: first cut of ins_mak script
+
+	* test/makefile.in, test/td_defns.mk:
+	make TOP relative to td_lib, not its parent
+
+	* src/td_defns.mk: use symbol $(TD_LIB) rather than $L
+
+	* src/makefile.in:
+	make TOP relative to the top of td_lib, not its parent
+
+	* td_make.in: use TD_LIB,TD_INC symbols instead of $L, $I
+
 1997-09-10  dickey@clark.net
 
 	* src/td_rules.mk, aclocal.m4: first cut of FreeBSD port
