@@ -1,4 +1,4 @@
-# $Id: td_make.in,v 12.1 1994/07/04 17:14:11 tom Exp $
+# $Id: td_make.in,v 12.3 1994/07/10 20:38:22 tom Exp $
 # common definitions for makefiles built over TD_LIB library.
 
 ####### (Environment) ##########################################################
@@ -35,7 +35,8 @@ INCLUDES	= -I. -I$I @INCLUDES@
 DEFINES		= -DHAVE_CONFIG_H
 CPP_OPTS	= $(DEFINES) $(INCLUDES)
 
-LIBS		= $L/$(TD_LIB).a @LIBS@
+LIB_DEPS	= $L/$(TD_LIB).a
+LIB_ARGS	= $L/$(TD_LIB).a @LIBS@
 DATE		= echo '** '`date` >> $@
 
 LINTLIBS	= -ltd @LIBS@
@@ -43,7 +44,7 @@ LINTOPTS	= $(CPP_OPTS) -DNO_IDENT $(LINTLIBS)
 
 ####### (Standard Lists) #######################################################
 # don't put .a into CLEAN, because VERDIX-ADA uses that for source!
-CLEAN	= *.[oi] *.lint *.bak *.log *.out *.tst .nfs* *.pure* core
+CLEAN	= *.[oi] *.lint *.bak *.log *.out *.tst .nfs* *.pure* core tags
 DESTROY	=sh -c 'for i in *;do case $$i in RCS);; *) $(RM) $$i;;esac;done;exit 0'
 RUN_TESTS=sh -c '$@.sh 2>&1 | tee -a $@.out'
 
@@ -74,7 +75,7 @@ LINT_EACH = sh -c 'for i in $?;do echo $$i:; tdlint $(LINTOPTS) $$i >>$@;done'
 .c.proto:	; $(CPROTO) $(CPP_OPTS) $< >$@
 .c.lint:	; tdlint $(LINTOPTS) $< >$@
 
-.c.tst:		; $(CC) -o $@ -DTEST $(CFLAGS) $(CPP_OPTS) $< $Z $(LIBS)
+.c.tst:		; $(CC) -o $@ -DTEST $(CFLAGS) $(CPP_OPTS) $< $Z $(LIB_ARGS)
 
 .SUFFIXES: .man .cat
 

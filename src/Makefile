@@ -1,4 +1,4 @@
-# $Id: Makefile,v 12.9 1994/07/02 13:24:52 tom Exp $
+# $Id: Makefile,v 12.11 1994/07/10 21:22:59 tom Exp $
 # MAKE-file for miscellaneous library routines
 
 ####### (Environment) ##########################################################
@@ -43,6 +43,5 @@ install ::	$(SOURCES)
 	cd string;	$(MAKE) $@
 	cd unix;	$(MAKE) $@
 
-clean ::			; $(RM) $(CLEAN)
-clobber ::	clean		; $(RM) $(ALL)
+clean ::			; -$(RM) $(CLEAN)
 destroy ::			; $(DESTROY)
