@@ -1,12 +1,9 @@
-#ifndef	NO_IDENT
-static	char	Id[] = "$Id: name2vms.c,v 12.1 1994/08/21 18:39:51 tom Exp $";
-#endif
-
 /*
  * Title:	name2vms.c
  * Author:	T.E.Dickey
  * Created:	29 Sep 1988
  * Modified:
+ *		25 Aug 1994, allow ".type" names as-is, and always uppercase.
  *		01 Dec 1993, ifdefs, TurboC warnings.
  *		22 Sep 1993, gcc warnings
  *		20 Nov 1992, use prototypes
@@ -31,12 +28,15 @@ static	char	Id[] = "$Id: name2vms.c,v 12.1 1994/08/21 18:39:51 tom Exp $";
 #define	STR_PTYPES
 #include	"port2vms.h"
 
+MODULE_ID("$Id: name2vms.c,v 12.3 1994/08/25 23:53:55 tom Exp $")
+
 static	int	leaf_dot;   /* counts dots found in a particular leaf */
+static	int	leaf_ver;   /* set if we found a DECshell version */
 
 /*
- * If we have a dot in one of the first two character positions, force that to
- * a dollar sign.  Otherwise, keep the first dot in each unix leaf as a dot in
- * the resulting vms name.
+ * If we have a dot in the second character position, force that to a dollar
+ * sign.  Otherwise, keep the first dot in each unix leaf as a dot in the
+ * resulting vms name.
  */
 #define	ONE_CHAR_DOT	"sp"	/* e.g., for SCCS */
 
@@ -45,13 +45,10 @@ int	prefix(
 	_AR1(char *,	s))
 	_DCL(char *,	s)
 {
-	if (s[0] == '.'
-	||    (	   s[0] != EOS
-		&& s[1] == '.'
-		&& s[2] != EOS
-		&& strchr(ONE_CHAR_DOT, s[0])
-	      )
-	    )
+	if (s[0] != EOS
+	 && s[1] == '.'
+	 && s[2] != EOS
+	 && strchr(ONE_CHAR_DOT, s[0]))
 		return (-1);
 	return (0);
 }
@@ -67,8 +64,9 @@ char	translate(
 	} else if (c == '.') {
 		if (leaf_dot++)
 			c = '$';
-	} else if (!strchr("0123456789_-", c))
+	} else if (!strchr("0123456789_-", c)) {
 		c = '$';
+	}
 	return (c);
 }
 
@@ -135,9 +133,9 @@ char *	name2vms(
 		if (*s) {		/* text follows leading token */
 			s++;		/* skip (assumed) '/' */
 			if ((len > 1)
-			&&  (d[len-1] == ':'))
+			&&  (d[len-1] == ':')) {
 				on_top = TRUE;
-			else if (strchr(s, '/')) {	/* must do a splice */
+			} else if (strchr(s, '/')) {	/* must do a splice */
 				if ((len > 2)
 				&&  (d[len-1] == ']')) {
 					bracket++;
@@ -165,8 +163,9 @@ char *	name2vms(
 	if (!node
 	&&  (t = strchr(s, '!')) != 0
 	&&  (t[1] == '/' || t[1] == EOS)) {
+		leaf_dot = prefix(s);
 		while (s < t)
-			*d++ = *s++;
+			*d++ = translate(*s++);
 		*d++ = ':';
 		*d++ = ':';
 		s++;		/* skip over '!' */
@@ -175,10 +174,11 @@ char *	name2vms(
 	/* look for device-name, indicated by a leading '/' */
 	if (!device
 	&&  (*s == '/')) {
-		if ((t = strchr(++s, '/')) == 0)
+		leaf_dot = prefix(++s);
+		if ((t = strchr(s, '/')) == 0)
 			t = s + strlen(s);
 		while (s < t)
-			*d++ = *s++;
+			*d++ = translate(*s++);
 		*d++ = ':';
 	}
 
@@ -197,10 +197,11 @@ char *	name2vms(
 	if (strchr(s, '/')) {
 		if (!bracket++)
 			*d++ = '[';
-		if (*s == '/')
+		if (*s == '/') {
 			s++;
-		else if (!on_top)
+		} else if (!on_top) {
 			*d++ = '.';
+		}
 		leaf_dot = prefix(s);
 		while ((c = *s++) != EOS) {
 			if (c == '/') {
@@ -210,19 +211,26 @@ char *	name2vms(
 				else {
 					break;
 				}
-			} else
+			} else {
 				*d++ = translate(c);
+			}
 		}
 	}
 	if (bracket)
 		*d++ = ']';
 	if (c != EOS && *s) {
 		leaf_dot = prefix(s);
-		while ((c = *s++) != EOS)
-			*d++ = translate(c);
+		while ((c = *s++) != EOS) {
+			if (c == '.'
+			 && (leaf_ver = (strtol(s, &t, 0) && (t != s) && !*t)))
+				*d++ = ';';
+			else
+				*d++ = translate(c);
+		}
 		if (!leaf_dot)
 			*d++ = '.';
-		*d++ = ';';
+		if (!leaf_ver)
+			*d++ = ';';
 	}
 	*d = EOS;
 	return (dst);
@@ -243,8 +251,10 @@ void	do_test(
 	if (argc <= 1) {
 		static	char	*array[] = {
 				"name",
+				".type",
 				"name.type",
 				"name.type.junk",
+				"x/.type",
 				"x/y",
 				"x/y/z",
 				"/x",
@@ -252,6 +262,8 @@ void	do_test(
 				"/x/y/",
 				"/x.y",
 				"x.y.z",
+				"x.y.1",
+				"x.y.1x",
 				"x.y",
 				"s.x",
 				"s.x.y",	/* SCCS cases */
@@ -279,7 +291,7 @@ void	do_test(
 	} else {
 		for (j = 1; j < argc; j++) {
 			name2vms(buffer, argv[j]);
-			printf("%d)\t\"%s\" => \"%s\"\n", j, argv[j], buffer);
+			printf("\"%s\" => \"%s\"\n", argv[j], buffer);
 		}
 	}
 }
