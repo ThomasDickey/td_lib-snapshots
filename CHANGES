@@ -1,3 +1,8 @@
+1990-01-30  dickey@software.org
+
+	* src/curses/cmdch.c:
+	permit explicit zero-count to be returned.  default is still 1.
+
 1990-01-23  dickey@software.org
 
 	* src/curses/win2file.c:
