@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Id: aclocal.m4,v 12.107 1998/02/15 20:39:21 tom Exp $
+dnl $Id: aclocal.m4,v 12.110 1998/02/17 22:47:27 tom Exp $
 dnl vi:set ts=4:
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "CF_" to "AC_"
@@ -319,10 +319,12 @@ freebsd*) #(vi
 	;;
 esac
 
+if test ".$With5lib" != ".no" ; then
 if test -d /usr/5lib ; then
 	# SunOS 3.x or 4.x
 	CPPFLAGS="$CPPFLAGS -I/usr/5include"
 	LIBS="$LIBS -L/usr/5lib"
+fi
 fi
 
 if test ".$ac_cv_func_initscr" != .yes ; then
@@ -340,7 +342,7 @@ if test ".$ac_cv_func_initscr" != .yes ; then
 	])
 
 	# Check for library containing initscr
-	test "$cf_term_lib" != predefined && \ test "$cf_term_lib" != unknown && LIBS="-l$cf_term_lib $cf_save_LIBS"
+	test "$cf_term_lib" != predefined && test "$cf_term_lib" != unknown && LIBS="-l$cf_term_lib $cf_save_LIBS"
 	for cf_curs_lib in curses ncurses xcurses cursesX jcurses unknown
 	do
 		AC_CHECK_LIB($cf_curs_lib,initscr,[break])
@@ -350,7 +352,7 @@ if test ".$ac_cv_func_initscr" != .yes ; then
 	LIBS="-l$cf_curs_lib $cf_save_LIBS"
 	if test "$cf_term_lib" = unknown ; then
 		AC_MSG_CHECKING(if we can link with $cf_curs_lib library)
-		AC_TRY_LINK([#include <$cf_cv_ncurses_header>],
+		AC_TRY_LINK([#include <${cf_cv_ncurses_header-curses.h}>],
 			[initscr()],
 			[cf_result=yes],
 			[cf_result=no])
@@ -358,12 +360,12 @@ if test ".$ac_cv_func_initscr" != .yes ; then
 		test $cf_result = no && AC_ERROR(Cannot link curses library)
 	elif test "$cf_term_lib" != predefined ; then
 		AC_MSG_CHECKING(if we need both $cf_curs_lib and $cf_term_lib libraries)
-		AC_TRY_LINK([#include <$cf_cv_ncurses_header>],
-			[initscr()],
+		AC_TRY_LINK([#include <${cf_cv_ncurses_header-curses.h}>],
+			[initscr(); tgoto((char *)0, 0, 0);],
 			[cf_result=no],
 			[
 			LIBS="-l$cf_curs_lib -l$cf_term_lib $cf_save_LIBS"
-			AC_TRY_LINK([#include <$cf_cv_ncurses_header>],
+			AC_TRY_LINK([#include <${cf_cv_ncurses_header-curses.h}>],
 				[initscr()],
 				[cf_result=yes],
 				[cf_result=error])
@@ -1056,7 +1058,7 @@ esac
 
 LIBS="$cf_ncurses_LIBS $LIBS"
 CF_FIND_LIBRARY(ncurses,
-	[#include <$cf_cv_ncurses_header>],
+	[#include <${cf_cv_ncurses_header-curses.h}>],
 	[initscr()],
 	initscr)
 
@@ -1069,7 +1071,7 @@ if test -n "$cf_ncurses_LIBS" ; then
 			LIBS="$q"
 		fi
 	done
-	AC_TRY_LINK([#include <$cf_cv_ncurses_header>],
+	AC_TRY_LINK([#include <${cf_cv_ncurses_header-curses.h}>],
 		[initscr(); mousemask(0,0); tgoto((char *)0, 0, 0);],
 		[AC_MSG_RESULT(yes)],
 		[AC_MSG_RESULT(no)
@@ -1084,7 +1086,7 @@ AC_CACHE_VAL(cf_cv_ncurses_version,[
 	cf_cv_ncurses_version=no
 	cf_tempfile=out$$
 	AC_TRY_RUN([
-#include <$cf_cv_ncurses_header>
+#include <${cf_cv_ncurses_header-curses.h}>
 int main()
 {
 	FILE *fp = fopen("$cf_tempfile", "w");
@@ -1109,7 +1111,7 @@ int main()
 	# This will not work if the preprocessor splits the line after the
 	# Autoconf token.  The 'unproto' program does that.
 	cat > conftest.$ac_ext <<EOF
-#include <$cf_cv_ncurses_header>
+#include <${cf_cv_ncurses_header-curses.h}>
 #undef Autoconf
 #ifdef NCURSES_VERSION
 Autoconf NCURSES_VERSION
@@ -1140,7 +1142,7 @@ AC_CACHE_VAL(cf_cv_ncurses_version,[
 	cf_cv_ncurses_version=no
 	cf_tempfile=out$$
 	AC_TRY_RUN([
-#include <$cf_cv_ncurses_header>
+#include <${cf_cv_ncurses_header-curses.h}>
 int main()
 {
 	FILE *fp = fopen("$cf_tempfile", "w");
@@ -1165,7 +1167,7 @@ int main()
 	# This will not work if the preprocessor splits the line after the
 	# Autoconf token.  The 'unproto' program does that.
 	cat > conftest.$ac_ext <<EOF
-#include <$cf_cv_ncurses_header>
+#include <${cf_cv_ncurses_header-curses.h}>
 #undef Autoconf
 #ifdef NCURSES_VERSION
 Autoconf NCURSES_VERSION

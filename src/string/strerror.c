@@ -5,10 +5,11 @@
  *
  * Function:	provide the unix 'strerror()' function if it isn't available
  */
+#define	ERR_PTYPES
 #define STR_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: strerror.c,v 12.5 1995/02/18 00:04:00 tom Exp $")
+MODULE_ID("$Id: strerror.c,v 12.6 1998/02/17 17:31:43 tom Exp $")
 
 #if !HAVE_STRERROR
 char	*strerror (
