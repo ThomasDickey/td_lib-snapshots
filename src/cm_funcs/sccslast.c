@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	20 Oct 1986
  * Modified:
+ *		03 Sep 1996, ignore removed-revisions
  *		14 Oct 1995, mods for 14-character names
  *		11 Aug 1994, decode CMVision date in comment.
  *		15 Jul 1994, mods for SCCS_VAULT
@@ -35,7 +36,7 @@
 #include	<sccsdefs.h>
 #include	<ctype.h>
 
-MODULE_ID("$Id: sccslast.c,v 12.10 1995/10/14 16:26:54 tom Exp $")
+MODULE_ID("$Id: sccslast.c,v 12.11 1996/09/03 15:05:16 tom Exp $")
 
 /*
  * Set the release.version and date values iff we find a legal sccs-file at
@@ -59,6 +60,7 @@ void	trysccs (
 	auto	char	*s;
 	auto	int	yy, mm, dd, hr, mn, sc;
 	auto	char	ver[80];
+	auto	int	have_rev = FALSE;
 
 #if S_FILES_14
 	auto	char	temp[MAXPATHLEN];
@@ -87,9 +89,10 @@ void	trysccs (
 					continue;
 				*vers_ = txtalloc(ver);
 				*date_ = packdate (1900+yy, mm, dd, hr, mn, sc);
+				have_rev = TRUE;
 			}
 #ifdef CMV_PATH		/* for CmVision */
-			if (!strncmp(bfr, "\001c ", 3)) {
+			if (have_rev && !strncmp(bfr, "\001c ", 3)) {
 				time_t	when;
 				if ((s = strstr(bfr, "\\\001O")) != 0) {
 					while (strncmp(s, ":M", 2) && *s)
