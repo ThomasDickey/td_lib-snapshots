@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: rcstemp.c,v 12.3 1994/05/21 20:18:44 tom Exp $";
+static	char	Id[] = "$Id: rcstemp.c,v 12.4 1994/07/11 01:29:34 tom Exp $";
 #endif
 
 /*
@@ -86,7 +86,9 @@ char *	rcstemp(
 			(void)umask(oldmask);
 		} else {
 			DEBUG(".. %s group is %d(%s)\n",
-				tf, sb.st_gid, gid2s((int)sb.st_gid));
+				tf,
+				(int)(sb.st_gid),
+				gid2s((int)(sb.st_gid)));
 
 			if (getgid() != sb.st_gid)
 				mode = 0777;

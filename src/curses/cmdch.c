@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: cmdch.c,v 12.11 1994/07/05 01:17:27 tom Exp $";
+static	char	Id[] = "$Id: cmdch.c,v 12.12 1994/07/11 00:00:55 tom Exp $";
 #endif
 
 /*
@@ -55,6 +55,8 @@ static	char	Id[] = "$Id: cmdch.c,v 12.11 1994/07/05 01:17:27 tom Exp $";
 #ifndef	NO_XTERM_MOUSE
 
 #define XtermPos() (getch() - 041)	/* 0..COLS-1 or 0..LINES-1 */
+
+XtermMouse xt_mouse;	/* state of XTerm-mouse */
 
 static	int	double_click (_AR0)
 {
@@ -132,6 +134,26 @@ int	cmdch(
 			i_blk[j++] = c;
 #if HAVE_KEYPAD
 		switch (c) {
+		/*
+		 * These definitions simplify the task of porting between BSD-
+		 * and SYS5-curses.  Just because I turn on the keypad, I
+		 * shouldn't have to worry about normal keycodes shifting about
+		 * as a side-effect.
+		 */
+#ifdef KEY_DC
+#if KEY_DC != '\177'
+		case KEY_DC:	c = '\177';	done = TRUE;	break;
+#endif
+#endif
+#ifdef KEY_BACKSPACE
+#if KEY_BACKSPACE != '\b'
+		case KEY_BACKSPACE: c = '\b';	done = TRUE;	break;
+#endif
+#endif
+		/*
+		 * These definitions are just because I've not completely
+		 * integrated my definitions with Sys5 curses...
+		 */
 		case KEY_UP:	c = ARO_UP;	done = TRUE;	break;
 		case KEY_DOWN:	c = ARO_DOWN;	done = TRUE;	break;
 		case KEY_LEFT:	c = ARO_LEFT;	done = TRUE;	break;

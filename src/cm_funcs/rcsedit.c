@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: rcsedit.c,v 12.4 1994/05/21 20:18:43 tom Exp $";
-#endif
-
 /*
  * Title:	rcsedit.c (edit RCS file)
  * Author:	T.E.Dickey
@@ -41,6 +37,8 @@ static	char	Id[] = "$Id: rcsedit.c,v 12.4 1994/05/21 20:18:43 tom Exp $";
 #include	"ptypes.h"
 #include	"rcsdefs.h"
 #include	<ctype.h>
+
+MODULE_ID("$Id: rcsedit.c,v 12.6 1994/07/11 01:27:54 tom Exp $")
 
 /* local definitions */
 #define	VERBOSE	if (verbose) PRINTF
@@ -230,7 +228,7 @@ int	rcsopen(
 		else if (dir_access())
 			strcpy(tmp_name, fname)[strlen(fname)-1] = 'V';
 		else
-			FORMAT(tmp_name, "%s/rcsedit%d", P_tmpdir, getpid());
+			FORMAT(tmp_name, "%s/rcsedit%d", P_tmpdir, (int)getpid());
 
 		fmode	= sb.st_mode & 0555;
 		if ((fd = open(tmp_name, O_CREAT|O_EXCL|O_WRONLY, fmode)) < 0

@@ -1,3 +1,17 @@
+1994-07-11  dickey@clark.net
+
+	* include/td_regex.h: corrected test for strwcmp
+
+	* aclocal.m4: corrected test for SunOS 're_exec()'
+
+	* aclocal.m4: sys_errlist may not be declared
+
+	* include/Makefile: use cpp-options for lintlib
+
+	* include/llib-ltd: must define LINTLIBRARY to a value
+
+	* include/ptypes.h: SunOS cpp doesn't have "#error"
+
 1994-07-10  dickey@clark.net
 
 	* src/cm_funcs/rcstemp.c, src/cm_funcs/rcsedit.c: compiler warning
