@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: rawgets.c,v 12.10 1994/07/16 23:51:39 tom Exp $";
+static	char	Id[] = "$Id: rawgets.c,v 12.12 1994/07/19 23:00:07 tom Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: rawgets.c,v 12.10 1994/07/16 23:51:39 tom Exp $";
  * Title:	rawgets.c (raw-mode 'gets()')
  * Created:	29 Sep 1987 (from 'fl.c')
  * Modified:
+ *		19 Jul 1994, adjustment for ncurses.
  *		16 Jul 1994, explicitly call for reverse-video if Sys5-curses.
  *		30 Jun 1994, added CTL/P, CTL/N as synonyms for up/down arrows
  *		28 Jun 1994, modified for window-resizing.
@@ -70,6 +71,12 @@ static	char	Id[] = "$Id: rawgets.c,v 12.10 1994/07/16 23:51:39 tom Exp $";
 #include	<ctype.h>
 #include	"td_curse.h"
 #include	"dyn_str.h"
+
+#if HAVE_LIBNCURSES		/* I think this is a bug in ncurses 1.8.5 */
+#define NCURSES_ADJ 1
+#else
+#define NCURSES_ADJ 0
+#endif
 
 #define	SHIFT	5
 
@@ -232,7 +239,7 @@ void	ShowAt(
 		register int	y, x, row, col, len, max;
 
 		getyx(Z, y, x);
-		for (row = y, col = x; *at && (row < Z->_maxy); row++) {
+		for (row = y, col = x; *at && (row < Z->_maxy + NCURSES_ADJ); row++) {
 			(void)wmove(Z, row, col);
 			len = strlen(at);
 			max = xlast - col;

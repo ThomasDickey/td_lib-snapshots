@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: dumpwin.c,v 12.6 1994/07/04 22:50:01 tom Exp $";
+static	char	Id[] = "$Id: dumpwin.c,v 12.7 1994/07/19 22:53:32 tom Exp $";
 #endif
 
 /*
@@ -34,15 +34,16 @@ void	dumpwin(
 	_DCL(char *,	tag)
 {
 	chtype	*p;
-	char	fname[BUFSIZ],
-		*s = strcat(strcpy(fname, getenv("HOME")), "/dumpwin.out");
+	char	fname[MAXPATHLEN],
+		*s = pathcat(fname, gethome(), "dumpwin.out");
 	FILE	*fp = fopen(s, "a+");
 	int	j,k;
 
 	if (fp) {
-	time_t	now = time((time_t *)0);
+		time_t	now = time((time_t *)0);
+
 		OUT "%s: %s", tag, ctime(&now));
-		OUT "window @ %p\n", w);
+		OUT "window @ %p (LINES=%d, COLS=%d)\n", w, LINES, COLS);
 
 		OUT "   _cury:%d, _curx:%d\n", w->_cury, w->_curx);
 		OUT "   _maxy:%d, _maxx:%d\n", w->_maxy, w->_maxx);
@@ -71,4 +72,3 @@ void	dumpwin(
 		FCLOSE(fp);
 	}
 }
-

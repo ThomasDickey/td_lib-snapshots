@@ -1,3 +1,12 @@
+1994-07-19  dickey@clark.net
+
+	* src/curses/bindkeys.c: still just notes
+
+	* src/curses/rawgets.c:
+	added def for NCURSES_ADJ (need to test other Sys5 curses)
+
+	* src/curses/dumpwin.c: use 'pathcat()'
+
 1994-07-18  dickey@clark.net
 
 	* src/curses/rawgets.c:
