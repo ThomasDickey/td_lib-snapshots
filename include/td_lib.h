@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 6.0 1990/03/28 08:04:32 ste_cm Rel $ */
+/* $Id: td_lib.h,v 6.1 1990/04/25 07:56:15 dickey Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for CM_TOOLS COMMON
@@ -22,6 +22,12 @@
 
 	/* abspath.c -------------------------------------------------- */
 #ifdef	unix
+		abshome(
+			_AR1(char *,	path)
+			)
+			_DCL(char *,	path)
+			_NUL
+
 		abspath(
 			_AR1(char *,	path)
 			)
