@@ -1,13 +1,15 @@
-# $Header: /users/source/archives/td_lib.vcs/include/RCS/Makefile,v 2.0 1989/03/21 16:17:11 ste_cm Exp $
+# $Header: /users/source/archives/td_lib.vcs/include/RCS/Makefile,v 2.1 1989/04/20 14:07:03 dickey Exp $
 # make-file for CM_TOOLS common interface directory
 #
 # $Log: Makefile,v $
-# Revision 2.0  1989/03/21 16:17:11  ste_cm
-# BASELINE Thu Apr  6 09:38:25 EDT 1989
+# Revision 2.1  1989/04/20 14:07:03  dickey
+# moved guts of llib-ltd to "common.h" to use for function-prototype on VMS.
 #
+#	Revision 2.0  89/03/21  16:17:11  ste_cm
+#	BASELINE Thu Apr  6 09:38:25 EDT 1989
+#	
 #	Revision 1.1  89/03/21  16:17:11  dickey
 #	Initial revision
-#	
 #	
 
 ####### (Development) ##########################################################
@@ -21,6 +23,7 @@ LLIB	= llib-l$(llib)
 L	= ../lib
 H_SRC	=\
 	cmdch.h\
+	common.h\
 	ptypes.h\
 	rcsdefs.h
 L_SRC	=\
@@ -40,4 +43,4 @@ lint.out:
 ####### (Details of Productions) ###############################################
 #
 $(SOURCES):		; $(GET) $@
-$L/$(LLIB).ln:	ptypes.h rcsdefs.h $(LLIB) ; -makellib -L$L $(LLIB) $(llib)
+$L/$(LLIB).ln:	$(H_SRC) $(LLIB) ; -makellib -L$L $(LLIB) $(llib)

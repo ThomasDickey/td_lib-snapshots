@@ -1,3 +1,105 @@
+1989-04-20  dickey@software.org
+
+	* include/ptypes.h:
+	renamed PORTUNIX's dir.h to unixdir.h to avoid potential name-conflict
+
+	* include/port2vms.h:
+	use definitions from CM_TOOLS "ptypes.h" where they apply
+
+	* src/Makefile: added MMS script to controlled-sources.
+
+	* src/pathname/modechar.c: port to VMS
+
+	* include/td_lib.h: ifdef'd out cutoff & erasechar for VMS port
+
+	* src/descrip.mms: RCS_BASE
+
+	* include/Makefile:
+	moved guts of llib-ltd to "common.h" to use for function-prototype on VMS.
+
+	* src/string/lsbycols.c: RCS_BASE
+
+1989-04-20  ste_cm@software.org
+
+	* src/string/lsbycols.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/string/lsbycols.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+	* src/string/lsbycols.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
+1989-04-20  dickey@software.org
+
+	* include/ptypes.h:
+	added definitions which support function-prototype/lint-library stuff.
+	also, first cut at port to VMS.
+
+	* include/rcsdefs.h:
+	moved function-prototype definitions here from "llib-ltd" so that "common.h"
+	need not be as big
+
+1989-04-20  ste_cm@software.org
+
+	* include/rcsdefs.h:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* include/rcsdefs.h: BASELINE Mon Jun 19 13:22:44 EDT 1989
+
+	* include/rcsdefs.h:
+	BASELINE Thu Aug 24 09:35:35 EDT 1989 -- support:navi_011(rel2)
+
+	* include/rcsdefs.h:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1989-04-20  dickey@software.org
+
+	* include/td_lib.h: RCS_BASE
+
+	* src/cm_funcs/rcskeys.c:
+	include "ptypes.h" before "rcsdefs.h" because of function-prototypes there.
+
+1989-04-20  ste_cm@software.org
+
+	* src/cm_funcs/rcskeys.c:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* src/cm_funcs/rcskeys.c: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* src/cm_funcs/rcskeys.c:
+	BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+
+	* src/cm_funcs/rcskeys.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+	* src/cm_funcs/rcskeys.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
+	* src/cm_funcs/rcskeys.c:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1989-04-20  dickey@software.org
+
+	* src/Makefile:
+	absorbed a bunch of library routines from MDIFF and PORTUNIX
+
+	* include/llib-ltd:
+	moved most of this file to "common.h" and "rcsdefs.h"
+
+1989-04-20  ste_cm@software.org
+
+	* include/llib-ltd:
+	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+
+	* include/llib-ltd: BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+
+	* include/llib-ltd: BASELINE Mon Jun 19 13:22:44 EDT 1989
+
+	* include/llib-ltd:
+	BASELINE Thu Aug 24 09:35:35 EDT 1989 -- support:navi_011(rel2)
+
+	* include/llib-ltd:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
 1989-04-19  dickey@software.org
 
 	* test/port2vms/README, src/process/makeargv.c: RCS_BASE
