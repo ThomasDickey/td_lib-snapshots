@@ -1,15 +1,21 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/string/RCS/dotcmp.c,v 8.0 1988/05/19 08:22:47 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: dotcmp.c,v 9.0 1991/05/15 10:01:35 ste_cm Rel $";
+#endif
 
 /*
  * Title:	dotcmp.c (compare dot-separated strings)
  * Author:	T.E.Dickey
  * Created:	19 May 1988
  * $Log: dotcmp.c,v $
- * Revision 8.0  1988/05/19 08:22:47  ste_cm
- * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ * Revision 9.0  1991/05/15 10:01:35  ste_cm
+ * BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
  *
+ *		Revision 8.1  91/05/15  10:01:35  dickey
+ *		apollo sr10.3 cpp complains about tag in #endif
+ *		
+ *		Revision 8.0  88/05/19  08:22:47  ste_cm
+ *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ *		
  *		Revision 7.0  88/05/19  08:22:47  ste_cm
  *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
  *		
@@ -89,4 +95,4 @@ int	j;
 	(void)exit(0);
 	/*NOTREACHED*/
 }
-#endif	TEST
+#endif

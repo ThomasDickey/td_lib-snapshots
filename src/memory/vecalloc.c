@@ -1,15 +1,21 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/memory/RCS/vecalloc.c,v 8.0 1988/05/17 09:40:23 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: vecalloc.c,v 9.0 1991/05/15 09:58:05 ste_cm Rel $";
+#endif
 
 /*
  * Title:	vecalloc.c (vector-allocator)
  * Author:	T.E.Dickey
  * Created:	01 Dec 1987
  * $Log: vecalloc.c,v $
- * Revision 8.0  1988/05/17 09:40:23  ste_cm
- * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ * Revision 9.0  1991/05/15 09:58:05  ste_cm
+ * BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
  *
+ *		Revision 8.1  91/05/15  09:58:05  dickey
+ *		apollo sr10.3 cpp complains about tag in #endif
+ *		
+ *		Revision 8.0  88/05/17  09:40:23  ste_cm
+ *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ *		
  *		Revision 7.0  88/05/17  09:40:23  ste_cm
  *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
  *		
@@ -42,9 +48,9 @@ extern	char	*doalloc();
 
 #ifdef	lint
 #define	DOALLOC(c,n)	(c *)0
-#else	lint
+#else
 #define	DOALLOC(c,n)	(c *)(doalloc((char *)0, sizeof(c) * (n)))
-#endif	lint
+#endif
 
 /*ARGSUSED*/
 char **

@@ -1,15 +1,18 @@
 #ifndef	lint
-static	char	Id[] = "$Id: ftype2.c,v 8.0 1989/10/04 12:11:05 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: ftype2.c,v 8.1 1991/05/15 09:25:41 dickey Exp $";
+#endif
 
 /*
  * Title:	ftype2.c (file-type/suffix #2)
  * Author:	T.E.Dickey
  * Created:	13 Sep 1988
  * $Log: ftype2.c,v $
- * Revision 8.0  1989/10/04 12:11:05  ste_cm
- * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ * Revision 8.1  1991/05/15 09:25:41  dickey
+ * apollo sr10.3 cpp complains about tag in #endif
  *
+ *		Revision 8.0  89/10/04  12:11:05  ste_cm
+ *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ *		
  *		Revision 7.0  89/10/04  12:11:05  ste_cm
  *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
  *		

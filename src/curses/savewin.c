@@ -1,15 +1,21 @@
 #ifndef	lint
-static	char	Id[] = "$Id: savewin.c,v 8.0 1989/12/07 14:11:34 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: savewin.c,v 9.0 1991/05/15 09:49:57 ste_cm Rel $";
+#endif
 
 /*
  * Author:	T.E.Dickey
  * Title:	savewin.c (save/unsave curses window)
  * Created:	25 Mar 1988
  * $Log: savewin.c,v $
- * Revision 8.0  1989/12/07 14:11:34  ste_cm
- * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ * Revision 9.0  1991/05/15 09:49:57  ste_cm
+ * BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
  *
+ *		Revision 8.1  91/05/15  09:49:57  dickey
+ *		apollo sr10.3 cpp complains about tag in #endif
+ *		
+ *		Revision 8.0  89/12/07  14:11:34  ste_cm
+ *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ *		
  *		Revision 7.0  89/12/07  14:11:34  ste_cm
  *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
  *		
@@ -68,10 +74,10 @@ static	SAVE	*saved;
 #define	_BODY(f,c)	static c *f(n) unsigned n; { return(0); }
 /*ARGSUSED */		_BODY(S_ALLOC, SAVE)
 /*ARGSUSED */		_BODY(c_ALLOC, chtype)
-#else	lint
+#else
 #define	S_ALLOC(n)	ALLOC(SAVE,n)
 #define	c_ALLOC(n)	ALLOC(chtype,n)
-#endif	lint
+#endif
 
 #ifndef	SYSTEM5
 /*
@@ -87,7 +93,7 @@ newC(c)
 		c = '.';
 	return (c);
 }
-#endif	SYSTEM5
+#endif	/* !SYSTEM5 */
 
 /*
  * Save a window on the stack.
@@ -129,7 +135,7 @@ register int j, row;
 			touchwin(stdscr);
 			clear();
 			refresh();
-#else	SYSTEM5
+#else	/* !SYSTEM5 */
 			/* "touch" cursor position */
 			VOID(wmove(stdscr, LINES, COLS));
 			VOID(wmove(curscr, LINES, COLS));
@@ -153,7 +159,7 @@ register int j, row;
 				FOR_ROW(curscr,row)
 					s[j] = newC(newC(bfr[j]));
 			}
-#endif	SYSTEM5
+#endif	/* !SYSTEM5 */
 		}
 
 		for (row = top, t = z; row < LINES; row++) {

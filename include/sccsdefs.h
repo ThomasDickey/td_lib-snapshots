@@ -1,4 +1,4 @@
-/* $Id: sccsdefs.h,v 8.0 1990/05/08 14:11:44 ste_cm Rel $ */
+/* $Id: sccsdefs.h,v 9.0 1991/05/15 09:01:15 ste_cm Rel $ */
 
 #ifndef	_SCCSDEFS_H_
 #define	_SCCSDEFS_H_
@@ -43,4 +43,4 @@
 			_DCL(int,	full)
 			_RET
 
-#endif	_SCCSDEFS_H_
+#endif	/* _SCCSDEFS_H_ */

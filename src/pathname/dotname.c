@@ -1,13 +1,19 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RCS/dotname.c,v 8.0 1985/12/16 09:28:47 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: dotname.c,v 9.0 1991/05/15 10:01:46 ste_cm Rel $";
+#endif
 
 /*
  * Created:	10 Dec 1985
  * $Log: dotname.c,v $
- * Revision 8.0  1985/12/16 09:28:47  ste_cm
- * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ * Revision 9.0  1991/05/15 10:01:46  ste_cm
+ * BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
  *
+ *		Revision 8.1  91/05/15  10:01:46  dickey
+ *		apollo sr10.3 cpp complains about tag in #endif
+ *		
+ *		Revision 8.0  85/12/16  09:28:47  ste_cm
+ *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ *		
  *		Revision 7.0  85/12/16  09:28:47  ste_cm
  *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
  *		

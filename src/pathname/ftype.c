@@ -1,15 +1,18 @@
 #ifndef	lint
-static	char	Id[] = "$Id: ftype.c,v 8.0 1989/10/04 11:52:08 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: ftype.c,v 8.1 1991/05/15 10:17:46 dickey Exp $";
+#endif
 
 /*
  * Title:	ftype.c (file-type/suffix)
  * Author:	T.E.Dickey
  * Created:	13 Sep 1988
  * $Log: ftype.c,v $
- * Revision 8.0  1989/10/04 11:52:08  ste_cm
- * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ * Revision 8.1  1991/05/15 10:17:46  dickey
+ * apollo sr10.3 cpp complains about tag in #endif
  *
+ *		Revision 8.0  89/10/04  11:52:08  ste_cm
+ *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ *		
  *		Revision 7.0  89/10/04  11:52:08  ste_cm
  *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
  *		
@@ -47,9 +50,9 @@ static	char	Id[] = "$Id: ftype.c,v 8.0 1989/10/04 11:52:08 ste_cm Rel $";
 
 #ifdef	vms
 #define	PATH_END	']'
-#else	unix
+#else	/* unix */
 #define	PATH_END	'/'
-#endif	vms/unix
+#endif	/* vms/unix */
 
 char *
 ftype(path)

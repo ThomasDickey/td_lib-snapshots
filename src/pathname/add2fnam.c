@@ -1,6 +1,6 @@
 #ifndef	lint
-static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RCS/add2fnam.c,v 8.0 1989/06/12 08:04:50 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: add2fnam.c,v 9.0 1991/05/15 10:15:44 ste_cm Rel $";
+#endif
 
 /*
  * Title:	add2fname.c
@@ -35,9 +35,9 @@ char	*name, *suffix;
 			return (FALSE);
 		}
 	}
-#else	unix
+#else	/* unix */
 	if (s = strrchr(name, '/'))	name = s;
-#endif	vms/unix
+#endif	/* vms/unix */
 	if (strlen(name) > strlen(suffix)
 	&&  !strcmp(name+strlen(name)-strlen(suffix), suffix))
 		return (FALSE);

@@ -1,6 +1,6 @@
 #ifndef	lint
-static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RCS/denode.c,v 8.0 1987/01/22 10:05:39 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: denode.c,v 9.0 1991/05/15 10:01:11 ste_cm Rel $";
+#endif
 
 /*
  * Function:	Remove a leading node-name from a path.

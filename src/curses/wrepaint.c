@@ -1,6 +1,6 @@
 #ifndef	lint
-static	char	what[] = "$Id: wrepaint.c,v 8.0 1989/09/28 10:49:03 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: wrepaint.c,v 9.0 1991/05/15 09:59:19 ste_cm Rel $";
+#endif
 
 /*
  * Title:	wrepaint.c (repaint-window)

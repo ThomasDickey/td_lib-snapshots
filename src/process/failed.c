@@ -1,6 +1,6 @@
 #ifndef	lint
-static	char	what[] = "$Id: failed.c,v 8.0 1989/08/17 09:05:22 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: failed.c,v 9.0 1991/05/15 10:03:35 ste_cm Rel $";
+#endif
 
 /*
  * Title:	failed.c (generic exit from program)
@@ -35,4 +35,4 @@ char	*argv[];
 	failed(argc > 1 ? argv[1] : argv[0]);
 	/*NOTREACHED*/
 }
-#endif	TEST
+#endif

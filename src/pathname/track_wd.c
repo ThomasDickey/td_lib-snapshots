@@ -1,6 +1,6 @@
 #ifndef	lint
-static	char	Id[] = "$Id: track_wd.c,v 8.0 1989/10/26 08:52:57 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: track_wd.c,v 9.0 1991/05/15 09:56:06 ste_cm Rel $";
+#endif
 
 /*
  * Title:	trace_wd.c (track working-directory)

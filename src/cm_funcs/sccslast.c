@@ -1,15 +1,21 @@
 #ifndef	lint
-static	char	Id[] = "$Id: sccslast.c,v 8.0 1990/06/22 08:07:40 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: sccslast.c,v 9.0 1991/05/15 09:50:19 ste_cm Rel $";
+#endif
 
 /*
  * Title:	sccslast.c (scan for last sccs date)
  * Author:	T.E.Dickey
  * Created:	20 Oct 1986
  * $Log: sccslast.c,v $
- * Revision 8.0  1990/06/22 08:07:40  ste_cm
- * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ * Revision 9.0  1991/05/15 09:50:19  ste_cm
+ * BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
  *
+ *		Revision 8.1  91/05/15  09:50:19  dickey
+ *		apollo sr10.3 cpp complains about tag in #endif
+ *		
+ *		Revision 8.0  90/06/22  08:07:40  ste_cm
+ *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
+ *		
  *		Revision 7.1  90/06/22  08:07:40  dickey
  *		if we have successfully opened/scanned "s." file, try to do
  *		the same for the "p." file so that we can show lock-owners.

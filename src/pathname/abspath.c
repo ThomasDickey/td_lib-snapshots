@@ -1,14 +1,20 @@
 #ifndef	lint
-static	char	Id[] = "$Id: abspath.c,v 8.1 1991/04/04 09:21:17 dickey Exp $";
-#endif	lint
+static	char	Id[] = "$Id: abspath.c,v 9.0 1991/05/15 10:15:23 ste_cm Rel $";
+#endif
 
 /*
  * Author:	T.E.Dickey
  * Created:	17 Sep 1987
  * $Log: abspath.c,v $
- * Revision 8.1  1991/04/04 09:21:17  dickey
- * try to recover in case 'getwd()' fails.
+ * Revision 9.0  1991/05/15 10:15:23  ste_cm
+ * BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
  *
+ *		Revision 8.2  91/05/15  10:15:23  dickey
+ *		apollo sr10.3 cpp complains about tag in #endif
+ *		
+ *		Revision 8.1  91/04/04  09:21:17  dickey
+ *		try to recover in case 'getwd()' fails.
+ *		
  *		Revision 8.0  90/04/24  16:40:29  ste_cm
  *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
  *		
@@ -85,7 +91,7 @@ extern	char	*getenv();
 #define	TOP	2			/* permit 2 leading /'s */
 #else
 #define	TOP	1
-#endif	apollo
+#endif	/* apollo */
 
 extern	char	*denode();
 
@@ -141,7 +147,7 @@ status_$t	st;
 	}
 #endif					/* apollo sr10.x vs sr9.x */
 }
-#endif	apollo
+#endif	/* apollo */
 
 /*
  * Concatenate two pathnames to make a longer one.
@@ -213,7 +219,7 @@ register char *s, *d = path;
 	if ((*d == '`')
 	||  (*d == '\\'))
 		apollo_name(d);
-#endif	apollo
+#endif	/* apollo */
 
 	/*
 	 * Strip altos-style nodename prefix, if applicable
@@ -238,9 +244,9 @@ register char *s, *d = path;
 				apollo_name(strcpy(thisnode, "/"));
 			precat(thisnode, path);
 		}
-#else	apollo
+#else	/* !apollo */
 		;
-#endif	apollo
+#endif	/* apollo */
 	} else if (*path) {
 	char	cwdpath[MAXPATHLEN];
 		if (d = getwd(cwdpath)) {
@@ -343,4 +349,4 @@ char	*argv[];
 	exit(SUCCESS);
 	/*NOTREACHED*/
 }
-#endif	TEST
+#endif	/* TEST */

@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 8.0 1990/08/13 13:37:55 ste_cm Rel $ */
+/* $Id: ptypes.h,v 8.1 1991/05/15 13:06:04 dickey Exp $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -20,6 +20,9 @@
 #ifndef	P_tmpdir
 #define	P_tmpdir	"/usr/tmp"
 #ifdef	L_tmpnam
+#ifdef _SYS_STDSYMS_INCLUDED
+#define	apollo_sr10
+#endif
 #else
 #define	L_tmpnam	32
 #ifdef	apollo
@@ -28,12 +31,10 @@
 #endif	/* L_tmpnam */
 #endif	/* P_tmpdir */
 
-#ifdef	S_IFSOCK
-#if	S_IFSOCK == S_IFLNK
+#ifdef	apollo
+#ifdef	CLASSIC_SYS5_FUNC
 #define	SYSTEM5		/* apollo sr10.x sys5 */
 #endif
-#else			/* no sockets, assume bsd4.x */
-#define	SYSTEM5
 #endif
 
 #ifndef	S_IFLNK
@@ -45,7 +46,7 @@
 extern	char	*getcwd();
 #else	/* !SYSTEM5 */
 extern	char	*getwd();
-#ifdef	unix		/* bsd4.x on SunOs? */
+#if	defined(unix) && !defined(apollo)	/* bsd4.x on SunOs? */
 extern	char	*sprintf();
 #endif
 #endif
@@ -123,12 +124,17 @@ extern	char	*sprintf();
 #endif	/* vms/unix */
 #endif	/* SYSTEM5 */
 
-/* the type of return-value from "signal()" */
-#if	defined(apollo) || !defined(NBBY)
-#define	SIGS_T		int
-#else
-#define	SIGS_T		void
+#ifdef	SIG_PTYPES
+#include <signal.h>
+/* defines the type of return-value from "signal()" */
+#ifdef	apollo
+#ifndef	__SIG_HANDLER_T
+typedef	int	(__sig_handler_t)();	/* pre sr10.3 */
 #endif
+#else	/* !apollo */
+typedef	void	(__sig_handler_t)();
+#endif
+#endif	/* SIG_PTYPES */
 
 extern	V_OR_I	_exit();
 extern	V_OR_I	exit();

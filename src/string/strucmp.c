@@ -1,6 +1,6 @@
 #ifndef	lint
-static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/string/RCS/strucmp.c,v 8.0 1988/10/05 14:55:33 ste_cm Rel $";
-#endif	lint
+static	char	Id[] = "$Id: strucmp.c,v 9.0 1991/05/15 09:55:46 ste_cm Rel $";
+#endif
 
 /*
  * Title:	strucmp.c
@@ -43,4 +43,4 @@ char	*argv[];
 		printf("%s %s %s\n", argv[1], tag[k+1], argv[j]);
 	}
 }
-#endif	TEST
+#endif
