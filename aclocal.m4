@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.6 1994/05/28 23:43:46 tom Exp $
+dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.8 1994/05/29 00:48:07 tom Exp $
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4"
 dnl ---------------------------------------------------------------------------
@@ -14,19 +14,49 @@ dnl ---------------------------------------------------------------------------
 dnl Test if "##" is substituted properly, or failing that, if /**/ can do
 dnl the trick.
 define([AC_ANSI_CPP],
-[AC_CHECKING(for ANSI CPP token-splicing)
+[AC_CHECKING(for ANSI CPP token-splicing/quoting)
 AC_TEST_PROGRAM([
 #define cat(a,b) a##b
 int main() { cat(lo,ng) x; char *y = "a" "b"; exit (0);}
 ],
-[AC_DEFINE(HAVE_NEW_TOKEN_SPLICE) ansi_cpp=1], ansi_cpp=0)
-if test $ansi_cpp = 0; then
+[AC_DEFINE(HAVE_NEW_TOKEN_SPLICE)])
+AC_TEST_PROGRAM([
+#define quote(name) #name
+int main() { char *y = quote(a); exit (*y != 'a');}
+],
+[AC_DEFINE(HAVE_NEW_TOKEN_QUOTE)])
 AC_TEST_PROGRAM([
 #define cat(a,b) a/**/b
 int main() { cat(lo,ng) x; exit (0);}
 ],
 [AC_DEFINE(HAVE_OLD_TOKEN_SPLICE)])
-fi
+AC_TEST_PROGRAM([
+#define quote(name) "name"
+int main() { char *y = quote(a); exit (*y != 'a');}
+],
+[AC_DEFINE(HAVE_OLD_TOKEN_QUOTE)])
+])
+dnl ---------------------------------------------------------------------------
+dnl Tests for the ensemble of include-files and functions that make up the
+dnl host's regular expression parsing.
+define([AC_REGEX],
+[AC_CHECKING(for regular-expression library support)
+AC_TEST_PROGRAM([
+#include <sys/types.h>
+#include <regex.h>
+int main() {
+	regex_t e;
+	char *p = "foo";
+	char *s = "foobar";
+	if (regcomp(&e, p, 0) != 0
+	 || regexec(&e, s, 0, (regmatch_t*)0, 0) < 0)
+	 	exit(1);
+	regfree(&e);
+	exit(0);
+}
+], [AC_DEFINE(HAVE_REGEX_H_FUNCS)])
+AC_HAVE_HEADERS(regexpr.h)
+AC_HAVE_FUNCS(compile step)
 ])
 dnl ---------------------------------------------------------------------------
 define([AC_GMTOFF],
