@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)sccslast.c	1.4 88/05/17 12:20:01";
+static	char	sccs_id[] = "@(#)sccslast.c	1.5 88/05/18 13:59:39";
 #endif	lint
 
 /*
@@ -7,7 +7,7 @@ static	char	sccs_id[] = "@(#)sccslast.c	1.4 88/05/17 12:20:01";
  * Author:	T.E.Dickey
  * Created:	20 Oct 1986
  * Modified:
- *		17 May 1988, lint.
+ *		18 May 1988, moved 'sccszone' call here
  *		30 Sep 1987, if file is sccs-file, determine the data of the
  *			     corresponding checked-out file.
  *
@@ -24,6 +24,7 @@ extern	char	*strcat(),
 		*strrchr();
 
 extern	long	packdate();
+extern	long	sccszone();
 
 #define	MAXPATH	256
 
@@ -54,7 +55,8 @@ int	gotten = 0;
 					&hr, &mn, &sc) != 8)	break;
 				*rels_ = rel;
 				*vers_ = ver;
-				*date_ = packdate (1900+yy, mm, dd, hr, mn, sc);
+				*date_ = packdate (1900+yy, mm, dd, hr, mn, sc)
+					- sccszone();
 				break;
 			}
 		}

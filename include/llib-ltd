@@ -1,4 +1,4 @@
-/* @(#)llib-ltd	1.13 88/05/17 07:57:33 */
+/* @(#)llib-ltd	1.14 88/05/18 13:31:14 */
 /*LINTLIBRARY*/
 
 #include	<curses.h>
@@ -79,6 +79,9 @@ int	padedit(name, readonly) char *name; { return(0); }
 
 /* rawterm.c ---------------------------------------------------------- */
 	rawterm() { }
+
+/* rcslast.c --------------------------------------------------------- */
+	rcslast(wd,n,r_,v_,t_) char *wd,*n; unsigned char *r_,*v_; time_t *t_; { }
 
 /* resizewin.c -------------------------------------------------------- */
 int	resizewin() { return(0); }

@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19880517
+MANIFEST for td_lib, version t19880518
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 include                         subdirectory
@@ -9,6 +9,7 @@ src                             subdirectory
 src/Makefile                    makefile for td_lib/src
 src/cm_funcs                    subdirectory
 src/cm_funcs/packdate.c         pack numbers to make UNIX date
+src/cm_funcs/rcslast.c          scan for last RCS date & version
 src/cm_funcs/sccslast.c         scan for last SCCS date & version
 src/curses                      subdirectory
 src/curses/beep.c               sound audible alarm

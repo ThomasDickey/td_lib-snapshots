@@ -1,3 +1,12 @@
+1988-05-18  dickey@software.org
+
+	* src/cm_funcs/sccslast.c:
+	'sccszone' follows 'packdate', not stat-upwards.  Changes the return value of this code!
+
+	* src/cm_funcs/rcslast.c: New file.
+
+	* include/llib-ltd, src/Makefile: added 'rcslast.c' module.
+
 1988-05-17  dickey@software.org
 
 	* src/curses/resizwin.c: lint
