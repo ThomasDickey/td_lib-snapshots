@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcstemp.c,v 9.10 1991/10/04 12:25:04 dickey Exp $";
+static	char	Id[] = "$Id: rcstemp.c,v 10.0 1991/10/22 11:31:05 ste_cm Rel $";
 #endif
 
 /*
@@ -7,6 +7,8 @@ static	char	Id[] = "$Id: rcstemp.c,v 9.10 1991/10/04 12:25:04 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	25 Aug 1988
  * Modified:
+ *		22 Oct 1991, ensure that we unlink the temp-file if it already
+ *			     exists.
  *		04 Oct 1991, conversion to ANSI
  *		12 Sep 1991, removed redundant def for 'errno' (VMS C 3.2)
  *		11 Jul 1991, don't need temp-name if suid-root
@@ -53,18 +55,26 @@ _DCL(int,	copy)
 		int	mode = ((getgid() == getegid()) ? 0775 : 0777);
 		struct	stat	sb;
 
-		DEBUG("mode:%o gid:%d/%d\n", mode, getgid(),getegid());
+		DEBUG(".. rcstemp mode is %o gid:%d(%s) egid:%d(%s)\n",
+			mode,
+			getgid(),	gid2s(getgid()),
+			getegid(),	gid2s(getegid()));
+
 		if (stat(tf, &sb) < 0) {
 			int	oldmask = umask(0);
-			DEBUG(".. mkdir %s (mode=%o)\n", tf, mode);
+
+			DEBUG("%% mkdir %s\n", tf);
 			if (mkdir(tf, mode) < 0) {
 				failed(tf);
 				/*NOTREACHED*/
 			}
+
+			/* make sure we get the right group */
 			if (chown(tf, (int)geteuid(), (int)getegid()) < 0){
 				failed("chown");
 				/*NOTREACHED*/
 			}
+
 			(void)umask(oldmask);
 		} else {
 			if ((sb.st_mode & S_IFMT) != S_IFDIR) {
@@ -72,11 +82,15 @@ _DCL(int,	copy)
 				failed(tf);
 				/*NOTREACHED*/
 			}
-			DEBUG("group:%d\n", sb.st_gid);
+
+			DEBUG(".. %s group is %d(%s)\n",
+				tf, sb.st_gid, gid2s(sb.st_gid));
+
 			if (getgid() != sb.st_gid)
 				mode = 0777;
+
 			if ((sb.st_mode &= 0777)   != mode) {
-				DEBUG(".. chmod %o %s (was %o)\n",
+				DEBUG("%% chmod %o %s (was %o)\n",
 						mode, tf, sb.st_mode);
 				if (chmod(tf, mode) < 0) {
 					if (sb.st_mode != 0777) {
@@ -88,6 +102,7 @@ _DCL(int,	copy)
 		}
 
 		tf = pathcat(tmp, tf, pathleaf(working));
+		(void)unlink(tf);
 		if (filecopy(working, tf, copy) < 0) {
 			failed(tf);
 			/*NOTREACHED*/
