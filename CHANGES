@@ -1,3 +1,18 @@
+1989-04-13  dickey@software.org
+
+	* support/td_lib.mms, support/td_progs.mms: New file.
+
+1989-04-13  ste_cm@software.org
+
+	* support/td_progs.mms:
+	BASELINE Fri Oct  6 15:23:19 EDT 1989 -- support:ada_pits_000(rel3)
+
+	* support/td_progs.mms: BASELINE Mon Jun 12 09:07:53 EDT 1989
+
+1989-04-13  dickey@software.org
+
+	* src/port2vms/vms2name.c: New file.
+
 1989-04-12  dickey@software.org
 
 	* src/pathname/file2arg.c: RCS_BASE
