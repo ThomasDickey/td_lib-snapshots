@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: cmv_last.c,v 12.3 1994/09/29 00:27:02 tom Exp $";
+static	char	Id[] = "$Id: cmv_last.c,v 12.4 1995/01/05 23:38:03 tom Exp $";
 #endif
 
 /*
@@ -7,6 +7,8 @@ static	char	Id[] = "$Id: cmv_last.c,v 12.3 1994/09/29 00:27:02 tom Exp $";
  * Author:	T.E.Dickey
  * Created:	02 Aug 1994, from 'sccslast.c'
  * Modified:
+ *		05 Jan 1995, CMVision stores all branches in the main trunk,
+ *			     must use r-curr file to find the actual tip-version
  *		28 Sep 1994, CMVision encodes the file locks in the r-file.
  *		11 Aug 1994, CMVision encodes file modification time in the
  *			     change-comment.
@@ -43,6 +45,7 @@ void	ScanSCCS (
 {
 	auto	FILE	*fp = fopen(path, "r");
 	auto	int	gotten = 0;
+	auto	int	match  = FALSE;
 	auto	char	bfr[BUFSIZ];
 	auto	char	*s;
 	auto	int	yy, mm, dd, hr, mn, sc;
@@ -56,18 +59,17 @@ void	ScanSCCS (
 					break;
 				gotten++;
 			}
-			if (!strncmp(bfr, "\001d D ", 4)) {
-				if (sscanf(bfr+4, "%s %d/%d/%d %d:%d:%d ",
-						ver,
-						&yy, &mm, &dd,
-						&hr, &mn, &sc) != 7)
-					break;
-				if (strchr(ver, '.') != strrchr(ver, '.'))
-					continue;
-				*vers_ = txtalloc(ver);
+			if ((strncmp(bfr, "\001d D ", 4) == 0)
+			 && (sscanf(bfr+4, "%s %d/%d/%d %d:%d:%d ",
+				ver,
+				&yy, &mm, &dd,
+				&hr, &mn, &sc) == 7)
+			 && (strcmp(*vers_, ver) == 0)) {
+				match = TRUE;
 				*date_ = packdate (1900+yy, mm, dd, hr, mn, sc);
 			}
-			if (!strncmp(bfr, "\001c ", 3)) {
+			if (match
+			 && !strncmp(bfr, "\001c ", 3)) {
 				time_t	when;
 				if ((s = strstr(bfr, "\\\001O")) != 0) {
 					while (strncmp(s, ":M", 2) && *s)
@@ -105,15 +107,8 @@ void	cmv_last (
 	*date_ = 0;
 
 	if (archive != 0) {
-		char *lockedby;
-		char *revision;
+		get_cmv_lock(working, path, lock_, vers_);
 		ScanSCCS(archive, vers_, date_);
-		get_cmv_lock(working, path, &lockedby, &revision);
-		if (lockedby != 0)
-			*lock_ = lockedby;
-		/* FIXME: do we pick up correctly the version if a non-top
-		 * version is locked?
-		 */
 	}
 }
 
