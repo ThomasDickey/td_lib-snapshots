@@ -1,3 +1,12 @@
+1988-05-26  dickey@software.org
+
+	* src/cm_funcs/rcskeys.c, include/rcsdefs.h: New file.
+
+	* src/process/bldarg.c:
+	permit embedded blanks in args, as done by 'catarg()'.
+
+	* src/process/getuser.c, src/process/catarg.c: New file.
+
 1988-05-25  dickey@software.org
 
 	* src/pathname/copyback.c: New file.

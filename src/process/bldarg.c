@@ -1,10 +1,14 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)bldarg.c	1.1 85/12/17 11:59:12";
+static	char	sccs_id[] = "@(#)bldarg.c	1.2 88/05/26 10:50:48";
 #endif	lint
 
 /*
+ * Title:	bldarg.c (build argv-array)
  * Created:	17 Dec 1985
- * Modified:	17 Dec 1985
+ * Modified:
+ *		26 May 1988, accommodate changes in 'catarg()', which sets
+ *			     spaces to non-ASCII characters to pass them thru
+ *			     this procedure.
  *
  * Function:	Chop a command-string into words and point to the pieces via
  *		an argv-vector so that we can use the processed argument list
@@ -27,6 +31,7 @@ static	char	sccs_id[] = "@(#)bldarg.c	1.1 85/12/17 11:59:12";
  */
 
 #include	<ctype.h>
+#define	blank(c)	(isascii(c) && isspace(c))
 
 bldarg (argc, argv, string)
 char	*argv[], *string;
@@ -35,9 +40,13 @@ register int  j  = 0;
 register char *s = string;
 
 	while (*s && (j < argc-1)) {
-		while (isspace(*s))		*s++ = '\0';
+		while (blank(*s))	
+			*s++ = '\0';
 		argv[j++] = s;
-		while (*s && !isspace(*s))	s++;
+		while (*s && !blank(*s)) {
+			*s = toascii(*s);
+			s++;
+		}
 	}
-	argv[j++] = 0;
+	argv[j] = 0;
 }
