@@ -1,7 +1,11 @@
-/* $Id: td_ext.h,v 12.13 1997/09/07 17:07:39 tom Exp $ */
+/* $Id: td_ext.h,v 12.14 1998/05/30 01:27:50 tom Exp $ */
 
 #ifndef	TD_EXT_H
 #define	TD_EXT_H
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /*
  * This file provides missing extern/prototype declarations for external
@@ -439,6 +443,10 @@ extern	int	vfork	 ARGS((void));
 
 #if HAVE_GETCWD		/* prefer Posix functions */
 #define	getwd(p)	getcwd(p,MAXPATHLEN)
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif	/* TD_EXT_H */

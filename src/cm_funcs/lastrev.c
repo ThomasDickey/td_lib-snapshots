@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	03 Aug 1994, from 'dedscan.c'
  * Modified:
+ *		30 May 1998, compile with g++
  *		15 Feb 1998, guard against use of non-configured modules.
  *
  * Function:	Combines calls to rcslast, sccslast, cmv_last.
@@ -14,7 +15,7 @@
 #include	"rcsdefs.h"
 #include	"sccsdefs.h"
 
-MODULE_ID("$Id: lastrev.c,v 12.6 1998/02/15 20:25:43 tom Exp $")
+MODULE_ID("$Id: lastrev.c,v 12.7 1998/05/30 16:34:55 tom Exp $")
 
 #if defined(CMV_PATH) && !(defined(RCS_PATH) || defined(SCCS_PATH))
 #undef CMV_PATH
@@ -30,8 +31,8 @@ typedef	enum TrySCCS { DontTry, TrySccs, TryRcs, TryCmVision } TRY;
 #define MAX_ORDER 10
 
 static	TRY	try_order(
-	_AR1(int,	try))
-	_DCL(int,	try)
+	_AR1(int,	tried))
+	_DCL(int,	tried)
 {
 	static	int	 num_order;
 	static	TRY vec_order[MAX_ORDER];
@@ -64,9 +65,9 @@ static	TRY	try_order(
 
 		vec_order[num_order++] = DontTry; /* end-marker */
 	}
-	if (try >= num_order)
-		try = num_order;
-	return vec_order[try];
+	if (tried >= num_order)
+		tried = num_order;
+	return vec_order[tried];
 }
 
 #define	LAST(p)	p(working_dir, filename, vers_ptr, time_ptr, lock_ptr)
@@ -85,20 +86,20 @@ void	lastrev(
 	_DCL(char **,	lock_ptr)
 {
 	int	n;
-	TRY	try;
-	for (n = 0; (try = try_order(n)) != DontTry; n++) {
+	TRY	tried;
+	for (n = 0; (tried = try_order(n)) != DontTry; n++) {
 #ifdef	RCS_PATH
-		if (try == TryRcs) {
+		if (tried == TryRcs) {
 			LAST(rcslast);
 		}
 #endif
 #ifdef	SCCS_PATH
-		if (try == TrySccs) {
+		if (tried == TrySccs) {
 			LAST(sccslast);
 		}
 #endif
 #ifdef	CMV_PATH
-		if (try == TryCmVision) {
+		if (tried == TryCmVision) {
 			LAST(cmv_last);
 		}
 #endif

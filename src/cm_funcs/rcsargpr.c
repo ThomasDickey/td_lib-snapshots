@@ -77,7 +77,7 @@
 #include "rcsdefs.h"
 #include <errno.h>
 
-MODULE_ID("$Id: rcsargpr.c,v 12.4 1994/05/21 20:16:53 tom Exp $")
+MODULE_ID("$Id: rcsargpr.c,v 12.5 1998/05/30 11:30:17 tom Exp $")
 
 /************************************************************************
  *	local data							*
@@ -122,7 +122,7 @@ is_archive(
 _AR1(char *,	name))
 _DCL(char *,	name)
 {
-	int	len = strlen(name);
+	size_t	len = strlen(name);
 	if (len >= LEN_SUFFIX)
 		if (!strcmp(suffix, name + len - LEN_SUFFIX))
 			return (TRUE);

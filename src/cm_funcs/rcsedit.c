@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	26 May 1988
  * Modified:
+ *		30 May 1998, compile with g++
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		17 Nov 1992, modified _FNX macro
@@ -38,7 +39,7 @@
 #include	"rcsdefs.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: rcsedit.c,v 12.6 1994/07/11 01:27:54 tom Exp $")
+MODULE_ID("$Id: rcsedit.c,v 12.7 1998/05/30 10:51:39 tom Exp $")
 
 /* local definitions */
 #define	VERBOSE	if (verbose) PRINTF
@@ -290,22 +291,22 @@ char *	rcsread(
  *	recent call on 'rcsparse_id()' or 'rcsparse_num()'.
  */
 void	rcsedit (
-	_ARX(char *,	old)
-	_AR1(char *,	new)
+	_ARX(char *,	oldname)
+	_AR1(char *,	newname)
 		)
-	_DCL(char *,	old)
-	_DCL(char *,	new)
+	_DCL(char *,	oldname)
+	_DCL(char *,	newname)
 {
-	size_t	len = strlen(old);
+	size_t	len = strlen(oldname);
 	char	tmp[BUFSIZ];
 
 	if ((edit_at < buffer)
 	 || (edit_at > buffer + strlen(buffer))
-	 || strncmp(old, edit_at, len))
+	 || strncmp(oldname, edit_at, len))
 		failed("rcsedit");
 
 	(void)strcpy(tmp, edit_at + len);
-	(void)strcat(strcpy(edit_at, new), tmp);
+	(void)strcat(strcpy(edit_at, newname), tmp);
 	changes++;
 }
 

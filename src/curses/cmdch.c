@@ -46,7 +46,7 @@
 #include	"td_curse.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: cmdch.c,v 12.26 1998/02/17 23:37:07 tom Exp $")
+MODULE_ID("$Id: cmdch.c,v 12.27 1998/05/30 01:02:36 tom Exp $")
 
 #define	ESC(c)	((c) == '\033')
 #define	END(s)	s[strlen(s)-1]
@@ -116,7 +116,7 @@ int	cmdch(
 	_AR1(int *,	cnt_))
 	_DCL(int *,	cnt_)
 {
-	register j = 0;
+	register int	j = 0;
 	auto	int	c	= EOS,
 			done	= FALSE,
 			had_c	= 0,

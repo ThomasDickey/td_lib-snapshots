@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	19 Aug 1988
  * Modified:
+ *		30 May 1998, compile with g++
  *		29 Oct 1993, ifdef-ident
  *		27 Sep 1993, forgot to allow EOS in 'append()'.
  *		21 Sep 1993, gcc-warnings.  Fixes for uninitialized-memory with
@@ -45,7 +46,7 @@
 #include	<ctype.h>
 #include	<time.h>
 
-MODULE_ID("$Id: rcsload.c,v 12.6 1994/07/02 17:23:57 tom Exp $")
+MODULE_ID("$Id: rcsload.c,v 12.8 1998/05/30 10:57:10 tom Exp $")
 
 #ifdef	TEST
 #define	DEBUG(s) PRINTF s;
@@ -72,8 +73,8 @@ static	char	**load_vector,		/* one-shot pointer to line-pointers */
 
 					/* buffer maintained by 'loadtext()' */
 static	char	*my_buffer;
-static	int	my_length;
-static	unsigned my_limit;
+static	size_t	my_length;
+static	size_t	my_limit;
 
 /************************************************************************
  *	local procedures						*
@@ -335,14 +336,15 @@ _DCL(int,	load)
 _DCL(int,	verbose)
 {
 	static	DELTREE	nil;		/* empty struct, for terminator */
-	DELTREE	new,			/* current struct, for loading	*/
+	DELTREE	newtree,		/* current struct, for loading	*/
 		*vec = 0;		/* vector of structs to return	*/
-	unsigned total = 0;		/* number of items in vector	*/
+	size_t	total = 0;		/* number of items in vector	*/
 	char	key[BUFSIZ],
 		tmp[BUFSIZ],
 		*name,
 		*s	= 0;
-	register int j, k;
+	register size_t j;
+	register int k;
 	int	delta	= 0,
 		code	= S_FAIL;
 
@@ -379,7 +381,7 @@ _DCL(int,	verbose)
 		case S_VERS:
 			last_rev = txtalloc(key);
 			if (delta == 0) {
-				new.revision = last_rev;
+				newtree.revision = last_rev;
 			} else {
 				k = -1;
 				for (j = 0; j < total; j++)
@@ -393,19 +395,19 @@ _DCL(int,	verbose)
 			break;
 		case S_NEXT:
 			s = rcsparse_num(tmp,s);
-			new.parent = txtalloc(tmp);
-			new.buffer = load_buffer;	load_buffer = 0;
+			newtree.parent = txtalloc(tmp);
+			newtree.buffer = load_buffer;	load_buffer = 0;
 			vec = DOALLOC(vec,DELTREE,((total+1)|CHUNK)+1);
-			vec[total++] = new;
+			vec[total++] = newtree;
 			vec[total]   = nil;
 			break;
 		case S_DATE:
 			s = rcsparse_num(tmp, s);
-			new.tstamp = rcs2time(tmp);
+			newtree.tstamp = rcs2time(tmp);
 			break;
 		case S_AUTHOR:
 			s = rcsparse_id(tmp, s);
-			new.author = txtalloc(tmp);
+			newtree.author = txtalloc(tmp);
 			break;
 		case S_DESC:
 			s = rcsparse_str(s, (RcsparseStr)0);

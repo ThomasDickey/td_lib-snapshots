@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	07 Feb 1992
  * Modified:
+ *		30 May 1998, compile with g++
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *
@@ -24,7 +25,7 @@
 #include "rcsdefs.h"
 #include <ctype.h>
 
-MODULE_ID("$Id: rcssymbs.c,v 12.3 1993/10/29 17:35:24 tom Exp $")
+MODULE_ID("$Id: rcssymbs.c,v 12.4 1998/05/30 10:51:39 tom Exp $")
 
 #define	isname(c)	(isalnum(c) || (c == '_'))
 
@@ -85,14 +86,14 @@ _DCL(char *,	value)
 
 	register char	*d = buffer,
 			*s = in_out;
-	register int	this;
+	register int	item;
 
 	while (*s == '.')
 		s++;
 	*d = EOS;
 
 	while (*s) {
-		if ((this = *s++) == '.') {
+		if ((item = *s++) == '.') {
 			substitute(base, name, value);
 			d     = base + strlen(base);
 			first = TRUE;
@@ -100,7 +101,7 @@ _DCL(char *,	value)
 			first = FALSE;
 			base  = d;
 		}
-		*d++ = this;
+		*d++ = item;
 		*d = EOS;
 	}
 	substitute(base, name, value);

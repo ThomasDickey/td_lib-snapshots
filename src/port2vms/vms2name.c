@@ -38,7 +38,7 @@
 #define	STR_PTYPES
 #include	"port2vms.h"
 
-MODULE_ID("$Id: vms2name.c,v 12.2 1994/08/21 18:39:51 tom Exp $")
+MODULE_ID("$Id: vms2name.c,v 12.3 1998/05/30 10:55:21 tom Exp $")
 
 #define	LOWER(p)	((isalpha(*p) && isupper(*p)) ? LowerMacro(*p) : *p)
 
@@ -62,7 +62,8 @@ char *	vms2name(
 	_DCL(char *,	dst)
 	_DCL(char *,	src)
 {
-	register int j, uc_len = 0;
+	register size_t j;
+	register int uc_len = 0;
 	auto	char	current[MAXPATHLEN];
 	auto	int	need_dev = FALSE,
 			have_dev = FALSE,

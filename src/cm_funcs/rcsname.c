@@ -43,7 +43,7 @@
 
 #include	<ctype.h>
 
-MODULE_ID("$Id: rcsname.c,v 12.6 1994/07/02 17:18:14 tom Exp $")
+MODULE_ID("$Id: rcsname.c,v 12.7 1998/05/30 11:05:28 tom Exp $")
 
 #define	LEN_SUFFIX	(sizeof(suffix)-1)
 
@@ -61,7 +61,7 @@ int	rcs_suffix(
 	_AR1(char *,	name))
 	_DCL(char *,	name)
 {
-	int	len = strlen(name);
+	size_t	len = strlen(name);
 	if (len >= LEN_SUFFIX)
 		if (!strcmp(suffix, name + len - LEN_SUFFIX))
 			return (TRUE);

@@ -26,7 +26,7 @@
 #include	"rcsdefs.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: rcskeys.c,v 12.3 1993/10/29 17:35:24 tom Exp $")
+MODULE_ID("$Id: rcskeys.c,v 12.4 1998/05/30 11:05:19 tom Exp $")
 
 int	rcskeys(
 	_AR1(char *,	arg))
@@ -55,7 +55,7 @@ int	rcskeys(
 		{S_LOG,		"log"},		/* log-message		*/
 		{S_TEXT,	"text"}		/* text/editing commands*/
 		};
-	register int j;
+	register size_t j;
 	register char	*s = arg;
 	int	code	= -1;
 

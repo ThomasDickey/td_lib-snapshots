@@ -1,4 +1,4 @@
-/* $Id: rcsdefs.h,v 12.3 1994/06/25 14:15:37 tom Exp $ */
+/* $Id: rcsdefs.h,v 12.4 1998/05/30 01:19:44 tom Exp $ */
 
 #ifndef	RCSDEFS_H
 #define	RCSDEFS_H
@@ -89,11 +89,11 @@ typedef	void	(*RcsparseStr)(
 			_ret
 
 	int	rcsargpair(
-			_arx(int,	this)
+			_arx(int,	item)
 			_arx(int,	argc)
 			_ar1(char **,	argv)
 			)
-			_dcl(int,	this)
+			_dcl(int,	item)
 			_dcl(int,	argc)
 			_dcl(char **,	argv)
 			_ret
@@ -118,11 +118,11 @@ typedef	void	(*RcsparseStr)(
 			_ret
 
 	void	rcsedit (
-			_arx(char *,	old)
-			_ar1(char *,	new)
+			_arx(char *,	oldname)
+			_ar1(char *,	newname)
 			)
-			_dcl(char *,	old)
-			_dcl(char *,	new)
+			_dcl(char *,	oldname)
+			_dcl(char *,	newname)
 			_nul
 
 	void	rcsclose(_ar0)

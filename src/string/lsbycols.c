@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	17 Apr 1989
  * Modified:
+ *		30 May 1998, compile with g++
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, converted to ANSI
@@ -19,7 +20,7 @@
 #define	STR_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: lsbycols.c,v 12.3 1993/10/29 17:35:25 tom Exp $")
+MODULE_ID("$Id: lsbycols.c,v 12.4 1998/05/30 10:51:39 tom Exp $")
 
 #ifdef	lint
 #define	LIST(n)	(*(listp + n))		/* close enough to fool lint */
@@ -40,33 +41,33 @@ void	list_by_cols(
 {
 	register int	j, k;
 	auto	 int	maxlen = 0,	/* length of widest column */
-			this,
+			len,
 			gap,		/* gap between columns */
 			cols,		/* number of columns to print */
 			rows;		/* last row-number */
 
 	for (j = 0; j < num; j++)
-		if ((this = strlen(LIST(j))) > maxlen)
-			maxlen = this;
+		if ((len = strlen(LIST(j))) > maxlen)
+			maxlen = len;
 	gap  = (maxlen / 4) + 3;
 	cols = MAXCOL / (maxlen + gap);
 	rows = (num + (cols - 1)) / cols;
 
 	for (j = 0; j < rows; j++) {
 		for (k = 0; k < cols; k++) {
-			if ((this = j + (k * rows)) >= num) {
+			if ((len = j + (k * rows)) >= num) {
 				if (k != 0)
 					PRINTF("\n");
 				break;
 			}
 			if (k != 0)
 				PRINTF("%*s", gap, " ");
-			if ((this + rows >= num)
+			if ((len + rows >= num)
 			||  (k == cols - 1)) {
-				PRINTF("%s\n", LIST(this));
+				PRINTF("%s\n", LIST(len));
 				break;
 			} else
-				PRINTF("%-*s", maxlen, LIST(this));
+				PRINTF("%-*s", maxlen, LIST(len));
 		}
 	}
 }

@@ -23,7 +23,7 @@
 #define	SIG_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: catchall.c,v 12.4 1993/11/26 13:28:40 tom Exp $")
+MODULE_ID("$Id: catchall.c,v 12.5 1998/05/30 10:54:36 tom Exp $")
 
 void	catchall(
 	_FN1(SIG_T,	catchsig,	(SIGNAL_ARGS)))
@@ -40,7 +40,7 @@ void	catchall(
 				,SIGPIPE
 #endif
 			};
-	register int j;
+	register size_t j;
 
 	for (j = 0; j < sizeof(sigs); j++) {
 		if (catchsig == 0) {

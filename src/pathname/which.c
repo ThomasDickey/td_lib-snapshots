@@ -30,7 +30,7 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: which.c,v 12.6 1994/05/21 20:18:44 tom Exp $")
+MODULE_ID("$Id: which.c,v 12.7 1998/05/30 16:20:32 tom Exp $")
 
 static
 int	executable(
@@ -70,12 +70,12 @@ int	executable(
 
 int	which(
 	_ARX(char *,	bfr)
-	_ARX(int,	len)
+	_ARX(unsigned,	len)
 	_ARX(char *,	find)
 	_AR1(char *,	dot)
 		)
 	_DCL(char *,	bfr)
-	_DCL(int,	len)
+	_DCL(unsigned,	len)
 	_DCL(char *,	find)
 	_DCL(char *,	dot)
 {
