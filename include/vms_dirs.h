@@ -1,5 +1,5 @@
 /*
- * $Header: /users/source/archives/td_lib.vcs/include/RCS/vms_dirs.h,v 2.0 1989/04/25 07:52:14 ste_cm Rel $
+ * $Id: vms_dirs.h,v 5.0 1989/09/14 14:57:43 ste_cm Rel $
  *
  * VMS definitions to interface to unix-like DIRECTORY(3) procedures.
  */
@@ -10,7 +10,9 @@
 #ifndef	$DESCRIPTOR
 #include	<descrip.h>
 #endif	$DESCRIPTOR
+#ifndef	$VMS_STATUS_SUCCESS
 #include	<stsdef.h>
+#endif	$VMS_STATUS_SUCCESS
 
 /* *** nominal contents of "dir.h" */
 #define	MAXPATHLEN  NAM$C_MAXRSS

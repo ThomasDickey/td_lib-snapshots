@@ -1,3 +1,20 @@
+1989-09-14  dickey@software.org
+
+	* include/td_lib.h, src/descrip.mms, src/pathname/ftype.c:
+	made ftype.c portable to vms
+
+	* include/vms_dirs.h: protect <stsdef.h> against repeated inclusion
+
+1989-09-14  ste_cm@software.org
+
+	* include/vms_dirs.h:
+	BASELINE Mon Sep 18 08:21:35 EDT 1989 -- support:ada_pits_000(rel3)
+
+	* include/vms_dirs.h: BASELINE Tue Aug 14 16:27:44 1990
+
+	* include/vms_dirs.h:
+	BASELINE Tue Jun 11 16:44:53 1991 -- apollo sr10.3
+
 1989-09-07  dickey@software.org
 
 	* include/td_lib.h, src/descrip.mms, src/Makefile:
