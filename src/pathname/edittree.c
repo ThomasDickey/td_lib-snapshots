@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: edittree.c,v 3.0 1989/09/15 08:39:14 ste_cm Rel $";
+static	char	Id[] = "$Id: edittree.c,v 3.2 1989/09/29 16:58:07 dickey Exp $";
 #endif	lint
 
 /*
@@ -28,7 +28,7 @@ static	char	Id[] = "$Id: edittree.c,v 3.0 1989/09/15 08:39:14 ste_cm Rel $";
 #ifdef	TEST
 #define	TELL_FILE(name)	TELL "%d\t%s => %s\n", changes, nesting, name);
 #define	TELL_DIR(name)	TELL "%d\t%s directory %s\n", changes, nesting, name); 
-static	editfile()	{ return 1;}
+static	editfile(n,f)	char *n; int (*f)(); { return 1;}
 #else	TEST
 #define	TELL_FILE(name)
 #define	TELL_DIR(name)
@@ -43,6 +43,7 @@ static	editfile()	{ return 1;}
 edittree(oldname,func,recur)
 char	*oldname;
 int	(*func)();
+int	recur;
 {
 	auto	DIR		*dirp;
 	auto	struct	direct	*dp;

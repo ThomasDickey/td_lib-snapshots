@@ -1,3 +1,10 @@
+1989-09-29  dickey@software.org
+
+	* src/pathname/edittree.c: corrected TEST-code for apollo SR10.1
+
+	* src/pathname/trnstree.c, src/pathname/edittree.c, src/pathname/dlettree.c:
+	apollo SR10.1 function prototypes
+
 1989-09-28  dickey@software.org
 
 	* src/curses/wrepaint.c: lint (apollo SR10.1)

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: trnstree.c,v 3.0 1989/09/15 08:39:19 ste_cm Rel $";
+static	char	Id[] = "$Id: trnstree.c,v 3.1 1989/09/29 15:00:39 dickey Exp $";
 #endif	lint
 
 /*
@@ -19,6 +19,7 @@ static	char	Id[] = "$Id: trnstree.c,v 3.0 1989/09/15 08:39:19 ste_cm Rel $";
 transtree(oldname,func,recur)
 char	*oldname;
 int	(*func)();
+int	recur;
 {
 	auto	DIR		*dirp;
 	auto	struct	direct	*dp;
