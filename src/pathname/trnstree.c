@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	what[] = "$Header: /users/source/archives/td_lib.vcs/src/pathname/RCS/trnstree.c,v 2.0 1989/01/12 10:40:56 ste_cm Rel $";
+static	char	what[] = "$Id: trnstree.c,v 2.1 1989/07/26 13:18:23 dickey Exp $";
 #endif	lint
 
 /*
@@ -44,7 +44,7 @@ int	(*func)();
 					if (!recur)
 						continue;
 					if (getcwd(oldpath,sizeof(oldpath)-2)
-					&&  chdir(dir2path(newname)) >= 0) {
+					&&  chdir(DIR2PATH(newname)) >= 0) {
 						transtree(
 							OPENDIR_ARG,
 							func,
