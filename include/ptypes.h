@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 9.0 1991/06/07 11:31:15 ste_cm Rel $ */
+/* $Id: ptypes.h,v 9.1 1991/07/22 13:25:03 dickey Exp $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -205,6 +205,10 @@ typedef	int	gid_t;
 
 #define	EOS	'\0'
 
+#ifndef	MAXPATHLEN
+#define	MAXPATHLEN	256
+#endif
+
 #define NULL_FUNC (int (*)())0
 
 /*
@@ -214,6 +218,7 @@ typedef	int	gid_t;
 #define	PRINTF	(void)printf
 #define	FPRINTF	(void)fprintf
 #define	FORMAT	(void)sprintf
+#define	FFLUSH	(void)fflush
 #define	FCLOSE	(void)fclose
 
 /*

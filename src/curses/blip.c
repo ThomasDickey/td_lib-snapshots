@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: blip.c,v 9.1 1991/06/20 08:42:05 dickey Exp $";
+static	char	Id[] = "$Id: blip.c,v 9.2 1991/07/22 16:09:10 dickey Exp $";
 #endif
 
 /*
@@ -13,6 +13,7 @@ static	char	Id[] = "$Id: blip.c,v 9.1 1991/06/20 08:42:05 dickey Exp $";
 #include	"ptypes.h"
 
 void blip(c)
+int	c;
 {
 #ifdef	putc
 	c = putc((unsigned char)c, stderr);

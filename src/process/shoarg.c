@@ -1,34 +1,71 @@
 #ifndef	lint
-static	char	Id[] = "$Id: shoarg.c,v 9.1 1991/06/20 08:25:19 dickey Exp $";
+static	char	Id[] = "$Id: shoarg.c,v 9.4 1991/07/22 14:38:13 dickey Exp $";
 #endif
 
 /*
  * Title:	shoarg.c (display argv-array)
  * Created:	20 Jun 1991
  * Modified:
- *
+ *		22 Jul 1991, don't assume that 'command' contains no spaces.
+ *			     Added entrypoint 'bldcmd()'.
+ */
+
+#define	STR_PTYPES
+#include	"ptypes.h"
+#include	<ctype.h>
+
+/*
+ * Function:	Writes a new string with the non-ascii characters escaped.
+ */
+char	*
+bldcmd(dst, src, len)
+char	*dst, *src;
+size_t	len;
+{
+	char	*base = dst;
+	register int	c;
+	*dst = EOS;
+	while (len-- > 0 && (c = *src++)) {
+		if (!isascii(c)) {
+			if (--len <= 0)
+				break;
+			*dst++ = '\\';
+			*dst++ = toascii(c);
+		} else
+			*dst++ = c;
+	}
+	*dst = EOS;
+	return (base);
+}
+
+/*
+ * Function:	Combines two strings into one destination, with non-ascii stuff
+ *		escaped.
+ */
+char	*
+bldcmd2(dst, src1, src2, len)
+char	*dst,*src1,*src2;
+size_t	len;
+{
+	char	*base = dst;
+	(void)bldcmd(dst, src1, len);			dst += strlen(dst);
+	(void)bldcmd(dst, " ",	len - (dst - base));	dst += strlen(dst);
+	(void)bldcmd(dst, src2, len - (dst - base));
+	return base;
+}
+
+/*
  * Function:	Displays a command + argument-string constructed by 'catarg()'
  *
  * Arguments:	fp	- file-pointer to which to write result
  *		command	- command-verb
  *		string	- the command-string to display
  */
-
-#include	"ptypes.h"
-#include	<ctype.h>
-
 shoarg (fp, command, string)
 FILE	*fp;
 char	*command, *string;
 {
 	char	temp[BUFSIZ];
-	register int	j;
-	for (j = 0; (j < (sizeof(temp)-1)) && (temp[j] = *string++); j++)
-		if (!isascii(temp[j])) {
-			temp[j+1] = toascii(temp[j]);
-			temp[j++] = '\\';
-		}
-	temp[j] = EOS;
 
-	FPRINTF(fp, "%% %s %s\n", command, temp);
+	FPRINTF(fp, "%% %s\n", bldcmd2(temp, command, string, sizeof(temp)));
 }
