@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	what[] = "$Id: logch.c,v 11.2 1992/08/06 12:16:56 dickey Exp $";
+static	char	what[] = "$Id: logch.c,v 12.0 1992/08/12 07:45:08 ste_cm Rel $";
 #endif
 
 /*
@@ -87,6 +87,9 @@ void	encode_logch(
 	_DCL(int,	c)
 {
 	register char	*s = buffer;
+
+	*s = EOS;
+	c &= 0xff;
 
 	if (count_)
 		FORMAT(s + strlen(s), "%d", *count_);
