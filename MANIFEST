@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19880511
+MANIFEST for td_lib, version t19880512
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 include                         subdirectory
@@ -36,6 +36,7 @@ src/pathname/which.c            locate file in $PATH
 src/process                     subdirectory
 src/process/bldarg.c            build argc+argv array from string
 src/string                      subdirectory
+src/string/ltostr.c             convert 'long' to a string
 src/string/strclean.c           "clean" string, removes unnecessary blanks
 src/unix                        subdirectory
 src/unix/gid2s.c                convert group-id to string

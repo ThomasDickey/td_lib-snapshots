@@ -1,4 +1,4 @@
-# @(#)Makefile	1.13 88/05/11 09:19:25
+# @(#)Makefile	1.14 88/05/12 09:10:00
 # MAKE-file for miscellaneous library routines
 L=lib.a
 #
@@ -17,6 +17,7 @@ OBJS	=\
 	flushall.o\
 	gid2s.o\
 	killchar.o\
+	ltostr.o\
 	modechar.o\
 	okpnum.o\
 	packdate.o\
