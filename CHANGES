@@ -1,3 +1,7 @@
+2004-06-26  dickey@invisible-island.net
+
+	* config.sub, config.guess: 2004-06-24
+
 2004-03-21  dickey@invisible-island.net
 
 	* support/selflink.sh:
