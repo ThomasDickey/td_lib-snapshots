@@ -1,5 +1,5 @@
 /*
- * $Id: port2vms.h,v 3.1 1989/10/06 12:48:27 dickey Exp $
+ * $Id: port2vms.h,v 3.2 1989/11/16 07:53:44 dickey Exp $
  *
  * VMS-definitions for supporting unix/vms port
  */
@@ -88,6 +88,12 @@ int	edittree(
 		_DCL(int,		recur)
 		_RET
 
+char *	gid2s(
+		_AR1(int,		gid)
+		)
+		_DCL(int,		gid)
+		_RET
+
 char *	name2vms(
 		_ARX(char *,		dst)
 		_AR1(char *,		src)
@@ -108,6 +114,12 @@ char *	path2vms(
 		)
 		_DCL(char *,		dst)
 		_DCL(char *,		src)
+		_RET
+
+int	s2gid(
+		_AR1(char *,		name)
+		)
+		_DCL(char *,		name)
 		_RET
 
 int	s2uid(
