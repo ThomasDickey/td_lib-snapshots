@@ -1,10 +1,13 @@
-# $Id: Makefile,v 4.3 1989/09/06 15:22:34 dickey Exp $
+# $Id: Makefile,v 4.4 1989/09/07 15:06:47 dickey Exp $
 # MAKE-file for miscellaneous library routines
 #
 # $Log: Makefile,v $
-# Revision 4.3  1989/09/06 15:22:34  dickey
-# use "ptypes.h" in 'abspath.c'; added missing ranlib to 'archive' rule
+# Revision 4.4  1989/09/07 15:06:47  dickey
+# added module "relpath.c"
 #
+#	Revision 4.3  89/09/06  15:22:34  dickey
+#	use "ptypes.h" in 'abspath.c'; added missing ranlib to 'archive' rule
+#	
 #	Revision 4.2  89/08/25  09:56:12  dickey
 #	added ptypes.h dependency to which.o
 #	
@@ -86,6 +89,7 @@ CSRC	=\
 	rcspath.c\
 	rcspermit.c\
 	rcstemp.c\
+	relpath.c\
 	resizewin.c\
 	revert.c\
 	sameleaf.c\
@@ -177,6 +181,7 @@ OBJS	=\
 	rcspath.o\
 	rcspermit.o\
 	rcstemp.o\
+	relpath.o\
 	resizewin.o\
 	revert.o\
 	sameleaf.o\
@@ -266,6 +271,7 @@ rcslocks.o:	$I/ptypes.h	$I/rcsdefs.h
 rcsname.o:	$I/ptypes.h	$I/rcsdefs.h
 rcspath.o:	$J/rcspath.h	; $(CC) -I$J -c $*.c
 rcspermit.o:	$I/ptypes.h	$I/rcsdefs.h
+relpath.o:	$I/ptypes.h
 resizewin.o:	$I/ptypes.h
 sccslast.o:	$I/ptypes.h
 setmtime.o:	$I/ptypes.h

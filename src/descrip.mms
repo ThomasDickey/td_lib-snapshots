@@ -1,4 +1,4 @@
-# $Header: /users/source/archives/td_lib.vcs/src/RCS/descrip.mms,v 4.1 1989/08/24 16:52:26 dickey Exp $
+# $Header: /users/source/archives/td_lib.vcs/src/RCS/descrip.mms,v 4.2 1989/09/07 15:07:26 dickey Exp $
 # MMS-file for miscellaneous library routines	
 #
 ####### (Development) ##########################################################
@@ -85,6 +85,7 @@ UNUSED_MODULES = -
 	RCSPATH,		# rcs (unix-only) -
 	RCSPERMIT,		# rcs (unix-only) -
 	RCSTEMP,		# rcs (unix-only) -
+	RELPATH,		# unix-style 'getwd()' -
 	RESIZEWIN,		# curses (apollo) -
 	REVERT,			# unix setuid -
 	S2GID,			# unix-passwd -
@@ -162,6 +163,7 @@ C_SRC	=-
 	RCSPATH.C -
 	RCSPERMIT.C -
 	RCSTEMP.C -
+	RELPATH.C -
 	RESIZEWIN.C -
 	REVERT.C -
 	S2GID.C -
