@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: vms_pthc.c,v 5.1 1991/10/18 15:35:46 dickey Exp $";
+static	char	Id[] = "$Id: vms_pthc.c,v 7.0 1991/12/12 08:29:52 ste_cm Rel $";
 #endif
 
 /*
@@ -7,9 +7,18 @@ static	char	Id[] = "$Id: vms_pthc.c,v 5.1 1991/10/18 15:35:46 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	26 Jun 1990
  * $Log: vms_pthc.c,v $
- * Revision 5.1  1991/10/18 15:35:46  dickey
- * use macro _MAIN
+ * Revision 7.0  1991/12/12 08:29:52  ste_cm
+ * BASELINE Thu Jul 16 16:14:02 1992 -- CM_TOOLS #11
  *
+ *		Revision 6.0  91/12/12  08:29:52  ste_cm
+ *		BASELINE Thu Dec 12 08:31:46 1991
+ *		
+ *		Revision 5.2  91/12/12  08:29:52  dickey
+ *		corrected entrypoint-name
+ *		
+ *		Revision 5.1  91/10/18  15:35:46  dickey
+ *		use macro _MAIN
+ *		
  *		Revision 5.0  91/05/20  17:18:21  ste_cm
  *		BASELINE Tue Jun 11 16:44:53 1991 -- apollo sr10.3
  *		
@@ -38,7 +47,7 @@ static	char	Id[] = "$Id: vms_pthc.c,v 5.1 1991/10/18 15:35:46 dickey Exp $";
 #define	A_NAME	1
 
 char *
-pathcat(dst, dname, fname)
+vms_pathcat(dst, dname, fname)
 char	*dst, *dname, *fname;
 {
 	auto	char	tmp[BUFSIZ],
@@ -96,7 +105,7 @@ do_test(path, leaf)
 char	*path, *leaf;
 {
 	auto	char	tmp[BUFSIZ];
-	printf("%s + %s => \"%s\"\n", path, leaf, pathcat(tmp, path, leaf));
+	printf("%s + %s => \"%s\"\n", path, leaf, vms_pathcat(tmp, path, leaf));
 }
 
 #define	DO_NAME	16

@@ -1,3 +1,14 @@
+1991-12-12  dickey@software.org
+
+	* src/port2vms/vms_pthc.c: corrected entrypoint-name
+
+1991-12-12  ste_cm@software.org
+
+	* src/port2vms/vms_pthc.c: BASELINE Thu Dec 12 08:31:46 1991
+
+	* src/port2vms/vms_pthc.c:
+	BASELINE Thu Jul 16 16:14:02 1992 -- CM_TOOLS #11
+
 1991-12-11  dickey@software.org
 
 	* src/pathname/trnstree.c:
