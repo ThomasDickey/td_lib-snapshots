@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: wrepaint.c,v 12.2 1993/11/01 17:39:14 dickey Exp $";
+static	char	Id[] = "$Id: wrepaint.c,v 12.3 1994/04/27 23:03:44 tom Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: wrepaint.c,v 12.2 1993/11/01 17:39:14 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	24 Aug 1989
  * Modified:
+ *		26 Apr 1994, port to Linux
  *		01 Nov 1993, ported to HP/UX (SYSTEM5). This works well enough
  *			     to manage the curses output, but not the non-curses
  *			     output -- for that we must still clear the screen.
@@ -33,6 +34,10 @@ void	wrepaint(
 	_DCL(int,	row)
 {
 #ifdef	SYSTEM5
+# if defined(linux)
+	touchwin(win);
+	wrefresh(curscr);
+# else	/* tested with _hpux */
 	WINDOW	*tmp;
 	int	y, x;
 
@@ -48,6 +53,7 @@ void	wrepaint(
 	delwin(tmp);
 	wmove(win, y, x);
 	wrefresh(win);
+# endif
 #else
 	auto	int	min_row = win->_begy,
 			min_col = win->_begx,

@@ -1,3 +1,7 @@
+1994-04-27  dickey@clark.net
+
+	* src/curses/wrepaint.c, src/curses/rawterm.c: Linux-port
+
 1994-04-26  dickey@clark.net
 
 	* include/ptypes.h: make this compile with Linux

@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: rawterm.c,v 12.7 1993/12/02 15:20:31 dickey Exp $";
+static	char	Id[] = "$Id: rawterm.c,v 12.8 1994/04/27 22:54:41 tom Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: rawterm.c,v 12.7 1993/12/02 15:20:31 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	24 Nov 1987
  * Modified:
+ *		26 Apr 1994, port to Linux
  *		23 Nov 1993, check environment variable TERM for "xterm".
  *		18 Nov 1993, added entrypoint 'cookterm()' to allow xterm
  *			     mouse control via this interface.
@@ -26,8 +27,14 @@ static	char	Id[] = "$Id: rawterm.c,v 12.7 1993/12/02 15:20:31 dickey Exp $";
 #define STR_PTYPES
 #include	"td_curse.h"
 
+#include <termio.h> /* PATCH */
 #ifdef __hpux
 #include <sgtty.h>
+#endif
+
+#ifdef	linux
+#include <termio.h>
+static	struct	termios	saved_tty;
 #endif
 
 #ifdef	NO_XTERM_MOUSE
@@ -77,6 +84,9 @@ static	void	disable_mouse(_AR0)
  */
 void	rawterm(_AR0)
 {
+#if	defined(linux)
+	tcgetattr(0, &saved_tty); /* savetty(); seems to be used elsewhere */
+#endif
 #ifdef	SYSTEM5
 	cbreak();
 #else	/* SYSTEM5 */
@@ -85,13 +95,17 @@ void	rawterm(_AR0)
 	noecho();
 	nonl();
 
-#ifdef __hpux
+#if	defined(__hpux)
 	{
 		struct	sgttyb sb;
 		gtty(0, &sb);
 		sb.sg_flags &= ~ECHO;
 		stty(0, &sb);
 	}
+#endif
+#if	defined(linux_PATCH)
+	intrflush(stdscr, FALSE);
+	keypad(stdscr, TRUE);
 #endif
 	enable_mouse();
 }
@@ -104,4 +118,5 @@ void	cookterm(_AR0)
 	refresh();
 	disable_mouse();
 	resetty();
+	tcsetattr(0, TCSAFLUSH, &saved_tty);
 }
