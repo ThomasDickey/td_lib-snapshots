@@ -1,6 +1,8 @@
-MANIFEST for td_lib, version t19871116
+MANIFEST for td_lib, version t19871118
 --------------------------------------------------------------------------------
 MANIFEST                        this file
+src                             subdirectory
+src/Makefile                    makefile for td_lib/src
 src/cm_funcs                    subdirectory
 src/cm_funcs/packdate.c         pack numbers to make UNIX date
 src/cm_funcs/sccslast.c         scan for last SCCS date & version
@@ -12,6 +14,8 @@ src/pathname                    subdirectory
 src/pathname/abspath.c          convert path to absolute form
 src/pathname/denode.c           strip leading node-name from path
 src/pathname/dotname.c          test for "." or ".." names
+src/pathname/modechar.c         translate file-mode (binary) to character
+src/pathname/which.c            locate file in $PATH
 src/process                     subdirectory
 src/process/bldarg.c            build argc+argv array from string
 src/string                      subdirectory
