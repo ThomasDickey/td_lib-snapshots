@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19950916
+MANIFEST for td_lib, version t19950920
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         restrictions on copying/using this software
@@ -93,6 +93,7 @@ src/curses/dumptty.c            dumps termio settings to a file, for debugging
 src/curses/dumpwin.c            dump curses window to file
 src/curses/erasechr.c           returns erase-char value
 src/curses/is_xterm.c           return true if terminal is xterm
+src/curses/keycode.c            =============================================================================
 src/curses/killchar.c           returns kill-char value
 src/curses/logch.c              abstracts log-character encode/decode for 'ded'; put here so I can use it
 src/curses/on_winch.c           catch SIGWINCH and invoke display refresh procedures
