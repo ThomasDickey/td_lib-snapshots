@@ -1,7 +1,3 @@
-#ifndef	NO_IDENT
-static	char	Id[] = "$Id: cmv_dir.c,v 12.15 1995/07/06 19:58:06 tom Exp $";
-#endif
-
 /*
  * Title:	cmv_dir.c (returns name of CmVision-directory)
  * Author:	T.E.Dickey
@@ -28,11 +24,19 @@ static	char	Id[] = "$Id: cmv_dir.c,v 12.15 1995/07/06 19:58:06 tom Exp $";
 #include "ptypes.h"
 #include "cmv_defs.h"
 
+MODULE_ID("$Id: cmv_dir.c,v 12.17 1995/07/07 16:11:46 tom Exp $")
+
 /******************************************************************************/
 #ifdef	lint
 #define	typealloc(type)	(type *)0
 #else
 #define	typealloc(type)	(type *)doalloc((char *)0, sizeof(type))
+#endif
+
+#ifdef DEBUG
+#define Debug(p) fprintf p;
+#else
+#define Debug(p) /* nothing */
 #endif
 
 /******************************************************************************/
@@ -512,10 +516,12 @@ int	samehead(
 {
 	size_t	match = strlen(path2);
 	if (strlen(path1) >= match) {
-		if (strcmp(path1, path2)
-		 && !isPath(path1[match])) {
+		if (strncmp(path1, path2, match)
+		 || !isPath(path1[match])) {
 			match = 0;
 		}
+	} else {
+		match = 0;
 	}
 	return match;
 }
@@ -536,6 +542,10 @@ VAULTS *LookupVault(
 	WORKING	*q;
 	int	max_n = 0;
 
+	Debug((stderr, "LookupVault\n"))
+	Debug((stderr, "...dir:%s\n", working_directory))
+	Debug((stderr, "..file:%s\n", filename))
+
 	if (!initialized)
 		Initialize();
 	if (CmvVault == 0 || filename == 0)
@@ -549,6 +559,8 @@ VAULTS *LookupVault(
 	if (stat_dir(result, &sb) < 0)
 		(void)strcpy(result, pathhead(result, &sb));
 
+	Debug((stderr, "..test:%s\n", result))
+
 	/*
 	 * Now, search the CMV_VAULT variable for a working directory that
 	 * matches the beginning of the string we've got in 'result[]'.  If we
@@ -561,6 +573,7 @@ VAULTS *LookupVault(
 			int	n;
 			if ((n = samehead(result, q->working)) > 0) {
 				if (n > max_n) {
+					Debug((stderr, "..same:%s\n", q->working))
 					max_p = p;
 					max_n = n;
 				}
@@ -577,6 +590,7 @@ VAULTS *LookupVault(
 		for (j = 0; (result[j] = result[j+max_n]) != EOS; j++)
 			if (isPath(result[j]))
 				level++;;
+		Debug((stderr, "=>%s\n", result))
 	}
 	return (max_n > 0) ? max_p : 0;
 }

@@ -1,3 +1,9 @@
+1995-07-07  dickey@clark.net
+
+	* src/cm_funcs/cmv_dir.c: corrected (again) 'samehead()'
+
+	* src/cm_funcs/cmv_dir.c: use MODULE_ID
+
 1995-07-06  dickey@clark.net
 
 	* src/cm_funcs/cmv_dir.c:
