@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Id: aclocal.m4,v 12.115 1998/04/25 14:54:09 tom Exp $
+dnl $Id: aclocal.m4,v 12.116 1998/05/29 21:09:33 tom Exp $
 dnl vi:set ts=4:
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "CF_" to "AC_"
@@ -155,6 +155,27 @@ ifelse($3,,[    :]dnl
 ])dnl
   ])])dnl
 dnl ---------------------------------------------------------------------------
+dnl Test if curses defines 'cchar_t' (usually a 'long' type for SysV curses).
+AC_DEFUN([CF_CURSES_CCHAR_T],
+[
+AC_CACHE_CHECK(for cchar_t typedef,cf_cv_cchar_t_decl,[
+	AC_TRY_COMPILE([#include <curses.h>],
+		[cchar_t foo],
+		[cf_cv_cchar_t_decl=yes],
+		[cf_cv_cchar_t_decl=no])])
+if test $cf_cv_cchar_t_decl = yes ; then
+	AC_DEFINE(HAVE_TYPE_CCHAR_T)
+	AC_CACHE_CHECK(if cchar_t is scalar or struct,cf_cv_cchar_t_type,[
+		AC_TRY_COMPILE([#include <curses.h>],
+			[cchar_t foo; long x = foo],
+			[cf_cv_cchar_t_type=scalar],
+			[cf_cv_cchar_t_type=struct])])
+	if test $cf_cv_cchar_t_type = scalar ; then
+		AC_DEFINE(TYPE_CCHAR_T_IS_SCALAR)
+	fi
+fi
+])dnl
+dnl ---------------------------------------------------------------------------
 dnl Check if we're accidentally using a cache from a different machine.
 dnl Derive the system name, as a check for reusing the autoconf cache.
 dnl
@@ -268,6 +289,7 @@ dnl ---------------------------------------------------------------------------
 dnl Test for curses data/types
 AC_DEFUN([CF_CURSES_DATA],
 [
+CF_CURSES_CCHAR_T
 CF_CURSES_CHTYPE
 CF_CURSES_STYLE
 CF_STRUCT_SCREEN
