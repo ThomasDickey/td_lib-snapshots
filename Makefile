@@ -1,4 +1,4 @@
-# $Id: Makefile,v 11.3 1992/10/09 12:14:39 dickey Exp $
+# $Id: Makefile,v 11.4 1992/10/16 12:27:10 dickey Exp $
 # Top-level makefile for CM_TOOLS common library
 
 ####### (Development) ##########################################################
@@ -14,6 +14,9 @@ THIS	= cm_library
 I	= $(TOP)/interface
 L	= $(TOP)/lib
 
+CLEAN	= *.[oai] *.bak *.log *.out *.tst .nfs* core
+DESTROY	=sh -c 'for i in *;do case $$i in RCS);; *) rm -f $$i;;esac;done;exit 0'
+
 ####### (Standard Lists) #######################################################
 SOURCES	= Makefile descrip.mms README
 
@@ -24,7 +27,7 @@ MFILES	=\
 	support/Makefile\
 	test/Makefile
 
-ALL	=\
+IT	=\
 	$I/cmdch.h\
 	$I/common.h\
 	$I/deltree.h\
@@ -62,13 +65,14 @@ clean\
 clobber::			; rm -f $(CLEAN)
 clobber\
 destroy::			; rm -rf lib
+destroy::			; cd support; $(DESTROY)
 destroy::			; $(DESTROY)
 
 run_tests::
 	@echo '** no test suite available for this module'
 
-install::	all $(ALL)
-deinstall::			; rm -f $(ALL)
+install::	all $(IT)
+deinstall::			; rm -f $(IT)
 
 ####### (Details of Productions) ###############################################
 $(MFILES)\

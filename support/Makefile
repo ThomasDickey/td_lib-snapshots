@@ -1,4 +1,4 @@
-# $Id: Makefile,v 11.1 1992/10/09 11:38:59 dickey Exp $
+# $Id: Makefile,v 11.2 1992/10/16 12:25:20 dickey Exp $
 # make-file for CM_LIBRARY support directory
 
 ####### (Development) ##########################################################
@@ -13,8 +13,7 @@ SOURCES	= Makefile cm_library.mk
 all:	sources $(ALL)
 clean:			; rm -f *.out
 clobber:	clean	; rm -f $(ALL)
-destroy:
-	sh -c 'for i in *;do case $$i in RCS);; *) rm -f $$i;;esac;done;exit 0'
+destroy:		# will get here last
 sources:	$(SOURCES)
 lint.out:
 
