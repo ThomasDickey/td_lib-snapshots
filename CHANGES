@@ -1,3 +1,13 @@
+1998-02-16  dickey@clark.net
+
+	* include/Makefile: drop acl.h from list
+
+	* src/curses/rawterm.c:
+	workaround for SVr4 curses, so I keep my arrow keys after running editor
+	from ded.
+
+	* configure.in: check for putp, tigetstr, but no winchstr
+
 1998-02-15  dickey@clark.net
 
 	* src/curses/logch.c, src/curses/cmdch.c: add home/end/ppage/npage keys

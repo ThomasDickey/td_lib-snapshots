@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19980215
+MANIFEST for td_lib, version v980215
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         restrictions on copying/using this software
@@ -12,12 +12,13 @@ makefile.in                     template for generated top-level makefile
 mkdirs.sh                       script to make directory-hierarchy
 td_make.in                      autoconf template for support/td_lib.mk
 certify                         subdirectory
+certify/Makefile                makefile for certify directory
 certify/README                  description of certify directory
 certify/config.txt              configurations on which TD_LIB is ported
 certify/release.txt             release notes for TD_LIB
 include                         subdirectory
 include/.vilerc                 macro to use in ifdef'ing td_ext.h for autoconf
-include/acl.h                   defines ACL bits for apollo SR10.1
+include/Makefile                make-file for CM_TOOLS common interface directory
 include/cmv_defs.h              definitions for CmVision wrappers
 include/config.hin              template for include/td_config.h
 include/deltree.h               delta-tree function interface
@@ -91,7 +92,6 @@ src/curses/dumptty.c            dumps termio settings to a file, for debugging
 src/curses/dumpwin.c            dump curses window to file
 src/curses/erasechr.c           returns erase-char value
 src/curses/is_xterm.c           return true if terminal is xterm
-src/curses/keycode.c            =============================================================================
 src/curses/killchar.c           returns kill-char value
 src/curses/lnextchr.c           returns value of literal-next character
 src/curses/logch.c              abstracts log-character encode/decode for 'ded'; put here so I can use it
@@ -244,6 +244,7 @@ src/unix/s2uid.c                convert string to user-id
 src/unix/setmtime.c             set mtime/atime of a file
 src/unix/uid2s.c                convert user-id to string
 support                         subdirectory
+support/Makefile                makefile for td_lib/support
 support/ins_hdr                 script to install header files
 support/ins_mak                 script to install td_lib.mk
 support/lib_top.mms             same as STANDARD_RULES, save that we generate lib-directory, rather than bin
@@ -282,6 +283,7 @@ test/cm_funcs/vcs_file.sh       test-script for vcs_file
 test/cm_funcs/vercmp.ref        reference for vercmp test
 test/cm_funcs/vercmp.sh         test-script for vercmp
 test/compare                    subdirectory
+test/compare/Makefile           makefile for td_lib/test/compare
 test/compare/diffload.ref       test result
 test/compare/diffload.sh        =============================================================================
 test/compare/m2comp.ref         reference for 'm2comp.sh'
@@ -357,6 +359,9 @@ test/pathname/walktree.ref      reference for 'walktree'
 test/pathname/walktree.sh       test-script for 'walktree'
 test/pathname/which.ref         reference for 'which'
 test/pathname/which.sh          test-script for 'which'
+test/port2dos                   subdirectory
+test/port2dos/Makefile          makefile for td_lib/test/port2dos
+test/port2dos/run_test.sh       general test script
 test/port2vms                   subdirectory
 test/port2vms/README            description of test/port2vms
 test/port2vms/descrip.mms       VMS build-script for test/port2vms
@@ -396,6 +401,7 @@ test/process/usercopy.sh        test-script for 'usercopy'
 test/process/walkback.ref       reference (apollo only) for walkback
 test/process/walkback.sh        test script for walkback
 test/sheet                      subdirectory
+test/sheet/Makefile             makefile for td_lib/test/sheet
 test/sheet/run_test.sh          general test script
 test/string                     subdirectory
 test/string/dotcmp.ref          reference for 'dotcmp'
