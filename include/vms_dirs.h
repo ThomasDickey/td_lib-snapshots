@@ -1,10 +1,10 @@
 /*
- * $Id: vms_dirs.h,v 8.0 1991/10/18 15:13:57 ste_cm Rel $
+ * $Id: vms_dirs.h,v 12.1 1994/08/21 17:59:48 tom Exp $
  *
  * VMS definitions to interface to unix-like DIRECTORY(3) procedures.
  */
-#ifndef	_UNIXDIR_
-#define	_UNIXDIR_
+#ifndef	VMS_DIRS_H
+#define	VMS_DIRS_H
 
 #ifdef	vms
 #include	<rms.h>
@@ -73,4 +73,4 @@ extern	void		closedir(
 			_dcl(DIR *,	dirp)
 			_nul
 
-#endif	_UNIXDIR_
+#endif	VMS_DIRS_H

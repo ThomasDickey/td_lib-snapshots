@@ -1,9 +1,9 @@
-.  scan directory ../support
-.  (directory) ../support
+.  scan directory ../../support
+.  (directory) ../../support
 .  => Makefile
-.  => library_rules.mms
-.  => link_options.opt
-.  => portunix.mk
-.  => program_rules.mms
-.  => standard_rules.mms
-.  => top_lib_rules.mms
+.  => lib_top.mms
+.  => linkopts.opt
+.  => prog_top.mms
+.  => td_lib.mk
+.  => td_lib.mms
+.  => td_progs.mms

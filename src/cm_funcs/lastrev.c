@@ -1,5 +1,5 @@
 #ifndef NO_IDENT
-static	char	Id[] = "$Id: lastrev.c,v 12.1 1994/08/03 12:57:16 tom Exp $";
+static	char	Id[] = "$Id: lastrev.c,v 12.2 1994/08/21 18:26:46 tom Exp $";
 #endif
 
 /*
@@ -21,7 +21,7 @@ static	char	Id[] = "$Id: lastrev.c,v 12.1 1994/08/03 12:57:16 tom Exp $";
  * This is driven by an environment variable, but ultimately should be done
  * via ".dedrc"
  */
-#ifdef	RCS_PATH || defined(SCCS_PATH)
+#if	defined(RCS_PATH) || defined(SCCS_PATH)
 typedef	enum TrySCCS { DontTry, TrySccs, TryRcs, TryCmVision } TRY;
 
 static	TRY	try_order(

@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: file2mem.c,v 12.4 1993/12/01 19:09:51 dickey Exp $";
-#endif
-
 /*
  * Title:	file2mem.c (file to argv-conversion)
  * Author:	T.E.Dickey
@@ -22,10 +18,12 @@ static	char	Id[] = "$Id: file2mem.c,v 12.4 1993/12/01 19:09:51 dickey Exp $";
  *		error occurred).
  */
 
+#define	ERR_PTYPES
 #define	STR_PTYPES
 #include "ptypes.h"
-#include <errno.h>
 extern	FILE	*tmpfile(_ar0);
+
+MODULE_ID("$Id: file2mem.c,v 12.6 1994/08/21 19:31:29 tom Exp $")
 
 char	*
 file2mem(

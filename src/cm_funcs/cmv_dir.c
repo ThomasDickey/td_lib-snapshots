@@ -1,5 +1,5 @@
 #ifndef	NO_IDENT
-static	char	Id[] = "$Id: cmv_dir.c,v 12.2 1994/08/10 18:55:16 tom Exp $";
+static	char	Id[] = "$Id: cmv_dir.c,v 12.3 1994/08/21 18:26:16 tom Exp $";
 #endif
 
 /*
@@ -97,7 +97,6 @@ CMTREE *NewCmTree(
 }
 
 /*
-/*
  * Returns a relative path for the given internal leaf name
  */
 static
@@ -189,8 +188,8 @@ CMTREE *FindInternalDir(
 	_DCL(char *,	external)
 {
 	CMTREE	*p;
-	int	len1 = strlen(external);
-	int	len2;
+	size_t	len1 = strlen(external);
+	size_t	len2;
 
 	p = parent->children;
 	if (p == 0) {

@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: filecopy.c,v 12.5 1994/07/16 15:23:47 tom Exp $";
+static	char	Id[] = "$Id: filecopy.c,v 12.6 1994/08/21 19:31:37 tom Exp $";
 #endif
 
 /*
@@ -31,10 +31,10 @@ static	char	Id[] = "$Id: filecopy.c,v 12.5 1994/07/16 15:23:47 tom Exp $";
  *		EEXIST - the source and destination are identical.
  */
 
+#define	ERR_PTYPES
 #define	OPN_PTYPES
 #define	SIG_PTYPES
 #include	"ptypes.h"
-#include	<errno.h>
 
 int	filecopy(
 	_ARX(char *,	src)

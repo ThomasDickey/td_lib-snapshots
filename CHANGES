@@ -1,3 +1,144 @@
+1994-08-21  dickey@clark.net
+
+	* src/Makefile: added descrip.mms
+
+	* src/descrip.mms: makefile for [.td_lib.src]
+
+	* test/pathname/trnstree.ref, test/pathname/editfile.ref: shorted-names
+
+	* support/Makefile, descrip.mms: merged PORTUNIX
+
+	* support/lib_top.mms: renamed from TOP_LIB_RULES.MMS
+
+	* support/prog_top.mms: renamed from STANDARD_RULES.MMS
+
+	* support/td_progs.mms:
+	renamed from PROGRAM_RULES.MMS; merged PORTUNIX with TD_LIB
+
+	* support/td_lib.mms:
+	renamed from LIBRARY_RULES.MMS, fixed some of the internal structure due
+	to merging PORTUNIX
+
+	* certify/release.txt: absorbed PORTUNIX
+
+	* certify/config.txt: ate up PORTUNIX
+
+	* test/pathname/walktree.ref:
+	moved modules from PORTUNIX: dlettree, editfile, edittree, trnstree
+
+	* test/pathname/trnstree.ref:
+	different directory structure from PORTUNIX
+
+	* test/pathname/edittree.ref: fixed an error in test-driver
+
+	* src/pathname/edittree.c: fixes for Linux testing with TD_LIB
+
+	* src/pathname/edittree.c: use MODULE_ID
+
+	* src/pathname/editfile.c:
+	recopy the argument of mktemp each time we use it on Linux. (On SunOS,
+	we could re-use the same argument)
+
+	* src/pathname/editfile.c: use MODULE_ID
+
+	* test/pathname/editfile.sh:
+	new directory structure (moved from PORTUNIX)
+
+	* test/pathname/editfile.ref:
+	different directory-structure from PORTUNIX
+
+	* test/pathname/dlettree.ref: tweaked again
+
+	* src/pathname/dlettree.c: misplaced free
+
+	* src/pathname/dlettree.c: use MODULE_ID
+
+	* src/pathname/dlettree.c: compiler warning for test-driver
+
+	* test/pathname/dlettree.ref:
+	dlettree now sorts entries, so this should be a little more portable
+
+	* src/pathname/dlettree.c:
+	sort the tree as we traverse it: not really necessary, but simplifies the
+	regression testing.
+
+	* test/pathname/trnstree.sh:
+	moved from PORTUNIX (different directory structure)
+
+	* test/pathname/Makefile:
+	added programs from PORTUNIX: dlettree, editfile, edittree, trnstree
+
+	* src/process/getopt.c: autoconf ifdef
+
+	* src/process/getopt.c: use MODULE_ID
+
+	* src/process/Makefile: added getopt.c (if I need it)
+
+	* src/pathname/Makefile:
+	added modules from PORTUNIX: dlettree.c, editfile.c, edittree.c, trnstree.c
+
+	* include/port2vms.h:
+	moved some modules to pathname directory: dletree, editfile, edittree, trnstree
+
+	* src/pathname/trnstree.c: moved from PORTUNIX library
+
+	* src/pathname/trnstree.c: use MODULE_ID
+
+	* src/pathname/edittree.c, src/pathname/dlettree.c:
+	moved from PORTUNIX library
+
+	* src/pathname/stat_fil.c: use MODULE_ID
+
+	* src/pathname/stat_fil.c: use:ERR_PTYPES
+
+	* src/pathname/stat_dir.c: use MODULE_ID
+
+	* src/pathname/stat_dir.c, src/pathname/filecopy.c: use:ERR_PTYPES
+
+	* src/pathname/file2mem.c: use MODULE_ID
+
+	* src/pathname/file2mem.c: use:ERR_PTYPES
+
+	* include/td_lib.h:
+	added modules from PORTUNIX: dlettree.c, editfile.c, edittree.c, trnstree.c
+
+	* src/pathname/editfile.c: moved from PORTUNIX library
+
+	* test/port2vms/README: renamed library
+
+	* src/port2vms/zone2vms.c:
+	well, I _can_ compile this on unix, even though it's not much use!
+
+	* test/port2vms/Makefile:
+	moved tests for unix+vms porting from PORTUNIX library
+
+	* include/port2vms.h: renamed STAT to Stat_t
+
+	* src/port2vms/vms_wild.c: merge:portunix
+
+	* src/port2vms/vms_wild.c: use MODULE_ID
+
+	* src/port2vms/time2vms.c: correct position of module-id
+
+	* src/port2vms/dir2path.c, src/port2vms/name2vms.c, src/port2vms/path2dir.c, src/port2vms/path2vms.c, src/port2vms/rmsio.c, src/port2vms/time2vms.c, src/port2vms/uid2s.c, src/port2vms/utimes.c, src/port2vms/vms2name.c, src/port2vms/vms_dirs.c, src/port2vms/vms_pthc.c, src/port2vms/vms_rpth.c, src/port2vms/zone2vms.c:
+	merge:portunix
+
+	* src/port2vms/dir2path.c, src/port2vms/path2dir.c, src/port2vms/path2vms.c, src/port2vms/rmsio.c, src/port2vms/time2vms.c, src/port2vms/uid2s.c, src/port2vms/utimes.c, src/port2vms/vms2name.c, src/port2vms/vms_dirs.c, src/port2vms/vms_pthc.c, src/port2vms/vms_rpth.c:
+	use MODULE_ID
+
+	* src/port2vms/Makefile:
+	move the really vms-specific modules here from PORTUNIX library
+
+	* src/cm_funcs/lastrev.c, src/cm_funcs/cmv_dir.c: typos
+
+	* include/td_local.h: added <port2vms.h>
+
+	* include/Makefile: added vms_dirs.h, port2vms.h
+
+	* include/port2vms.h: renamed from portunix.h
+
+	* include/vms_dirs.h: renamed from unixdir.h
+
 1994-08-15  dickey@clark.net
 
 	* src/cm_funcs/cmv_last.c:

@@ -1,4 +1,4 @@
-# $Id: Makefile,v 12.1 1994/07/02 15:17:59 tom Exp $
+# $Id: Makefile,v 12.2 1994/08/21 21:42:33 tom Exp $
 # MAKE-file for process-management library routines
 
 ####### (Environment) ##########################################################
@@ -14,6 +14,7 @@ CSRC	=\
 	for_admn.c \
 	for_user.c \
 	gethome.c \
+	getopt.c \
 	getuser.c \
 	interact.c \
 	makeargv.c \
@@ -36,6 +37,7 @@ OBJS	=\
 	$Z(for_admn.o) \
 	$Z(for_user.o) \
 	$Z(gethome.o) \
+	$Z(getopt.o) \
 	$Z(getuser.o) \
 	$Z(interact.o) \
 	$Z(makeargv.o) \

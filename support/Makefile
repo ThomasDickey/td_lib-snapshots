@@ -1,4 +1,4 @@
-# $Id: Makefile,v 12.3 1994/07/12 16:38:22 tom Exp $
+# $Id: Makefile,v 12.4 1994/08/21 23:29:52 tom Exp $
 # make-file for TD_LIB support directory
 
 ####### (Development) ##########################################################
@@ -8,7 +8,14 @@ RM	= -rm -f
 ####### (Command-line Options) #################################################
 
 ####### (Standard Lists) #######################################################
-SOURCES	= Makefile #td_lib.mk
+VMS_FILES = \
+	lib_top.mms \
+	linkopts.opt \
+	prog_top.mms \
+	td_lib.mms \
+	td_progs.mms
+
+SOURCES	= Makefile $(VMS_FILES)
 
 ####### (Standard Productions) #################################################
 all\
@@ -21,5 +28,5 @@ sources:	$(SOURCES)
 lint.out:
 
 ####### (Details of Productions) ###############################################
-#
+
 $(SOURCES):		; $(GET) $@

@@ -1,7 +1,3 @@
-#ifndef	NO_IDENT
-static	char	Id[] = "$Id: edittree.c,v 8.2 1993/12/01 19:38:36 tom Exp $";
-#endif
-
 /*
  * Title:	edittree.c
  * Author:	T.E.Dickey
@@ -26,10 +22,12 @@ static	char	Id[] = "$Id: edittree.c,v 8.2 1993/12/01 19:38:36 tom Exp $";
  *		unix-style, rather than the "..." wildcard that VMS provides.
  */
 #define	DIR_PTYPES
+#define	ERR_PTYPES
 #define	STR_PTYPES
-#include	"portunix.h"
+#include	"port2vms.h"
 #include	"td_qsort.h"
-#include	<errno.h>
+
+MODULE_ID("$Id: edittree.c,v 12.3 1994/08/21 22:43:37 tom Exp $")
 
 typedef	char	*PTR;
 	/*ARGSUSED*/
@@ -39,20 +37,18 @@ typedef	char	*PTR;
 #define	v_ALLOC(v,n,s)	v = DOALLOC(v, PTR, ((++n)|CHUNK)+1);\
 			v[n-1] = txtalloc(s)
 
-#define	TELL		FPRINTF(stderr,
-
 #ifdef	TEST
-#define	TELL_FILE(name)	TELL "%d\t%s => %s\n", changes, nesting, name);
-#define	TELL_DIR(name)	TELL "%d\t%s directory %s\n", changes, nesting, name); 
-static	int	editfile(
-		_ARX(char *,	n)
-		_FNX(int,	func,	(_ARX(FILE*,o) _ARX(FILE*,i) _AR1(STAT*,s)))
-		_AR1(STAT *,	s)
-			)
-		_DCL(char *,	n)
-		_DCL(int,	(*f)())
-		_DCL(STAT *,	s)
-		{ return 1;}
+#define	TELL_FILE(name)	FPRINTF(stderr, "%d\t%s => %s\n", changes, nesting, name);
+#define	TELL_DIR(name)	FPRINTF(stderr, "%d\t%s directory %s\n", changes, nesting, name); 
+int	editfile(
+	_ARX(char *,	n)
+	_FNX(int,	func,	(_ARX(FILE*,o) _ARX(FILE*,i) _AR1(Stat_t*,s)))
+	_AR1(Stat_t *,	s)
+		)
+	_DCL(char *,	n)
+	_DCL(int,	(*f)())
+	_DCL(Stat_t *,	s)
+	{ return 1;}
 #else
 #define	TELL_FILE(name)
 #define	TELL_DIR(name)
@@ -70,7 +66,7 @@ static	int	editfile(
 
 int	edittree(
 	_ARX(char *,	oldname)
-	_FNX(int,	func,	(_ARX(FILE *,o) _ARX(FILE *,i) _AR1(STAT *,s)))
+	_FNX(int,	func,	(_ARX(FILE *,o) _ARX(FILE *,i) _AR1(Stat_t *,s)))
 	_ARX(int,	recur)
 	_AR1(int,	links)
 		)
@@ -80,10 +76,10 @@ int	edittree(
 	_DCL(int,	links)
 {
 	auto	DIR	*dirp;
-	auto	DIRENT	*dp;
+	auto	DirentT	*dp;
 	auto	int	changes = 0;
 	auto	int	next	= recur ? recur+1 : 0;
-	auto	STAT	sb;
+	auto	Stat_t	sb;
 	auto	unsigned num;
 	auto	PTR	*vec;
 	auto	char	newname[MAXPATHLEN];
@@ -92,7 +88,8 @@ int	edittree(
 
 #ifdef	TEST
 	static	char	stack[]	= ". . . . . . . ";
-	auto	char	*nesting = &stack[sizeof(stack)-(recur*2)];
+	auto	int	level = recur ? recur : 1;
+	auto	char	*nesting = &stack[sizeof(stack)-(level*2)];
 #endif
 
 	if (LOOK(oldname, &sb) < 0) {
@@ -162,11 +159,11 @@ static
 int	do_copy(
 	_ARX(FILE *,	ofp)
 	_ARX(FILE *,	ifp)
-	_AR1(STAT *,	sb)
+	_AR1(Stat_t *,	sb)
 		)
 	_DCL(FILE *,	ofp)
 	_DCL(FILE *,	ifp)
-	_DCL(STAT *,	sb)
+	_DCL(Stat_t *,	sb)
 {
 	char	buffer[BUFSIZ];
 	while (fgets(buffer, sizeof(buffer), ifp))

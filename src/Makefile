@@ -1,4 +1,4 @@
-# $Id: Makefile,v 12.11 1994/07/10 21:22:59 tom Exp $
+# $Id: Makefile,v 12.12 1994/08/21 23:41:50 tom Exp $
 # MAKE-file for miscellaneous library routines
 
 ####### (Environment) ##########################################################
@@ -20,6 +20,7 @@ MFILES	= \
 	unix/Makefile
 
 SOURCES	= \
+	Makefile	descrip.mms \
 	td_defns.mk	td_defns.mms \
 	td_rules.mk	td_rules.mms
 

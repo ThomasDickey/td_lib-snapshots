@@ -1,11 +1,11 @@
 /*
- * $Id: port2vms.h,v 8.1 1993/12/04 18:43:18 tom Exp $
+ * $Id: port2vms.h,v 12.3 1994/08/21 19:37:54 tom Exp $
  *
  * VMS-definitions for supporting unix/vms port
  */
 
-#ifndef	_PORTUNIX_
-#define	_PORTUNIX_
+#ifndef	PORT2VMS_H
+#define	PORT2VMS_H
 
 #include	"ptypes.h"		/* CM_TOOLS common */
 
@@ -23,8 +23,6 @@ typedef	struct	timeval {
 	long	tv_usec;
 	};
 
-#define	bzero(p,len)	memset(p,0,len)
-#define	bcopy(s,d,n)	memcpy(d,s,n)
 #define	rmdir		remove
 #define	unlink		remove
 
@@ -49,52 +47,10 @@ typedef	struct	timeval {
 
 #endif	/* vms/unix/MSDOS */
 
-/*
- * Externals assumed by 'deletetree()'
- */
-#ifndef	LINTLIBRARY
-extern	void	fail      (_ar1(char *,text));
-extern	int	deletefile(_ar1(char *,name));
-extern	int	deletedir (_ar1(char *,name));
-#endif
-
-/*
- * Library procedures for unix/vms compatability
- */
-extern	int	deletetree(
-		_arx(char *,		path)
-		_ar1(int,		recur)
-		)
-		_dcl(char *,		path)
-		_dcl(int,		recur)
-		_ret
-
 extern	char *	dir2path(
 		_ar1(char *,		src)
 		)
 		_dcl(char *,		src)
-		_ret
-
-extern	int	editfile(
-		_arx(char *,		name)
-		_fnx(int,		func,	(_ARX(FILE*,o) _ARX(FILE*,i) _AR1(STAT*,s)))
-		_ar1(STAT *,		sb)
-		)
-		_dcl(char *,		name)
-		_dcl(int,		(*func)())
-		_dcl(STAT *,		sb)
-		_ret
-
-extern	int	edittree(
-		_arx(char *,		name)
-		_fnx(int,		func,	(_ARX(FILE*,o) _ARX(FILE*,i) _AR1(STAT*,s)))
-		_arx(int,		recur)
-		_ar1(int,		links)
-		)
-		_dcl(char *,		name)
-		_dcl(int,		(*func)())
-		_dcl(int,		recur)
-		_dcl(int,		links)
 		_ret
 
 extern	char *	gid2s(
@@ -179,7 +135,7 @@ extern	void	time2vms(
 
 extern	void	transtree(
 		_arx(char *,		path)
-		_fnx(int,		func,	(_ARX(char*,n) _AR1(STAT*,s)))
+		_fnx(int,		func,	(_ARX(char*,n) _AR1(Stat_t*,s)))
 		_arx(int,		recur)
 		_ar1(int,		links)
 		)
@@ -267,4 +223,4 @@ extern	time_t	zone2vms(
 #define	PATH2DIR(path)		path
 #endif	/* vms/unix */
  
-#endif	/* _PORTUNIX_ */
+#endif	/* PORT2VMS_H */

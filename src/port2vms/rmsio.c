@@ -1,7 +1,3 @@
-#ifndef	NO_IDENT
-static	char	Id[] = "$Id: rmsio.c,v 8.1 1993/12/01 19:43:28 tom Exp $";
-#endif
-
 /*
  * Title:	rmsio.c
  * Author:	T.E.Dickey
@@ -22,9 +18,11 @@ static	char	Id[] = "$Id: rmsio.c,v 8.1 1993/12/01 19:43:28 tom Exp $";
  *		rmsio_size:	Returns size of largest record of input.
  */
 
-#include	"portunix.h"
+#include	"port2vms.h"
 #include	<ctype.h>
 #include	<errno.h>
+
+MODULE_ID("$Id: rmsio.c,v 12.2 1994/08/21 18:39:51 tom Exp $")
 
 #ifdef	vms
 #include	<rms.h>

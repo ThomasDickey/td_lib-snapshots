@@ -1,8 +1,10 @@
-# $Id: td_progs.mms,v 8.0 1992/11/04 07:18:57 ste_cm Rel $
-# MMS script for program development with PORTUNIX
+# $Id: td_progs.mms,v 12.1 1994/08/21 23:02:36 tom Exp $
+# MMS script for program development with TD_LIB
 #
+# (originally named PROGRAM_RULES.MMS)
+
 ALL		= [-.BIN]$(PROGRAM).EXE
-.INCLUDE	PORTUNIX_ROOT:[SUPPORT]LIBRARY_RULES
+.INCLUDE	TD_LIB_ROOT:[SUPPORT]TD_LIB
 #
 ALL ::		$(ALL)	; @ WRITE SYS$OUTPUT "** produced $@"
 CLEAN ::
@@ -22,7 +24,7 @@ $(B)$(PROGRAM).EXE :	[-.BIN]$(PROGRAM).EXE
 	COPY [-.BIN]$(PROGRAM).EXE $(B)
 	- PURGE [-.BIN]
 #
-# Build the program using the PORTUNIX library
+# Build the program using the TD_LIB library
 # If other objects are necessary, define them as "OBJ_ARGS", with a leading
 # comma to keep the syntax straight.
 [-.BIN]$(PROGRAM).EXE :	[-.BIN]$(PROGRAM).OBJ $(OBJ_ARGS), $(LIB_DEPS)

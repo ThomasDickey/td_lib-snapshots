@@ -1,7 +1,3 @@
-#ifndef	NO_IDENT
-static	char	Id[] = "$Id: getopt.c,v 8.1 1993/12/04 18:46:24 tom Exp $";
-#endif
-
 /*
  * Title:	getopt.c
  * Modified:
@@ -13,6 +9,10 @@ static	char	Id[] = "$Id: getopt.c,v 8.1 1993/12/04 18:46:24 tom Exp $";
 
 #define	STR_PTYPES
 #include "ptypes.h"
+
+MODULE_ID("$Id: getopt.c,v 12.2 1994/08/21 21:43:23 tom Exp $")
+
+#if !HAVE_GETOPT
 
 #ifdef	unix
 #define ERR(s, c)	if(opterr){\
@@ -82,3 +82,4 @@ int	getopt(
 	}
 	return(c);
 }
+#endif	/* !HAVE_GETOPT */

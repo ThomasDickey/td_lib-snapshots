@@ -1,8 +1,8 @@
-$Id: README,v 8.0 1992/11/20 08:42:56 ste_cm Rel $
+$Id: README,v 12.1 1994/08/21 18:59:37 tom Exp $
 
 -------------------------------------------------------------------------------
 
-The procedures in the PORTUNIX library are tested by compiling them with
+The procedures in the PORT2VMS library are tested by compiling them with
 the TEST preprocessor variable defined.
 
 The modules which contain VMS-specific code (such as 'unixdir.c') cannot be

@@ -1,12 +1,9 @@
-#ifndef	NO_IDENT
-static	char	Id[] = "$Id: editfile.c,v 8.2 1993/12/01 19:43:14 tom Exp $";
-#endif
-
 /*
  * Title:	editfile.c
  * Author:	T.E.Dickey
  * Created:	03 Oct 1988
  * Modified:
+ *		21 Aug 1994, argument of mktemp is volatile on Linux.
  *		01 Dec 1993, ifdefs, TurboC warnings.
  *		22 Sep 1993, gcc warnings
  *		20 Nov 1992, added 3rd arg to _FNX macros.
@@ -23,9 +20,9 @@ static	char	Id[] = "$Id: editfile.c,v 8.2 1993/12/01 19:43:14 tom Exp $";
  */
 
 #define		STR_PTYPES
-#include	"portunix.h"
+#include	"ptypes.h"
 
-#define	TELL	FPRINTF(stderr,
+MODULE_ID("$Id: editfile.c,v 12.3 1994/08/21 22:37:58 tom Exp $")
 
 #ifdef	vms
 #define	NEWVER(name)	(name)
@@ -35,12 +32,12 @@ static	char	Id[] = "$Id: editfile.c,v 8.2 1993/12/01 19:43:14 tom Exp $";
 
 int	editfile(
 	_ARX(char *,	oldname)
-	_FNX(int,	func,	(_ARX(FILE*,o) _ARX(FILE*,i) _AR1(STAT*,s)))
-	_AR1(STAT *,	sb)
+	_FNX(int,	func,	(_ARX(FILE*,o) _ARX(FILE*,i) _AR1(Stat_t*,s)))
+	_AR1(Stat_t *,	sb)
 		)
 	_DCL(char *,	oldname)
 	_DCL(int,	(*func)())
-	_DCL(STAT *,	sb)
+	_DCL(Stat_t *,	sb)
 {
 	auto	FILE	*ifp = fopen(oldname, "r");
 	auto	FILE	*ofp;
@@ -52,32 +49,35 @@ int	editfile(
 	if (s = strrchr(newname, ';'))	s[1] = '\0';
 	else				(void)strcat(newname, ";");
 #else	/* unix */
-	static	char	newname[] = "fileXXXXXX";
+	char	newname[MAXPATHLEN];
+	(void)strcpy(newname, "fileXXXXXX");
 #endif	/* vms/unix */
 
 	if ((ifp != 0)
 	&&  (ofp = fopen(NEWVER(newname), "w")) != 0) {
-		TELL "** edit \"%s\" => \"%s\"\n", oldname, newname);
+		FPRINTF(stderr, "** edit \"%s\" => \"%s\"\n", oldname, newname);
 		changes += (*func)(ofp, ifp, sb);
 		(void)fclose(ifp);
 		(void)fclose(ofp);
 		if (changes == 0) {
-			TELL "** no change made\n");
+			FPRINTF(stderr, "** no change made\n");
 			(void)unlink(newname);
 		}
 #ifndef	vms
 		else {
-			if (rename(newname, oldname) >= 0)
+			if (rename(newname, oldname) >= 0) {
 				(void)unlink(newname);
-			else {
+			} else {
 				perror(newname);
 				return(0);
 			}
 		}
 #endif
 		if (changes > 0) {
-			TELL "** %d change(s) made\n", changes);
+			FPRINTF(stderr, "** %d change(s) made\n", changes);
 		}
+	} else {
+		perror(newname);
 	}
 	return (changes);
 }
@@ -87,11 +87,11 @@ static
 int	do_copy(
 	_ARX(FILE *,	ofp)
 	_ARX(FILE *,	ifp)
-	_AR1(STAT *,	sb)
+	_AR1(Stat_t *,	sb)
 		)
 	_DCL(FILE *,	ofp)
 	_DCL(FILE *,	ifp)
-	_DCL(STAT *,	sb)
+	_DCL(Stat_t *,	sb)
 {
 	char	buffer[BUFSIZ];
 	while (fgets(buffer, sizeof(buffer), ifp))
@@ -108,7 +108,7 @@ _MAIN
 	register int	j;
 
 	for (j = 1; j < argc; j++)
-		editfile(argv[j], do_copy, (STAT *)0);
+		editfile(argv[j], do_copy, (Stat_t *)0);
 	exit(SUCCESS);
 	/*NOTREACHED*/
 }

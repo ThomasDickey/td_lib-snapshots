@@ -1,4 +1,4 @@
-/* $Id: td_local.h,v 12.3 1994/08/02 14:21:46 tom Exp $ */
+/* $Id: td_local.h,v 12.4 1994/08/21 18:03:51 tom Exp $ */
 
 /*
  * Include all features in TD_LIB, used for configuration.
@@ -25,3 +25,4 @@
 #include <sccsdefs.h>
 #include <td_sheet.h>
 #include <td_lib.h>
+#include <port2vms.h>

@@ -5,12 +5,22 @@
  	|-- abspath
 ?	|-- abspath.ref
  	|-- abspath.sh
+ 	|-- dlettree
+?	|-- dlettree.ref
+ 	|-- dlettree.sh
+ 	|-- editfile
+?	|-- editfile.ref
+ 	|-- editfile.sh
+ 	|-- edittree
+?	|-- edittree.ref
+ 	|-- edittree.sh
  	|-- file2arg
 ?	|-- file2arg.ref
  	|-- file2arg.sh
  	|-- file2mem
 ?	|-- file2mem.ref
  	|-- file2mem.sh
+ 	|-- fileblox
  	|-- filecopy
 ?	|-- filecopy.ref
  	|-- filecopy.sh
@@ -41,6 +51,9 @@
  	|-- trimpath
 ?	|-- trimpath.ref
  	|-- trimpath.sh
+ 	|-- trnstree
+?	|-- trnstree.ref
+ 	|-- trnstree.sh
  	|-- walktree
 ?	|-- walktree.ref
  	|-- walktree.sh
@@ -48,4 +61,4 @@
  	|-- which
 ?	|-- which.ref
  	|-- which.sh
-** total= 31
+** total= 40

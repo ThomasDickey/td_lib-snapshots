@@ -1,4 +1,4 @@
-# $Id: Makefile,v 12.6 1994/08/02 18:36:48 tom Exp $
+# $Id: Makefile,v 12.7 1994/08/21 18:03:03 tom Exp $
 # make-file for CM_TOOLS common interface directory
 
 THIS	= td
@@ -13,18 +13,20 @@ LLIB	= llib-l$(llib)
 H_SRC	=\
 	$(THIS)_lib.h\
 	acl.h \
-	deltree.h\
-	dyn_str.h\
+	cmv_defs.h \
+	deltree.h \
+	dyn_str.h \
 	ptypes.h\
-	cmv_defs.h\
-	rcsdefs.h\
-	sccsdefs.h\
-	td_ext.h\
-	td_curse.h\
-	td_local.h\
-	td_qsort.h\
-	td_scomp.h\
-	td_sheet.h
+	rcsdefs.h \
+	sccsdefs.h \
+	port2vms.h \
+	td_ext.h \
+	td_curse.h \
+	td_local.h \
+	td_qsort.h \
+	td_scomp.h \
+	td_sheet.h \
+	vms_dirs.h
 
 L_SRC	=\
 	llib-l$(THIS)
