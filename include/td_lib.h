@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 9.1 1991/06/20 09:17:13 dickey Exp $ */
+/* $Id: td_lib.h,v 9.2 1991/06/25 11:46:12 dickey Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for CM_TOOLS COMMON
@@ -245,6 +245,16 @@
 			_RET
 
 	/* for_user.c ------------------------------------------------- */
+	int	for_user2(
+			_FNX(int,	func)
+			_ARX(int,	the_uid)
+			_AR1(int,	the_gid)
+			)
+			_DCL(int,	(*func)())
+			_DCL(int,	the_uid)
+			_DCL(int,	the_gid)
+			_RET
+
 	int	for_user(
 			_FN1(int,	func)
 			)
