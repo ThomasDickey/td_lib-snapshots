@@ -1,11 +1,13 @@
-#ifndef	lint
-static	char	*Id = "$Id: stat_fil.c,v 12.0 1992/02/06 08:38:34 ste_cm Rel $";
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: stat_fil.c,v 12.1 1993/10/29 17:35:23 dickey Exp $";
 #endif
 
 /*
  * Title:	stat_file.c
  * Author:	T.E.Dickey
  * Created:	06 Feb 1992
+ * Modified:
+ *		29 Oct 1993, ifdef-ident
  *
  * Function:	does a 'stat()' on a pathname.  If no error is found, it also
  *		tests to ensure the pathname was a regular file, setting an

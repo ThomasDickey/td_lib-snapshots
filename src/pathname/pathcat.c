@@ -1,5 +1,5 @@
-#ifndef	lint
-static	char	Id[] = "$Id: pathcat.c,v 12.1 1993/09/21 12:02:48 dickey Exp $";
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: pathcat.c,v 12.2 1993/10/29 17:35:25 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: pathcat.c,v 12.1 1993/09/21 12:02:48 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	12 Sep 1988
  * Modified:
+ *		29 Oct 1993, ifdef-ident
  *		28 Jan 1992, 'dname' may be empty.
  *		03 Oct 1991, conversion to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif

@@ -1,12 +1,9 @@
-#ifndef	lint
-static	char	*Id = "$Id: strwcmp.c,v 12.2 1993/09/23 13:44:16 dickey Exp $";
-#endif
-
 /*
  * Title:	strwcmp (compare wildcard-strings)
  * Author:	T.E.Dickey
  * Created:	27 Mar 1989
  * Modified:
+ *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, converted to ANSI
  *
@@ -15,6 +12,8 @@ static	char	*Id = "$Id: strwcmp.c,v 12.2 1993/09/23 13:44:16 dickey Exp $";
  */
 
 #include "ptypes.h"
+
+MODULE_ID("$Id: strwcmp.c,v 12.4 1993/10/29 17:35:23 tom Exp $")
 
 #define	SINGLE	'?'
 #define	MULTI	'*'

@@ -1,5 +1,5 @@
-#ifndef	lint
-static	char	Id[] = "$Id: gid2s.c,v 12.1 1993/09/21 18:54:04 dickey Exp $";
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: gid2s.c,v 12.2 1993/10/29 17:35:26 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: gid2s.c,v 12.1 1993/09/21 18:54:04 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	10 Nov 1987
  * Modified:
+ *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, conversion to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
@@ -23,12 +24,6 @@ static	char	Id[] = "$Id: gid2s.c,v 12.1 1993/09/21 18:54:04 dickey Exp $";
 #define	STR_PTYPES
 #include	"ptypes.h"
 #include	<grp.h>
-
-#ifdef	SYSTEM5
-extern	 struct group  *getgrent();		/* cf: apollo sys5 */
-extern		V_OR_I	setgrent();
-extern		V_OR_I	endgrent();
-#endif
 
 typedef	struct	_table	{
 	struct	_table	*link;

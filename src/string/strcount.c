@@ -1,16 +1,16 @@
-#ifndef	lint
-static	char	*Id = "$Id: strcount.c,v 12.0 1992/02/10 07:46:49 ste_cm Rel $";
-#endif
-
 /*
  * Title:	strcount.c
  * Author:	T.E.Dickey
  * Created:	10 Feb 1992
+ * Modified:
+ *		29 Oct 1993, ifdef-ident
  *
  * Function:	counts occurrences of a given character within a string.
  */
 
 #include "ptypes.h"
+
+MODULE_ID("$Id: strcount.c,v 12.2 1993/10/29 17:35:23 tom Exp $")
 
 int
 strcount(

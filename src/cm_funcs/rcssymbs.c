@@ -1,12 +1,9 @@
-#ifndef	lint
-static	char	Id[] = "$Id: rcssymbs.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
-#endif
-
 /*
  * Title:	rcssymbols.c (RCS symbols-parsing)
  * Author:	T.E.Dickey
  * Created:	07 Feb 1992
  * Modified:
+ *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *
  * Function:	Within the 'rcsedit' state S_SYMBOLS, parse for information to
@@ -26,6 +23,8 @@ static	char	Id[] = "$Id: rcssymbs.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
 #include "ptypes.h"
 #include "rcsdefs.h"
 #include <ctype.h>
+
+MODULE_ID("$Id: rcssymbs.c,v 12.3 1993/10/29 17:35:24 tom Exp $")
 
 #define	isname(c)	(isalnum(c) || (c == '_'))
 

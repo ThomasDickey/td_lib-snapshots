@@ -1,5 +1,5 @@
-#ifndef	lint
-static	char	Id[] = "$Id: relpath.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: relpath.c,v 12.2 1993/10/29 17:35:24 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: relpath.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	07 Sep 1989
  * Modified:
+ *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		21 Jan 1992, If 'cwd[]' is empty, treat it as a null-pointer.
  *			     Also, force single return-point.

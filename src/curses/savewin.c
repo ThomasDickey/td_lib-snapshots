@@ -1,5 +1,5 @@
-#ifndef	lint
-static	char	Id[] = "$Id: savewin.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: savewin.c,v 12.2 1993/10/29 17:35:24 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: savewin.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
  * Title:	savewin.c (save/unsave curses window)
  * Created:	25 Mar 1988
  * Modified:
+ *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, conversion to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif

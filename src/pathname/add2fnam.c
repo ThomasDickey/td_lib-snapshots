@@ -1,5 +1,5 @@
-#ifndef	lint
-static	char	Id[] = "$Id: add2fnam.c,v 12.1 1993/09/21 12:08:02 dickey Exp $";
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: add2fnam.c,v 12.2 1993/10/29 17:35:27 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: add2fnam.c,v 12.1 1993/09/21 12:08:02 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	05 Jun 1989
  * Modified:
+ *		29 Oct 1993, ifdef-ident
  *		03 Oct 1991, converted to ANSI
  *
  * Function:	Add a suffix to a filename, if it is not already there.

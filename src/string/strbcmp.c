@@ -1,12 +1,9 @@
-#ifndef	lint
-static	char	Id[] = "$Id: strbcmp.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
-#endif
-
 /*
  * Title:	strbcmp.c (string-blank-compare)
  * Author:	T.E.Dickey
  * Created:	07 Apr 1989
  * Modified:
+ *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, converted to ANSI
  *
@@ -21,6 +18,8 @@ static	char	Id[] = "$Id: strbcmp.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
 
 #include	<ptypes.h>
 #include	<ctype.h>
+
+MODULE_ID("$Id: strbcmp.c,v 12.3 1993/10/29 17:35:24 tom Exp $")
 
 #define	SKIP(p)	while (isspace(*p))	p++;
 

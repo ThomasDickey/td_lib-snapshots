@@ -1,12 +1,9 @@
-#ifndef	lint
-static	char	Id[] = "$Id: rcsdebug.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
-#endif
-
 /*
  * Title:	rcs_debug.c (rcs debug-flag)
  * Author:	T.E.Dickey
  * Created:	15 Mar 1989
  * Modified:
+ *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		04 Oct 1991, conversion to ANSI
  *		06 Sep 1991, return a value, allowing debug-levels
@@ -21,6 +18,8 @@ static	char	Id[] = "$Id: rcsdebug.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
 
 #include "ptypes.h"
 #include "rcsdefs.h"
+
+MODULE_ID("$Id: rcsdebug.c,v 12.3 1993/10/29 17:35:25 tom Exp $")
 
 int	rcs_debug(_AR0)
 {

@@ -1,5 +1,5 @@
-#ifndef	lint
-static	char	Id[] = "$Id: scr_size.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: scr_size.c,v 12.2 1993/10/29 18:41:44 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: scr_size.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
  * Title:	scr_size.c (obtain screen size)
  * Created:	27 Jul 1988
  * Modified:
+ *		29 Oct 1993, ifdef-ident. Compile on HP/UX.
  *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, convert to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
@@ -30,6 +31,7 @@ static	char	Id[] = "$Id: scr_size.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
  */
 
 #include "ptypes.h"
+#include "td_curse.h"
 #ifdef	apollo
 #ifdef	apollo_sr10
 #define	sr10_bug	1

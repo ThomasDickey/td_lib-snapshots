@@ -1,5 +1,5 @@
-#ifndef	lint
-static	char	Id[] = "$Id: setmtime.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: setmtime.c,v 12.2 1993/10/29 17:35:24 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: setmtime.c,v 12.1 1993/09/21 18:54:03 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	20 May 1988
  * Modified:
+ *		29 Oct 1993, ifdef-ident, port to HP/UX
  *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, convert to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
@@ -26,9 +27,13 @@ int	setmtime(
 	_DCL(time_t,	mtime)
 {
 #ifdef	SYSTEM5
-	struct { time_t x, y; } tp;
-	tp.x = time((time_t *)0);
-	tp.y = mtime;
+#if	defined(__hpux)
+	struct utimbuf tp;
+#else
+	struct { time_t actime, modtime; } tp;
+#endif
+	tp.actime  = time((time_t *)0);
+	tp.modtime = mtime;
 	return (utime(name, &tp));
 #else
 	extern	int	utime(_arx(char *,s) _ar1(time_t *,p));

@@ -1,12 +1,9 @@
-#ifndef	lint
-static	char	Id[] = "$Id: dftenv.c,v 12.0 1991/10/03 16:05:20 ste_cm Rel $";
-#endif
-
 /*
  * Title:	dftenv.c (getenv with default)
  * Author:	T.E.Dickey
  * Created:	08 Aug 1989
  * Modified:
+ *		29 Oct 1993, ifdef-ident
  *		03 Oct 1991, converted to ANSI
  *
  * Function:	Performs a 'getenv()' and returns the environment value if it
@@ -14,6 +11,8 @@ static	char	Id[] = "$Id: dftenv.c,v 12.0 1991/10/03 16:05:20 ste_cm Rel $";
  */
 
 #include "ptypes.h"
+
+MODULE_ID("$Id: dftenv.c,v 12.2 1993/10/29 17:35:27 tom Exp $")
 
 char *
 dftenv(

@@ -1,5 +1,5 @@
-#ifndef	lint
-static	char	Id[] = "$Id: rawgets.c,v 12.2 1993/09/28 17:24:25 dickey Exp $";
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: rawgets.c,v 12.3 1993/10/29 17:35:25 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: rawgets.c,v 12.2 1993/09/28 17:24:25 dickey Exp $";
  * Title:	rawgets.c (raw-mode 'gets()')
  * Created:	29 Sep 1987 (from 'fl.c')
  * Modified:
+ *		29 Oct 1993, ifdef-ident
  *		28 Sep 1993, modified 'InsertAt()' to avoid reading past the
  *			     end of the 'at' string (makes Purify happy).
  *		21 Sep 1993, gcc-warnings
@@ -167,7 +168,7 @@ void	ShowAt(
 			max = xlast - col;
 			if (len > max)	len = max;
 			while (len-- > 0) {
-				register int	c = *at++ & 0xff;
+				register chtype	c = *at++ & 0xff;
 				if (!isprint(c)) {
 					(void)waddch(Z, '^');
 					if (c == '\177')
@@ -296,7 +297,7 @@ void	ShowPrefix(_AR0)
 		(void)wstandend(Z);
 		(void)wmove(Z, ybase, (int)(xbase-strlen(prefix)));
 		while (*prefix)
-			(void)waddch(Z,*prefix++);
+			(void)waddch(Z,(chtype)(*prefix++));
 	}
 }
 

@@ -1,12 +1,9 @@
-#ifndef	lint
-static	char	Id[] = "$Id: scomp.c,v 12.2 1993/09/23 13:54:16 dickey Exp $";
-#endif
-
 /*
  * Title:	scomp.c (simple compare)
  * Author:	T.E.Dickey
  * Created:	24 May 1989
  * Modified:
+ *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		13 Nov 1992, use prototypes
  *
@@ -22,6 +19,8 @@ static	char	Id[] = "$Id: scomp.c,v 12.2 1993/09/23 13:54:16 dickey Exp $";
 #define	SCOMP	scomp
 #define STR_PTYPES
 #include	"td_scomp.h"
+
+MODULE_ID("$Id: scomp.c,v 12.4 1993/10/29 17:35:24 tom Exp $")
 
 #ifdef	lint
 #define	REF(v,n)	v[n*size/4]

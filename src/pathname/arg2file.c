@@ -1,12 +1,9 @@
-#ifndef	lint
-static	char	Id[] = "$Id: arg2file.c,v 12.1 1993/09/21 12:08:24 dickey Exp $";
-#endif
-
 /*
  * Title:	argv2file.c
  * Author:	T.E.Dickey
  * Created:	18 May 1989
  * Modified:
+ *		29 Oct 1993, ifdef-ident
  *		03 Oct 1991, converted to ANSI
  *
  * Function:	Write an argv-style text vector to a file, with the given mode.
@@ -14,6 +11,8 @@ static	char	Id[] = "$Id: arg2file.c,v 12.1 1993/09/21 12:08:24 dickey Exp $";
 
 #define	STR_PTYPES
 #include	"ptypes.h"
+
+MODULE_ID("$Id: arg2file.c,v 12.3 1993/10/29 17:35:27 tom Exp $")
 
 int	argv2file(
 	_ARX(char **,	vec)

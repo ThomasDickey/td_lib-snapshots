@@ -1,12 +1,9 @@
-#ifndef	lint
-static	char	Id[] = "$Id: fp2argv.c,v 12.1 1993/09/21 18:54:04 dickey Exp $";
-#endif
-
 /*
  * Title:	fp2argv (file-pointer to argv-list)
  * Author:	T.E.Dickey
  * Created:	18 Jul 1988
  * Modified:
+ *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		17 Nov 1992, modified _FNX macro.
  *		25 Feb 1992, allow input-records to be arbitrarily wide.
@@ -24,6 +21,8 @@ static	char	Id[] = "$Id: fp2argv.c,v 12.1 1993/09/21 18:54:04 dickey Exp $";
 
 #include	"ptypes.h"
 #include	"dyn_str.h"
+
+MODULE_ID("$Id: fp2argv.c,v 12.3 1993/10/29 17:35:26 tom Exp $")
 
 	/*ARGSUSED*/
 	def_DOALLOC(char *)

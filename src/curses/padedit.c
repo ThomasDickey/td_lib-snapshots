@@ -1,5 +1,5 @@
-#ifndef	lint
-static	char	Id[] = "$Id: padedit.c,v 12.2 1993/09/27 17:19:27 dickey Exp $";
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: padedit.c,v 12.3 1993/10/29 17:35:25 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: padedit.c,v 12.2 1993/09/27 17:19:27 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	14 Dec 1987
  * Modified:
+ *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		22 Dec 1992, reset process-group on SunOs to avoid having
  *			     signals kill the spawned xterms.

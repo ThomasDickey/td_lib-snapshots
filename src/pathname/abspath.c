@@ -1,11 +1,12 @@
-#ifndef	lint
-static	char	Id[] = "$Id: abspath.c,v 12.1 1993/09/21 18:54:02 dickey Exp $";
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: abspath.c,v 12.2 1993/10/29 17:35:27 dickey Exp $";
 #endif
 
 /*
  * Author:	T.E.Dickey
  * Created:	17 Sep 1987
  * Modified:
+ *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		13 Nov 1992, removed redundant 'index' macro.
  *		04 Oct 1991, conversion to ANSI

@@ -1,5 +1,5 @@
-#ifndef	lint
-static	char	Id[] = "$Id: rcsload.c,v 12.3 1993/09/27 20:26:57 dickey Exp $";
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: rcsload.c,v 12.4 1993/10/29 17:35:24 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: rcsload.c,v 12.3 1993/09/27 20:26:57 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	19 Aug 1988
  * Modified:
+ *		29 Oct 1993, ifdef-ident
  *		27 Sep 1993, forgot to allow EOS in 'append()'.
  *		21 Sep 1993, gcc-warnings.  Fixes for uninitialized-memory with
  *			     Purify.

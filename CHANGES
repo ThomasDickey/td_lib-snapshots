@@ -1,3 +1,100 @@
+1993-10-29  dickey@software.org
+
+	* src/cm_funcs/vercmp.c:
+	use new symbol ANSI_CPP so we can port "#n" ,substitutions
+
+	* include/ptypes.h: defined new symbol ANSI_CPP
+
+	* include/ptypes.h: port to HP/UX
+
+	* src/unix/s2gid.c, src/curses/scr_size.c: ifdef-ident
+	compile on HP/UX
+
+	* src/curses/win2file.c: ifdef-ident
+
+	* include/td_curse.h: port to HP/UX
+
+	* support/old-td_lib.mk: added NO_IDENT ifdef for linting ident's
+
+	* src/cm_funcs/cutoff.c, src/compare/cmpqsort.c, src/curses/beep.c, src/curses/blip.c, src/curses/dumpchr.c, src/memory/doalloc.c, src/pathname/abspath.c, src/pathname/acc_mode.c, src/pathname/add2fnam.c, src/pathname/arg2file.c, src/pathname/copyback.c, src/pathname/denode.c, src/pathname/dotname.c, src/process/bldarg.c, src/process/catarg.c, src/process/catchall.c, src/string/dftenv.c, src/string/dotcmp.c:
+	ifdef-ident
+
+	* src/compare/diffload.c: ifdef-ident
+	compile on HP/UX
+
+1993-10-29  dickey@software.org
+
+	* src/cm_funcs/cutoff.c, src/curses/dumpchr.c, src/pathname/arg2file.c, src/pathname/dotname.c, src/process/bldarg.c, src/process/catarg.c, src/string/dftenv.c, src/string/dotcmp.c:
+	use MODULE_ID
+
+1993-10-29  dickey@software.org
+
+	* src/pathname/file2arg.c, src/pathname/file2mem.c, src/pathname/filesize.c, src/pathname/fp2argv.c, src/pathname/ftype.c, src/pathname/ftype2.c, src/process/execute.c, src/process/failed.c, src/process/for_admn.c, src/process/for_user.c, src/process/gethome.c, src/process/getuser.c, src/sheet/field_of.c:
+	ifdef-ident
+
+	* src/pathname/filecopy.c, src/unix/gid2s.c: ifdef-ident
+	compile on HP/UX
+
+1993-10-29  dickey@software.org
+
+	* src/pathname/fp2argv.c, src/process/failed.c: use MODULE_ID
+
+1993-10-29  dickey@software.org
+
+	* src/curses/rawgets.c: gcc warnings for HP/UX
+
+	* src/cm_funcs/next_ver.c, src/cm_funcs/packdate.c, src/cm_funcs/rcs_dir.c, src/cm_funcs/rcsdebug.c, src/compare/m2comp.c, src/curses/killchar.c, src/curses/logch.c, src/curses/padedit.c, src/curses/rawterm.c, src/pathname/is_spath.c, src/pathname/istextfl.c, src/pathname/mem2file.c, src/pathname/modechar.c, src/pathname/name2s.c, src/pathname/pathcat.c, src/pathname/pathcmp.c, src/pathname/pathhead.c, src/pathname/pathleaf.c, src/process/makeargv.c, src/string/lsbycols.c, src/string/ltostr.c:
+	ifdef-ident
+
+	* src/process/interact.c: ifdef-ident
+	compile on HP/UX
+
+	* src/cm_funcs/newzone.c: port to HP/UX
+
+1993-10-29  dickey@software.org
+
+	* src/cm_funcs/rcs_dir.c, src/cm_funcs/rcsdebug.c, src/compare/m2comp.c, src/pathname/istextfl.c, src/pathname/modechar.c, src/process/makeargv.c, src/string/lsbycols.c:
+	use MODULE_ID
+
+1993-10-29  dickey@software.org
+
+	* src/cm_funcs/rcskeys.c, src/cm_funcs/rcslast.c, src/cm_funcs/rcsload.c, src/cm_funcs/rcslocks.c, src/cm_funcs/rcsname.c, src/cm_funcs/rcspath.c, src/cm_funcs/rcsperm.c, src/cm_funcs/rcssymbs.c, src/cm_funcs/rcstemp.c, src/cm_funcs/rcstime.c, src/cm_funcs/samebr.c, src/cm_funcs/sccs_dir.c, src/cm_funcs/sccslast.c, src/cm_funcs/sccsname.c, src/compare/scomp.c, src/curses/resizwin.c, src/curses/savewin.c, src/memory/stralloc.c, src/pathname/relpath.c, src/pathname/sameleaf.c, src/process/revert.c, src/process/shoarg.c, src/sheet/ss_field.c, src/string/strbcmp.c, src/unix/s2uid.c:
+	ifdef-ident
+
+	* src/cm_funcs/rcsedit.c: ifdef-ident
+	compile on HP/UX
+
+	* src/unix/setmtime.c: port to HP/UX
+
+1993-10-29  dickey@software.org
+
+	* src/cm_funcs/rcskeys.c, src/cm_funcs/rcslocks.c, src/cm_funcs/rcssymbs.c, src/compare/scomp.c, src/memory/stralloc.c, src/sheet/ss_field.c, src/string/strbcmp.c:
+	use MODULE_ID
+
+1993-10-29  dickey@software.org
+
+	* src/cm_funcs/rcsargpr.c, src/cm_funcs/vcs_file.c, src/cm_funcs/vercmp.c, src/curses/viewfile.c, src/memory/txtalloc.c, src/memory/vecalloc.c, src/memory/vecedit.c, src/memory/veclen.c, src/pathname/stat_dir.c, src/pathname/stat_fil.c, src/pathname/track_wd.c, src/pathname/trimpath.c, src/pathname/walktree.c, src/pathname/which.c, src/process/savesuid.c, src/process/showuids.c, src/process/usercopy.c, src/process/userprot.c, src/process/walkback.c, src/string/dyn_copy.c, src/string/dyn_str.c, src/string/strclean.c, src/string/strcount.c, src/string/strtrim.c, src/string/strucmp.c, src/string/strucpy.c, src/string/strwcmp.c, src/unix/uid2s.c:
+	ifdef-ident
+
+1993-10-29  dickey@software.org
+
+	* src/memory/vecedit.c, src/memory/veclen.c, src/pathname/track_wd.c, src/process/savesuid.c, src/string/dyn_copy.c, src/string/dyn_str.c, src/string/strclean.c, src/string/strcount.c, src/string/strtrim.c, src/string/strucmp.c, src/string/strucpy.c, src/string/strwcmp.c:
+	use MODULE_ID
+
+1993-10-29  dickey@software.org
+
+	* src/sheet/count_ss.c, src/string/dyn_app.c, src/string/dyn_appc.c, src/string/dyn_cata.c:
+	ifdef-ident
+
+1993-10-29  dickey@software.org
+
+	* src/sheet/count_ss.c, src/string/dyn_app.c, src/string/dyn_appc.c, src/string/dyn_cata.c:
+	use MODULE_ID
+
+1993-10-29  dickey@software.org
+
+	* include/td_qsort.h: port to HP/UX
+
 1993-09-28  dickey@software.org
 
 	* src/curses/rawgets.c:

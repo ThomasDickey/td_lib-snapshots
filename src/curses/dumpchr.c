@@ -1,12 +1,9 @@
-#ifndef	lint
-static	char	Id[] = "$Id: dumpchr.c,v 12.1 1993/09/21 18:54:05 dickey Exp $";
-#endif
-
 /*
  * Title:	dumpchr.c (dump character)
  * Author:	T.E.Dickey
  * Created:	20 Apr 1988
  * Modified:
+ *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, converted to ANSI
  *		
@@ -19,6 +16,8 @@ static	char	Id[] = "$Id: dumpchr.c,v 12.1 1993/09/21 18:54:05 dickey Exp $";
 
 #include	"ptypes.h"
 #include	<ctype.h>
+
+MODULE_ID("$Id: dumpchr.c,v 12.3 1993/10/29 17:35:27 tom Exp $")
 
 #define	OUT	FPRINTF(fp,
 

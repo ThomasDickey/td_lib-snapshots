@@ -1,11 +1,12 @@
-#ifndef	lint
-static	char	Id[] = "$Id: doalloc.c,v 12.1 1993/09/21 18:54:05 dickey Exp $";
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: doalloc.c,v 12.2 1993/10/29 17:35:27 dickey Exp $";
 #endif
 
 /*
  * Author:	T.E.Dickey
  * Created:	09 Jan 1986
  * Modified:
+ *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		16 Nov 1992, added 'show_alloc()'; revised debug-code.
  *		02 Apr 1992, don't append to log-file. Write error message there

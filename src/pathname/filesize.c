@@ -1,5 +1,5 @@
-#ifndef	lint
-static	char	*Id = "$Id: filesize.c,v 12.0 1992/02/06 10:08:59 ste_cm Rel $";
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: filesize.c,v 12.1 1993/10/29 17:35:26 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	*Id = "$Id: filesize.c,v 12.0 1992/02/06 10:08:59 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	13 Sep 1991
  * Modified:
+ *		29 Oct 1993, ifdef-ident
  *		06 Feb 1992, use 'stat_file()'
  *		04 Oct 1991, conversion to ANSI
  *

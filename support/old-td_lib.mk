@@ -1,4 +1,4 @@
-# $Id: old-td_lib.mk,v 12.2 1993/09/23 20:29:38 dickey Exp $
+# $Id: old-td_lib.mk,v 12.3 1993/10/29 17:41:12 dickey Exp $
 # common definitions for makefiles built over TD_LIB library.
 
 ####### (Environment) ##########################################################
@@ -15,7 +15,9 @@ PUT	= rm -f $@; $(COPY) $? $@
 
 MAKE	= make $(MFLAGS) -k$(MAKEFLAGS)	CFLAGS="$(CFLAGS)" COPY="$(COPY)"
 
+#CFLAGS	=
 #CC	= gcc -g -O -Wall -Wshadow -Wconversion -Wstrict-prototypes -Wmissing-prototypes
+#CC	= gcc -D__hpux -DNO_IDENT -O -Wall -Wshadow -Wconversion -Wstrict-prototypes -Wmissing-prototypes
 #LINK	= purify $(CC)
 LINK	= $(CC)
 
@@ -31,7 +33,7 @@ LIBS	= $L/$(TD_LIB).a
 DATE	= echo '** '`date` >> $@
 
 LINTLIBS= -ltd
-LINTOPTS= $(CPP_OPTS) $(LINTLIBS)
+LINTOPTS= $(CPP_OPTS) -DNO_IDENT $(LINTLIBS)
 
 ####### (Standard Lists) #######################################################
 # don't put .a into CLEAN, because VERDIX-ADA uses that for source!

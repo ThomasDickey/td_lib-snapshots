@@ -1,5 +1,5 @@
-#ifndef	lint
-static	char	Id[] = "$Id: blip.c,v 12.1 1993/09/21 18:54:05 dickey Exp $";
+#if	!defined(NO_IDENT)
+static	char	Id[] = "$Id: blip.c,v 12.2 1993/10/29 17:35:27 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: blip.c,v 12.1 1993/09/21 18:54:05 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	11 Aug 1988, from 'beep()'
  * Modified:
+ *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		18 Oct 1991, if stderr is not a terminal, open directly to
  *			     /dev/tty.
