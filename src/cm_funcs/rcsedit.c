@@ -1,54 +1,15 @@
 #ifndef	lint
-static	char	*Id = "$Id: rcsedit.c,v 9.0 1991/05/15 09:34:03 ste_cm Rel $";
+static	char	*Id = "$Id: rcsedit.c,v 9.1 1991/07/10 12:26:11 dickey Exp $";
 #endif
 
 /*
  * Title:	rcsedit.c (edit RCS file)
  * Author:	T.E.Dickey
  * Created:	26 May 1988
- * $Log: rcsedit.c,v $
- * Revision 9.0  1991/05/15 09:34:03  ste_cm
- * BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
- *
- *		Revision 8.1  91/05/15  09:34:03  dickey
- *		apollo sr10.3 cpp complains about tag in #endif
- *		
- *		Revision 8.0  90/04/18  14:10:27  ste_cm
- *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
- *		
- *		Revision 7.0  90/04/18  14:10:27  ste_cm
- *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
- *		
- *		Revision 6.1  90/04/18  14:10:27  dickey
- *		cleanup/lint (apollo sr10.2)
- *		
- *		Revision 6.0  90/03/12  09:02:57  ste_cm
- *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
- *		
- *		Revision 5.2  90/03/12  09:02:57  dickey
- *		lint (apollo sr10.1)
- *		
- *		Revision 5.1  90/03/05  13:41:41  dickey
- *		port to sun3 (os3.4)
- *		
- *		Revision 5.0  89/07/25  09:19:55  ste_cm
- *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
- *		
- *		Revision 4.0  89/07/25  09:19:55  ste_cm
- *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
- *		
- *		Revision 3.1  89/07/25  09:19:55  dickey
- *		recompiled with apollo SR10 -- mods for function prototypes
- *		
- *		Revision 3.0  89/03/15  13:00:22  ste_cm
- *		BASELINE Mon Jun 19 13:27:01 EDT 1989
- *		
- *		Revision 2.0  89/03/15  13:00:22  ste_cm
- *		BASELINE Thu Apr  6 09:45:13 EDT 1989
- *		
- *		Revision 1.9  89/03/15  13:00:22  dickey
- *		sccs2rcs keywords
- *		
+ * Modified:
+ *		10 Jul 1991, write directly into lock-file to avoid redundant
+ *			     copying, unless we have no permission in the RCS
+ *			     directory.
  *		08 Mar 1988, use temp-file for copying RCS archive back (safer)
  *		19 Aug 1988, modified 'rcsopen()' to properly check that we
  *			     are opening a file.  Corrected 'rcsparse_str()',
@@ -62,6 +23,7 @@ static	char	*Id = "$Id: rcsedit.c,v 9.0 1991/05/15 09:34:03 ste_cm Rel $";
  * Function:	Open an RCS file, parse it, optionally modifying fields.
  */
 
+#define	ACC_PTYPES
 #define	STR_PTYPES
 #include	"ptypes.h"
 #include	"rcsdefs.h"
@@ -71,12 +33,10 @@ static	char	*Id = "$Id: rcsedit.c,v 9.0 1991/05/15 09:34:03 ste_cm Rel $";
 #define	VERBOSE	if (verbose) PRINTF
 
 static	FILE	*fpS, *fpT;
-static	char	fname[BUFSIZ];
+static	char	fname[256];
 static	char	buffer[BUFSIZ];
-static	char	tmp_name[L_tmpnam];
-static	int	fmode;		/* original protection of file */
+static	char	tmp_name[256];
 static	int	changed;	/* set if caller changed file */
-static	int	lines;		/* total # of records written to temp-file */
 static	int	verbose;	/* set if we show informational messages */
 
 /************************************************************************
@@ -84,10 +44,37 @@ static	int	verbose;	/* set if we show informational messages */
  ************************************************************************/
 
 static
+dir_access()
+{
+	register char	*s;
+	char	temp[256];
+	int	uid = geteuid();
+	int	gid = getegid();
+	struct	stat	sb;
+
+	if (s = strrchr(strcpy(temp, fname), '/'))
+		*s = EOS;
+	else
+		(void)strcpy(temp, ".");
+	if (stat(temp, &sb) < 0 || (sb.st_mode & S_IFMT) != S_IFDIR)
+		return FALSE;
+
+	if (!uid) {		/* root can do anything */
+		uid = sb.st_uid;
+		gid = sb.st_gid;
+	}
+	if (uid == sb.st_uid)
+		return (sb.st_mode & S_IWRITE);
+	else if (gid == sb.st_gid)
+		return (sb.st_mode & (S_IWRITE >> 3));
+	return (sb.st_mode & (S_IWRITE >> 6));
+}
+
+static
 delim(c)
 {
 	if (isspace(c))	return (TRUE);
-	return (strchr(";:,@", (long)c) != 0);
+	return (strchr(";:,@", c) != 0);
 }
 
 static
@@ -111,7 +98,6 @@ writeit()
 {
 	if (*buffer) {
 		fputs(buffer, fpT);
-		lines++;
 	}
 	*buffer = EOS;
 }
@@ -128,19 +114,24 @@ char	*name;
 int	show;
 {
 	struct	stat	sb;
+	int	fd;
 
 	(void)strcpy(fname, name);
+	fpT     = 0;
 	changed	= FALSE;
-	lines	= 0;
 	verbose	= show;
 	VERBOSE("++ rcs-%s(%s)\n", (show > 0) ? "edit" : "scan", fname);
 	if (	(stat(fname, &sb) >= 0)
 	&&	((sb.st_mode & S_IFMT) == S_IFREG)
 	&&	(fpS = fopen(fname, "r")) ) {
-		fmode	= sb.st_mode & 0555;
-			/* retain protection for copyback */
-		FORMAT(tmp_name, "%s/rcsedit%d", P_tmpdir, getpid());
-		if (!(fpT = fopen(tmp_name, "w+"))) {
+		int	fmode	= sb.st_mode & 0555;
+		if (dir_access())
+			strcpy(tmp_name, fname)[strlen(fname)-1] = 'V';
+		else
+			FORMAT(tmp_name, "%s/rcsedit%d", P_tmpdir, getpid());
+
+		if ((fd = open(tmp_name, O_CREAT|O_EXCL|O_WRONLY, fmode)) < 0
+		 || !(fpT = fdopen(fd, "w"))) {
 			perror(tmp_name);
 			return(FALSE);
 		}
@@ -208,33 +199,21 @@ rcsclose()
 {
 	writeit();
 	if (changed) {
-		int	fd;
-		char	tname[BUFSIZ];
-
 		while (readit())
 			writeit();
-		(void)fclose(fpS);
-
-		VERBOSE("++ rcs-copyback %d lines\n", lines);
-		(strcpy(tname, fname))[strlen(fname)-1] = ',';
-		/* give 'copyback' something to work with... */
-		if ((fd = creat(tname, 0644)) < 0) {
-			perror(tname);
-			return;
-		}
-		(void)close(fd);
-
-		if (!copyback(fpT, tname, fmode, lines))
-			perror(fname);
-		else if (rename(tname, fname) < 0)
-			perror("rename");
-	} else
-		(void)fclose(fpS);
-	if (fpT != 0) {
 		FCLOSE(fpT);
-		(void)unlink(tmp_name);
-		fpT = 0;
+		if (rename(tmp_name, fname) < 0) {
+			perror("rename");
+			(void)unlink(tmp_name);
+		}
+	} else {
+		if (fpT != 0) {
+			FCLOSE(fpT);
+			(void)unlink(tmp_name);
+		}
 	}
+	FCLOSE(fpS);
+	fpT = 0;
 }
 
 /************************************************************************
