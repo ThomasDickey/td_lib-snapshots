@@ -1,3 +1,7 @@
+1989-03-24  dickey@software.org
+
+	* Makefile: added install/deinstall rules
+
 1989-03-21  dickey@software.org
 
 	* Makefile, include/Makefile: New file.
