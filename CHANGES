@@ -1,3 +1,29 @@
+1995-11-04  dickey@clark.net
+
+	* src/curses/rawgets.c:
+	lots of little tweaks to make column-80 work properly (tested with ncurses
+	1.9.7)
+
+	* src/curses/wrepaint.c: got rid of SYS5_CURSES definition
+
+	* include/td_curse.h: drop SYS5_CURSES definition
+	added better fallbacks for wMaxX/wMaxY
+
+1995-11-02  dickey@clark.net
+
+	* src/curses/rawgets.c: mods to display 80th column
+
+	* src/curses/win2file.c: tuning the loop limits (was 1-short)
+
+	* aclocal.m4: added libcurses. to -lncurses pattern
+
+	* Makefile:
+	rules for (re)generating configure are more trouble than they're worth
+
+	* aclocal.m4:
+	further disentangling predefined $LIBS values with -lcurses vs -lncurses
+	(to make cfg-bsd43 work)
+
 1995-10-31  dickey@clark.net
 
 	* src/port2vms/zone2vms.c: mods so this (should) compile on AIX

@@ -34,7 +34,7 @@
 #include	<ctype.h>
 #include	<time.h>
 
-MODULE_ID("$Id: win2file.c,v 12.9 1995/09/04 16:05:38 tom Exp $")
+MODULE_ID("$Id: win2file.c,v 12.10 1995/11/03 01:07:49 tom Exp $")
 
 #define	OUT	FPRINTF(fp,
 
@@ -66,7 +66,7 @@ void	MarkIt(
 	_DCL(int,	row)
 	_DCL(chtype,	c)
 {
-	(void)wmove(win, row + win->_begy, win->_begx);
+	(void)wmove(win, (int)(row + win->_begy), (int)(win->_begx));
 	(void)waddch(win,c);
 }
 
@@ -85,15 +85,16 @@ void	win2fp(
 	register int	j, k;
 	register chtype	khr;
 	int	rows = wMaxY(win);
+	int	cols = wMaxX(win);
 
 	OUT "%sscreen saved at %s", *prefix ? prefix : "\f", ctime(&now));
-	OUT "%s----------------\n", prefix);
+	OUT "%s----------------(%dx%d)\n", prefix, rows, cols);
 
 	getyx(win, y, x);
 	for (j = 0; j < rows; j++) {
 		OUT "%s", prefix);
 		if (CursesLine(win,j) != NULL) {
-			int	last = 0;
+			int	last = -1;
 
 			/* animate this so user can see something */
 			khr = CursesData(win,j,0);
@@ -102,7 +103,7 @@ void	win2fp(
 			MarkIt(win, j, khr);
 
 			/* find the last nonblank column */
-			for (k = 0; k < wMaxX(win); k++) {
+			for (k = 0; k < cols; k++) {
 				khr = CursesData(win,j,k);
 				if ((khr = toascii(khr)) == EOS)
 					break;
@@ -111,7 +112,7 @@ void	win2fp(
 			}
 
 			/* dump the line, setting boldface as needed */
-			for (k = 0; k < last; k++) {
+			for (k = 0; k <= last; k++) {
 				auto	int	bold;
 
 				khr = CursesData(win,j,k);

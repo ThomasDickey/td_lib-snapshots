@@ -1,4 +1,4 @@
-# $Id: Makefile,v 12.12 1995/02/03 11:48:37 tom Exp $
+# $Id: Makefile,v 12.13 1995/11/03 00:31:52 tom Exp $
 # Top-level makefile for TD_LIB common library
 
 ####### (Development) ##########################################################
@@ -124,15 +124,15 @@ $I/sccsdefs.h:		$i/sccsdefs.h	; $(PUT)
 
 $L/$(THIS).a:	lib/$(THIS).a		; $(PUT); ranlib $@
 
-configure:	$(CONFIG_H)		; autoconf
-
-# config.status might not change config.h
-$(I_CFG): stamp-h
-stamp-h: config.status
-	$(SHELL) -c ./config.status
-
-#? Makefile: Makefile.in config.status
-#? 	./config.status
-
-config.status: configure
-	$(SHELL) -c "./config.status --recheck"
+#:configure:	$(CONFIG_H)		; autoconf
+#:
+#:# config.status might not change config.h
+#:$(I_CFG): stamp-h
+#:stamp-h: config.status
+#:	$(SHELL) -c ./config.status
+#:
+#:#? Makefile: Makefile.in config.status
+#:#? 	./config.status
+#:
+#:config.status: configure
+#:	$(SHELL) -c "./config.status --recheck"
