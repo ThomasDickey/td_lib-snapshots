@@ -1,3 +1,21 @@
+1992-07-16  dickey@software.org
+
+	* src/pathname/edittree.c:
+	removed conflicting/redundant defs of isDIR and isFILE
+
+1992-07-16  ste_cm@software.org
+
+	* src/pathname/edittree.c:
+	BASELINE Thu Jul 16 16:44:02 1992 -- CM_TOOLS #11
+
+	* src/cm_funcs/cutoff.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+	* src/cm_funcs/cutoff.c:
+	BASELINE Thu Jul 16 11:16:11 1992 -- EBPM4 support
+
+	* src/cm_funcs/cutoff.c: last correction was wrong
+
 1992-06-30  dickey@software.org
 
 	* src/cm_funcs/cutoff.c: corrected increment of 'optind'
