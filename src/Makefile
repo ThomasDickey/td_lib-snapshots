@@ -1,4 +1,4 @@
-# @(#)Makefile	1.21 88/05/25 16:06:32
+# @(#)Makefile	1.22 88/05/27 07:02:57
 # MAKE-file for miscellaneous library routines
 L=lib.a
 #
@@ -7,6 +7,7 @@ OBJS	=\
 	adj2est.o\
 	beep.o\
 	bldarg.o\
+	catarg.o\
 	closeall.o\
 	cmdch.o\
 	copyback.o\
@@ -20,6 +21,7 @@ OBJS	=\
 	erasechar.o\
 	execute.o\
 	flushall.o\
+	getuser.o\
 	gid2s.o\
 	killchar.o\
 	ltostr.o\
@@ -29,7 +31,10 @@ OBJS	=\
 	padedit.o\
 	rawgets.o\
 	rawterm.o\
+	rcsedit.o\
+	rcskeys.o\
 	rcslast.o\
+	rcsname.o\
 	resizewin.o\
 	savewin.o\
 	sccslast.o\
@@ -58,6 +63,9 @@ cmdch.o:	cmdch.h
 cutoff.o:	ptypes.h
 packdate.o:	ptypes.h
 rawgets.o:	cmdch.h
+rcsedit.o:	rcsdefs.h
+rcskeys.o:	rcsdefs.h
+rcsname.o:	rcsdefs.h
 sccszone.o:	ptypes.h
 set2est.o:	ptypes.h
 setmtime.o:	ptypes.h
