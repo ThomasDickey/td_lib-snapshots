@@ -1,3 +1,4 @@
 #!/bin/sh
-# $Id: vms_wild.sh,v 7.1 1992/11/20 11:36:43 dickey Exp $
-./vms_iswild >vms_iswild.tmp
+# $Id: vms_wild.sh,v 8.0 1993/04/30 11:20:58 ste_cm Rel $
+ME=vms_wild
+./$ME >$ME.tmp
