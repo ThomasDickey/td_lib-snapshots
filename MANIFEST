@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19921118
+MANIFEST for td_lib, version t19921119
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         restrictions on copying/using this software
@@ -25,6 +25,7 @@ include/sccsdefs.h              interface for sccs functions
 include/td_curse.h              interface for curses functions
 include/td_lib.h                interface of common TD_LIB functions
 include/td_qsort.h              interface for 'qsort()'
+include/td_scomp.h              interface for source-compare functions
 include/td_sheet.h              interface for spreadsheet (CSV) functions
 include/vms_dirs.h              VMS unix-style directory-interface definitions
 src                             subdirectory
@@ -217,6 +218,7 @@ test/cm_funcs/vercmp.sh         test-script for vercmp
 test/compare                    subdirectory
 test/compare/diffload.ref       test result
 test/compare/diffload.sh        =============================================================================
+test/compare/test_cmp.c         test-driver for scomp/mcomp modules
 test/curses                     subdirectory
 test/curses/padedit.ref         reference for 'padedit'
 test/curses/padedit.sh          test-script for 'padedit'
@@ -228,6 +230,7 @@ test                            subdirectory
 test/descrip.mms                =============================================================================
 test/dummy.txt                  test-file #1
 test/dummy2.txt                 test-file
+test/dummy3.txt                 short test-case for 'rcsload'
 test/dummy4.txt                 long test-case for 'rcsload'
 test/memory                     subdirectory
 test/memory/doalloc.ref         reference for 'doalloc'

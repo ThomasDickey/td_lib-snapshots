@@ -1,4 +1,4 @@
-# $Id: Makefile,v 11.10 1992/11/18 08:47:11 dickey Exp $
+# $Id: Makefile,v 11.11 1992/11/19 15:11:58 dickey Exp $
 # MAKE-file for miscellaneous library routines
 
 ####### (Environment) ##########################################################
@@ -61,6 +61,7 @@ CSRC	=\
 	list_by_cols.c\
 	logch.c\
 	ltostr.c\
+	m2comp.c\
 	makeargv.c\
 	mem2file.c\
 	modechar.c\
@@ -95,6 +96,7 @@ CSRC	=\
 	samebranch.c\
 	sameleaf.c\
 	savewin.c\
+	scomp.c\
 	sccs_dir.c\
 	sccslast.c\
 	sccsname.c\
@@ -186,6 +188,7 @@ OBJS	=\
 	$Z(list_by_cols.o)\
 	$Z(logch.o)\
 	$Z(ltostr.o)\
+	$Z(m2comp.o)\
 	$Z(makeargv.o)\
 	$Z(mem2file.o)\
 	$Z(modechar.o)\
@@ -223,6 +226,7 @@ OBJS	=\
 	$Z(sccs_dir.o)\
 	$Z(sccslast.o)\
 	$Z(sccsname.o)\
+	$Z(scomp.o)\
 	$Z(scr_size.o)\
 	$Z(setmtime.o)\
 	$Z(shoarg.o)\
@@ -293,6 +297,9 @@ $Z(win2file.o)\
 $Z(wrepaint.o):	$(CURSES_H)
 
 $Z(cm_qsort.o):	$(QSORT_H)
+
+$Z(m2comp.o)\
+$Z(scomp.o):	$I/cm_scomp.h
 
 $Z(cmdch.o)\
 $Z(logch.o)\

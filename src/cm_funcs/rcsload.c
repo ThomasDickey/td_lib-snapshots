@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcsload.c,v 11.3 1992/11/18 15:22:40 dickey Exp $";
+static	char	Id[] = "$Id: rcsload.c,v 11.7 1992/11/19 09:13:19 dickey Exp $";
 #endif
 
 /*
@@ -7,7 +7,8 @@ static	char	Id[] = "$Id: rcsload.c,v 11.3 1992/11/18 15:22:40 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	19 Aug 1988
  * Modified:
- *		18 Nov 1992, fixed a broken loop in 'eat_text()'.
+ *		18 Nov 1992, fixed a broken loop in 'eat_text()'.  Plugged
+ *			     memory leaks.
  *		26 Oct 1992, changed interface to 'rcsread()'.
  *		07 Feb 1992, use 'rcs2time()'
  *		17 Oct 1991, added logic for computing versions of loaded text
@@ -173,6 +174,12 @@ _DCL(int,	c)
 	}
 	if (c == EOS)
 		skip = 0;
+
+#ifdef	NO_LEAKS
+	dofree(my_buffer);
+	my_buffer = 0;
+	my_limit = 0;
+#endif
 }
 
 /*
@@ -367,9 +374,6 @@ _DCL(int,	verbose)
 		case S_HEAD:
 			s = rcsparse_num(tmp, s);
 			break;
-		case S_COMMENT:
-			s = rcsparse_str(s, NULL_FUNC);
-			break;
 		case S_VERS:
 			last_rev = txtalloc(key);
 			if (delta == 0) {
@@ -476,7 +480,7 @@ _DCL(DELTREE *,	p)
 	if (p != 0) {
 		register int	j;
 		for (j = 0; p[j].vector; j++) {
-			if (p[j].buffer != 0)	free(p[j].buffer);
+			if (p[j].buffer != 0)	dofree(p[j].buffer);
 			if (p[j].vector != 0)	vecfree(p[j].vector);
 		}
 		dofree((char *)p);
@@ -539,12 +543,19 @@ _MAIN
 					p[k].parent,
 					p[k].revision,
 					ctime(&p[k].tstamp));
+#ifdef	TEST2
 				SHOW_VECTOR("SHOW", p[k].revision, p[k].vector);
+				FFLUSH(stdout);
+#endif
 				compare(name, p[k].vector, p[k].revision);
 			}
 			rcsunload(p);
 		}
 	}
+#ifdef	NO_LEAKS
+	free_txtalloc();
+	show_alloc();
+#endif
 	exit(SUCCESS);
 }
 #endif

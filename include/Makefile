@@ -1,4 +1,4 @@
-# $Id: Makefile,v 11.2 1992/11/18 08:25:54 dickey Exp $
+# $Id: Makefile,v 11.3 1992/11/19 15:03:40 dickey Exp $
 # make-file for CM_TOOLS common interface directory
 
 TOP	= ../..
@@ -14,6 +14,7 @@ H_SRC	=\
 	cmdch.h\
 	cm_curses.h\
 	cm_qsort.h\
+	cm_scomp.h\
 	common.h\
 	deltree.h\
 	dyn_string.h\

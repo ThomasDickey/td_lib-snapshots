@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	*Id = "$Id: rcsedit.c,v 11.5 1992/11/17 13:07:58 dickey Exp $";
+static	char	*Id = "$Id: rcsedit.c,v 11.7 1992/11/19 09:42:17 dickey Exp $";
 #endif
 
 /*
@@ -44,13 +44,16 @@ static	char	*Id = "$Id: rcsedit.c,v 11.5 1992/11/17 13:07:58 dickey Exp $";
 #define	SEMICOLON	';'
 #define	AT_SYMBOL	'@'
 
+#define	DEBUG(s)	if(RCS_DEBUG > 1) PRINTF s;
+
 static	FILE	*fpS, *fpT;
-static	char	fname[MAXPATHLEN];
-static	char	buffer[BUFSIZ];
-static	char	tmp_name[MAXPATHLEN];
+static	char	fname[MAXPATHLEN];	/* patch: should be dynamic */
+static	char	buffer[BUFSIZ];	/* patch: should be dynamic */
+static	char	tmp_name[MAXPATHLEN];	/* patch: should be dynamic */
 static	char	*edit_at;
 static	int	changes;	/* set if caller changed file */
 static	int	verbose;	/* set if we show informational messages */
+static	int	in_string;	/* true only while parsing string */
 
 /************************************************************************
  *	local procedures						*
@@ -67,7 +70,11 @@ void	Show(
 	if ((RCS_DEBUG > 1) && text != 0 && verbose) {
 		FFLUSH(stdout);
 		FFLUSH(stderr);
-		PRINTF("%s %d\t%s", tag, changes, text);
+		PRINTF("%s %d%c%s%s",
+			tag,
+			changes,
+			in_string ? "\"\t" : "\t",
+			text);
 	}
 }
 
@@ -175,7 +182,7 @@ char *	SkipPastSemicolon(
 	_DCL(char *,	s)
 {
 	while (s != 0) {
-		while (*s != EOS) {
+		while ((s != 0) && (*s != EOS)) {
 			if (*s == AT_SYMBOL)
 				s = rcsparse_str(s, NULL_FUNC);
 			else if (*s++ == SEMICOLON)
@@ -387,20 +394,25 @@ char *	rcsparse_str(
 
 	s = SkipBlanks(s);
 	if (*s == AT_SYMBOL) {
+		in_string = TRUE;
 		s++;			/* skip past leading quote */
 		do {
-			while (*s != EOS) {
+			while ((s != 0) && (*s != EOS)) {
 				if ((c = *s++) == AT_SYMBOL) {
 					if (*s != AT_SYMBOL) {
 						STR_FUNC(EOS);
+						in_string = FALSE;
 						return s;
-					}
+					} else	/* skip escaped quote */
+						s++;
 				}
 				STR_FUNC(c);
 			}
 		} while (s = ReadNewBuffer());
 
 		STR_FUNC(EOS);	/* got an end-of-file */
+		DEBUG(("EOF encountered in rcsparse_str\n"))
+		in_string = FALSE;
 	}
 	return s;
 }

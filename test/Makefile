@@ -1,4 +1,4 @@
-# $Id: Makefile,v 11.5 1992/11/18 09:41:56 dickey Exp $
+# $Id: Makefile,v 11.7 1992/11/19 15:13:22 dickey Exp $
 # make-file for CM_TOOLS common/test library
 
 ####### (Development) ##########################################################
@@ -14,11 +14,111 @@ VPATH	= ../src
 .c:	; $(CC) -o $@ $(CFLAGS) $(CPP_OPTS) $< $(LIBS) -lcurses -ltermcap
 
 ####### (Standard Lists) #######################################################
-REF_FILES =
-SCRIPTS	= \
-	run_tests.sh
+DATA_FILES = \
+	dummy.txt \
+	dummy2.txt \
+	dummy3.txt \
+	dummy4.txt
 
-SOURCES	= Makefile descrip.mms README $(SCRIPTS) $(REF_FILES)
+REF_FILES = \
+	abspath.ref \
+	cutoff.ref \
+	diffload.ref \
+	doalloc.ref \
+	dotcmp.ref \
+	execute.ref \
+	failed.ref \
+	file2argv.ref \
+	file2mem.ref \
+	filecopy.ref \
+	fp2argv.ref \
+	gethome.ref \
+	gid2s.ref \
+	list_by_cols.ref \
+	ltostr.ref \
+	makeargv.ref \
+	name2s.ref \
+	newzone.ref \
+	packdate.ref \
+	padedit.ref \
+	pathcmp.ref \
+	pathhead.ref \
+	pathleaf.ref \
+	rawgets.ref \
+	rcsargpair.ref \
+	rcsload.ref \
+	rcsname.ref \
+	relpath.ref \
+	s2uid.ref \
+	samebranch.ref \
+	sameleaf.ref \
+	sccsname.ref \
+	scr_size.ref \
+	strbcmp.ref \
+	strucmp.ref \
+	strwcmp.ref \
+	trimpath.ref \
+	txtalloc.ref \
+	uid2s.ref \
+	usercopy.ref \
+	vcs_file.ref \
+	vecedit.ref \
+	vercmp.ref \
+	walktree.ref \
+	which.ref
+
+SCRIPTS	= \
+	run_tests.sh \
+	abspath.sh \
+	cutoff.sh \
+	diffload.sh \
+	doalloc.sh \
+	dotcmp.sh \
+	execute.sh \
+	failed.sh \
+	file2argv.sh \
+	file2mem.sh \
+	filecopy.sh \
+	fp2argv.sh \
+	gethome.sh \
+	gid2s.sh \
+	list_by_cols.sh \
+	ltostr.sh \
+	makeargv.sh \
+	name2s.sh \
+	newzone.sh \
+	packdate.sh \
+	padedit.sh \
+	pathcmp.sh \
+	pathhead.sh \
+	pathleaf.sh \
+	rawgets.sh \
+	rcsargpair.sh \
+	rcsload.sh \
+	rcsname.sh \
+	relpath.sh \
+	s2uid.sh \
+	samebranch.sh \
+	sameleaf.sh \
+	sccsname.sh \
+	scr_size.sh \
+	strbcmp.sh \
+	strucmp.sh \
+	strwcmp.sh \
+	trimpath.sh \
+	txtalloc.sh \
+	uid2s.sh \
+	usercopy.sh \
+	vcs_file.sh \
+	vecedit.sh \
+	vercmp.sh \
+	walktree.sh \
+	which.sh
+
+C_SRC	= \
+	test_scomp.c
+
+SOURCES	= Makefile descrip.mms README $(C_SRC) $(SCRIPTS) $(REF_FILES)
 
 PROGS	=\
 	abspath\

@@ -1,4 +1,4 @@
-# $Id: old-td_lib.mk,v 11.6 1992/11/18 08:38:16 dickey Exp $
+# $Id: old-td_lib.mk,v 11.8 1992/11/19 15:51:43 dickey Exp $
 # common definitions for makefiles built over CM_TOOLS library.
 
 ####### (Environment) ##########################################################
@@ -30,7 +30,7 @@ LINTLIBS= -ltd
 LINTOPTS= $(CPP_OPTS) $(LINTLIBS)
 
 ####### (Standard Lists) #######################################################
-CLEAN	= *.[oai] *.bak *.log *.out *.tst .nfs* core
+CLEAN	= *.[oai] *.lint *.bak *.log *.out *.tst .nfs* core
 DESTROY	=sh -c 'for i in *;do case $$i in RCS);; *) rm -f $$i;;esac;done;exit 0'
 RUN_TESTS=sh -c '$@.sh 2>&1 | tee -a $@.out'
 
@@ -58,7 +58,7 @@ LINT_EACH = sh -c 'for i in $?;do echo $$i:; tdlint $(LINTOPTS) $$i >>$@;done'
 
 .c.i:		; $(CC) $(CPP_OPTS) -E -C $< >$@
 .c.proto:	; $(CPROTO) $(CPP_OPTS) $< >$@
-.c.lint:	; tdlint $(LINTOPT) $< >$@
+.c.lint:	; tdlint $(LINTOPTS) $< >$@
 
 .c.tst:		; $(CC) -o $@ -DTEST $(CFLAGS) $(CPP_OPTS) $< $Z $(LIBS)
 

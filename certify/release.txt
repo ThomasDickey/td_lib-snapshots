@@ -1,4 +1,4 @@
-$Id: release.txt,v 11.2 1992/11/17 13:28:56 dickey Exp $
+$Id: release.txt,v 11.4 1992/11/19 15:20:48 dickey Exp $
 
 --------------------------------------------------------------------------------
 
@@ -11,3 +11,17 @@ Added third-arg to _fnx, _fn1, _FNX, _FN1 macros to specify argument lists
 of function-pointers in prototypes.
 
 Revised leak-testing in 'doalloc.c'.
+
+Added test-scripts & reference files for the (41) modules that currently have
+test-drivers.
+
+Added includes:
+	cm_curses.h
+	cm_qsort.h
+	cm_scomp.h
+
+Added modules:
+	cmp_qsort
+	m2comp - from DDIF
+	scomp - from DDIF
+	walkback

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: doalloc.c,v 11.3 1992/11/18 14:43:40 dickey Exp $";
+static	char	Id[] = "$Id: doalloc.c,v 12.0 1992/11/19 15:12:40 ste_cm Rel $";
 #endif
 
 /*
@@ -40,7 +40,7 @@ void	fail_alloc(
 	_DCL(char *,	ptr)
 {
 	PRINTF("%s: %#x\n", msg, ptr);
-	walkback();
+	walkback((char *)0);
 	FFLUSH(stdout);
 	FFLUSH(stderr);
 	abort();
@@ -74,7 +74,7 @@ int	FindArea(
 	register int j;
 	for (j = 0; j < DEBUG; j++)
 		if (area[j].text == ptr) {
-			if ((ptr != 0) && (j >= nowPending)) {
+			if (j >= nowPending) {
 				nowPending = j+1;
 				if (nowPending > maxPending)
 					maxPending = nowPending;
@@ -95,11 +95,10 @@ int	record_freed(
 		area[j].size = 0;
 		area[j].text = 0;
 		area[j].note = count_freed;
-		if (j+1 == nowPending) {
+		if ((j+1) == nowPending) {
 			register int	k;
-			for (k = j; k >= 0; k--)
-				if (!area[k].size)
-					nowPending = k;
+			for (k = j; (k >= 0) && !area[k].size; k--)
+				nowPending = k;
 		}
 	}
 	return j;
