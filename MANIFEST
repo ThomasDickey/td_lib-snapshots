@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19890407
+MANIFEST for td_lib, version t19890412
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 Makefile                        top-level makefile for TD_LIB
@@ -59,6 +59,7 @@ src/pathname/dlettree.c         delete-tree code for VMS/unix
 src/pathname/dotname.c          test for "." or ".." names
 src/pathname/editfile.c         VMS/unix edit tree-of-files
 src/pathname/edittree.c         VMS/unix edit-tree-of-files
+src/pathname/file2arg.c         load a text-file to memory in 'argv[]' format, returning the number of lines
 src/pathname/filecopy.c         copy a file
 src/pathname/fp2argv.c          file-pointer to argv-list
 src/pathname/ftype.c            finds filename's suffix
@@ -110,3 +111,5 @@ src/unix/s2gid.c                convert string to group-id
 src/unix/s2uid.c                convert string to user-id
 src/unix/setmtime.c             set mtime/atime of a file
 src/unix/uid2s.c                convert user-id to string
+support                         subdirectory
+support/prog_top.mms            VMS MMS include-file defining standard (module-level) rules.
