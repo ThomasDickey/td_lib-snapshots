@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	01 Dec 1987
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, converted to ANSI
@@ -27,18 +28,16 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: stralloc.c,v 12.3 1993/10/29 17:35:24 tom Exp $")
+MODULE_ID("$Id: stralloc.c,v 12.4 2004/03/07 22:03:45 tom Exp $")
 
-char *	stralloc(
-	_AR1(char *,	s))
-	_DCL(char *,	s)
+char *
+stralloc(char *s)
 {
-	return(strcpy(doalloc((char *)0, (unsigned)strlen(s)+1), s));
+    return (strcpy(doalloc((char *) 0, (unsigned) strlen(s) + 1), s));
 }
 
-void	strfree(
-	_AR1(char *,	s))
-	_DCL(char *,	s)
+void
+strfree(char *s)
 {
-	dofree(s);
+    dofree(s);
 }

@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	13 Sep 1988
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		04 Oct 1991, conversion to ANSI
@@ -23,30 +24,32 @@
 #define	SIG_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: catchall.c,v 12.6 2001/05/15 00:59:08 tom Exp $")
+MODULE_ID("$Id: catchall.c,v 12.7 2004/03/07 22:03:45 tom Exp $")
 
-void	catchall(
-	_FN1(SIG_T,	catchsig,	(SIGNAL_ARGS)))
-	_DCL(SIG_T,	(*catchsig)())
+void
+catchall(SIG_T(*catchsig) (SIGNAL_ARGS))
 {
 #define	SAVE(j)	save[j].func
-	static	struct	{ DCL_SIGNAL(func); } save[NSIG+1];
-	static	char	sigs[] = {
-				SIGINT
-				,SIGTERM
+    static struct {
+	DCL_SIGNAL(func);
+    } save[NSIG + 1];
+    static char sigs[] =
+    {
+	SIGINT
+	,SIGTERM
 #ifdef SYS_UNIX
-				,SIGHUP
-				,SIGQUIT
-				,SIGPIPE
+	,SIGHUP
+	,SIGQUIT
+	,SIGPIPE
 #endif
-			};
-	register size_t j;
+    };
+    size_t j;
 
-	for (j = 0; j < sizeof(sigs); j++) {
-		if (catchsig == 0) {
-			(void)signal(sigs[j], SAVE(j));
-		} else {
-			SAVE(j) = signal(sigs[j], catchsig);
-		}
+    for (j = 0; j < sizeof(sigs); j++) {
+	if (catchsig == 0) {
+	    (void) signal(sigs[j], SAVE(j));
+	} else {
+	    SAVE(j) = signal(sigs[j], catchsig);
 	}
+    }
 }

@@ -1,4 +1,4 @@
-/* $Id: td_curse.h,v 12.57 2004/02/09 23:51:34 tom Exp $ */
+/* $Id: td_curse.h,v 12.58 2004/03/07 21:54:10 tom Exp $ */
 
 /*
  * TD_LIB CURSES-related definitions
@@ -246,7 +246,7 @@ extern int getbegy(WINDOW *);
 
 #ifndef beep
 #if defined(HAVE_BEEP) && defined(NEED_BEEP)
-extern	int	beep		ARGS((void));
+extern	int	beep		(void);
 #endif /* HAVE_BEEP */
 #endif
 
@@ -256,54 +256,54 @@ extern	int	beep		ARGS((void));
 #endif
 
 #if defined(HAVE_ENDWIN) && defined(NEED_ENDWIN)
-extern	int	endwin		ARGS((void));
+extern	int	endwin		(void);
 #endif /* HAVE_ENDWIN */
 #if defined(HAVE_PRINTW) && defined(NEED_PRINTW)
-extern	int	printw		ARGS((char *f, ...));
+extern	int	printw		(char *f, ...);
 #endif /* HAVE_PRINTW */
 #if defined(USING_SGTTY_H)
 #if defined(HAVE_STTY) && defined(NEED_STTY)
-extern	int	stty		ARGS((int f, struct sgttyb *p));
+extern	int	stty		(int f, struct sgttyb *p);
 #endif /* HAVE_STTY */
 #endif
 #if defined(HAVE_TGETENT) && defined(NEED_TGETENT)
-extern	int	tgetent		ARGS((char *p, const char *t));
+extern	int	tgetent		(char *p, const char *t);
 #endif /* HAVE_TGETENT */
 #if defined(HAVE_TGETNUM) && defined(NEED_TGETNUM)
-extern	int	tgetnum		ARGS((const char *n));
+extern	int	tgetnum		(const char *n);
 #endif /* HAVE_TGETNUM */
 #if defined(HAVE_TGETSTR) && defined(NEED_TGETSTR)
-extern	char *	tgetstr		ARGS((const char *n, char **p));
+extern	char *	tgetstr		(const char *n, char **p);
 #endif /* HAVE_TGETSTR */
 #if defined(HAVE_TOUCHWIN) && defined(NEED_TOUCHWIN)
-extern	int	touchwin	ARGS((WINDOW *w));
+extern	int	touchwin	(WINDOW *w);
 #endif /* HAVE_TOUCHWIN */
 #if defined(HAVE_WADDCH) && defined(NEED_WADDCH)
-extern	int	waddch		ARGS((WINDOW *w, chtype c));
+extern	int	waddch		(WINDOW *w, chtype c);
 #endif /* HAVE_WADDCH */
 #if defined(HAVE_WADDSTR) && defined(NEED_WADDSTR)
-extern	int	waddstr		ARGS((WINDOW *w, char *s));
+extern	int	waddstr		(WINDOW *w, char *s);
 #endif /* HAVE_WADDSTR */
 #if defined(HAVE_WCLRTOBOT) && defined(NEED_WCLRTOBOT)
-extern	int	wclrtobot	ARGS((WINDOW *w));
+extern	int	wclrtobot	(WINDOW *w);
 #endif /* HAVE_WCLRTOBOT */
 #if defined(HAVE_WCLRTOEOL) && defined(NEED_WCLRTOEOL)
-extern	int	wclrtoeol	ARGS((WINDOW *w));
+extern	int	wclrtoeol	(WINDOW *w);
 #endif /* HAVE_WCLRTOEOL */
 #if defined(HAVE_WGETCH) && defined(NEED_WGETCH)
-extern	int	wgetch		ARGS((WINDOW *w));
+extern	int	wgetch		(WINDOW *w);
 #endif /* HAVE_WGETCH */
 #if defined(HAVE_WMOVE) && defined(NEED_WMOVE)
-extern	int	wmove		ARGS((WINDOW *w, int ybase, int xbase));
+extern	int	wmove		(WINDOW *w, int ybase, int xbase);
 #endif /* HAVE_WMOVE */
 #if defined(HAVE_WREFRESH) && defined(NEED_WREFRESH)
-extern	int	wrefresh	ARGS((WINDOW *w));
+extern	int	wrefresh	(WINDOW *w);
 #endif /* HAVE_WREFRESH */
 #if defined(HAVE_WSTANDEND) && defined(NEED_WSTANDEND)
-extern	int	wstandend	ARGS((WINDOW *w));
+extern	int	wstandend	(WINDOW *w);
 #endif /* HAVE_WSTANDEND */
 #if defined(HAVE_WSTANDOUT) && defined(NEED_WSTANDOUT)
-extern	int	wstandout	ARGS((WINDOW *w));
+extern	int	wstandout	(WINDOW *w);
 #endif /* HAVE_WSTANDOUT */
 
 #ifdef	lint
@@ -339,21 +339,18 @@ extern	int	wstandout	ARGS((WINDOW *w));
 	/* addchnst.c ------------------------------------------------- */
 #if	!defined(HAVE_ADDCHNSTR) && !defined(TESTING_CONFIG_H)
 	int	waddchnstr(
-			_arx(WINDOW *,	w)
-			_arx(chtype *,	s)
-			_ar1(int,	n)
+			WINDOW *	w,
+			chtype *	s,
+			int	n
 				)
-			_dcl(WINDOW *,	w)
-			_dcl(chtype *,	s)
-			_dcl(int,	n)
-			_ret
+			;
 #define addchnstr(str,n)	waddchnstr(stdscr,str, n)
 #endif
 
 	/* beep.c ----------------------------------------------------- */
 #if	!defined(HAVE_BEEP) && !defined(TESTING_CONFIG_H)
-	void	beep(_ar0)
-			_nul
+	void	beep(void)
+			;
 #endif
 
 	/* cmdch.c ---------------------------------------------------- */
@@ -370,64 +367,57 @@ extern	XtermMouse xt_mouse;	/* state of XTerm-mouse */
 #endif
 
 	int	cmdch(
-			_ar1(int *,	cntp)
+			int *	cntp
 			)
-			_dcl(int *,	cntp)
-			_ret
+			;
 
 	/* dumptty.c -------------------------------------------------- */
 	void	dumptty(
-			_arx(FILE *,	fp)
-			_ar1(char *,	s)
+			FILE *	fp,
+			char *	s
 			)
-			_dcl(FILE *,	fp)
-			_dcl(char *,	s)
-			_nul
+			;
 
 	/* dumpwin.c -------------------------------------------------- */
 	void	dumpwin(
-			_arx(WINDOW *,	w)
-			_ar1(char *,	s)
+			WINDOW *	w,
+			char *	s
 			)
-			_dcl(WINDOW *,	w)
-			_dcl(char *,	s)
-			_nul
+			;
 
 	/* erasechar.c ------------------------------------------------ */
 #if	!defined(HAVE_ERASECHAR) && !defined(erasechar) && !defined(TESTING_CONFIG_H)
-	int	erasechar(_ar0)
-			_ret
+	int	erasechar(void)
+			;
 #endif
-	int	eraseword(_ar0)
-			_ret
+	int	eraseword(void)
+			;
 
 	/* is_xterm.c ------------------------------------------------- */
 #if	!defined(HAVE_IS_XTERM)
-	int	is_xterm(_ar0)
-			_ret
+	int	is_xterm(void)
+			;
 #endif
 
 	/* killchar.c ------------------------------------------------- */
 #if	!defined(HAVE_KILLCHAR) && !defined(killchar) && !defined(TESTING_CONFIG_H)
-	int	killchar(_ar0)
-			_ret
+	int	killchar(void)
+			;
 #endif
 
 	/* lnextchr.c ------------------------------------------------- */
-	int	lnext_char(_ar0)
-			_ret
+	int	lnext_char(void)
+			;
 
 	/* on_winch.c ------------------------------------------------- */
 #ifdef SIG_PTYPES
 #  if defined(SIGWINCH)
 	void	on_winch(
-			_fn1(void,	func,(void)))
-			_dcl(void,	(*func)())
-			_nul
+			void (*func)(void))
+			;
 	void	enable_winch(
-			_ar1(int,	enable))
-			_dcl(int,	enable)
-			_nul
+			int	enable)
+			;
 #  else
 #    define	on_winch(func)		/* nothing */
 #    define	enable_winch(func)	/* nothing */
@@ -441,113 +431,88 @@ extern	int	y_rawgets;
 #  endif
 #endif
 	int	wrawgets (
-			_arx(WINDOW *,	win)
-			_arx(char *,	buffer)
-			_arx(char **,	prefix)
-			_arx(int,	buffer_len)
-			_arx(int,	field_len)
-			_arx(int,	first_col)
-			_arx(int,	first_mode)
-			_arx(int,	new_line)
-			_arx(int,	fast_q)
-			_arx(char **,	command)
-			_ar1(int,	logging)
+			WINDOW *	win,
+			char *	buffer,
+			char **	prefix,
+			int	buffer_len,
+			int	field_len,
+			int	first_col,
+			int	first_mode,
+			int	new_line,
+			int	fast_q,
+			char **	command,
+			int	logging
 			)
-			_dcl(WINDOW *,	win)
-			_dcl(char *,	buffer)
-			_dcl(char **,	prefix)
-			_dcl(int,	buffer_len)
-			_dcl(int,	field_len)
-			_dcl(int,	first_col)
-			_dcl(int,	first_mode)
-			_dcl(int,	new_line)
-			_dcl(int,	fast_q)
-			_dcl(char **,	command)
-			_dcl(int,	logging)
-			_ret
+			;
 
-	char *	rawgets_log(_ar0)
-			_ret
+	char *	rawgets_log(void)
+			;
 
 #define		 rawgets(b, p, bl, fl, fc, fm, nl, q, cmd, log) \
 	wrawgets(stdscr, b, p, bl, fl, fc, fm, nl, q, cmd, log)
 
 	/* rawterm.c -------------------------------------------------- */
-	void	save_terminal(_ar0)
-			_nul
+	void	save_terminal(void)
+			;
 
-	void	restore_terminal(_ar0)
-			_nul
+	void	restore_terminal(void)
+			;
 
-	void	rawterm(_ar0)
-			_nul
+	void	rawterm(void)
+			;
 
-	void	cookterm(_ar0)
-			_nul
+	void	cookterm(void)
+			;
 
 	/* resizewin.c ------------------------------------------------ */
-	int	resizewin(_ar0)
-			_ret
+	int	resizewin(void)
+			;
 
 	/* savewin.c -------------------------------------------------- */
-	void	savewin(_ar0)
-			_nul
+	void	savewin(void)
+			;
 
 	void	lastwin(
-			_arx(int,	redo)
-			_ar1(int,	top)
+			int	redo,
+			int	top
 			)
-			_dcl(int,	redo)
-			_dcl(int,	top)
-			_nul
+			;
 
 	void	unsavewin(
-			_arx(int,	redo)
-			_ar1(int,	top)
+			int	redo,
+			int	top
 			)
-			_dcl(int,	redo)
-			_dcl(int,	top)
-			_nul
+			;
 
 	/* win2file.c ------------------------------------------------- */
 	void	win2fp(
-			_arx(WINDOW *,	win)
-			_arx(FILE *,	fp)
-			_ar1(char *,	prefix)
+			WINDOW *	win,
+			FILE *	fp,
+			char *	prefix
 			)
-			_dcl(WINDOW *,	win)
-			_dcl(FILE *,	fp)
-			_dcl(char *,	prefix)
-			_nul
+			;
 
 	int	win2file(
-			_arx(WINDOW *,	win)
-			_ar1(char *,	file)
+			WINDOW *	win,
+			char *	file
 			)
-			_dcl(WINDOW *,	win)
-			_dcl(char *,	file)
-			_ret
+			;
 
 	/* wrepaint.c ------------------------------------------------- */
 	void	wrepaint(
-			_arx(WINDOW *,	win)
-			_ar1(int,	row)
+			WINDOW *	win,
+			int	row
 			)
-			_dcl(WINDOW *,	win)
-			_dcl(int,	row)
-			_nul
+			;
 
 	/* wresize.c -------------------------------------------------- */
 #if !defined(HAVE_WRESIZE)
 	int	wresize(
-			_arx(WINDOW *,	win)
-			_arx(int,	rows)
-			_ar1(int,	cols)
+			WINDOW *	win,
+			int	rows,
+			int	cols
 			)
-			_dcl(WINDOW *,	win)
-			_dcl(int,	rows)
-			_dcl(int,	cols)
-			_ret
+			;
 #endif
 
 #undef extern

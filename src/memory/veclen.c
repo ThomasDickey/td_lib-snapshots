@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	16 Sep 1991
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *
  * Function:	Computes the length of a list of vectors (e.g., pointers to
@@ -13,18 +14,15 @@
 
 #include <ptypes.h>
 
-MODULE_ID("$Id: veclen.c,v 12.2 1993/10/29 17:35:23 tom Exp $")
+MODULE_ID("$Id: veclen.c,v 12.3 2004/03/07 22:03:45 tom Exp $")
 
 int
-veclen(
-_AR1(char **,	vector)
-	)
-_DCL(char **,	vector)
+veclen(char **vector)
 {
-	if (vector != 0) {
-		register int	len;
-		for (len = 0; vector[len] != 0; len++);
-		return len;
-	}
-	return 0;
+    if (vector != 0) {
+	register int len;
+	for (len = 0; vector[len] != 0; len++) ;
+	return len;
+    }
+    return 0;
 }

@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	07 Feb 1992
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *
  * Function:	prints the real/effective uid+gid in both numeric and symbolic
@@ -12,23 +13,22 @@
 
 #include "ptypes.h"
 
-MODULE_ID("$Id: showuids.c,v 12.4 2001/05/15 00:58:26 tom Exp $")
+MODULE_ID("$Id: showuids.c,v 12.5 2004/03/07 22:03:45 tom Exp $")
 
 #ifdef	SYS_UNIX
 void
 show_uids(
-_AR1(FILE *,	fp))
-_DCL(FILE *,	fp)
+	     FILE *fp)
 {
-	FPRINTF(fp, "...uid=%d(%s)",		(int)getuid(),  uid2s((int)getuid()));
-	if (geteuid() != getuid())
-		FPRINTF(fp, ", euid=%d(%s)",	(int)geteuid(), uid2s((int)geteuid()));
+    FPRINTF(fp, "...uid=%d(%s)", (int) getuid(), uid2s((int) getuid()));
+    if (geteuid() != getuid())
+	FPRINTF(fp, ", euid=%d(%s)", (int) geteuid(), uid2s((int) geteuid()));
 
-	FPRINTF(fp, ", gid=%d(%s)",		(int)getgid(),  gid2s((int)getgid()));
-	if (getegid() != getgid())
-		FPRINTF(fp, ", egid=%d(%s)",	(int)getegid(), gid2s((int)getegid()));
+    FPRINTF(fp, ", gid=%d(%s)", (int) getgid(), gid2s((int) getgid()));
+    if (getegid() != getgid())
+	FPRINTF(fp, ", egid=%d(%s)", (int) getegid(), gid2s((int) getegid()));
 
-	FPRINTF(fp, "\n");
+    FPRINTF(fp, "\n");
 }
 
-#endif	/* SYS_UNIX */
+#endif /* SYS_UNIX */

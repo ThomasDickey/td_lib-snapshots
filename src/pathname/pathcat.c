@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	12 Sep 1988
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		05 Nov 1995, added 'pathcat2()' entrypoint for instances where
  *			     we don't want to expand tilde.
  *		29 Oct 1993, ifdef-ident
@@ -24,46 +25,33 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: pathcat.c,v 12.5 1995/11/05 23:04:37 tom Exp $")
+MODULE_ID("$Id: pathcat.c,v 12.6 2004/03/07 22:03:45 tom Exp $")
 
-char *	pathcat2(
-	_ARX(char *,	dst)
-	_ARX(char *,	dname)
-	_AR1(char *,	fname)
-		)
-	_DCL(char *,	dst)
-	_DCL(char *,	dname)
-	_DCL(char *,	fname)
+char *
+pathcat2(char *dst, char *dname, char *fname)
 {
-	auto	char	tmp[MAXPATHLEN],
-			*s;
+    char tmp[MAXPATHLEN], *s;
 
-	if (isSlash(*fname) || !dname || !*dname)
-		return (strcpy(dst, fname));
-	else if (*fname == EOS) {
-		if (dst != dname)
-			(void)strcpy(dst, dname);
-		return (dst);
-	}
-	(void)strcpy(tmp, dname);
-	if ((s = fleaf_delim(tmp)) != 0 && (s[1] == EOS))
-		*s = EOS;		/* trim excess path-delimiter */
-	s = tmp + strlen(tmp);
-	*s++ = PATH_SLASH;
-	(void)strcpy(s, fname);
-	return (strcpy(dst, tmp));
+    if (isSlash(*fname) || !dname || !*dname)
+	return (strcpy(dst, fname));
+    else if (*fname == EOS) {
+	if (dst != dname)
+	    (void) strcpy(dst, dname);
+	return (dst);
+    }
+    (void) strcpy(tmp, dname);
+    if ((s = fleaf_delim(tmp)) != 0 && (s[1] == EOS))
+	*s = EOS;		/* trim excess path-delimiter */
+    s = tmp + strlen(tmp);
+    *s++ = PATH_SLASH;
+    (void) strcpy(s, fname);
+    return (strcpy(dst, tmp));
 }
 
-char *	pathcat(
-	_ARX(char *,	dst)
-	_ARX(char *,	dname)
-	_AR1(char *,	fname)
-		)
-	_DCL(char *,	dst)
-	_DCL(char *,	dname)
-	_DCL(char *,	fname)
+char *
+pathcat(char *dst, char *dname, char *fname)
 {
-	if (*fname == '~')
-		return (strcpy(dst, fname));
-	return pathcat2(dst, dname, fname);
+    if (*fname == '~')
+	return (strcpy(dst, fname));
+    return pathcat2(dst, dname, fname);
 }

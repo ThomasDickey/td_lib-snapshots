@@ -1,5 +1,5 @@
 /*
- * $Id: vms_dirs.h,v 12.2 2001/05/15 00:56:52 tom Exp $
+ * $Id: vms_dirs.h,v 12.3 2004/03/07 21:45:49 tom Exp $
  *
  * VMS definitions to interface to unix-like DIRECTORY(3) procedures.
  */
@@ -36,41 +36,34 @@ typedef	struct	_dirdesc {
 #endif	/* vms/SYS_UNIX */
 
 extern	DIR *		opendir(
-			_ar1(char *,	filename)
+			char *	filename
 			)
-			_dcl(char *,	filename)
-			_ret
+			;
 
 extern	struct direct *	readdir(
-			_ar1(DIR *,	dirp)
+			DIR *	dirp
 			)
-			_dcl(DIR *,	dirp)
-			_ret
+			;
 
 extern	long		telldir(
-			_ar1(DIR *,	dirp)
+			DIR *	dirp
 			)
-			_dcl(DIR *,	dirp)
-			_ret
+			;
 
 extern	void		seekdir(
-			_arx(DIR *,	dirp)
-			_ar1(long,	loc)
+			DIR *	dirp,
+			long	loc
 			)
-			_dcl(DIR *,	dirp)
-			_dcl(long,	loc)
-			_nul
+			;
 
 extern	void		rewinddir(
-			_ar1(DIR *,	dirp)
+			DIR *	dirp
 			)
-			_dcl(DIR *,	dirp)
-			_nul
+			;
 
 extern	void		closedir(
-			_ar1(DIR *,	dirp)
+			DIR *	dirp
 			)
-			_dcl(DIR *,	dirp)
-			_nul
+			;
 
 #endif	VMS_DIRS_H

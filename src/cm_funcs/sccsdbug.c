@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	30 May 1994
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *
  * Function:	Encapsulates knowledge of the SCCS_DEBUG enviromnent variable
  *		so that it can be easily set/cleared from C-shell or Bourne
@@ -15,23 +16,24 @@
 #include "ptypes.h"
 #include "sccsdefs.h"
 
-MODULE_ID("$Id: sccsdbug.c,v 12.2 1994/05/30 18:34:59 tom Exp $")
+MODULE_ID("$Id: sccsdbug.c,v 12.3 2004/03/07 16:31:58 tom Exp $")
 
-int	sccs_debug(_AR0)
+int
+sccs_debug(void)
 {
-	static	int	flag = -1;
-	register char	*s;
+    static int flag = -1;
+    char *s;
 
-	if (flag < 0) {
-		flag = 0;
-		if ((s = getenv("SCCS_DEBUG")) != 0) {
-			if (*s) {
-				char	*d;
-				flag = strtol(s, &d, 0);
-				if (*d)
-					flag = 1;	/* not a number */
-			}
-		}
+    if (flag < 0) {
+	flag = 0;
+	if ((s = getenv("SCCS_DEBUG")) != 0) {
+	    if (*s) {
+		char *d;
+		flag = strtol(s, &d, 0);
+		if (*d)
+		    flag = 1;	/* not a number */
+	    }
 	}
-	return (flag);
+    }
+    return (flag);
 }

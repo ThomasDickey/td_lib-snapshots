@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	02 Aug 1994, from 'sccslast.c'
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		31 Dec 1999, move 1900's to packdate().
  *		21 Aug 1998, change cmv_lock to return binary file's mod-times.
  *		05 Jan 1995, CMVision stores all branches in the main trunk,
@@ -25,7 +26,7 @@
 #include	<sccsdefs.h>
 #include	<cmv_defs.h>
 
-MODULE_ID("$Id: cmv_last.c,v 12.11 2000/01/04 14:49:00 tom Exp $")
+MODULE_ID("$Id: cmv_last.c,v 12.12 2004/03/07 16:31:58 tom Exp $")
 
 /*
  * Set the release.version and date values iff we find a legal sccs-file at
@@ -35,111 +36,100 @@ MODULE_ID("$Id: cmv_last.c,v 12.11 2000/01/04 14:49:00 tom Exp $")
  *	\{number}\{comment}\^AO{uid}:G{gid}:P{protection}:M{modified}
  * (except for the last line, each also ends with a ':').
  */
-static
-void	ScanSCCS (
-	_ARX(char *,	path)
-	_ARX(char **,	vers_)
-	_AR1(time_t *,	date_)
-		)
-	_DCL(char *,	path)
-	_DCL(char **,	vers_)
-	_DCL(time_t *,	date_)
+static void
+ScanSCCS(char *path,
+	 char **vers_,
+	 time_t * date_)
 {
-	auto	FILE	*fp = fopen(path, "r");
-	auto	int	gotten = 0;
-	auto	int	match  = FALSE;
-	auto	char	bfr[BUFSIZ];
-	auto	char	bfr2[BUFSIZ];
-	auto	char	*s;
-	auto	int	yy, mm, dd, hr, mn, sc;
-	auto	char	ver[80];
+    FILE *fp = fopen(path, "r");
+    int gotten = 0;
+    int match = FALSE;
+    char bfr[BUFSIZ];
+    char bfr2[BUFSIZ];
+    char *s;
+    int yy, mm, dd, hr, mn, sc;
+    char ver[80];
 
-	if (fp) {
-		newzone(5,0,FALSE);	/* interpret in EST5EDT */
-		while (fgets(bfr, sizeof(bfr), fp)) {
-			if (*bfr != '\001')
-				break;
-			if (!gotten) {
-				if (bfr[1] != 'h')
-					break;
-				gotten++;
-			}
-			if (strncmp(bfr+1, "d D ", 3) == 0
-			 && sscanf(bfr+4, "%s %[^/]/%d/%d %d:%d:%d ",
-				ver,
-				bfr2, &mm, &dd,
-				&hr, &mn, &sc) == 7
-			 && (yy = sccsyear(bfr2)) > 0
-			 && (strcmp(*vers_, ver) == 0)) {
-				match = TRUE;
-				*date_ = packdate (yy, mm, dd, hr, mn, sc);
-			}
-			if (match
-			 && !strncmp(bfr+1, "c ", 2)) {
-				time_t	when;
-				if ((s = strstr(bfr+1, "\\\001O")) != 0) {
-					while (strncmp(s, ":M", 2) && *s)
-						s++;
-					if (sscanf(s, ":M%ld", &when))
-						*date_ = when;
-				}
-				break;
-			}
+    if (fp) {
+	newzone(5, 0, FALSE);	/* interpret in EST5EDT */
+	while (fgets(bfr, sizeof(bfr), fp)) {
+	    if (*bfr != '\001')
+		break;
+	    if (!gotten) {
+		if (bfr[1] != 'h')
+		    break;
+		gotten++;
+	    }
+	    if (strncmp(bfr + 1, "d D ", 3) == 0
+		&& sscanf(bfr + 4, "%s %[^/]/%d/%d %d:%d:%d ",
+			  ver,
+			  bfr2, &mm, &dd,
+			  &hr, &mn, &sc) == 7
+		&& (yy = sccsyear(bfr2)) > 0
+		&& (strcmp(*vers_, ver) == 0)) {
+		match = TRUE;
+		*date_ = packdate(yy, mm, dd, hr, mn, sc);
+	    }
+	    if (match
+		&& !strncmp(bfr + 1, "c ", 2)) {
+		time_t when;
+		if ((s = strstr(bfr + 1, "\\\001O")) != 0) {
+		    while (strncmp(s, ":M", 2) && *s)
+			s++;
+		    if (sscanf(s, ":M%ld", &when))
+			*date_ = when;
 		}
-		FCLOSE(fp);
-		oldzone();		/* restore time-zone */
+		break;
+	    }
 	}
+	FCLOSE(fp);
+	oldzone();		/* restore time-zone */
+    }
 }
 
 /******************************************************************************/
 
-void	cmv_last (
-	_ARX(char *,	working)	/* working directory (absolute) */
-	_ARX(char *,	path)		/* pathname to check (may be relative) */
-	_ARX(char **,	vers_)
-	_ARX(time_t *,	date_)
-	_AR1(char **,	lock_)
-		)
-	_DCL(char *,	working)
-	_DCL(char *,	path)
-	_DCL(char **,	vers_)
-	_DCL(time_t *,	date_)
-	_DCL(char **,	lock_)
+void
+cmv_last(char *working,		/* working directory (absolute) */
+	 char *path,		/* pathname to check (may be relative) */
+	 char **vers_,
+	 time_t * date_,
+	 char **lock_)
 {
-	auto	 char	*archive = cmv_file(working, path);
+    char *archive = cmv_file(working, path);
 
-	*lock_ =
+    *lock_ =
 	*vers_ = "?";
-	*date_ = 0;
+    *date_ = 0;
 
-	if (archive != 0) {
-		char *arcleaf = fleaf(archive);
-		get_cmv_lock(working, path, lock_, vers_, date_);
-		if (strncmp(arcleaf, "b-", 2) || isdigit((int)(*vers_)[0]))
-			ScanSCCS(archive, vers_, date_);
-	}
+    if (archive != 0) {
+	char *arcleaf = fleaf(archive);
+	get_cmv_lock(working, path, lock_, vers_, date_);
+	if (strncmp(arcleaf, "b-", 2) || isdigit((int) (*vers_)[0]))
+	    ScanSCCS(archive, vers_, date_);
+    }
 }
 
 #ifdef	TEST
 _MAIN
 {
-	char	current[MAXPATHLEN];
-	int	n;
+    char current[MAXPATHLEN];
+    int n;
 
-	(void)getwd(current);
+    (void) getwd(current);
 
-	for (n = 1; n < argc; n++) {
-		char	*vers;
-		char	*lock;
-		time_t	date;
-		cmv_last(current, argv[n], &vers, &date, &lock);
-		PRINTF("%s vers %s, lock %s %s",
-			argv[n],
-			vers ? vers : "<null>",
-			lock ? lock : "<null>",
-			ctime(&date));
-	}
-	exit(EXIT_SUCCESS);
-	/*NOTREACHED*/
+    for (n = 1; n < argc; n++) {
+	char *vers;
+	char *lock;
+	time_t date;
+	cmv_last(current, argv[n], &vers, &date, &lock);
+	PRINTF("%s vers %s, lock %s %s",
+	       argv[n],
+	       vers ? vers : "<null>",
+	       lock ? lock : "<null>",
+	       ctime(&date));
+    }
+    exit(EXIT_SUCCESS);
+    /*NOTREACHED */
 }
 #endif

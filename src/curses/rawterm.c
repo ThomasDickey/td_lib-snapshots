@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	24 Nov 1987
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		16 Feb 1998, workaround: SVr4 curses doesn't do smkx unless it
  *			     had endwin() call.
  *		16 Dec 1995, integration with ncurses mouse-support; moved
@@ -27,26 +28,25 @@
  *		the normal, buffered mode.
  */
 
-#define STR_PTYPES	/* <string.h> */
-#define TRM_PTYPES	/* <termios.h> */
+#define STR_PTYPES		/* <string.h> */
+#define TRM_PTYPES		/* <termios.h> */
 #include	"td_curse.h"
 
-MODULE_ID("$Id: rawterm.c,v 12.23 2002/07/05 11:18:55 tom Exp $")
+MODULE_ID("$Id: rawterm.c,v 12.24 2004/03/07 22:03:45 tom Exp $")
 
-TermioT	original_tty;
-TermioT	modified_tty;
+TermioT original_tty;
+TermioT modified_tty;
 
 #ifdef	TEST
-void	show_term(
-	_AR1(char *,	s))
-	_DCL(char *,	s)
+void
+show_term(char *s)
 {
-	static	FILE	*log;
-	if (log == 0)
-		log = fopen("rawterm.log", "w");
-	if (log != 0) {
-		dumptty(log, s);
-	}
+    static FILE *log;
+    if (log == 0)
+	log = fopen("rawterm.log", "w");
+    if (log != 0) {
+	dumptty(log, s);
+    }
 }
 #else
 #define show_term(s)
@@ -54,52 +54,56 @@ void	show_term(
 
 #if	!defined(NO_XTERM_MOUSE)
 #if	!defined(NCURSES_MOUSE_VERSION)
-static	int	xterm_mouse(_AR0)
+static int
+xterm_mouse(void)
 {
-	static	int	initialized;
-	static	int	use_mouse;
+    static int initialized;
+    static int use_mouse;
 
-	if (!initialized) {
-		char	*name;
-		initialized = TRUE;
-		if ((name = getenv("TERM")) != 0) {
-			int	len = strlen(name);
-			if (!strncmp(name, "xterm", 5)
-			 || (len > 5 && !strcmp(name+len-5, "xterm")))
-				use_mouse = TRUE;
-		}
+    if (!initialized) {
+	char *name;
+	initialized = TRUE;
+	if ((name = getenv("TERM")) != 0) {
+	    int len = strlen(name);
+	    if (!strncmp(name, "xterm", 5)
+		|| (len > 5 && !strcmp(name + len - 5, "xterm")))
+		use_mouse = TRUE;
 	}
-	return use_mouse;
+    }
+    return use_mouse;
 }
-#endif	/* !NCURSES_MOUSE_VERSION */
+#endif /* !NCURSES_MOUSE_VERSION */
 
 #define XTERM_ENABLE_TRACKING   "\033[?1000h"	/* normal tracking mode */
 #define XTERM_DISABLE_TRACKING  "\033[?1000l"
 
 #define	Puts(s) fputs(s, stdout); (void)fflush(stdout)
 
-static	void	enable_mouse(_AR0)
+static void
+enable_mouse(void)
 {
 #if defined(NCURSES_MOUSE_VERSION)
-	(void)mousemask(
-		 BUTTON1_CLICKED |BUTTON1_DOUBLE_CLICKED
-		|BUTTON2_CLICKED |BUTTON2_DOUBLE_CLICKED
-		|BUTTON3_CLICKED |BUTTON3_DOUBLE_CLICKED, (mmask_t *)0);
+    (void) mousemask(
+			BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED
+			| BUTTON2_CLICKED | BUTTON2_DOUBLE_CLICKED
+			| BUTTON3_CLICKED | BUTTON3_DOUBLE_CLICKED, (mmask_t
+								     *) 0);
 #else
-	if (xterm_mouse()) {
-		Puts(XTERM_ENABLE_TRACKING);
-	}
+    if (xterm_mouse()) {
+	Puts(XTERM_ENABLE_TRACKING);
+    }
 #endif
 }
 
-static	void	disable_mouse(_AR0)
+static void
+disable_mouse(void)
 {
 #if defined(NCURSES_MOUSE_VERSION)
-	(void)mousemask((mmask_t)0, (mmask_t *)0);
+    (void) mousemask((mmask_t) 0, (mmask_t *) 0);
 #else
-	if (xterm_mouse()) {
-		Puts(XTERM_DISABLE_TRACKING);
-	}
+    if (xterm_mouse()) {
+	Puts(XTERM_DISABLE_TRACKING);
+    }
 #endif
 }
 #else
@@ -113,12 +117,13 @@ static	void	disable_mouse(_AR0)
  * the screen as well.
  */
 #if	defined(HAVE_TIGETSTR) && HAVE_PUTP && !defined(NCURSES_VERSION)
-extern	char *tigetstr();	/* FIXME */
-static	void	set_cursor_mode(_AR0)
+extern char *tigetstr();	/* FIXME */
+static void
+set_cursor_mode(void)
 {
-	char *s = tigetstr("smkx");
-	if (s != 0)
-		putp(s);
+    char *s = tigetstr("smkx");
+    if (s != 0)
+	putp(s);
 }
 #else
 #define	set_cursor_mode()
@@ -130,70 +135,74 @@ static	void	set_cursor_mode(_AR0)
  * terminal characteristics were not being saved/restored properly.  Because
  * this wasn't the first problem I'd had with SysV, I encapsulated it... 
  */
-void	save_terminal(_AR0)
+void
+save_terminal(void)
 {
-	show_term("save-terminal");
-	GetTerminal(&original_tty);
+    show_term("save-terminal");
+    GetTerminal(&original_tty);
 }
 
-void	restore_terminal(_AR0)
+void
+restore_terminal(void)
 {
-	show_term("restore-terminal");
-	SetTerminal(&original_tty);
+    show_term("restore-terminal");
+    SetTerminal(&original_tty);
 }
 
 /*
  * Set terminal to single-character mode
  */
-void	rawterm(_AR0)
+void
+rawterm(void)
 {
-	static	int	initialized ;
+    static int initialized;
 
 #if defined(HAVE_INTRFLUSH)
-     	intrflush(stdscr, FALSE);
+    intrflush(stdscr, FALSE);
 #endif
 #if defined(HAVE_KEYPAD)
-	keypad(stdscr,TRUE);
+    keypad(stdscr, TRUE);
 #endif
-	show_term("before-raw-");
+    show_term("before-raw-");
 #if	defined(HAVE_CBREAK)
-	cbreak();
+    cbreak();
 #else
-	crmode();
+    crmode();
 #endif
-	noecho();
-	nonl();
+    noecho();
+    nonl();
 
-#ifdef __hpux	/* bug-fix */
-	/* HP/UX didn't disable echo; this is a quick hack to fix that */
-	{
-		TermioT sb;
-		GetTerminal(&sb);
-		sb.c_lflag &= ~ECHO;
-		SetTerminal(&sb);
-	}
+#ifdef __hpux			/* bug-fix */
+    /* HP/UX didn't disable echo; this is a quick hack to fix that */
+    {
+	TermioT sb;
+	GetTerminal(&sb);
+	sb.c_lflag &= ~ECHO;
+	SetTerminal(&sb);
+    }
 #endif
 
-	if (!initialized) {
-		GetTerminal(&modified_tty) ;
-		initialized = TRUE ;
-	} else {
-		SetTerminal(&modified_tty) ;
-	}
+    if (!initialized) {
+	GetTerminal(&modified_tty);
+	initialized = TRUE;
+    } else {
+	SetTerminal(&modified_tty);
+    }
 
-	enable_mouse();
-	set_cursor_mode();
-	show_term("after--raw-");
+    enable_mouse();
+    set_cursor_mode();
+    show_term("after--raw-");
 }
 
 /*
  * Set terminal back to out-of-curses state
  */
-void	cookterm(_AR0)
+void
+cookterm(void)
 {
-	show_term("before-cook");
-	refresh();
-	disable_mouse();
-	restore_terminal();	/* replaces 'resetty()' */
-	show_term("after--cook");
+    show_term("before-cook");
+    refresh();
+    disable_mouse();
+    restore_terminal();		/* replaces 'resetty()' */
+    show_term("after--cook");
 }

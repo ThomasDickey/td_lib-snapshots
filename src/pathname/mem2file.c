@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	11 May 1989
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, converted to ANSI
@@ -17,42 +18,36 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: mem2file.c,v 12.5 1994/07/16 15:24:08 tom Exp $")
+MODULE_ID("$Id: mem2file.c,v 12.6 2004/03/07 22:03:45 tom Exp $")
 
-int	mem2file(
-	_ARX(char *,	blob)
-	_ARX(char *,	name)
-	_AR1(char *,	mode)
-		)
-	_DCL(char *,	blob)
-	_DCL(char *,	name)
-	_DCL(char *,	mode)
+int
+mem2file(char *blob, char *name, char *mode)
 {
-	auto	int	len	= -1;
-	auto	int	save;
-	auto	Stat_t	sb;
-	auto	FILE	*fp;
+    int len = -1;
+    int save;
+    Stat_t sb;
+    FILE *fp;
 
-	if (mode[0] != 'a' && mode[0] != 'w')
+    if (mode[0] != 'a' && mode[0] != 'w')
+	return (-1);
+
+    if (stat(name, &sb) >= 0) {
+	if ((sb.st_mode & S_IFMT) != S_IFREG)
+	    return (-1);
+	if (((save = (sb.st_mode & 0777)) & 0222) == 0)
+	    if (chmod(name, (mode_t) (save | 0600)) < 0)
 		return (-1);
+    } else
+	save = -1;
 
-	if (stat(name, &sb) >= 0) {
-		if ((sb.st_mode & S_IFMT) != S_IFREG)
-			return (-1);
-		if ( ( (save = (sb.st_mode & 0777)) & 0222) == 0)
-			if (chmod(name, (mode_t)(save | 0600)) < 0)
-				return (-1);
-	} else
-		save = -1;
+    if ((fp = fopen(name, mode)) != 0) {
 
-	if ((fp = fopen(name, mode)) != 0) {
+	len = fwrite(blob, sizeof(char), (LEN_FREAD) strlen(blob), fp);
+	(void) fclose(fp);
 
-		len = fwrite(blob, sizeof(char), (LEN_FREAD)strlen(blob), fp);
-		(void)fclose(fp);
-
-		if ((save >= 0)
-		&&  (chmod(name, (mode_t)save) < 0))
-			return (-1);
-	}
-	return (len);
+	if ((save >= 0)
+	    && (chmod(name, (mode_t) save) < 0))
+	    return (-1);
+    }
+    return (len);
 }

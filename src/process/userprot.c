@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	30 Aug 1988
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		04 Oct 1991, conversion to ANSI
@@ -21,40 +22,39 @@
 #include	"ptypes.h"
 #include	<errno.h>
 
-MODULE_ID("$Id: userprot.c,v 12.7 2001/05/15 00:57:56 tom Exp $")
+MODULE_ID("$Id: userprot.c,v 12.8 2004/03/07 22:03:45 tom Exp $")
 
 #ifdef	SYS_UNIX
 
-static	char	*upr_name;
-static	mode_t	upr_mode;
-static	time_t	upr_time;
+static char *upr_name;
+static mode_t upr_mode;
+static time_t upr_time;
 
-static	
-void	upr_func(_AR0) { 
-	if (chmod(upr_name, upr_mode) >= 0)
-		(void)setmtime(upr_name, upr_time, (time_t)0);
-}
-
-int	userprot(
-	_ARX(char *,	name)
-	_ARX(int,	mode)
-	_AR1(time_t,	mtime)
-		)
-	_DCL(char *,	name)
-	_DCL(int,	mode)
-	_DCL(time_t,	mtime)
+static
+void
+upr_func(void)
 {
-	upr_name = name;
-	upr_mode = mode;
-	upr_time = mtime;
-	if (!geteuid()) {
-		if (chown(upr_name, (int)getuid(), (int)getgid()) < 0)
-			return (-1);
-		errno = 0;
-		upr_func();
-		return (errno != 0) ? -1 : 0;
-	}
-	return (for_user(upr_func));
+    if (chmod(upr_name, upr_mode) >= 0)
+	(void) setmtime(upr_name, upr_time, (time_t) 0);
 }
 
-#endif	/* SYS_UNIX */
+int
+userprot(
+	    char *name,
+	    int mode,
+	    time_t mtime)
+{
+    upr_name = name;
+    upr_mode = mode;
+    upr_time = mtime;
+    if (!geteuid()) {
+	if (chown(upr_name, (int) getuid(), (int) getgid()) < 0)
+	    return (-1);
+	errno = 0;
+	upr_func();
+	return (errno != 0) ? -1 : 0;
+    }
+    return (for_user(upr_func));
+}
+
+#endif /* SYS_UNIX */

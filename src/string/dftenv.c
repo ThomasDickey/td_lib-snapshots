@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	08 Aug 1989
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *		03 Oct 1991, converted to ANSI
  *
@@ -12,18 +13,13 @@
 
 #include "ptypes.h"
 
-MODULE_ID("$Id: dftenv.c,v 12.2 1993/10/29 17:35:27 tom Exp $")
+MODULE_ID("$Id: dftenv.c,v 12.3 2004/03/07 22:03:45 tom Exp $")
 
 char *
-dftenv(
-_ARX(char *,	value)
-_AR1(char *,	name)
-	)
-_DCL(char *,	value)
-_DCL(char *,	name)
+dftenv(char *value, char *name)
 {
-	register char	*s;
-	if ((s = getenv(name)) == 0)
-		s = value;
-	return (s);
+    char *s;
+    if ((s = getenv(name)) == 0)
+	s = value;
+    return (s);
 }

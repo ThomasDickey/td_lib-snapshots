@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	13 Mar 1989
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *		03 Oct 1991, converted to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
@@ -18,36 +19,31 @@
 #include	"ptypes.h"
 #include	"rcsdefs.h"
 
-MODULE_ID("$Id: vcs_file.c,v 12.4 2001/12/11 13:57:21 tom Exp $")
+MODULE_ID("$Id: vcs_file.c,v 12.5 2004/03/07 16:31:58 tom Exp $")
 
 char *
-vcs_file(
-_ARX(char *,	path)		/* pathname to prepend, if nonnull */
-_ARX(char *,	name)		/* where to write the name */
-_AR1(int,	temp)		/* TRUE iff we provide temporary-name */
-	)
-_DCL(char *,	path)
-_DCL(char *,	name)
-_DCL(int,	temp)
+vcs_file(char *path,		/* pathname to prepend, if nonnull */
+	 char *name,		/* where to write the name */
+	 int temp)		/* TRUE iff we provide temporary-name */
 {
-	register char	*s = pathleaf(rcs_dir(NULL,NULL));
+    char *s = pathleaf(rcs_dir(NULL, NULL));
 
-	if (!strcmp(s, ".")
-	||  isSlash(*s))
-		s = RCS_DIR;
-	(void)strcpy(name,s);
-	if (!temp)
-		(void)strcat(name, RCS_SUFFIX);
-	return ((path == 0) ? name : pathcat(name, path, name));
+    if (!strcmp(s, ".")
+	|| isSlash(*s))
+	s = RCS_DIR;
+    (void) strcpy(name, s);
+    if (!temp)
+	(void) strcat(name, RCS_SUFFIX);
+    return ((path == 0) ? name : pathcat(name, path, name));
 }
 
 #ifdef	TEST
 _MAIN
 {
-	char	bfr[BUFSIZ];
+    char bfr[BUFSIZ];
 
-	PRINTF("vcs_file='%s'\n", vcs_file("./", bfr,0));
-	exit(SUCCESS);
-	/*NOTREACHED*/
+    PRINTF("vcs_file='%s'\n", vcs_file("./", bfr, 0));
+    exit(SUCCESS);
+    /*NOTREACHED */
 }
 #endif

@@ -3,6 +3,7 @@
  * Title:	resizewin.c (change size of curses window)
  * Created:	21 Apr 1988
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		03 Jul 2003, modify ifdef to use resizeterm() even if curses
  *			     is not apparently ncurses.
  *		15 Feb 1998, cannot use savewin on OSF1 4.0; chtype is struct
@@ -38,62 +39,63 @@
 
 #include	"td_curse.h"
 
-MODULE_ID("$Id: resizwin.c,v 12.20 2003/07/02 22:51:07 tom Exp $")
+MODULE_ID("$Id: resizwin.c,v 12.21 2004/03/07 22:03:45 tom Exp $")
 
 #if defined(HAVE_RESIZETERM)
-extern	WINDOW	*newscr;
+extern WINDOW *newscr;
 #endif
 
 #define	my_LINES	size[0]
 #define	my_COLS		size[1]
 
-int	resizewin(_AR0)
+int
+resizewin(void)
 {
-	static	int	size[2];
-	auto	int	lc[2];
+    static int size[2];
+    int lc[2];
 
-	lc[0] = LINES;
-	lc[1] = COLS;
-	if (scr_size(lc) >= 0) {
-		my_LINES = lc[0];
-		my_COLS  = lc[1];
-		if (my_LINES != LINES || my_COLS != COLS) {
+    lc[0] = LINES;
+    lc[1] = COLS;
+    if (scr_size(lc) >= 0) {
+	my_LINES = lc[0];
+	my_COLS = lc[1];
+	if (my_LINES != LINES || my_COLS != COLS) {
 #if defined(CURSES_LIKE_BSD) && (defined(TYPE_CCHAR_T_IS_SCALAR) || !defined(HAVE_TYPE_CCHAR_T)) && (defined(TYPE_CHTYPE_IS_SCALAR) || !defined(HAVE_TYPE_CHTYPE))
-			wresize(stdscr, my_LINES, my_COLS);
-			wresize(curscr, my_LINES, my_COLS);
-			LINES = my_LINES;
-			COLS  = my_COLS;
-			savewin();
-			unsavewin(TRUE,0);
-			return (TRUE);
+	    wresize(stdscr, my_LINES, my_COLS);
+	    wresize(curscr, my_LINES, my_COLS);
+	    LINES = my_LINES;
+	    COLS = my_COLS;
+	    savewin();
+	    unsavewin(TRUE, 0);
+	    return (TRUE);
 #endif
 #if defined(CURSES_LIKE_BSD44)
-			wresize(stdscr, my_LINES, my_COLS);
-			wresize(curscr, my_LINES, my_COLS);
-			LINES = my_LINES;
-			COLS  = my_COLS;
-			return (TRUE);
+	    wresize(stdscr, my_LINES, my_COLS);
+	    wresize(curscr, my_LINES, my_COLS);
+	    LINES = my_LINES;
+	    COLS = my_COLS;
+	    return (TRUE);
 #endif
 #if defined(CURSES_LIKE_SYSV)
 #ifdef __hpux
-			dlog_comment("resizewin called\n");
-			dlog_comment("..., LINES %d, COLS %d\n", LINES, COLS);
-			dlog_comment("..., scr_size (%d, %d)\n", lc[0], lc[1]);
-			dlog_flush();
+	    dlog_comment("resizewin called\n");
+	    dlog_comment("..., LINES %d, COLS %d\n", LINES, COLS);
+	    dlog_comment("..., scr_size (%d, %d)\n", lc[0], lc[1]);
+	    dlog_flush();
 #endif
-			/*
-			 * This might work
-			 */
-			endwin();
-			refresh();
-			return (TRUE);
+	    /*
+	     * This might work
+	     */
+	    endwin();
+	    refresh();
+	    return (TRUE);
 #endif
 #if defined(HAVE_WRESIZE) && defined(HAVE_RESIZETERM)
-			resizeterm(my_LINES, my_COLS);
-			wrefresh(curscr);
-			return (TRUE);
+	    resizeterm(my_LINES, my_COLS);
+	    wrefresh(curscr);
+	    return (TRUE);
 #endif
-		}
 	}
-	return (FALSE);
+    }
+    return (FALSE);
 }

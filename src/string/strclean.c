@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	10 Nov 1987
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, converted to ANSI
@@ -18,27 +19,26 @@
 #include	"ptypes.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: strclean.c,v 12.4 2002/07/03 13:07:33 tom Exp $")
+MODULE_ID("$Id: strclean.c,v 12.5 2004/03/07 22:03:45 tom Exp $")
 
-int	strclean(
-	_AR1(char *,	string))
-	_DCL(char *,	string)
+int
+strclean(char *string)
 {
-	register char	*d, *s = string, *t;
+    char *d, *s = string, *t;
 
-	while (*s) {
-		if (isspace(UCH(*s))) {
-			for (t = s; isspace(UCH(*t)); t++);
-			if (*t) {
-				if (s != string) *s++ = ' ';
-				for (d = s; (*d++ = *t++) != EOS; )
-					;
-			} else
-				*s = EOS;
-		} else {
-			while (*s && !isspace(UCH(*s)))
-				s++;
-		}
+    while (*s) {
+	if (isspace(UCH(*s))) {
+	    for (t = s; isspace(UCH(*t)); t++) ;
+	    if (*t) {
+		if (s != string)
+		    *s++ = ' ';
+		for (d = s; (*d++ = *t++) != EOS;) ;
+	    } else
+		*s = EOS;
+	} else {
+	    while (*s && !isspace(UCH(*s)))
+		s++;
 	}
-	return(strlen(string));
+    }
+    return (strlen(string));
 }

@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	02 Sep 1988
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		25 Apr 2003, split-out samehead.c, add check on return-value.
  *		11 Dec 2001, make this a clone of sccs_dir() to implement
  *			     $RCS_VAULT.
@@ -22,25 +23,25 @@
 #include "ptypes.h"
 #include "rcsdefs.h"
 
-MODULE_ID("$Id: rcs_dir.c,v 12.6 2003/04/25 23:23:24 tom Exp $")
+MODULE_ID("$Id: rcs_dir.c,v 12.7 2004/03/07 16:31:58 tom Exp $")
 
 #define	WORKING	struct	Working
-	WORKING	{
-	WORKING	*next;
-	char	*working;
-	};
+WORKING {
+    WORKING *next;
+    char *working;
+};
 
 #define	VAULTS	struct	Vaults
-	VAULTS	{
-	VAULTS	*next;
-	char	*archive;
-	WORKING	*working;
-	};
+VAULTS {
+    VAULTS *next;
+    char *archive;
+    WORKING *working;
+};
 
-static	int	initialized;
-static	char	*RcsDir;
-static	char	*RcsVault;
-static	VAULTS	*VaultList;
+static int initialized;
+static char *RcsDir;
+static char *RcsVault;
+static VAULTS *VaultList;
 
 /******************************************************************************/
 
@@ -48,193 +49,181 @@ static	VAULTS	*VaultList;
  * We put stuff on the end of the linked list to preserve a natural ordering
  * of the search path.
  */
-static
-VAULTS	*add_archive(
-	_AR1(char *,	pathname))
-	_DCL(char *,	pathname)
+static VAULTS *
+add_archive(char *pathname)
 {
-	if (*pathname != EOS) {
-		VAULTS	*p, *q, *r;
-		for (p = VaultList, q = 0; p != 0; q = p, p = p->next)
-			;
-		r = (VAULTS *)doalloc((char *)0, sizeof(VAULTS));
-		r->next = 0;
-		r->archive = txtalloc(pathname);
-		r->working = 0;
-		if (q == 0)
-			VaultList = r;
-		else
-			q->next = r;
-		return r;
-	}
-	return 0;
+    if (*pathname != EOS) {
+	VAULTS *p, *q, *r;
+	for (p = VaultList, q = 0; p != 0; q = p, p = p->next) ;
+	r = (VAULTS *) doalloc((char *) 0, sizeof(VAULTS));
+	r->next = 0;
+	r->archive = txtalloc(pathname);
+	r->working = 0;
+	if (q == 0)
+	    VaultList = r;
+	else
+	    q->next = r;
+	return r;
+    }
+    return 0;
 }
 
-static
-void	add_working(
-	_ARX(VAULTS *,	list)
-	_AR1(char *,	pathname)
-		)
-	_DCL(VAULTS *,	list)
-	_DCL(char *,	pathname)
+static void
+add_working(VAULTS * list,
+	    char *pathname)
 {
-	if (*pathname != EOS) {
-		WORKING *p, *q, *r;
-		for (p = list->working, q = 0; p != 0; q = p, p = p->next)
-			;
-		r = (WORKING *)doalloc((char *)0, sizeof(WORKING));
-		r->next = 0;
-		r->working = txtalloc(pathname);
-		if (q == 0)
-			list->working = r;
-		else
-			q->next = r;
-	}
+    if (*pathname != EOS) {
+	WORKING *p, *q, *r;
+	for (p = list->working, q = 0; p != 0; q = p, p = p->next) ;
+	r = (WORKING *) doalloc((char *) 0, sizeof(WORKING));
+	r->next = 0;
+	r->working = txtalloc(pathname);
+	if (q == 0)
+	    list->working = r;
+	else
+	    q->next = r;
+    }
 }
 
 /******************************************************************************/
-static
-void	Initialize(_AR0)
+static void
+Initialize(void)
 {
-	initialized = TRUE;
-	RcsDir = getenv("RCS_DIR");
-	if (RcsDir == 0)
-		RcsDir = "RCS";
-	RcsDir = txtalloc(RcsDir);
+    initialized = TRUE;
+    RcsDir = getenv("RCS_DIR");
+    if (RcsDir == 0)
+	RcsDir = "RCS";
+    RcsDir = txtalloc(RcsDir);
 
-	RcsVault = getenv("RCS_VAULT");
-	if (RcsVault != 0) {
-		register char *s;
-		char	*next, *eqls;
-		int	at_next, at_eqls;
-		VAULTS	*p;
+    RcsVault = getenv("RCS_VAULT");
+    if (RcsVault != 0) {
+	char *s;
+	char *next, *eqls;
+	int at_next, at_eqls;
+	VAULTS *p;
 
-		for (s = RcsVault; *s != EOS; s = next) {
-			next = strchr(s, PATHLIST_SEP);
-			if (next == 0)
-				next = s + strlen(s);
-			at_next = *next;
-			*next = EOS;
+	for (s = RcsVault; *s != EOS; s = next) {
+	    next = strchr(s, PATHLIST_SEP);
+	    if (next == 0)
+		next = s + strlen(s);
+	    at_next = *next;
+	    *next = EOS;
 
-			eqls = strchr(s, '=');
-			if (eqls == 0)
-				eqls = next;
-			at_eqls = *eqls;
-			*eqls = EOS;
+	    eqls = strchr(s, '=');
+	    if (eqls == 0)
+		eqls = next;
+	    at_eqls = *eqls;
+	    *eqls = EOS;
 
-			if ((p = add_archive(s)) != 0) {
-				while (eqls != next) {
-					*eqls = at_eqls;
-					s = eqls + 1;
+	    if ((p = add_archive(s)) != 0) {
+		while (eqls != next) {
+		    *eqls = at_eqls;
+		    s = eqls + 1;
 
-					eqls = strchr(s, '=');
-					if (eqls == 0)
-						eqls = next;
-					at_eqls = *eqls;
-					*eqls = EOS;
+		    eqls = strchr(s, '=');
+		    if (eqls == 0)
+			eqls = next;
+		    at_eqls = *eqls;
+		    *eqls = EOS;
 
-					add_working(p, s);
-				}
-			}
-			if ((*next = at_next) != EOS)
-				next++;
+		    add_working(p, s);
 		}
-		RcsVault = txtalloc(RcsVault);
+	    }
+	    if ((*next = at_next) != EOS)
+		next++;
 	}
+	RcsVault = txtalloc(RcsVault);
+    }
 }
 
 /******************************************************************************/
-char *	rcs_dir(
-	_ARX(char *,	working_directory)
-	_AR1(char *,	filename)
-		)
-	_DCL(char *,	working_directory)
-	_DCL(char *,	filename)
+char *
+rcs_dir(char *working_directory, char *filename)
 {
-	char	*name;
-	int	vault	= FALSE;
-	int	n;
+    char *name;
+    int vault = FALSE;
+    int n;
 
-	if (!initialized)
-		Initialize();
+    if (!initialized)
+	Initialize();
 
-	name = RcsDir;
-	if (filename != 0 && RcsVault != 0) {
-		Stat_t	sb;
-		char	temp[MAXPATHLEN];
-		VAULTS	*p, *max_p = 0;
-		WORKING	*q, *max_q = 0;
-		int	max_n = 0;
+    name = RcsDir;
+    if (filename != 0 && RcsVault != 0) {
+	Stat_t sb;
+	char temp[MAXPATHLEN];
+	VAULTS *p, *max_p = 0;
+	WORKING *q, *max_q = 0;
+	int max_n = 0;
 
-		/*
-		 * If we're given the name of a file, compute its directory.
-		 * If we're given a directory name, use it.
-		 */
-		abspath(pathcat(temp, working_directory, filename));
-		if (stat_dir(temp, &sb) < 0)
-			(void)strcpy(temp, pathhead(temp, &sb));
+	/*
+	 * If we're given the name of a file, compute its directory.
+	 * If we're given a directory name, use it.
+	 */
+	abspath(pathcat(temp, working_directory, filename));
+	if (stat_dir(temp, &sb) < 0)
+	    (void) strcpy(temp, pathhead(temp, &sb));
 
-		/*
-		 * Now, search the RCS_VAULT variable for a working directory
-		 * that matches the beginning of the string we've got in
-		 * 'temp[]'.  If we find that match, substitute the remainder
-		 * to obtain the archive directory path.  If we find an archive
-		 * without a working directory in RCS_VAULT, use this iff no
-		 * prior match is found.
-		 */
-		for (p = VaultList; p != 0; p = p->next) {
-			if ((n = samehead(temp, p->archive)) > 0
-			  && n >= (int) strlen(p->archive)) {
-				if (n > max_n) {
-					max_p = p;
-					max_q = p->working;
-					max_n = n;
-					vault = TRUE;
-				}
-			}
-			for (q = p->working; q != 0; q = q->next) {
-				if ((n = samehead(temp, q->working)) > 0
-				  && n >= (int) strlen(q->working)) {
-					if (n > max_n) {
-						max_p = p;
-						max_q = q;
-						max_n = n;
-						vault = FALSE;
-					}
-				}
-			}
+	/*
+	 * Now, search the RCS_VAULT variable for a working directory
+	 * that matches the beginning of the string we've got in
+	 * 'temp[]'.  If we find that match, substitute the remainder
+	 * to obtain the archive directory path.  If we find an archive
+	 * without a working directory in RCS_VAULT, use this iff no
+	 * prior match is found.
+	 */
+	for (p = VaultList; p != 0; p = p->next) {
+	    if ((n = samehead(temp, p->archive)) > 0
+		&& n >= (int) strlen(p->archive)) {
+		if (n > max_n) {
+		    max_p = p;
+		    max_q = p->working;
+		    max_n = n;
+		    vault = TRUE;
 		}
-
-		/*
-		 * Construct the correspond archive-directory name.
-		 * If this isn't the same as the last value that I returned,
-		 * update my buffer.
-		 */
-		if (max_n > 0) {	/* we found a match */
-			char	archive[MAXPATHLEN];
-
-			if (vault) {
-				/*
-				 * FIXME: if we found the path was in a vault
-				 * directory, use it as is (we are assuming
-				 * the working directory corresponds to this
-				 * vault!)
-				 */
-				name = txtalloc(temp);
-			} else {
-				if (temp[max_n] != EOS)
-					max_n++;
-				pathcat(
-					archive,
-					pathcat(
-						archive,
-						strcpy(archive, max_p->archive),
-						temp + max_n),
-					name);
-				name = txtalloc(archive);
-			}
+	    }
+	    for (q = p->working; q != 0; q = q->next) {
+		if ((n = samehead(temp, q->working)) > 0
+		    && n >= (int) strlen(q->working)) {
+		    if (n > max_n) {
+			max_p = p;
+			max_q = q;
+			max_n = n;
+			vault = FALSE;
+		    }
 		}
+	    }
 	}
 
-	return (name);
+	/*
+	 * Construct the correspond archive-directory name.
+	 * If this isn't the same as the last value that I returned,
+	 * update my buffer.
+	 */
+	if (max_n > 0) {	/* we found a match */
+	    char archive[MAXPATHLEN];
+
+	    if (vault) {
+		/*
+		 * FIXME: if we found the path was in a vault
+		 * directory, use it as is (we are assuming
+		 * the working directory corresponds to this
+		 * vault!)
+		 */
+		name = txtalloc(temp);
+	    } else {
+		if (temp[max_n] != EOS)
+		    max_n++;
+		pathcat(
+			   archive,
+			   pathcat(
+				      archive,
+				      strcpy(archive, max_p->archive),
+				      temp + max_n),
+			   name);
+		name = txtalloc(archive);
+	    }
+	}
+    }
+
+    return (name);
 }

@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	27 Jun 1994
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		23 Jul 1994, retain 'saved_winch' to use for HP/UX curses.
  *
  * Function:	Maintains a list of functions to invoke when a SIGWINCH
@@ -17,27 +18,25 @@
  *		recently attached function.
  */
 
-#define CUR_PTYPES	/* this is part of my curses extensions */
+#define CUR_PTYPES		/* this is part of my curses extensions */
 #define SIG_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: on_winch.c,v 12.7 1995/07/04 14:31:46 tom Exp $")
+MODULE_ID("$Id: on_winch.c,v 12.8 2004/03/07 22:05:43 tom Exp $")
 
 #ifdef SIGWINCH
 #define	ON_WINCH struct OnWinch
-	ON_WINCH {
-	ON_WINCH	*next;
-	void		(*func)ARGS((void));
-	};
+ON_WINCH {
+    ON_WINCH *next;
+    void (*func) (void);
+};
 
-/*ARGSUSED*/def_ALLOC(ON_WINCH)
+static RETSIGTYPE catch_winch(SIGNAL_args);
 
-static	RETSIGTYPE catch_winch (SIGNAL_args);
-
-static	DCL_SIGNAL(saved_winch);
-static	ON_WINCH	*list;
-static	int		disable_this;
-static	int		caught_this;
+static DCL_SIGNAL(saved_winch);
+static ON_WINCH *list;
+static int disable_this;
+static int caught_this;
 
 /*
  * The 'signal' function returns the last function associated with the given
@@ -50,43 +49,41 @@ static	int		caught_this;
  * curses sets its signal handler (only one!) in 'initscr()', and doesn't do
  * anything fancy (like have multiple signal handlers).
  */
-static
-void	set_handler(
-	_FN1(RETSIGTYPE,	new_handler,	(SIGNAL_ARGS)))
-	_DCL(RETSIGTYPE,	(*new_handler)())
+static void
+set_handler(RETSIGTYPE (*new_handler) (SIGNAL_ARGS))
 {
-	DCL_SIGNAL(old_handler);
+    DCL_SIGNAL(old_handler);
 
-	old_handler = signal(SIGWINCH, new_handler);
+    old_handler = signal(SIGWINCH, new_handler);
 
-	if (old_handler != SIG_DFL
-	 && old_handler != SIG_IGN
-	 && old_handler != SIG_ERR
-	 && old_handler != catch_winch) {
-		saved_winch = old_handler;
-	}
+    if (old_handler != SIG_DFL
+	&& old_handler != SIG_IGN
+	&& old_handler != SIG_ERR
+	&& old_handler != catch_winch) {
+	saved_winch = old_handler;
+    }
 }
 
 /*
  * Handle the resize by calling the application's resize handler (if any), and
  * then the handlers registered with this module.
  */
-static
-void	handle_resize (_AR0)
+static void
+handle_resize(void)
 {
-	if (saved_winch != 0)
-		(*saved_winch)(SIGWINCH);
+    if (saved_winch != 0)
+	(*saved_winch) (SIGWINCH);
 
-	set_handler(SIG_IGN);
-	if (list != 0 && resizewin()) {
-		register ON_WINCH *p;
-		for (p = list; p != 0; p = p->next) {
-			caught_this = FALSE;
-			(*p->func)();
-		}
-		refresh();
-		caught_this = FALSE;
+    set_handler(SIG_IGN);
+    if (list != 0 && resizewin()) {
+	ON_WINCH *p;
+	for (p = list; p != 0; p = p->next) {
+	    caught_this = FALSE;
+	    (*p->func) ();
 	}
+	refresh();
+	caught_this = FALSE;
+    }
 }
 
 /*
@@ -101,49 +98,46 @@ void	handle_resize (_AR0)
 static
 SIGNAL_FUNC(catch_winch)
 {
-	caught_this = TRUE;
-	if (!disable_this)
-		handle_resize();
-	set_handler(catch_winch);
+    caught_this = TRUE;
+    if (!disable_this)
+	handle_resize();
+    set_handler(catch_winch);
 }
 
-void	on_winch(
-	_FN1(void,	func,(void))
-		)
-	_DCL(void,	(*func)())
+void
+on_winch(void (*func) (void))
 {
-	register ON_WINCH *p, *q;
+    ON_WINCH *p, *q;
 
-	disable_this = TRUE;
-	if (func != 0) {	/* add function to end of our list */
-		p = ALLOC(ON_WINCH,1);
-		q = list;
+    disable_this = TRUE;
+    if (func != 0) {		/* add function to end of our list */
+	p = ALLOC(ON_WINCH, 1);
+	q = list;
 
-		p->next = 0;
-		p->func = func;
+	p->next = 0;
+	p->func = func;
 
-		if (q != 0) {
-			while (q->next != 0)
-				q = q->next;
-			q->next = p;
-		} else {
-			list = p;
-		}
-	} else {		/* remove function on the end of list */
-		if ((p = list) != 0) {
-			for (q = 0; p->next != 0; q = p, p = p->next)
-				;
-			if (q != 0)
-				q->next = 0;
-			else
-				list = 0;
-			dofree((char *)p);
-		}
+	if (q != 0) {
+	    while (q->next != 0)
+		q = q->next;
+	    q->next = p;
+	} else {
+	    list = p;
 	}
-	disable_this = FALSE;
-	if (caught_this)
-		handle_resize();
-	set_handler(catch_winch);
+    } else {			/* remove function on the end of list */
+	if ((p = list) != 0) {
+	    for (q = 0; p->next != 0; q = p, p = p->next) ;
+	    if (q != 0)
+		q->next = 0;
+	    else
+		list = 0;
+	    dofree((char *) p);
+	}
+    }
+    disable_this = FALSE;
+    if (caught_this)
+	handle_resize();
+    set_handler(catch_winch);
 }
 
 /* This function is called before/after invoking shell processes, to force this
@@ -154,13 +148,12 @@ void	on_winch(
  * Disabling the interrupt in this way means that 'ded' has to query the screen
  * size when it exits from a subprocess that invokes 'vile', for example.
  */
-void	enable_winch (
-	_AR1(int,	enabled))
-	_DCL(int,	enabled)
+void
+enable_winch(int enabled)
 {
-	if ((disable_this = !enabled))
-		set_handler(SIG_IGN);
-	else
-		set_handler(catch_winch);
+    if ((disable_this = !enabled))
+	set_handler(SIG_IGN);
+    else
+	set_handler(catch_winch);
 }
-#endif	/* SIGWINCH */
+#endif /* SIGWINCH */

@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	23 Aug 1989
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, converted to ANSI
@@ -19,29 +20,25 @@
 
 #include	"td_curse.h"
 
-MODULE_ID("$Id: viewfile.c,v 12.6 2001/05/15 01:00:00 tom Exp $")
+MODULE_ID("$Id: viewfile.c,v 12.7 2004/03/07 22:03:45 tom Exp $")
 
 #ifdef	SYS_UNIX
 
-int	view_file(
-	_ARX(char *,	fname)
-	_AR1(int,	readonly)
-		)
-	_DCL(char *,	fname)
-	_DCL(int,	readonly)
+int
+view_file(char *fname, int readonly)
 {
-	auto	int	code;
-	auto	char	*editor = dftenv(readonly ? "view" : "vi", "EDITOR");
+    int code;
+    char *editor = dftenv(readonly ? "view" : "vi", "EDITOR");
 
-	if ((code = padedit(fname, readonly, editor)) < 0) {
-		/* give up: put it in the current process's window */
-		cookterm();
-		code = execute(editor, fname);
-		rawterm();
-		touchwin(curscr);
-		(void)wrefresh(curscr);
-	}
-	return (code);
+    if ((code = padedit(fname, readonly, editor)) < 0) {
+	/* give up: put it in the current process's window */
+	cookterm();
+	code = execute(editor, fname);
+	rawterm();
+	touchwin(curscr);
+	(void) wrefresh(curscr);
+    }
+    return (code);
 }
 
-#endif	/* SYS_UNIX */
+#endif /* SYS_UNIX */

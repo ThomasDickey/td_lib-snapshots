@@ -1,11 +1,7 @@
-/* $Id: deltree.h,v 12.2 1997/09/08 00:56:37 tom Exp $ */
+/* $Id: deltree.h,v 12.3 2004/03/07 21:46:48 tom Exp $ */
 
 #ifndef	DELTREE_H
 #define	DELTREE_H
-
-#ifndef	_arx
-#include <ptypes.h>
-#endif
 
 /*
  * This structure contains a list of all deltas loaded via 'rcsload()'.
@@ -28,19 +24,15 @@ typedef	struct	{
 	} DELTREE;
 
 	DELTREE *diffload(
-			_arx(char **,	names)
-			_arx(int,	load)
-			_ar1(int,	verbose)
+			char **	names,
+			int	load,
+			int	verbose
 			)
-			_dcl(char **,	names)
-			_dcl(int,	load)
-			_dcl(int,	verbose)
-			_ret
+			;
 
 	void	diffunload(
-			_ar1(DELTREE *,	p)
+			DELTREE *	p
 			)
-			_dcl(DELTREE *,	p)
-			_nul
+			;
 
 #endif	/* DELTREE_H */

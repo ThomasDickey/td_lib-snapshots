@@ -2,6 +2,7 @@
  * Author:	T.E.Dickey
  * Created:	18 Nov 1992, from 'doalloc.c'
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		20 Nov 1992, added test-driver.
@@ -14,116 +15,114 @@
 #include	"ptypes.h"
 #include	<errno.h>
 
-MODULE_ID("$Id: walkback.c,v 12.6 2001/05/15 00:57:52 tom Exp $")
+MODULE_ID("$Id: walkback.c,v 12.7 2004/03/07 22:03:45 tom Exp $")
 
 #ifdef	SYS_UNIX
 
 #ifdef	apollo
 static
-int	contains(
-	_ARX(char *,	ref)
-	_AR1(char *,	tst)
-		)
-	_DCL(char *,	ref)
-	_DCL(char *,	tst)
+int
+contains(
+	    char *ref,
+	    char *tst)
 {
-	size_t	len	= strlen(ref);
-	while (*tst) {
-		if (!strncmp(ref,tst++,len))
-			return TRUE;
-	}
-	return FALSE;
+    size_t len = strlen(ref);
+    while (*tst) {
+	if (!strncmp(ref, tst++, len))
+	    return TRUE;
+    }
+    return FALSE;
 }
-#else	/* assume we can dump-core */
-static	char	*core	= "core";
-static	char	*caller;
+#else /* assume we can dump-core */
+static char *core = "core";
+static char *caller;
 #endif
 
 /******************************************************************************/
-	/*ARGSUSED*/
-void	walkback(
-	_AR1(char *,	program))
-	_DCL(char *,	program)
+	/*ARGSUSED */
+void
+walkback(
+	    char *program)
 {
-	static	int	count;
-	if (program == 0)
-		PRINTF("WALKBACK %d\n", ++count);
+    static int count;
+    if (program == 0)
+	PRINTF("WALKBACK %d\n", ++count);
 
-	if (program) {
+    if (program) {
 #if	defined(SYS_UNIX) && !defined(apollo)
-		char	dot[MAXPATHLEN],
-			bfr[256];
-		(void)getwd(dot);
-		(void)which(bfr, sizeof(bfr), program, dot);
-		caller = stralloc(bfr);
+	char dot[MAXPATHLEN], bfr[256];
+	(void) getwd(dot);
+	(void) which(bfr, sizeof(bfr), program, dot);
+	caller = stralloc(bfr);
 #endif
-	} else {	/* do the actual walkback */
+    } else {			/* do the actual walkback */
 #ifdef	vms
-		*((char *)0) = 0;	/* patch */
-#else	/* SYS_UNIX ? */
+	*((char *) 0) = 0;	/* patch */
+#else /* SYS_UNIX ? */
 #ifdef	apollo
-		static	char	*first	= "\"walkback\"",
-				*last	= "\"unix_$main\"";
-		FILE	*pp;
-		char	bfr[BUFSIZ];
-		int	ok	= FALSE;
+	static char *first = "\"walkback\"", *last = "\"unix_$main\"";
+	FILE *pp;
+	char bfr[BUFSIZ];
+	int ok = FALSE;
 
-		FORMAT(bfr, "/com/tb %d", getpid());
-		if (!(pp = popen(bfr, "r")))
-			failed(bfr);
+	FORMAT(bfr, "/com/tb %d", getpid());
+	if (!(pp = popen(bfr, "r")))
+	    failed(bfr);
 
-		while (fgets(bfr, sizeof(bfr), pp)) {
-			if (ok && contains(last, bfr))
-				break;
-			else if (contains(first, bfr))
-				ok = TRUE;
-			else if (ok)
-				PRINTF("%s", bfr);
-		}
-		FCLOSE(pp);
-#else	/* !apollo */
-		FILE	*pp;
-		char	bfr[BUFSIZ];
-		int	pid;
-
-		FFLUSH(stdout);
-		FFLUSH(stderr);
-		(void)unlink(core);
-
-		if ((pid = fork()) > 0) {
-			(void)kill(pid, SIGABRT);
-		} else {
-			catchall(SIG_DFL);
-			for(;;);
-			/*NOTREACHED*/
-		}
-
-		FORMAT(bfr, "adb %s", caller);
-		if ((pp = popen(bfr, "w")) != NULL) {
-			(void)fputs("$c\n", pp); FFLUSH(pp);
-			(void)fputs("$q\n", pp); FFLUSH(pp);
-			(void)pclose(pp);
-			(void)unlink(core);
-		}
-#endif	/* apollo */
-#endif	/* vms/SYS_UNIX */
+	while (fgets(bfr, sizeof(bfr), pp)) {
+	    if (ok && contains(last, bfr))
+		break;
+	    else if (contains(first, bfr))
+		ok = TRUE;
+	    else if (ok)
+		PRINTF("%s", bfr);
 	}
+	FCLOSE(pp);
+#else /* !apollo */
+	FILE *pp;
+	char bfr[BUFSIZ];
+	int pid;
+
+	FFLUSH(stdout);
+	FFLUSH(stderr);
+	(void) unlink(core);
+
+	if ((pid = fork()) > 0) {
+	    (void) kill(pid, SIGABRT);
+	} else {
+	    catchall(SIG_DFL);
+	    for (;;) ;
+	    /*NOTREACHED */
+	}
+
+	FORMAT(bfr, "adb %s", caller);
+	if ((pp = popen(bfr, "w")) != NULL) {
+	    (void) fputs("$c\n", pp);
+	    FFLUSH(pp);
+	    (void) fputs("$q\n", pp);
+	    FFLUSH(pp);
+	    (void) pclose(pp);
+	    (void) unlink(core);
+	}
+#endif /* apollo */
+#endif /* vms/SYS_UNIX */
+    }
 }
 
 #ifdef	TEST
-static
-void	do_test(_AR0)
+static void
+do_test(void)
 {
-	walkback((char *)0);
+    walkback((char *) 0);
 }
 
 _MAIN
 {
-	walkback(argv[0]);
-	do_test();
-	walkback((char *)0);
-	exit(SUCCESS);
+    walkback(argv[0]);
+    do_test();
+    walkback((char *) 0);
+    exit(SUCCESS);
 }
-#endif	/* TEST */
+#endif /* TEST */
 
-#endif	/* SYS_UNIX */
+#endif /* SYS_UNIX */

@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	14 Dec 1987
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		22 Dec 1992, reset process-group on SunOs to avoid having
@@ -38,7 +39,7 @@
 #include	"ptypes.h"
 #include	<errno.h>
 
-MODULE_ID("$Id: padedit.c,v 12.6 2001/05/15 01:00:08 tom Exp $")
+MODULE_ID("$Id: padedit.c,v 12.7 2004/03/07 22:03:45 tom Exp $")
 
 #ifdef	SYS_UNIX
 
@@ -48,7 +49,7 @@ MODULE_ID("$Id: padedit.c,v 12.6 2001/05/15 01:00:08 tom Exp $")
 #include 	<apollo/error.h>
 #include 	<apollo/pad.h>
 #include 	<apollo/ios.h>
-#else	/* sr9.x */
+#else /* sr9.x */
 #include	"/sys/ins/base.ins.c"
 #include	"/sys/ins/error.ins.c"
 #include	"/sys/ins/pad.ins.c"
@@ -57,201 +58,182 @@ MODULE_ID("$Id: padedit.c,v 12.6 2001/05/15 01:00:08 tom Exp $")
 #endif
 
 #ifdef	apollo
-int	apollo_edit(
-	_ARX(char *,	name)
-	_AR1(int,	readonly)
-		)
-	_DCL(char *,	name)
-	_DCL(int,	readonly)
+int
+apollo_edit(char *name, int readonly)
 {
 #ifdef	apollo_sr10
-	name_$pname_t		in_name;
-	pinteger		in_len;
-	status_$t		st;
-	pad_$window_desc_t	window;
-	stream_$id_t		stream_id;
+    name_$pname_t in_name;
+    pinteger in_len;
+    status_$t st;
+    pad_$window_desc_t window;
+    stream_$id_t stream_id;
 
-	in_len = (size_t)strlen(strcpy(in_name, name));
+    in_len = (size_t) strlen(strcpy(in_name, name));
 
-	/* force default-sized window */
-	window.top =
+    /* force default-sized window */
+    window.top =
 	window.left =
 	window.width =
 	window.height = 0;
-	pad_$create_window(
-		in_name, in_len,
-		(pad_$type_t) (readonly ? pad_$read_edit : pad_$edit),
-		(short)1, window,
-		&stream_id, &st);
+    pad_$create_window(
+			  in_name, in_len,
+			  (pad_$type_t) (readonly ? pad_$read_edit : pad_$edit),
+			  (short) 1, window,
+			  &stream_id, &st);
 
-	if (error_$fail(st)) {
-		error_$print(st);
-		return(-1);
-	} else {
-		if (!readonly) {
-			pad_$edit_wait(stream_id, &st);
-		}
-		ios_$close(stream_id, &st);
+    if (error_$fail(st)) {
+	error_$print(st);
+	return (-1);
+    } else {
+	if (!readonly) {
+	    pad_$edit_wait(stream_id, &st);
 	}
-#else	/* sr9.x */
-	name_$pname_t		in_name;
-	pinteger		in_len;
-	status_$t		st;
-	pad_$window_desc_t	window;
-	stream_$id_t		stream_id;
+	ios_$close(stream_id, &st);
+    }
+#else /* sr9.x */
+    name_$pname_t in_name;
+    pinteger in_len;
+    status_$t st;
+    pad_$window_desc_t window;
+    stream_$id_t stream_id;
 
-	in_len = (size_t)strlen(strcpy(in_name, name));
+    in_len = (size_t) strlen(strcpy(in_name, name));
 
-	/* force default-sized window */
-	window.top =
+    /* force default-sized window */
+    window.top =
 	window.left =
 	window.width =
 	window.height = 0;
-	pad_$create_window(
-		in_name, in_len,
-		(pad_$type_t) (readonly ? pad_$read_edit : pad_$edit),
-		(short)1, window,
-		stream_id, st);
+    pad_$create_window(
+			  in_name, in_len,
+			  (pad_$type_t) (readonly ? pad_$read_edit : pad_$edit),
+			  (short) 1, window,
+			  stream_id, st);
 
-	if (error_$fail(st)) {
-		error_$print(st);
-		return(-1);
-	} else {
-		if (!readonly) {
-			pad_$edit_wait(stream_id, st);
-		}
-		stream_$close(stream_id, st);
+    if (error_$fail(st)) {
+	error_$print(st);
+	return (-1);
+    } else {
+	if (!readonly) {
+	    pad_$edit_wait(stream_id, st);
 	}
-#endif	/* sr9.x */
-	return(0);
+	stream_$close(stream_id, st);
+    }
+#endif /* sr9.x */
+    return (0);
 }
-#endif	/* apollo */
+#endif /* apollo */
 
 /*
  * Spawn a process which is detached from the current one.
  */
-static
-int	spawn(
-	_ARX(char *,	cmd)
-	_AR1(char **,	argv)
-		)
-	_DCL(char *,	cmd)
-	_DCL(char **,	argv)
+static int
+spawn(char *cmd, char **argv)
 {
-	int	pid;
+    int pid;
 #ifdef	TEST
-	int	debug	= 0;
+    int debug = 0;
 #define	DEBUG(s,a)	if (debug) printf(s,a)
-#else	/* TEST */
+#else /* TEST */
 #define	DEBUG(s,a)
-#endif	/* TEST */
+#endif /* TEST */
 
-	DCL_WAIT(status);
+    DCL_WAIT(status);
 
+    if ((pid = fork()) > 0) {
+	DEBUG("** spawn-1st (pid= %d)\r\n", pid);
+	while (wait(ARG_WAIT(status)) >= 0) ;
+	DEBUG("spawn-1st (status= %#x)\n", W_RETCODE(status));
+	if ((errno = W_RETCODE(status)) != 0)
+	    return (-1);
+	return (0);
+    } else if (pid == 0) {
+	DEBUG("spawn-%dst\n", 1);
 	if ((pid = fork()) > 0) {
-		DEBUG("** spawn-1st (pid= %d)\r\n", pid);
-		while (wait(ARG_WAIT(status)) >= 0)
-			;
-		DEBUG("spawn-1st (status= %#x)\n", W_RETCODE(status));
-		if ((errno = W_RETCODE(status)) != 0)
-			return (-1);
-		return (0);
+	    DEBUG("** spawn-%dnd\r\n", 2);
+	    (void) _exit(0);	/* abandon exec'ing process */
+	    /*NOTREACHED */
 	} else if (pid == 0) {
-		DEBUG("spawn-%dst\n",1);
-		if ((pid = fork()) > 0) {
-			DEBUG("** spawn-%dnd\r\n",2);
-			(void)_exit(0);		/* abandon exec'ing process */
-			/*NOTREACHED*/
-		} else if (pid == 0) {
-			DEBUG("** exec'ing %drd-process\r\n",3);
+	    DEBUG("** exec'ing %drd-process\r\n", 3);
 #ifdef	sun
-			setsid();
+	    setsid();
 #endif
-			(void)execvp(cmd, argv);
-			(void)_exit(errno);	/* just in case exec-failed */
-			/*NOTREACHED*/
-		}
+	    (void) execvp(cmd, argv);
+	    (void) _exit(errno);	/* just in case exec-failed */
+	    /*NOTREACHED */
 	}
-	return (-1);
+    }
+    return (-1);
 }
 
-int	padedit(
-	_ARX(char *,	name)
-	_ARX(int,	readonly)
-	_AR1(char *,	editor)
-		)
-	_DCL(char *,	name)
-	_DCL(int,	readonly)
-	_DCL(char *,	editor)
+int
+padedit(char *name, int readonly, char *editor)
 {
-	int	lc[2];
-	int	code = scr_size(lc);
+    int lc[2];
+    int code = scr_size(lc);
 
 #ifdef	apollo
-	if (code > 0)
-		return (apollo_edit(name, readonly));
-	else
-#endif	/* apollo */
-	if (code == 0) {
-		char	*display;
-		char	*argv[20];
-		int	argc;
+    if (code > 0)
+	return (apollo_edit(name, readonly));
+    else
+#endif /* apollo */
+    if (code == 0) {
+	char *display;
+	char *argv[20];
+	int argc;
 
-		char	wd[MAXPATHLEN],
-			xt[MAXPATHLEN],
-			tmp[BUFSIZ],
-			the_title[BUFSIZ];
+	char wd[MAXPATHLEN], xt[MAXPATHLEN], tmp[BUFSIZ], the_title[BUFSIZ];
 
-		if (getwd(wd) == 0)
-			return (-1);
-		if (which(xt, sizeof(xt), "xterm", wd) <= 0)
-			return (-1);
+	if (getwd(wd) == 0)
+	    return (-1);
+	if (which(xt, sizeof(xt), "xterm", wd) <= 0)
+	    return (-1);
 
-		FORMAT(the_title, "%s:%s", readonly ? "view" : "edit", name);
+	FORMAT(the_title, "%s:%s", readonly ? "view" : "edit", name);
 
-		argc = 0;
-		argv[argc++] = xt;
-		if ((display = getenv("DISPLAY")) != NULL) {
-			argv[argc++] = "-display";
-			argv[argc++] = display;
-		}
-		argv[argc++] = "-title";
-		argv[argc++] = the_title;
-		argv[argc++] = "-e";
-		argc += makeargv(&argv[argc], (int)(SIZEOF(argv)-argc-2), tmp, editor);
-		argv[argc++] = name;
-		argv[argc]   = 0;
-
-		if (readonly) {	/* spawn and run away */
-			return (spawn(xt, argv));
-		} else {
-			char	args[BUFSIZ];
-			int	j;
-
-			*args = EOS;
-			for (j = 1; argv[j]; j++)
-				catarg(args, argv[j]);
-			return (execute(xt, args));
-		}
+	argc = 0;
+	argv[argc++] = xt;
+	if ((display = getenv("DISPLAY")) != NULL) {
+	    argv[argc++] = "-display";
+	    argv[argc++] = display;
 	}
-	return (-1);
+	argv[argc++] = "-title";
+	argv[argc++] = the_title;
+	argv[argc++] = "-e";
+	argc += makeargv(&argv[argc], (int) (SIZEOF(argv) - argc - 2), tmp, editor);
+	argv[argc++] = name;
+	argv[argc] = 0;
+
+	if (readonly) {		/* spawn and run away */
+	    return (spawn(xt, argv));
+	} else {
+	    char args[BUFSIZ];
+	    int j;
+
+	    *args = EOS;
+	    for (j = 1; argv[j]; j++)
+		catarg(args, argv[j]);
+	    return (execute(xt, args));
+	}
+    }
+    return (-1);
 }
 
 #ifdef	TEST
 /*ARGSUSED*/
 _MAIN
 {
-	register int j;
-	int	readonly = FALSE;
-	for (j = 1; j < argc; j++) {
-		if (!strcmp(argv[j], "-r"))
-			readonly = TRUE;
-		else
-			padedit(argv[j], readonly, "view");
-	}
-	exit(SUCCESS);
-	/*NOTREACHED*/
+    int j;
+    int readonly = FALSE;
+    for (j = 1; j < argc; j++) {
+	if (!strcmp(argv[j], "-r"))
+	    readonly = TRUE;
+	else
+	    padedit(argv[j], readonly, "view");
+    }
+    exit(SUCCESS);
+    /*NOTREACHED */
 }
-#endif	/* TEST */
+#endif /* TEST */
 
-#endif	/* SYS_UNIX */
+#endif /* SYS_UNIX */

@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	12 Jan 1989
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		01 Dec 1993, ifdefs.
  *		22 Sep 1993, gcc warnings
  *		29 Apr 1993, sort _all_ leaves before translating
@@ -22,13 +23,10 @@
 #include	"port2vms.h"
 #include	"td_qsort.h"
 
-MODULE_ID("$Id: trnstree.c,v 12.2 1994/08/21 19:36:36 tom Exp $")
+MODULE_ID("$Id: trnstree.c,v 12.3 2004/03/07 22:03:45 tom Exp $")
 
-typedef	char	*PTR;
-	/*ARGSUSED*/
-	def_DOALLOC(PTR)
-
-#define	CHUNK	127	/* 1 less than a power of 2 */
+typedef char *PTR;
+#define	CHUNK	127		/* 1 less than a power of 2 */
 #define	v_ALLOC(v,n,s)	v = DOALLOC(v, PTR, ((++n)|CHUNK)+1);\
 			v[n-1] = txtalloc(s)
 
@@ -54,124 +52,115 @@ typedef	char	*PTR;
  ************************************************************************/
 
 /*ARGSUSED*/
-void	transtree(
-	_ARX(char *,	oldname)
-	_FNX(int,	func,	(_ARX(char *,name) _AR1(Stat_t *,s)))
-	_ARX(int,	recur)
-	_AR1(int,	links)
-		)
-	_DCL(char *,	oldname)
-	_DCL(int,	(*func)())
-	_DCL(int,	recur)
-	_DCL(int,	links)
+void
+transtree(char *oldname,
+	  int (*func) (char *name, Stat_t * s),
+	  int recur,
+	  int links)
 {
-	auto	DIR	*dirp;
-	auto	DirentT	*dp;
-	auto	Stat_t	sb;
-	auto	unsigned num;
-	auto	PTR	*vec;
-	auto	char	newname[MAXPATHLEN];
-	auto	char	oldpath[MAXPATHLEN];
-	auto	char	*newpath;
+    DIR *dirp;
+    DirentT *dp;
+    Stat_t sb;
+    unsigned num;
+    PTR *vec;
+    char newname[MAXPATHLEN];
+    char oldpath[MAXPATHLEN];
+    char *newpath;
 
 #ifdef	TEST
-	static	char	stack[]	= ". . . . . . . ";
-	auto	char	*nesting = &stack[sizeof(stack)-(recur*2)-1];
+    static char stack[] = ". . . . . . . ";
+    char *nesting = &stack[sizeof(stack) - (recur * 2) - 1];
 #endif
 
-	if (LOOK(oldname, &sb) < 0) {
-		errno = ENOENT;		/* bypass vms-bug */
-		perror(oldname);
-	}
+    if (LOOK(oldname, &sb) < 0) {
+	errno = ENOENT;		/* bypass vms-bug */
+	perror(oldname);
+    }
 
-	if (_OPENDIR(oldname,sb.st_mode)) {
-		TELL_SCAN(oldname);
-		if (getwd(oldpath) == 0) {
-			perror("(getwd)");
-			return;
-		}
-		newpath = OPENDIR_ARG;
+    if (_OPENDIR(oldname, sb.st_mode)) {
+	TELL_SCAN(oldname);
+	if (getwd(oldpath) == 0) {
+	    perror("(getwd)");
+	    return;
+	}
+	newpath = OPENDIR_ARG;
 #ifdef	vms
-		if (vms_iswild(oldname))
-			newpath = oldname;
-		else
+	if (vms_iswild(oldname))
+	    newpath = oldname;
+	else
 #endif
-		if (chdir(DIR2PATH(oldname)) < 0) {
-			perror(oldname);
-			return;
-		}
-		TELL_DIR(DIR2PATH(oldname));
-
-		if ((dirp = opendir(newpath)) != NULL) {
-			num = 0;
-			vec = 0;
-			while ((dp = readdir(dirp)) != NULL) {
-				(void)strcpy(newname, dp->d_name);
-#ifndef	vms
-				if (dotname(newname))	continue;
-#endif
-				v_ALLOC(vec,num,newname);
-			}
-			closedir(dirp);
-			if (num != 0) {
-				qsort((PTR)vec, (LEN_QSORT)num,
-					sizeof(PTR), cmp_qsort);
-				while (num-- != 0) {
-					if (LOOK(vec[num], &sb) < 0) {
-						perror(vec[num]);
-						continue;
-					}
-					if (isDIR(sb.st_mode)) {
-						if (recur)
-							transtree(vec[num],
-								func,
-								recur+1,
-								links);
-					} else if (isFILE(sb.st_mode)) {
-						TELL_FILE(vec[num]);
-						(*func)(vec[num], &sb);
-					}
-				}
-				dofree((PTR)vec);
-			}
-		}
-		(void)chdir(oldpath);
-	} else if (isFILE(sb.st_mode)) {
-		TELL_FILE(oldname);
-		(*func)(oldname, &sb);
+	if (chdir(DIR2PATH(oldname)) < 0) {
+	    perror(oldname);
+	    return;
 	}
+	TELL_DIR(DIR2PATH(oldname));
+
+	if ((dirp = opendir(newpath)) != NULL) {
+	    num = 0;
+	    vec = 0;
+	    while ((dp = readdir(dirp)) != NULL) {
+		(void) strcpy(newname, dp->d_name);
+#ifndef	vms
+		if (dotname(newname))
+		    continue;
+#endif
+		v_ALLOC(vec, num, newname);
+	    }
+	    closedir(dirp);
+	    if (num != 0) {
+		qsort((PTR) vec, (LEN_QSORT) num,
+		      sizeof(PTR), cmp_qsort);
+		while (num-- != 0) {
+		    if (LOOK(vec[num], &sb) < 0) {
+			perror(vec[num]);
+			continue;
+		    }
+		    if (isDIR(sb.st_mode)) {
+			if (recur)
+			    transtree(vec[num],
+				      func,
+				      recur + 1,
+				      links);
+		    } else if (isFILE(sb.st_mode)) {
+			TELL_FILE(vec[num]);
+			(*func) (vec[num], &sb);
+		    }
+		}
+		dofree((PTR) vec);
+	    }
+	}
+	(void) chdir(oldpath);
+    } else if (isFILE(sb.st_mode)) {
+	TELL_FILE(oldname);
+	(*func) (oldname, &sb);
+    }
 }
 
 #ifdef	TEST
-static
-int	do_file(
-	_ARX(char *,	name)
-	_AR1(Stat_t *,	sb)
-		)
-	_DCL(char *,	name)
-	_DCL(Stat_t *,	sb)
+static int
+do_file(char *name, Stat_t * sb)
 {
-	return 1;
+    return 1;
 }
 
 /*ARGSUSED*/
 _MAIN
 {
-	register int	j;
-	auto	 char	*s;
-	auto	 int	recur = FALSE;
-	auto	 int	links = FALSE;
+    int j;
+    char *s;
+    int recur = FALSE;
+    int links = FALSE;
 
-	for (j = 1; j < argc; j++) {
-		if (*(s = argv[j]) == '-') {
-			if (*(++s) == 'r')
-				recur = TRUE;
-			if (*s == 'L')
-				links = TRUE;
-		} else
-			transtree(s, do_file, recur, links);
-	}
-	exit(SUCCESS);
-	/*NOTREACHED*/
+    for (j = 1; j < argc; j++) {
+	if (*(s = argv[j]) == '-') {
+	    if (*(++s) == 'r')
+		recur = TRUE;
+	    if (*s == 'L')
+		links = TRUE;
+	} else
+	    transtree(s, do_file, recur, links);
+    }
+    exit(SUCCESS);
+    /*NOTREACHED */
 }
 #endif

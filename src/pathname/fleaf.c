@@ -2,6 +2,8 @@
  * Title:	fleaf.c (file/pathname leaf)
  * Author:	T.E.Dickey
  * Created:	27 Nov 1993
+ * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *
  * Function:	Returns a pointer in 'path' to the leaf (i.e., filename)
  *		iff a pathname-delimiter precedes it.  If no delimiter is
@@ -14,31 +16,29 @@
 #define STR_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: fleaf.c,v 12.5 2003/04/25 23:21:52 tom Exp $")
+MODULE_ID("$Id: fleaf.c,v 12.6 2004/03/07 22:03:45 tom Exp $")
 
-char *	fleaf_delim(
-	_AR1(char *, path))
-	_DCL(char *, path)
+char *
+fleaf_delim(char *path)
 {
 #ifdef	SYS_UNIX
-	return strrchr(path, '/');
+    return strrchr(path, '/');
 #endif
 #if	defined(vms) || defined(MSDOS)
-	register char *s = path + strlen(path);
-	while (s-- != path) {
-		if (isSlash(*s))
-			return s;
-	}
-	return 0;
+    char *s = path + strlen(path);
+    while (s-- != path) {
+	if (isSlash(*s))
+	    return s;
+    }
+    return 0;
 #endif
 }
 
-char *	fleaf(
-	_AR1(char *, path))
-	_DCL(char *, path)
+char *
+fleaf(char *path)
 {
-	register char *s = fleaf_delim(path);
-	if (s != 0)
-		s++;
-	return s;
+    char *s = fleaf_delim(path);
+    if (s != 0)
+	s++;
+    return s;
 }

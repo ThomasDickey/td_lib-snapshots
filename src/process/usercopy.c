@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	30 Aug 1988
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, converted to ANSI
@@ -16,39 +17,40 @@
 
 #include	"ptypes.h"
 
-MODULE_ID("$Id: usercopy.c,v 12.5 2001/05/15 00:57:58 tom Exp $")
+MODULE_ID("$Id: usercopy.c,v 12.6 2004/03/07 22:03:45 tom Exp $")
 
 #ifdef	SYS_UNIX
 
-static	char	*ucp_src,
-		*ucp_dst;
-static	void	ucp_func(_AR0) { (void)filecopy(ucp_src, ucp_dst, TRUE); }
-
-int	usercopy(
-	_ARX(char *,	src)
-	_AR1(char *,	dst)
-		)
-	_DCL(char *,	src)
-	_DCL(char *,	dst)
+static char *ucp_src, *ucp_dst;
+static void
+ucp_func(void)
 {
-	ucp_src = src;
-	ucp_dst = dst;
-	return (for_user(ucp_func));
+    (void) filecopy(ucp_src, ucp_dst, TRUE);
+}
+
+int
+usercopy(
+	    char *src,
+	    char *dst)
+{
+    ucp_src = src;
+    ucp_dst = dst;
+    return (for_user(ucp_func));
 }
 
 #ifdef	TEST
 _MAIN
 {
-	char	*src, *dst;
+    char *src, *dst;
 
-	if (argc > 2) {
-		printf("src=%s, dst=%s\n", src = argv[1], dst = argv[2]);
-		if (usercopy(src, dst) < 0)
-			perror(src);
-	}
-	exit(SUCCESS);
-	/*NOTREACHED*/
+    if (argc > 2) {
+	printf("src=%s, dst=%s\n", src = argv[1], dst = argv[2]);
+	if (usercopy(src, dst) < 0)
+	    perror(src);
+    }
+    exit(SUCCESS);
+    /*NOTREACHED */
 }
-#endif	/* TEST */
+#endif /* TEST */
 
-#endif	/* SYS_UNIX */
+#endif /* SYS_UNIX */

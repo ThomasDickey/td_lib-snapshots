@@ -1,4 +1,4 @@
-/* $Id: cmv_defs.h,v 12.5 1998/08/20 20:51:33 tom Exp $ */
+/* $Id: cmv_defs.h,v 12.6 2004/03/07 21:07:17 tom Exp $ */
 
 #ifndef	CMV_DEFS_H
 #define	CMV_DEFS_H
@@ -27,75 +27,54 @@
 
 	/* cmv_dir.c ------------------------------------------------- */
 	char *	cmv_dir(
-			_arx(char *,	working_dir)
-			_ar1(char *,	pathname)
+			char *	working_dir,
+			char *	pathname
 			)
-			_dcl(char *,	working_dir)
-			_dcl(char *,	pathname)
-			_ret
+			;
 
 	char *	cmv_file(
-			_arx(char *,	working_dir)
-			_ar1(char *,	pathname)
+			char *	working_dir,
+			char *	pathname
 			)
-			_dcl(char *,	working_dir)
-			_dcl(char *,	pathname)
-			_ret
+			;
 
 	void	get_cmv_lock(
-			_arx(char *,	working_dir)
-			_arx(char *,	pathname)
-			_arx(char **,	lockedby)
-			_arx(char **,	revision)
-			_ar1(time_t *,	t_)
+			char *	working_dir,
+			char *	pathname,
+			char **	lockedby,
+			char **	revision,
+			time_t *	t_
 			)
-			_dcl(char *,	working_dir)
-			_dcl(char *,	pathname)
-			_dcl(char *,	lockedby)
-			_dcl(char *,	revision)
-			_dcl(time_t *,	t_)
-			_nul
+			;
 
 	void	purge_cmv_dir(
-			_arx(char *,	working_dir)
-			_ar1(char *,	pathname)
+			char *	working_dir,
+			char *	pathname
 			)
-			_dcl(char *,	working_dir)
-			_dcl(char *,	pathname)
-			_nul
+			;
 
 	/* cmv_dbug.c ------------------------------------------------- */
-	int	cmv_debug(_ar0)
-			_ret
+	int	cmv_debug(void)
+			;
 
 	/* cmv_last.c ------------------------------------------------- */
 	void	cmv_last(
-			_arx(char *,	wd)
-			_arx(char *,	n)
-			_arx(char **,	v_)
-			_arx(time_t *,	t_)
-			_ar1(char **,	l_)
+			char *	wd,
+			char *	n,
+			char **	v_,
+			time_t *	t_,
+			char **	l_
 			)
-			_dcl(char *,	wd)
-			_dcl(char *,	n)
-			_dcl(char **,	v_)
-			_dcl(time_t *,	t_)
-			_dcl(char **,	l_)
-			_nul
+			;
 
 	/* lastrev.c -------------------------------------------------- */
 	void	lastrev(
-			_arx(char *,	wd)
-			_arx(char *,	n)
-			_arx(char **,	v_)
-			_arx(time_t *,	t_)
-			_ar1(char **,	l_)
+			char *	wd,
+			char *	n,
+			char **	v_,
+			time_t *	t_,
+			char **	l_
 			)
-			_dcl(char *,	wd)
-			_dcl(char *,	n)
-			_dcl(char **,	v_)
-			_dcl(time_t *,	t_)
-			_dcl(char **,	l_)
-			_nul
+			;
 
 #endif	/* CMV_DEFS_H */

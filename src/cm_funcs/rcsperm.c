@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	08 Mar 1989
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		12 Nov 1992, added 'accflag' argument.
@@ -32,97 +33,93 @@
 #include	"dyn_str.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: rcsperm.c,v 12.5 1994/05/21 20:18:44 tom Exp $")
+MODULE_ID("$Id: rcsperm.c,v 12.6 2004/03/07 16:31:58 tom Exp $")
 
-int	rcspermit(
-	_ARX(char *,	path)
-	_ARX(char *,	base)
-	_AR1(char **,	accflag)
-		)
-	_DCL(char *,	path)
-	_DCL(char *,	base)
-	_DCL(char **,	accflag)
+int
+rcspermit(char *path,
+	  char *base,
+	  char **accflag)
 {
-	static	DYN *	access_list;
-	auto	Stat_t	sb;
-	auto	int	header	= TRUE;
-	auto	char	*s	= 0,
-			tip	[80],
-			user	[BUFSIZ],
-			key	[BUFSIZ],
-			tmp	[BUFSIZ];
-	auto	int	empty	= TRUE,		/* assume access-list empty */
-			my_file,
-			code	= S_FAIL,
-			ok	= FALSE;	/* assume no permission */
+    static DYN *access_list;
+    Stat_t sb;
+    int header = TRUE;
+    char *s = 0;
+    char tip[80];
+    char user[BUFSIZ];
+    char key[BUFSIZ];
+    char tmp[BUFSIZ];
+    int empty = TRUE;		/* assume access-list empty */
+    int my_file;
+    int code = S_FAIL;
+    int ok = FALSE;		/* assume no permission */
 
-	path = vcs_file(path, tmp, FALSE);
-	dyn_init(&access_list, BUFSIZ);
+    path = vcs_file(path, tmp, FALSE);
+    dyn_init(&access_list, BUFSIZ);
 
-	/*
-	 * Reset caller's copy of $RCS_BASE in case we are processing more than
-	 * one RCS directory.
-	 */
-	if (base != 0) {
-		register char *t;
-		if ((t = getenv("RCS_BASE")) != NULL)
-			(void)strcpy(base, t);
-		else
-			*base = EOS;
+    /*
+     * Reset caller's copy of $RCS_BASE in case we are processing more than
+     * one RCS directory.
+     */
+    if (base != 0) {
+	char *t;
+	if ((t = getenv("RCS_BASE")) != NULL)
+	    (void) strcpy(base, t);
+	else
+	    *base = EOS;
+    }
+
+    /*
+     * If we find the caller's uid/gid combination in the permission file,
+     * (or if the access list is blank)
+     * set the corresponding copy of $RCS_BASE and return true.
+     */
+    (void) strcpy(user, uid2s((int) getuid()));
+
+    if (!rcsopen(path, RCS_DEBUG, TRUE))
+	return (FALSE);		/* could not open file anyway */
+
+    /*
+     * If access-list is empty, we want to know who owns the file:
+     */
+    my_file = ((stat(path, &sb) >= 0)	/* ok always! */
+	       &&(sb.st_uid == getuid()));
+
+    while (header && (s = rcsread(s, code)) != 0) {
+	s = rcsparse_id(key, s);
+
+	switch (code = rcskeys(key)) {
+	case S_HEAD:
+	    s = rcsparse_num(tip, s);
+	    break;
+	case S_ACCESS:
+	    for (;;) {
+		s = rcsparse_id(tmp, s);
+		if (*tmp == EOS)
+		    break;
+		if (!empty)
+		    APPEND(access_list, ",");
+		APPEND(access_list, tmp);
+		empty = FALSE;
+		if (!ok)
+		    ok = !strcmp(tmp, user);
+	    }
+	    if (empty) {
+		ok = my_file;
+	    }
+	    if ((header = ok) != 0
+		&& (base != 0))
+		(void) strcpy(base, tip);
+	    break;
+	case S_LOCKS:
+	    s = rcslocks(s, strcpy(key, user), tmp);
+	    break;
+	case S_VERS:
+	    header = FALSE;
+	    break;
 	}
-
-	/*
-	 * If we find the caller's uid/gid combination in the permission file,
-	 * (or if the access list is blank)
-	 * set the corresponding copy of $RCS_BASE and return true.
-	 */
-	(void)strcpy (user, uid2s((int)getuid()));
-
-	if (!rcsopen(path, RCS_DEBUG, TRUE))
-		return (FALSE);		/* could not open file anyway */
-
-	/*
-	 * If access-list is empty, we want to know who owns the file:
-	 */
-	my_file = ((stat(path, &sb) >= 0)	/* ok always! */
-		&& (sb.st_uid == getuid()));
-
-	while (header && (s = rcsread(s, code)) != 0) {
-		s = rcsparse_id(key, s);
-
-		switch (code = rcskeys(key)) {
-		case S_HEAD:
-			s = rcsparse_num(tip, s);
-			break;
-		case S_ACCESS:
-			for(;;) {
-				s = rcsparse_id(tmp,s);
-				if (*tmp == EOS)
-					break;
-				if (!empty)
-					APPEND(access_list, ",");
-				APPEND(access_list, tmp);
-				empty = FALSE;
-				if (!ok)
-					ok = !strcmp(tmp, user);
-			}
-			if (empty) {
-				ok = my_file;
-			}
-			if ((header = ok) != 0
-			&&  (base  != 0))
-				(void)strcpy(base, tip);
-			break;
-		case S_LOCKS:
-			s = rcslocks(s, strcpy(key, user), tmp);
-			break;
-		case S_VERS:
-			header = FALSE;
-			break;
-		}
-	}
-	rcsclose();
-	if (accflag != 0)
-		*accflag = txtalloc(dyn_string(access_list));
-	return(ok);
+    }
+    rcsclose();
+    if (accflag != 0)
+	*accflag = txtalloc(dyn_string(access_list));
+    return (ok);
 }

@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	24 Mar (from 'ded.c')
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		26 Apr 1994, port to Linux
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
@@ -14,11 +15,12 @@
 
 #include	"td_curse.h"
 
-MODULE_ID("$Id: beep.c,v 12.8 2002/07/05 11:17:40 tom Exp $")
+MODULE_ID("$Id: beep.c,v 12.9 2004/03/07 22:03:45 tom Exp $")
 
 #if !defined(HAVE_BEEP)
-void	beep(_AR0)
+void
+beep(void)
 {
-	blip('\007');
+    blip('\007');
 }
 #endif

@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	08 Mar 1989
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *		07 Feb 1992, make this return true iff a change is made.
  *		03 Oct 1991, conversion to ANSI
@@ -17,34 +18,32 @@
 
 #include	"ptypes.h"
 
-MODULE_ID("$Id: revert.c,v 12.4 2001/05/15 00:58:42 tom Exp $")
+MODULE_ID("$Id: revert.c,v 12.5 2004/03/07 22:03:45 tom Exp $")
 
 #ifdef	SYS_UNIX
 
 #define	TELL	if (msg) FPRINTF(stderr,
 
 int
-revert(
-_AR1(char *,	msg))
-_DCL(char *,	msg)
+revert(char *msg)
 {
-	register int	changed = 0;
-	register uid_t	id;
-	register gid_t	gid;
-	static	char	fmt[] = "** reset %s from %d to %d\n";
+    int changed = 0;
+    uid_t id;
+    gid_t gid;
+    static char fmt[] = "** reset %s from %d to %d\n";
 
-	if ((id = getuid()) != geteuid()) {
-		TELL fmt, "uid", geteuid(), id);
-		(void)setuid((int)id);
-		changed++;
-	}
-	if ((gid = getgid()) != getegid()) {
-		TELL fmt, "gid", getegid(), gid);
-		(void)setgid((int)gid);
-		changed++;
-	}
-	if (changed)
-		TELL "** reason: %s\n", msg);
-	return changed;
+    if ((id = getuid()) != geteuid()) {
+	TELL fmt, "uid", geteuid(), id);
+	(void) setuid((int) id);
+	changed++;
+    }
+    if ((gid = getgid()) != getegid()) {
+	TELL fmt, "gid", getegid(), gid);
+	(void) setgid((int) gid);
+	changed++;
+    }
+    if (changed)
+	TELL "** reason: %s\n", msg);
+    return changed;
 }
-#endif	/* SYS_UNIX */
+#endif /* SYS_UNIX */

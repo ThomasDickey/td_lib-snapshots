@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	14 Dec 1988 (from 'dotcmp()')
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident; port to HP/UX.
  *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, converted to ANSI
@@ -19,7 +20,7 @@
 
 #include	"ptypes.h"
 
-MODULE_ID("$Id: vercmp.c,v 12.7 2002/07/05 11:15:57 tom Exp $")
+MODULE_ID("$Id: vercmp.c,v 12.8 2004/03/07 16:31:58 tom Exp $")
 
 #define	DOT	'.'
 
@@ -32,54 +33,50 @@ MODULE_ID("$Id: vercmp.c,v 12.7 2002/07/05 11:15:57 tom Exp $")
 #define	TRACE(s)
 #endif
 
-int	vercmp(
-	_ARX(char *,	s1)
-	_ARX(char *,	s2)
-	_AR1(int,	wild)
-		)
-	_DCL(char *,	s1)
-	_DCL(char *,	s2)
-	_DCL(int,	wild)
+int
+vercmp(char *s1, char *s2, int wild)
 {
-	register int	cmp1, cmp2;
+    int cmp1, cmp2;
 
-	while ((*s1 != EOS) || (*s2 != EOS)) {
-		FIRST(s1);
-		FIRST(s2);
-		LAST(s1,cmp1);
-		LAST(s2,cmp2);
-		TRACE(("\t\ttest '%s' vs '%s'\t('%.*s' vs '%.*s')\n",
-			s1, s2, cmp1,s1, cmp2,s2))
-		if (cmp1 == cmp2) {	/* same lengths, comparable */
-			while (cmp1-- > 0) {
-				if ((cmp2 = (*s1++ - *s2++)) != EOS)
-					return (cmp2);
-			}
-			if ((*s1 != EOS) ^ (*s2 != EOS))
-				return wild ? 0 : (*s1 - *s2);
-			if (*s1 == DOT)	s1++;
-			if (*s2 == DOT)	s2++;
-		} else if (wild && ((cmp1 == 0) || (cmp2 == 0))) {
-			return (0);
-		} else {
-			return (cmp1-cmp2);
-		}
-		TRACE(("\t\tnext '%s' vs '%s'\n", s1, s2))
+    while ((*s1 != EOS) || (*s2 != EOS)) {
+	FIRST(s1);
+	FIRST(s2);
+	LAST(s1, cmp1);
+	LAST(s2, cmp2);
+	TRACE(("\t\ttest '%s' vs '%s'\t('%.*s' vs '%.*s')\n",
+	       s1, s2, cmp1, s1, cmp2, s2))
+	    if (cmp1 == cmp2) {	/* same lengths, comparable */
+	    while (cmp1-- > 0) {
+		if ((cmp2 = (*s1++ - *s2++)) != EOS)
+		    return (cmp2);
+	    }
+	    if ((*s1 != EOS) ^ (*s2 != EOS))
+		return wild ? 0 : (*s1 - *s2);
+	    if (*s1 == DOT)
+		s1++;
+	    if (*s2 == DOT)
+		s2++;
+	} else if (wild && ((cmp1 == 0) || (cmp2 == 0))) {
+	    return (0);
+	} else {
+	    return (cmp1 - cmp2);
 	}
-	return (0);
+	TRACE(("\t\tnext '%s' vs '%s'\n", s1, s2))
+    }
+    return (0);
 }
 
 #ifdef	TEST
 #include "td_qsort.h"
 
-static	int	wild;
+static int wild;
 
 static
 QSORT_FUNC(compare)
 {
-	QSORT_CAST(q1,p1)
-	QSORT_CAST(q2,p2)
-	return (vercmp(*p1, *p2, wild));
+    QSORT_CAST(q1, p1);
+    QSORT_CAST(q2, p2);
+    return (vercmp(*p1, *p2, wild));
 }
 
 #define	EQL(c)		((c > 0) ? ">" : ((c < 0) ? "<" : "="))
@@ -91,40 +88,35 @@ QSORT_FUNC(compare)
 			PRINTF("%s\t%s %s \t(%d)\n", "a", EQL(j), "b", j)
 #endif
 
-static
-void	do_test(
-	_ARX(int,	argc)
-	_AR1(char **,	argv)
-		)
-	_DCL(int,	argc)
-	_DCL(char **,	argv)
+static void
+do_test(int argc, char **argv)
 {
-	register int	j;
+    int j;
 
-	if (argc > 1) {
-		qsort((char *)&argv[1], argc-1, sizeof(argv[0]), compare);
-		for (j = 1; j < argc; j++)
-			PRINTF("%3d: %s\n", j, argv[j]);
-	} else {
-		DO_TEST(20,2.3);
-		DO_TEST(2,20.3);
-		DO_TEST(2,2.3);
-		DO_TEST(2,2.0);
-		DO_TEST(2,1.99);
-		DO_TEST(2.,2.3);
-		DO_TEST(2.0,2);
-	}
+    if (argc > 1) {
+	qsort((char *) &argv[1], argc - 1, sizeof(argv[0]), compare);
+	for (j = 1; j < argc; j++)
+	    PRINTF("%3d: %s\n", j, argv[j]);
+    } else {
+	DO_TEST(20, 2.3);
+	DO_TEST(2, 20.3);
+	DO_TEST(2, 2.3);
+	DO_TEST(2, 2.0);
+	DO_TEST(2, 1.99);
+	DO_TEST(2., 2.3);
+	DO_TEST(2.0, 2);
+    }
 }
 
 _MAIN
 {
-	if (argc > 1 && !strcmp(argv[1], "-w")) {
-		argc--;
-		argv++;
-		wild++;
-	}
-	do_test(argc, argv);
-	(void)exit(SUCCESS);
-	/*NOTREACHED*/
+    if (argc > 1 && !strcmp(argv[1], "-w")) {
+	argc--;
+	argv++;
+	wild++;
+    }
+    do_test(argc, argv);
+    (void) exit(SUCCESS);
+    /*NOTREACHED */
 }
 #endif

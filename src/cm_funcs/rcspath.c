@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	09 Sep 1988
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		30 May 1994, RCS_PATH is obtained via autoconf.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
@@ -18,20 +19,19 @@
 #include	"ptypes.h"
 #include	"rcsdefs.h"
 
-MODULE_ID("$Id: rcspath.c,v 12.4 1994/05/30 11:19:50 tom Exp $")
+MODULE_ID("$Id: rcspath.c,v 12.5 2004/03/07 16:31:58 tom Exp $")
 
-char *	rcspath(
-	_AR1(char *,	utility))
-	_DCL(char *,	utility)
+char *
+rcspath(char *utility)
 {
-	static	char	bfr[BUFSIZ];
+    static char bfr[BUFSIZ];
 #ifdef	RCS_PATH
-	auto	char	tmp[BUFSIZ];
-	utility = pathcat(tmp, RCS_PATH, utility);
+    auto char tmp[BUFSIZ];
+    utility = pathcat(tmp, RCS_PATH, utility);
 #endif
-	if (which(bfr, sizeof(bfr), utility, ".") <= 0) {
-		failed(utility);
-		/*NOTREACHED*/
-	}
-	return bfr;
+    if (which(bfr, sizeof(bfr), utility, ".") <= 0) {
+	failed(utility);
+	/*NOTREACHED */
+    }
+    return bfr;
 }

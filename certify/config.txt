@@ -1,8 +1,0 @@
-$Id: config.txt,v 12.1 1994/08/21 22:54:10 tom Exp $
-
---------------------------------------------------------------------------------
-
-The TD_LIB functions are designed to be portable among not only UNIX systems,
-but also (largely) to VAX/VMS.  On that system, the common-library tree is
-installed as TD_LIB:
-	VAX/VMS 5.3-1 -- CC 3.2

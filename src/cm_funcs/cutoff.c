@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	20 May 1988 (from 'sccsdate.c')
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		18 Jul 2000, Y2K fix
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
@@ -24,94 +25,86 @@
 #include	<ctype.h>
 #include	<time.h>
 
-MODULE_ID("$Id: cutoff.c,v 12.5 2002/07/03 13:04:43 tom Exp $")
+MODULE_ID("$Id: cutoff.c,v 12.6 2004/03/07 16:31:58 tom Exp $")
 
 #define	Z(n)	twod(&bfr[n+n])
 
-static
-int	twod (
-	_AR1(char *,	s))
-	_DCL(char *,	s)
+static int
+twod(char *s)
 {
-	return (10*(s[0]-'0') + s[1]-'0');
+    return (10 * (s[0] - '0') + s[1] - '0');
 }
 
-time_t	cutoff (
-	_ARX(int,	argc)
-	_AR1(char **,	argv)
-		)
-	_DCL(int,	argc)
-	_DCL(char **,	argv)
+time_t
+cutoff(int argc, char **argv)
 {
-	int	first	= TRUE;
-	int	year	= 1900;
-	time_t	date;
-	char	bfr[80],
-		*d = strcpy(bfr, "991231235959"),
-		*s = optarg;
+    int first = TRUE;
+    int year = 1900;
+    time_t date;
+    char bfr[80], *d = strcpy(bfr, "991231235959"), *s = optarg;
 
-	newzone(5,0,0);		/* interpret date in EST5EDT */
+    newzone(5, 0, 0);		/* interpret date in EST5EDT */
 
-	/*
-	 * Decode the date from the argument list
-	 */
-	while (*d) {
-		if (isdigit(UCH(*s))) {
-			*d++ = *s++;
+    /*
+     * Decode the date from the argument list
+     */
+    while (*d) {
+	if (isdigit(UCH(*s))) {
+	    *d++ = *s++;
 
-			if (first && (d - bfr) == 2) {
-				first = FALSE;
-				if (!strncmp(bfr, "19", 2))
-					d = bfr;
-				else if (!strncmp(bfr, "20", 2)) {
-					year = 2000;
-					d = bfr;
-				} else if (Z(0) < 38) {
-					year = 100;
-				}
-			}
-
-		} else {
-			if ((d-bfr) & 1) {
-				*d = d[-1];
-				d[-1] = '0';
-				d++;
-			}
-			if (*s)
-				s++;
-			else {
-				if (optind < argc) {
-					if (isdigit(UCH(*argv[optind])))
-						s = argv[optind++];
-					else
-						break;
-				} else
-					break;
-			}
+	    if (first && (d - bfr) == 2) {
+		first = FALSE;
+		if (!strncmp(bfr, "19", 2))
+		    d = bfr;
+		else if (!strncmp(bfr, "20", 2)) {
+		    year = 2000;
+		    d = bfr;
+		} else if (Z(0) < 38) {
+		    year = 100;
 		}
-	}
+	    }
 
-	date = packdate(year+Z(0),Z(1),Z(2),Z(3),Z(4),Z(5));
-	oldzone();		/* restore original timezone */
-	return (date);
+	} else {
+	    if ((d - bfr) & 1) {
+		*d = d[-1];
+		d[-1] = '0';
+		d++;
+	    }
+	    if (*s)
+		s++;
+	    else {
+		if (optind < argc) {
+		    if (isdigit(UCH(*argv[optind])))
+			s = argv[optind++];
+		    else
+			break;
+		} else
+		    break;
+	    }
+	}
+    }
+
+    date = packdate(year + Z(0), Z(1), Z(2), Z(3), Z(4), Z(5));
+    oldzone();			/* restore original timezone */
+    return (date);
 }
 
 #ifdef	TEST
 _MAIN
 {
-	time_t	it;
-	register int	j;
-	while ((j = getopt(argc, argv, "c:")) != EOF)
-		switch (j) {
-		case 'c':
-			it = cutoff(argc, argv);
-			PRINTF("=>%s", ctime(&it));
-			break;
-		default:
-			FPRINTF(stderr, "expecting -c option\n");
-			exit(FAIL);
-		}
-	exit(SUCCESS);
-	/*NOTREACHED*/
+    time_t it;
+    int j;
+    while ((j = getopt(argc, argv, "c:")) != EOF)
+	switch (j) {
+	case 'c':
+	    it = cutoff(argc, argv);
+	    PRINTF("=>%s", ctime(&it));
+	    break;
+	default:
+	    FPRINTF(stderr, "expecting -c option\n");
+	    exit(FAIL);
+	}
+    exit(SUCCESS);
+    /*NOTREACHED */
 }
 #endif

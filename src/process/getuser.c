@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	26 May 1988
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, conversion to ANSI
@@ -16,13 +17,14 @@
 #define PWD_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: getuser.c,v 12.5 2001/05/15 00:58:46 tom Exp $")
+MODULE_ID("$Id: getuser.c,v 12.6 2004/03/07 22:03:45 tom Exp $")
 
 #ifdef	SYS_UNIX
-char *	getuser(_AR0)
+char *
+getuser(void)
 {
-	static	struct	passwd p;
-	p = *getpwuid((int)getuid());
-	return (p.pw_name);
+    static struct passwd p;
+    p = *getpwuid((int) getuid());
+    return (p.pw_name);
 }
-#endif	/* SYS_UNIX */
+#endif /* SYS_UNIX */

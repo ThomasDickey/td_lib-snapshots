@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	26 May 1988
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, conversion to ANSI
@@ -20,38 +21,28 @@
 #include	"ptypes.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: catarg.c,v 12.4 2002/07/03 13:04:43 tom Exp $")
+MODULE_ID("$Id: catarg.c,v 12.5 2004/03/07 22:03:45 tom Exp $")
 
-void	catarg(
-	_ARX(char *,	dst)
-	_AR1(char *,	src)
-		)
-	_DCL(char *,	dst)
-	_DCL(char *,	src)
+void
+catarg(char *dst, char *src)
 {
-	dst += strlen(dst);
-	if (*src) {
-		(void)strcpy(dst, src);
-		while (*dst) {
-			if (isspace(UCH(*dst)))
-				*dst |= 0200;
-			dst++;
-		}
-		*dst++ = ' ';
-		*dst   = EOS;
+    dst += strlen(dst);
+    if (*src) {
+	(void) strcpy(dst, src);
+	while (*dst) {
+	    if (isspace(UCH(*dst)))
+		*dst |= 0200;
+	    dst++;
 	}
+	*dst++ = ' ';
+	*dst = EOS;
+    }
 }
 
-void	catarg2(
-	_ARX(char *,	dst)
-	_ARX(char *,	opt)
-	_AR1(char *,	arg)
-		)
-	_DCL(char *,	dst)
-	_DCL(char *,	opt)
-	_DCL(char *,	arg)
+void
+catarg2(char *dst, char *opt, char *arg)
 {
-	catarg(dst, opt);
-	dst[strlen(dst)-1] = EOS;
-	catarg(dst, arg);
+    catarg(dst, opt);
+    dst[strlen(dst) - 1] = EOS;
+    catarg(dst, arg);
 }

@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	25 May 1988, from 'checkin'.
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, converted to ANSI
@@ -18,37 +19,32 @@
 #include	"ptypes.h"
 #include	<signal.h>
 
-MODULE_ID("$Id: copyback.c,v 12.4 1994/07/16 15:23:38 tom Exp $")
+MODULE_ID("$Id: copyback.c,v 12.5 2004/03/07 22:03:45 tom Exp $")
 
-int	copyback (
-	_ARX(FILE *,	fpT)		/* temporary-file pointer */
-	_ARX(char *,	name)
-	_ARX(int,	mode)		/* original mode of file */
-	_AR1(int,	lines)		/* number of lines to copy (truncate) */
-		)
-	_DCL(FILE *,	fpT)
-	_DCL(char *,	name)
-	_DCL(int,	mode)
-	_DCL(int,	lines)
+int
+copyback(FILE *fpT,		/* temporary-file pointer */
+	 char *name,
+	 int mode,		/* original mode of file */
+	 int lines)		/* number of lines to copy (truncate) */
 {
-	FILE	*fpS;
-	char	bfr[BUFSIZ];
+    FILE *fpS;
+    char bfr[BUFSIZ];
 
-	if (chmod(name, 0644) < 0) {
-		perror(name);
-		return (FALSE);
-	}
-	catchall(SIG_IGN);
-	if ((fpS = fopen (name, "w")) != 0) {
-		(void) rewind (fpT);
-		while (lines-- > 0) {
-			(void) fgets (bfr, sizeof(bfr), fpT);
-			(void) fputs (bfr, fpS);
-		}
-		(void) fclose (fpS);
-		(void) chmod (name, (mode_t)mode);
-		catchall(SIG_DFL);
-		return (TRUE);
-	}
+    if (chmod(name, 0644) < 0) {
+	perror(name);
 	return (FALSE);
+    }
+    catchall(SIG_IGN);
+    if ((fpS = fopen(name, "w")) != 0) {
+	(void) rewind(fpT);
+	while (lines-- > 0) {
+	    (void) fgets(bfr, sizeof(bfr), fpT);
+	    (void) fputs(bfr, fpS);
+	}
+	(void) fclose(fpS);
+	(void) chmod(name, (mode_t) mode);
+	catchall(SIG_DFL);
+	return (TRUE);
+    }
+    return (FALSE);
 }

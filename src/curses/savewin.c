@@ -3,6 +3,7 @@
  * Title:	savewin.c (save/unsave curses window)
  * Created:	25 Mar 1988
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		15 Feb 1998, cannot use this when chtype isn't scalar.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
@@ -27,148 +28,132 @@
 #include	"td_curse.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: savewin.c,v 12.11 2002/07/05 11:34:48 tom Exp $")
+MODULE_ID("$Id: savewin.c,v 12.12 2004/03/07 22:03:45 tom Exp $")
 
 #if defined(CURSES_LIKE_BSD) && (defined(TYPE_CCHAR_T_IS_SCALAR) || !defined(HAVE_TYPE_CCHAR_T)) && (defined(TYPE_CHTYPE_IS_SCALAR) || !defined(HAVE_TYPE_CHTYPE))
 
-typedef	struct	_save {
-	struct	_save	*link;
-	int		x,y;
-	chtype		*image;
-	} SAVE;
+typedef struct _save {
+    struct _save *link;
+    int x, y;
+    chtype *image;
+} SAVE;
 
-static	SAVE	*saved;
+static SAVE *saved;
 
-#ifdef	lint
-#define	_BODY(f,c)	static c *f(n) unsigned n; { return(0); }
-/*ARGSUSED */		_BODY(S_ALLOC, SAVE)
-/*ARGSUSED */		_BODY(c_ALLOC, chtype)
-#else
 #define	S_ALLOC(n)	ALLOC(SAVE,n)
 #define	c_ALLOC(n)	ALLOC(chtype,n)
-#endif
 
 /*
  * Force a character to be different
  */
-static
-int	newC(
-	_AR1(int,c))
-	_DCL(int,c)
+static int
+newC(int c)
 {
-	c++;
-	if (!isprint(c))
-		c = '.';
-	if (c == ' ')
-		c = '.';
-	return (c);
+    c++;
+    if (!isprint(c))
+	c = '.';
+    if (c == ' ')
+	c = '.';
+    return (c);
 }
 
 /*
  * Save a window on the stack.
  */
-void	savewin(_AR0)
+void
+savewin(void)
 {
-	register int row, col;
-	SAVE	*last;
-	register int j = 0;
+    int row, col;
+    SAVE *last;
+    int j = 0;
 
-	last         = saved;
-	saved        = S_ALLOC(1);
-	saved->image = c_ALLOC((unsigned)(LINES * COLS));
-	saved->link  = last;
-	getyx(stdscr, saved->y, saved->x);
+    last = saved;
+    saved = S_ALLOC(1);
+    saved->image = c_ALLOC((unsigned) (LINES * COLS));
+    saved->link = last;
+    getyx(stdscr, saved->y, saved->x);
 
-	for (row = 0; row < LINES; row++) {
-		chtype	*src = CursesLine(stdscr,row);
+    for (row = 0; row < LINES; row++) {
+	chtype *src = CursesLine(stdscr, row);
 
-		for (col = 0; col < COLS; col++)
-			saved->image[j++] = *src++;
-	}
+	for (col = 0; col < COLS; col++)
+	    saved->image[j++] = *src++;
+    }
 }
 
 /*
  * Restore the state of the last window saved on the stack.
  */
-void	lastwin(
-	_ARX(int,	redo)
-	_AR1(int,	top)
-		)
-	_DCL(int,	redo)
-	_DCL(int,	top)
+void
+lastwin(int redo, int top)
 {
-	chtype	*t,
-		*z = saved->image + (top * COLS);
-	char	bfr[BUFSIZ];
-	register int j, row;
+    chtype *t, *z = saved->image + (top * COLS);
+    char bfr[BUFSIZ];
+    int j, row;
 
-	if (saved) {
+    if (saved) {
 
-		if (redo) {
-			/* "touch" cursor position */
-			(void)wmove(stdscr, LINES, COLS);
-			(void)wmove(curscr, LINES, COLS);
+	if (redo) {
+	    /* "touch" cursor position */
+	    (void) wmove(stdscr, LINES, COLS);
+	    (void) wmove(curscr, LINES, COLS);
 
-			/* do "touch" pass first to avoid clrtoeol bug */
-			for (row = top, t = z; row < LINES; row++) {
-				chtype	*s;
+	    /* do "touch" pass first to avoid clrtoeol bug */
+	    for (row = top, t = z; row < LINES; row++) {
+		chtype *s;
 
-				/* retrieve saved-image */
-				for (j = 0; j < COLS; bfr[j++] = *t++);
-				bfr[j] = EOS;
+		/* retrieve saved-image */
+		for (j = 0; j < COLS; bfr[j++] = *t++) ;
+		bfr[j] = EOS;
 
-				/*
-				 * Change curses' window state
-				 * ...leaving last column alone because of
-				 * wrap-forward bug!
-				 */
+		/*
+		 * Change curses' window state
+		 * ...leaving last column alone because of
+		 * wrap-forward bug!
+		 */
 #define	FOR_ROW(w,row)	for (s = w->_y[row], j = 0; (s != 0) && s[j+1]; j++)
-				FOR_ROW(stdscr,row)
-					s[j] = newC(bfr[j]);
-				FOR_ROW(curscr,row)
-					s[j] = newC(newC(bfr[j]));
-			}
-		}
-
-		for (row = top, t = z; row < LINES; row++) {
-
-			/* retrieve saved-image */
-			for (j = 0; j < COLS; bfr[j++] = *t++)
-				;
-			bfr[j] = EOS;
-			while ((--j >= 0) && (bfr[j] == ' '))
-				bfr[j] = EOS;
-
-			/* ...and then restore it */
-			move(row,0);
-			if (*bfr) addstr(bfr);
-			/*else	addstr(" ");*/
-			clrtoeol();
-		}
-		move(saved->y, saved->x);
-		refresh();
+		FOR_ROW(stdscr, row)
+		    s[j] = newC(bfr[j]);
+		FOR_ROW(curscr, row)
+		    s[j] = newC(newC(bfr[j]));
+	    }
 	}
+
+	for (row = top, t = z; row < LINES; row++) {
+
+	    /* retrieve saved-image */
+	    for (j = 0; j < COLS; bfr[j++] = *t++) ;
+	    bfr[j] = EOS;
+	    while ((--j >= 0) && (bfr[j] == ' '))
+		bfr[j] = EOS;
+
+	    /* ...and then restore it */
+	    move(row, 0);
+	    if (*bfr)
+		addstr(bfr);
+	    /*else  addstr(" "); */
+	    clrtoeol();
+	}
+	move(saved->y, saved->x);
+	refresh();
+    }
 }
 
 /*
  * Restore the last window, and pop it from the stack.
  */
-void	unsavewin(
-	_ARX(int,	redo)
-	_AR1(int,	top)
-		)
-	_DCL(int,	redo)
-	_DCL(int,	top)
+void
+unsavewin(int redo, int top)
 {
-	SAVE	*last;
+    SAVE *last;
 
-	if (saved) {
-		lastwin(redo,top);
-		last = saved->link;
-		dofree((char *)saved->image);
-		dofree((char *)saved);
-		saved = last;
-	}
+    if (saved) {
+	lastwin(redo, top);
+	last = saved->link;
+	dofree((char *) saved->image);
+	dofree((char *) saved);
+	saved = last;
+    }
 }
 
 #endif /* CURSES_LIKE_BSD */

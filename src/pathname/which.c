@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	18 Nov 1987
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		04 Dec 1993, port to MSDOS.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
@@ -30,7 +31,7 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: which.c,v 12.9 2001/05/15 00:59:14 tom Exp $")
+MODULE_ID("$Id: which.c,v 12.10 2004/03/07 22:03:45 tom Exp $")
 
 #ifdef MSDOS
 #define PROG_EXTS "PIF", "BAT", "EXE", "COM"
@@ -40,106 +41,97 @@ MODULE_ID("$Id: which.c,v 12.9 2001/05/15 00:59:14 tom Exp $")
 #define PROG_EXTS "EXE"
 #endif
 
-static
-int	executable(
-	_AR1(char *,	name))
-	_DCL(char *,	name)
+static int
+executable(char *name)
 {
 #ifdef	PROG_EXTS
-	char	*s = ftype(name);
-	char	*t = s;
-	int	ok = FALSE;
-	register int j;
+    char *s = ftype(name);
+    char *t = s;
+    int ok = FALSE;
+    int j;
 
-	if (s == name || s[-1] != '.') {
-		*s++ = '.';
-		*s = EOS;
+    if (s == name || s[-1] != '.') {
+	*s++ = '.';
+	*s = EOS;
+    }
+    if (s == t) {		/* don't supply a suffix */
+	ok = (access(name, R_OK) >= 0);
+    } else {
+	static char *exectypes[] =
+	{PROG_EXTS};
+	for (j = 0; j < SIZEOF(exectypes); j++) {
+	    strcpy(s, exectypes[j]);
+	    if (access(name, R_OK) >= 0) {
+		ok = TRUE;
+		break;
+	    }
 	}
-	if (s == t) {		/* don't supply a suffix */
-		ok = (access(name, R_OK) >= 0);
-	} else {
-		static	char	*exectypes[] = { PROG_EXTS };
-		for (j = 0; j < SIZEOF(exectypes); j++) {
-			strcpy(s, exectypes[j]);
-			if (access(name, R_OK) >= 0) {
-				ok = TRUE;
-				break;
-			}
-		}
-	}
-	return ok;
-#else	/* SYS_UNIX */
-	Stat_t	sb;
-	return (access(name, X_OK) >= 0) && (stat_file(name, &sb) >= 0);
+    }
+    return ok;
+#else /* SYS_UNIX */
+    Stat_t sb;
+    return (access(name, X_OK) >= 0) && (stat_file(name, &sb) >= 0);
 #endif
 }
 
-int	which(
-	_ARX(char *,	bfr)
-	_ARX(unsigned,	len)
-	_ARX(char *,	find)
-	_AR1(char *,	dot)
-		)
-	_DCL(char *,	bfr)
-	_DCL(unsigned,	len)
-	_DCL(char *,	find)
-	_DCL(char *,	dot)
+int
+which(char *bfr,
+      unsigned len,
+      char *find,
+      char *dot)
 {
-	register char *s, *d;
-	char	*path = getenv("PATH");
-	char	test[BUFSIZ];
+    char *s, *d;
+    char *path = getenv("PATH");
+    char test[BUFSIZ];
 
-	if (path == 0) path = ".";
-	s = path;
-	*test = *bfr = EOS;
+    if (path == 0)
+	path = ".";
+    s = path;
+    *test = *bfr = EOS;
 
-	if (fleaf_delim(find) != 0) {
-		if (executable(find))
-			(void)pathcat(test, dot, find);
-	} else {
-#ifdef	MSDOS	/* "." is at the beginning of the implied path */
-		if (executable(pathcat(test, dot, find)))
-			;
-		else
+    if (fleaf_delim(find) != 0) {
+	if (executable(find))
+	    (void) pathcat(test, dot, find);
+    } else {
+#ifdef	MSDOS			/* "." is at the beginning of the implied path */
+	if (executable(pathcat(test, dot, find))) ;
+	else
 #endif
-		while (*s) {
-			size_t n;
-			for (n = 0; s[n] != EOS && s[n] != PATHLIST_SEP; n++)
-				;
-			d = s + n;
-			if ((n == 0) || !strncmp(s, ".", n)) {
-				(void)strcpy(test, dot);
-			} else {
-				strncpy(test, s, n)[n] = EOS;
-			}
-			abspath(test);
-			(void)pathcat(test, test, find);
-			if (executable(test))
-				break;
-			for (s = d; (*s != EOS) && (*s == PATHLIST_SEP); s++)
-				;
-			*test = EOS;
+	    while (*s) {
+		size_t n;
+		for (n = 0; s[n] != EOS && s[n] != PATHLIST_SEP; n++) ;
+		d = s + n;
+		if ((n == 0) || !strncmp(s, ".", n)) {
+		    (void) strcpy(test, dot);
+		} else {
+		    strncpy(test, s, n)[n] = EOS;
 		}
-	}
+		abspath(test);
+		(void) pathcat(test, test, find);
+		if (executable(test))
+		    break;
+		for (s = d; (*s != EOS) && (*s == PATHLIST_SEP); s++) ;
+		*test = EOS;
+	    }
+    }
 
-	if (len > strlen(test))
-		(void)strcpy(bfr, test);
-	return(strlen(bfr));
+    if (len > strlen(test))
+	(void) strcpy(bfr, test);
+    return (strlen(bfr));
 }
 
 #ifdef	TEST
 _MAIN
 {
-int	j;
-char	bfr[BUFSIZ],
-	dot[BUFSIZ];
+    int j;
+    char bfr[BUFSIZ], dot[BUFSIZ];
 
-	(void)getwd(dot);
-	for (j = 1; j < argc; j++) {
-		which(bfr, sizeof(bfr), argv[j], dot);
-		printf("%d '%s' = '%s'\n", j, argv[j], bfr);
-	}
-	exit(SUCCESS);
-	/*NOTREACHED*/
+    (void) getwd(dot);
+    for (j = 1; j < argc; j++) {
+	which(bfr, sizeof(bfr), argv[j], dot);
+	printf("%d '%s' = '%s'\n", j, argv[j], bfr);
+    }
+    exit(SUCCESS);
+    /*NOTREACHED */
 }
-#endif	/* TEST */
+#endif /* TEST */

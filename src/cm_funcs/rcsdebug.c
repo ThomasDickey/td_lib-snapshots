@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	15 Mar 1989
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		04 Oct 1991, conversion to ANSI
@@ -19,23 +20,24 @@
 #include "ptypes.h"
 #include "rcsdefs.h"
 
-MODULE_ID("$Id: rcsdebug.c,v 12.3 1993/10/29 17:35:25 tom Exp $")
+MODULE_ID("$Id: rcsdebug.c,v 12.4 2004/03/07 16:31:58 tom Exp $")
 
-int	rcs_debug(_AR0)
+int
+rcs_debug(void)
 {
-	static	int	flag = -1;
-	register char	*s;
+    static int flag = -1;
+    char *s;
 
-	if (flag < 0) {
-		flag = 0;
-		if ((s = getenv("RCS_DEBUG")) != 0) {
-			if (*s) {
-				char	*d;
-				flag = strtol(s, &d, 0);
-				if (*d)
-					flag = 1;	/* not a number */
-			}
-		}
+    if (flag < 0) {
+	flag = 0;
+	if ((s = getenv("RCS_DEBUG")) != 0) {
+	    if (*s) {
+		char *d;
+		flag = strtol(s, &d, 0);
+		if (*d)
+		    flag = 1;	/* not a number */
+	    }
 	}
-	return (flag);
+    }
+    return (flag);
 }

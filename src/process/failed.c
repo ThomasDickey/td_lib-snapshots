@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	27 Apr 1989
  * Modified:
+ *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, converted to ANSI
@@ -18,22 +19,21 @@
 
 #include "ptypes.h"
 
-MODULE_ID("$Id: failed.c,v 12.3 1993/10/29 17:35:26 tom Exp $")
+MODULE_ID("$Id: failed.c,v 12.4 2004/03/07 22:03:45 tom Exp $")
 
-void	failed(
-	_AR1(char *,	s))
-	_DCL(char *,	s)
+void
+failed(char *s)
 {
-	FFLUSH(stdout);
-	perror(s);
-	exit(FAIL);
-	/*NOTREACHED*/
+    FFLUSH(stdout);
+    perror(s);
+    exit(FAIL);
+    /*NOTREACHED */
 }
 
 #ifdef	TEST
 _MAIN
 {
-	failed(argc > 1 ? argv[1] : argv[0]);
-	/*NOTREACHED*/
+    failed(argc > 1 ? argv[1] : argv[0]);
+    /*NOTREACHED */
 }
 #endif
