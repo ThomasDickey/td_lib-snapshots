@@ -1,3 +1,11 @@
+1988-05-23  dickey@software.org
+
+	* src/cm_funcs/sccslast.c, src/cm_funcs/rcslast.c:
+	combined 'rels_', 'vers_' args.
+
+	* include/llib-ltd:
+	combined rels/vers args in 'rcslast()', 'sccslast()'.
+
 1988-05-21  dickey@software.org
 
 	* include/llib-ltd: added arg to 'adj2est()'.

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)sccslast.c	1.5 88/05/18 13:59:39";
+static	char	sccs_id[] = "@(#)sccslast.c	1.6 88/05/23 06:40:36";
 #endif	lint
 
 /*
@@ -7,6 +7,7 @@ static	char	sccs_id[] = "@(#)sccslast.c	1.5 88/05/18 13:59:39";
  * Author:	T.E.Dickey
  * Created:	20 Oct 1986
  * Modified:
+ *		23 May 1988, combined rels/vers args.
  *		18 May 1988, moved 'sccszone' call here
  *		30 Sep 1987, if file is sccs-file, determine the data of the
  *			     corresponding checked-out file.
@@ -25,6 +26,7 @@ extern	char	*strcat(),
 
 extern	long	packdate();
 extern	long	sccszone();
+extern	char	*txtalloc();
 
 #define	MAXPATH	256
 
@@ -32,9 +34,9 @@ extern	long	sccszone();
  * Set the release.version and date values iff we find a legal sccs-file at
  * 'path[]'.
  */
-static	trysccs (path, rels_, vers_, date_)
+static	trysccs (path, vers_, date_)
 char	*path;
-unsigned char *rels_, *vers_;
+char	**vers_;
 time_t	*date_;
 {
 FILE	*fp = fopen(path, "r");
@@ -48,13 +50,13 @@ int	gotten = 0;
 				gotten++;
 			}
 			if (!strncmp(bfr, "\001d D ", 4)) {
-			int	rel, ver, yy, mm, dd, hr, mn, sc;
-				if (sscanf(bfr+4, "%d.%d %d/%d/%d %d:%d:%d ",
-					&rel, &ver,
+			int	yy, mm, dd, hr, mn, sc;
+			char	ver[80];
+				if (sscanf(bfr+4, "%s %d/%d/%d %d:%d:%d ",
+					ver,
 					&yy, &mm, &dd,
-					&hr, &mn, &sc) != 8)	break;
-				*rels_ = rel;
-				*vers_ = ver;
+					&hr, &mn, &sc) != 7)	break;
+				*vers_ = txtalloc(ver);
 				*date_ = packdate (1900+yy, mm, dd, hr, mn, sc)
 					- sccszone();
 				break;
@@ -64,10 +66,10 @@ int	gotten = 0;
 	}
 }
 
-sccslast (working, path, rels_, vers_, date_)
+sccslast (working, path, vers_, date_)
 char	*working;		/* working directory (absolute) */
 char	*path;			/* pathname to check (may be relative) */
-unsigned char *rels_, *vers_;
+char	**vers_;
 time_t	*date_;
 {
 char	name[MAXPATH+1];
@@ -75,7 +77,7 @@ int	is_sccs;
 register char *s, *t;
 struct	stat	sbfr;
 
-	*rels_ = *vers_ = 0;
+	*vers_ = "?";
 	*date_ = 0;
 
 	/*
@@ -109,7 +111,7 @@ struct	stat	sbfr;
 		*t = 's';
 		(void)strcpy(name, path);
 		*t = xx;
-		trysccs(name, rels_, vers_, date_);
+		trysccs(name, vers_, date_);
 		if (*date_) {		/* it was an ok sccs file */
 			/* look for checked-out file */
 			(void)strcat(strcpy(name+(t-path), "../"), t+2);
@@ -126,5 +128,5 @@ struct	stat	sbfr;
 	 */
 	(void)strcpy(name,  s = path);
 	(void)strcat(strcpy(&name[t-s],"sccs/s."), t);
-	trysccs(name, rels_, vers_, date_);
+	trysccs(name, vers_, date_);
 }
