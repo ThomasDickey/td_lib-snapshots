@@ -1,3 +1,7 @@
+1987-09-17  Thomas E. Dickey
+
+	* src/pathname/abspath.c: New file.
+
 1987-05-07  Thomas E. Dickey
 
 	* src/memory/doalloc.c:
