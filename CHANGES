@@ -1,3 +1,8 @@
+1987-11-23  dickey@software.org
+
+	* src/pathname/abspath.c:
+	ported this to APOLLO (must handle doubled-// on net-level directory).
+
 1987-11-18  dickey@software.org
 
 	* src/pathname/modechar.c, src/Makefile, src/pathname/which.c:

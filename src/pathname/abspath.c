@@ -1,11 +1,12 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)abspath.c	1.1 87/09/17 12:18:03";
+static	char	sccs_id[] = "@(#)abspath.c	1.2 87/11/23 09:26:21";
 #endif	lint
 
 /*
  * Author:	T.E.Dickey
  * Created:	17 Sep 1987
  * Modified:
+ *		23 Nov 1987, to work with Apollo path convention (leading '//')
  *
  * Function:	Modify the argument so that it contains an absolute (beginning
  *		with '/') pathname.  Relative paths may include the following
@@ -23,6 +24,12 @@ extern	char	*getcwd(),
 		*strcpy();
 
 #define	MAXPATHLEN	BUFSIZ
+
+#ifdef	apollo
+#define	TOP	2			/* permit 2 leading /'s */
+#else
+#define	TOP	1
+#endif	apollo
 
 extern	char	*denode();
 
@@ -71,8 +78,9 @@ register char *s, *d = path;
 	 */
 	for (s = d = path; *s; s++) {
 		if (*s == '/') {
-			while (s[1] == '/')
-				s++;
+			if (s > (path+TOP-1))	/* provide for leading "//" */
+				while (s[1] == '/')
+					s++;
 		} else if (*s == '.') {
 			if (s > path && s[-1] == '/') {
 				if (s[1] == '\0')
@@ -89,7 +97,7 @@ register char *s, *d = path;
 	/*
 	 * Trim trailing '/' marks
 	 */
-	while (d > path+1)
+	while (d > path+TOP)
 		if (d[-1] == '/')	d--;
 		else			break;
 	*d = '\0';
@@ -102,7 +110,7 @@ register char *s, *d = path;
 			if ((s > path && s[-1] == '/')
 			&&  (s[2] == '\0' || s[2] == '/')) {
 				d = s+2;
-				if (s > path+1) {
+				if (s > (path+TOP)) {
 					s -= 2;
 					while (s > path && *s != '/') s--;
 					if (s == path &&  !*d) s++;
