@@ -1,4 +1,4 @@
-# $Id: descrip.mms,v 5.0 1989/10/26 08:55:23 ste_cm Rel $
+# $Id: descrip.mms,v 6.0 1990/03/28 08:26:37 ste_cm Rel $
 # MMS-file for miscellaneous library routines	
 #
 ####### (Development) ##########################################################
@@ -47,6 +47,7 @@ LIBRARYMODULES = -
 	STRTRIM, -
 	STRUCMP, -
 	STRUCPY, -
+	STRWCMP, -
 	TRIMPATH, -
 	TXTALLOC, -
 	VECALLOC, -
@@ -183,6 +184,7 @@ C_SRC	=-
 	STRTRIM.C -
 	STRUCMP.C -
 	STRUCPY.C -
+	STRWCMP.C -
 	TRACK_WD.C -
 	TRIMPATH.C -
 	TXTALLOC.C -

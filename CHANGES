@@ -1,3 +1,21 @@
+1990-03-28  dickey@software.org
+
+	* src/descrip.mms: added module 'strwcmp'
+
+1990-03-28  ste_cm@software.org
+
+	* src/descrip.mms:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
+1990-03-28  dickey@software.org
+
+	* include/td_lib.h: forgot to show return-value of 'strwcmp()'
+
+1990-03-28  ste_cm@software.org
+
+	* include/td_lib.h:
+	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+
 1990-03-27  dickey@software.org
 
 	* include/td_lib.h, src/Makefile: added 'strwcmp.c' module
