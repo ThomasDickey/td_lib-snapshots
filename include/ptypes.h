@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 12.31 1994/07/15 12:39:32 tom Exp $ */
+/* $Id: ptypes.h,v 12.32 1994/07/18 00:46:21 tom Exp $ */
 
 #ifndef	PTYPES_H
 #define	PTYPES_H
@@ -33,6 +33,10 @@
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+
+#if HAVE_SYS_PARAM_H
+#include <sys/param.h>
+#endif
 
 	/* useful stuff for <sys/stat.h> */
 #define	Stat_t	struct	stat	/* STAT conflicts with 'dist' package */
@@ -627,7 +631,7 @@ extern	int	main(_arx(int,argc) _ar1(char **,argv));
 
 #endif	/* LINTLIBRARY */
 
-/* This may be defined in one of the system includes */
+/* This may be defined in one of the system includes, e.g., <sys/param.h> */
 #ifndef	MAXPATHLEN
 #define	MAXPATHLEN	256
 #endif

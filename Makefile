@@ -1,4 +1,4 @@
-# $Id: Makefile,v 12.7 1994/07/04 23:56:49 tom Exp $
+# $Id: Makefile,v 12.8 1994/07/18 22:29:41 tom Exp $
 # Top-level makefile for TD_LIB common library
 
 ####### (Development) ##########################################################
@@ -76,7 +76,6 @@ clobber\
 destroy\
 run_test\
 sources\
-lincnt.out\
 lint.out ::	$(MFILES)
 	cd support;	$(MAKE) $@
 	cd certify;	$(MAKE) $@
