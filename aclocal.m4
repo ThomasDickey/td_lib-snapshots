@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Id: aclocal.m4,v 12.137 2002/01/13 16:23:19 tom Exp $
+dnl $Id: aclocal.m4,v 12.139 2002/04/16 12:56:31 tom Exp $
 dnl vi:set ts=4:
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "CF_" to "AC_"
@@ -803,17 +803,17 @@ dnl ---------------------------------------------------------------------------
 AC_DEFUN([CF_GMTOFF],
 [
 cf_decl='#include <sys/types.h>
+#if TIME_WITH_SYS_TIME
+# include <sys/time.h>
+# include <time.h>
+#else
+# if HAVE_SYS_TIME_H
+#  include <sys/time.h>
+# else
+#  include <time.h>
+# endif
+#endif
 '
-if test $ac_cv_header_sys_time_h = yes; then
-	cf_decl="$cf_decl
-#include <sys/time.h>
-"
-else
-	cf_decl="$cf_decl
-#include <time.h>
-"
-fi
-
 AC_STRUCT_TM
 AC_MSG_CHECKING(for localzone declared)
 AC_CACHE_VAL(cf_cv_decl_localzone,[
@@ -871,6 +871,34 @@ AC_CACHE_VAL(cf_cv_tm_zone_decl,[
 		[cf_cv_tm_zone_decl=no])])
 AC_MSG_RESULT($cf_cv_tm_zone_decl)
 test $cf_cv_tm_zone_decl = yes && AC_DEFINE(HAVE_TM_ZONE)
+])dnl
+dnl ---------------------------------------------------------------------------
+dnl Check if we must define _GNU_SOURCE to get a reasonable value for
+dnl _XOPEN_SOURCE, upon which many POSIX definitions depend.  This is a defect
+dnl (or misfeature) of glibc2, which breaks portability of many applications,
+dnl since it is interwoven with GNU extensions.
+dnl
+dnl Well, yes we could work around it...
+AC_DEFUN([CF_GNU_SOURCE],
+[
+AC_CACHE_CHECK(if we must define _GNU_SOURCE,cf_cv_gnu_source,[
+AC_TRY_COMPILE([#include <sys/types.h>],[
+#ifndef _XOPEN_SOURCE
+make an error
+#endif],
+	[cf_cv_gnu_source=no],
+	[cf_save="$CPPFLAGS"
+	 CPPFLAGS="$CPPFLAGS -D_GNU_SOURCE"
+	 AC_TRY_COMPILE([#include <sys/types.h>],[
+#ifdef _XOPEN_SOURCE
+make an error
+#endif],
+	[cf_cv_gnu_source=no],
+	[cf_cv_gnu_source=yes])
+	CPPFLAGS="$cf_save"
+	])
+])
+test "$cf_cv_gnu_source" = yes && CPPFLAGS="$CPPFLAGS -D_GNU_SOURCE"
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl	Combines AC_HAVE_FUNCS logic with additional test from Kevin Buettner
@@ -1549,11 +1577,16 @@ dnl Tests for the ensemble of programs that are used in RCS, SCCS, VCS, CVS.
 dnl We'll have to assume that the related utilities all reside in the same
 dnl directory.
 AC_DEFUN([CF_RCS_SCCS],
-[CF_PROGRAM_PREFIX(RCS_PATH, rcs)
+[
+cf_rcs_sccs_path="$PATH"
+PATH="/usr/local/libexec/cssc:$PATH"
+PATH="/usr/libexec/cssc:$PATH"
+CF_PROGRAM_PREFIX(RCS_PATH, rcs)
 CF_PROGRAM_PREFIX(SCCS_PATH, admin)dnl the SCCS tool
 CF_PROGRAM_PREFIX(VCS_PATH, vcs)dnl VCS is my RCS application
 CF_PROGRAM_PREFIX(CVS_PATH, cvs)dnl CVS is a layer above RCS
 CF_PROGRAM_PREFIX(CMV_PATH, cmv)dnl CmVision combines RCS and SCCS archives
+PATH="$cf_rcs_sccs_path"
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Test for the presence of regcmp/regex functions.

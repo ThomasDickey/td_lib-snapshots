@@ -1,3 +1,24 @@
+2002-04-16  dickey@invisible-island.net
+
+	* aclocal.m4: add CF_GNU_SOURCE (needed for Debian unstable).
+	change CF_TM_GMTOFF to use headers/ifdef's from AC_HEADER_TIME
+
+	* src/cm_funcs/packdate.c:
+	add to the test-driver (tm_isdst ifdef and timezone)
+
+	* configure.in:
+	check for _GNU_SOURCE (needed on Debian unstable to make tm.tm_gmtoff detect)
+
+	* src/cm_funcs/packdate.c:
+	hmm - running sl71 and debian (stable), I was apparently off by an hour.
+	debian unstable did it "right".  That appears to be because the former
+	have 'timezone', and the latter did not.  So I re-ordered to use tm_gmtoff,
+	which does work the same on each platform.
+
+	* aclocal.m4: check for CSSC's libexec path
+
+	* include/td_curse.h: correct include-path for <ncurses/termcap.h>
+
 2002-03-26  dickey@invisible-island.net
 
 	* src/cm_funcs/sccs_dir.c:
