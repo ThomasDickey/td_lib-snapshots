@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.72 1996/04/10 22:37:22 tom Exp $
+dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.73 1996/10/20 17:47:21 tom Exp $
 dnl vi:set ts=4:
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", without change
@@ -181,23 +181,23 @@ else
 		[initscr()],
 		[case "$LIBS" in
 		 *libncurses.*|*-lncurses*)
-		 	ac_cv_lib_ncurses=predefined
-		 	ac_cv_lib_curses=no
+		 	ac_cv_lib_ncurses_initscr=predefined
+		 	ac_cv_lib_curses_initscr=no
 		 	;;
 		 *)
-		 	ac_cv_lib_ncurses=no
-		 	ac_cv_lib_curses=yes
+		 	ac_cv_lib_ncurses_initscr=no
+		 	ac_cv_lib_curses_initscr=yes
 		 	;;
 		 esac],
-		[ac_cv_lib_ncurses=unknown])
+		[ac_cv_lib_ncurses_initscr=unknown])
 fi
-TD_MSG_LOG(ncurses state $ac_cv_lib_ncurses)
-if test $ac_cv_lib_ncurses = yes; then
+TD_MSG_LOG(ncurses state $ac_cv_lib_ncurses_initscr)
+if test $ac_cv_lib_ncurses_initscr = yes; then
 	# Linux installs NCURSES's include files in a separate directory to avoid
 	# confusion with the native curses.  NCURSES has its own termcap support.
 	TD_INCLUDE_PATH(/usr/include/ncurses /usr/local/include/ncurses)
-	ac_cv_lib_curses=yes
-elif test $ac_cv_lib_ncurses = unknown; then
+	ac_cv_lib_curses_initscr=yes
+elif test $ac_cv_lib_ncurses_initscr = unknown; then
 	# The curses library often depends on the termcap library, so we've checked
 	# for it first.  We could make a more complicated test to ensure that we
 	# don't add the termcap library, but some functions use it anyway if it's
@@ -211,7 +211,7 @@ AC_MSG_CHECKING(BSD vs SYSV curses)
 TD_MSG_LOG(curses-type BSD/SYSV)
 AC_CACHE_VAL(td_cv_curses_type,[
 	td_cv_curses_type=unknown
-	if test .$ac_cv_lib_curses = .yes; then
+	if test .$ac_cv_lib_curses_initscr = .yes; then
 		AC_TRY_LINK([#include <curses.h>],
 			[keypad(curscr,1)],
 			[td_cv_curses_type=sysv],
