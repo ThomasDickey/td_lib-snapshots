@@ -1,7 +1,9 @@
-MANIFEST for td_lib, version t19890320
+MANIFEST for td_lib, version t19890321
 --------------------------------------------------------------------------------
 MANIFEST                        this file
+Makefile                        top-level makefile for TD_LIB
 include                         subdirectory
+include/Makefile                make-file for CM_TOOLS common interface directory
 include/cmdch.h                 
 include/llib-ltd                template for lint-library
 include/port2vms.h              interface for vms-porting functions
