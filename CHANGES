@@ -1,3 +1,7 @@
+1987-09-29  Thomas E. Dickey
+
+	* src/curses/rawgets.c: New file.
+
 1987-09-17  Thomas E. Dickey
 
 	* src/pathname/abspath.c: New file.
