@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: erasechr.c,v 12.3 1993/11/26 14:12:44 dickey Exp $";
+static	char	Id[] = "$Id: erasechr.c,v 12.4 1994/04/26 22:34:50 tom Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: erasechr.c,v 12.3 1993/11/26 14:12:44 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	24 Mar 1988
  * Modified:
+ *		26 Apr 1994, port to Linux
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		05 Aug 1992, added 'eraseword()'
@@ -34,7 +35,7 @@ int	erasechar(_AR0)
 
 int	eraseword(_AR0)
 {
-#if defined(__hpux) || defined(MSDOS)
+#if defined(__hpux) || defined(linux) || defined(MSDOS)
 	return -1;
 #else
 	int	code	= EOS;

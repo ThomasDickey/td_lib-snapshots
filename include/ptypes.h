@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 12.11 1993/12/02 16:10:28 dickey Exp $ */
+/* $Id: ptypes.h,v 12.12 1994/04/26 23:00:16 tom Exp $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -93,7 +93,7 @@ typedef	short	ino_t;
 #define	isSlash(c)   ((c) == PATH_SLASH)
 #endif
 
-#ifdef	__hpux
+#if	defined(__hpux) || defined(linux)
 #define	SYSTEM5
 #define	HAS_STDLIB 1
 #define HAS_UNISTD 1
@@ -294,7 +294,7 @@ typedef	short	ino_t;
 
 #if	defined(SYSTEM5) || defined(vms) || defined(__TURBOC__)
 #define	getwd(p)	getcwd(p,sizeof(p)-2)
-#if	!(defined(__hpux) || defined(__TURBOC__))
+#if	!(defined(__hpux) || defined(linux) || defined(__TURBOC__))
 extern	char	*getcwd(_ar1(char *,p));
 #endif
 #else	/* !SYSTEM5 */
@@ -318,7 +318,7 @@ extern	long	strtol(
 		_ar1(int,	base));
 #endif
 #if	!(defined(vms) || defined(__TURBOC__))
-#if	!(defined(apollo_sr10) || defined(__hpux) || defined(__CLCC__))
+#if	!(defined(apollo_sr10) || defined(__hpux) || defined(linux) || defined(__CLCC__))
 extern	V_OR_I2	perror (_ar1(char *,s));
 extern	V_OR_I	rewind (_ar1(FILE *,s));
 #endif
@@ -329,7 +329,7 @@ extern	time_t	time   (_ar1(time_t *,t));
 
 #endif	/* !vms */
 
-#if	!defined(__hpux)
+#if	!(defined(__hpux) || defined(linux))
 extern	FILE	*popen(_arx(char *,name) _ar1(char *,mode));
 
 extern	int	getopt(
@@ -340,7 +340,7 @@ extern	char *	optarg;
 extern	int	optind;
 #endif
 
-#if	defined(__hpux)
+#if	defined(__hpux) || defined(linux)
 #define	ltostr	td_ltostr
 #endif
 
@@ -349,7 +349,7 @@ extern	int	optind;
 extern	uid_t	getuid(), geteuid();
 extern	gid_t	getgid(), getegid();
 #else
-#if	!(defined(NBBY) || defined(__hpux))
+#if	!(defined(NBBY) || defined(__hpux) || defined(linux))
 typedef	int	uid_t;
 typedef	int	gid_t;
 #endif	/* SunOs 3.5 (fixed in SunOs 4.0) */
@@ -486,7 +486,7 @@ extern	int	tolower(int);
 extern	int	toupper(int);
 #endif
 
-#if defined(tolower) || defined(sun)
+#if defined(tolower) || defined(sun) || defined(linux)
 #define LowerMacro(c) tolower(c)
 #define UpperMacro(c) toupper(c)
 #endif
@@ -567,7 +567,7 @@ static	struct	direct	dbfr;
 #ifndef MSDOS
 #include <pwd.h>
 
-#if	!defined(__hpux)
+#if	!defined(__hpux) && !defined(linux)
 extern	struct passwd *	getpwnam(_ar1(char *,name));
 extern	struct passwd *	getpwuid(_ar1(int,uid));
 
@@ -636,7 +636,7 @@ extern	V_OR_I		endpwent(_ar0);
 #define	strchr	index
 #define	strrchr	rindex
 #endif	/* SYSTEM5 */
-#if	!(defined(__hpux) || defined(__TURBOC__) || defined(__CLCC__))
+#if	!(defined(__hpux) || defined(linux) || defined(__TURBOC__) || defined(__CLCC__))
 extern	char *	strchr (_arx(char *,s) _ar1(int,c));
 extern	char *	strrchr(_arx(char *,s) _ar1(int,c));
 extern	char *	strtok (_arx(char *,s) _ar1(char *,t));

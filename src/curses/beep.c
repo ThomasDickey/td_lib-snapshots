@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: beep.c,v 12.3 1993/11/26 14:03:58 dickey Exp $";
+static	char	Id[] = "$Id: beep.c,v 12.4 1994/04/26 22:57:45 tom Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: beep.c,v 12.3 1993/11/26 14:03:58 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	24 Mar (from 'ded.c')
  * Modified:
+ *		26 Apr 1994, port to Linux
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, converted to ANSI
@@ -17,7 +18,7 @@ static	char	Id[] = "$Id: beep.c,v 12.3 1993/11/26 14:03:58 dickey Exp $";
 
 #include	"td_curse.h"
 
-#if !SYS5_CURSES
+#if !SYS5_CURSES || defined(linux)
 void	beep(_AR0)
 {
 	blip('\007');
