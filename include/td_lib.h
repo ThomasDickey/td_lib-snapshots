@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 12.19 1998/06/29 18:46:40 tom Exp $ */
+/* $Id: td_lib.h,v 12.20 2000/12/02 18:05:10 tom Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for TD_LIB common
@@ -827,7 +827,7 @@ extern	int	localzone;
 			_dcl(char *,	b)
 			_ret
 
-	char *	strlcpy(
+	char *	strlwrcpy(
 			_arx(char *,	a)
 			_ar1(char *,	b)
 			)

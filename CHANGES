@@ -1,3 +1,11 @@
+2000-12-02  dickey@clark.net
+
+	* include/td_lib.h:
+	renamed strlcpy() to strlwcpy() to avoid bogus function on *BSD's
+
+	* src/cm_funcs/lastrev.c, src/port2vms/vms_rpth.c, src/string/strucpy.c:
+	renamed strlcpy() to strlwrcpy() to avoid conflict with bogus function on *BSD's
+
 2000-11-01  dickey@clark.net
 
 	* aclocal.m4: various changes to port to OS/2 EMX
