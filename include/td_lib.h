@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 12.13 1995/02/11 19:21:04 tom Exp $ */
+/* $Id: td_lib.h,v 12.14 1995/04/22 20:50:45 tom Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for TD_LIB common
@@ -672,10 +672,12 @@ extern	int	localzone;
 	/* setmtime.c ------------------------------------------------- */
 	int	setmtime(
 			_arx(char *,	name)
-			_ar1(time_t,	mtime)
+			_arx(time_t,	mtime)
+			_ar1(time_t,	atime)
 			)
 			_dcl(char *,	name)
 			_dcl(time_t,	mtime)
+			_dcl(time_t,	atime)
 			_ret
 
 	/* shoarg.c --------------------------------------------------- */

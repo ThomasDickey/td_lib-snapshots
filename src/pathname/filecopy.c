@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: filecopy.c,v 12.6 1994/08/21 19:31:37 tom Exp $";
-#endif
-
 /*
  * Title:	filecopy.c (copy a file)
  * Author:	T.E.Dickey
@@ -35,6 +31,8 @@ static	char	Id[] = "$Id: filecopy.c,v 12.6 1994/08/21 19:31:37 tom Exp $";
 #define	OPN_PTYPES
 #define	SIG_PTYPES
 #include	"ptypes.h"
+
+MODULE_ID("$Id: filecopy.c,v 12.8 1995/04/22 21:07:27 tom Exp $")
 
 int	filecopy(
 	_ARX(char *,	src)
@@ -91,7 +89,7 @@ int	filecopy(
 			}
 			(void)close(fo);
 			(void)chmod(dst, (mode_t)mode);
-			(void)setmtime(dst, sb1.st_mtime);
+			(void)setmtime(dst, sb1.st_mtime, sb1.st_atime);
 		}
 		(void)close(fi);
 	}

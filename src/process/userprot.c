@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: userprot.c,v 12.4 1994/07/16 15:26:01 tom Exp $";
-#endif
-
 /*
  * Title:	userprot.c (set protection for setuid program's caller)
  * Author:	T.E.Dickey
@@ -25,6 +21,8 @@ static	char	Id[] = "$Id: userprot.c,v 12.4 1994/07/16 15:26:01 tom Exp $";
 #include	"ptypes.h"
 #include	<errno.h>
 
+MODULE_ID("$Id: userprot.c,v 12.6 1995/04/22 21:09:55 tom Exp $")
+
 #ifdef	unix
 
 static	char	*upr_name;
@@ -34,7 +32,7 @@ static	time_t	upr_time;
 static	
 void	upr_func(_AR0) { 
 	if (chmod(upr_name, upr_mode) >= 0)
-		(void)setmtime(upr_name, upr_time);
+		(void)setmtime(upr_name, upr_time, (time_t)0);
 }
 
 int	userprot(
