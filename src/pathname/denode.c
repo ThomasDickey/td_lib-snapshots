@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: denode.c,v 12.2 1993/10/29 17:35:27 dickey Exp $";
-#endif
-
 /*
  * Title:	denode.c
  * Author:	T.E.Dickey
@@ -29,26 +25,30 @@ static	char	Id[] = "$Id: denode.c,v 12.2 1993/10/29 17:35:27 dickey Exp $";
 
 #include "ptypes.h"
 
-char *
-denode (
-_ARX(register char *,	path)
-_ARX(register char *,	node)
-_AR1(int *,		opt)
-	)
-_DCL(register char *,	path)
-_DCL(register char *,	node)
-_DCL(int *,		opt)
-{
-register char *s = path, *t = node;
+MODULE_ID("$Id: denode.c,v 12.4 1993/11/28 23:36:40 tom Exp $")
 
-	if (opt && (*opt >= 0))
+char *	denode (
+	_ARX(register char *,	path)
+	_ARX(register char *,	node)
+	_AR1(int *,		opt)
+		)
+	_DCL(register char *,	path)
+	_DCL(register char *,	node)
+	_DCL(int *,		opt)
+{
+	register char *s = path, *t = node;
+
+	if (opt && (*opt >= 0)) {
 		t += *opt;
-	else {
-		while ((*t != '/') && *t) t++;
+	} else {
+		register int n = 0;
+		while (!isSlash(node[n]) && node[n] != EOS)
+			n++;
 		if (opt) {
-			*t = EOS;
-			*opt = t - node;
+			node[n] = EOS;
+			*opt = n;
 		}
+		t += n;
 	}
 
 	if (node < t) {
@@ -56,7 +56,7 @@ register char *s = path, *t = node;
 			if (node < t) {
 				if (*node != *s)	break;
 			} else {
-				if (*s == '/')		path = s;
+				if (isSlash(*s))	path = s;
 				break;
 			}
 			node++, s++;

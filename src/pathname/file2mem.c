@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: file2mem.c,v 12.2 1993/10/29 17:35:26 dickey Exp $";
+static	char	Id[] = "$Id: file2mem.c,v 12.3 1993/11/28 23:47:40 dickey Exp $";
 #endif
 
 /*
@@ -70,6 +70,16 @@ _DCL(char *,	name)
 		if (!(fp = fopen(name, "r")))
 			return (0);
 	}
+
+	/*
+	 * If the file is too big, we cannot allocate space...
+	 */
+#ifdef	MSDOS
+	if (length > 0xffffL) {
+		fclose(fp);
+		return (0);
+	}
+#endif
 
 	/*
 	 * We now have a file-pointer open on a file of known length, which

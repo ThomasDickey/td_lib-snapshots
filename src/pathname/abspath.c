@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: abspath.c,v 12.2 1993/10/29 17:35:27 dickey Exp $";
+static	char	Id[] = "$Id: abspath.c,v 12.3 1993/11/28 23:32:34 dickey Exp $";
 #endif
 
 /*
@@ -19,7 +19,7 @@ static	char	Id[] = "$Id: abspath.c,v 12.2 1993/10/29 17:35:27 dickey Exp $";
  *			     driver.
  *		06 Sep 1989, use "ptypes.h" to consolidate definitions
  *		09 Sep 1988, corrected case in which current directory ends in
- *			     "/".
+ *			     slash.
  *		16 May 1988, 'getcwd()' is not as portable as 'getwd()'.
  *		05 May 1988, make "/tmp" translate ok on Apollo (must provide
  *			     missing node-name).  Also, translate csh-like "~".
@@ -37,6 +37,7 @@ static	char	Id[] = "$Id: abspath.c,v 12.2 1993/10/29 17:35:27 dickey Exp $";
  */
 
 #define	CHR_PTYPES
+#define DIR_PTYPES	/* 'getcwd()' for MSDOS */
 #define	PWD_PTYPES
 #define	STR_PTYPES
 #include	"ptypes.h"
@@ -69,8 +70,12 @@ static	void	do_test(
 		_ar1(char **,	argv));
 #endif	/* TEST */
 
+static	char	slash[] = {PATH_SLASH, EOS};		/* "/"   */
+
+#ifdef	unix
 static	char	nodestr[MAXPATHLEN];	/* will hold nodename, if any */
 static	int	nodelen = -1;
+#endif
 
 #ifdef	apollo
 static
@@ -140,7 +145,7 @@ void	precat(
 
 	s = strcpy(tmp, prefix) + strlen(prefix);
 	if (*string)
-		(void)strcat(strcat(s, "/"), string);
+		(void)strcat(strcat(s, slash), string);
 	(void)strcpy(string, tmp);
 	*s = EOS;
 }
@@ -148,6 +153,7 @@ void	precat(
 /************************************************************************
  *	main procedures							*
  ************************************************************************/
+#if	defined(unix) || defined(MSDOS)
 void	abshome(
 	_AR1(char *,	path))
 	_DCL(char *,	path)
@@ -156,14 +162,20 @@ void	abshome(
 
 	if (*d == '~') {	/* my home directory */
 		s = d+1;
-		if ((*s == EOS) || (*s++ == '/')) {
+		if ((*s == EOS) || isSlash(*s)) {
+			s++;
 			while ((*d++ = *s++) != EOS)
 				;
 			precat(getenv("HOME"), path);
 		} else {	/* someone else's home */
+#ifdef	MSDOS
+			while ((*d++ = *s++) != EOS)
+				;
+			precat("/users", path);
+#else
 			register struct passwd *p;
 			char	user[MAXPATHLEN];
-			if ((s = strchr(strcpy(user, d+1), '/')) != 0)
+			if ((s = fleaf_delim(strcpy(user, d+1))) != 0)
 				*s++ = EOS;
 			else
 				s = d + strlen(d);
@@ -173,25 +185,40 @@ void	abshome(
 				precat(p->pw_dir, path);
 			}
 			/* else no such home directory! */
+#endif
 		}
 	}
 }
+#endif
 
 void	abspath(
 	_AR1(char *,	path))
 	_DCL(char *,	path)
 {
-	register char *s, *d = path;
+	char	*base	= path;
+	register char *s, *d = base;
 
+#ifdef	unix
 	if (nodelen < 0) {	/* 'getwd()' is expensive... */
 		if (getwd(nodestr))
 			(void)denode(nodestr,nodestr,&nodelen);
 	}
+#endif	/* unix */
 
 	/*
 	 * Check for references to someone's home directory in csh-style.
 	 */
-	abshome(path);
+	abshome(base);
+
+	/*
+	 * Skip DOS-style device
+	 */
+#ifdef	MSDOS
+	if (isalpha(*base) && base[1] == ':') {
+		path += 2;
+		d = path;
+	}
+#endif	/* MSDOS */
 
 	/*
 	 * Convert special Apollo names.  This is necessary because the
@@ -207,58 +234,66 @@ void	abspath(
 	/*
 	 * Strip altos-style nodename prefix, if applicable
 	 */
+#ifdef	unix
 	if (nodelen > 0) {
 		if (strcmp(d, nodestr)) {
 			if (d != (s = denode(d, nodestr, (int *)0)))
 				while ((*d++ = *s++) != EOS)
 					;
-		} else
-			(void)strcpy(d, "/");
+		} else {
+			(void)strcpy(d, slash);
+		}
 	}
+#endif
 
 	/*
 	 * Convert this to an absolute path somehow
 	 */
-	if (*path == '/') {
+	if (isSlash(*path)) {
 #ifdef	apollo
-	static
-	char	thisnode[MAXPATHLEN];
-		if (path[1] != '/') {
+		static	char	thisnode[MAXPATHLEN];
+
+		if (!isSlash(path[1])) {
 			if (!thisnode[0])
-				apollo_name(strcpy(thisnode, "/"));
+				apollo_name(strcpy(thisnode, slash));
 			precat(thisnode, path);
 		}
 #else	/* !apollo */
 		;
 #endif	/* apollo */
 	} else if (*path) {
-	char	cwdpath[MAXPATHLEN];
+		char	cwdpath[MAXPATHLEN];
+
 		if ((d = getwd(cwdpath)) != 0) {
 			s = path;
 			if (*s == '.')
-				if (s[1] == EOS || s[1] == '/')
+				if (s[1] == EOS || isSlash(s[1]))
 					s++;	/* absorb "." */
 			d += strlen(cwdpath);
-			if (d[-1] != '/')	/* add "/" iff we need it */
-				(void)strcat(d, "/");
+			if (!isSlash(d[-1]))	/* add slash iff we need it */
+				(void)strcat(d, slash);
 			(void)strcat(d, s);
-			(void)strcpy(path,denode(cwdpath, nodestr, (int *)0));
+#ifdef	unix
+			(void)strcpy(base, denode(cwdpath, nodestr, (int *)0));
+#else	/* MSDOS */
+			(void)strcpy(base, cwdpath);
+#endif	/* unix or MSDOS */
 		}
 	}
 
 	/*
-	 * Trim out repeated '/' marks
+	 * Trim out repeated slash-marks
 	 */
 	for (s = d = path; *s; s++) {
-		if (*s == '/') {
+		if (isSlash(*s)) {
 			if (s > (path+TOP-1))	/* provide for leading "//" */
-				while (s[1] == '/')
+				while (isSlash(s[1]))
 					s++;
 		} else if (*s == '.') {
-			if (s > path && s[-1] == '/') {
+			if (s > path && isSlash(s[-1])) {
 				if (s[1] == EOS)
 					break;
-				else if (s[1] == '/') {
+				else if (isSlash(s[1])) {
 					s++;
 					continue;
 				}
@@ -268,10 +303,10 @@ void	abspath(
 	}
 
 	/*
-	 * Trim trailing '/' marks
+	 * Trim trailing slash-marks
 	 */
 	while (d > path+TOP)
-		if (d[-1] == '/')	d--;
+		if (isSlash(d[-1]))	d--;
 		else			break;
 	*d = EOS;
 
@@ -280,13 +315,15 @@ void	abspath(
 	 */
 	for (s = path; *s; s++) {
 		if (s[0] == '.' && s[1] == '.')
-			if ((s > path && s[-1] == '/')
-			&&  (s[2] == EOS || s[2] == '/')) {
+			if ((s > path && isSlash(s[-1]))
+			&&  (s[2] == EOS || isSlash(s[2]))) {
 				d = s+2;
 				if (s > (path+TOP)) {
 					s -= 2;
-					while (s > path && *s != '/') s--;
-					if (s == path &&  !*d) s++;
+					while (s > path && !isSlash(*s))
+						s--;
+					if (s == path &&  !*d)
+						s++;
 				} else if (*d)
 					s--;
 				while ((*s++ = *d++) != EOS)
