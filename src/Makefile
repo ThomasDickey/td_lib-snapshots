@@ -1,4 +1,4 @@
-# @(#)Makefile	1.14 88/05/12 09:10:00
+# @(#)Makefile	1.15 88/05/18 11:55:08
 # MAKE-file for miscellaneous library routines
 L=lib.a
 #
@@ -24,6 +24,7 @@ OBJS	=\
 	padedit.o\
 	rawgets.o\
 	rawterm.o\
+	rcslast.o\
 	resizewin.o\
 	savewin.o\
 	sccslast.o\
