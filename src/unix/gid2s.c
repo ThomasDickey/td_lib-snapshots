@@ -1,7 +1,3 @@
-#ifndef NO_IDENT
-static	char	Id[] = "$Id: gid2s.c,v 12.6 1995/09/04 14:09:22 tom Exp $";
-#endif
-
 /*
  * Title:	gid2s.c (gid/string converter)
  * Author:	T.E.Dickey
@@ -26,6 +22,8 @@ static	char	Id[] = "$Id: gid2s.c,v 12.6 1995/09/04 14:09:22 tom Exp $";
 #define	GRP_PTYPES
 #define	STR_PTYPES
 #include <td_btree.h>
+
+MODULE_ID("$Id: gid2s.c,v 12.8 1995/09/14 23:09:17 tom Exp $")
 
 #if HAVE_GETGRGID
 
@@ -102,7 +100,7 @@ char *	gid2s(
 {
 	static GID_DATA data;
 	data.user = user;
-	data = *(GID_DATA *)btree_find(&gid2s_tree, &data);
+	memcpy((char *)&data, (char *)btree_find(&gid2s_tree, &data), sizeof(GID_DATA));
 	return data.name;
 }
 
@@ -113,21 +111,21 @@ _MAIN
 	auto	 char	*d;
 	auto	 int	user;
 
-	printf("argc:%d\n", argc);
+	PRINTF("argc:%d\n", argc);
 	if (argc > 1) {
 		for (j = 1; j < argc; j++) {
 			user = strtol(argv[j], &d, 0);
 			if (*d) {
-				printf("? illegal character /%s/\n", d);
+				PRINTF("? illegal character /%s/\n", d);
 				continue;
 			}
-			printf("%d => \"%s\"\n", user, gid2s(user));
+			PRINTF("%d => \"%s\"\n", user, gid2s(user));
 		}
 	} else {
 		int	tst_len;
 		char	**tst_vec;
 		tst_len = file2argv("/etc/group", &tst_vec);
-		printf("tst_len:%d\n", tst_len);
+		PRINTF("tst_len:%d\n", tst_len);
 		for (j = 0; j < tst_len; j++) {
 			if ((d = strchr(tst_vec[j], ':')) == 0)
 				continue;
@@ -135,9 +133,9 @@ _MAIN
 			if ((d = strchr(d, ':')) == 0)
 				continue;
 			user = atoi(++d);
-			printf("%s -> %d -> %s\n", tst_vec[j], user, d = gid2s(user));
+			PRINTF("%s -> %d -> %s\n", tst_vec[j], user, d = gid2s(user));
 			if (strcmp(tst_vec[j], d))
-				printf("** DIFF\n");
+				PRINTF("** DIFF\n");
 		}
 		btree_dump(&gid2s_tree);
 	}

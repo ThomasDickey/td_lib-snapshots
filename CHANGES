@@ -1,3 +1,22 @@
+1995-09-14  dickey@clark.net
+
+	* src/unix/gid2s.c: lint test-driver
+	use memcpy to avoid possible alignment problem
+
+	* src/unix/gid2s.c: use MODULE_ID
+
+	* src/unix/uid2s.c: lint test-driver
+	use memcpy to avoid possible alignment problem
+
+	* src/unix/uid2s.c: use MODULE_ID
+
+	* include/td_btree.h: fixes from axposf: more stringent alignment
+
+	* src/memory/txtalloc.c:
+	fixes the node-allocation size (oops) and an alignment problem (axposf)
+
+	* src/memory/txtalloc.c: use MODULE_ID
+
 1995-09-04  dickey@clark.net
 
 	* aclocal.m4:

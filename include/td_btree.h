@@ -1,4 +1,4 @@
-/* $Id: td_btree.h,v 12.3 1995/09/04 14:06:47 tom Exp $ */
+/* $Id: td_btree.h,v 12.4 1995/09/14 17:41:36 tom Exp $ */
 
 /*
  * TD_LIB binary-tree functions
@@ -17,12 +17,13 @@
 	char	 balance;	/* holds 0, -1, +1 */
 	union	{		/* force worst-cast alignment */
 		char	text[1];
+		char	*pointer;
 		int	num;
 	}	value;		/* we'll return pointer to this data */
 	};
 
 	/* cf: offsetof */
-#define BI_NODE_SIZE ((size_t) &((BI_NODE *)0)->value.text)
+#define BI_NODE_SIZE ((size_t) ((BI_NODE *)0)->value.text)
 
 #ifdef lint
 #define	BI_NODE_ALLOC(size) (BI_NODE *)(size)

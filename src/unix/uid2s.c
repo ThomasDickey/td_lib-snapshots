@@ -1,7 +1,3 @@
-#ifndef NO_IDENT
-static	char	Id[] = "$Id: uid2s.c,v 12.7 1995/09/04 14:10:00 tom Exp $";
-#endif
-
 /*
  * Title:	uid2s.c (uid/string converter)
  * Author:	T.E.Dickey
@@ -28,6 +24,8 @@ static	char	Id[] = "$Id: uid2s.c,v 12.7 1995/09/04 14:10:00 tom Exp $";
 #define	PWD_PTYPES
 #define	STR_PTYPES
 #include <td_btree.h>
+
+MODULE_ID("$Id: uid2s.c,v 12.9 1995/09/14 17:48:16 tom Exp $")
 
 #if HAVE_GETPWUID
 
@@ -137,7 +135,7 @@ char *	uid2s(
 {
 	static UID_DATA data;
 	data.user = user;
-	data = *(UID_DATA *)btree_find(&uid2s_tree, &data);
+	memcpy((char *)&data, (char *)btree_find(&uid2s_tree, &data), sizeof(UID_DATA));
 	return data.name;
 }
 
@@ -148,21 +146,21 @@ _MAIN
 	auto	 char	*d;
 	auto	 int	user;
 
-	printf("argc:%d\n", argc);
+	PRINTF("argc:%d\n", argc);
 	if (argc > 1) {
 		for (j = 1; j < argc; j++) {
 			user = strtol(argv[j], &d, 0);
 			if (*d) {
-				printf("? illegal character /%s/\n", d);
+				PRINTF("? illegal character /%s/\n", d);
 				continue;
 			}
-			printf("%d => \"%s\"\n", user, uid2s(user));
+			PRINTF("%d => \"%s\"\n", user, uid2s(user));
 		}
 	} else {
 		int	tst_len;
 		char	**tst_vec;
 		tst_len = file2argv("/etc/passwd", &tst_vec);
-		printf("tst_len:%d\n", tst_len);
+		PRINTF("tst_len:%d\n", tst_len);
 		for (j = 0; j < tst_len; j++) {
 			if ((d = strchr(tst_vec[j], ':')) == 0)
 				continue;
@@ -170,9 +168,9 @@ _MAIN
 			if ((d = strchr(d, ':')) == 0)
 				continue;
 			user = atoi(++d);
-			printf("%s -> %d -> %s\n", tst_vec[j], user, d = uid2s(user));
+			PRINTF("%s -> %d -> %s\n", tst_vec[j], user, d = uid2s(user));
 			if (strcmp(tst_vec[j], d))
-				printf("** DIFF\n");
+				PRINTF("** DIFF\n");
 		}
 		btree_dump(&uid2s_tree);
 	}
