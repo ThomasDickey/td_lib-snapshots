@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: dlettree.c,v 3.0 1989/09/15 08:39:09 ste_cm Rel $";
+static	char	Id[] = "$Id: dlettree.c,v 3.1 1989/09/20 14:37:52 dickey Exp $";
 #endif	lint
 
 /*
@@ -47,6 +47,8 @@ char	*oldname;
 	auto	struct stat	sb;
 	auto	char		newname[MAXPATHLEN];
 	auto	char		oldpath[MAXPATHLEN];
+	auto	int		old_mode;
+	auto	int		ok	= TRUE;
 
 #ifdef	TEST
 	static	char		stack[]	= ". . . . . . . ";
@@ -69,6 +71,7 @@ char	*oldname;
 			fail(oldname);
 			return(0);
 		}
+		old_mode = sb.st_mode;	/* save, so we know to delete-dir */
 
 		if (dirp = opendir(OPENDIR_ARG)) {
 			while (dp = readdir(dirp)) {
@@ -81,24 +84,37 @@ char	*oldname;
 					continue;
 				}
 				if (isDIR(sb.st_mode)) {
+					auto	int	k;
 					if (!recur)
 						continue;
-					changes += deletetree(newname, recur+1);
-					changes += deletedir(newname);
-					TELL_DIR(newname);
+					if ((k = deletetree(newname,recur+1))
+							>= 0)
+						changes += k;
+					else
+						ok = FALSE;
 				} else {	/* file, link, etc. */
 					TELL_FILE(newname);
-					changes += deletefile(newname);
+					if (deletefile(newname))
+						changes++;
+					else
+						ok = FALSE;
 				}
 			}
 			closedir(dirp);
 		}
 		(void)chdir(oldpath);
+		if (ok && isDIR(old_mode)) {
+			changes += deletedir(oldname);
+			TELL_DIR(DIR2PATH(oldname));
+		}
 	} else {
 		TELL_FILE(oldname);
-		changes += deletefile(oldname);
+		if (deletefile(oldname))
+			changes++;
+		else
+			ok = FALSE;
 	}
-	return (changes);
+	return (ok ? changes : -1);
 }
 
 #ifdef	TEST
