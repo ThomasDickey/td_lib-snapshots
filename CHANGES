@@ -1,3 +1,7 @@
+1993-11-22  dickey@software.org
+
+	* src/curses/rawterm.c: oops: wasn't disabling mouse-tracking...
+
 1993-11-19  dickey@software.org
 
 	* src/curses/cmdch.c:
