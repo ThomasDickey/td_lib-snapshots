@@ -1,10 +1,11 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)packdate.c	1.4 87/11/25 07:35:48";
+static	char	sccs_id[] = "@(#)packdate.c	1.6 88/02/01 09:33:45";
 #endif	lint
 
 /*
  * Author:	T.E.Dickey
  * Modified:
+ *		01 Feb 1988, ooops: wrong computation for leapyear.
  *		24 Nov 1987, made to run on BSD4.2 (as opposed to SYSTEM5).
  *
  * Function:	Given a date, in unpacked form, return the unix time (GMT
@@ -14,6 +15,7 @@ static	char	sccs_id[] = "@(#)packdate.c	1.4 87/11/25 07:35:48";
  *		Base date is Thu Jan 1, 1970
  */
 
+#include	"ptypes.h"
 #include	<time.h>
 extern	struct	tm	*localtime();
 
@@ -39,7 +41,7 @@ static	int	m[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 	for (j = 1; j < mon; j++) {
 		sec += DAY * m[j-1];
 	}
-	if (mon >= 2 && LEAP(year))	sec += DAY;
+	if (mon > 2 && LEAP(year))	sec += DAY;
 	sec += (day-1) * DAY;
 	/* adjustments for timezone, etc. */
 #ifdef	SYSTEM5
