@@ -1,3 +1,14 @@
+1993-09-22  dickey@software.org
+
+	* include/td_scomp.h: clean-compile with SunOs & gcc
+
+	* src/port2vms/name2vms.c, src/pathname/edittree.c, src/pathname/dlettree.c, src/port2vms/path2dir.c, src/port2vms/vms2name.c, src/pathname/trnstree.c, src/port2vms/vms_pthc.c, src/port2vms/vms_rpth.c, src/port2vms/vms_wild.c, src/pathname/editfile.c, src/port2vms/dir2path.c:
+	gcc warnings
+
+	* support/old-td_lib.mk:
+	added symbol 'LINK' so I can run Purify on the linked programs.
+	added CC definition so I can compile-out gcc-warnings
+
 1993-09-21  dickey@software.org
 
 	* src/cm_funcs/vercmp.c: fixed the ANSI-cpp usage for gcc

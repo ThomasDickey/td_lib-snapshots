@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: editfile.c,v 8.0 1992/11/20 10:59:49 ste_cm Rel $";
+static	char	Id[] = "$Id: editfile.c,v 8.1 1993/09/22 17:37:47 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: editfile.c,v 8.0 1992/11/20 10:59:49 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	03 Oct 1988
  * Modified:
+ *		22 Sep 1993, gcc warnings
  *		20 Nov 1992, added 3rd arg to _FNX macros.
  *		13 Dec 1991, pass 'sb' arg down to 'func', from initial stat on
  *			     the input-file.
@@ -28,7 +29,6 @@ static	char	Id[] = "$Id: editfile.c,v 8.0 1992/11/20 10:59:49 ste_cm Rel $";
 #ifdef	vms
 #define	NEWVER(name)	(name)
 #else	/* unix */
-extern	char	*mktemp();
 #define	NEWVER(name)	mktemp(name)
 #endif	/* vms/unix */
 

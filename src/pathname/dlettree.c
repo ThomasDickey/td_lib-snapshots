@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: dlettree.c,v 8.0 1992/11/20 08:29:32 ste_cm Rel $";
+static	char	Id[] = "$Id: dlettree.c,v 8.1 1993/09/22 17:55:30 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: dlettree.c,v 8.0 1992/11/20 08:29:32 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	17 Nov 1988
  * Modified:
+ *		22 Sep 1993, gcc warnings
  *		20 Nov 1992, use prototypes
  *
  * Function:	Deletes a tree of files a la "rm -rf".
@@ -32,8 +33,8 @@ static	char	Id[] = "$Id: dlettree.c,v 8.0 1992/11/20 08:29:32 ste_cm Rel $";
 #define	TELL_FILE(name)	TELL "%d\t%s => %s\n", TELL_(name))
 #define	TELL_DIR(name)	TELL "%d\t%s (directory) %s\n", TELL_(name));
 #define	TELL_SCAN(name)	TELL "%d\t%s scan directory %s\n", TELL_(name))
-static	deletedir()	{ return 1;}
-static	deletefile()	{ return 1;}
+static	int	deletedir   (_AR1(char *,s))	_DCL(char *,s) { return 1;}
+static	int	deletefile  (_AR1(char *,s))	_DCL(char *,s) { return 1;}
 #else
 #define	TELL_FILE(name)
 #define	TELL_SCAN(name)
@@ -48,19 +49,19 @@ int	deletetree(
 	_DCL(char *,	oldname)
 	_DCL(int,	recur)
 {
-	auto	DIR		*dirp;
-	auto	struct	direct	*dp;
-	auto	int		changes = 0;
-	auto	struct stat	sb;
-	auto	char		newname[MAXPATHLEN];
-	auto	char		oldpath[MAXPATHLEN];
-	auto	char		*newpath;
-	auto	int		old_mode;
-	auto	int		ok	= TRUE;
+	auto	DIR	*dirp;
+	auto	DIRENT	*dp;
+	auto	int	changes = 0;
+	auto	STAT	sb;
+	auto	char	newname[MAXPATHLEN];
+	auto	char	oldpath[MAXPATHLEN];
+	auto	char	*newpath;
+	auto	int	old_mode;
+	auto	int	ok	= TRUE;
 
 #ifdef	TEST
-	static	char		stack[]	= ". . . . . . . ";
-	auto	char		*nesting = &stack[sizeof(stack)-(recur*2)-1];
+	static	char	stack[]	= ". . . . . . . ";
+	auto	char	*nesting = &stack[sizeof(stack)-(recur*2)-1];
 #endif
 
 	if (stat(oldname, &sb) < 0) {
@@ -87,8 +88,8 @@ int	deletetree(
 		}
 		old_mode = sb.st_mode;	/* save, so we know to delete-dir */
 
-		if (dirp = opendir(newpath)) {
-			while (dp = readdir(dirp)) {
+		if ((dirp = opendir(newpath)) != NULL) {
+			while ((dp = readdir(dirp)) != NULL) {
 				(void)strcpy(newname, dp->d_name);
 #ifndef	vms
 				if (dotname(newname))	continue;

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: vms_rpth.c,v 8.0 1992/11/20 12:02:23 ste_cm Rel $";
+static	char	Id[] = "$Id: vms_rpth.c,v 8.1 1993/09/22 17:42:18 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: vms_rpth.c,v 8.0 1992/11/20 12:02:23 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	26 Jun 1990
  * Modified:
+ *		22 Sep 1993, gcc warnings
  *		20 Nov 1992, use prototypes
  *		18 Oct 1991, use macro _MAIN
  *		20 May 1991, apollo sr10.3 cpp complains about endif-tags
@@ -19,7 +20,6 @@ static	char	Id[] = "$Id: vms_rpth.c,v 8.0 1992/11/20 12:02:23 ste_cm Rel $";
 
 #define	STR_PTYPES
 #include	"portunix.h"
-extern	char	*strlcpy();
 
 static
 char *	after_leaf(

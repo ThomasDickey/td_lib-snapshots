@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: vms_wild.c,v 8.0 1992/11/20 11:37:34 ste_cm Rel $";
+static	char	Id[] = "$Id: vms_wild.c,v 8.1 1993/09/22 17:42:18 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: vms_wild.c,v 8.0 1992/11/20 11:37:34 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	06 Oct 1989
  * Modified:
+ *		22 Sep 1993, gcc warnings
  *		20 Nov 1992, use prototypes.  Added test-driver.
  *
  * Function:	Tests the given pathname to see if it contains any of the VMS
@@ -22,7 +23,7 @@ int	vms_iswild(
 	if (strchr(name, '*') != 0
 	||  strchr(name, '?') != 0)
 		return (TRUE);
-	if (name = strchr(name, '[')) {
+	if ((name = strchr(name, '[')) != NULL) {
 		while (*name != EOS && *name != ']')
 			if (!strncmp(name++, "...", 3))
 				return (TRUE);
@@ -36,7 +37,6 @@ void	do_test(
 	_AR1(char *,	path))
 	_DCL(char *,	path)
 {
-	char	tmp[MAXPATHLEN];
 	PRINTF("%s => %d\n", path, vms_iswild(path));
 }
 

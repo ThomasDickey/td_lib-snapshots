@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: dir2path.c,v 8.0 1992/11/20 10:20:08 ste_cm Rel $";
+static	char	Id[] = "$Id: dir2path.c,v 8.1 1993/09/22 17:37:47 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: dir2path.c,v 8.0 1992/11/20 10:20:08 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	06 Oct 1988
  * Modified:
+ *		22 Sep 1993, gcc warnings
  *		20 Nov 1992, use prototypes.  Added default test-case.
  *
  * Function:	Convert a VMS directory-name into the name of the corresponding
@@ -33,7 +34,7 @@ void	insert(
 	for (d = strlen(src), c = strlen(dst); c >= 0; c--)
 		dst[c+d] = dst[c];
 
-	while (c = *src++)
+	while ((c = *src++) != EOS)
 		*dst++ = c;
 }
 
@@ -45,16 +46,16 @@ char *	dir2path(
 	register char	*s, *t;
 
 	(void)strucpy(buffer, src);
-	if (t = strrchr(buffer, '.')) {
+	if ((t = strrchr(buffer, '.')) != NULL) {
 		while ((s = strrchr(buffer, ';')) == 0)
 			(void)strcat(buffer, ";1");
 		if (! s[1])
 			(void)strcat(buffer, "1");
 		if (!strncmp(t, ".DIR;1", 6)) {
 			*t = '\0';
-			if (s = strrchr(buffer, ']')) {
+			if ((s = strrchr(buffer, ']')) != NULL) {
 				*s = '.';
-			} else if (s = strrchr(buffer, ':')) {
+			} else if ((s = strrchr(buffer, ':')) != NULL) {
 				insert(s+1, "[");
 			} else
 				insert(buffer, "[.");

@@ -1,4 +1,4 @@
-# $Id: old-td_lib.mk,v 12.0 1993/04/27 12:59:37 ste_cm Rel $
+# $Id: old-td_lib.mk,v 12.1 1993/09/22 13:33:35 dickey Exp $
 # common definitions for makefiles built over TD_LIB library.
 
 ####### (Environment) ##########################################################
@@ -14,6 +14,10 @@ COPY	= cp -p
 PUT	= rm -f $@; $(COPY) $? $@
 
 MAKE	= make $(MFLAGS) -k$(MAKEFLAGS)	CFLAGS="$(CFLAGS)" COPY="$(COPY)"
+
+#CC	= gcc -g -O -Wall -Wshadow -Wconversion -Wstrict-prototypes -Wmissing-prototypes
+#LINK	= purify $(CC)
+LINK	= $(CC)
 
 INSTALL_BIN = $(TOP)/install_bin
 INSTALL_LIB = $(TOP)/install_lib

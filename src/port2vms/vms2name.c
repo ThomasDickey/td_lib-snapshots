@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: vms2name.c,v 8.0 1993/04/29 07:24:38 ste_cm Rel $";
+static	char	Id[] = "$Id: vms2name.c,v 8.1 1993/09/22 17:44:30 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: vms2name.c,v 8.0 1993/04/29 07:24:38 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	02 Nov 1988
  * Modified:
+ *		22 Sep 1993, gcc warnings
  *		29 Apr 1993, added 'copying' to case-conversions.
  *		20 Nov 1992, use prototypes
  *		15 Sep 1989, added IMakefile and AMakefile cases.
@@ -36,23 +37,23 @@ static	char	Id[] = "$Id: vms2name.c,v 8.0 1993/04/29 07:24:38 ste_cm Rel $";
  *		vms-tar.
  */
 
+#define	CHR_PTYPES
 #define	STR_PTYPES
 #include	"portunix.h"
-#include	<ctype.h>
 
-#define	LOWER(p)	((isalpha(*p) && isupper(*p)) ? tolower(*p) : *p)
+#define	LOWER(p)	((isalpha(*p) && isupper(*p)) ? LowerMacro(*p) : *p)
 
 static	struct	{
 		int	len;	/* number of chars to uppercase */
 		char	*name;	/* lowercase string to check for */
 	} uc_names[] = {
-		1,	"makefile",
-		2,	"amakefile",
-		2,	"imakefile",
-		6,	"readme",
-		256,	"read.me",
-		256,	"copying",
-		256,	"copyright"
+		{1,	"makefile"},
+		{2,	"amakefile"},
+		{2,	"imakefile"},
+		{6,	"readme"},
+		{256,	"read.me"},
+		{256,	"copying"},
+		{256,	"copyright"}
 	};
 
 char *	vms2name(
@@ -73,7 +74,7 @@ char *	vms2name(
 			*s = strcpy(tmp, src),	/* ... to permit src == dst */
 			*d;
 
-	if (s = strchr(s, ';'))		/* trim off version */
+	if ((s = strchr(s, ';')) != NULL)	/* trim off version */
 		*s = EOS;
 
 	/* look for node specification */
@@ -93,7 +94,7 @@ char *	vms2name(
 	 * begin at the top of the device.  In this case, it would be ambiguous
 	 * if no device is supplied.
 	 */
-	if (s = strchr(base, ':')) {
+	if ((s = strchr(base, ':')) != NULL) {
 		*dst++ = '/';
 		while (base < s) {
 			*dst++ = LOWER(base);
@@ -124,7 +125,7 @@ char *	vms2name(
 	}
 
 	/* translate directory-syntax */
-	if (s = strchr(base, '[')) {
+	if ((s = strchr(base, '[')) != NULL) {
 		if (s[1] == ']') {
 			*dst++ = '.';
 			if (s[2] != EOS)
@@ -208,7 +209,7 @@ char *	vms2name(
 	}
 	while (uc_len-- > 0 && *s) {
 		if (isalpha(*s))
-			*s = toupper(*s);
+			*s = UpperMacro(*s);
 		s++;
 	}
 	if (rcs_suffix)
