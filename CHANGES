@@ -1,3 +1,15 @@
+1988-06-30  dickey@software.org
+
+	* src/cm_funcs/rcslast.c:
+	use 'newzone()' rather than 'sccszone()' -- better porting.
+
+	* src/Makefile:
+	added SRCS-list, 'archive' production and automatic-sccsget if source
+	is missing.
+
+	* src/cm_funcs/sccslast.c:
+	use 'newzone()' instead of 'sccszone()' -- better porting.
+
 1988-06-13  dickey@software.org
 
 	* include/llib-ltd: removed 'adj2est()', 'set2est()'.

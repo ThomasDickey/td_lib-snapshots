@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)sccslast.c	1.8 88/06/01 10:12:45";
+static	char	sccs_id[] = "@(#)sccslast.c	1.9 88/06/30 06:28:42";
 #endif	lint
 
 /*
@@ -7,6 +7,7 @@ static	char	sccs_id[] = "@(#)sccslast.c	1.8 88/06/01 10:12:45";
  * Author:	T.E.Dickey
  * Created:	20 Oct 1986
  * Modified:
+ *		30 Jun 1988, use 'newzone()' instead of 'sccszone()'.
  *		01 Jun 1988, use SCCS_DIR environment variable.
  *		23 May 1988, combined rels/vers args.
  *		18 May 1988, moved 'sccszone' call here
@@ -27,10 +28,10 @@ extern	char	*getenv(),
 		*strrchr();
 
 extern	long	packdate();
-extern	long	sccszone();
 extern	char	*txtalloc();
 
 #define	MAXPATH	256
+#define	FALSE	(0)
 
 /*
  * Set the release.version and date values iff we find a legal sccs-file at
@@ -47,6 +48,7 @@ int	gotten = 0;
 
 	if (fp) {
 	char	bfr[BUFSIZ];
+		newzone(5,0,FALSE);	/* interpret in EST5EDT */
 		while (fgets(bfr, sizeof(bfr), fp)) {
 			if (!gotten) {
 				if (strncmp(bfr, "\001h", 2))	break;
@@ -60,12 +62,12 @@ int	gotten = 0;
 					&yy, &mm, &dd,
 					&hr, &mn, &sc) != 7)	break;
 				*vers_ = txtalloc(ver);
-				*date_ = packdate (1900+yy, mm, dd, hr, mn, sc)
-					- sccszone();
+				*date_ = packdate (1900+yy, mm, dd, hr, mn, sc);
 				break;
 			}
 		}
 		(void) fclose(fp);
+		oldzone();		/* restore time-zone */
 	}
 }
 

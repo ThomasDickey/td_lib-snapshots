@@ -1,6 +1,55 @@
-# @(#)Makefile	1.26 88/06/13 09:28:26
+# @(#)Makefile	1.27 88/06/30 06:43:39
 # MAKE-file for miscellaneous library routines
 L=lib.a
+GET=sccsget
+#
+SRCS	=\
+	abspath.c\
+	beep.c\
+	bldarg.c\
+	catarg.c\
+	closeall.c\
+	cmdch.c\
+	copyback.c\
+	cutoff.c\
+	denode.c\
+	doalloc.c\
+	dotcmp.c\
+	dotname.c\
+	dumpchr.c\
+	dumpwin.c\
+	erasechar.c\
+	execute.c\
+	flushall.c\
+	gethome.c\
+	getuser.c\
+	gid2s.c\
+	killchar.c\
+	ltostr.c\
+	modechar.c\
+	newzone.c\
+	okpnum.c\
+	packdate.c\
+	padedit.c\
+	rawgets.c\
+	rawterm.c\
+	rcsedit.c\
+	rcskeys.c\
+	rcslast.c\
+	rcsname.c\
+	resizewin.c\
+	savewin.c\
+	sccslast.c\
+	setmtime.c\
+	stralloc.c\
+	strclean.c\
+	s2gid.c\
+	s2uid.c\
+	txtalloc.c\
+	uid2s.c\
+	vecalloc.c\
+	which.c\
+	win2file.c
 #
 OBJS	=\
 	abspath.o\
@@ -39,7 +88,6 @@ OBJS	=\
 	resizewin.o\
 	savewin.o\
 	sccslast.o\
-	sccszone.o\
 	setmtime.o\
 	stralloc.o\
 	strclean.o\
@@ -53,11 +101,14 @@ OBJS	=\
 #
 all:	$L\
 	llib-ltd.ln
-$L:	$(OBJS)
 #
-$L:
+$L:	$(OBJS)
 	ar rv $L $?
 	ranlib $L
+#
+archive: $(OBJS)
+	rm -f $L
+	ar rv $L ($OBJS)
 #
 cmdch.o:	cmdch.h
 cutoff.o:	ptypes.h
@@ -68,7 +119,6 @@ rcslast.o:	rcsdefs.h
 rcsedit.o:	rcsdefs.h
 rcskeys.o:	rcsdefs.h
 rcsname.o:	rcsdefs.h
-sccszone.o:	ptypes.h
 setmtime.o:	ptypes.h
 win2file.o:	ptypes.h
 #
@@ -81,8 +131,16 @@ destroy:
 #
 install: all
 #
-llib-ltd.ln:	LLIB
+LLIB\
+$(SRCS):
+	sh -c 'for i in $@;do $(GET) -s sccs/s.$$i;done'
+#
+lintit.sh\
+makellib.sh:
+	sh -c 'for i in $@;do $(GET) -s sccs/s.$$i;chmod +x $$i;done'
+#
+llib-ltd.ln:	makellib.sh LLIB
 	makellib.sh LLIB td
 #
-lint.out:	llib-ltd.ln
+lint.out:	lintit.sh llib-ltd.ln
 	lintit.sh *.c >lint.out
