@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)newzone.c	1.6 88/08/09 09:33:26";
+static	char	sccs_id[] = "@(#)newzone.c	1.7 88/08/10 12:35:25";
 #endif	lint
 
 /*
@@ -54,11 +54,13 @@ static	time_t	now;
 static	char	old_TZ[NAMELEN];
 int	localzone;		/* public copy of minutes-west */
 
-#if	!defined(SYSTEM5) && !defined(apollo)
+#ifndef	SYSTEM5
+#ifndef	apollo
 typedef	char	**VEC;
 extern	VEC	environ;
 extern	char	*stralloc();
 	def_ALLOC(char *)
+#endif	apollo
 #endif	SYSTEM5
 
 /************************************************************************
@@ -77,13 +79,13 @@ name_of_tz(minutes)
 	static	 char	computed[NAMELEN];
 	register char	*s = computed,
 			*standard,
-			*daylight;
+			*DayLight;
 
 	switch (hours) {
-	case 5:	standard = "EST";	daylight = "EDT"; break;
-	case 6:	standard = "CST";	daylight = "CDT"; break;
-	case 7:	standard = "MST";	daylight = "MDT"; break;
-	case 8:	standard = "PST";	daylight = "PDT"; break;
+	case 5:	standard = "EST";	DayLight = "EDT"; break;
+	case 6:	standard = "CST";	DayLight = "CDT"; break;
+	case 7:	standard = "MST";	DayLight = "MDT"; break;
+	case 8:	standard = "PST";	DayLight = "PDT"; break;
 	default:
 		hours    = - hours;
 		if (minutes < 0) {
@@ -94,13 +96,13 @@ name_of_tz(minutes)
 		} else {
 			standard = "GMT";
 		}
-		daylight = "";
+		DayLight = "";
 	}
 	minutes %= 60;
 	FORMAT(s, "%s%d", standard, hours);
 	if (minutes)
 		FORMAT(s + strlen(s), ":%02d", minutes);
-	return (strcat(s, daylight));
+	return (strcat(s, DayLight));
 }
 
 /*
@@ -110,8 +112,13 @@ static
 reset_tz(name)
 char	*name;
 {
-#if	defined(SYSTEM5) || defined(apollo)
+#ifdef	apollo
 	putenv(name);
+	tzset();
+#else	apollo
+#ifdef	SYSTEM5
+	putenv(name);
+	tzset();
 #else	SYSTEM5
 register unsigned j, k;
 register char	*s;
@@ -138,10 +145,11 @@ int	match	= FALSE;	/* true iff we need no change */
 			strfree(s);
 		environ[j] = stralloc(name);
 	}
-#endif	SYSTEM5
-#if	defined(apollo) || defined(GOULD_NP1) || defined(SYSTEM5)
+#ifdef	GOULD_NP1
 	tzset();
-#endif
+#endif	GOULD_NP1
+#endif	SYSTEM5
+#endif	apollo
 }
 
 /*

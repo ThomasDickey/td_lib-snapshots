@@ -1,11 +1,17 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)doalloc.c	1.7 88/08/09 07:45:02";
+static	char	sccs_id[] = "$Header: /users/source/archives/td_lib.vcs/src/memory/RCS/doalloc.c,v 2.0 1988/08/10 12:19:33 ste_cm Exp $";
 #endif	lint
 
 /*
  * Author:	T.E.Dickey
  * Created:	09 Jan 1986
- * Modified:
+ * $Log: doalloc.c,v $
+ * Revision 2.0  1988/08/10 12:19:33  ste_cm
+ * BASELINE Thu Apr  6 09:45:13 EDT 1989
+ *
+ *		Revision 1.9  88/08/10  12:19:33  dickey
+ *		sccs2rcs keywords
+ *		
  *		10 May 1988, added 'dofree()' entrypoint for debugging aid.
  *		07 May 1987, to use generic 'failed()' as common exit.
  *
@@ -18,6 +24,7 @@ static	char	sccs_id[] = "@(#)doalloc.c	1.7 88/08/09 07:45:02";
  * Returns:	New pointer, unless procedure fails (then we simply exit).
  */
 
+#include	"ptypes.h"
 extern	char	*malloc (), *realloc ();
 
 #ifdef	DEBUG
@@ -76,7 +83,8 @@ char	*oldp;
 #endif	DEBUG
 	}
 	(void)printf("free(%#x) not found\r\n", oldp);
-#if	defined(apollo) && defined(DEBUG)
+#ifdef	DEBUG
+#ifdef	apollo
 	/* force a walkback */
 	{
 	char	msg[80];
@@ -84,4 +92,5 @@ char	*oldp;
 		(void)system(msg);
 	}
 #endif	apollo
+#endif	DEBUG
 }

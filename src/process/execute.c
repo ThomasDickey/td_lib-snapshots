@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)execute.c	1.5 88/08/09 10:11:28";
+static	char	sccs_id[] = "@(#)execute.c	1.6 88/08/10 12:27:02";
 #endif	lint
 
 /*
@@ -21,18 +21,20 @@ static	char	sccs_id[] = "@(#)execute.c	1.5 88/08/09 10:11:28";
 #include	<stdio.h>
 #include	<ctype.h>
 #include	<errno.h>
-extern	char	*doalloc();
 extern	char	*strcat();
 extern	char	*strcpy();
-extern	char	**environ;
 extern	int	errno;
 
-#ifndef	SYSTEM5
+#ifdef	SYSTEM5
+#define	EXECV(c,v,e)	execvp(c,v)
+#else	SYSTEM5
 #include	<sys/wait.h>
-#define	fork	vfork
-#define	execvp	execve
+extern	char	**environ;
+#define	fork		vfork
+#define	EXECV(c,v,e)	execve(c,v,e)
 #endif	SYSTEM5
 
+	/*ARGSUSED*/
 	def_DOALLOC(char *)
 
 execute(verb, args)
@@ -52,7 +54,7 @@ int	count	= 3,		/* minimum needed for 'bldarg()' */
 
 #ifdef	SYSTEM5
 int	status;
-#define	W_RETCODE	(status >> 8) & 0xff)
+#define	W_RETCODE	((status >> 8) & 0xff)
 #else	SYSTEM5
 union	wait	status;
 #define	W_RETCODE	status.w_retcode
@@ -89,7 +91,7 @@ union	wait	status;
 			return (-1);
 		return (0);
 	} else if (pid == 0) {
-		(void)execvp(what, myargv, environ);
+		(void)EXECV(what, myargv, environ);
 		(void)_exit(errno);	/* just in case exec-failed */
 		/*NOTREACHED*/
 	}
