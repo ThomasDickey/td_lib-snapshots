@@ -1,3 +1,11 @@
+1994-04-26  dickey@clark.net
+
+	* include/ptypes.h: make this compile with Linux
+
+	* src/curses/beep.c, src/curses/erasechr.c: Linux-port
+
+	* include/td_curse.h: compiled on Linux
+
 1994-04-01  dickey@clark.net
 
 	* COPYING: notice for alt.sources

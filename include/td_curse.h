@@ -1,4 +1,4 @@
-/* $Id: td_curse.h,v 12.6 1993/11/27 21:35:20 dickey Exp $ */
+/* $Id: td_curse.h,v 12.7 1994/04/26 22:33:24 tom Exp $ */
 
 /*
  * TD_LIB CURSES-related definitions
@@ -40,6 +40,9 @@
  * note: System5 curses does not define the 'screen' structure
  */
 #if SYS5_CURSES
+# ifdef linux
+	typedef	char	chtype;		/* sys5-curses data-type */
+# endif
 # ifdef	lint
 	struct	screen	{ int dummy; };
 # endif
@@ -53,7 +56,7 @@
 # endif
 #endif	/* SYSTEM5 */
 
-#if !defined(__hpux) && !defined(LINTLIBRARY)	/* defined in <curses.h> */
+#if !(defined(__hpux) || defined(linux) || defined(LINTLIBRARY))	/* defined in <curses.h> */
 extern	char	*tgetstr(_arx(char *,n) _ar1(char **,p));
 #endif
 
