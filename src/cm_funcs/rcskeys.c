@@ -1,45 +1,15 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcskeys.c,v 9.0 1991/05/15 09:40:33 ste_cm Rel $";
+static	char	Id[] = "$Id: rcskeys.c,v 9.1 1991/09/06 07:54:18 dickey Exp $";
 #endif
 
 /*
  * Title:	rcskeys.c (decode RCS keywords)
  * Author:	T.E.Dickey
  * Created:	26 May 1988
- * $Log: rcskeys.c,v $
- * Revision 9.0  1991/05/15 09:40:33  ste_cm
- * BASELINE Mon Jun 10 10:09:56 1991 -- apollo sr10.3
- *
- *		Revision 8.1  91/05/15  09:40:33  dickey
- *		apollo sr10.3 cpp complains about tag in #endif
- *		
- *		Revision 8.0  89/04/20  12:36:00  ste_cm
- *		BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
- *		
- *		Revision 7.0  89/04/20  12:36:00  ste_cm
- *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
- *		
- *		Revision 6.0  89/04/20  12:36:00  ste_cm
- *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
- *		
- *		Revision 5.0  89/04/20  12:36:00  ste_cm
- *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
- *		
- *		Revision 4.0  89/04/20  12:36:00  ste_cm
- *		BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
- *		
- *		Revision 3.0  89/04/20  12:36:00  ste_cm
- *		BASELINE Mon Jun 19 13:27:01 EDT 1989
- *		
- *		Revision 2.1  89/04/20  12:36:00  dickey
- *		include "ptypes.h" before "rcsdefs.h" because of function-prototypes there.
- *		
- *		Revision 2.0  88/09/28  09:31:03  ste_cm
- *		BASELINE Thu Apr  6 09:45:13 EDT 1989
- *		
- *		Revision 1.4  88/09/28  09:31:03  dickey
- *		sccs2rcs keywords
- *		
+ * Modified:
+ *		06 Sep 1991, added debug-trace
+ *		20 Apr 1989, include "ptypes.h" before "rcsdefs.h" because of
+ *			     function-prototypes there.
  *		28 Sep 1988, added 'strict' keyword.
  *		19 Aug 1988, added 'log', 'text' keywords so we can scan the
  *			     entire archive-file.
@@ -57,41 +27,52 @@ static	char	Id[] = "$Id: rcskeys.c,v 9.0 1991/05/15 09:40:33 ste_cm Rel $";
 #include	"rcsdefs.h"
 #include	<ctype.h>
 
-
-rcskeys(s)
-char	*s;
+rcskeys(arg)
+char	*arg;
 {
-static
-char	*keys[] = {
+	static	struct	{
+		int	code;
+		char	*text;
+		} keys[] = {
 				/* <admin> section			*/
-		"head",		/*0:	head	{<num>};		*/
-		"access",	/*1:	access	{<id>}*;		*/
-		"symbols",	/*2:	symbols	{<id> : <num>}*;	*/
-		"locks",	/*3:	locks	{<id> : <num>}*;	*/
-		"comment",	/*4:	comment	{<string};		*/
-		"strict",	/*5:	strict-locking in effect	*/
+		S_HEAD,		"head",		/* {<num>};		*/
+		S_BRANCH,	"branch",	/* {<num>}*;		*/
+		S_ACCESS,	"access",	/* {<id>}*;		*/
+		S_SYMBOLS,	"symbols",	/* {<id> : <num>}*;	*/
+		S_LOCKS,	"locks",	/* {<id> : <num>}*;	*/
+		S_COMMENT,	"comment",	/* {<string};		*/
+		S_STRICT,	"strict",	/* strict-locking	*/
 				/* <delta> section begins with <num>	*/
-		"date",		/*6:	date		<num>;		*/
-		"author",	/*7:	author		{<id>};		*/
-		"state",	/*8:	state		{<id>};		*/
-		"branches",	/*9:	branches	{<num>}*;	*/
-		"next",		/*10:	next		{<num>};	*/
-		"desc",		/*11: description ends header		*/
+		S_DATE,		"date",		/* <num>;		*/
+		S_AUTHOR,	"author",	/* {<id>};		*/
+		S_STATE,	"state",	/* {<id>};		*/
+		S_BRANCHES,	"branches",	/* {<num>}*;		*/
+		S_NEXT,		"next",		/* {<num>};		*/
+		S_DESC,		"desc",		/* ends header		*/
 				/* <deltatext> begins with <num>	*/
-		"log",		/*12: delta log-message			*/
-		"text"		/*13: delta text/editing commands	*/
+		S_LOG,		"log",		/* log-message		*/
+		S_TEXT,		"text"		/* text/editing commands*/
 		};
-register int j;
+	register int j;
+	register char	*s = arg;
+	int	code	= -1;
+
 	if (*s) {
 		if (isdigit(*s)) {
 			while (isdigit(*s) || (*s == '.'))	s++;
-			return (*s ? -1 : S_VERS);
+			if (*s == EOS)
+				code = S_VERS;
+		} else {
+			code = -2;	/* no match at all */
+			for (j = 0; j < sizeof(keys)/sizeof(keys[0]); j++) {
+				if (!strcmp(keys[j].text, s)) {
+					code = keys[j].code;
+					break;
+				}
+			}
 		}
-		for (j = 0; j < sizeof(keys)/sizeof(keys[0]); j++) {
-			if (!strcmp(keys[j], s))
-				return (j);
-		}
-		return (-2);	/* no match at all */
 	}
-	return (-1);
+	if (RCS_DEBUG > 1)
+		PRINTF("++ rcskeys(%s) = %d\n", arg, code);
+	return (code);
 }

@@ -1,3 +1,27 @@
+1991-09-06  dickey@software.org
+
+	* src/cm_funcs/rcsedit.c: added 'readonly' arg to 'rcsopen()'.
+
+	* src/cm_funcs/rcsperm.c, src/cm_funcs/rcsload.c, include/rcsdefs.h:
+	added 'readonly' arg to 'rcsopen()'
+
+	* src/cm_funcs/rcsload.c: lint
+
+	* src/cm_funcs/rcsload.c: made this compute line numbers for branches.
+	corrected line-number computation
+
+	* src/cm_funcs/rcsload.c: some cleanup, added code for 'author'
+
+	* src/cm_funcs/rcskeys.c: added debug-trace.
+	revised 'keys[]' table to ensure that we don't rely on the
+	arbitrary assignment of "S_???" names
+
+	* include/rcsdefs.h: added member 'author' to RCSTREE
+	added def of S_BRANCH to recognize all current rcs keys
+
+	* src/cm_funcs/rcsdebug.c:
+	modified to return a value if the environment variable has one
+
 1991-09-05  dickey@software.org
 
 	* src/cm_funcs/rcsload.c: added 'full' argument
