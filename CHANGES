@@ -1,3 +1,15 @@
+1991-12-10  dickey@software.org
+
+	* src/pathname/trnstree.c:
+	changed interfaces to make this more useful on UNIX:
+	a) added 'links' argument to control whether we allow symbolic
+	links, and b) pass-in 'sb' argument to the translate-function.
+	Also, accumulate entire list of filenames in a directory
+	before passing-in, since we may want to create temporary
+	files there; this would conflict with 'readdir()'
+
+	* include/port2vms.h: added 'links' argument to 'transtree()'
+
 1991-10-23  dickey@software.org
 
 	* include/ptypes.h: oops: forgot to leave getopt defined for vms
