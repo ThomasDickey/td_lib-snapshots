@@ -1,3 +1,27 @@
+1988-09-30  dickey@software.org
+
+	* src/port2vms/path2dir.c: New file.
+
+1988-09-30  ste_cm@software.org
+
+	* src/port2vms/path2dir.c: BASELINE Mon Jun 12 08:56:43 EDT 1989
+
+	* src/port2vms/path2dir.c:
+	BASELINE Mon Sep 18 08:24:15 EDT 1989 -- support:ada_pits_000(rel3)
+
+	* src/port2vms/path2dir.c: BASELINE Tue Aug 14 16:27:44 1990
+
+1988-09-30  dickey@software.org
+
+	* src/port2vms/zone2vms.c: New file.
+
+1988-09-30  ste_cm@software.org
+
+	* src/port2vms/zone2vms.c: BASELINE Mon Jun 12 08:56:43 EDT 1989
+
+	* src/port2vms/zone2vms.c:
+	BASELINE Mon Sep 18 08:24:15 EDT 1989 -- support:ada_pits_000(rel3)
+
 1988-09-28  dickey@software.org
 
 	* src/port2vms/vms_dirs.c: New file.
