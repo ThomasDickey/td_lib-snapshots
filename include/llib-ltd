@@ -1,14 +1,5 @@
-/* $Id: llib-ltd,v 12.0 1993/04/26 15:29:14 ste_cm Rel $ */
+/* $Id: llib-ltd,v 12.1 1994/06/26 20:25:00 tom Exp $ */
 /*LINTLIBRARY*/
 
 #define	LINTLIBRARY
-#define	CUR_PTYPES
-#define	SIG_PTYPES
-#include	"ptypes.h"
-#include	"td_qsort.h"
-#include	"td_scomp.h"
-#include	"dyn_str.h"
-#include	"rcsdefs.h"
-#include	"sccsdefs.h"
-#include	"td_sheet.h"
-#include	"td_lib.h"
+#include <td_local.h>

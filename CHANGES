@@ -1,3 +1,28 @@
+1994-06-26  dickey@clark.net
+
+	* src/curses/scr_size.c: use BSD-style ioctl to obtain window size
+
+	* configure.in: added ioctl.h tests
+
+	* src/pathname/walktree.c: changed name
+
+	* src/pathname/walktree.c: use MODULE_ID
+
+	* aclocal.m4:
+	do TD_HAVE_FUNCS in one place, to make the configure script more efficient
+
+	* configure.in: moved test for beep, keypad funcs here
+
+	* include/td_ext.h: added ifdefs
+
+	* aclocal.m4: corrections to TD_HAVE_FUNCS
+
+	* include/llib-ltd: use <td_local.h>
+
+	* include/Makefile: added <td_local.h>
+
+	* include/td_local.h: RCS_BASE
+
 1994-06-25  dickey@clark.net
 
 	* configure.in: add/use TD_HAVE_FUNCS

@@ -1,8 +1,7 @@
 dnl Process this file with 'autoconf' to produce a 'configure' script
-dnl $Header: /users/source/archives/td_lib.vcs/RCS/configure.in,v 12.16 1994/06/25 22:31:31 tom Exp $
-AC_REVISION($Revision: 12.16 $)
+dnl $Header: /users/source/archives/td_lib.vcs/RCS/configure.in,v 12.19 1994/06/26 23:47:36 tom Exp $
+AC_REVISION($Revision: 12.19 $)
 AC_INIT(include/td_lib.h)
-dnl AC_CONFIG_HEADER(include/config.h)
 AC_HAVE_LIBRARY(bsd, [LIBS="$LIBS -lbsd"])
 TD_RCS_SCCS
 AC_CONST
@@ -12,27 +11,105 @@ AC_MAJOR_HEADER
 AC_RETSIGTYPE
 TD_REGEX
 TD_ANSI_CPP
-AC_HAVE_HEADERS(stdlib.h unistd.h)
-AC_HAVE_HEADERS(string.h memory.h pwd.h)
+AC_HAVE_HEADERS(stdlib.h unistd.h string.h memory.h pwd.h)
 AC_HAVE_HEADERS(stdarg.h varargs.h)
-AC_HAVE_HEADERS(file.h)
-AC_HAVE_HEADERS(fcntl.h)
+AC_HAVE_HEADERS(file.h fcntl.h ioctl.h)
 dnl don't combine <file.h> and <sys/file.h>, because autoconf gets confused
-AC_HAVE_HEADERS(sys/file.h)
-AC_HAVE_HEADERS(sys/fcntl.h)
-AC_HAVE_HEADERS(termios.h sgtty.h)
-AC_HAVE_HEADERS(utime.h)
+AC_HAVE_HEADERS(sys/file.h sys/fcntl.h sys/ioctl.h)
+AC_HAVE_HEADERS(termios.h sgtty.h utime.h)
 TD_WAIT
 TD_SIZE_T
 TD_CURSES
-AC_HAVE_FUNCS(execvp)
-AC_HAVE_FUNCS(lstat)
-AC_HAVE_FUNCS(ltostr)
-AC_HAVE_FUNCS(rename)
-AC_HAVE_FUNCS(tcgetattr)
-AC_HAVE_FUNCS(utime)
+TD_HAVE_FUNCS(
+_exit \
+_filbuf \
+_flsbuf \
+beep \
+bzero \
+calloc \
+closedir \
+creat \
+endgrent \
+endpwent \
+execvp \
+exit \
+fclose \
+fflush \
+fgetc \
+fork \
+fprintf \
+fputc \
+fputs \
+fread \
+free \
+fscanf \
+fseek \
+fwrite \
+getcwd \
+getegid \
+getenv \
+geteuid \
+getgid \
+getgrent \
+getgrgid \
+getgrnam \
+getopt \
+getpwent \
+getpwnam \
+getpwuid \
+getuid \
+getwd \
+ioctl \
+keypad \
+lstat \
+ltostr \
+malloc \
+mkstemp \
+mktemp \
+open \
+opendir \
+pclose \
+perror \
+popen \
+printf \
+putenv \
+puts \
+readdir \
+readlink \
+realloc \
+rename \
+rewind \
+rewinddir \
+seekdir \
+setbuf \
+setegid \
+setgrent \
+setlinebuf \
+setpwent \
+setrgid \
+setruid \
+sprintf \
+sscanf \
+strchr \
+strrchr \
+strtok \
+strtol \
+symlink \
+system \
+tcgetattr \
+telldir \
+tgetent \
+tgetnum \
+time \
+tolower \
+toupper \
+ungetc \
+utime \
+vfork \
+wait \
+)
 dnl cannot distinguish between function/data in libraries...
-AC_HAVE_FUNCS(timezone)
+TD_HAVE_FUNCS(timezone)
 TD_GMTOFF
 TD_DEV_T
 TD_INO_T

@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: walktree.c,v 12.5 1994/05/22 21:59:47 tom Exp $";
-#endif
-
 /*
  * Title:	walktree.c (link/directory tree)
  * Author:	T.E.Dickey
@@ -53,6 +49,8 @@ static	char	Id[] = "$Id: walktree.c,v 12.5 1994/05/22 21:59:47 tom Exp $";
 #include	"ptypes.h"
 #include	"td_qsort.h"
 
+MODULE_ID("$Id: walktree.c,v 12.7 1994/06/26 21:15:18 tom Exp $")
+
 /************************************************************************
  *	local definitions						*
  ************************************************************************/
@@ -96,7 +94,7 @@ int	walktree(
 	char		old_wd[BUFSIZ];
 	char		new_wd[BUFSIZ];
 	DIR		*dp;
-	Dirent_t	*de;
+	DirentT		*de;
 
 	if (stat(namearg, sb_) >= 0) {
 		mode = (sb.st_mode & S_IFMT);

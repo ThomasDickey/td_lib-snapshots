@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.17 1994/06/25 23:57:34 tom Exp $
+dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.19 1994/06/26 20:48:18 tom Exp $
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "TD_" to "AC_"
 dnl ---------------------------------------------------------------------------
@@ -77,7 +77,7 @@ dnl	Combines AC_HAVE_FUNCS logic with additional test from Kevin Buettner
 dnl	that checks to see if we need a prototype for the given function.
 define([TD_HAVE_FUNCS],
 [
-td_compile=$ac_compile
+td_compile="$ac_compile"
 ac_compile="$ac_compile -Iinclude"
 for ac_func in $1
 do
@@ -87,34 +87,15 @@ changequote([,])dnl
 AC_FUNC_CHECK(${ac_func},
 AC_DEFINE(HAVE_${ac_tr_func}))dnl
 AC_COMPILE_CHECK([missing "$ac_func" extern],
+[#include <td_local.h>],
 [
-#define	ACC_PTYPES
-#define	CHR_PTYPES
-#define	CUR_PTYPES
-#define	DIR_PTYPES
-#define	GRP_PTYPES
-#define	OPN_PTYPES
-#define	PWD_PTYPES
-#define	SIG_PTYPES
-#define	STR_PTYPES
-#define	TIM_PTYPES
-#define	WAI_PTYPES
-
-#include <ptypes.h>
-#include <td_qsort.h>
-#include <td_scomp.h>
-#include <dyn_str.h>
-#include <rcsdefs.h>
-#include <sccsdefs.h>
-#include <td_sheet.h>
-
 #undef $ac_func
 struct zowie { int a; double b; struct zowie *c; char d; };
 extern struct zowie *$ac_func();
 ],
 AC_DEFINE(NEED_$ac_tr_func))
 done
-ac_compile=$td_compile
+ac_compile="$td_compile"
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl	On both Ultrix and CLIX, I find size_t defined in <stdio.h>
@@ -292,7 +273,6 @@ dnl ---------------------------------------------------------------------------
 dnl Test for interesting things about curses
 define([TD_CURSES],
 [AC_HAVE_LIBRARY(curses)
-TD_HAVE_FUNCS(beep keypad)
 TD_CURSES_CHTYPE
 TD_CURSES_ERASECHAR
 TD_CURSES_KILLCHAR
@@ -315,7 +295,6 @@ dnl	that if we've got union-wait, we'll automatically use it.
 dnl
 define([TD_WAIT],
 [AC_CHECKING(wait include/argument type)
-TD_HAVE_FUNCS(wait)
 AC_HAVE_HEADERS(wait.h)
 AC_HAVE_HEADERS(sys/wait.h)td_decl='#include <sys/types.h>
 '
