@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Id: aclocal.m4,v 12.113 1998/03/02 00:28:40 tom Exp $
+dnl $Id: aclocal.m4,v 12.115 1998/04/25 14:54:09 tom Exp $
 dnl vi:set ts=4:
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "CF_" to "AC_"
@@ -44,7 +44,13 @@ cf_save_CFLAGS="$CFLAGS"
 # HP-UX			-Aa -D_HPUX_SOURCE
 # SVR4			-Xc
 # UnixWare 1.2		(cannot use -Xc, since ANSI/POSIX clashes)
-for cf_arg in "-DCC_HAS_PROTOS" "" -qlanglvl=ansi -std1 "-Aa -D_HPUX_SOURCE" -Xc
+for cf_arg in "-DCC_HAS_PROTOS" \
+	"" \
+	-qlanglvl=ansi \
+	-std1 \
+	"-Aa -D_HPUX_SOURCE +e" \
+	"-Aa -D_HPUX_SOURCE" \
+	-Xc
 do
 	CFLAGS="$cf_save_CFLAGS $cf_arg"
 	AC_TRY_COMPILE(
@@ -279,7 +285,9 @@ do
 	AC_CACHE_VAL(cf_cv_func_$cf_func,[
 		eval cf_result='$ac_cv_func_'$cf_func
 		if test ".$cf_result" != ".no"; then
-			AC_TRY_LINK([#include <curses.h>],
+			AC_TRY_LINK([
+#define _XOPEN_SOURCE_EXTENDED
+#include <curses.h>],
 			[
 #ifndef ${cf_func}
 long foo = (long)(&${cf_func});
@@ -307,16 +315,16 @@ case $host_os in #(vi
 freebsd*) #(vi
 	AC_CHECK_LIB(mytinfo,tgoto,[LIBS="-lmytinfo $LIBS"])
 	;;
-*hp-hpux10.*)
+hpux10.*)
+	AC_CHECK_LIB(cur_colr,initscr,[
+		LIBS="-lcur_colr $LIBS"
+		CFLAGS="-I/usr/include/curses_colr $CFLAGS"
+		ac_cv_func_initscr=yes
+		],[
 	AC_CHECK_LIB(Hcurses,initscr,[
 		# HP's header uses __HP_CURSES, but user claims _HP_CURSES.
 		LIBS="-lHcurses $LIBS"
 		CFLAGS="-D__HP_CURSES -D_HP_CURSES $CFLAGS"
-		ac_cv_func_initscr=yes
-		],[
-	AC_CHECK_LIB(cur_color,initscr,[
-		LIBS="-lcur_color $LIBS"
-		CFLAGS="-I/usr/include/curses_colr $CFLAGS"
 		ac_cv_func_initscr=yes
 		])])
 	;;
@@ -497,6 +505,11 @@ AC_DEFUN([CF_FIND_LIBRARY],
 if test $cf_cv_have_lib_$1 = no ; then
 	AC_ERROR(Cannot link $1 library)
 fi
+case $host_os in #(vi
+linux*) # Suse Linux does not follow /usr/lib convention
+	$1="[$]$1 /lib"
+	;;
+esac
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl A conventional existence-check for 'lstat' won't work with the Linux
@@ -1311,12 +1324,13 @@ else
 fi
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl Derive the 'PROG_EXT' variable, used for porting executables to OS/2 EMX
-dnl and other quasi-Unix layers on PC's.
-AC_DEFUN([CF_PROG_EXT],[
+dnl Compute $PROG_EXT, used for non-Unix ports, such as OS/2 EMX.
+AC_DEFUN([CF_PROG_EXT],
+[
+AC_REQUIRE([CF_CHECK_CACHE])
 PROG_EXT=
 case $cf_cv_system_name in
-os2*) # (vi
+os2*)
     # We make sure -Zexe is not used -- it would interfere with @PROG_EXT@
     CFLAGS="$CFLAGS -Zmt -D__ST_MT_ERRNO__"
     LDFLAGS=`echo "$LDFLAGS -Zmt -Zcrtdll" | sed "s/-Zexe//g"`
@@ -1481,6 +1495,10 @@ AC_MSG_CHECKING(for size_t in <sys/types.h> or <stdio.h>)
 AC_CACHE_VAL(cf_cv_type_size_t,[
 	AC_TRY_COMPILE([
 #include <sys/types.h>
+#if STDC_HEADERS
+#include <stdlib.h>
+#include <stddef.h>
+#endif
 #include <stdio.h>],
 		[size_t x],
 		[cf_cv_type_size_t=yes],
