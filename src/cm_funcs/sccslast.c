@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	sccs_id[] = "@(#)sccslast.c	1.1 86/10/20 11:05:01";
+static	char	sccs_id[] = "@(#)sccslast.c	1.2 87/01/23 08:59:31";
 #endif	lint
 
 /*
@@ -13,6 +13,8 @@ static	char	sccs_id[] = "@(#)sccslast.c	1.1 86/10/20 11:05:01";
 extern	char	*strcpy();
 
 extern	long	packdate();
+
+#define	MAXPATH	256
 
 /*
  * Set the release.version and date values iff we find a legal sccs-file at
@@ -54,7 +56,7 @@ char	*path;
 unsigned char *rels_, *vers_;
 time_t	*date_;
 {
-char	name[128];
+char	name[MAXPATH+1];
 register char *s;
 
 	*rels_ = *vers_ = 0;

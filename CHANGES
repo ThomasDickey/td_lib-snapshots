@@ -1,3 +1,7 @@
+1987-01-23  Thomas E. Dickey
+
+	* src/cm_funcs/sccslast.c: Increased pathlength.
+
 1987-01-22  Thomas E. Dickey
 
 	* src/pathname/denode.c: New file.
