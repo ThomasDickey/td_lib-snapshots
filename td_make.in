@@ -1,4 +1,4 @@
-# $Id: old-td_lib.mk,v 12.4 1994/05/28 12:15:24 tom Exp $
+# $Id: td_make.in,v 12.1 1994/07/04 17:14:11 tom Exp $
 # common definitions for makefiles built over TD_LIB library.
 
 ####### (Environment) ##########################################################
@@ -14,27 +14,32 @@ GET	= checkout
 COPY	= cp -p
 PUT	= $(RM) $@; $(COPY) $? $@
 
-MAKE	= make $(MFLAGS) -k$(MAKEFLAGS)	CFLAGS="$(CFLAGS)" COPY="$(COPY)"
+MAKE	= @MAKE@ $(MFLAGS) -k$(MAKEFLAGS) CFLAGS="$(CFLAGS)" COPY="$(COPY)"
 
-#CFLAGS	=
-#CC	= gcc -g -O -Wall -Wshadow -Wconversion -Wstrict-prototypes -Wmissing-prototypes
-#CC	= gcc -D__hpux -DNO_IDENT -O -Wall -Wshadow -Wconversion -Wstrict-prototypes -Wmissing-prototypes
-#LINK	= purify $(CC)
-LINK	= $(CC)
+CC		= @CC@
+INSTALL		= @INSTALL@
+INSTALL_PROGRAM	= @INSTALL_PROGRAM@
+INSTALL_DATA	= @INSTALL_DATA@
+RANLIB		= @RANLIB@
 
-INSTALL_BIN = $(TOP)/install_bin
-INSTALL_LIB = $(TOP)/install_lib
-INSTALL_MAN = $(TOP)/install_man
+CFLAGS		= @CC_OPTS@
+#LINK		= purify $(CC)
+LINK		= $(CC)
+
+INSTALL_BIN	= $(TOP)/install_bin
+INSTALL_LIB	= $(TOP)/install_lib
+INSTALL_MAN	= $(TOP)/install_man
 
 ####### (Command-line Options) #################################################
-INCLUDES= -I. -I$I
-CPP_OPTS= $(DEFINES) $(INCLUDES)
+INCLUDES	= -I. -I$I @INCLUDES@
+DEFINES		= -DHAVE_CONFIG_H
+CPP_OPTS	= $(DEFINES) $(INCLUDES)
 
-LIBS	= $L/$(TD_LIB).a
-DATE	= echo '** '`date` >> $@
+LIBS		= $L/$(TD_LIB).a @LIBS@
+DATE		= echo '** '`date` >> $@
 
-LINTLIBS= -ltd
-LINTOPTS= $(CPP_OPTS) -DNO_IDENT $(LINTLIBS)
+LINTLIBS	= -ltd @LIBS@
+LINTOPTS	= $(CPP_OPTS) -DNO_IDENT $(LINTLIBS)
 
 ####### (Standard Lists) #######################################################
 # don't put .a into CLEAN, because VERDIX-ADA uses that for source!
@@ -42,7 +47,7 @@ CLEAN	= *.[oi] *.lint *.bak *.log *.out *.tst .nfs* *.pure* core
 DESTROY	=sh -c 'for i in *;do case $$i in RCS);; *) $(RM) $$i;;esac;done;exit 0'
 RUN_TESTS=sh -c '$@.sh 2>&1 | tee -a $@.out'
 
-PTYPES_H =	$I/ptypes.h	$I/td_lib.h
+PTYPES_H =	$I/ptypes.h	$I/td_ext.h	$I/td_lib.h	$I/config.h
 CURSES_H =	$(PTYPES_H)	$I/td_curse.h
 QSORT_H =	$(PTYPES_H)	$I/td_qsort.h
 RCSDEFS_H =	$(PTYPES_H)	$I/rcsdefs.h	$I/deltree.h
@@ -53,6 +58,7 @@ CPROTO	= cproto -e -i -fo'\\n\\t\\t' -fp'\\n\\t\\t'
 
 LINT_EACH = sh -c 'for i in $?;do echo $$i:; tdlint $(LINTOPTS) $$i >>$@;done'
 
+#.SUFFIXES:
 .SUFFIXES: .c .o .a
 
 .c.o:		; $(CC) $(CPP_OPTS) $(CFLAGS) -c $<

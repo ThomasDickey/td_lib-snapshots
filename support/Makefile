@@ -1,8 +1,9 @@
-# $Id: Makefile,v 12.0 1993/04/26 16:35:58 ste_cm Rel $
+# $Id: Makefile,v 12.1 1994/07/04 23:53:53 tom Exp $
 # make-file for TD_LIB support directory
 
 ####### (Development) ##########################################################
 GET	= checkout
+RM	= -rm -f
 
 ####### (Command-line Options) #################################################
 
@@ -12,8 +13,8 @@ SOURCES	= Makefile td_lib.mk
 ####### (Standard Productions) #################################################
 all\
 run_test:	$(SOURCES) $(ALL)
-clean:			; rm -f *.out
-clobber:	clean	; rm -f $(ALL)
+clean:			; $(RM) *.out
+clobber:	clean	; $(RM) $(ALL)
 destroy:		# will get here last
 sources:	$(SOURCES)
 lint.out:

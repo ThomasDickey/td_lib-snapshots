@@ -1,12 +1,9 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: erasechr.c,v 12.6 1994/05/30 23:22:50 tom Exp $";
-#endif
-
 /*
  * Title:	erasechar.c (return erase-char value)
  * Author:	T.E.Dickey
  * Created:	24 Mar 1988
  * Modified:
+ *		04 Jul 1994, autoconf mods.
  *		19 May 1994, port to Solaris
  *		26 Apr 1994, port to Linux
  *		29 Oct 1993, ifdef-ident
@@ -20,28 +17,53 @@ static	char	Id[] = "$Id: erasechr.c,v 12.6 1994/05/30 23:22:50 tom Exp $";
 
 #include	"td_curse.h"
 
+MODULE_ID("$Id: erasechr.c,v 12.8 1994/07/04 11:58:27 tom Exp $")
+
+#define	STDIN_FD 0
+
 #if	!HAVE_ERASECHAR
 int	erasechar(_AR0)
 {
-	int	code	= '\b';
-	struct	sgttyb	buf;
-
-	if (ioctl(0, TIOCGETP, (caddr_t)&buf) >= 0)
+	int	code	= '\b';		/* default value */
+	TermioT buf;
+#if USING_TERMIOS_H
+	if (tcgetattr(0, &buf) >= 0)
+		code = buf.c_cc[VERASE];
+#else
+# if USING_TERMIO_H
+	if (ioctl(0, TCGETA, (char *)&buf) >= 0)
+		code = buf.c_cc[VERASE];
+# else
+#  if USING_SGTTY_H
+	if (ioctl(STDIN_FD, TIOCGETP, (caddr_t)&buf) >= 0)
 		code = buf.sg_erase;
+#  endif
+# endif
+#endif
 	return (code);
 }
-#endif
+#endif	/* !HAVE_ERASECHAR */
 
 int	eraseword(_AR0)
 {
-#if defined(__hpux) || defined(__svr4__) || defined(linux) || defined(MSDOS)
-	return -1;
+	int	code	= CTL('W');	/* default value */
+#if USING_TERMIOS_H
+# ifdef VWERASE				/* SunOS has it */
+	if (tcgetattr(0, &buf) >= 0)
+		code = buf.c_cc[VWERASE];
+# endif
 #else
-	int	code	= EOS;
+# if USING_TERMIO_H
+	if (ioctl(0, TCGETA, (char *)&buf) >= 0)
+		code = buf.c_cc[VWERASE];
+# else
+#  if USING_SGTTY_H
 	struct ltchars buf;
 
-	if (ioctl(0, TIOCGLTC, (caddr_t)&buf) >= 0)
+	if (ioctl(STDIN_FD, TIOCGLTC, (caddr_t)&buf) >= 0)
 		code = buf.t_werasc;
-	return (code);
+#  endif
+# endif
 #endif
+	return (code);
 }

@@ -1,4 +1,4 @@
-/* $Id: td_ext.h,v 12.3 1994/07/02 01:30:44 tom Exp $ */
+/* $Id: td_ext.h,v 12.4 1994/07/03 00:42:43 tom Exp $ */
 
 #ifndef	TD_EXT_H
 #define	TD_EXT_H
@@ -389,7 +389,7 @@ extern	int	optind;
 extern	char *	getwd    ARGS((char *p));
 #endif /* HAVE_GETWD */
 #if HAVE_IOCTL && NEED_IOCTL
-extern	int	ioctl	 ARGS((int f, int m, caddr_t p));
+extern	int	ioctl	 ARGS((int f, int m, ...));
 #endif /* HAVE_IOCTL */
 #if HAVE_LSTAT && NEED_LSTAT
 extern	int	lstat	 ARGS((const char *f, Stat_t *s));

@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: cmdch.c,v 12.9 1994/05/30 21:24:26 tom Exp $";
+static	char	Id[] = "$Id: cmdch.c,v 12.10 1994/07/04 22:44:47 tom Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: cmdch.c,v 12.9 1994/05/30 21:24:26 tom Exp $";
  * Author:	T.E.Dickey
  * Created:	01 Dec 1987 (broke out of 'ded.c')
  * Modified:
+ *		04 Jul 1994, mods for autoconf.
  *		18 Nov 1993, added xt_mouse support.
  *		05 Nov 1993, absorb "cmdch.h" into "td_curse.h"
  *		29 Oct 1993, ifdef-ident
@@ -30,8 +31,8 @@ static	char	Id[] = "$Id: cmdch.c,v 12.9 1994/05/30 21:24:26 tom Exp $";
  *		(see "cmdch.h").
  *
  * Configure:
- *		HAS_CURSOR is true iff the curses library defines KD, KU, etc.,
- *			which are attributes with arrow keys.
+ *		HAVE_TCAP_CURSOR is true iff the curses library defines KD, KU,
+ *			etc., which are attributes with arrow keys.
  *
  *		HAVE_KEYPAD is true iff the curses library supports 'keypad()',
  *			so that we can assume 'getch()' will translate arrow
@@ -50,18 +51,6 @@ static	char	Id[] = "$Id: cmdch.c,v 12.9 1994/05/30 21:24:26 tom Exp $";
 #define	END(s)	s[strlen(s)-1]
 #define	if_C(c)	if (i_blk[j] == c)
 #define	EQL(s)	(!strcmp(i_blk,((s)?(s):"")))
-
-/* pre-SR10 apollo systems do not have cursor-codes in curses */
-#define	HAS_CURSOR
-#ifdef	apollo
-#ifndef	apollo_sr10
-#undef	HAS_CURSOR
-#endif
-#endif
-
-#if	SYS5_CURSES
-#undef	HAS_CURSOR	/* patch: want to use 'keypad()' */
-#endif
 
 #ifndef	NO_XTERM_MOUSE
 
@@ -98,16 +87,18 @@ int	cmdch(
 			had_c	= 0,
 			count	= 0;
 	auto	char	i_blk[1024];
-	static	int	init	= FALSE,
-			ansi	= FALSE;
-#ifndef	HAS_CURSOR
+#if !HAVE_KEYPAD
+# if !HAVE_TCAP_CURSOR
 	static	char	*KU, *KD, *KR, *KL;
-#endif
+# endif
+	static	int	init	= FALSE;
+	static	int	ansi	= FALSE;
+#endif	/* HAVE_KEYPAD */
 
 #if !HAVE_KEYPAD
 	if (!init) {
 		init = TRUE;
-#ifndef	HAS_CURSOR
+# if !HAVE_TCAP_CURSOR
 		{
 		static	char	o_blk[1024], *a_ = o_blk;
 			if (tgetent(i_blk,getenv("TERM")) <= 0)
@@ -117,7 +108,7 @@ int	cmdch(
 			KR = tgetstr("kr", &a_);
 			KL = tgetstr("kl", &a_);
 		}
-#endif
+# endif
 		if (KD && KU && KR && KL) {
 			if (ESC(*KD) && ESC(*KU) && ESC(*KR) && ESC(*KL))
 				ansi	=  END(KU) == 'A'

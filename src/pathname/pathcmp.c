@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: pathcmp.c,v 12.2 1993/10/29 17:35:25 dickey Exp $";
-#endif
-
 /*
  * Title:	pathcmp.c (pathname compare)
  * Author:	T.E.Dickey
@@ -22,11 +18,9 @@ static	char	Id[] = "$Id: pathcmp.c,v 12.2 1993/10/29 17:35:25 dickey Exp $";
 #define		STR_PTYPES
 #include	"ptypes.h"
 
-#ifndef	SLASH
-#define	SLASH	'/'	/* divider between levels */
-#endif
+MODULE_ID("$Id: pathcmp.c,v 12.4 1994/07/04 23:26:57 tom Exp $")
 
-#define	CUT(p,s)	if ((s = strchr(p, SLASH)) != 0) *s = EOS
+#define	CUT(p,s)	if ((s = strchr(p, PATH_SLASH)) != 0) *s = EOS
 
 			/* TRACE makes the code more verbose */
 #ifdef	DEBUG
@@ -56,7 +50,7 @@ int	pathcmp(
 	p2 = strcpy(tmp2, p2);
 
 	TRACE(("\n\t(%s %s)", p1, p2))
-	while (*p1 == SLASH && *p2 == SLASH)
+	while (*p1 == PATH_SLASH && *p2 == PATH_SLASH)
 		p1++, p2++;		/* faster than strcmp... */
 	while (*p1 && *p2) {
 		CUT(p1,s1);

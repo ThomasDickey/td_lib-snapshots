@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.22 1994/07/02 22:41:43 tom Exp $
+dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.30 1994/07/04 23:37:52 tom Exp $
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "TD_" to "AC_"
 dnl ---------------------------------------------------------------------------
@@ -238,8 +238,10 @@ case "$DEFS" in
 #include <time.h>
 " ;;
 esac
+AC_COMPILE_CHECK([localzone declared], $ac_decl,
+[long x = localzone;], AC_DEFINE(LOCALZONE_DECLARED))
 AC_COMPILE_CHECK([timezone declared], $ac_decl,
-[long x = timezone;], AC_DEFINE(TIMEZONE_DECLARED), ac_no_timezone=1)
+[long x = timezone;], AC_DEFINE(TIMEZONE_DECLARED))
 AC_COMPILE_CHECK(tm_gmtoff in tm, $ac_decl,
 [struct tm tm; tm.tm_gmtoff;], AC_DEFINE(HAVE_TM_GMTOFF))
 AC_COMPILE_CHECK(tm_zone in tm, $ac_decl,
@@ -252,6 +254,12 @@ define([TD_CURSES_CHTYPE],
 AC_TEST_PROGRAM([#include <curses.h>
 int main() { chtype foo; exit(0); }
 ], [AC_DEFINE(HAVE_TYPE_CHTYPE)])
+])dnl
+dnl ---------------------------------------------------------------------------
+dnl Test if curses defines 'cbreak()' (maybe a macro or function)
+define([TD_CURSES_CBREAK],
+[AC_COMPILE_CHECK([function/macro cbreak],["#include <curses.h>
+"], [cbreak()], [AC_DEFINE(HAVE_CBREAK)])
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Test if curses defines 'erasechar()' (maybe a macro or function)
@@ -270,12 +278,97 @@ int main() { int foo = killchar(); exit(0); }
 ], [AC_DEFINE(HAVE_KILLCHAR)])
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl Test for interesting things about curses
-define([TD_CURSES],
-[AC_HAVE_LIBRARY(curses)
+dnl Test if curses defines 'struct screen'.
+dnl
+dnl	If this isn't defined, we cannot build a lint library that will check
+dnl	for that type, since it isn't resolved.
+dnl
+define([TD_STRUCT_SCREEN],
+[AC_COMPILE_CHECK([definition of struct-screen/macro],["#include <curses.h>
+"], [struct screen { int dummy;}], [AC_DEFINE(NEED_STRUCT_SCREEN)])
+])dnl
+dnl ---------------------------------------------------------------------------
+dnl Test if curses defines KD, KU, etc., for cursor keys
+dnl
+dnl	I found at least one implementation of curses that didn't declare these
+dnl	variables in the include-file, but did define them in the library.  If
+dnl	they're not in the include-file, ignore them.  Otherwise, assume that
+dnl	curses initializes them in 'initscr()'.
+dnl
+define([TD_TCAP_CURSOR],
+[AC_CHECKING([termcap-cursor variables])
+AC_TEST_PROGRAM([#include <curses.h>
+int main() { char *d=KD, *u=KU, *r=KR, *l=KL; exit(0); }
+], [AC_DEFINE(HAVE_TCAP_CURSOR)])
+])dnl
+dnl ---------------------------------------------------------------------------
+dnl Test for interesting things about curses functions/datatypes
+define([TD_CURSES_FUNCS],
+[AC_REQUIRE([TD_CURSES_LIBS])
 TD_CURSES_CHTYPE
+TD_CURSES_CBREAK
 TD_CURSES_ERASECHAR
 TD_CURSES_KILLCHAR
+TD_STRUCT_SCREEN
+TD_TCAP_CURSOR
+])dnl
+dnl ---------------------------------------------------------------------------
+dnl Test for the varieties of curses libraries.
+dnl
+dnl	There are two main varieties of curses: BSD and SYSV.  The latter has
+dnl	more features (e.g., keypad and function key support, auxiliary
+dnl	character set).  The easiest thing to test for is the presence of
+dnl	'keypad()' in the curses library.  BSD curses hasn't got it.
+dnl
+dnl	There's a free version of SYSV curses called 'ncurses'.  If we've got
+dnl	that, configure for it instead of the BSD curses.
+dnl
+dnl	On SunOS, we may have both BSD and SYS5 curses (the latter under /5lib
+dnl	and /5include).  I don't have a test case for that yet (94/7/4).
+dnl
+define([TD_CURSES_LIBS],
+[
+AC_PROVIDE([$0])
+td_save_LIBS="${LIBS}"
+AC_HAVE_LIBRARY(curses)
+td_have_keypad=yes
+case "$DEFS" in
+*HAVE_LIBCURSES*)
+	td_decl="#include <curses.h>
+"
+	AC_COMPILE_CHECK([BSD vs SYSV curses], $td_decl,
+	[keypad(curscr,1)],,
+	td_have_keypad=no)
+	;;
+esac
+if test $td_have_keypad = no
+then
+	td_save2LIBS="${LIBS}"
+	LIBS="${td_save_LIBS}"
+	AC_HAVE_LIBRARY(ncurses)
+	case "$DEFS" in
+	*HAVE_LIBNCURSES*)
+		# Linux installs NCURSES's include files in a separate
+		# directory to avoid confusion with the native curses.
+		#
+		# Autoconf 1.11 should have provided a way to add include path
+		# options to the cpp-tests.
+		if test -d /usr/include/ncurses
+		then
+			INCLUDES="$INCLUDES -I/usr/include/ncurses"
+			td_cpp="${ac_cpp}"
+			ac_cpp="${ac_cpp} $INCLUDES"
+			CFLAGS="$CFLAGS -I/usr/include/ncurses"
+			AC_HAVE_HEADERS(ncurses.h)
+		else
+			AC_HAVE_HEADERS(ncurses.h)
+		fi
+		;;
+	*)
+		LIBS="${td_save2LIBS}"
+		;;
+	esac
+fi
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl Test for non-Posix prototype for 'signal()'
@@ -303,7 +396,22 @@ RETSIGTYPE (*signal(int sig, RETSIGTYPE(*func)(int sig,...)))(int sig2,...);
 RETSIGTYPE catch(int sig, ...) { exit(1); }
 main() { signal(SIGINT, catch); exit(0); }
 ],[AC_DEFINE(SIG_ARGS_VARYING)])]
-)])dnl
+)
+AC_CHECKING([redefinable signal handler prototype])
+# We're checking the definitions of the commonly-used predefined signal macros,
+# to see if their values are the ones that we expect.  If so, we'll plug in our
+# own definitions, that have complete prototypes.
+case "$DEFS" in
+*SIG_ARGS_*) # we have prototypes
+AC_TEST_PROGRAM([
+#include <signal.h>
+#undef  NOT
+#define NOT(s,d) ((long)(s) != (long)(d))
+main() { exit(NOT(SIG_IGN,1) || NOT(SIG_DFL,0) || NOT(SIG_ERR,-1)); }
+],[AC_DEFINE(SIG_IGN_REDEFINEABLE)])
+;;
+esac
+])dnl
 dnl ---------------------------------------------------------------------------
 dnl Test for the presence of <sys/wait.h>, 'union wait', arg-type of 'wait()'.
 dnl
@@ -325,7 +433,7 @@ define([TD_WAIT],
 AC_HAVE_HEADERS(wait.h)
 AC_HAVE_HEADERS(sys/wait.h)td_decl='#include <sys/types.h>
 '
-case $DEFS in
+case "$DEFS" in
 *_SYS_WAIT_H*)td_decl="$td_decl
 #include <sys/wait.h>
 " ;;
