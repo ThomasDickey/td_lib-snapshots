@@ -1,3 +1,11 @@
+2004-09-16  dickey@invisible-island.net
+
+	* aclocal.m4: resync - miscellaneous fixes from lynx, xterm and cdk
+
+	* td_make.in: add EXTRA_CPPFLAGS
+
+	* COPYING: change to diffstat's copyright style
+
 2004-06-26  dickey@invisible-island.net
 
 	* config.sub, config.guess: 2004-06-24
