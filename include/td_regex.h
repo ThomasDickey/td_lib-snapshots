@@ -1,4 +1,4 @@
-/* $Id: td_regex.h,v 12.2 1994/06/25 14:14:22 tom Exp $ */
+/* $Id: td_regex.h,v 12.4 1994/07/12 18:53:16 tom Exp $ */
 
 /*
  * SYSTEM5/BSD4.x differences between native regular-expression handling:
@@ -35,8 +35,9 @@
 #endif
 
 #if HAVE_RE_COMP_FUNCS && !defined(REGEX_T) /* probably BSD4.x */
-	extern	char	*re_comp(_ar1(char *,s)); /* returns 0 or error message */
-	extern	int	re_exec(_ar1(char *,s));  /* (return > 0): match */
+					/*  IRIX defines in <unistd.h> */
+	extern	char	*re_comp(_ar1(const char *,s)); /* returns 0 or error message */
+	extern	int	re_exec(_ar1(const char *,s));  /* (return > 0): match */
 #  define REGEX_T char *
 #  define OLD_REGEX(expr)
 #  define NEW_REGEX(expr,pattern)	((expr = re_comp(pattern)) == 0)
@@ -49,7 +50,7 @@
 #  define REGEX_T char *
 #  define OLD_REGEX(expr)		if (expr != 0) { free(expr); expr = 0; }
 #  define NEW_REGEX(expr,pattern)	((expr = stralloc(pattern)) != 0)
-#  define GOT_REGEX(expr,string)	(strwcmp(expr, string) != 0)
+#  define GOT_REGEX(expr,string)	(strwcmp(expr, string) == 0)
 #endif
 
 #ifndef BAD_REGEX

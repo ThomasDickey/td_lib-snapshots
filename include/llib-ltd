@@ -1,5 +1,5 @@
-/* $Id: llib-ltd,v 12.1 1994/06/26 20:25:00 tom Exp $ */
+/* $Id: llib-ltd,v 12.2 1994/07/12 01:00:17 tom Exp $ */
 /*LINTLIBRARY*/
 
-#define	LINTLIBRARY
+#define	LINTLIBRARY 1
 #include <td_local.h>

@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.1 1994/07/02 15:10:36 tom Exp $
+# $Id: Makefile,v 1.2 1994/07/12 17:16:42 tom Exp $
 # MAKE-file for VMS-specific/portability library routines
 
 ####### (Environment) ##########################################################
@@ -9,7 +9,7 @@ CSRC	=
 
 SOURCES	= Makefile descrip.mms $(CSRC)
 
-OBJS	=
+OBJS	= dummy
 
 ####### (Standard Productions) #################################################
 include ../td_rules.mk

@@ -1,4 +1,4 @@
-# $Id: td_rules.mk,v 12.3 1994/07/05 00:01:25 tom Exp $
+# $Id: td_rules.mk,v 12.4 1994/07/12 17:06:32 tom Exp $
 # Common make-rules for TD_LIB
 
 ####### (Standard Productions) #################################################
@@ -14,7 +14,7 @@ sources:	$(SOURCES)
 
 ####### (Details of Productions) ###############################################
 $Z:	$(OBJS)
-	ranlib $Z
+	$(RANLIB) $Z
 
 .PRECIOUS: $Z
 

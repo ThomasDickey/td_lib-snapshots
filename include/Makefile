@@ -1,4 +1,4 @@
-# $Id: Makefile,v 12.3 1994/06/26 20:24:37 tom Exp $
+# $Id: Makefile,v 12.4 1994/07/12 01:00:30 tom Exp $
 # make-file for CM_TOOLS common interface directory
 
 THIS	= td
@@ -48,5 +48,5 @@ lincnt.out:	$(H_SRC)	; lincnt $(H_SRC) >$@
 ####### (Details of Productions) ###############################################
 #
 $(SOURCES):			; $(GET) $@
-$L/$(LLIB).ln:	$(SOURCES)	; - sh -c 'makellib -I. -L$L $(LLIB) $(llib)'
+$L/$(LLIB).ln:	$(SOURCES)	; - sh -c 'makellib -I. $(CPP_OPTS) -L$L $(LLIB) $(llib)'
 $(LLIB).i:	$(SOURCES)	; /usr/lib/cpp -Dlint -I. $(LLIB) $@
