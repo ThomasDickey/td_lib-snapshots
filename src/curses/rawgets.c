@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rawgets.c,v 5.0 1989/10/04 11:58:21 ste_cm Rel $";
+static	char	Id[] = "$Id: rawgets.c,v 8.0 1990/03/02 11:41:50 ste_cm Rel $";
 #endif	lint
 
 /*
@@ -7,9 +7,25 @@ static	char	Id[] = "$Id: rawgets.c,v 5.0 1989/10/04 11:58:21 ste_cm Rel $";
  * Title:	rawgets.c (raw-mode 'gets()')
  * Created:	29 Sep 1987 (from 'fl.c')
  * $Log: rawgets.c,v $
- * Revision 5.0  1989/10/04 11:58:21  ste_cm
- * BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+ * Revision 8.0  1990/03/02 11:41:50  ste_cm
+ * BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
  *
+ *		Revision 7.0  90/03/02  11:41:50  ste_cm
+ *		BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+ *		
+ *		Revision 6.0  90/03/02  11:41:50  ste_cm
+ *		BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+ *		
+ *		Revision 5.1  90/03/02  11:41:50  dickey
+ *		modified so that if this is invoked in no-wrap mode, and the
+ *		output buffer is wider than the screen, we automatically
+ *		scroll left/right.  also, permit arrow keys to work in
+ *		non-insert mode.  finally, added a test-driver to exercise
+ *		the code.
+ *		
+ *		Revision 5.0  89/10/04  11:58:21  ste_cm
+ *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+ *		
  *		Revision 4.1  89/10/04  11:58:21  dickey
  *		lint (apollo SR10.1)
  *		
@@ -62,9 +78,12 @@ static	char	Id[] = "$Id: rawgets.c,v 5.0 1989/10/04 11:58:21 ste_cm Rel $";
 #include	<ctype.h>
 #include	"cmdch.h"
 
+#define	SHIFT	5
+
 static	WINDOW	*Z;		/* window we use in this module */
 static	int	xbase,	ybase,	/* base-position of 'bfr[]' */
 		xlast,		/* last usable column in screen */
+		shift,		/* amount shifted in no-wrap mode */
 		wrap,		/* if we echo newline, assume wrappable */
 		errs,		/* flag for error/illegal command */
 		Imode;
@@ -94,17 +113,27 @@ char	*new;
 register
 int	y = ybase,
 	x = xbase,
-	z = new-bbase;
+	z = new-(bbase+shift);
+	int	original = shift;
+
+	while (z < 0) {		/* nowrap: shift-left */
+		shift -= SHIFT;
+		z += SHIFT;
+	}
 	while (z-- > 0) {
 		if (++x >= xlast) {
 			if (wrap) {
 				x = 0;
 				y++;
 			} else {
-				errs++;
-				break;
+				shift += SHIFT;
+				x -= SHIFT;
 			}
 		}
+	}
+	if (shift != original) {
+		(void)wmove(Z, ybase, xbase);
+		ShowAt(bbase+shift);
 	}
 	(void)wmove(Z,y,x);
 }
@@ -238,19 +267,16 @@ int	ec = erasechar(),
 	Imode = 1;
 	errs  = 0;
 	bbase = bfr;
+	shift = 0;
 	getyx(Z,ybase,xbase);		/* get my initial position */
 	xlast = xbase + size;
 	if (xlast >= Z->_maxx)
 		xlast = Z->_maxx - 1;
-	if (!(wrap  = newline)) {
-		if (xlast - xbase < size)
-			size = xlast - xbase;
-		bfr[size-1] = '\0';	/* ...permit initial display/move */
-	}
-	if (xbase + size < xlast)
-		xlast = xbase + size;
+	if (!(wrap = newline))
+		while (strlen(bfr) > (shift + xlast - xbase))
+			shift += SHIFT;
 
-	ShowAt(tag = bfr);
+	ShowAt((tag = bfr) + shift);
 	tag += strlen(tag);
 	MoveTo(tag);			/* ...and end-of-string */
 
@@ -279,7 +305,10 @@ int	ec = erasechar(),
 
 		if (c == '\t') {
 			toggle();
-		} else if (!Imode) {	/* process scroll-mode ops */
+		} else if (!Imode || !isascii(c)) {
+			/* process scroll-mode ops */
+			if (Imode)
+				count = 1;
 			if ((c == '\b') || (c == ARO_LEFT)) {
 				if (tag > bfr) {
 				char	*s = tag;
@@ -328,3 +357,32 @@ int	newline;
 {
 	return (wrawgets (stdscr, bfr,size,newline));
 }
+
+/************************************************************************
+ *	test procedure							*
+ ************************************************************************/
+#ifdef	TEST
+main(argc, argv)
+char	*argv[];
+{
+	register int	j	= 0;
+	auto	 int	wrap	= (argc > 1 && !strcmp(argv[1], "-w"));
+	auto	 char	bfr[BUFSIZ];
+
+	initscr();
+	rawterm();
+	*bfr = EOS;
+	while (strlen(bfr) < 3 * COLS) {
+		(void)strcat(bfr, "abcdefghijklmnopqrstuvwxyz.");
+		(void)sprintf(bfr + strlen(bfr), "%d.", j++);
+	}
+	for (j = 0; j < LINES; j++) {
+		move(j,0);
+		clrtobot();
+		move(j,0);
+		printw("%05d> ", j);
+		rawgets(bfr, sizeof(bfr), wrap);
+	}
+	endwin();
+}
+#endif	/* TEST */

@@ -1,38 +1,19 @@
-# $Id: Makefile,v 5.2 1989/12/08 08:31:51 dickey Exp $
+# $Id: Makefile,v 5.3 1990/03/02 11:50:31 dickey Exp $
 # MAKE-file for miscellaneous library routines
 #
 # $Log: Makefile,v $
-# Revision 5.2  1989/12/08 08:31:51  dickey
-# added suffix-driven rules for lint, test files
+# Revision 5.3  1990/03/02 11:50:31  dickey
+# separated CFLAGS, INCLUDES, DEFINES defs.
 #
+#	Revision 5.2  89/12/08  08:39:04  dickey
+#	added suffix-driven rules for lint, test files
+#	
 #	Revision 5.1  89/12/07  14:33:37  dickey
 #	added 'lint2.out' rule, which is less sensitive to command-length
 #	than 'lint.out' (though much slower!)
 #	
 #	Revision 5.0  89/10/26  08:54:17  ste_cm
 #	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
-#	
-#	Revision 4.7  89/10/26  08:54:17  dickey
-#	added TRACK_WD module
-#	
-#	Revision 4.6  89/10/24  11:48:43  dickey
-#	added module 'istextfile.c'
-#	
-#	Revision 4.5  89/10/04  12:13:16  dickey
-#	made "ptypes.h" and "common.h" dependencies for all objects (most
-#	needed it anyway).
-#	
-#	Revision 4.4  89/09/07  15:06:47  dickey
-#	added module "relpath.c"
-#	
-#	Revision 4.3  89/09/06  15:22:34  dickey
-#	use "ptypes.h" in 'abspath.c'; added missing ranlib to 'archive' rule
-#	
-#	Revision 4.2  89/08/25  09:56:12  dickey
-#	added ptypes.h dependency to which.o
-#	
-#	Revision 4.1  89/08/24  16:50:43  dickey
-#	added 'wrepaint.c'
 #	
 #	Revision 4.0  89/08/23  13:49:43  ste_cm
 #	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
@@ -44,9 +25,10 @@ GET	= checkout
 I	= ../interface
 J	= ../../../interface
 INCLUDES= -I$I
-CFLAGS  = $(DEFINES) $(INCLUDES) -O
+CFLAGS  =
 DATE	= echo '****'`date` >> $@
 LINTOPT	= $(DEFINES) $(INCLUDES) -I$J -ltd -lcurses -lapollo
+LIBS	= -lcurses -ltermcap
 #
 ####### (Standard Lists) #######################################################
 A	= ../lib/lib.a
@@ -237,12 +219,11 @@ OBJS	=\
 	wrepaint.o
 #
 ALL	= $A
-.PRECIOUS: $A
 #
 ####### (Standard Productions) #################################################
 all:		sources $(ALL)
 #
-clean:				; rm -f *.o *.out *.ln *.lint
+clean:				; rm -f core *.o *.out *.ln *.lint *.tst
 clobber:	clean		; rm -f $(ALL)
 destroy:
 	sh -c 'for i in *;do case $$i in RCS);; *) rm -f $$i;;esac;done;exit 0'
@@ -254,6 +235,8 @@ install: all
 $A:	$(OBJS)
 	ar rv $A $?
 	ranlib $A
+#
+.PRECIOUS: $A
 #
 archive: $(OBJS)
 	rm -f $A
@@ -286,5 +269,7 @@ lincnt.out:	$(CSRC)		; $(DATE); lincnt $(CSRC) >>$@
 .c.lint:
 	tdlint $(LINTOPT) $< >$@
 .c.tst:
-	$(CC) -o $@ -DTEST $(CFLAGS) $< $A
+	$(CC) -o $@ -DTEST $(CFLAGS) $(INCLUDES) $(DEFINES) $< $A $(LIBS)
 	rm -f $*.o
+.c.o:
+	$(CC) $(CFLAGS) $(INCLUDES) $(DEFINES) -c $<
