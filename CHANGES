@@ -1,3 +1,22 @@
+1988-09-19  dickey@software.org
+
+	* src/pathname/sameleaf.c: New file.
+
+	* src/pathname/sameleaf.c: sccs2rcs keywords
+
+1988-09-19  ste_cm@software.org
+
+	* src/pathname/sameleaf.c: BASELINE Mon Jun 19 13:27:01 EDT 1989
+
+	* src/pathname/sameleaf.c: BASELINE Thu Apr  6 09:45:13 EDT 1989
+
+	* src/pathname/sameleaf.c:
+	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
+
+1988-09-19  dickey@software.org
+
+	* src/Makefile, include/llib-ltd: added 'sameleaf.c' module.
+
 1988-09-13  dickey@software.org
 
 	* src/cm_funcs/newzone.c: lint

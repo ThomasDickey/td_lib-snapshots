@@ -1,4 +1,4 @@
-/* @(#)llib-ltd	1.46 88/09/13 09:47:38 */
+/* @(#)llib-ltd	1.47 88/09/19 07:36:58 */
 /*LINTLIBRARY*/
 
 #define	CUR_PTYPES
@@ -173,6 +173,9 @@ int	s2gid(s) char	*s; { return (0); }
 
 /* s2uid.c ------------------------------------------------------------ */
 int	s2uid(s) char	*s; { return (0); }
+
+/* sameleaf.c --------------------------------------------------------- */
+int	sameleaf(path,leaf) char *path, *leaf; { return(0); }
 
 /* savewin.c ---------------------------------------------------------- */
 	savewin() { }
