@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 12.18 1994/05/30 23:39:58 tom Exp $ */
+/* $Id: ptypes.h,v 12.19 1994/05/31 00:31:23 tom Exp $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -343,7 +343,7 @@ extern	gid_t	getgid(), getegid();
 extern	int	_filbuf	(FILE *);
 extern	int	_flsbuf	(int, FILE *);
 extern	void	bzero	(char *, int);
-extern	int	creat	(char *, int);
+extern	int	creat	(const char *, mode_t);
 extern	int	fclose	(FILE *);
 extern	int	fflush	(FILE *);
 extern	int	fgetc	(FILE *);
@@ -367,7 +367,7 @@ extern	int	setrgid	(uid_t);
 extern	int	ioctl	(int, int, caddr_t);
 extern	int	lstat	(char *, Stat_t *);
 #endif	/* __svr4__ */
-extern	int	open	(char *, int, int);
+extern	int	open	(const char *, int, ...);
 extern	int	pclose	(FILE *);
 #ifndef __svr4__
 extern	int	printf	(char *, ...);
@@ -515,6 +515,7 @@ extern	int	toupper(int);
 #    if defined(DIRENT)
 #      include	<dirent.h>
 #      define	direct	dirent	/* so <sys/dir.h> looks like <dirent.h> */
+#      define   d_namlen d_reclen
 #    else
 #      if defined(SYSDIR)
 #        include	<sys/dir.h>
