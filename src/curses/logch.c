@@ -12,13 +12,12 @@
  * Function:	Decode/encode log-file characters (e.g., for 'ded').
  */
 
+#define	CHR_PTYPES
 #define	STR_PTYPES
 #include	<ptypes.h>
 #include	<td_curse.h>
 
-#include	<ctype.h>
-
-MODULE_ID("$Id: logch.c,v 12.8 1998/02/16 00:16:39 tom Exp $")
+MODULE_ID("$Id: logch.c,v 12.9 2000/12/24 22:32:32 tom Exp $")
 
 #define	CONVERT(base,p,n)	n = (base * n) + (*p++ - '0')
 

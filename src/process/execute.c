@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	21 May 1988
  * Modified:
+ *		24 Dec 2000, ctype.h fix for QNX
  *		21 May 1994, mods for 'autoconf'
  *		04 Dec 1993, port to TurboC
  *		29 Oct 1993, ifdef-ident
@@ -31,13 +32,13 @@
  *		returned on any error.
  */
 
+#define	CHR_PTYPES
 #define	STR_PTYPES
 #define	WAI_PTYPES
 #include	"ptypes.h"
-#include	<ctype.h>
 #include	<errno.h>
 
-MODULE_ID("$Id: execute.c,v 12.7 1994/05/30 21:19:52 tom Exp $")
+MODULE_ID("$Id: execute.c,v 12.8 2000/12/24 22:18:20 tom Exp $")
 
 #ifdef	vms
 #  include	<descrip.h>

@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 12.45 2000/12/23 16:14:59 tom Exp $ */
+/* $Id: ptypes.h,v 12.46 2000/12/24 22:21:14 tom Exp $ */
 
 #ifndef	PTYPES_H
 #define	PTYPES_H
@@ -382,7 +382,7 @@ typedef	short	ino_t;
 #define UpperCase(c) if (isascii(c) && islower(c)) c = UpperMacro(c)
 #endif
 
-#ifndef toascii
+#if !defined(toascii) && !defined(HAVE_TOASCII)
 #define	toascii(c) (c & 0x7f)		/* e.g., 7-bit ASCII */
 #endif
 

@@ -14,10 +14,10 @@
  *
  */
 
+#define CHR_PTYPES
 #include	"ptypes.h"
-#include	<ctype.h>
 
-MODULE_ID("$Id: dumpchr.c,v 12.3 1993/10/29 17:35:27 tom Exp $")
+MODULE_ID("$Id: dumpchr.c,v 12.4 2000/12/24 22:17:38 tom Exp $")
 
 #define	OUT	FPRINTF(fp,
 
