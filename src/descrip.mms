@@ -1,4 +1,4 @@
-# $Header: /users/source/archives/td_lib.vcs/src/RCS/descrip.mms,v 3.0 1989/06/05 13:27:22 ste_cm Rel $
+# $Header: /users/source/archives/td_lib.vcs/src/RCS/descrip.mms,v 4.0 1989/08/08 14:00:31 ste_cm Rel $
 # MMS-file for miscellaneous library routines	
 #
 ####### (Development) ##########################################################
@@ -22,6 +22,7 @@ LIBRARYMODULES = -
 	CATARG, -
 	CATCHALL, -
 	COPYBACK, -
+	DFTENV, -
 	DOALLOC, -
 	DOTCMP, -
 	DOTNAME, -
@@ -113,6 +114,7 @@ C_SRC	=-
 	COPYBACK.C -
 	CUTOFF.C -
 	DENODE.C -
+	DFTENV.C -
 	DOALLOC.C -
 	DOTCMP.C -
 	DOTNAME.C -
