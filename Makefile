@@ -1,4 +1,4 @@
-# $Id: Makefile,v 11.7 1993/04/26 16:35:55 dickey Exp $
+# $Id: Makefile,v 12.0 1993/04/29 09:07:55 ste_cm Rel $
 # Top-level makefile for TD_LIB common library
 
 ####### (Development) ##########################################################
@@ -18,7 +18,7 @@ CLEAN	= *.[oai] *.bak *.log *.out *.tst .nfs* core
 DESTROY	=sh -c 'for i in *;do case $$i in RCS);; *) rm -f $$i;;esac;done;exit 0'
 
 ####### (Standard Lists) #######################################################
-SOURCES	= Makefile descrip.mms README
+SOURCES	= Makefile descrip.mms README COPYING
 
 MFILES	=\
 	certify/Makefile\

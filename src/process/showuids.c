@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	*Id = "$Id: showuids.c,v 11.0 1992/02/07 08:13:58 ste_cm Rel $";
+static	char	*Id = "$Id: showuids.c,v 12.0 1993/04/29 10:15:57 ste_cm Rel $";
 #endif
 
 /*
@@ -19,13 +19,13 @@ show_uids(
 _AR1(FILE *,	fp))
 _DCL(FILE *,	fp)
 {
-	FPRINTF(fp, "...uid=%d(%s)",		getuid(),  uid2s(getuid()));
+	FPRINTF(fp, "...uid=%d(%s)",		(int)getuid(),  uid2s((int)getuid()));
 	if (geteuid() != getuid())
-		FPRINTF(fp, ", euid=%d(%s)",	geteuid(), uid2s(geteuid()));
+		FPRINTF(fp, ", euid=%d(%s)",	(int)geteuid(), uid2s((int)geteuid()));
 
-	FPRINTF(fp, ", gid=%d(%s)",		getgid(),  gid2s(getgid()));
+	FPRINTF(fp, ", gid=%d(%s)",		(int)getgid(),  gid2s((int)getgid()));
 	if (getegid() != getgid())
-		FPRINTF(fp, ", egid=%d(%s)",	getegid(), gid2s(getegid()));
+		FPRINTF(fp, ", egid=%d(%s)",	(int)getegid(), gid2s((int)getegid()));
 
 	FPRINTF(fp, "\n");
 }

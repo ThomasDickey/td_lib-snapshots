@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: trnstree.c,v 7.2 1993/04/28 14:10:48 dickey Exp $";
+static	char	Id[] = "$Id: trnstree.c,v 8.0 1993/04/29 14:58:46 ste_cm Rel $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: trnstree.c,v 7.2 1993/04/28 14:10:48 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	12 Jan 1989
  * Modified:
+ *		29 Apr 1993, sort _all_ leaves before translating
  *		20 Nov 1992, added 3rd arg to _FNX macros.
  *		11 Dec 1991, added 'links' argument.  Process entire list of
  *			     files per-directory to avoid possible conflict
@@ -111,19 +112,7 @@ void	transtree(
 #ifndef	vms
 				if (dotname(newname))	continue;
 #endif
-				if (LOOK(newname, &sb) < 0) {
-					perror(newname);
-					continue;
-				}
-				if (isDIR(sb.st_mode)) {
-					if (recur)
-						transtree(newname,
-							func,
-							recur+1,
-							links);
-				} else if (isFILE(sb.st_mode)) {
-					v_ALLOC(vec,num,newname);
-				}
+				v_ALLOC(vec,num,newname);
 			}
 			closedir(dirp);
 			if (num != 0) {
@@ -134,8 +123,16 @@ void	transtree(
 						perror(vec[num]);
 						continue;
 					}
-					TELL_FILE(vec[num]);
-					(*func)(vec[num], &sb);
+					if (isDIR(sb.st_mode)) {
+						if (recur)
+							transtree(vec[num],
+								func,
+								recur+1,
+								links);
+					} else if (isFILE(sb.st_mode)) {
+						TELL_FILE(vec[num]);
+						(*func)(vec[num], &sb);
+					}
 				}
 				dofree((PTR)vec);
 			}

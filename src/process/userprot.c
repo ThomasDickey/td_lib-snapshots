@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: userprot.c,v 11.0 1991/10/04 10:13:13 ste_cm Rel $";
+static	char	Id[] = "$Id: userprot.c,v 12.0 1993/04/29 10:15:18 ste_cm Rel $";
 #endif
 
 /*
@@ -46,7 +46,7 @@ _DCL(time_t,	mtime)
 	upr_mode = mode;
 	upr_time = mtime;
 	if (!geteuid()) {
-		if (chown(upr_name, getuid(), getgid()) < 0)
+		if (chown(upr_name, (int)getuid(), (int)getgid()) < 0)
 			return (-1);
 		errno = 0;
 		upr_func();

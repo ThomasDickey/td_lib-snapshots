@@ -1,12 +1,12 @@
-# $Id: descrip.mms,v 11.7 1993/04/26 16:23:56 dickey Exp $
+# $Id: descrip.mms,v 12.0 1993/04/29 14:01:53 ste_cm Rel $
 # MMS-file for miscellaneous library routines	
 #
 ####### (Development) ##########################################################
 #
 ####### (Command-line Options) #################################################
-A	=	[-.LIB]COMMON.OLB
-I	=	[-.INTERFACE]
-INCLUDES =	/Include=($(I),PORTUNIX_ROOT:[INTERFACE])
+A	=	[-.LIB]TD_LIB.OLB
+I	=	[-.INCLUDE]
+INCLUDES =	/Include=($(I),PORTUNIX_ROOT:[INCLUDE])
 CFLAGS =	$(INCLUDES) /LIST /OBJECT=$@
 LINKFLAGS =	/MAP/CROSS_REFERENCE/EXEC=$@
 C_RTL =		SYS$LIBRARY:VAXCRTL.OLB		! C runtime library
@@ -75,8 +75,7 @@ LIBRARYMODULES = -
 	VECEDIT, -
 	VECLEN, -
 	VERCMP, -
-	WALKBACK, -
-	WALKTREE
+	WALKBACK
 UNUSED_MODULES = -
 	ABSPATH, 		# unix-style 'getwd()' -
 	CMDCH, 			# curses -
@@ -93,7 +92,7 @@ UNUSED_MODULES = -
 	GETUSER, 		# unix-passwd -
 	GID2S, 			# PORTUNIX -
 	INTERACT,		# unix filesystem -
-	KILLCHAR 		# curses -
+	KILLCHAR, 		# curses -
 	LOGCH, 			# curses/ded -
 	NAME2S,			# unix-style names only -
 	NEWZONE,		# unix environment -
@@ -131,13 +130,14 @@ UNUSED_MODULES = -
 	SETMTIME,		# utime() call -
 	TRACK_WD,		# unix-style 'getwd()' -
 	UID2S,			# PORTUNIX -
-	USERCOPY 		# uses FOR_USER -
-	USERPROT 		# uses FOR_USER -
+	USERCOPY, 		# uses FOR_USER -
+	USERPROT, 		# uses FOR_USER -
 	VCS_FILE,		# rcs (unix-only) -
 	VIEWFILE,		# curses/unix -
 	WHICH,			# unix-style PATH-variable -
 	WIN2FILE,		# curses -
-	WREPAINT		# curses
+	WREPAINT,		# curses -
+	WALKTREE
 #
 C_SRC	=-
 	ABSPATH.C -
@@ -264,7 +264,7 @@ C_SRC	=-
 	WIN2FILE.C -
 	WREPAINT.C
 #
-PTYPES_H = $(I)PTYPES.H $(I)COMMON.H
+PTYPES_H = $(I)PTYPES.H $(I)TD_LIB.H
 #
 ####### (Standard Productions) #################################################
 LIBRARIES =	$(A)($(LIBRARYMODULES)) -	! project library

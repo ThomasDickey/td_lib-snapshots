@@ -1,4 +1,4 @@
-/* $Id: td_qsort.h,v 11.2 1992/11/18 08:32:18 dickey Exp $ */
+/* $Id: td_qsort.h,v 12.0 1993/04/29 13:38:24 ste_cm Rel $ */
 #ifndef	_CM_QSORT_H
 #define	_CM_QSORT_H
 
@@ -27,7 +27,7 @@
 
 #define	QSORT_DST	QSORT_SRC*
 
-#ifdef	__STDC__
+#if	defined(__STDC__) || defined(vms)
 #define	QSORT_CAST(s,d)	register QSORT_DST d = (QSORT_DST) s;
 #define	QSORT_FUNC_ARGS(p1,p2)	_ARX(V_OR_P,   q1) _AR1(V_OR_P,   q2)
 #else
@@ -42,11 +42,13 @@
 		     QSORT_FUNC_DCLS(p1,p2)
 
 #ifndef	LINTLIBRARY
+#ifndef vms
 extern	V_OR_I	qsort(
 		_arx(V_OR_P,	base)
 		_arx(size_t,	nel)
 		_arx(size_t,	width)
 		_fn1(int,	compar,	(QSORT_FUNC_ARGS(a,b))));
+#endif
 #endif
 
 extern	int	cmp_qsort(

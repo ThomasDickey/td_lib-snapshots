@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcstemp.c,v 11.3 1992/12/21 10:28:14 dickey Exp $";
+static	char	Id[] = "$Id: rcstemp.c,v 12.0 1993/04/29 10:16:26 ste_cm Rel $";
 #endif
 
 /*
@@ -63,8 +63,8 @@ _DCL(int,	copy)
 
 		DEBUG(".. rcstemp mode is %o gid:%d(%s) egid:%d(%s)\n",
 			mode,
-			getgid(),	gid2s(getgid()),
-			getegid(),	gid2s(getegid()));
+			(int)getgid(),	gid2s((int)getgid()),
+			(int)getegid(),	gid2s((int)getegid()));
 
 		if (stat_dir(tf, &sb) < 0) {
 			int	oldmask = umask(0);

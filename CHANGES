@@ -1,3 +1,154 @@
+1993-04-29  ste_cm@software.org
+
+	* include/ptypes.h: fix include-path by using <> rather than ""
+
+1993-04-29  dickey@software.org
+
+	* src/pathname/trnstree.c:
+	sort all leaves in a directory before translating (makes
+	tests more consistent)
+
+1993-04-29  ste_cm@software.org
+
+	* src/pathname/trnstree.c:
+	BASELINE Fri Apr 30 08:53:28 1993 -- TD_LIB split, VAX-shutdown
+
+1993-04-29  dickey@software.org
+
+	* src/pathname/edittree.c: make sure we edit only files!
+
+1993-04-29  ste_cm@software.org
+
+	* src/pathname/edittree.c:
+	BASELINE Fri Apr 30 08:53:28 1993 -- TD_LIB split, VAX-shutdown
+
+1993-04-29  dickey@software.org
+
+	* src/pathname/edittree.c:
+	sort all leaves of a directory before doing a translation
+	pass.
+
+	* test/pathname/edittree.ref: corrected sorting
+
+1993-04-29  ste_cm@software.org
+
+	* test/pathname/edittree.ref:
+	BASELINE Fri Apr 30 08:53:28 1993 -- TD_LIB split, VAX-shutdown
+
+1993-04-29  dickey@software.org
+
+	* include/port2vms.h: compile-on-VMS
+
+1993-04-29  ste_cm@software.org
+
+	* include/port2vms.h:
+	BASELINE Fri Apr 30 08:53:28 1993 -- TD_LIB split, VAX-shutdown
+
+1993-04-29  dickey@software.org
+
+	* src/descrip.mms: compile-on-VMS
+
+1993-04-29  ste_cm@software.org
+
+	* src/descrip.mms:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1993-04-29  dickey@software.org
+
+	* include/ptypes.h: compile-on-VMS
+
+	* test/port2vms/name2vms.ref: HOME-environ
+
+1993-04-29  ste_cm@software.org
+
+	* test/port2vms/name2vms.ref:
+	BASELINE Fri Apr 30 08:53:28 1993 -- TD_LIB split, VAX-shutdown
+
+1993-04-29  dickey@software.org
+
+	* test/port2vms/name2vms.sh: HOME-environ
+
+1993-04-29  ste_cm@software.org
+
+	* test/port2vms/name2vms.sh:
+	BASELINE Fri Apr 30 08:53:28 1993 -- TD_LIB split, VAX-shutdown
+
+1993-04-29  dickey@software.org
+
+	* include/td_qsort.h: compile-on-VMS
+
+1993-04-29  ste_cm@software.org
+
+	* include/td_qsort.h:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1993-04-29  dickey@software.org
+
+	* include/ptypes.h:
+	rationalized hooks to include <stdlib.h> and <unistd.h>
+
+	* src/process/for_admn.c: SunOs-lint
+
+1993-04-29  ste_cm@software.org
+
+	* src/process/for_admn.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1993-04-29  dickey@software.org
+
+	* src/process/for_user.c: SunOs-lint
+
+1993-04-29  ste_cm@software.org
+
+	* src/process/for_user.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1993-04-29  dickey@software.org
+
+	* src/cm_funcs/rcstemp.c: SunOs-lint
+
+1993-04-29  ste_cm@software.org
+
+	* src/cm_funcs/rcstemp.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1993-04-29  dickey@software.org
+
+	* src/process/showuids.c: SunOs-lint
+
+1993-04-29  ste_cm@software.org
+
+	* src/process/showuids.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1993-04-29  dickey@software.org
+
+	* src/process/userprot.c: SunOs-lint
+
+1993-04-29  ste_cm@software.org
+
+	* src/process/userprot.c:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1993-04-29  dickey@software.org
+
+	* Makefile: added COPYING to source-rule
+
+1993-04-29  ste_cm@software.org
+
+	* Makefile:
+	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
+
+1993-04-29  dickey@software.org
+
+	* src/port2vms/vms2name.c:
+	added 'copying' to table of names to uppercase
+
+1993-04-29  ste_cm@software.org
+
+	* src/port2vms/vms2name.c:
+	BASELINE Fri Apr 30 08:53:28 1993 -- TD_LIB split, VAX-shutdown
+
 1993-04-28  dickey@software.org
 
 	* src/cm_funcs/rcstime.c:
