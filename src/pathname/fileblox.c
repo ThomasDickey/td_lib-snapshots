@@ -1,4 +1,5 @@
 #ifndef	NO_IDENT
+static	char	Id[] = "$Id: fileblox.c,v 12.2 1994/07/18 00:59:52 tom Exp $";
 #endif
 
 /*
@@ -15,16 +16,16 @@
  *		the UNIX Operating System", by Maurice J.  Bach, Prentice-Hall
  *		1986.
  */
-
 #include <ptypes.h>
-#undef STAT_HAS_ST_BLOCKS	/* patch */
-#undef fileblocks		/* patch */
 
 #ifdef unix
 #if !STAT_HAS_ST_BLOCKS
 
+#ifndef	NINDIR			/* should be in <sys/param.h> */
 #define	BSIZE		1024	/* size of indirect-block, in bytes */
-#define	ISIZE		(BSIZE/sizeof(long))
+#define	NINDIR		(BSIZE/sizeof(daddr_t))
+#endif
+
 #define NDIR		10	/* # of direct-block addresses in inode */
 
 #define	frac(a,b)	((a) + (b) - 1) / (b)
@@ -33,23 +34,55 @@ long	fileblocks (
 	_AR1(Stat_t *,	sb))
 	_DCL(Stat_t *,	sb)
 {
-	register long	blocks = frac(sb->st_size, BSIZE);
+	auto	long	bytes = sb->st_size;
+	register long	blocks = frac(bytes, 512);
 	register long	c = blocks - NDIR;
 
-	if (c > (ISIZE*ISIZE)) {
-		/* 1 triple with up to ISIZE double indirect */
-		blocks += (1)
-			+ (1 + frac((c - (1+ISIZE)), ISIZE))
-			+ (1 + frac((c - (1+ISIZE+ISIZE*ISIZE)), ISIZE*ISIZE));
-	} else if (c > ISIZE) {
-		/* 1 double with up to ISIZE indirect */
-		blocks += (1)
-			+ (1 + frac((c - (1+ISIZE)), ISIZE));
-	} else if (c > 0) {
-		/* 1 indirect with up to ISIZE direct */
-		blocks += (1);
+	if (c > 0) {
+		blocks += frac(c,NINDIR);
+		if (c > NINDIR) {
+			blocks++;
+			c -= (NINDIR * NINDIR);
+			if (c > 0) {
+				blocks += 1 + frac(c,NINDIR);
+			}
+		}
 	}
 	return (blocks);
 }
 #endif /* !STAT_HAS_ST_BLOCKS */
 #endif	/* unix */
+
+#ifdef	TEST
+static
+void	do_file (
+	_AR1(char *,	name))
+	_DCL(char *,	name)
+{
+	Stat_t	sb;
+	if (stat_file(name, &sb) >= 0) {
+		printf("%8ld >%8ld %s\n",
+			sb.st_size,
+			fileblocks(&sb),
+			name);
+	} else if (errno != EISDIR) {
+		perror(name);
+	}
+}
+
+_MAIN
+{
+	int	n;
+	if (argc > 1) {
+		for (n = 0; n < argc; n++)
+			do_file(argv[n]);
+	} else {
+		char	buffer[BUFSIZ];
+		while (gets(buffer)) {
+			strtrim(buffer);
+			do_file(buffer);
+		}
+	}
+	exit(EXIT_SUCCESS);
+}
+#endif	/* TEST */

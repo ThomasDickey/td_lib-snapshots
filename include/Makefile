@@ -1,4 +1,4 @@
-# $Id: Makefile,v 12.4 1994/07/12 01:00:30 tom Exp $
+# $Id: Makefile,v 12.5 1994/07/18 22:30:22 tom Exp $
 # make-file for CM_TOOLS common interface directory
 
 THIS	= td
@@ -37,16 +37,14 @@ ALL	=
 all\
 run_test\
 install:	$(SOURCES) $(ALL)
-clean:				; rm -f $(CLEAN) *.ln
-clobber:	clean		; rm -f $(ALL) $(IT)
+clean:				; $(RM) $(CLEAN) *.ln
+clobber:	clean		; $(RM) $(ALL) $(IT)
 destroy:			; $(DESTROY)
 sources:	$(SOURCES)
 lintlib:	$(IT)
 lint.out:	$(IT)
-lincnt.out:	$(H_SRC)	; lincnt $(H_SRC) >$@
 
 ####### (Details of Productions) ###############################################
-#
 $(SOURCES):			; $(GET) $@
-$L/$(LLIB).ln:	$(SOURCES)	; - sh -c 'makellib -I. $(CPP_OPTS) -L$L $(LLIB) $(llib)'
-$(LLIB).i:	$(SOURCES)	; /usr/lib/cpp -Dlint -I. $(LLIB) $@
+$L/$(LLIB).ln:	$(SOURCES)	; - sh -c 'makellib $(CPP_OPTS) -L$L $(LLIB) $(llib)'
+$(LLIB).i:	$(SOURCES)	; /usr/lib/cpp -Dlint $(CPP_OPTS) $(LLIB) $@

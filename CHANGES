@@ -1,3 +1,27 @@
+1994-07-18  dickey@clark.net
+
+	* src/curses/rawgets.c:
+	Running with ncurses 1.8.5, at least, I'm seeing the Z->_maxy value as the
+	actual y-maximum value, rather than one greater.
+
+	* test/Makefile, include/Makefile, Makefile: no-lincnt-rule
+
+	* src/cm_funcs/sccs_dir.c:
+	corrected the case where we're given a filename rather than directory as
+	the 2nd arg.
+
+	* src/cm_funcs/sccs_dir.c: use MODULE_ID
+
+1994-07-17  dickey@clark.net
+
+	* src/pathname/fileblox.c: added a simple test-driver
+
+	* include/ptypes.h: use <sys/param.h>
+
+	* configure.in: use AC_WITH
+	cut over to ncurses (?)
+	added <sys/param.h>
+
 1994-07-16  dickey@clark.net
 
 	* src/curses/rawgets.c:

@@ -1,4 +1,4 @@
-# $Id: Makefile,v 12.5 1994/07/10 21:23:32 tom Exp $
+# $Id: Makefile,v 12.6 1994/07/18 22:30:31 tom Exp $
 # make-file for TD_LIB common/test library
 
 ####### (Development) ##########################################################
@@ -41,7 +41,6 @@ run_test ::	$(SOURCES)
 clean ::			; -$(RM) $(CLEAN) *.tmp *.pure*
 destroy ::			; $(DESTROY)
 lint.out:
-lincnt.out:
 
 ####### (Details of Productions) ###############################################
 

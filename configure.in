@@ -1,6 +1,6 @@
 dnl Process this file with 'autoconf' to produce a 'configure' script
-dnl $Header: /users/source/archives/td_lib.vcs/RCS/configure.in,v 12.32 1994/07/16 16:14:02 tom Exp $
-AC_REVISION($Revision: 12.32 $)
+dnl $Header: /users/source/archives/td_lib.vcs/RCS/configure.in,v 12.33 1994/07/18 00:45:19 tom Exp $
+AC_REVISION($Revision: 12.33 $)
 AC_INIT(include/td_lib.h)
 
 ###	program paths
@@ -21,11 +21,8 @@ AC_SUBST(RANLIB)
 CC_OPTS="$CFLAGS"
 if test -n "$GCC"
 then
-	if test -n "$with_warnings"
-	then
-CC_OPTS="$CC_OPTS -Wshadow -Wconversion -Wstrict-prototypes -Wmissing-prototypes"
-	fi
-CC_OPTS="$CC_OPTS -Wall"
+AC_WITH(warnings,
+[CC_OPTS="$CC_OPTS -Wall -Wshadow -Wconversion -Wstrict-prototypes -Wmissing-prototypes"])
 fi
 
 AC_CONST
@@ -39,15 +36,15 @@ TD_ANSI_CPP
 TD_STAT_ST_BLOCKS
 
 ### This may alter include-path
-dnl:TD_CURSES_LIBS
-AC_HAVE_LIBRARY(curses)
-AC_HAVE_LIBRARY(termcap)
+TD_CURSES_LIBS
+dnl:AC_HAVE_LIBRARY(curses)
+dnl:AC_HAVE_LIBRARY(termcap)
 
 AC_HAVE_HEADERS(stdlib.h unistd.h string.h memory.h pwd.h)
 AC_HAVE_HEADERS(stdarg.h varargs.h)
 AC_HAVE_HEADERS(file.h fcntl.h ioctl.h)
 dnl don't combine <file.h> and <sys/file.h>, because autoconf gets confused
-AC_HAVE_HEADERS(sys/file.h sys/fcntl.h sys/ioctl.h)
+AC_HAVE_HEADERS(sys/file.h sys/fcntl.h sys/ioctl.h sys/param.h)
 AC_HAVE_HEADERS(termcap.h termios.h termio.h sgtty.h utime.h)
 
 AC_HAVE_LIBRARY(bsd, [LIBS="$LIBS -lbsd"])
