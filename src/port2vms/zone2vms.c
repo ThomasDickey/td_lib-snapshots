@@ -1,5 +1,5 @@
-#ifndef	lint
-static	char	Id[] = "$Id: zone2vms.c,v 8.0 1992/11/20 10:27:58 ste_cm Rel $";
+#ifndef	NO_IDENT
+static	char	Id[] = "$Id: zone2vms.c,v 8.1 1993/12/01 19:55:24 tom Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: zone2vms.c,v 8.0 1992/11/20 10:27:58 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	30 Sep 1988
  * Modified:
+ *		01 Dec 1993, ifdefs.
  *		20 Nov 1992, use prototypes
  *
  * Function:	DEC's unix-like time routines do not account for time-zone or
@@ -20,6 +21,7 @@ static	char	Id[] = "$Id: zone2vms.c,v 8.0 1992/11/20 10:27:58 ste_cm Rel $";
 
 #include	"portunix.h"
 
+#ifdef	vms
 #define	MIN	60
 #define	HOUR	(60*MIN)
 #define	DAY	(24*HOUR)
@@ -73,4 +75,6 @@ _MAIN
 	exit(SUCCESS);
 	/*NOTREACHED*/
 }
-#endif
+#endif	/* TEST */
+
+#endif	/* vms */

@@ -1,5 +1,5 @@
-#ifndef	lint
-static	char	Id[] = "$Id: vms_pthc.c,v 8.1 1993/09/22 17:42:18 dickey Exp $";
+#ifndef	NO_IDENT
+static	char	Id[] = "$Id: vms_pthc.c,v 8.2 1993/12/01 19:53:04 tom Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: vms_pthc.c,v 8.1 1993/09/22 17:42:18 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	26 Jun 1990
  * Modified:
+ *		01 Dec 1993, ifdefs, TurboC warnings.
  *		22 Sep 1993, gcc warnings
  *		20 Nov 1992, use prototypes
  *		12 Dec 1991, corrected entrypoint-name
@@ -76,7 +77,8 @@ char *	vms_pathcat(
 		}
 		break;
 	case A_NAME:	/* append after NODE, DEV or DIR */
-		if ((s = strchr(tmp, ']')) || (s = strrchr(tmp, ':')))
+		if ((s = strchr(tmp, ']')) != 0
+		 || (s = strrchr(tmp, ':')) != 0)
 			s++;
 		else
 			s = tmp;
@@ -137,4 +139,4 @@ _MAIN
 	exit(SUCCESS);
 	/*NOTREACHED*/
 }
-#endif
+#endif	/* TEST */

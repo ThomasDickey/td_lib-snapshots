@@ -1,5 +1,5 @@
-#ifndef	lint
-static	char	Id[] = "$Id: vms_rpth.c,v 8.1 1993/09/22 17:42:18 dickey Exp $";
+#ifndef	NO_IDENT
+static	char	Id[] = "$Id: vms_rpth.c,v 8.2 1993/12/01 19:56:58 tom Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: vms_rpth.c,v 8.1 1993/09/22 17:42:18 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	26 Jun 1990
  * Modified:
+ *		01 Dec 1993, ifdefs, TurboC warnings.
  *		22 Sep 1993, gcc warnings
  *		20 Nov 1992, use prototypes
  *		18 Oct 1991, use macro _MAIN
@@ -73,7 +74,7 @@ char *	vms_relpath(
 	||  (s+1 != strchr(src, '['))
 	||  (d+1 != strchr(cwd, '['))
 	||  (s-src != d-cwd)
-	||  strncmp(src,cwd, j = (s-src)) )
+	||  strncmp(src,cwd, j = (size_t)(s-src)) )
 		return (strcpy(dst, src));
 
 	/* If we made it past that, 'j' contains the distance to the '[' in
@@ -89,7 +90,7 @@ char *	vms_relpath(
 	for (matched = 0;;) {
 		s = after_leaf(src+1);
 		d = after_leaf(cwd+1);
-		if ((j = (s-src)) <= 1)
+		if ((j = (size_t)(s-src)) <= 1)
 			continue;
 		if (s-src != d-cwd)
 			break;

@@ -1,5 +1,5 @@
-#ifndef	lint
-static	char	Id[] = "$Id: time2vms.c,v 8.0 1991/10/21 15:02:34 ste_cm Rel $";
+#ifndef	NO_IDENT
+static	char	Id[] = "$Id: time2vms.c,v 8.1 1993/12/01 19:44:12 tom Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: time2vms.c,v 8.0 1991/10/21 15:02:34 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	29 Sep 1988
  * Modified:
+ *		01 Dec 1993, ifdefs.
  *		21 Oct 1991, converted to ANSI
  *
  * Function:	Converts a unix time (seconds since 1-jan-1970) to a vms
@@ -14,6 +15,8 @@ static	char	Id[] = "$Id: time2vms.c,v 8.0 1991/10/21 15:02:34 ste_cm Rel $";
  */
 
 #include	"portunix.h"
+
+#ifdef	vms
 #include	<time.h>
 
 #define	VMS_SEC	10000000	/* one second on VMS */
@@ -75,4 +78,6 @@ _MAIN
 	exit (SUCCESS);
 	/*NOTREACHED*/
 }
-#endif
+#endif	/* TEST */
+
+#endif	/* vms */

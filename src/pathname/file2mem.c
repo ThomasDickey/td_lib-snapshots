@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: file2mem.c,v 12.3 1993/11/28 23:47:40 dickey Exp $";
+static	char	Id[] = "$Id: file2mem.c,v 12.4 1993/12/01 19:09:51 dickey Exp $";
 #endif
 
 /*
@@ -39,7 +39,7 @@ _DCL(char *,	name)
 	auto	 char	*blob;
 
 	if (!strcmp(name, "-")) {
-		if (!(fp = tmpfile()))
+		if ((fp = tmpfile()) == 0)
 			return (0);
 		length = 0;
 		while ((j = getchar()) != EOF) {
@@ -67,7 +67,7 @@ _DCL(char *,	name)
 		expected = length;
 #endif	/* vms/unix */
 
-		if (!(fp = fopen(name, "r")))
+		if ((fp = fopen(name, "r")) == 0)
 			return (0);
 	}
 

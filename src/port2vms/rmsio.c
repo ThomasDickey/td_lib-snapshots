@@ -1,5 +1,5 @@
-#ifndef	lint
-static	char	Id[] = "$Id: rmsio.c,v 8.0 1992/11/20 11:35:15 ste_cm Rel $";
+#ifndef	NO_IDENT
+static	char	Id[] = "$Id: rmsio.c,v 8.1 1993/12/01 19:43:28 tom Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: rmsio.c,v 8.0 1992/11/20 11:35:15 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	03 Nov 1988 (from earlier version w/o unix-style interface)
  * Modified:
+ *		01 Dec 1993, ifdefs.
  *		20 Nov 1992, use prototypes
  *		22 Feb 1989, to permit user to append to existing file.
  *
@@ -21,11 +22,13 @@ static	char	Id[] = "$Id: rmsio.c,v 8.0 1992/11/20 11:35:15 ste_cm Rel $";
  *		rmsio_size:	Returns size of largest record of input.
  */
 
-#include	<rms.h>
-#include	<ssdef.h>
 #include	"portunix.h"
 #include	<ctype.h>
 #include	<errno.h>
+
+#ifdef	vms
+#include	<rms.h>
+#include	<ssdef.h>
 
 #define	c$$translate(sts)	errno = EVMSERR; vaxc$errno = sts
 
@@ -439,4 +442,6 @@ _MAIN
 	exit (SUCCESS);
 	/*NOTREACHED*/
 }
-#endif
+#endif	/* TEST */
+
+#endif	/* vms */

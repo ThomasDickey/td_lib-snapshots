@@ -1,5 +1,5 @@
-#ifndef	lint
-static	char	Id[] = "$Id: uid2s.c,v 8.0 1992/11/20 08:19:50 ste_cm Rel $";
+#ifndef	NO_IDENT
+static	char	Id[] = "$Id: uid2s.c,v 8.1 1993/12/01 19:46:30 tom Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: uid2s.c,v 8.0 1992/11/20 08:19:50 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	15 Dec 1988
  * Modified:
+ *		01 Dec 1993, ifdefs.
  *		20 Nov 1992, use prototypes
  *		18 Oct 1991, use macro _MAIN
  *		20 May 1991, apollo sr10.3 cpp complains about endif-tags
@@ -28,9 +29,9 @@ static	char	Id[] = "$Id: uid2s.c,v 8.0 1992/11/20 08:19:50 ste_cm Rel $";
 
 #define	STR_PTYPES
 #include	"portunix.h"
+
 #ifdef	vms
 #include	<ssdef.h>
-#endif
 
 typedef	unsigned long	LID;
 
@@ -254,4 +255,6 @@ _MAIN
 	exit(SUCCESS);
 	/*NOTREACHED*/
 }
-#endif
+#endif	/* TEST */
+
+#endif	/* vms */

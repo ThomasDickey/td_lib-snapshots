@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 12.9 1993/11/29 00:05:36 dickey Exp $ */
+/* $Id: ptypes.h,v 12.10 1993/12/01 18:46:08 dickey Exp $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -299,7 +299,7 @@ extern	char	*getcwd(_ar1(char *,p));
 #endif
 #else	/* !SYSTEM5 */
 extern	char	*getwd(_ar1(char *,p));
-#if	defined(unix) && !defined(apollo) && !defined(__GNUC__)	&& !defined(__hpux) /* bsd4.x on SunOs? */
+#if	defined(unix) && !(defined(apollo) || defined(__GNUC__) || defined(__hpux) || defined(__CLCC__)) /* bsd4.x on SunOs? */
 extern	char	*sprintf(_arx(char *,fmt) _DOTS);
 #endif
 #endif
@@ -318,7 +318,7 @@ extern	long	strtol(
 		_ar1(int,	base));
 #endif
 #if	!defined(vms) && !defined(__TURBOC__)
-#if	!defined(apollo_sr10) && !defined(__hpux)
+#if	!(defined(apollo_sr10) || defined(__hpux) || defined(__CLCC__))
 extern	V_OR_I2	perror (_ar1(char *,s));
 extern	V_OR_I	rewind (_ar1(FILE *,s));
 #endif
@@ -629,7 +629,7 @@ extern	V_OR_I		endpwent(_ar0);
 #define	strchr	index
 #define	strrchr	rindex
 #endif	/* SYSTEM5 */
-#if	!defined(__hpux) && !defined(__TURBOC__)
+#if	!(defined(__hpux) || defined(__TURBOC__) || defined(__CLCC__))
 extern	char *	strchr (_arx(char *,s) _ar1(int,c));
 extern	char *	strrchr(_arx(char *,s) _ar1(int,c));
 extern	char *	strtok (_arx(char *,s) _ar1(char *,t));

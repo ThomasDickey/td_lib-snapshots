@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: packdate.c,v 12.4 1993/11/30 14:36:07 dickey Exp $";
+static	char	Id[] = "$Id: packdate.c,v 12.5 1993/12/01 19:13:12 dickey Exp $";
 #endif
 
 /*
@@ -64,7 +64,7 @@ long	gmt_offset(
 		sec += timezone;
 	}
 #else	/* !SYSTEM5 */
-#ifdef	sun
+#if	defined(sun) && !defined(__CLCC__)
 	sec -= tm.tm_gmtoff;
 #else	/* UNIX */
 	{

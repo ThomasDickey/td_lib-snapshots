@@ -1,5 +1,5 @@
-#ifndef	lint
-static	char	Id[] = "$Id: name2vms.c,v 8.1 1993/09/22 18:01:57 dickey Exp $";
+#ifndef	NO_IDENT
+static	char	Id[] = "$Id: name2vms.c,v 8.2 1993/12/01 19:39:18 tom Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: name2vms.c,v 8.1 1993/09/22 18:01:57 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	29 Sep 1988
  * Modified:
+ *		01 Dec 1993, ifdefs, TurboC warnings.
  *		22 Sep 1993, gcc warnings
  *		20 Nov 1992, use prototypes
  *		01 Jun 1989, if 2nd-char in name is a '.' and 1st is not, only
@@ -82,7 +83,7 @@ int	leading_uc(
 	auto	char	*base = dst;
 	register int	c;
 
-	while ((c = *src) && c != '/') {
+	while ((c = *src) != EOS && c != '/') {
 		if (isalpha(c)) {
 			if (islower(c))
 				return (0);
@@ -93,7 +94,7 @@ int	leading_uc(
 		src++;
 	}
 	*dst = EOS;
-	if ((*base) && (dst = getenv(base))) {
+	if ((*base) && (dst = getenv(base)) != 0) {
 		c = strlen(base);
 		while (isspace(*dst))	dst++;
 		(void)strcpy(base, dst);
@@ -162,7 +163,7 @@ char *	name2vms(
 
 	/* look for node-name in VMS-format */
 	if (!node
-	&&  (t = strchr(s, '!'))
+	&&  (t = strchr(s, '!')) != 0
 	&&  (t[1] == '/' || t[1] == EOS)) {
 		while (s < t)
 			*d++ = *s++;

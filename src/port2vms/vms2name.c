@@ -1,5 +1,5 @@
-#ifndef	lint
-static	char	Id[] = "$Id: vms2name.c,v 8.1 1993/09/22 17:44:30 dickey Exp $";
+#ifndef	NO_IDENT
+static	char	Id[] = "$Id: vms2name.c,v 8.2 1993/12/01 19:52:24 tom Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: vms2name.c,v 8.1 1993/09/22 17:44:30 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	02 Nov 1988
  * Modified:
+ *		01 Dec 1993, ifdefs, TurboC warnings.
  *		22 Sep 1993, gcc warnings
  *		29 Apr 1993, added 'copying' to case-conversions.
  *		20 Nov 1992, use prototypes
@@ -78,7 +79,7 @@ char *	vms2name(
 		*s = EOS;
 
 	/* look for node specification */
-	if ((s = strchr(base, ':'))
+	if ((s = strchr(base, ':')) != 0
 	&&  (s[1] == ':')) {
 		while (base < s) {
 			*dst++ = LOWER(base);
@@ -287,4 +288,4 @@ _MAIN
 	exit(SUCCESS);
 	/*NOTREACHED*/
 }
-#endif
+#endif	/* TEST */

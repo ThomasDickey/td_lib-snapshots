@@ -1,4 +1,4 @@
-/* $Id: td_qsort.h,v 12.2 1993/11/26 14:05:32 dickey Exp $ */
+/* $Id: td_qsort.h,v 12.3 1993/12/01 18:53:14 dickey Exp $ */
 #ifndef	_CM_QSORT_H
 #define	_CM_QSORT_H
 
@@ -28,10 +28,12 @@
 #define	QSORT_DST	QSORT_SRC*
 
 #if	defined(__STDC__) || defined(vms) || defined(__TURBOC__)
+#define	ANSI_QSORT 1
 #define	QSORT_CAST(s,d)	register QSORT_DST d = (QSORT_DST) s;
 #define QSORT_dst const V_OR_P
 #define	QSORT_FUNC_ARGS(p1,p2)	_ARX(QSORT_dst,q1) _AR1(QSORT_dst,q2)
 #else
+#define	ANSI_QSORT 0
 #define	QSORT_CAST(s,d)
 #define QSORT_dst QSORT_DST
 #define	QSORT_FUNC_ARGS(p1,p2)	_ARX(QSORT_DST,p1) _AR1(QSORT_DST,p2)
@@ -44,7 +46,7 @@
 		     QSORT_FUNC_DCLS(p1,p2)
 
 #ifndef	LINTLIBRARY
-#if	!(defined(vms) || defined(__TURBOC__))
+#if	!ANSI_QSORT
 extern	V_OR_I	qsort(
 		_arx(V_OR_P,	base)
 		_arx(size_t,	nel)

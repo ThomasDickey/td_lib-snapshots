@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: gethome.c,v 12.3 1993/11/26 21:57:30 dickey Exp $";
-#endif
-
 /*
  * Title:	gethome.c (get home name)
  * Author:	T.E.Dickey
@@ -19,6 +15,8 @@ static	char	Id[] = "$Id: gethome.c,v 12.3 1993/11/26 21:57:30 dickey Exp $";
 #define PWD_PTYPES
 #include	"ptypes.h"
 
+MODULE_ID("$Id: gethome.c,v 12.5 1993/12/01 19:16:22 tom Exp $")
+
 char *
 gethome(_AR0)
 {
@@ -28,9 +26,9 @@ gethome(_AR0)
 	static   char	*home;
 
 	if (home == 0) {
-		if (!(q = getpwuid((int)getuid()))
-		|| (!(r = q->pw_dir))) {		/* prefer passwd-file */
-			if (!(r = getenv("HOME")))	/* fall-back (sys-err)*/
+		if (((q = getpwuid((uid_t)getuid())) == 0)
+		||  ((r = q->pw_dir) == 0)) {		/* prefer passwd-file */
+			if ((r = getenv("HOME")) == 0)	/* fall-back (sys-err)*/
 				r = ".";		/* give up */
 		}
 		home = stralloc(r);
