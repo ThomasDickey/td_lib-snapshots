@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: sccslast.c,v 9.1 1991/10/03 11:09:50 dickey Exp $";
+static	char	Id[] = "$Id: sccslast.c,v 12.0 1991/10/18 11:25:25 ste_cm Rel $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: sccslast.c,v 9.1 1991/10/03 11:09:50 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	20 Oct 1986
  * Modified:
+ *		18 Oct 1991, look only for tip-version, not for "last" version
  *		03 Oct 1991, conversion to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
  *		22 Jun 1990, if we have successfully opened/scanned "s." file,
@@ -29,8 +30,8 @@ static	char	Id[] = "$Id: sccslast.c,v 9.1 1991/10/03 11:09:50 dickey Exp $";
  */
 
 #define	STR_PTYPES
-#include	"ptypes.h"
-#include	"sccsdefs.h"
+#include	<ptypes.h>
+#include	<sccsdefs.h>
 #include	<ctype.h>
 
 /*
@@ -67,12 +68,14 @@ _DCL(char **,	lock_)
 					ver,
 					&yy, &mm, &dd,
 					&hr, &mn, &sc) != 7)	break;
+				if (strchr(ver, '.') != strrchr(ver, '.'))
+					continue;
 				*vers_ = txtalloc(ver);
 				*date_ = packdate (1900+yy, mm, dd, hr, mn, sc);
 				break;
 			}
 		}
-		(void) fclose(fp);
+		FCLOSE(fp);
 		oldzone();		/* restore time-zone */
 	}
 
@@ -88,7 +91,7 @@ _DCL(char **,	lock_)
 					&yy, &mm, &dd, &hr, ver) == 5)
 					*lock_ = txtalloc(ver);
 			}
-			(void) fclose(fp);
+			FCLOSE(fp);
 		}
 	}
 }

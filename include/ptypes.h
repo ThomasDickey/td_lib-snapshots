@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 9.8 1991/10/17 09:50:44 dickey Exp $ */
+/* $Id: ptypes.h,v 9.9 1991/10/18 09:18:36 dickey Exp $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -85,6 +85,17 @@ extern	char	*sprintf();
 #define	_nul		;
 #endif	/* __STDC__ */
 #endif	/* LINTLIBRARY */
+
+/*
+ * Define special macros to represent the "..." ellipsis
+ */
+#if	defined(__STDC__) && !defined(LINTLIBRARY)
+#define	_DOTS	...
+#define	_CDOTS	,...
+#else
+#define	_DOTS
+#define	_CDOTS
+#endif
 
 /*
  * Macros to use with actual procedures to make them use prototypes if the
@@ -184,15 +195,34 @@ extern	char	*sprintf();
  * defines the type of return-value from "signal()"
  */
 #ifdef	SIG_PTYPES
+
 #include <signal.h>
-#if	defined(apollo) && !defined(__SIG_HANDLER_T)
-#define	SIG_T	int
-#else
+
+#undef	SIG_T
+#undef	SIGNAL_FUNC
+#undef	DCL_SIGNAL
+
 #define	SIG_T	void
+
+#ifdef	apollo
+#  ifdef	__SIG_HANDLER_T
+#    define	SIGNAL_FUNC(f)	SIG_T f (_AR1(int,sig) _CDOTS) _DCL(int,sig)
+#  else	/* sr10.2 or lower */
+#    undef	SIG_T
+#    define	SIG_T	int
+#  endif
 #endif
+
+#ifndef	SIGNAL_FUNC
+#  define	SIGNAL_FUNC(f)	SIG_T f (_AR1(int,sig)) _DCL(int,sig)
+#endif
+
 #define	DCL_SIGNAL(func)	SIG_T	(*func)()
 #endif	/* SIG_PTYPES */
 
+/*
+ * Useful external-definitions:
+ */
 #ifndef	LINTLIBRARY
 extern	V_OR_I	_exit(_ar1(int,code));
 extern	V_OR_I	exit(_ar1(int,code));

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: utimes.c,v 5.0 1991/05/20 17:18:05 ste_cm Rel $";
+static	char	Id[] = "$Id: utimes.c,v 7.0 1991/10/18 15:37:01 ste_cm Rel $";
 #endif
 
 /*
@@ -99,13 +99,15 @@ struct	timeval	tv[2];
 }
 
 #ifdef	TEST
-main(argc,argv)
-char	*argv[];
+/*ARGSUSED*/
+_MAIN
 {
 	static	struct	timeval	tv[2];
 	int	j;
 	for (j = 1; j < argc; j++)
 		if (utimes(argv[j], tv) < 0)
 			perror(argv[j]);
+	exit(SUCCESS);
+	/*NOTREACHED*/
 }
 #endif

@@ -1,5 +1,5 @@
 /*
- * $Id: port2vms.h,v 5.0 1991/05/20 17:19:07 ste_cm Rel $
+ * $Id: port2vms.h,v 5.1 1991/10/18 15:17:41 dickey Exp $
  *
  * VMS-definitions for supporting unix/vms port
  */
@@ -9,7 +9,9 @@
 
 #include	"ptypes.h"		/* CM_TOOLS common */
 
+#ifndef	MAXPATHLEN
 #define	MAXPATHLEN	BUFSIZ		/* defined in <stdio.h> */
+#endif
 
 #define	isDIR(m)	((m & S_IFMT) == S_IFDIR)
 #define	isFILE(m)	((m & S_IFMT) == S_IFREG)
@@ -49,158 +51,156 @@ extern	char		*getcwd();
 #define	_OPENDIR(s,m)	(isDIR(m))
 #define	OPENDIR_ARG	"."
 
-extern	char	*malloc();
-
 #endif	/* vms/unix */
 
 /*
  * Library procedures for unix/vms compatability
  */
-int	deletetree(
-		_ARX(char *,		path)
-		_AR1(int,		recur)
+extern	int	deletetree(
+		_arx(char *,		path)
+		_ar1(int,		recur)
 		)
-		_DCL(char *,		path)
-		_DCL(int,		recur)
-		_RET
+		_dcl(char *,		path)
+		_dcl(int,		recur)
+		_ret
 
-char *	dir2path(
-		_AR1(char *,		src)
+extern	char *	dir2path(
+		_ar1(char *,		src)
 		)
-		_DCL(char *,		src)
-		_RET
+		_dcl(char *,		src)
+		_ret
 
-int	editfile(
-		_ARX(char *,		name)
-		_FN1(int,		func)
+extern	int	editfile(
+		_arx(char *,		name)
+		_fn1(int,		func)
 		)
-		_DCL(char *,		name)
-		_DCL(int,		(*func)())
-		_RET
+		_dcl(char *,		name)
+		_dcl(int,		(*func)())
+		_ret
 
-int	edittree(
-		_ARX(char *,		name)
-		_FNX(int,		func)
-		_AR1(int,		recur)
+extern	int	edittree(
+		_arx(char *,		name)
+		_fnx(int,		func)
+		_ar1(int,		recur)
 		)
-		_DCL(char *,		name)
-		_DCL(int,		(*func)())
-		_DCL(int,		recur)
-		_RET
+		_dcl(char *,		name)
+		_dcl(int,		(*func)())
+		_dcl(int,		recur)
+		_ret
 
-char *	gid2s(
-		_AR1(int,		gid)
+extern	char *	gid2s(
+		_ar1(int,		gid)
 		)
-		_DCL(int,		gid)
-		_RET
+		_dcl(int,		gid)
+		_ret
 
-char *	name2vms(
-		_ARX(char *,		dst)
-		_AR1(char *,		src)
+extern	char *	name2vms(
+		_arx(char *,		dst)
+		_ar1(char *,		src)
 		)
-		_DCL(char *,		dst)
-		_DCL(char *,		src)
-		_RET
+		_dcl(char *,		dst)
+		_dcl(char *,		src)
+		_ret
 
-char *	path2dir(
-		_AR1(char *,		src)
+extern	char *	path2dir(
+		_ar1(char *,		src)
 		)
-		_DCL(char *,		src)
-		_RET
+		_dcl(char *,		src)
+		_ret
 
-char *	path2vms(
-		_ARX(char *,		dst)
-		_AR1(char *,		src)
+extern	char *	path2vms(
+		_arx(char *,		dst)
+		_ar1(char *,		src)
 		)
-		_DCL(char *,		dst)
-		_DCL(char *,		src)
-		_RET
+		_dcl(char *,		dst)
+		_dcl(char *,		src)
+		_ret
 
-int	s2gid(
-		_AR1(char *,		name)
+extern	int	s2gid(
+		_ar1(char *,		name)
 		)
-		_DCL(char *,		name)
-		_RET
+		_dcl(char *,		name)
+		_ret
 
-int	s2uid(
-		_AR1(char *,		name)
+extern	int	s2uid(
+		_ar1(char *,		name)
 		)
-		_DCL(char *,		name)
-		_RET
+		_dcl(char *,		name)
+		_ret
 
 #ifdef	vms
-	time2vms(
-		_ARX(long *,		vms_time)
-		_AR1(time_t,		unix_time)
+extern	void	time2vms(
+		_arx(long *,		vms_time)
+		_ar1(time_t,		unix_time)
 		)
-		_DCL(long *,		vms_time)
-		_DCL(time_t,		unix_time)
-		_NUL
+		_dcl(long *,		vms_time)
+		_dcl(time_t,		unix_time)
+		_nul
 #endif	/* vms */
 
-	transtree(
-		_ARX(char *,		path)
-		_FNX(int,		func)
-		_AR1(int,		recur)
+extern	void	transtree(
+		_arx(char *,		path)
+		_fnx(int,		func)
+		_ar1(int,		recur)
 		)
-		_DCL(char *,		path)
-		_DCL(int,		(*func)())
-		_DCL(int,		recur)
-		_NUL
+		_dcl(char *,		path)
+		_dcl(int,		(*func)())
+		_dcl(int,		recur)
+		_nul
 
-char *	uid2s(
-		_AR1(int,		uid)
+extern	char *	uid2s(
+		_ar1(int,		uid)
 		)
-		_DCL(int,		uid)
-		_RET
+		_dcl(int,		uid)
+		_ret
 
-int	utimes(
-		_ARX(char *,		filespec)
-		_AR1(struct timeval *,	tv)
+extern	int	utimes(
+		_arx(char *,		filespec)
+		_ar1(struct timeval *,	tv)
 		)
-		_DCL(char *,		filespec)
-		_DCL(struct timeval *,	tv)
-		_NUL
+		_dcl(char *,		filespec)
+		_dcl(struct timeval *,	tv)
+		_ret
 
-char *	vms2name(
-		_ARX(char *,		dst)
-		_AR1(char *,		src)
+extern	char *	vms2name(
+		_arx(char *,		dst)
+		_ar1(char *,		src)
 		)
-		_DCL(char *,		dst)
-		_DCL(char *,		src)
-		_RET
+		_dcl(char *,		dst)
+		_dcl(char *,		src)
+		_ret
 
-int	vms_iswild(
-		_AR1(char *,		name)
+extern	int	vms_iswild(
+		_ar1(char *,		name)
 		)
-		_DCL(char *,		name)
-		_RET
+		_dcl(char *,		name)
+		_ret
 
-char *	vms_pathcat(
-		_ARX(char *,		dst)
-		_ARX(char *,		p)
-		_AR1(char *,		n)
+extern	char *	vms_pathcat(
+		_arx(char *,		dst)
+		_arx(char *,		p)
+		_ar1(char *,		n)
 		)
-		_DCL(char *,		dst)
-		_DCL(char *,		p)
-		_DCL(char *,		n)
-		_RET
+		_dcl(char *,		dst)
+		_dcl(char *,		p)
+		_dcl(char *,		n)
+		_ret
 
-char *	vms_relpath(
-		_ARX(char *,		dst)
-		_ARX(char *,		cwd)
-		_AR1(char *,		src)
+extern	char *	vms_relpath(
+		_arx(char *,		dst)
+		_arx(char *,		cwd)
+		_ar1(char *,		src)
 		)
-		_DCL(char *,		dst)
-		_DCL(char *,		cwd)
-		_DCL(char *,		src)
-		_RET
+		_dcl(char *,		dst)
+		_dcl(char *,		cwd)
+		_dcl(char *,		src)
+		_ret
 
-time_t	zone2vms(
-		_AR1(time_t,		reference)
+extern	time_t	zone2vms(
+		_ar1(time_t,		reference)
 		)
-		_DCL(time_t,		reference)
-		_RET
+		_dcl(time_t,		reference)
+		_ret
 
 /* conversions from unix-form to native system */
 #ifdef	vms

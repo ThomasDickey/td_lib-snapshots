@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: dir2path.c,v 5.0 1991/05/20 17:14:58 ste_cm Rel $";
+static	char	Id[] = "$Id: dir2path.c,v 7.0 1991/10/18 15:36:19 ste_cm Rel $";
 #endif
 
 /*
@@ -59,11 +59,13 @@ char	*src;
 }
 
 #ifdef	TEST
-main(argc,argv)
-char	*argv[];
+/*ARGSUSED*/
+_MAIN
 {
 	register int	j;
 	for (j = 1; j < argc; j++)
 		printf("%s => %s\n", argv[j], dir2path(argv[j]));
+	exit(SUCCESS);
+	/*NOTREACHED*/
 }
 #endif

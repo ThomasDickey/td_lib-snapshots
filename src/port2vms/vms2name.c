@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: vms2name.c,v 5.0 1991/06/06 16:21:19 ste_cm Rel $";
+static	char	Id[] = "$Id: vms2name.c,v 7.0 1991/10/18 15:40:15 ste_cm Rel $";
 #endif
 
 /*
@@ -67,10 +67,8 @@ char	*dst, *src;
 			*s = strcpy(tmp, src),	/* ... to permit src == dst */
 			*d;
 
-	if (s = strchr(s, ';')) {	/* trim off version */
+	if (s = strchr(s, ';'))		/* trim off version */
 		*s = EOS;
-		s = tmp;
-	}
 
 	/* look for node specification */
 	if ((s = strchr(base, ':'))
@@ -225,8 +223,8 @@ char	*argv[];
 	}
 }
 
-main(argc, argv)
-char	*argv[];
+/*ARGSUSED*/
+_MAIN
 {
 	auto	char	current[MAXPATHLEN];
 
@@ -274,5 +272,7 @@ char	*argv[];
 				};
 		dotest(sizeof(testv)/sizeof(testv[0]), testv);
 	}
+	exit(SUCCESS);
+	/*NOTREACHED*/
 }
 #endif

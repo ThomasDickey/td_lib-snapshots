@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: name2vms.c,v 5.0 1991/06/04 13:55:00 ste_cm Rel $";
+static	char	Id[] = "$Id: name2vms.c,v 7.0 1991/10/18 15:39:28 ste_cm Rel $";
 #endif
 
 /*
@@ -56,7 +56,6 @@ char	*s;
 static	char
 translate(c)
 {
-	int d = c;
 	if (isalpha(c)) {
 		if (islower(c))
 			c = toupper(c);
@@ -189,7 +188,6 @@ char	*dst, *src;
 			s++;
 		else if (!on_top)
 			*d++ = '.';
-		on_top++;
 		leaf_dot = prefix(s);
 		while (c = *s++) {
 			if (c == '/') {
@@ -268,10 +266,11 @@ char	*argv[];
 	}
 }
 
-main(argc, argv)
-char	*argv[];
+/*ARGSUSED*/
+_MAIN
 {
 	do_test(argc, argv);
 	exit(SUCCESS);
+	/*NOTREACHED*/
 }
 #endif

@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: zone2vms.c,v 5.0 1991/05/20 17:18:32 ste_cm Rel $";
+static	char	Id[] = "$Id: zone2vms.c,v 7.0 1991/10/18 15:37:24 ste_cm Rel $";
 #endif
 
 /*
@@ -55,7 +55,8 @@ time_t	unix_time;
 }
 
 #ifdef	TEST
-main()
+/*ARGSUSED*/
+_MAIN
 {
 	extern	char	*ctime();
 	auto	time_t	unix_time = time(0),
@@ -67,5 +68,7 @@ main()
 		printf("%2d) %s", j, ctime(&real_time));
 		unix_time -= (DAY * 14);
 	}
+	exit(SUCCESS);
+	/*NOTREACHED*/
 }
 #endif

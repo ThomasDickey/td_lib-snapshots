@@ -1,14 +1,14 @@
-# $Id: Makefile,v 9.3 1991/10/04 16:34:31 dickey Exp $
+# $Id: Makefile,v 9.4 1991/10/18 12:29:12 dickey Exp $
 # Top-level makefile for CM_TOOLS common library
-#
+
 ####### (Development) ##########################################################
 TOP	= ../..
 B	= $(TOP)/bin
 I	= $(TOP)/interface
 L	= $(TOP)/lib
+
 COPY	= cp -p
-CFLAGS	=
-MAKE	= make $(MFLAGS) -k$(MAKEFLAGS)	CFLAGS="$(CFLAGS)"
+MAKE	= make $(MFLAGS) -k$(MAKEFLAGS)	CFLAGS="$(CFLAGS)" COPY="$(COPY)"
 
 ####### (Standard Lists) #######################################################
 SOURCES	= Makefile descrip.mms README
@@ -48,7 +48,7 @@ destroy::
 destroy::
 	sh -c 'for i in *;do case $$i in RCS);; *) rm -f $$i;;esac;done;exit 0'
 
-run_tests:
+run_tests::
 	@echo '** no test suite available for this module'
 
 install::	all $(ALL)
