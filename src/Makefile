@@ -1,7 +1,9 @@
-# $Id: Makefile,v 10.13 1992/02/25 08:01:58 dickey Exp $
+# $Id: Makefile,v 10.15 1992/03/18 13:53:23 dickey Exp $
 # MAKE-file for miscellaneous library routines
-#
-####### (Development) ##########################################################
+
+####### (Environment) ##########################################################
+THIS	= common
+
 GET	= checkout
 
 ####### (Command-line Options) #################################################
@@ -17,7 +19,7 @@ LINTOPT	= $(CPP_OPTS) -I$J -ltd -lcurses -lapollo
 LIBS	= -lcurses -ltermcap
 
 ####### (Standard Lists) #######################################################
-A	= ../lib/lib.a
+Z	= ../lib/lib.a
 CSRC	=\
 	abspath.c\
 	access_mode.c\
@@ -134,127 +136,127 @@ CSRC	=\
 	which.c\
 	win2file.c\
 	wrepaint.c
-#
+
 SOURCES	= Makefile descrip.mms $(CSRC)
-#
+
 OBJS	=\
-	abspath.o\
-	access_mode.o\
-	add2fname.o\
-	argv2file.o\
-	beep.o\
-	bldarg.o\
-	blip.o\
-	catarg.o\
-	catchall.o\
-	cmdch.o\
-	copyback.o\
-	count_ss.o\
-	cutoff.o\
-	denode.o\
-	dftenv.o\
-	diffload.o\
-	doalloc.o\
-	dotcmp.o\
-	dotname.o\
-	dumpchr.o\
-	dumpwin.o\
-	dyn_append.o\
-	dyn_catarg.o\
-	dyn_string.o\
-	erasechar.o\
-	execute.o\
-	failed.o\
-	field_of.o\
-	file2argv.o\
-	file2mem.o\
-	filecopy.o\
-	filesize.o\
-	for_admin.o\
-	for_user.o\
-	fp2argv.o\
-	ftype.o\
-	ftype2.o\
-	gethome.o\
-	getuser.o\
-	gid2s.o\
-	interactive.o\
-	is_subpath.o\
-	istextfile.o\
-	killchar.o\
-	list_by_cols.o\
-	ltostr.o\
-	makeargv.o\
-	mem2file.o\
-	modechar.o\
-	name2s.o\
-	newzone.o\
-	next_version.o\
-	packdate.o\
-	padedit.o\
-	pathcat.o\
-	pathcmp.o\
-	pathhead.o\
-	pathleaf.o\
-	rawgets.o\
-	rawterm.o\
-	rcs_debug.o\
-	rcs_dir.o\
-	rcsargpair.o\
-	rcsedit.o\
-	rcskeys.o\
-	rcslast.o\
-	rcsload.o\
-	rcslocks.o\
-	rcsname.o\
-	rcspath.o\
-	rcspermit.o\
-	rcssymbols.o\
-	rcstemp.o\
-	rcstime.o\
-	relpath.o\
-	resizewin.o\
-	revert.o\
-	sameleaf.o\
-	savewin.o\
-	sccs_dir.o\
-	sccslast.o\
-	sccsname.o\
-	scr_size.o\
-	setmtime.o\
-	shoarg.o\
-	show_uids.o\
-	ss_field.o\
-	stat_dir.o\
-	stat_file.o\
-	stralloc.o\
-	strbcmp.o\
-	strclean.o\
-	strcount.o\
-	strtrim.o\
-	strucmp.o\
-	strucpy.o\
-	strwcmp.o\
-	s2gid.o\
-	s2uid.o\
-	track_wd.o\
-	trimpath.o\
-	txtalloc.o\
-	uid2s.o\
-	usercopy.o\
-	userprot.o\
-	vcs_file.o\
-	vecalloc.o\
-	vecedit.o\
-	veclen.o\
-	vercmp.o\
-	view_file.o\
-	walktree.o\
-	which.o\
-	win2file.o\
-	wrepaint.o
+	$Z(abspath.o)\
+	$Z(access_mode.o)\
+	$Z(add2fname.o)\
+	$Z(argv2file.o)\
+	$Z(beep.o)\
+	$Z(bldarg.o)\
+	$Z(blip.o)\
+	$Z(catarg.o)\
+	$Z(catchall.o)\
+	$Z(cmdch.o)\
+	$Z(copyback.o)\
+	$Z(count_ss.o)\
+	$Z(cutoff.o)\
+	$Z(denode.o)\
+	$Z(dftenv.o)\
+	$Z(diffload.o)\
+	$Z(doalloc.o)\
+	$Z(dotcmp.o)\
+	$Z(dotname.o)\
+	$Z(dumpchr.o)\
+	$Z(dumpwin.o)\
+	$Z(dyn_append.o)\
+	$Z(dyn_catarg.o)\
+	$Z(dyn_string.o)\
+	$Z(erasechar.o)\
+	$Z(execute.o)\
+	$Z(failed.o)\
+	$Z(field_of.o)\
+	$Z(file2argv.o)\
+	$Z(file2mem.o)\
+	$Z(filecopy.o)\
+	$Z(filesize.o)\
+	$Z(for_admin.o)\
+	$Z(for_user.o)\
+	$Z(fp2argv.o)\
+	$Z(ftype.o)\
+	$Z(ftype2.o)\
+	$Z(gethome.o)\
+	$Z(getuser.o)\
+	$Z(gid2s.o)\
+	$Z(interactive.o)\
+	$Z(is_subpath.o)\
+	$Z(istextfile.o)\
+	$Z(killchar.o)\
+	$Z(list_by_cols.o)\
+	$Z(ltostr.o)\
+	$Z(makeargv.o)\
+	$Z(mem2file.o)\
+	$Z(modechar.o)\
+	$Z(name2s.o)\
+	$Z(newzone.o)\
+	$Z(next_version.o)\
+	$Z(packdate.o)\
+	$Z(padedit.o)\
+	$Z(pathcat.o)\
+	$Z(pathcmp.o)\
+	$Z(pathhead.o)\
+	$Z(pathleaf.o)\
+	$Z(rawgets.o)\
+	$Z(rawterm.o)\
+	$Z(rcs_debug.o)\
+	$Z(rcs_dir.o)\
+	$Z(rcsargpair.o)\
+	$Z(rcsedit.o)\
+	$Z(rcskeys.o)\
+	$Z(rcslast.o)\
+	$Z(rcsload.o)\
+	$Z(rcslocks.o)\
+	$Z(rcsname.o)\
+	$Z(rcspath.o)\
+	$Z(rcspermit.o)\
+	$Z(rcssymbols.o)\
+	$Z(rcstemp.o)\
+	$Z(rcstime.o)\
+	$Z(relpath.o)\
+	$Z(resizewin.o)\
+	$Z(revert.o)\
+	$Z(sameleaf.o)\
+	$Z(savewin.o)\
+	$Z(sccs_dir.o)\
+	$Z(sccslast.o)\
+	$Z(sccsname.o)\
+	$Z(scr_size.o)\
+	$Z(setmtime.o)\
+	$Z(shoarg.o)\
+	$Z(show_uids.o)\
+	$Z(ss_field.o)\
+	$Z(stat_dir.o)\
+	$Z(stat_file.o)\
+	$Z(stralloc.o)\
+	$Z(strbcmp.o)\
+	$Z(strclean.o)\
+	$Z(strcount.o)\
+	$Z(strtrim.o)\
+	$Z(strucmp.o)\
+	$Z(strucpy.o)\
+	$Z(strwcmp.o)\
+	$Z(s2gid.o)\
+	$Z(s2uid.o)\
+	$Z(track_wd.o)\
+	$Z(trimpath.o)\
+	$Z(txtalloc.o)\
+	$Z(uid2s.o)\
+	$Z(usercopy.o)\
+	$Z(userprot.o)\
+	$Z(vcs_file.o)\
+	$Z(vecalloc.o)\
+	$Z(vecedit.o)\
+	$Z(veclen.o)\
+	$Z(vercmp.o)\
+	$Z(view_file.o)\
+	$Z(walktree.o)\
+	$Z(which.o)\
+	$Z(win2file.o)\
+	$Z(wrepaint.o)
 #
-ALL	= $A
+ALL	= $Z
 #
 ####### (Standard Productions) #################################################
 all:		sources $(ALL)
@@ -268,38 +270,40 @@ sources:	$(SOURCES)
 install: all
 #
 ####### (Details of Productions) ###############################################
-$A:	$(OBJS)
-	ar rv $A $?
-	ranlib $A
+$Z:	$(OBJS)
+	ranlib $Z
 #
-.PRECIOUS: $A
-#
-archive: $(OBJS)
-	rm -f $A
-	ar rv $A $(OBJS)
-	ranlib $A
+.PRECIOUS: $Z
 #
 RCSDEFS_H	= $I/rcsdefs.h	$I/deltree.h
+SCCSDEFS_H	= $I/sccsdefs.h
 #
-$(OBJS):	$I/ptypes.h	$I/common.h
-cmdch.o:	$I/cmdch.h
-rawgets.o:	$I/cmdch.h
-rcsargpair.o:	$(RCSDEFS_H)
-rcsedit.o:	$(RCSDEFS_H)
-rcskeys.o:	$(RCSDEFS_H)
-rcslast.o:	$(RCSDEFS_H)
-rcsload.o:	$(RCSDEFS_H)
-rcslocks.o:	$(RCSDEFS_H)
-rcsname.o:	$(RCSDEFS_H)
-rcspath.o:	$J/rcspath.h	; $(CC) $(CPP_OPTS) -I$J $(CFLAGS) -c $*.c
-rcspermit.o:	$(RCSDEFS_H)
-sccslast.o:	$I/sccsdefs.h
-sccsname.o:	$I/sccsdefs.h
-vcs_file.o:	$(RCSDEFS_H)
+$(OBJS):	$I/ptypes.h	$I/$(THIS).h
+
+$Z(cmdch.o)\
+$Z(rawgets.o):	$I/cmdch.h
+
+$Z(rcsargpair.o)\
+$Z(rcsedit.o)\
+$Z(rcskeys.o)\
+$Z(rcslast.o)\
+$Z(rcsload.o)\
+$Z(rcslocks.o)\
+$Z(rcsname.o)\
+$Z(rcspermit.o)\
+$Z(vcs_file.o):	$(RCSDEFS_H)
 #
-count_ss.o\
-field_of.o\
-ss_field.o:	$I/spreadsheet.h
+$Z(rcspath.o):	$J/rcspath.h
+	$(CC) $(CPP_OPTS) -I$J $(CFLAGS) -c $*.c
+	@ar r $Z $*.o
+	@rm   -f $*.o
+#
+$Z(sccslast.o)\
+$Z(sccsname.o):	$(SCCSDEFS_H)
+#
+$Z(count_ss.o)\
+$Z(field_of.o)\
+$Z(ss_field.o):	$I/spreadsheet.h
 #
 ####### (Development) ##########################################################
 $(SOURCES):			; $(GET) $@
@@ -311,13 +315,17 @@ lint.out:	$(CSRC)
 
 lincnt.out:	$(CSRC)		; $(DATE); lincnt $(CSRC) >>$@
 #
-.SUFFIXES: .lint .tst .i
+.SUFFIXES:
+.SUFFIXES: .c .o .a .lint .tst .i
+.c.a:
+	@echo compile $<
+	@$(CC) $(CFLAGS) $(CPP_OPTS) -c $*.c
+	@ar rv $@ $*.o
+	@rm -f $*.o
 .c.lint:
 	tdlint $(LINTOPT) $< >$@
 .c.tst:
-	$(CC) -o $@ -DTEST $(CFLAGS) $(CPP_OPTS) $< $A $(LIBS)
+	$(CC) -o $@ -DTEST $(CFLAGS) $(CPP_OPTS) $< $Z $(LIBS)
 	rm -f $*.o
-.c.o:
-	$(CC) $(CFLAGS) $(CPP_OPTS) -c $<
-.c.i:
-	$(CC) -E -C $(CPP_OPTS) $< >$@
+.c.o:	; $(CC) $(CFLAGS) $(CPP_OPTS) -c $<
+.c.i:	; $(CC) -E -C $(CPP_OPTS) $< >$@

@@ -1,3 +1,9 @@
+1992-03-18  dickey@software.org
+
+	* src/Makefile: silent
+
+	* src/Makefile: use .c.a rule
+
 1992-02-28  dickey@software.org
 
 	* src/string/dyn_app.c: oops: ensure that we check for null-pointer
