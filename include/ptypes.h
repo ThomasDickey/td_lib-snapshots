@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 5.1 1989/10/30 10:24:26 dickey Exp $ */
+/* $Id: ptypes.h,v 5.2 1989/10/31 09:20:55 dickey Exp $ */
 
 #ifndef	_PTYPES_
 #define	_PTYPES_
@@ -106,10 +106,10 @@ extern	char	*getwd();
 #endif	SYSTEM5
 
 /* the type of return-value from "signal()" */
-#ifdef	sparc
-#define	SIGS_T		void
-#else
+#if	defined(apollo) || !defined(NBBY)
 #define	SIGS_T		int
+#else
+#define	SIGS_T		void
 #endif
 
 extern	V_OR_I	_exit();

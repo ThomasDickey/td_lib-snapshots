@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: rcstemp.c,v 5.0 1989/10/04 13:09:32 ste_cm Rel $";
+static	char	Id[] = "$Id: rcstemp.c,v 5.1 1989/10/31 13:25:20 dickey Exp $";
 #endif	lint
 
 /*
@@ -7,9 +7,13 @@ static	char	Id[] = "$Id: rcstemp.c,v 5.0 1989/10/04 13:09:32 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	25 Aug 1988
  * $Log: rcstemp.c,v $
- * Revision 5.0  1989/10/04 13:09:32  ste_cm
- * BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+ * Revision 5.1  1989/10/31 13:25:20  dickey
+ * account for present setting of 'umask'; use chown to force
+ * the group of the created-directory
  *
+ *		Revision 5.0  89/10/04  13:09:32  ste_cm
+ *		BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
+ *		
  *		Revision 4.2  89/10/04  13:09:32  dickey
  *		lint (apollo SR10.1)
  *		
@@ -72,17 +76,17 @@ char	*working;
 
 		DEBUG("mode:%o gid:%d/%d\n", mode, getgid(),getegid());
 		if (stat(tf, &sb) < 0) {
+			int	oldmask = umask(0);
 			DEBUG(".. mkdir %s (mode=%o)\n", tf, mode);
 			if (mkdir(tf, mode) < 0) {
 				failed(tf);
 				/*NOTREACHED*/
 			}
-#ifdef	apollo
-			if (chmod(tf, mode) < 0) { /* mkdir ignores mode */
-				failed(tf);
+			if (chown(tf, geteuid(), getegid()) < 0){
+				failed("chown");
 				/*NOTREACHED*/
 			}
-#endif	apollo
+			(void)umask(oldmask);
 		} else {
 			if ((sb.st_mode & S_IFMT) != S_IFDIR) {
 				errno = ENOTDIR;
