@@ -1,3 +1,9 @@
+1997-09-14  dickey@clark.net
+
+	* support/ins_mak: remove the sed script when done
+
+	* makefile.in: install td_config
+
 1997-09-13  dickey@clark.net
 
 	* configure.in: test for touchwin
