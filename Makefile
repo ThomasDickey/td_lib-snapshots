@@ -1,4 +1,4 @@
-# $Id: Makefile,v 12.4 1994/07/02 10:49:18 tom Exp $
+# $Id: Makefile,v 12.7 1994/07/04 23:56:49 tom Exp $
 # Top-level makefile for TD_LIB common library
 
 ####### (Development) ##########################################################
@@ -6,7 +6,7 @@ INSTALL_INC = ../install_inc
 INSTALL_LIB = ../install_lib
 INSTALL_MAN = ../install_man
 
-RM	= rm -f
+RM	= -rm -f
 PUT	= $(RM) $@; cp -p $? $@
 TOP	= ..
 GET	= checkout
@@ -16,8 +16,11 @@ i	= include
 I	= $(TOP)/include
 L	= $(TOP)/lib
 
+I_CFG	= $i/config.h
+MDEFN	= support/td_lib.mk
+
 CLEAN	= *.bak *.log *.out *.tst .nfs* core
-PURE	= stamp-* *.status $i/config.*
+PURE	= stamp-* *.status $(I_CFG) $(MDEFN)
 DESTROY	=sh -c 'for i in *;do case $$i in RCS);; *) $(RM) $$i;;esac;done;exit 0'
 
 ####### (Standard Lists) #######################################################
@@ -27,6 +30,7 @@ CONFIG_H=\
 
 SOURCES	=\
 	Makefile\
+	td_make.in\
 	descrip.mms\
 	README\
 	COPYING\
@@ -58,8 +62,14 @@ IT	=\
 ####### (Standard Productions) #################################################
 all\
 lintlib\
-install::	lib $i/config.h
+install::	lib $(I_CFG) $(MDEFN)
 
+clean\
+clobber \
+destroy ::	td_make.in
+	sh -c "if test ! -f $(MDEFN);\
+		then sed -es/@MAKE@/make/ td_make.in >$(MDEFN);\
+		fi"
 all\
 clean\
 clobber\
@@ -67,25 +77,25 @@ destroy\
 run_test\
 sources\
 lincnt.out\
-lint.out::	$(MFILES)
+lint.out ::	$(MFILES)
 	cd support;	$(MAKE) $@
 	cd certify;	$(MAKE) $@
 	cd include;	$(MAKE) $@
 	cd src;		$(MAKE) $@
 	cd test;	$(MAKE) $@
 
-lintlib::	$(MFILES)
+lintlib ::	$(MFILES)
 	cd include;	$(MAKE) $@
 
 all\
-sources::	$(SOURCES)
+sources ::	$(SOURCES)
 
-clean\
-clobber::			; $(RM) $(CLEAN)
-clobber\
-destroy::			; $(RM) -r lib
-destroy::			; cd support; $(DESTROY)
-destroy::			; $(DESTROY)
+clean \
+clobber ::			; $(RM) $(CLEAN)
+clobber \
+destroy ::			; $(RM) -r lib
+destroy ::			; cd support; $(DESTROY)
+destroy ::			; $(DESTROY)
 
 distclean:	clobber		; $(RM) $(PURE)
 
@@ -116,7 +126,7 @@ $L/$(THIS).a:	lib/$(THIS).a		; $(PUT); ranlib $@
 configure:	$(CONFIG_H)		; autoconf
 
 # config.status might not change config.h
-$i/config.h: stamp-h
+$(I_CFG): stamp-h
 stamp-h: config.status
 	./config.status
 	touch stamp-h

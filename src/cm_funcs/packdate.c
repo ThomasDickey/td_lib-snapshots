@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: packdate.c,v 12.7 1994/07/02 00:24:25 tom Exp $";
+static	char	Id[] = "$Id: packdate.c,v 12.8 1994/07/04 11:32:01 tom Exp $";
 #endif
 
 /*
@@ -69,7 +69,7 @@ long	gmt_offset(
 	 * (in GMT seconds) would be bumped up an hour for daylight savings
 	 * time.
 	 */
-#ifndef	sun
+#if HAVE_TM_ISDST
 	if (tm.tm_isdst)	sec -= HOUR;
 #endif
 	return sec;

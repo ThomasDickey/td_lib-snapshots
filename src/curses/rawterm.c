@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: rawterm.c,v 12.12 1994/05/24 00:50:05 tom Exp $";
+static	char	Id[] = "$Id: rawterm.c,v 12.14 1994/07/04 22:51:10 tom Exp $";
 #endif
 
 /*
@@ -26,34 +26,12 @@ static	char	Id[] = "$Id: rawterm.c,v 12.12 1994/05/24 00:50:05 tom Exp $";
  *		the normal, buffered mode.
  */
 
-#define STR_PTYPES
+#define STR_PTYPES	/* <string.h> */
+#define TRM_PTYPES	/* <termios.h> */
 #include	"td_curse.h"
 
-#if defined(__hpux)
-# undef HAVE_TERMIOS_H	/* patch: I should have used <termios.h> */
-#endif
-
-#if HAVE_TERMIOS_H
-#  include <termios.h>
-#  define SGTTY struct termios
-#  if HAVE_TCGETATTR
-#    define GetTerminal(p) tcgetattr(0, p)
-#    define SetTerminal(p) tcsetattr(0, TCSAFLUSH, p)
-#  else
-#    define GetTerminal(p) ioctl(0, TCGETA, p)
-#    define SetTerminal(p) ioctl(0, TCSETAF, p)
-#  endif
-#else
-#  if HAVE_SGTTY_H
-#    include <sgtty.h>
-#    define SGTTY struct sgttyb
-#    define GetTerminal gtty(0, p)
-#    define SetTerminal stty(0, p)
-#  endif
-#endif
-
-SGTTY	original_tty;
-SGTTY	modified_tty;
+TermioT	original_tty;
+TermioT	modified_tty;
 
 #ifdef	TEST
 void	show_term(s)
@@ -63,9 +41,9 @@ void	show_term(s)
 	if (log == 0)
 		log = fopen("rawterm.log", "w");
 	if (log != 0) {
-#if HAVE_TERMIOS_H	/* we've got <termios.h> */
+#if USING_TERMIOS_H || USING_TERMIO_H
 		int	n;
-		SGTTY sb;
+		TermioT sb;
 		GetTerminal(&sb);
 		fprintf(log, "%s: \n", s);
 		fprintf(log, "\tiflag %#lo\n", sb.c_iflag);
@@ -78,7 +56,7 @@ void	show_term(s)
 				fprintf(log, "\t\t%d: %#o\n", n, sb.c_cc[n]);
 		fprintf(log, "\n");
 #else
-		SGTTY sb;
+		TermioT sb;
 		GetTerminal(&sb);
 		fprintf(log,
 			"%s: speed %#o/%#o erase %#o kill %#o flags %#o\n", s,
@@ -163,7 +141,7 @@ void	rawterm(_AR0)
 	static	int	initialized ;
 
 	show_term("before-raw-");
-#ifdef	SYS5_CURSES
+#if	HAVE_CBREAK
 	cbreak();
 #else
 	crmode();
@@ -171,12 +149,12 @@ void	rawterm(_AR0)
 	noecho();
 	nonl();
 
-#ifdef __hpux
+#ifdef __hpux	/* bug-fix */
 	/* HP/UX didn't disable echo; this is a quick hack to fix that */
 	{
-		SGTTY sb;
+		TermioT sb;
 		GetTerminal(&sb);
-		sb.sg_flags &= ~ECHO;
+		sb.c_lflag &= ~ECHO;
 		SetTerminal(0, &sb);
 	}
 #endif

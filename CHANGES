@@ -1,3 +1,79 @@
+1994-07-04  dickey@clark.net
+
+	* configure.in: tweaks from first pass on Solaris
+
+	* src/curses/cmdch.c: initialize SYS5-curses with 'keypad()'
+
+	* aclocal.m4: look for -ltermcap if we've got BSD curses
+
+	* td_make.in: split LIBS into LIB_DEPS and LIB_ARGS
+
+	* test/td_rules.mk, test/Makefile, src/Makefile, src/td_rules.mk, Makefile, support/Makefile:
+	port:ClarkNet
+
+	* aclocal.m4: forgot struct-screen
+
+	* support/old-td_lib.mk: port:ClarkNet
+
+	* src/pathname/pathcmp.c: use MODULE_ID
+
+	* src/pathname/pathcmp.c: use PATH_SLASH (UNIX & MSDOS)
+
+	* include/td_curse.h: mods for autoconf (ready for integration-testing)
+
+	* configure.in: moved TD_CURSES_LIBS _before_ termcap.h
+	corrected RANLIB
+
+	* Makefile:
+	added td_lib.mk to list of files that are purged in distclean
+
+	* aclocal.m4: added TD_STRUCT_SCREEN
+
+	* src/curses/rawterm.c: autoconf:cbreak
+
+	* src/curses/dumpwin.c: autoconf:chtype
+
+	* src/curses/cmdch.c: adjustments for autoconf
+
+	* aclocal.m4: added TD_TCAP_CURSOR
+
+	* configure.in: test for termcap.h
+
+	* aclocal.m4: make sure we retain include-path from curses
+
+	* configure.in: keep bsd-library after ncurses
+
+	* Makefile: added td_make.in
+
+	* configure.in:
+	use calls to make support/td_lib.mk, and configure for ncurses
+
+	* td_make.in: RCS_BASE
+
+	* aclocal.m4: logic error
+
+	* aclocal.m4: added TD_CURSES_LIBS
+
+	* include/ptypes.h: added TRM_PTYPES
+
+	* src/curses/erasechr.c: rewrote using autoconf definitions
+
+	* src/curses/erasechr.c: use MODULE_ID
+
+	* src/curses/rawterm.c: absorbed the termio stuff into ptypes.h
+
+	* src/cm_funcs/packdate.c: autoconf:tm_isdst
+
+	* configure.in: test for termio.h
+
+	* include/td_local.h: added TRM_PTYPES
+
+	* aclocal.m4: test for localzone
+
+	* src/cm_funcs/newzone.c: autoconf:localzone
+
+	* src/cm_funcs/newzone.c: use MODULE_ID
+
 1994-07-02  dickey@clark.net
 
 	* include/td_ext.h: make 'ioctl()' compatible with Linux.

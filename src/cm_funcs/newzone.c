@@ -1,7 +1,3 @@
-#if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: newzone.c,v 12.3 1994/05/23 22:45:26 tom Exp $";
-#endif
-
 /*
  * Title:	newzone.c (set new timezone)
  * Author:	T.E.Dickey
@@ -39,6 +35,8 @@ static	char	Id[] = "$Id: newzone.c,v 12.3 1994/05/23 22:45:26 tom Exp $";
 #define	TIM_PTYPES
 #include	"ptypes.h"
 
+MODULE_ID("$Id: newzone.c,v 12.5 1994/07/04 10:26:15 tom Exp $")
+
 #define	SIX_MM	(6 * (30 * DAY))
 
 #define	EST_REF	581961600	/* EST: jun 10, 1988 12:00 */
@@ -49,7 +47,7 @@ static	time_t	now;
 #endif
 
 static	char	old_TZ[NAMELEN];
-#ifndef	__hpux
+#if	!LOCALZONE_DECLARED
 int	localzone;		/* public copy of minutes-west */
 #endif
 

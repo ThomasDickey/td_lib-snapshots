@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: dumpwin.c,v 12.5 1994/05/23 00:10:03 tom Exp $";
+static	char	Id[] = "$Id: dumpwin.c,v 12.6 1994/07/04 22:50:01 tom Exp $";
 #endif
 
 /*
@@ -33,11 +33,7 @@ void	dumpwin(
 	_DCL(WINDOW *,	w)
 	_DCL(char *,	tag)
 {
-#if	SYS5_CURSES
 	chtype	*p;
-#else
-	char	*p;
-#endif
 	char	fname[BUFSIZ],
 		*s = strcat(strcpy(fname, getenv("HOME")), "/dumpwin.out");
 	FILE	*fp = fopen(s, "a+");

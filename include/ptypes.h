@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 12.26 1994/07/02 21:43:28 tom Exp $ */
+/* $Id: ptypes.h,v 12.28 1994/07/04 11:58:56 tom Exp $ */
 
 #ifndef	PTYPES_H
 #define	PTYPES_H
@@ -22,6 +22,7 @@
  *	SIG_PTYPES	<signal.h>
  *	STR_PTYPES	<string.h>
  *	TIM_PTYPES	<time.h>
+ *	TRM_PTYPES	<termio.h>
  *	WAI_PTYPES	<wait.h>
  *
  * We include <stdio.h> here so that 'sprintf()' lints properly.
@@ -34,7 +35,6 @@
 #include <sys/stat.h>
 
 	/* useful stuff for <sys/stat.h> */
-#define	STAT	struct	stat
 #define	Stat_t	struct	stat	/* STAT conflicts with 'dist' package */
 #define	isDIR(mode)	((mode & S_IFMT) == S_IFDIR)
 #define	isFILE(mode)	((mode & S_IFMT) == S_IFREG)
@@ -446,13 +446,11 @@ static	struct	direct	dbfr;
 #undef	SIGNAL_FUNC
 #undef	DCL_SIGNAL
 
-#define	SIG_T	RETSIGTYPE
+#define	SIG_T	RETSIGTYPE	/* obsolete */
 
-#ifdef	apollo
-#  ifdef	__SIG_HANDLER_T
-#    define	SIGNAL_ARGS _AR1(int,sig) _CDOTS
-#    define	SIGNAL_args _ar1(int,sig) _CDOTS
-#  endif
+#if SIG_ARGS_VARYING
+#  define SIGNAL_ARGS _AR1(int,sig) _CDOTS
+#  define SIGNAL_args _ar1(int,sig) _CDOTS
 #endif
 
 #ifndef SIGNAL_ARGS
@@ -460,17 +458,15 @@ static	struct	direct	dbfr;
 #  define SIGNAL_args _ar1(int,sig)
 #endif
 
-#ifndef	SIGNAL_FUNC
-#  define	SIGNAL_FUNC(f)	SIG_T f (SIGNAL_ARGS) _DCL(int,sig)
-#endif
+#define	SIGNAL_FUNC(f)		RETSIGTYPE f (SIGNAL_ARGS) _DCL(int,sig)
 
-#define	DCL_SIGNAL(func)	SIG_T	(*func)(SIGNAL_args)
+#define	DCL_SIGNAL(func)	RETSIGTYPE	(*func)(SIGNAL_args)
 
-#if defined(__GNUC__)
+#if SIG_IGN_REDEFINEABLE
 # undef  SIG_DFL
 # undef  SIG_IGN
-# define SIG_DFL	(SIG_T (*)(SIGNAL_ARGS))0
-# define SIG_IGN	(SIG_T (*)(SIGNAL_ARGS))1
+# define SIG_DFL	(RETSIGTYPE (*)(SIGNAL_ARGS))0
+# define SIG_IGN	(RETSIGTYPE (*)(SIGNAL_ARGS))1
 #endif
 
 #ifndef	NSIG		/* e.g., MSDOS */
@@ -528,6 +524,44 @@ extern	long	timezone;
 #endif
 
 #endif
+
+/******************************************************************************
+ * Handles proper include for <termios.h>                                     *
+ ******************************************************************************/
+#ifdef	TRM_PTYPES
+
+#if HAVE_TERMIOS_H && HAVE_TCGETATTR
+#  include <termios.h>
+#  define USING_TERMIOS_H 1
+#  define TermioT struct termios
+#  define GetTerminal(p) tcgetattr(0, p)
+#  define SetTerminal(p) tcsetattr(0, TCSAFLUSH, p)
+#else
+#  if HAVE_TERMIO_H
+#    include <termio.h>
+#    define USING_TERMIO_H 1
+#    define TermioT struct termio
+#    if HAVE_TCGETATTR
+#      define GetTerminal(p) tcgetattr(0, p)
+#      define SetTerminal(p) tcsetattr(0, TCSAFLUSH, p)
+#    else
+#      define GetTerminal(p) ioctl(0, TCGETA, p)
+#      define SetTerminal(p) ioctl(0, TCSETAF, p)
+#    endif
+#  else
+#    if HAVE_SGTTY_H
+#      include <sgtty.h>		/* for stty/gtty functions */
+#      define USING_SGTTY_H 1
+#      define TermioT struct sgttyb
+#      define GetTerminal gtty(0, p)
+#      define SetTerminal stty(0, p)
+#    else
+#      error "TRM_PTYPES?"
+#    endif
+#  endif
+#endif
+
+#endif	/* TRM_PTYPES */
 
 /******************************************************************************
  * defines the argument-type for "wait()"                                     *
