@@ -1,4 +1,4 @@
-# $Id: old-td_lib.mk,v 11.2 1992/10/09 12:55:20 dickey Exp $
+# $Id: old-td_lib.mk,v 11.4 1992/10/15 08:58:02 dickey Exp $
 # common definitions for makefiles built over CM_TOOLS library.
 
 ####### (Environment) ##########################################################
@@ -15,13 +15,19 @@ PUT	= rm -f $@; $(COPY) $? $@
 
 MAKE	= make $(MFLAGS) -k$(MAKEFLAGS)	CFLAGS="$(CFLAGS)" COPY="$(COPY)"
 
+INSTALL_BIN = $(TOP)/install_bin
+INSTALL_LIB = $(TOP)/install_lib
+INSTALL_MAN = $(TOP)/install_man
+
 ####### (Command-line Options) #################################################
 INCLUDES= -I. -I$I
 CPP_OPTS= $(DEFINES) $(INCLUDES)
 
 LIBS	= $L/$(CM_LIB).a
 DATE	= echo '** '`date` >> $@
-LINTOPT	= $(CPP_OPTS) -ltd -lcurses -lapollo
+
+LINTLIBS= -ltd
+LINTOPTS= $(CPP_OPTS) $(LINTLIBS)
 
 ####### (Standard Lists) #######################################################
 CLEAN	= *.[oai] *.bak *.log *.out *.tst .nfs* core
@@ -35,7 +41,7 @@ SCCSDEFS_H =	$(PTYPES_H)	$I/sccsdefs.h
 ####### (Development) ##########################################################
 CPROTO	= cproto -e -i -fo'\\n\\t\\t' -fp'\\n\\t\\t'
 
-LINT_EACH = sh -c 'for i in $?;do echo $$i:; tdlint $(LINTOPT) $$i >>$@;done'
+LINT_EACH = sh -c 'for i in $?;do echo $$i:; tdlint $(LINTOPTS) $$i >>$@;done'
 
 .SUFFIXES: .c .i .o .a .proto .lint .tst
 

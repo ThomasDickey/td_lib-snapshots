@@ -1,15 +1,14 @@
-# $Id: Makefile,v 11.0 1992/02/18 08:15:08 ste_cm Rel $
+# $Id: Makefile,v 11.1 1992/10/15 08:56:59 dickey Exp $
 # make-file for CM_TOOLS common interface directory
-#
-####### (Development) ##########################################################
-GET	= checkout
+
+TOP	= ../..
+include $(TOP)/cm_library/support/cm_library.mk
 
 ####### (Command-line Options) #################################################
 llib	= td
 LLIB	= llib-l$(llib)
 
 ####### (Standard Lists) #######################################################
-L	= ../lib
 H_SRC	=\
 	acl.h \
 	cmdch.h\
@@ -31,10 +30,9 @@ ALL	=
 
 ####### (Standard Productions) #################################################
 all:		$(SOURCES) $(ALL)
-clean:			; rm -f *.bak *.log *.out *.ln core
-clobber:	clean	; rm -f $(ALL) $(IT)
-destroy:
-	sh -c 'for i in *;do case $$i in RCS);; *) rm -f $$i;;esac;done;exit 0'
+clean:				; rm -f $(CLEAN) *.ln
+clobber:	clean		; rm -f $(ALL) $(IT)
+destroy:			; $(DESTROY)
 sources:	$(SOURCES)
 lintlib:	$(IT)
 lint.out:	$(IT)
@@ -42,6 +40,6 @@ lincnt.out:	$(H_SRC)	; lincnt $(H_SRC) >$@
 
 ####### (Details of Productions) ###############################################
 #
-$(SOURCES):		; $(GET) $@
-$L/$(LLIB).ln:	$(H_SRC) $(LLIB) ; - sh -c 'makellib -I. -L$L $(LLIB) $(llib)'
-$(LLIB).i:	$(H_SRC) $(LLIB) ; /usr/lib/cpp -Dlint -I. $(LLIB) $@
+$(SOURCES):			; $(GET) $@
+$L/$(LLIB).ln:	$(SOURCES)	; - sh -c 'makellib -I. -L$L $(LLIB) $(llib)'
+$(LLIB).i:	$(SOURCES)	; /usr/lib/cpp -Dlint -I. $(LLIB) $@
