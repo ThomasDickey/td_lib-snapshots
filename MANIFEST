@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19900427
+MANIFEST for td_lib, version t19900508
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 Makefile                        top-level makefile for TD_LIB
@@ -14,6 +14,7 @@ include/llib-ltd                template for lint-library
 include/port2vms.h              interface for vms-porting functions
 include/ptypes.h                principal include-file for TD_LIB
 include/rcsdefs.h               interface for rcs functions
+include/sccsdefs.h              interface for sccs functions
 include/td_lib.h                interface of common TD_LIB functions
 include/vms_dirs.h              VMS unix-style directory-interface definitions
 src                             subdirectory
@@ -35,6 +36,7 @@ src/cm_funcs/rcsperm.c          directory-level RCS permissions
 src/cm_funcs/rcstemp.c          create temp-file for setuid operations
 src/cm_funcs/sccs_dir.c         returns name of SCCS directory
 src/cm_funcs/sccslast.c         scan for last SCCS date & version
+src/cm_funcs/sccsname.c         SCCS working/archive name translation (like 'rcsname.c').
 src/cm_funcs/vcs_file.c         encapsulates name of directory-level RCS permissions file
 src/cm_funcs/vercmp.c           compare version-strings
 src/curses                      subdirectory

@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 7.0 1990/04/27 16:32:35 ste_cm Rel $ */
+/* $Id: td_lib.h,v 7.1 1990/05/08 13:26:36 dickey Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for CM_TOOLS COMMON
@@ -556,26 +556,7 @@
 			_NUL
 #endif	CUR_PTYPES
 
-	/* sccs_dir.c ------------------------------------------------- */
 #ifdef	unix
-	char *	sccs_dir()
-			_RET
-
-	/* sccslast.c ------------------------------------------------- */
-		sccslast(
-			_ARX(char *,	wd)
-			_ARX(char *,	n)
-			_ARX(char **,	v_)
-			_ARX(time_t *,	t_)
-			_AR1(char **,	l_)
-			)
-			_DCL(char *,	wd)
-			_DCL(char *,	n)
-			_DCL(char **,	v_)
-			_DCL(time_t *,	t_)
-			_DCL(char **,	l_)
-			_NUL
-
 	/* scr_size.c ------------------------------------------------- */
 	int	scr_size(
 			_AR1(int *,	lc)

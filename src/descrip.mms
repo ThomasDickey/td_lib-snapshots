@@ -1,4 +1,4 @@
-# $Id: descrip.mms,v 7.0 1990/04/26 07:54:27 ste_cm Rel $
+# $Id: descrip.mms,v 7.1 1990/05/08 13:45:06 dickey Exp $
 # MMS-file for miscellaneous library routines	
 #
 ####### (Development) ##########################################################
@@ -95,6 +95,7 @@ UNUSED_MODULES = -
 	SAVEWIN,		# curses -
 	SCCS_DIR,		# sccs (unix-only) -
 	SCCSLAST,		# sccs (unix-only) -
+	SCCSNAME,		# sccs (unix-only) -
 	SCR_SIZE,		# curses/apollo/termcap -
 	SETMTIME,		# utime() call -
 	TRACK_WD,		# unix-style 'getwd()' -
@@ -176,6 +177,7 @@ C_SRC	=-
 	SAVEWIN.C -
 	SCCS_DIR.C -
 	SCCSLAST.C -
+	SCCSNAME.C -
 	SCR_SIZE.C -
 	SETMTIME.C -
 	STRALLOC.C -

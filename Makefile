@@ -1,31 +1,23 @@
-# $Id: Makefile,v 7.0 1989/08/22 09:29:58 ste_cm Rel $
+# $Id: Makefile,v 8.0 1990/05/08 13:53:34 ste_cm Rel $
 # Top-level makefile for CM_TOOLS common library
 #
 # $Log: Makefile,v $
-# Revision 7.0  1989/08/22 09:29:58  ste_cm
-# BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
+# Revision 8.0  1990/05/08 13:53:34  ste_cm
+# BASELINE Mon Aug 13 15:06:41 1990 -- LINCNT, ADA_TRANS
 #
-#	Revision 6.0  89/08/22  09:29:58  ste_cm
-#	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
+#	Revision 7.1  90/05/08  13:53:34  dickey
+#	added 'sccsdefs.h' to install-rule; simplified other rules
 #	
-#	Revision 5.0  89/08/22  09:29:58  ste_cm
-#	BASELINE Fri Oct 27 12:27:25 1989 -- apollo SR10.1 mods + ADA_PITS 4.0
-#	
-#	Revision 4.0  89/08/22  09:29:58  ste_cm
-#	BASELINE Thu Aug 24 09:34:01 EDT 1989 -- support:navi_011(rel2)
-#	
-#	Revision 3.1  89/08/22  09:29:58  dickey
-#	corrected 'destroy' rule
-#	
-#	Revision 3.0  89/06/08  12:28:54  ste_cm
-#	BASELINE Mon Jun 19 13:20:43 EDT 1989
+#	Revision 7.0  89/08/22  09:29:58  ste_cm
+#	BASELINE Mon Apr 30 09:54:01 1990 -- (CPROTO)
 #	
 ####### (Development) ##########################################################
 I	= ../../interface
 L	= ../../lib
 GET	= checkout
 PUT	= copy -v -d ../$@
-MAKE	= make $(MFLAGS) -k$(MAKEFLAGS)	GET=$(GET)
+CFLAGS	=
+MAKE	= make $(MFLAGS) -k$(MAKEFLAGS)	GET=$(GET) CFLAGS="$(CFLAGS)"
 
 ####### (Standard Lists) #######################################################
 SOURCES	= Makefile descrip.mms README
@@ -40,22 +32,22 @@ ALL	=\
 	$I/common.h\
 	$I/ptypes.h\
 	$I/rcsdefs.h\
+	$I/sccsdefs.h\
 	$L/lib.a
 
 ####### (Standard Productions) #################################################
 all\
 clean\
 clobber\
+destroy rdestroy\
 sources\
 lincnt.out\
-lint.out:	$(FIRST)
+lint.out::	$(FIRST)
 	cd interface;	$(MAKE) $@
 	cd src;		$(MAKE) $@
 
 rdestroy\
-destroy:	$(FIRST)
-	cd interface;	$(MAKE) destroy
-	cd src;		$(MAKE) destroy
+destroy::
 	rm -rf lib
 	sh -c 'for i in *;do case $$i in RCS);; *) rm -f $$i;;esac;done;exit 0'
 
@@ -66,13 +58,14 @@ install:	all $(ALL)
 deinstall:		; rm -f $(ALL)
 
 ####### (Details of Productions) ###############################################
-$(SOURCES):				; $(GET) $@
+interface/Makefile\
+src/Makefile\
+$(SOURCES):				; $(GET) -x $@
 lib:					; mkdir $@
-interface/Makefile:			; cd interface;	$(GET) Makefile
-src/Makefile:				; cd src;	$(GET) Makefile
 
 $I/cmdch.h:	interface/cmdch.h	; cd interface;	$(PUT)
 $I/common.h:	interface/common.h	; cd interface;	$(PUT)
 $I/ptypes.h:	interface/ptypes.h	; cd interface;	$(PUT)
 $I/rcsdefs.h:	interface/rcsdefs.h	; cd interface;	$(PUT)
+$I/sccsdefs.h:	interface/sccsdefs.h	; cd interface;	$(PUT)
 $L/lib.a:	lib/lib.a		; cd lib;	$(PUT)
