@@ -43,7 +43,7 @@
 #define TIM_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: packdate.c,v 12.18 2002/04/21 15:22:31 tom Exp $")
+MODULE_ID("$Id: packdate.c,v 12.19 2002/05/02 10:37:38 tom Exp $")
 
 #define	LEAP(y)	(!(y&3))
 
@@ -113,6 +113,8 @@ long	packdate (
 #if HAVE_MKTIME
 	time_t sec;
 	struct tm tm;
+	if (year > 1900)
+		year -= 1900;
 	tm.tm_year = year;
 	tm.tm_mon = mon - 1;
 	tm.tm_mday = day;
