@@ -1,3 +1,10 @@
+1992-11-16  dickey@software.org
+
+	* src/memory/txtalloc.c: added 'free_txtalloc()' -- must test!
+
+	* src/memory/doalloc.c:
+	first pass of revising this so I can test for memory leaks
+
 1992-11-13  dickey@software.org
 
 	* src/pathname/abspath.c:

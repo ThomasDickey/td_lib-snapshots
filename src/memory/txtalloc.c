@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: txtalloc.c,v 11.0 1991/10/04 07:50:37 ste_cm Rel $";
+static	char	Id[] = "$Id: txtalloc.c,v 11.1 1992/11/16 12:06:32 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: txtalloc.c,v 11.0 1991/10/04 07:50:37 ste_cm Rel $";
  * Author:	T.E.Dickey
  * Created:	29 Apr 1988
  * Modified:
+ *		16 Nov 1992, Added 'free_txtalloc()' for debugging memory leaks.
  *		03 Oct 1991, converted to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
  *		04 Oct 1989, lint (apollo SR10.1)
@@ -47,10 +48,9 @@ typedef	struct	_node	{
 static	NODE	head;
 
 static
-NODE *
-new_NODE(
-_AR1(char *,	text))
-_DCL(char *,	text)
+NODE *	new_NODE(
+	_AR1(char *,	text))
+	_DCL(char *,	text)
 {
 register
 NODE	*p = MYALLOC(NODE, sizeof(NODE) + strlen(text));
@@ -61,10 +61,9 @@ NODE	*p = MYALLOC(NODE, sizeof(NODE) + strlen(text));
 	return (p);
 }
 
-char *
-txtalloc(
-_AR1(char *,	text))
-_DCL(char *,	text)
+char *	txtalloc(
+	_AR1(char *,	text))
+	_DCL(char *,	text)
 {
 				/* (A1:Initialize) */
 register
@@ -166,22 +165,43 @@ txtfree(
 _AR1(char *,	p))
 _DCL(char *,	p)
 {
+	/* patch */
 }
 
-#ifdef	TEST
-txtdump(
-_ARX(NODE *,	p)
-_AR1(int,	level)
-	)
-_DCL(NODE *,	p)
-_DCL(int,	level)
+/******************************************************************************/
+static
+NODE *	free_NODE(
+	_AR1(NODE *,	p))
+	_DCL(NODE *,	p)
 {
-int	j;
+	if (p != 0) {
+		free_NODE(p->llink);
+		free_NODE(p->rlink);
+		dofree((char *)p);
+	}
+	return 0;
+}
+
+void	free_txtalloc(_AR0)
+{
+	free_NODE(head.rlink);
+}
+
+/******************************************************************************/
+#ifdef	TEST
+void	txtdump(
+	_ARX(NODE *,	p)
+	_AR1(int,	level)
+		)
+	_DCL(NODE *,	p)
+	_DCL(int,	level)
+{
+	register int	j;
 
 	if (p) {
 		txtdump(LLINK(p),  level+1);
 		for (j = 0; j < level; j++)
-			printf(". ");
+			PRINTF(". ");
 		PRINTF("%s (%d)\n", KEY(p), B(p));
 		txtdump(RLINK(p), level+1);
 	}
@@ -189,7 +209,7 @@ int	j;
 
 _MAIN
 {
-int	j;
+	register int	j;
 	for (j = 1; j < argc; j++)
 		(void)txtalloc(argv[j]);
 	txtdump(head.rlink,0);
