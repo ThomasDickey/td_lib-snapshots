@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Id: editfile.c,v 5.1 1991/10/18 15:36:24 dickey Exp $";
+static	char	Id[] = "$Id: editfile.c,v 7.0 1991/12/13 08:46:25 ste_cm Rel $";
 #endif
 
 /*
@@ -7,6 +7,8 @@ static	char	Id[] = "$Id: editfile.c,v 5.1 1991/10/18 15:36:24 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	03 Oct 1988
  * Modified:
+ *		13 Dec 1991, pass 'sb' arg down to 'func', from initial stat on
+ *			     the input-file.
  *		24 Apr 1989, port to unix using 'mktemp()'
  *
  * Function:	Invokes a single-line editing function on a file.  If no changes
@@ -20,7 +22,7 @@ static	char	Id[] = "$Id: editfile.c,v 5.1 1991/10/18 15:36:24 dickey Exp $";
 #define		STR_PTYPES
 #include	"portunix.h"
 
-#define	TELL	fprintf(stderr,
+#define	TELL	FPRINTF(stderr,
 
 #ifdef	vms
 #define	NEWVER(name)	(name)
@@ -29,9 +31,14 @@ extern	char	*mktemp();
 #define	NEWVER(name)	mktemp(name)
 #endif	/* vms/unix */
 
-editfile(oldname,func)
-char	*oldname;
-int	(*func)();
+editfile(
+_ARX(char *,	oldname)
+_FNX(int,	func)
+_AR1(STAT *,	sb)
+	)
+_DCL(char *,	oldname)
+_DCL(int,	(*func)())
+_DCL(STAT *,	sb)
 {
 	auto	FILE	*ifp = fopen(oldname, "r");
 	auto	FILE	*ofp;
@@ -49,7 +56,7 @@ int	(*func)();
 	if ((ifp != 0)
 	&&  (ofp = fopen(NEWVER(newname), "w")) ) {
 		TELL "** edit \"%s\" => \"%s\"\n", oldname, newname);
-		changes += (*func)(ofp, ifp);
+		changes += (*func)(ofp, ifp, sb);
 		(void)fclose(ifp);
 		(void)fclose(ofp);
 		if (changes == 0) {

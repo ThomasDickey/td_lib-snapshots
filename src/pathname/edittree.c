@@ -1,11 +1,17 @@
 #ifndef	lint
-static	char	Id[] = "$Id: edittree.c,v 5.1 1991/10/18 15:36:30 dickey Exp $";
+static	char	Id[] = "$Id: edittree.c,v 6.0 1991/12/13 08:54:30 ste_cm Rel $";
 #endif
 
 /*
  * Title:	edittree.c
  * Author:	T.E.Dickey
  * Created:	06 Oct 1988
+ * Modified:
+ *		11 Dec 1991, added 'links' argument.  Process entire list of
+ *			     files per-directory to avoid possible conflict
+ *			     with temporary-files in current-directory.  Also,
+ *			     pass-in 'sb' argument to 'func()' with name.
+ *
  * Function:	Invokes a single-line editing function on a tree of files.
  *
  *		On VMS, we use this also to hide the fact that DCL does not
@@ -20,36 +26,70 @@ static	char	Id[] = "$Id: edittree.c,v 5.1 1991/10/18 15:36:30 dickey Exp $";
 #include	"portunix.h"
 #include	<errno.h>
 
+typedef	char	*PTR;
+	/*ARGSUSED*/
+	def_DOALLOC(PTR)
+
+#define	CHUNK	127	/* 1 less than a power of 2 */
+#define	v_ALLOC(v,n,s)	v = DOALLOC(v, PTR, ((++n)|CHUNK)+1);\
+			v[n-1] = txtalloc(s)
+
 #define	isDIR(m)	((m & S_IFMT) == S_IFDIR)
 #define	isFILE(m)	((m & S_IFMT) == S_IFREG)
 
-#define	TELL		fprintf(stderr,
+#define	TELL		FPRINTF(stderr,
 
 #ifdef	TEST
 #define	TELL_FILE(name)	TELL "%d\t%s => %s\n", changes, nesting, name);
 #define	TELL_DIR(name)	TELL "%d\t%s directory %s\n", changes, nesting, name); 
-static	editfile(n,f)	char *n; int (*f)(); { return 1;}
+static	editfile(n,f,s)	char *n; int (*f)(); STAT *s; { return 1;}
 #else
 #define	TELL_FILE(name)
 #define	TELL_DIR(name)
 #endif
 
-#ifdef	vms
-#define	EDITDIR_ARG	"*.*;"
-#else	/* unix */
-#define	EDITDIR_ARG	"."
-#endif	/* vms/unix */
+#ifdef	S_IFLNK
+#define	LOOK(name,sb)	(links ? stat(name,sb) : lstat(name,sb))
+#else
+#define	LOOK(name,sb)	(stat(name,sb))
+#endif
 
-edittree(oldname,func,recur)
-char	*oldname;
-int	(*func)();
-int	recur;
+/*
+ * Comparison routine for qsort.
+ */
+static
+compare(
+_ARX(char **,	p1)
+_AR1(char **,	p2)
+	)
+_DCL(char **,	p1)
+_DCL(char **,	p2)
+{
+	return (-strcmp(*p1, *p2));
+}
+
+/************************************************************************
+ *	public entrypoints						*
+ ************************************************************************/
+
+edittree(
+_ARX(char *,	oldname)
+_FNX(int,	func)
+_ARX(int,	recur)
+_AR1(int,	links)
+	)
+_DCL(char *,	oldname)
+_DCL(int,	(*func)())
+_DCL(int,	recur)
+_DCL(int,	links)
 {
 	auto	DIR		*dirp;
 	auto	struct	direct	*dp;
 	auto	int		changes = 0;
 	auto	int		next	= recur ? recur+1 : 0;
-	auto	struct stat	sb;
+	auto	STAT		sb;
+	auto	unsigned	num;
+	auto	PTR		*vec;
 	auto	char		newname[MAXPATHLEN];
 	auto	char		oldpath[MAXPATHLEN];
 	auto	char		*newpath;
@@ -59,7 +99,7 @@ int	recur;
 	auto	char		*nesting = &stack[sizeof(stack)-(recur*2)];
 #endif
 
-	if (stat(oldname, &sb) < 0) {
+	if (LOOK(oldname, &sb) < 0) {
 		errno = ENOENT;		/* bypass vms-bug */
 		perror(oldname);
 		return(0);
@@ -84,30 +124,44 @@ int	recur;
 		}
 
 		if (dirp = opendir(newpath)) {
+			num = 0;
+			vec = 0;
 			while (dp = readdir(dirp)) {
 				(void)strcpy(newname, dp->d_name);
 #ifndef	vms
 				if (dotname(newname))	continue;
 #endif
-				if (lstat(newname, &sb) < 0) {
+				if (LOOK(newname, &sb) < 0) {
 					perror(newname);
 					continue;
 				}
 				if (isDIR(sb.st_mode)) {
 					if (!next)
 						continue;
-					changes += edittree(newname, func, next);
+					changes += edittree(newname, func, next, links);
 				} else if (isFILE(sb.st_mode)) {
-					TELL_FILE(newname);
-					changes += editfile(newname, func);
+					v_ALLOC(vec,num,newname);
 				}
 			}
 			closedir(dirp);
+			if (num != 0) {
+				qsort((PTR)vec, (LEN_QSORT)num,
+					sizeof(PTR), compare);
+				while (num-- != 0) {
+					if (LOOK(vec[num], &sb) < 0) {
+						perror(vec[num]);
+						continue;
+					}
+					TELL_FILE(vec[num]);
+					changes += editfile(vec[num], func, &sb);
+				}
+				dofree((PTR)vec);
+			}
 		}
 		(void)chdir(oldpath);
 	} else {
 		TELL_FILE(oldname);
-		changes += editfile(oldname, func);
+		changes += editfile(oldname, func, &sb);
 	}
 	return (changes);
 }
@@ -128,12 +182,15 @@ char	*argv[];
 {
 	register int	j;
 	auto	 int	recur = FALSE;
+	auto	 int	links = FALSE;
 
 	for (j = 1; j < argc; j++) {
 		if (!strcmp(argv[j], "-r"))
 			recur = TRUE;
+		else if (!strcmp(argv[j], "-L"))
+			links = TRUE;
 		else
-			printf("count = %d\n", edittree(argv[j],do_copy,recur));
+			PRINTF("count = %d\n", edittree(argv[j],do_copy,recur, links));
 	}
 }
 

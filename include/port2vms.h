@@ -1,5 +1,5 @@
 /*
- * $Id: port2vms.h,v 5.2 1991/12/10 09:13:10 dickey Exp $
+ * $Id: port2vms.h,v 6.0 1991/12/13 08:34:55 ste_cm Rel $
  *
  * VMS-definitions for supporting unix/vms port
  */
@@ -7,6 +7,7 @@
 #ifndef	_PORTUNIX_
 #define	_PORTUNIX_
 
+#define	STAT	struct stat
 #include	"ptypes.h"		/* CM_TOOLS common */
 
 #ifndef	MAXPATHLEN
@@ -38,6 +39,7 @@ extern	char		*getcwd();
 
 #define	_OPENDIR(s,m)	(isDIR(m) || vms_iswild(s))
 #define	OPENDIR_ARG	"*.*;*"
+#define	EDITDIR_ARG	"*.*;"
 
 #ifndef		$DESCRIPTOR
 #include	<descrip.h>
@@ -50,6 +52,7 @@ extern	char		*getcwd();
 
 #define	_OPENDIR(s,m)	(isDIR(m))
 #define	OPENDIR_ARG	"."
+#define	EDITDIR_ARG	"."
 
 #endif	/* vms/unix */
 
@@ -72,20 +75,24 @@ extern	char *	dir2path(
 
 extern	int	editfile(
 		_arx(char *,		name)
-		_fn1(int,		func)
+		_fnx(int,		func)
+		_ar1(STAT *,		sb)
 		)
 		_dcl(char *,		name)
 		_dcl(int,		(*func)())
+		_dcl(STAT *,		sb)
 		_ret
 
 extern	int	edittree(
 		_arx(char *,		name)
 		_fnx(int,		func)
-		_ar1(int,		recur)
+		_arx(int,		recur)
+		_ar1(int,		links)
 		)
 		_dcl(char *,		name)
 		_dcl(int,		(*func)())
 		_dcl(int,		recur)
+		_dcl(int,		links)
 		_ret
 
 extern	char *	gid2s(
