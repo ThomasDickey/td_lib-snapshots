@@ -1,4 +1,4 @@
-/* $Header: /users/source/archives/td_lib.vcs/include/RCS/td_lib.h,v 3.2 1989/08/03 14:56:40 dickey Exp $ */
+/* $Header: /users/source/archives/td_lib.vcs/include/RCS/td_lib.h,v 3.3 1989/08/08 13:55:35 dickey Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for CM_TOOLS COMMON
@@ -128,6 +128,15 @@
 			_DCL(int *,	opt)
 			_RET
 #endif	unix
+
+	/* dftenv.c --------------------------------------------------- */
+	char	*dftenv(
+			_ARX(char *,	value)
+			_AR1(char *,	name)
+			)
+			_DCL(char *,	value)
+			_DCL(char *,	name)
+			_RET
 
 	/* doalloc.c -------------------------------------------------- */
 	char	*doalloc(

@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t19890803
+MANIFEST for td_lib, version t19890808
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 Makefile                        top-level makefile for TD_LIB
@@ -111,6 +111,7 @@ src/process/revert.c            reset/disable setuid mode
 src/process/usercopy.c          copy file for set-uid user
 src/process/userprot.c          set file protection for set-uid user
 src/string                      subdirectory
+src/string/dftenv.c             returns 'getenv()' with a default (non-null) value
 src/string/dotcmp.c             compare dot-separated strings
 src/string/lsbycols.c           list an array of character strings by columns
 src/string/ltostr.c             convert 'long' to a string

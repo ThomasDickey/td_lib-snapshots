@@ -1,10 +1,13 @@
-# $Header: /users/source/archives/td_lib.vcs/src/RCS/Makefile,v 3.0 1989/06/05 13:23:58 ste_cm Rel $
+# $Header: /users/source/archives/td_lib.vcs/src/RCS/Makefile,v 3.1 1989/08/08 14:00:54 dickey Exp $
 # MAKE-file for miscellaneous library routines
 #
 # $Log: Makefile,v $
-# Revision 3.0  1989/06/05 13:23:58  ste_cm
-# BASELINE Mon Jun 19 13:27:01 EDT 1989
+# Revision 3.1  1989/08/08 14:00:54  dickey
+# added module 'dftenv'
 #
+#	Revision 3.0  89/06/05  13:23:58  ste_cm
+#	BASELINE Mon Jun 19 13:27:01 EDT 1989
+#	
 #	Revision 2.6  89/06/05  13:23:58  dickey
 #	added module 'add2fname'
 #	
@@ -53,6 +56,7 @@ CSRC	=\
 	copyback.c\
 	cutoff.c\
 	denode.c\
+	dftenv.c\
 	doalloc.c\
 	dotcmp.c\
 	dotname.c\
@@ -141,6 +145,7 @@ OBJS	=\
 	copyback.o\
 	cutoff.o\
 	denode.o\
+	dftenv.o\
 	doalloc.o\
 	dotcmp.o\
 	dotname.o\
