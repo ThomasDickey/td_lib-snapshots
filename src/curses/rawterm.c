@@ -1,5 +1,5 @@
 #if	!defined(NO_IDENT)
-static	char	Id[] = "$Id: rawterm.c,v 12.5 1993/11/22 18:41:39 dickey Exp $";
+static	char	Id[] = "$Id: rawterm.c,v 12.6 1993/11/23 19:12:16 dickey Exp $";
 #endif
 
 /*
@@ -7,6 +7,7 @@ static	char	Id[] = "$Id: rawterm.c,v 12.5 1993/11/22 18:41:39 dickey Exp $";
  * Author:	T.E.Dickey
  * Created:	24 Nov 1987
  * Modified:
+ *		23 Nov 1993, check environment variable TERM for "xterm".
  *		18 Nov 1993, added entrypoint 'cookterm()' to allow xterm
  *			     mouse control via this interface.
  *		01 Nov 1993, 'nonl()' doesn't work on HP/UX. Workaround with
@@ -22,6 +23,7 @@ static	char	Id[] = "$Id: rawterm.c,v 12.5 1993/11/22 18:41:39 dickey Exp $";
  * Function:	Set terminal to single-character mode
  */
 
+#define STR_PTYPES
 #include	"td_curse.h"
 
 #ifdef __hpux
@@ -34,13 +36,26 @@ static	char	Id[] = "$Id: rawterm.c,v 12.5 1993/11/22 18:41:39 dickey Exp $";
 #else
 static	int	xterm_mouse(_AR0)
 {
-	return TRUE;	/* patch */
+	static	int	initialized;
+	static	int	use_mouse;
+
+	if (!initialized) {
+		char	*name;
+		initialized = TRUE;
+		if ((name = getenv("TERM")) != 0) {
+			int	len = strlen(name);
+			if (!strncmp(name, "xterm", 5)
+			 || (len > 5 && !strcmp(name+len-5, "xterm")))
+				use_mouse = TRUE;
+		}
+	}
+	return use_mouse;
 }
 
 #define XTERM_ENABLE_TRACKING   "\033[?1000h"	/* normal tracking mode */
 #define XTERM_DISABLE_TRACKING  "\033[?1000l"
 
-#define	Puts(s) fputs(s, stdout); fflush(stdout)
+#define	Puts(s) fputs(s, stdout); (void)fflush(stdout)
 
 static	void	enable_mouse(_AR0)
 {

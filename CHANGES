@@ -1,3 +1,7 @@
+1993-11-23  dickey@software.org
+
+	* src/curses/rawterm.c: added the test for TERM==xterm
+
 1993-11-22  dickey@software.org
 
 	* src/curses/rawterm.c: oops: wasn't disabling mouse-tracking...
