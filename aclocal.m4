@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.53 1995/02/11 20:26:38 tom Exp $
+dnl $Header: /users/source/archives/td_lib.vcs/RCS/aclocal.m4,v 12.54 1995/02/12 00:58:53 tom Exp $
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "TD_" to "AC_"
 dnl ---------------------------------------------------------------------------
@@ -144,8 +144,16 @@ td_tr_func=`echo $td_func | tr '[a-z]' '[A-Z]'`
 changequote([,])dnl
 AC_MSG_CHECKING(for ${td_func})
 AC_CACHE_VAL(td_cv_func_$td_func,[
+	# GCC won't reliably fail on prototype mismatches unless we make all
+	# warnings into errors.  Of course, _this_ assumes that the config is
+	# otherwise ok.
 AC_TRY_LINK([#undef ${td_func}],[${td_func}();],[
-if test $WithWarnings = yes; then
+if test $WithPrototypes = yes; then
+	td_result=undeclared
+elif test $WithWarnings = yes; then
+	if test $ac_cv_prog_gcc = yes; then
+		CFLAGS="$CFLAGS -Werror"
+	fi
 	AC_TRY_COMPILE([
 #define HAVE_${td_tr_func} 1
 #include <td_local.h>],
@@ -153,8 +161,8 @@ if test $WithWarnings = yes; then
 #undef $td_func
 	struct zowie { int a; double b; struct zowie *c; char d; };
 	extern struct zowie *$td_func(); $td_func() ],
-	[td_result=declared],
-	[td_result=undeclared])
+	[td_result=undeclared],
+	[td_result=declared])
 else
 	td_result=yes
 fi
