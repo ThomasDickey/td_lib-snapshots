@@ -3,6 +3,8 @@
  * Author:	T.E.Dickey
  * Created:	20 May 1988
  * Modified:
+ *		26 Mar 2002, if atime is zero, use current time.  Zero does not
+ *                           work with cygwin.
  *		22 Apr 1995, added 'atime' parameter.
  *		29 Oct 1993, ifdef-ident, port to HP/UX
  *		21 Sep 1993, gcc-warnings
@@ -17,7 +19,7 @@
 #include	"ptypes.h"
 #include	<time.h>
 
-MODULE_ID("$Id: setmtime.c,v 12.7 1995/04/22 20:52:46 tom Exp $")
+MODULE_ID("$Id: setmtime.c,v 12.8 2002/03/26 18:59:32 tom Exp $")
 
 #if HAVE_UTIME_H
 #include	<utime.h>
@@ -36,8 +38,8 @@ int	setmtime(
 	_DCL(time_t,	atime)
 {
 	struct utimbuf tp;
-	tp.actime  = time((time_t *)0);
+
 	tp.modtime = mtime;
-	tp.actime  = atime;
+	tp.actime  = (atime != 0) ? atime : time((time_t *)0);
 	return (utime(name, &tp));
 }

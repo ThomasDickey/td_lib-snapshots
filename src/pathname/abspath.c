@@ -39,7 +39,7 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: abspath.c,v 12.9 2001/05/15 00:59:52 tom Exp $")
+MODULE_ID("$Id: abspath.c,v 12.10 2002/03/26 14:28:04 tom Exp $")
 
 #ifdef	apollo
 #ifdef	apollo_sr10
@@ -157,7 +157,7 @@ void	abshome(
 	_AR1(char *,	path))
 	_DCL(char *,	path)
 {
-	register char *s, *d = path;
+	char *s, *d = path;
 
 	if (*d == '~') {	/* my home directory */
 		s = d+1;
@@ -190,6 +190,9 @@ void	abshome(
 #endif
 		}
 	}
+#ifdef __CYGWIN__
+	strlwrcpy(path, path);
+#endif
 }
 #endif
 
@@ -333,6 +336,9 @@ void	abspath(
 				s = path;	/* rescan */
 			}
 	}
+#ifdef __CYGWIN__
+	strlwrcpy(base, base);
+#endif
 }
 
 #ifdef	TEST

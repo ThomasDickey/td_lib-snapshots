@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	02 Sep 1988
  * Modified:
+ *		26 Mar 2002, force paths to lowercase on cygwin.
  *		21 Jul 2000, mods to support checkup -o & $SCCS_VAULT
  *		30 Jun 2000, fix infinite loop if PATHLIST_SEP is found.
  *		13 Jul 1994, added SCCS_VAULT interpretation.
@@ -37,7 +38,7 @@
 #include "ptypes.h"
 #include "sccsdefs.h"
 
-MODULE_ID("$Id: sccs_dir.c,v 12.7 2000/07/21 23:04:40 tom Exp $")
+MODULE_ID("$Id: sccs_dir.c,v 12.8 2002/03/26 19:04:38 tom Exp $")
 
 #define	WORKING	struct	Working
 	WORKING	{
@@ -57,6 +58,18 @@ static	char	*SccsDir;
 static	char	*SccsVault;
 static	VAULTS	*VaultList;
 
+#ifdef __CYGWIN__
+static char *
+path_alloc(char *s)
+{
+	char temp[1024];
+	strlwrcpy(temp, s);
+	return txtalloc(temp);
+}
+#else
+#define path_alloc(s) txtalloc(s)
+#endif
+
 /******************************************************************************/
 
 /*
@@ -70,11 +83,23 @@ VAULTS	*add_archive(
 {
 	if (*pathname != EOS) {
 		VAULTS	*p, *q, *r;
+#ifdef __CYGWIN__
+		char temp[1024];
+		if (*pathname == '"') {
+			size_t len;
+			pathname = strlwrcpy(temp, pathname+1);
+			len = strlen(pathname);
+			if (len != 0 && pathname[len-1] == '"')
+				pathname[len-1] = EOS;
+		} else {
+			pathname = strlwrcpy(temp, pathname);
+		}
+#endif
 		for (p = VaultList, q = 0; p != 0; q = p, p = p->next)
 			;
 		r = (VAULTS *)doalloc((char *)0, sizeof(VAULTS));
 		r->next = 0;
-		r->archive = txtalloc(pathname);
+		r->archive = path_alloc(pathname);
 		r->working = 0;
 		if (q == 0)
 			VaultList = r;
@@ -99,7 +124,7 @@ void	add_working(
 			;
 		r = (WORKING *)doalloc((char *)0, sizeof(WORKING));
 		r->next = 0;
-		r->working = txtalloc(pathname);
+		r->working = path_alloc(pathname);
 		if (q == 0)
 			list->working = r;
 		else
@@ -115,7 +140,7 @@ void	Initialize(_AR0)
 	SccsDir = getenv("SCCS_DIR");
 	if (SccsDir == 0)
 		SccsDir = "SCCS";
-	SccsDir = txtalloc(SccsDir);
+	SccsDir = path_alloc(SccsDir);
 
 	SccsVault = getenv("SCCS_VAULT");
 	if (SccsVault != 0) {
@@ -154,7 +179,7 @@ void	Initialize(_AR0)
 			if ((*next = at_next) != EOS)
 				next++;
 		}
-		SccsVault = txtalloc(SccsVault);
+		SccsVault = path_alloc(SccsVault);
 	}
 }
 
@@ -264,7 +289,7 @@ char *	sccs_dir(
 				 * the working directory corresponds to this
 				 * vault!)
 				 */
-				name = txtalloc(temp);
+				name = path_alloc(temp);
 			} else {
 				if (temp[max_n] != EOS)
 					max_n++;
@@ -275,7 +300,7 @@ char *	sccs_dir(
 						strcpy(archive, max_p->archive),
 						temp + max_n),
 					name);
-				name = txtalloc(archive);
+				name = path_alloc(archive);
 			}
 		}
 	}

@@ -1,3 +1,15 @@
+2002-03-26  dickey@invisible-island.net
+
+	* src/cm_funcs/sccs_dir.c:
+	got cm-fetch to work by lowercasing the pathnames, to work around occasional
+	nits from leading caps of leaf names.
+
+	* src/unix/setmtime.c:
+	'atime' parameter did not work with cygwin when it was zero.
+	so I make it default to the current time, anyway.
+
+	* src/pathname/abspath.c: force results to lowercase with cygwin.
+
 2002-03-20  dickey@invisible-island.net
 
 	* config.guess: resync
