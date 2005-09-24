@@ -1,3 +1,9 @@
+2005-09-24  dickey@invisible-island.net
+
+	* config.guess: 2005/9/19
+
+	* config.sub: 2005/7/8
+
 2005-01-24  dickey@invisible-island.net
 
 	* configure: RCS_BASE
