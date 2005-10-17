@@ -1,3 +1,15 @@
+2005-10-16  dickey@invisible-island.net
+
+	* src/cm_funcs/rcsload.c: appease gcc 4.0.2
+
+	* configure: 20051016
+
+	* aclocal.m4: new macros needed for resync
+
+	* aclocal.m4: resync with my-autoconf
+
+	* include/ptypes.h: AIX 5.3 compiler did not accept C++ comments
+
 2005-09-24  dickey@invisible-island.net
 
 	* config.guess: 2005/9/19
