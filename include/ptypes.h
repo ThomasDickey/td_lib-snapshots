@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 12.51 2004/03/08 01:43:22 tom Exp $ */
+/* $Id: ptypes.h,v 12.52 2005/10/16 23:14:18 tom Exp $ */
 
 #ifndef	PTYPES_H
 #define	PTYPES_H
@@ -228,8 +228,6 @@ typedef	short	ino_t;
 #define	FFLUSH	(void)fflush
 #define	FCLOSE	(void)fclose
 
-//#define	def_DOALLOC(t)
-//#define	def_ALLOC(t)
 #define	DOALLOC(p,t,n)	(t *)doalloc((char *)p,sizeof(t)*(n))
 #define	ALLOC(t,n)	DOALLOC(0,t,n)
 

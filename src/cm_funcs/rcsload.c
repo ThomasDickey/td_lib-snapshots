@@ -47,7 +47,7 @@
 #include	<ctype.h>
 #include	<time.h>
 
-MODULE_ID("$Id: rcsload.c,v 12.9 2004/03/07 16:31:58 tom Exp $")
+MODULE_ID("$Id: rcsload.c,v 12.10 2005/10/16 23:46:56 tom Exp $")
 
 #ifdef	TEST
 #define	DEBUG(s) PRINTF s;
@@ -297,8 +297,8 @@ rcsload(char *archive,		/* name of file to open             */
 	int verbose)		/* TRUE if we show messages */
 {
     static DELTREE nil;		/* empty struct, for terminator */
-    DELTREE newtree,		/* current struct, for loading  */
-     *vec = 0;			/* vector of structs to return  */
+    DELTREE newtree;		/* current struct, for loading  */
+    DELTREE *vec = 0;		/* vector of structs to return  */
     size_t total = 0;		/* number of items in vector    */
     char key[BUFSIZ], tmp[BUFSIZ], *name, *s = 0;
     size_t j;
@@ -328,6 +328,7 @@ rcsload(char *archive,		/* name of file to open             */
     load_logged = 0;
 
     k = -1;
+    memset(&newtree, 0, sizeof(newtree));
     while ((s = rcsread(s, code)) != NULL) {
 	s = rcsparse_id(key, s);
 
