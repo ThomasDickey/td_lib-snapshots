@@ -10,7 +10,7 @@
  */
 #include "ptypes.h"
 
-MODULE_ID("$Id: memmove.c,v 12.4 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: memmove.c,v 12.5 2006/09/05 21:42:59 tom Exp $")
 
 #if	!defined(HAVE_MEMMOVE)
 char *
@@ -20,7 +20,7 @@ memmove(char *s1, char *s2, size_t n)
 	if ((s1 + n > s2) && (s2 + n > s1)) {
 	    static char *buffer;
 	    static unsigned length;
-	    register int j;
+	    register size_t j;
 	    if (length < n)
 		buffer = doalloc(buffer, length = n);
 	    for (j = 0; j < n; j++)

@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	05 Feb 1992
  * Modified:
+ *		05 Sep 2006, allow '$' in filenames
  *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *
@@ -78,7 +79,7 @@
 #include "rcsdefs.h"
 #include <errno.h>
 
-MODULE_ID("$Id: rcsargpr.c,v 12.7 2004/03/07 16:31:58 tom Exp $")
+MODULE_ID("$Id: rcsargpr.c,v 12.8 2006/09/06 00:12:51 tom Exp $")
 
 /************************************************************************
  *	local data							*
@@ -99,12 +100,16 @@ static char suffix[] = RCS_SUFFIX;
 
 static Stat_t stat_working, stat_archive, stat_located;
 
-static int errs_working, have_working, errs_archive, have_archive,
-errs_located, have_located;
+static int errs_working;
+static int have_working;
+static int errs_archive;
+static int have_archive;
+static int errs_located;
+static int have_located;
 
-static char *name_working,	/* complete path of working file */
- *name_archive,			/* complete path of RCS file */
- *name_located;			/* directory in which archive is located */
+static char *name_working;	/* complete path of working file */
+static char *name_archive;	/* complete path of RCS file */
+static char *name_located;	/* directory in which archive is located */
 
 /************************************************************************
  *	local procedures						*
@@ -170,14 +175,9 @@ ok_name(char *name)
 {
     size_t len = strlen(name) + strlen(rcs_dir(NULL, NULL)) +
     LEN_SUFFIX + 2;
-    static char delim = '$';
 
     if (len > MAXPATHLEN) {
 	FPRINTF(stderr, "? name too long:%s\n", name);
-	return FALSE;
-    }
-    if (strchr(name, delim)) {
-	FPRINTF(stderr, "? name contains '%c':%s\n", delim, name);
 	return FALSE;
     }
     return TRUE;		/* ok I guess */
