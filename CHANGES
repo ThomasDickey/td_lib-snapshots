@@ -1,3 +1,22 @@
+2006-09-05  dickey@invisible-island.net
+
+	* src/cm_funcs/rcsargpr.c:
+	allow '$' characters in filenames.  Probably did not originally for some
+	scripting no longer needed.
+
+	* configure: regen'd.
+
+	* aclocal.m4:
+	add CF_CHECK_FUNCDECL() so I can use it to check for built-in memmove()
+
+	* configure.in: add a test to work around built-in memmove() in gcc 4.x
+
+	* aclocal.m4: new macros needed after resync
+
+	* aclocal.m4: resync with my-autoconf
+
+	* src/memory/memmove.c: gcc warning
+
 2006-08-14  dickey@invisible-island.net
 
 	* config.sub: 2006-8-14
