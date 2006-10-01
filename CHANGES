@@ -1,3 +1,8 @@
+2006-10-01  dickey@invisible-island.net
+
+	* src/cm_funcs/sccslast.c, src/cm_funcs/cmv_last.c:
+	gcc warning (time_t != long)
+
 2006-09-05  dickey@invisible-island.net
 
 	* src/cm_funcs/rcsargpr.c:

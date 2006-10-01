@@ -26,7 +26,7 @@
 #include	<sccsdefs.h>
 #include	<cmv_defs.h>
 
-MODULE_ID("$Id: cmv_last.c,v 12.12 2004/03/07 16:31:58 tom Exp $")
+MODULE_ID("$Id: cmv_last.c,v 12.13 2006/10/01 13:38:33 tom Exp $")
 
 /*
  * Set the release.version and date values iff we find a legal sccs-file at
@@ -72,7 +72,7 @@ ScanSCCS(char *path,
 	    }
 	    if (match
 		&& !strncmp(bfr + 1, "c ", 2)) {
-		time_t when;
+		long when;
 		if ((s = strstr(bfr + 1, "\\\001O")) != 0) {
 		    while (strncmp(s, ":M", 2) && *s)
 			s++;

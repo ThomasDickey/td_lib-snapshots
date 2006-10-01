@@ -43,7 +43,7 @@
 #include	<sccsdefs.h>
 #include	<ctype.h>
 
-MODULE_ID("$Id: sccslast.c,v 12.18 2004/03/07 16:31:58 tom Exp $")
+MODULE_ID("$Id: sccslast.c,v 12.19 2006/10/01 13:39:24 tom Exp $")
 
 /*
  * Post-Y2K years require special decoding
@@ -126,7 +126,7 @@ trysccs(char *path,
 	    }
 #ifdef CMV_PATH			/* for CmVision */
 	    if (have_rev && !strncmp(bfr, "\001c ", 3)) {
-		time_t when;
+		long when;
 		if ((s = strstr(bfr, "\\\001O")) != 0) {
 		    while (strncmp(s, ":M", 2) && *s)
 			s++;
