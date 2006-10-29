@@ -1,3 +1,12 @@
+2006-10-29  dickey@invisible-island.net
+
+	* configure: regen'd
+
+	* configure.in: use CF_CURSES_CONFIG and CF_NCURSES_CONFIG macros
+
+	* aclocal.m4: add CF_CURSES_CONFIG and CF_NCURSES_CONFIG
+	fix for CF_MAKEFLAGS
+
 2006-10-01  dickey@invisible-island.net
 
 	* src/cm_funcs/sccslast.c, src/cm_funcs/cmv_last.c:
