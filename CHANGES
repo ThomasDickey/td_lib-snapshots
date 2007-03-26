@@ -1,3 +1,7 @@
+2007-03-25  dickey@invisible-island.net
+
+	* mkdirs.sh: resync with my-autoconf
+
 2006-10-29  dickey@invisible-island.net
 
 	* configure: regen'd
