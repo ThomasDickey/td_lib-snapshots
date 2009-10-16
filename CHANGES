@@ -1,3 +1,24 @@
+2009-10-15  dickey@invisible-island.net
+
+	* src/cm_funcs/lastrev.c: add svn to DED_CM_LOOKUP as needed
+
+	* src/cm_funcs/lastrev.c: add call to svnlast()
+
+	* src/cm_funcs/svn_last.c: RCS_BASE
+
+	* src/cm_funcs/modules: add svn_last
+
+	* include/rcsdefs.h: add svnlast()
+
+	* configure: regen with autoconf-252
+
+	* aclocal.m4:
+	fix typo in CF_CHECK_FUNCDECL that prevented check for memmove() from working.
+
+	* src/memory/memmove.c: include string.h for prototype
+
+	* aclocal.m4: resync with my-autoconf (lots of changes)
+
 2009-08-25  dickey@invisible-island.net
 
 	* config.guess, config.sub: 2009-08-19
