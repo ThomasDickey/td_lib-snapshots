@@ -8,9 +8,10 @@
  *
  * Function:	substitute for the commonly available function 'memmove'
  */
+#define	STR_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: memmove.c,v 12.5 2006/09/05 21:42:59 tom Exp $")
+MODULE_ID("$Id: memmove.c,v 12.6 2009/10/15 23:18:27 tom Exp $")
 
 #if	!defined(HAVE_MEMMOVE)
 char *
