@@ -1,4 +1,4 @@
-/* $Id: rcsdefs.h,v 12.9 2004/03/07 21:45:04 tom Exp $ */
+/* $Id: rcsdefs.h,v 12.10 2009/10/16 00:23:51 tom Exp $ */
 
 #ifndef	RCSDEFS_H
 #define	RCSDEFS_H
@@ -240,6 +240,18 @@ typedef	void	(*RcsparseStr)(int);
 #ifdef CVS_PATH
 	/* cvslast.c -------------------------------------------------- */
 	void	cvslast(
+			char *	wd,
+			char *	n,
+			char **	v_,
+			time_t *	t_,
+			char **	l_
+			)
+			;
+
+#endif
+#ifdef SVN_PATH
+	/* svnlast.c -------------------------------------------------- */
+	void	svnlast(
 			char *	wd,
 			char *	n,
 			char **	v_,

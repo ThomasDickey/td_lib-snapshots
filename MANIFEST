@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t20091015
+MANIFEST for td_lib, version t20091016
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         restrictions on copying/using this software
@@ -68,6 +68,7 @@ src/cm_funcs/sccsdbug.c         encapsulate SCCS_DEBUG environment variable
 src/cm_funcs/sccslast.c         scan for last SCCS date & version
 src/cm_funcs/sccsname.c         SCCS working/archive name translation (like 'rcsname.c').
 src/cm_funcs/sccspath.c         encapsulates knowledge of sccs-path
+src/cm_funcs/svn_last.c         wrapper for SVN status
 src/cm_funcs/vcs_file.c         encapsulates name of directory-level RCS permissions file
 src/cm_funcs/vercmp.c           compare version-strings
 src/compare                     subdirectory
@@ -357,6 +358,8 @@ test/pathname/walktree.ref      reference for 'walktree'
 test/pathname/walktree.sh       test-script for 'walktree'
 test/pathname/which.ref         reference for 'which'
 test/pathname/which.sh          test-script for 'which'
+test/port2dos                   subdirectory
+test/port2dos/run_test.sh       general test script
 test/port2vms                   subdirectory
 test/port2vms/README            description of test/port2vms
 test/port2vms/descrip.mms       VMS build-script for test/port2vms

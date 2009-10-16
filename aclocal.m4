@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Id: aclocal.m4,v 12.168 2009/10/15 23:40:06 tom Exp $
+dnl $Id: aclocal.m4,v 12.169 2009/10/16 09:26:24 tom Exp $
 dnl vi:set ts=4:
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "CF_" to "AC_"
@@ -2412,7 +2412,7 @@ AC_SUBST(PROG_EXT)
 test -n "$PROG_EXT" && AC_DEFINE_UNQUOTED(PROG_EXT,"$PROG_EXT")
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_RCS_SCCS version: 4 updated: 2003/06/10 20:35:36
+dnl CF_RCS_SCCS version: 5 updated: 2009/10/16 05:25:56
 dnl -----------
 dnl Tests for the ensemble of programs that are used in RCS, SCCS, VCS, CVS.
 dnl We'll have to assume that the related utilities all reside in the same
@@ -2428,6 +2428,7 @@ CF_PROGRAM_PREFIX(RCS_PATH, rcs)
 CF_PROGRAM_PREFIX(SCCS_PATH, admin)dnl the SCCS tool
 CF_PROGRAM_PREFIX(VCS_PATH, vcs)dnl VCS is my RCS application
 CF_PROGRAM_PREFIX(CVS_PATH, cvs)dnl CVS is a layer above RCS
+CF_PROGRAM_PREFIX(SVN_PATH, svn)dnl SVN is like CVS, using local file status
 CF_PROGRAM_PREFIX(CMV_PATH, cmv)dnl CmVision combines RCS and SCCS archives
 PATH="$cf_rcs_sccs_path"
 ])dnl

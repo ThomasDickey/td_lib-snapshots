@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	03 Aug 1994, from 'dedscan.c'
  * Modified:
+ *		15 Oct 2009, add svnlast().
  *		07 Mar 2004, remove K&R support, indent'd.
  *		25 Apr 2003, add cvslast().
  *		30 May 1998, compile with g++
@@ -17,7 +18,7 @@
 #include	"rcsdefs.h"
 #include	"sccsdefs.h"
 
-MODULE_ID("$Id: lastrev.c,v 12.10 2004/03/07 16:31:58 tom Exp $")
+MODULE_ID("$Id: lastrev.c,v 12.12 2009/10/16 01:06:15 tom Exp $")
 
 #if defined(CMV_PATH) && !(defined(RCS_PATH) || defined(SCCS_PATH))
 #undef CMV_PATH
@@ -27,9 +28,9 @@ MODULE_ID("$Id: lastrev.c,v 12.10 2004/03/07 16:31:58 tom Exp $")
  * This is driven by an environment variable, but ultimately should be done
  * via ".dedrc"
  */
-#if	defined(RCS_PATH) || defined(SCCS_PATH)
+#if defined(RCS_PATH) || defined(SCCS_PATH) || defined(CVS_PATH) || defined(SVN_PATH)
 typedef enum TrySCCS {
-    DontTry, TrySccs, TryRcs, TryCvs, TryCmVision
+    DontTry, TrySccs, TryRcs, TryCvs, TrySvn, TryCmVision
 } TRY;
 
 #define MAX_ORDER 10
@@ -37,7 +38,6 @@ typedef enum TrySCCS {
 static TRY
 try_order(int tried)
 {
-
     static int num_order;
     static TRY vec_order[MAX_ORDER];
 
@@ -56,6 +56,9 @@ try_order(int tried)
 #ifdef CVS_PATH
 	    (void) strcat(temp, ",cvs");
 #endif
+#ifdef SVN_PATH
+	    (void) strcat(temp, ",svn");
+#endif
 	}
 	while ((s = strtok(env, ",")) != 0) {
 	    if (!strcmp(s, "rcs")) {
@@ -66,6 +69,8 @@ try_order(int tried)
 		vec_order[num_order++] = TryCmVision;
 	    } else if (!strcmp(s, "cvs")) {
 		vec_order[num_order++] = TryCvs;
+	    } else if (!strcmp(s, "svn")) {
+		vec_order[num_order++] = TrySvn;
 	    }
 	    env = 0;
 	    if (num_order + 1 >= MAX_ORDER)
@@ -90,6 +95,7 @@ lastrev(char *working_dir,
 {
     int n;
     TRY tried;
+
     for (n = 0; (tried = try_order(n)) != DontTry; n++) {
 #ifdef	RCS_PATH
 	if (tried == TryRcs) {
@@ -109,6 +115,11 @@ lastrev(char *working_dir,
 #ifdef	CVS_PATH
 	if (tried == TryCvs) {
 	    LAST(cvslast);
+	}
+#endif
+#ifdef	SVN_PATH
+	if (tried == TrySvn) {
+	    LAST(svnlast);
 	}
 #endif
 	if (*time_ptr != 0
