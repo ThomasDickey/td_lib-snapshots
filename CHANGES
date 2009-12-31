@@ -1,3 +1,9 @@
+2009-12-31  dickey@invisible-island.net
+
+	* config.guess: 2009-12-30
+
+	* config.sub: 2009-12-31
+
 2009-10-16  dickey@invisible-island.net
 
 	* configure: regen
