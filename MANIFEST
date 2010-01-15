@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t20091231
+MANIFEST for td_lib, version t20100114
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         restrictions on copying/using this software
@@ -358,6 +358,8 @@ test/pathname/walktree.ref      reference for 'walktree'
 test/pathname/walktree.sh       test-script for 'walktree'
 test/pathname/which.ref         reference for 'which'
 test/pathname/which.sh          test-script for 'which'
+test/port2dos                   subdirectory
+test/port2dos/run_test.sh       general test script
 test/port2vms                   subdirectory
 test/port2vms/README            description of test/port2vms
 test/port2vms/descrip.mms       VMS build-script for test/port2vms

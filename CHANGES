@@ -1,3 +1,17 @@
+2010-01-14  dickey@invisible-island.net
+
+	* configure: regen
+
+	* td_make.in: update per CF_DISABLE_ECHO changes.
+	add rules for making html/pdf/ps/txt form of manpage
+
+	* aclocal.m4:
+	updates to reduce redefinitions in CF_XOPEN_SOURCE and related macros.
+
+2010-01-01  dickey@invisible-island.net
+
+	* package/debian/source/format: RCS_BASE
+
 2009-12-31  dickey@invisible-island.net
 
 	* config.guess: 2009-12-30
