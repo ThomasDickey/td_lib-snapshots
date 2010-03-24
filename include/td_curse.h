@@ -1,4 +1,4 @@
-/* $Id: td_curse.h,v 12.58 2004/03/07 21:54:10 tom Exp $ */
+/* $Id: td_curse.h,v 12.59 2010/03/24 00:38:05 tom Exp $ */
 
 /*
  * TD_LIB CURSES-related definitions
@@ -56,14 +56,12 @@
 
 #if defined(NEED_TERM_H)
 
-#ifdef HAVE_NCURSES_TERM_H
+#if defined(HAVE_NCURSES_TERM_H)
 #include	<ncurses/term.h>
-#else
-#ifdef HAVE_NCURSES_TERM_H
+#elif defined(HAVE_NCURSES_TERM_H)
 #include	<ncurses/term.h>
-#else
+#elif defined(HAVE_TERM_H)
 #include	<term.h>
-#endif
 #endif
 
 #else
