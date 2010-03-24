@@ -1,3 +1,13 @@
+2010-03-23  dickey@invisible-island.net
+
+	* configure: regen
+
+	* include/td_curse.h: NetBSD curses does not have term.h; adjust ifdef
+
+	* aclocal.m4:
+	improve CF_CURSES_TERM_H for cygwin, which puts term.h in different directory
+	than curses.h
+
 2010-01-14  dickey@invisible-island.net
 
 	* configure: regen
