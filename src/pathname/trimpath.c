@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	17 Apr 1989 (logic adapted from 'abspath.c')
  * Modified:
+ *		24 May 2010, fix typo in test-driver.
  *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
@@ -19,7 +20,7 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: trimpath.c,v 12.6 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: trimpath.c,v 12.7 2010/05/24 23:51:19 tom Exp $")
 
 char *
 trimpath(char *path, char *cwd)
@@ -101,10 +102,6 @@ trimpath(char *path, char *cwd)
 }
 
 #ifdef	TEST
-void do_test(
-		_arx(int, argc)
-		_ar1(char **, argv));
-
 void
 do_test(int argc, char **argv)
 {

@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	02 Nov 1988
  * Modified:
+ *		24 May 2010, fix clang --analyze warnings.
  *		07 Mar 2004, remove K&R support, indent'd.
  *		01 Dec 1993, ifdefs, TurboC warnings.
  *		22 Sep 1993, gcc warnings
@@ -39,7 +40,7 @@
 #define	STR_PTYPES
 #include	"port2vms.h"
 
-MODULE_ID("$Id: vms2name.c,v 12.5 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: vms2name.c,v 12.6 2010/05/24 22:25:22 tom Exp $")
 
 #define	LOWER(p)	((isalpha(UCH(*p)) && isupper(UCH(*p))) ? LowerMacro(*p) : *p)
 
@@ -117,7 +118,13 @@ vms2name(char *dst, char *src)
 		   && (base[1] != '-')
 		   && (base[1] != '.')
 		   && (base[1] != ']'))) {	/* must supply a device */
-	char *a = getwd(current), *b = strchr(a ? a : "?", ':');
+	char *a = getwd(current);
+	char *b;
+
+	if (a == 0)
+	    a = ":";
+
+	b = strchr(a, '?');
 	if ((b != 0)
 	    && (b[1] == ':')) {	/* skip over node specification */
 	    a = b + 2;

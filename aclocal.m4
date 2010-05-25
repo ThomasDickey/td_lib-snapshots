@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Id: aclocal.m4,v 12.171 2010/03/24 00:36:42 tom Exp $
+dnl $Id: aclocal.m4,v 12.173 2010/05/24 21:11:16 tom Exp $
 dnl vi:set ts=4:
 dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "CF_" to "AC_"
@@ -641,20 +641,20 @@ ${cf_cv_main_return-return}(foo == 0);
 done
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_CURSES_HEADER version: 1 updated: 2005/12/31 13:28:25
+dnl CF_CURSES_HEADER version: 2 updated: 2010/04/28 06:02:16
 dnl ----------------
 dnl Find a "curses" header file, e.g,. "curses.h", or one of the more common
 dnl variations of ncurses' installs.
 dnl
-dnl See also CF_NCURSES_HEADER, which sets the same cache variable.
+dnl $1 = ncurses when looking for ncurses, or is empty
 AC_DEFUN([CF_CURSES_HEADER],[
 AC_CACHE_CHECK(if we have identified curses headers,cf_cv_ncurses_header,[
 cf_cv_ncurses_header=none
-for cf_header in \
+for cf_header in ifelse($1,,,[ \
+    $1/curses.h \
+	$1/ncurses.h]) \
 	curses.h \
-	ncurses.h \
-	ncurses/curses.h \
-	ncurses/ncurses.h
+	ncurses.h ifelse($1,,[ncurses/curses.h ncurses/ncurses.h])
 do
 AC_TRY_COMPILE([#include <${cf_header}>],
 	[initscr(); tgoto("?", 0,0)],
@@ -1196,7 +1196,7 @@ rm -rf conftest*
 fi
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_GCC_VERSION version: 4 updated: 2005/08/27 09:53:42
+dnl CF_GCC_VERSION version: 5 updated: 2010/04/24 11:02:31
 dnl --------------
 dnl Find version of gcc
 AC_DEFUN([CF_GCC_VERSION],[
@@ -1204,13 +1204,13 @@ AC_REQUIRE([AC_PROG_CC])
 GCC_VERSION=none
 if test "$GCC" = yes ; then
 	AC_MSG_CHECKING(version of $CC)
-	GCC_VERSION="`${CC} --version| sed -e '2,$d' -e 's/^.*(GCC) //' -e 's/^[[^0-9.]]*//' -e 's/[[^0-9.]].*//'`"
+	GCC_VERSION="`${CC} --version 2>/dev/null | sed -e '2,$d' -e 's/^.*(GCC) //' -e 's/^[[^0-9.]]*//' -e 's/[[^0-9.]].*//'`"
 	test -z "$GCC_VERSION" && GCC_VERSION=unknown
 	AC_MSG_RESULT($GCC_VERSION)
 fi
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_GCC_WARNINGS version: 24 updated: 2009/02/01 15:21:00
+dnl CF_GCC_WARNINGS version: 25 updated: 2010/04/24 11:03:31
 dnl ---------------
 dnl Check if the compiler supports useful warning options.  There's a few that
 dnl we don't use, simply because they're too noisy:
@@ -1278,10 +1278,10 @@ elif test "$GCC" = yes
 then
 	AC_CHECKING([for $CC warning options])
 	cf_save_CFLAGS="$CFLAGS"
-	EXTRA_CFLAGS="-W -Wall"
+	EXTRA_CFLAGS=
 	cf_warn_CONST=""
 	test "$with_ext_const" = yes && cf_warn_CONST="Wwrite-strings"
-	for cf_opt in \
+	for cf_opt in W Wall \
 		Wbad-function-cast \
 		Wcast-align \
 		Wcast-qual \
@@ -1486,7 +1486,7 @@ done
 CFLAGS="$cf_CFLAGS"
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_HEADER_PATH version: 10 updated: 2010/01/17 20:36:17
+dnl CF_HEADER_PATH version: 12 updated: 2010/05/05 05:22:40
 dnl --------------
 dnl Construct a search-list of directories for a nonstandard header-file
 dnl
@@ -1496,6 +1496,8 @@ dnl	$2 = the package name
 AC_DEFUN([CF_HEADER_PATH],
 [
 $1=
+
+# collect the current set of include-directories from compiler flags
 cf_header_path_list=""
 if test -n "${CFLAGS}${CPPFLAGS}" ; then
 	for cf_header_path in $CPPFLAGS $CFLAGS
@@ -1510,6 +1512,7 @@ if test -n "${CFLAGS}${CPPFLAGS}" ; then
 	done
 fi
 
+# add the variations for the package we are looking for
 CF_SUBDIR_PATH($1,$2,include)
 
 test "$includedir" != NONE && \
@@ -1526,7 +1529,7 @@ test -d "$oldincludedir" && {
 	test -d $oldincludedir/$2 && $1="[$]$1 $oldincludedir/$2"
 }
 
-$1="$cf_header_path_list [$]$1"
+$1="[$]$1 $cf_header_path_list"
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl CF_INTEL_COMPILER version: 3 updated: 2005/08/06 18:37:29
@@ -1566,7 +1569,46 @@ cf_save_CFLAGS="$cf_save_CFLAGS -we147 -no-gcc"
 fi
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_LIBRARY_PATH version: 8 updated: 2008/12/07 19:38:31
+dnl CF_LARGEFILE version: 7 updated: 2007/06/02 11:58:50
+dnl ------------
+dnl Add checks for large file support.
+AC_DEFUN([CF_LARGEFILE],[
+ifdef([AC_FUNC_FSEEKO],[
+    AC_SYS_LARGEFILE
+    if test "$enable_largefile" != no ; then
+	AC_FUNC_FSEEKO
+
+	# Normally we would collect these definitions in the config.h,
+	# but (like _XOPEN_SOURCE), some environments rely on having these
+	# defined before any of the system headers are included.  Another
+	# case comes up with C++, e.g., on AIX the compiler compiles the
+	# header files by themselves before looking at the body files it is
+	# told to compile.  For ncurses, those header files do not include
+	# the config.h
+	test "$ac_cv_sys_large_files"      != no && CPPFLAGS="$CPPFLAGS -D_LARGE_FILES "
+	test "$ac_cv_sys_largefile_source" != no && CPPFLAGS="$CPPFLAGS -D_LARGEFILE_SOURCE "
+	test "$ac_cv_sys_file_offset_bits" != no && CPPFLAGS="$CPPFLAGS -D_FILE_OFFSET_BITS=$ac_cv_sys_file_offset_bits "
+
+	AC_CACHE_CHECK(whether to use struct dirent64, cf_cv_struct_dirent64,[
+		AC_TRY_COMPILE([
+#include <sys/types.h>
+#include <dirent.h>
+		],[
+		/* if transitional largefile support is setup, this is true */
+		extern struct dirent64 * readdir(DIR *);
+		struct dirent64 *x = readdir((DIR *)0);
+		struct dirent *y = readdir((DIR *)0);
+		int z = x - y;
+		],
+		[cf_cv_struct_dirent64=yes],
+		[cf_cv_struct_dirent64=no])
+	])
+	test "$cf_cv_struct_dirent64" = yes && AC_DEFINE(HAVE_STRUCT_DIRENT64)
+    fi
+])
+])
+dnl ---------------------------------------------------------------------------
+dnl CF_LIBRARY_PATH version: 9 updated: 2010/03/28 12:52:50
 dnl ---------------
 dnl Construct a search-list of directories for a nonstandard library-file
 dnl
@@ -1575,6 +1617,7 @@ dnl	$1 = the variable to return as result
 dnl	$2 = the package name
 AC_DEFUN([CF_LIBRARY_PATH],
 [
+$1=
 cf_library_path_list=""
 if test -n "${LDFLAGS}${LIBS}" ; then
 	for cf_library_path in $LDFLAGS $LIBS
@@ -1860,7 +1903,7 @@ printf("old\n");
 	,[$1=no])
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_NCURSES_CONFIG version: 5 updated: 2009/01/11 15:31:22
+dnl CF_NCURSES_CONFIG version: 6 updated: 2010/04/28 06:02:16
 dnl -----------------
 dnl Tie together the configure-script macros for ncurses.
 dnl Prefer the "-config" script from ncurses 5.6, to simplify analysis.
@@ -1876,10 +1919,11 @@ AC_PATH_PROGS(NCURSES_CONFIG,${cf_ncuconfig_root}6-config ${cf_ncuconfig_root}5-
 
 if test "$NCURSES_CONFIG" != none ; then
 
-cf_cv_ncurses_header=curses.h
-
 CPPFLAGS="$CPPFLAGS `$NCURSES_CONFIG --cflags`"
 LIBS="`$NCURSES_CONFIG --libs` $LIBS"
+
+# even with config script, some packages use no-override for curses.h
+CF_CURSES_HEADER(ifelse($1,,ncurses,$1))
 
 dnl like CF_NCURSES_CPPFLAGS
 AC_DEFINE(NCURSES)
@@ -2436,6 +2480,14 @@ AC_SUBST(PROG_EXT)
 test -n "$PROG_EXT" && AC_DEFINE_UNQUOTED(PROG_EXT,"$PROG_EXT")
 ])dnl
 dnl ---------------------------------------------------------------------------
+dnl CF_PROG_LINT version: 2 updated: 2009/08/12 04:43:14
+dnl ------------
+AC_DEFUN([CF_PROG_LINT],
+[
+AC_CHECK_PROGS(LINT, tdlint lint alint splint lclint)
+AC_SUBST(LINT_OPTS)
+])dnl
+dnl ---------------------------------------------------------------------------
 dnl CF_RCS_SCCS version: 5 updated: 2009/10/16 05:25:56
 dnl -----------
 dnl Tests for the ensemble of programs that are used in RCS, SCCS, VCS, CVS.
@@ -2791,14 +2843,15 @@ AC_MSG_RESULT($cf_cv_need_struct_screen)
 test $cf_cv_need_struct_screen = yes && AC_DEFINE(NEED_STRUCT_SCREEN)
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_SUBDIR_PATH version: 5 updated: 2007/07/29 09:55:12
+dnl CF_SUBDIR_PATH version: 6 updated: 2010/04/21 06:20:50
 dnl --------------
 dnl Construct a search-list for a nonstandard header/lib-file
 dnl	$1 = the variable to return as result
 dnl	$2 = the package name
 dnl	$3 = the subdirectory, e.g., bin, include or lib
 AC_DEFUN([CF_SUBDIR_PATH],
-[$1=""
+[
+$1=
 
 CF_ADD_SUBDIR_PATH($1,$2,$3,/usr,$prefix)
 CF_ADD_SUBDIR_PATH($1,$2,$3,$prefix,NONE)
@@ -3236,7 +3289,7 @@ fi
 fi
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_XOPEN_CURSES version: 8 updated: 2003/11/07 19:47:46
+dnl CF_XOPEN_CURSES version: 9 updated: 2010/04/28 06:02:16
 dnl ---------------
 dnl Test if we should define X/Open source for curses, needed on Digital Unix
 dnl 4.x, to see the extended functions, but breaks on IRIX 6.x.
@@ -3250,6 +3303,11 @@ AC_CACHE_CHECK(if we must define _XOPEN_SOURCE_EXTENDED,cf_cv_need_xopen_extensi
 AC_TRY_LINK([
 #include <stdlib.h>
 #include <${cf_cv_ncurses_header-curses.h}>],[
+#if defined(NCURSES_VERSION_PATCH)
+if (NCURSES_VERSION_PATCH < 20100501) && (NCURSES_VERSION_PATCH >= 20100403)
+	make an error
+#endif
+#endif
 	long x = winnstr(stdscr, "", 0);
 	int x1, y1;
 	getbegyx(stdscr, y1, x1)],
@@ -3258,6 +3316,10 @@ AC_TRY_LINK([
 #define _XOPEN_SOURCE_EXTENDED
 #include <stdlib.h>
 #include <${cf_cv_ncurses_header-curses.h}>],[
+#ifdef NCURSES_VERSION
+	cchar_t check;
+	int check2 = curs_set((int)sizeof(check));
+#endif
 	long x = winnstr(stdscr, "", 0);
 	int x1, y1;
 	getbegyx(stdscr, y1, x1)],
@@ -3266,7 +3328,7 @@ AC_TRY_LINK([
 test $cf_cv_need_xopen_extension = yes && CPPFLAGS="$CPPFLAGS -D_XOPEN_SOURCE_EXTENDED"
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_XOPEN_SOURCE version: 32 updated: 2010/01/09 11:05:50
+dnl CF_XOPEN_SOURCE version: 33 updated: 2010/03/28 15:35:52
 dnl ---------------
 dnl Try to get _XOPEN_SOURCE defined properly that we can use POSIX functions,
 dnl or adapt to the vendor's definitions to get equivalent functionality,
@@ -3329,7 +3391,10 @@ nto-qnx*) #(vi
 sco*) #(vi
 	# setting _XOPEN_SOURCE breaks Lynx on SCO Unix / OpenServer
 	;;
-solaris*) #(vi
+solaris2.1[[0-9]]) #(vi
+	cf_xopen_source="-D__EXTENSIONS__ -D_XOPEN_SOURCE=$cf_XOPEN_SOURCE"
+	;;
+solaris2.[[1-9]]) #(vi
 	cf_xopen_source="-D__EXTENSIONS__"
 	;;
 *)

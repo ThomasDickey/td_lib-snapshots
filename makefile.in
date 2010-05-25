@@ -1,4 +1,4 @@
-# $Id: makefile.in,v 12.17 2004/03/07 15:32:38 tom Exp $
+# $Id: makefile.in,v 12.18 2010/05/24 22:38:02 tom Exp $
 # Top-level makefile for TD_LIB common library
 
 SHELL		= /bin/sh
@@ -103,7 +103,7 @@ uninstall::
 $(bindir) \
 $(my_incdir) \
 $(libdir) \
-lib:					; $(SHELL) $(srcdir)/mkdirs.sh $@
+lib:					; mkdir -p $@
 $(SOURCES):
 
 ../td_lib:				; $(SHELL) $(srcdir)/support/selflink.sh

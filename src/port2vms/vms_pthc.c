@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	26 Jun 1990
  * Modified:
+ *		24 May 2010, fix typo in test-driver.
  *		07 Mar 2004, remove K&R support, indent'd.
  *		01 Dec 1993, ifdefs, TurboC warnings.
  *		22 Sep 1993, gcc warnings
@@ -21,7 +22,7 @@
 #define	STR_PTYPES
 #include	"port2vms.h"
 
-MODULE_ID("$Id: vms_pthc.c,v 12.3 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: vms_pthc.c,v 12.4 2010/05/24 23:51:19 tom Exp $")
 
 #define	A_NODE	8
 #define	A_DEV	4
@@ -82,7 +83,7 @@ vms_pathcat(char *dst, char *dname, char *fname)
 
 #ifdef	TEST
 static void
-do_test(char *path, char *, leaf)
+do_test(char *path, char *leaf)
 {
     char tmp[BUFSIZ];
     printf("%s + %s => \"%s\"\n", path, leaf, vms_pathcat(tmp, path, leaf));

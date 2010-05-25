@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	05 Feb 1992
  * Modified:
+ *		24 May 2010, fix clang --analyze warnings.
  *		05 Sep 2006, allow '$' in filenames
  *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
@@ -79,13 +80,13 @@
 #include "rcsdefs.h"
 #include <errno.h>
 
-MODULE_ID("$Id: rcsargpr.c,v 12.8 2006/09/06 00:12:51 tom Exp $")
+MODULE_ID("$Id: rcsargpr.c,v 12.9 2010/05/24 22:25:22 tom Exp $")
 
 /************************************************************************
  *	local data							*
  ************************************************************************/
 #ifdef	TEST
-#define	TRACE(s)	PRINTF s;
+#define	TRACE(s)	PRINTF s
 #else
 #define	TRACE(s)
 #endif
@@ -323,30 +324,34 @@ rcsargpair(int This,
     if (archive != 0 && !fleaf_delim(archive))
 	archive = pathcat(temp_archive, rcs_dir(NULL, NULL), archive);
 
-    if (archive == 0) {
+    if (archive == 0 && working != 0) {
 
-	TRACE(("...case 3\n"))
-	    (void) strcpy(name_working, working);
+	TRACE(("...case 3\n"));
+	(void) strcpy(name_working, working);
 
 	(void) strcpy(name_archive, working);	/* copy path */
 	FORMAT(leaf_of(name_archive), "%s/%s%s",
 	       rcs_dir(NULL, NULL), leaf_of(working), RCS_SUFFIX);
 
-    } else if (working == 0) {
+    } else if (archive != 0 && working == 0) {
 
-	TRACE(("...case 2\n"))
-	    (void) strcpy(name_archive, archive);
+	TRACE(("...case 2\n"));
+	(void) strcpy(name_archive, archive);
 
 	working = leaf_of(archive);
 	FORMAT(name_working, "./%s", working);
 	(void) strip_suffix(name_working);
 
-    } else {
+    } else if (archive != 0 && working != 0) {
 
-	TRACE(("...case 1\n"))
-	    (void) strcpy(name_working, working);
+	TRACE(("...case 1\n"));
+	(void) strcpy(name_working, working);
 	(void) strcpy(name_archive, archive);
 
+    } else {
+
+	FPRINTF(stderr, "? missing archive/working names\n");
+	return Last;
     }
 
     /* the pathname must have a non-empty leaf! */

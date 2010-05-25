@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	03 Feb 1992
  * Modified:
+ *		24 May 2010, fix clang --analyze warnings.
  *		07 Mar 2004, remove K&R support, indent'd.
  *		30 May 1998, compile with g++
  *		01 Jul 1994, use autoconf to control use of 'memmove()'
@@ -22,7 +23,7 @@
 #include "td_sheet.h"
 #include <ctype.h>
 
-MODULE_ID("$Id: field_of.c,v 12.6 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: field_of.c,v 12.7 2010/05/24 22:25:22 tom Exp $")
 
 static int opt_Blanks;
 
@@ -208,7 +209,7 @@ get_field_of(char *list,
 {
     char *item, *next;
 
-    if (((N = skip_to_field(list, N, &item, &next)) == 0)
+    if ((skip_to_field(list, N, &item, &next) == 0)
 	&& (*item != EOS))
 	return UnquotedField(result, item);
 

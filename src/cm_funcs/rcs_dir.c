@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	02 Sep 1988
  * Modified:
+ *		24 May 2010, fix clang --analyze warnings.
  *		07 Mar 2004, remove K&R support, indent'd.
  *		25 Apr 2003, split-out samehead.c, add check on return-value.
  *		11 Dec 2001, make this a clone of sccs_dir() to implement
@@ -23,7 +24,7 @@
 #include "ptypes.h"
 #include "rcsdefs.h"
 
-MODULE_ID("$Id: rcs_dir.c,v 12.7 2004/03/07 16:31:58 tom Exp $")
+MODULE_ID("$Id: rcs_dir.c,v 12.8 2010/05/24 22:25:22 tom Exp $")
 
 #define	WORKING	struct	Working
 WORKING {
@@ -152,7 +153,7 @@ rcs_dir(char *working_directory, char *filename)
 	Stat_t sb;
 	char temp[MAXPATHLEN];
 	VAULTS *p, *max_p = 0;
-	WORKING *q, *max_q = 0;
+	WORKING *q;
 	int max_n = 0;
 
 	/*
@@ -176,7 +177,6 @@ rcs_dir(char *working_directory, char *filename)
 		&& n >= (int) strlen(p->archive)) {
 		if (n > max_n) {
 		    max_p = p;
-		    max_q = p->working;
 		    max_n = n;
 		    vault = TRUE;
 		}
@@ -186,7 +186,6 @@ rcs_dir(char *working_directory, char *filename)
 		    && n >= (int) strlen(q->working)) {
 		    if (n > max_n) {
 			max_p = p;
-			max_q = q;
 			max_n = n;
 			vault = FALSE;
 		    }

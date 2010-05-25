@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	07 Feb 1992
  * Modified:
+ *		24 May 2010, fix clang --analyze warnings.
  *		07 Mar 2004, remove K&R support, indent'd.
  *		30 May 1998, compile with g++
  *		29 Oct 1993, ifdef-ident
@@ -26,7 +27,7 @@
 #include "rcsdefs.h"
 #include <ctype.h>
 
-MODULE_ID("$Id: rcssymbs.c,v 12.6 2004/03/07 16:31:58 tom Exp $")
+MODULE_ID("$Id: rcssymbs.c,v 12.7 2010/05/24 22:25:22 tom Exp $")
 
 #define	isname(c)	(isalnum(UCH(c)) || (c == '_'))
 
@@ -65,7 +66,7 @@ expand(char *in_out,
        char *value)
 {
     char buffer[BUFSIZ];
-    char *base = 0;
+    char *base = buffer;
     int first = TRUE;
 
     char *d = buffer, *s = in_out;
