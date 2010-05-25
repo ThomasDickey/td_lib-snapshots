@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	18 May 1988, from 'sccslast.c'
  * Modified:
+ *		24 May 2010, fix clang --analyze warnings.
  *		07 Mar 2004, remove K&R support, indent'd.
  *		11 Dec 2001, modify rcs_dir() interface to implement $RCS_VAULT
  *		29 Oct 1993, ifdef-ident
@@ -35,7 +36,7 @@
 #include	<time.h>
 #include	"rcsdefs.h"
 
-MODULE_ID("$Id: rcslast.c,v 12.9 2004/03/07 16:31:58 tom Exp $")
+MODULE_ID("$Id: rcslast.c,v 12.10 2010/05/24 22:25:22 tom Exp $")
 
 /*
  * Returns the modification date of the given file, or 0 if not found
@@ -192,7 +193,7 @@ rcslast(char *working,		/* working directory (absolute) */
 		name[t - path - 1] = EOS;
 		if ((s = fleaf(name)) == NULL)
 		    s = name;
-		name[0] = EOS;
+		s[0] = EOS;
 		(void) strcat(name, t);
 	    } else
 		(void) strcat(strcpy(name, dotdot), t);

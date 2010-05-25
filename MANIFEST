@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t20100323
+MANIFEST for td_lib, version t20100524
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         restrictions on copying/using this software
@@ -12,7 +12,6 @@ configure.in                    autoconf script for td_lib
 descrip.mms                     top-level MMS script for this library on VMS
 install-sh                      install-script
 makefile.in                     template for generated top-level makefile
-mkdirs.sh                       script to make directory-hierarchy
 td_make.in                      autoconf template for support/td_lib.mk
 include                         subdirectory
 include/.vilerc                 macro to use in ifdef'ing td_ext.h for autoconf
@@ -358,8 +357,6 @@ test/pathname/walktree.ref      reference for 'walktree'
 test/pathname/walktree.sh       test-script for 'walktree'
 test/pathname/which.ref         reference for 'which'
 test/pathname/which.sh          test-script for 'which'
-test/port2dos                   subdirectory
-test/port2dos/run_test.sh       general test script
 test/port2vms                   subdirectory
 test/port2vms/README            description of test/port2vms
 test/port2vms/descrip.mms       VMS build-script for test/port2vms

@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	19 May 1988
  * Modified:
+ *		24 May 2010, change params to const.
  *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
@@ -20,13 +21,13 @@
 
 #include "ptypes.h"
 
-MODULE_ID("$Id: dotcmp.c,v 12.4 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: dotcmp.c,v 12.5 2010/05/24 23:50:41 tom Exp $")
 
 #define	DOT	'.'
 #define	LAST(s,l)	for (l = 0; (s[l] != DOT) && (s[l] != EOS); l++)
 
 int
-dotcmp(char *s1, char *s2)
+dotcmp(const char *s1, const char *s2)
 {
     int cmp1, cmp2;
 

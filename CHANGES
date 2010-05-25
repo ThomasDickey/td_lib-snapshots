@@ -1,3 +1,44 @@
+2010-05-24  dickey@invisible-island.net
+
+	* COPYING: update
+
+	* src/pathname/trimpath.c, src/port2vms/vms_pthc.c:
+	fix typo in test-driver
+
+	* src/cm_funcs/vercmp.c, src/string/dotcmp.c: change params to const
+
+	* include/td_lib.h: change dotcmp() and vercmp() to use const params
+
+	* test/compare/Makefile: correct link command
+
+	* test/cm_funcs/cmv_last.ref: generated testcase
+
+	* test/cm_funcs/cmv_last.sh: generate testcase
+
+	* test/cm_funcs/cmv_dir.ref: generated testcase
+
+	* test/cm_funcs/cmv_dir.sh: generate testcase
+
+	* makefile.in: drop mkdirs.sh, use "mkdir -p"
+
+	* src/cm_funcs/rcs_dir.c, src/cm_funcs/rcsargpr.c, src/cm_funcs/rcslast.c, src/cm_funcs/rcssymbs.c, src/cm_funcs/sccs_dir.c, src/port2vms/vms2name.c, src/sheet/field_of.c:
+	fix warnings from clang --analyze
+
+	* configure: regen
+
+	* aclocal.m4: add CF_LARGEFILE, CF_PROG_LINT
+
+	* configure.in: add CF_LARGEFILE
+	change inline AC_CHECK_PROGS to CF_PROG_LINT
+
+	* aclocal.m4:
+	improve checks in CF_CURSES_HEADER, CF_XOPEN_CURSES, CF_XOPEN_SOURCE, e.g.,
+	to work with OpenSolaris.
+
+2010-04-20  dickey@invisible-island.net
+
+	* package/debian/compat: RCS_BASE
+
 2010-03-23  dickey@invisible-island.net
 
 	* configure: regen

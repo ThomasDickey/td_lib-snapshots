@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	14 Dec 1988 (from 'dotcmp()')
  * Modified:
+ *		24 May 2010, change params to const.
  *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident; port to HP/UX.
  *		21 Sep 1993, gcc-warnings
@@ -20,7 +21,7 @@
 
 #include	"ptypes.h"
 
-MODULE_ID("$Id: vercmp.c,v 12.8 2004/03/07 16:31:58 tom Exp $")
+MODULE_ID("$Id: vercmp.c,v 12.9 2010/05/24 23:50:41 tom Exp $")
 
 #define	DOT	'.'
 
@@ -34,7 +35,7 @@ MODULE_ID("$Id: vercmp.c,v 12.8 2004/03/07 16:31:58 tom Exp $")
 #endif
 
 int
-vercmp(char *s1, char *s2, int wild)
+vercmp(const char *s1, const char *s2, int wild)
 {
     int cmp1, cmp2;
 

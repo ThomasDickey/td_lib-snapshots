@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	02 Sep 1988
  * Modified:
+ *		24 May 2010, fix clang --analyze warnings.
  *		07 Mar 2004, remove K&R support, indent'd.
  *		25 Apr 2003, split-out samehead.c, add check on return-value.
  *		26 Mar 2002, force paths to lowercase on cygwin.
@@ -40,7 +41,7 @@
 #include "ptypes.h"
 #include "sccsdefs.h"
 
-MODULE_ID("$Id: sccs_dir.c,v 12.11 2004/03/07 16:31:58 tom Exp $")
+MODULE_ID("$Id: sccs_dir.c,v 12.12 2010/05/24 22:25:22 tom Exp $")
 
 #define	WORKING	struct	Working
 WORKING {
@@ -192,7 +193,7 @@ sccs_dir(char *working_directory, char *filename)
 	Stat_t sb;
 	char temp[MAXPATHLEN];
 	VAULTS *p, *max_p = 0;
-	WORKING *q, *max_q = 0;
+	WORKING *q;
 	int max_n = 0;
 
 	/*
@@ -216,7 +217,6 @@ sccs_dir(char *working_directory, char *filename)
 		&& n >= (int) strlen(p->archive)) {
 		if (n > max_n) {
 		    max_p = p;
-		    max_q = p->working;
 		    max_n = n;
 		    vault = TRUE;
 		}
@@ -226,7 +226,6 @@ sccs_dir(char *working_directory, char *filename)
 		    && n >= (int) strlen(q->working)) {
 		    if (n > max_n) {
 			max_p = p;
-			max_q = q;
 			max_n = n;
 			vault = FALSE;
 		    }

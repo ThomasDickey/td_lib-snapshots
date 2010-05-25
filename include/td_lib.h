@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 12.25 2004/03/07 21:49:47 tom Exp $ */
+/* $Id: td_lib.h,v 12.26 2010/05/24 23:44:00 tom Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for TD_LIB common
@@ -158,8 +158,8 @@
 
 	/* dotcmp.c --------------------------------------------------- */
 	int	dotcmp (
-			char *	s1,
-			char *	s2
+			const char * s1,
+			const char * s2
 			)
 			;
 
@@ -765,8 +765,8 @@ extern	int	localzone;
 
 	/* vercmp.c --------------------------------------------------- */
 	int	vercmp (
-			char *	s1,
-			char *	s2,
+			const char * s1,
+			const char * s2,
 			int	wild
 			)
 			;
