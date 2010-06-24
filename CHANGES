@@ -1,3 +1,18 @@
+2010-06-24  dickey@invisible-island.net
+
+	* td_make.in: add $(EXTRA_CPP_OPTS)
+
+2010-06-23  dickey@invisible-island.net
+
+	* configure: regen
+
+	* aclocal.m4: add CF_MAKE_TAGS
+
+	* configure.in: use CF_MAKE_TAGS to check for ctags flavor
+
+	* aclocal.m4: quote params of ifelse()
+	add/use CF_ADD_LIB and CF_ADD_LIBS, for consistency
+
 2010-05-24  dickey@invisible-island.net
 
 	* COPYING: update

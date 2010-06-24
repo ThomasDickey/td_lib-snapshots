@@ -1,4 +1,4 @@
-# $Id: td_make.in,v 12.24 2010/01/14 22:51:53 tom Exp $
+# $Id: td_make.in,v 12.25 2010/06/24 09:20:50 tom Exp $
 # common definitions for makefiles built over TD_LIB library.
 # vile:makemode
 
@@ -9,13 +9,19 @@ SHELL	= /bin/sh
 prefix		= @prefix@
 exec_prefix	= @exec_prefix@
 
+bindir		= @bindir@
+libdir		= @libdir@
+mandir		= @mandir@
+datadir		= @datadir@
+
 TD_LIB		= @TOP_SRCDIR@/lib
 TD_INC		= @TOP_SRCDIR@/include
 
 AR		= ar crv
 RM		= rm -f
 LINT		= @LINT@
-CTAGS		= dotags
+CTAGS		= @CTAGS@
+ETAGS		= @ETAGS@
 
 CC		= @CC@
 CPP		= @CPP@
@@ -27,16 +33,17 @@ MAKE_OPTS	= @cf_cv_makeflags@
 
 EXTRA_CFLAGS	= @EXTRA_CFLAGS@
 CFLAGS		= @CFLAGS@
-#LINK		= purify $(CC) $(CFLAGS)
 LINK		= $(CC) $(CFLAGS)
 
-INSTALL_BIN	= $(exec_prefix)/bin
-INSTALL_LIB	= $(exec_prefix)/lib
-INSTALL_MAN	= $(prefix)/man
+INSTALL_BIN	= $(bindir)
+INSTALL_LIB	= $(libdir)
+INSTALL_MAN	= $(mandir)
 
 ####### (Command-line Options) #################################################
-CPP_CONFIG	= -I. -I$(TD_INC) -DHAVE_CONFIG_H @CPPFLAGS@ @EXTRA_CPPFLAGS@
-CPP_OPTS	= $(CPP_CONFIG)
+EXTRA_CPPFLAGS	= @EXTRA_CPPFLAGS@
+CPPFLAGS	= @CPPFLAGS@
+CPP_CONFIG	= -I. -I$(TD_INC) -DHAVE_CONFIG_H $(CPPFLAGS) $(EXTRA_CPPFLAGS)
+CPP_OPTS	= $(CPP_CONFIG) $(EXTRA_CPP_OPTS)
 
 x		= @PROG_EXT@
 LIB_DEPS	= $(TD_LIB)/@LIB_PREFIX@td.a
