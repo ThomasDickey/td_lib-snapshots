@@ -1,3 +1,42 @@
+2010-07-01  dickey@invisible-island.net
+
+	* package/debian/control: improve dependencies
+
+	* include/Makefile:
+	keep reference inside tree, no need for selflink here
+
+	* makefile.in:
+	use DESTDIR to allow this to install as a debian development package
+
+	* td_make.in: add INSTALL_INC
+
+	* package/debian/rules: RCS_BASE
+
+	* package/debian/source/format: use native format
+
+	* package/debian/control, package/debian/changelog, package/debian/copyright:
+	RCS_BASE
+
+	* COPYING: fill in date-range
+
+	* package/debian/watch: RCS_BASE
+
+2010-06-30  dickey@invisible-island.net
+
+	* configure: regen
+
+	* configure.in:
+	change --with-warnings to --enable-warnings, for consistency
+
+	* aclocal.m4:
+	changed --with-warnings to --enable-warnings, for consistency
+
+	* td_make.in: use DESTDIR in INSTALL_BIN, etc., for consistency
+
+2010-06-27  dickey@invisible-island.net
+
+	* package/debian/docs: RCS_BASE
+
 2010-06-24  dickey@invisible-island.net
 
 	* td_make.in: add $(EXTRA_CPP_OPTS)

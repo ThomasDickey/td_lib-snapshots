@@ -1,4 +1,4 @@
-# $Id: td_make.in,v 12.25 2010/06/24 09:20:50 tom Exp $
+# $Id: td_make.in,v 12.26 2010/06/30 10:50:14 tom Exp $
 # common definitions for makefiles built over TD_LIB library.
 # vile:makemode
 
@@ -35,9 +35,9 @@ EXTRA_CFLAGS	= @EXTRA_CFLAGS@
 CFLAGS		= @CFLAGS@
 LINK		= $(CC) $(CFLAGS)
 
-INSTALL_BIN	= $(bindir)
-INSTALL_LIB	= $(libdir)
-INSTALL_MAN	= $(mandir)
+INSTALL_BIN	= $(DESTDIR)$(bindir)
+INSTALL_LIB	= $(DESTDIR)$(libdir)
+INSTALL_MAN	= $(DESTDIR)$(mandir)
 
 ####### (Command-line Options) #################################################
 EXTRA_CPPFLAGS	= @EXTRA_CPPFLAGS@
