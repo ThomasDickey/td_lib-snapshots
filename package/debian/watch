@@ -1,0 +1,4 @@
+version=3
+
+opts=passive ftp://invisible-island.net/ded/td_lib-(\d+)\.tgz \
+ debian  uupdate

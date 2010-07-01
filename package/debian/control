@@ -1,0 +1,17 @@
+Source: tdlib
+Maintainer: Thomas E. Dickey <dickey@invisible-island.net>
+Priority: optional
+Standards-Version: 3.8.4
+Build-Depends: debhelper (>= 5)
+Homepage: http://invisible-island.net/ded/
+
+Package: tdlib-dev
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends} libncurses5w-dev
+Section: libdevel
+Description: td_lib - Thomas Dickey's library
+  This development library is used to build several related packages:
+  ded - directory editor
+  cm_tools - configuration management tools for RCS
+  sccs_tools - configuration management tools for SSCS
+  copyrite - utility for adding copyright notices

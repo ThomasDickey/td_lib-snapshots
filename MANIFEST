@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t20100630
+MANIFEST for td_lib, version t20100701
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         restrictions on copying/using this software
@@ -35,6 +35,17 @@ include/td_regex.h              interface for regular expression functions
 include/td_scomp.h              interface for source-compare functions
 include/td_sheet.h              interface for spreadsheet (CSV) functions
 include/vms_dirs.h              VMS unix-style directory-interface definitions
+package/debian                  subdirectory
+package/debian/changelog        debian build script
+package/debian/compat           debian build script
+package/debian/control          debian build script
+package/debian/copyright        debian build script
+package/debian/docs             debian build script
+package/debian/rules            debian build script
+package/debian/source           subdirectory
+package/debian/source/format    debian build script
+package/debian                  subdirectory
+package/debian/watch            debian build script
 src/cm_funcs                    subdirectory
 src/cm_funcs/cmv_dir.c          lookup CmVision directory & file paths
 src/cm_funcs/cmv_last.c         lookup file's current version in CmVision
@@ -357,8 +368,6 @@ test/pathname/walktree.ref      reference for 'walktree'
 test/pathname/walktree.sh       test-script for 'walktree'
 test/pathname/which.ref         reference for 'which'
 test/pathname/which.sh          test-script for 'which'
-test/port2dos                   subdirectory
-test/port2dos/run_test.sh       general test script
 test/port2vms                   subdirectory
 test/port2vms/README            description of test/port2vms
 test/port2vms/descrip.mms       VMS build-script for test/port2vms
