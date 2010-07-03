@@ -15,7 +15,7 @@
 #include	"ptypes.h"
 #include	<errno.h>
 
-MODULE_ID("$Id: walkback.c,v 12.7 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: walkback.c,v 12.8 2010/07/03 16:12:16 tom Exp $")
 
 #ifdef	SYS_UNIX
 
@@ -34,7 +34,7 @@ contains(
     return FALSE;
 }
 #else /* assume we can dump-core */
-static char *core = "core";
+static const char *core = "core";
 static char *caller;
 #endif
 

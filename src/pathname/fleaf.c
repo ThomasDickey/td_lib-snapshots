@@ -16,10 +16,10 @@
 #define STR_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: fleaf.c,v 12.6 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: fleaf.c,v 12.7 2010/07/03 15:57:23 tom Exp $")
 
 char *
-fleaf_delim(char *path)
+fleaf_delim(const char *path)
 {
 #ifdef	SYS_UNIX
     return strrchr(path, '/');
@@ -35,7 +35,7 @@ fleaf_delim(char *path)
 }
 
 char *
-fleaf(char *path)
+fleaf(const char *path)
 {
     char *s = fleaf_delim(path);
     if (s != 0)

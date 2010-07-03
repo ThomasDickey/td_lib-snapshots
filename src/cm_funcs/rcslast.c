@@ -36,7 +36,7 @@
 #include	<time.h>
 #include	"rcsdefs.h"
 
-MODULE_ID("$Id: rcslast.c,v 12.10 2010/05/24 22:25:22 tom Exp $")
+MODULE_ID("$Id: rcslast.c,v 12.11 2010/07/03 18:25:16 tom Exp $")
 
 /*
  * Returns the modification date of the given file, or 0 if not found
@@ -55,9 +55,9 @@ filedate(char *path)
  * Debugging-trace for dates
  */
 static void
-ShowDate(char *tag, time_t t)
+ShowDate(const char *tag, time_t t)
 {
-    char *s = (t != 0) ? ctime(&t) : "<none>\n";
+    const char *s = (t != 0) ? ctime(&t) : "<none>\n";
     PRINTF("++   %s: %s", tag, s);
 }
 
@@ -72,8 +72,12 @@ tryRCS(char *path,
        char **lock_)
 {
     int finish = FALSE, skip = FALSE, code = S_FAIL;
-    char *s = 0, user[BUFSIZ], key[BUFSIZ], arg[BUFSIZ], lstring[BUFSIZ],
-    vstring[BUFSIZ];
+    char *s = 0;
+    char user[BUFSIZ];
+    char key[BUFSIZ];
+    char arg[BUFSIZ];
+    char lstring[BUFSIZ];
+    char vstring[BUFSIZ];
 
     if (rcsopen(path, RCS_DEBUG, TRUE)) {
 
@@ -183,7 +187,7 @@ rcslast(char *working,		/* working directory (absolute) */
      * not checked-in, or which are not checked out (possibly obsolete).
      */
     if (is_RCS			/* t => filename */
-	&& ((len = strlen(t)) > len_s)
+	&& ((len = (int) strlen(t)) > len_s)
 	&& !strcmp(t + len - len_s, RCS_SUFFIX)) {
 	tryRCS(strcpy(name, path), vers_, date_, lock_);
 	if (*date_) {		/* it was an ok RCS file */
@@ -197,7 +201,7 @@ rcslast(char *working,		/* working directory (absolute) */
 		(void) strcat(name, t);
 	    } else
 		(void) strcat(strcpy(name, dotdot), t);
-	    name[strlen(name) - len_s] = EOS;	/* trim suffix */
+	    name[(int) strlen(name) - len_s] = EOS;	/* trim suffix */
 
 	    *date_ = filedate(name);
 	    return;

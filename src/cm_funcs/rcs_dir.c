@@ -24,7 +24,7 @@
 #include "ptypes.h"
 #include "rcsdefs.h"
 
-MODULE_ID("$Id: rcs_dir.c,v 12.8 2010/05/24 22:25:22 tom Exp $")
+MODULE_ID("$Id: rcs_dir.c,v 12.9 2010/07/03 15:43:24 tom Exp $")
 
 #define	WORKING	struct	Working
 WORKING {
@@ -93,7 +93,7 @@ Initialize(void)
     initialized = TRUE;
     RcsDir = getenv("RCS_DIR");
     if (RcsDir == 0)
-	RcsDir = "RCS";
+	RcsDir = txtalloc("RCS");
     RcsDir = txtalloc(RcsDir);
 
     RcsVault = getenv("RCS_VAULT");
@@ -118,7 +118,7 @@ Initialize(void)
 
 	    if ((p = add_archive(s)) != 0) {
 		while (eqls != next) {
-		    *eqls = at_eqls;
+		    *eqls = (char) at_eqls;
 		    s = eqls + 1;
 
 		    eqls = strchr(s, '=');
@@ -130,7 +130,7 @@ Initialize(void)
 		    add_working(p, s);
 		}
 	    }
-	    if ((*next = at_next) != EOS)
+	    if ((*next = (char) at_next) != EOS)
 		next++;
 	}
 	RcsVault = txtalloc(RcsVault);

@@ -44,7 +44,7 @@
 
 #include	<ctype.h>
 
-MODULE_ID("$Id: rcsname.c,v 12.9 2004/03/07 16:31:58 tom Exp $")
+MODULE_ID("$Id: rcsname.c,v 12.10 2010/07/03 15:51:15 tom Exp $")
 
 #define	LEN_SUFFIX	(sizeof(suffix)-1)
 
@@ -98,7 +98,7 @@ rcs2name(char *name, int full)
     static char fname[BUFSIZ];
 
     if (rcs_suffix(name)) {
-	int len = strlen(strcpy(fname, name));
+	size_t len = strlen(strcpy(fname, name));
 
 	fname[len - LEN_SUFFIX] = EOS;
 	if ((s = leaf(fname)) > fname) {

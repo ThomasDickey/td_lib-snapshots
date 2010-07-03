@@ -19,7 +19,7 @@
 #define CHR_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: strucpy.c,v 12.5 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: strucpy.c,v 12.6 2010/07/03 16:16:24 tom Exp $")
 
 /*
  * Copy string, converting to uppercase
@@ -32,7 +32,7 @@ strucpy(char *dst, char *src)
 
     while ((c = *src++) != EOS) {
 	UpperCase(c);
-	*dst++ = c;
+	*dst++ = (char) c;
     }
     *dst = EOS;
     return (base);
@@ -49,7 +49,7 @@ strlwrcpy(char *dst, char *src)
 
     while ((c = *src++) != EOS) {
 	LowerCase(c);
-	*dst++ = c;
+	*dst++ = (char) c;
     }
     *dst = EOS;
     return (base);

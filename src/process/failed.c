@@ -19,10 +19,10 @@
 
 #include "ptypes.h"
 
-MODULE_ID("$Id: failed.c,v 12.4 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: failed.c,v 12.5 2010/07/03 16:11:51 tom Exp $")
 
 void
-failed(char *s)
+failed(const char *s)
 {
     FFLUSH(stdout);
     perror(s);

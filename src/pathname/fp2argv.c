@@ -23,7 +23,7 @@
 #include	"ptypes.h"
 #include	"dyn_str.h"
 
-MODULE_ID("$Id: fp2argv.c,v 12.5 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: fp2argv.c,v 12.6 2010/07/03 15:59:30 tom Exp $")
 
 #define	CHUNK	32
 
@@ -36,7 +36,7 @@ get_line(FILE *fp)
     dyn_init(&bfr, BUFSIZ);
 
     do {
-	tmp[0] = fgetc(fp);
+	tmp[0] = (char) fgetc(fp);
 	if (feof(fp))
 	    break;
 	(void) dyn_append(bfr, tmp);
@@ -58,7 +58,7 @@ fp2argv(FILE *fp,
     char *buffer;
 
     while ((buffer = get_line(fp)) != 0) {
-	unsigned need = (++lines | (CHUNK - 1)) + 1;
+	unsigned need = (unsigned) (++lines | (CHUNK - 1)) + 1;
 	if (need != have) {
 	    vec = DOALLOC(vec, char *, need);
 	    have = need;

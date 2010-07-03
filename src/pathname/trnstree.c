@@ -23,7 +23,7 @@
 #include	"port2vms.h"
 #include	"td_qsort.h"
 
-MODULE_ID("$Id: trnstree.c,v 12.3 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: trnstree.c,v 12.4 2010/07/03 16:03:42 tom Exp $")
 
 typedef char *PTR;
 #define	CHUNK	127		/* 1 less than a power of 2 */
@@ -65,7 +65,7 @@ transtree(char *oldname,
     PTR *vec;
     char newname[MAXPATHLEN];
     char oldpath[MAXPATHLEN];
-    char *newpath;
+    const char *newpath;
 
 #ifdef	TEST
     static char stack[] = ". . . . . . . ";

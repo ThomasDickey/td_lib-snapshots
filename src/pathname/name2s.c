@@ -40,7 +40,7 @@
 #define	STR_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: name2s.c,v 12.7 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: name2s.c,v 12.8 2010/07/03 15:55:31 tom Exp $")
 
 #define	isshell(c)	(strchr("*%?$()[]{}|<>^&;#\\\"`'~", c) != 0)
 #define	isAEGIS(c)	(strchr("*%?()[]{}\\", c) != 0)
@@ -98,10 +98,10 @@ name2s(char *bfr, int len, char *name, int opt)
 		|| isspace(c)
 		|| isshell(c))
 		bfr[num++] = '\\';	/* escape the nasty thing */
-	    bfr[num++] = c;
+	    bfr[num++] = (char) c;
 	} else {
 	    if (isascii(c) && isprint(c)) {
-		bfr[num++] = c;
+		bfr[num++] = (char) c;
 	    } else
 		bfr[num++] = '?';
 	}

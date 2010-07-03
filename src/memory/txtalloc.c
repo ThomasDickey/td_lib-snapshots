@@ -14,7 +14,7 @@
 #define	STR_PTYPES
 #include <td_btree.h>
 
-MODULE_ID("$Id: txtalloc.c,v 12.9 2004/03/07 22:07:19 tom Exp $")
+MODULE_ID("$Id: txtalloc.c,v 12.10 2010/07/03 16:24:50 tom Exp $")
 
 static BI_NODE *
 new_node(void *data)
@@ -28,15 +28,15 @@ new_node(void *data)
 }
 
 static int
-cmp_node(void *a, void *b)
+cmp_node(const void *a, const void *b)
 {
-    return strcmp((char *) a, (char *) b);
+    return strcmp((const char *) a, (const char *) b);
 }
 
 static void
-dpy_node(void *a)
+dpy_node(const void *a)
 {
-    PRINTF("%s", (char *) a);
+    PRINTF("%s", (const char *) a);
 }
 
 static BI_TREE text_tree =
@@ -48,7 +48,7 @@ static BI_TREE text_tree =
 };
 
 char *
-txtalloc(char *text)
+txtalloc(const char *text)
 {
     return btree_find(&text_tree, text);
 }
@@ -61,6 +61,7 @@ void
 txtfree(char *p)
 {
     /*NOT IMPLEMENTED */
+    (void) p;
 }
 
 /******************************************************************************/

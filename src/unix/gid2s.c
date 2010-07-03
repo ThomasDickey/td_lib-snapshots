@@ -24,7 +24,7 @@
 #define	STR_PTYPES
 #include <td_btree.h>
 
-MODULE_ID("$Id: gid2s.c,v 12.12 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: gid2s.c,v 12.13 2010/07/03 16:25:50 tom Exp $")
 
 #if defined(HAVE_GETGRGID)
 
@@ -65,18 +65,18 @@ new_node(void *data)
 }
 
 static int
-cmp_node(void *a, void *b)
+cmp_node(const void *a, const void *b)
 {
-    return ((GID_DATA *) a)->user
-	- ((GID_DATA *) b)->user;
+    return ((const GID_DATA *) a)->user
+	- ((const GID_DATA *) b)->user;
 }
 
 static void
-dpy_node(void *a)
+dpy_node(const void *a)
 {
     PRINTF("%d:%s",
-	   ((GID_DATA *) a)->user,
-	   ((GID_DATA *) a)->name);
+	   ((const GID_DATA *) a)->user,
+	   ((const GID_DATA *) a)->name);
 }
 
 static BI_TREE gid2s_tree =

@@ -48,7 +48,7 @@
 #include	"td_curse.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: cmdch.c,v 12.31 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: cmdch.c,v 12.32 2010/07/03 16:18:22 tom Exp $")
 
 #define	ESC(c)	((c) == '\033')
 #define	END(s)	s[strlen(s)-1]
@@ -244,7 +244,7 @@ cmdch(int *cnt_)
 	    break;
 #endif /* HAVE_KEYPAD */
 	if (iscntrl(c) || j != 0)
-	    i_blk[j++] = c;
+	    i_blk[j++] = (char) c;
 
 #if !defined(HAVE_KEYPAD) && !defined(NO_XTERM_MOUSE)
 	if (ESC(c)) {		/* assume "standard" escapes */

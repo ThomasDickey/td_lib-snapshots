@@ -13,14 +13,14 @@
 #include "ptypes.h"
 #include "dyn_str.h"
 
-MODULE_ID("$Id: dyn_appc.c,v 12.3 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: dyn_appc.c,v 12.4 2010/07/03 16:15:01 tom Exp $")
 
 DYN *
 dyn_append_c(DYN * p, int c)
 {
     static char temp[] = "?";
     if (c != EOS) {
-	temp[0] = c;
+	temp[0] = (char) c;
 	p = dyn_append(p, temp);
     }
     return p;

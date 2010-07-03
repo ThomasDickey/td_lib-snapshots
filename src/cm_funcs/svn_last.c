@@ -12,7 +12,7 @@
 #include	<time.h>
 #include	"rcsdefs.h"
 
-MODULE_ID("$Id: svn_last.c,v 12.2 2009/10/16 09:20:52 tom Exp $")
+MODULE_ID("$Id: svn_last.c,v 12.3 2010/07/03 15:49:19 tom Exp $")
 
 #define NAME_LIST "entries"
 
@@ -50,7 +50,7 @@ typedef struct _svn_work {
 static SVN_WORK *my_work = 0;
 
 static char *
-admin_filename(char *dest, SVN_WORK * cache, char *leaf)
+admin_filename(char *dest, SVN_WORK * cache, const char *leaf)
 {
     return pathcat(dest, svn_dir(cache->working), leaf);
 }
@@ -119,7 +119,7 @@ read_entries(SVN_WORK * cache)
     int j, k, last;
 
     if ((last = file2argv(admin_filename(name, cache, NAME_LIST), &list)) > 0) {
-	cache->Entries = DOALLOC(0, SVN_ENTRY, last);
+	cache->Entries = DOALLOC(0, SVN_ENTRY, (size_t) last);
 	for (j = 0; list[j] != 0; ++j) {
 	    if (list[j][0] != '\f')
 		strtrim(list[j]);

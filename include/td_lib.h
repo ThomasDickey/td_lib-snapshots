@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 12.26 2010/05/24 23:44:00 tom Exp $ */
+/* $Id: td_lib.h,v 12.27 2010/07/03 16:15:44 tom Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for TD_LIB common
@@ -13,7 +13,7 @@
 
 	/* MAIN-PROGRAM *********************************************** */
 	void	failed(
-			char *	s
+			const char * s
 			)
 			;
 
@@ -74,14 +74,14 @@
 	/* catarg.c --------------------------------------------------- */
 	void	catarg (
 			char *	dst,
-			char *	src
+			const char *	src
 			)
 			;
 
 	void	catarg2 (
 			char *	dst,
-			char *	opt,
-			char *	arg
+			const char *	opt,
+			const char *	arg
 			)
 			;
 
@@ -130,7 +130,7 @@
 
 	/* dlettree.c ------------------------------------------------- */
 #ifndef	LINTLIBRARY
-	extern	void	fail      (char * text);
+	extern	void	fail      (const char * text);
 	extern	int	deletefile(char * name);
 	extern	int	deletedir (char * name);
 #endif
@@ -250,11 +250,11 @@
 
 	/* fleaf.c ---------------------------------------------------- */
 	char *	fleaf_delim(
-			char *	path
+			const char *	path
 			)
 			;
 	char *	fleaf(
-			char *	path
+			const char *	path
 			)
 			;
 
@@ -465,16 +465,16 @@ extern	int	localzone;
 	/* pathcat.c -------------------------------------------------- */
 #if	defined(SYS_UNIX) || defined(MSDOS)
 	char *	pathcat2(
-			char *	dst,
-			char *	p,
-			char *	n
+			char * dst,
+			const char * p,
+			const char * n
 			)
 			;
 
 	char *	pathcat(
-			char *	dst,
-			char *	p,
-			char *	n
+			char * dst,
+			const char * p,
+			const char * n
 			)
 			;
 
@@ -564,15 +564,15 @@ extern	int	localzone;
 	/* shoarg.c --------------------------------------------------- */
 	char 	*bldcmd (
 			char *	dst,
-			char *	src,
+			const char *	src,
 			size_t	len
 			)
 			;
 
 	char 	*bldcmd2 (
 			char *	dst,
-			char *	src1,
-			char *	src2,
+			const char *	src1,
+			const char *	src2,
 			size_t	len
 			)
 			;
@@ -592,21 +592,21 @@ extern	int	localzone;
 
 	/* stat_dir.c ------------------------------------------------- */
 	int	stat_dir(
-			char *	path,
+			const char *	path,
 			Stat_t *	sb
 			)
 			;
 
 	/* stat_fil.c ------------------------------------------------- */
 	int	stat_file(
-			char *	path,
+			const char *	path,
 			Stat_t *	sb
 			)
 			;
 
 	/* stralloc.c ------------------------------------------------- */
 	char *	stralloc(
-			char *	string
+			const char *	string
 			)
 			;
 
@@ -700,7 +700,7 @@ extern	int	localzone;
 
 	/* txtalloc.c ------------------------------------------------- */
 	char *	txtalloc(
-			char *	string
+			const char * string
 			)
 			;
 
@@ -811,10 +811,10 @@ extern	int	localzone;
 
 	/* which.c ---------------------------------------------------- */
 	int	which(
-			char *	bfr,
+			char *		bfr,
 			unsigned	len,
-			char *	find,
-			char *	dot
+			const char *	find,
+			const char *	dot
 			)
 			;
 #endif	/* SYS_UNIX */

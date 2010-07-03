@@ -47,7 +47,7 @@
 #include	<ctype.h>
 #include	<time.h>
 
-MODULE_ID("$Id: rcsload.c,v 12.10 2005/10/16 23:46:56 tom Exp $")
+MODULE_ID("$Id: rcsload.c,v 12.11 2010/07/03 15:50:14 tom Exp $")
 
 #ifdef	TEST
 #define	DEBUG(s) PRINTF s;
@@ -119,7 +119,7 @@ loadtext(int c)
     if (c != EOS) {
 	if (my_length >= my_limit - 1)
 	    my_buffer = doalloc(my_buffer, my_limit += BUFSIZ);
-	my_buffer[my_length++] = c;
+	my_buffer[my_length++] = (char) c;
 	my_buffer[my_length] = EOS;
     }
 
@@ -319,7 +319,7 @@ rcsload(char *archive,		/* name of file to open             */
 	    if (*t == '\n')
 		length++;
 	DEBUG(("%d newlines, filesize=%d\n", length, t - load_buffer))
-	    length += (t - load_buffer) + 2;
+	    length += (unsigned) (t - load_buffer) + 2;
 	load_buffer = doalloc(load_buffer, length);
     } else
 	load_buffer = 0;
@@ -344,7 +344,7 @@ rcsload(char *archive,		/* name of file to open             */
 		k = -1;
 		for (j = 0; j < total; j++)
 		    if (last_rev == vec[j].revision) {
-			k = j;
+			k = (int) j;
 			break;
 		    }
 		if ((RCS_DEBUG > 1) || (k < 0))
@@ -413,7 +413,7 @@ rcsload(char *archive,		/* name of file to open             */
 		    vec[k].num_added = vec[j].num_added;
 		    vec[k].num_deleted = vec[j].num_deleted;
 		    vec[j].num_added = vec[j].num_deleted = 0;
-		    k = j;
+		    k = (int) j;
 		    break;
 		}
 	}
@@ -427,7 +427,7 @@ rcsload(char *archive,		/* name of file to open             */
 	for (j = 0; j < total; j++) {
 	    if (!strcmp(vec[j].parent, "")
 		&& (s = branch_of(vec[j].revision)) != 0)
-		fill_branch(vec, j, s);
+		fill_branch(vec, (int) j, s);
 	}
     }
     return (vec);

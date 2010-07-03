@@ -18,18 +18,21 @@
 
 #include <ptypes.h>
 
-MODULE_ID("$Id: vecedit.c,v 12.5 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: vecedit.c,v 12.6 2010/07/03 16:06:15 tom Exp $")
 
 char **
 vecedit(char **text, char **script)
 {
-    unsigned len_in = veclen(text), len_out = len_in, use_in = 0, use_out = 0;
+    unsigned len_in = (unsigned) veclen(text);
+    unsigned len_out = len_in;
+    unsigned use_in = 0;
+    unsigned use_out = 0;
     unsigned e_at, e_len;
     char e_type, **result;
 
     register unsigned j;
 
-    static char *fmt = "%c%d %d\n";
+    static const char *fmt = "%c%d %d\n";
 
     /*
      * First, determine the resulting length of the edited "file"

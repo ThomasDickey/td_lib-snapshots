@@ -1,4 +1,4 @@
-/* $Id: dyn_str.h,v 12.3 2004/03/07 21:46:52 tom Exp $
+/* $Id: dyn_str.h,v 12.4 2010/07/03 15:52:09 tom Exp $
  *
  *	Functions which manage dynamic-strings.
  */
@@ -19,7 +19,7 @@ typedef	struct	{
 	/* dyn_append.c ----------------------------------------------- */
 	DYN *	dyn_append(
 		DYN *	p,
-		char *	s
+		const char *	s
 		)
 		;
 
@@ -33,21 +33,21 @@ typedef	struct	{
 	/* dyn_catarg.c ----------------------------------------------- */
 	DYN *	dyn_catarg(
 		DYN *	p,
-		char *	arg
+		const char *	arg
 		)
 		;
 
 	DYN *	dyn_catarg2(
 		DYN *	p,
-		char *	opt,
-		char *	value
+		const char *	opt,
+		const char *	value
 		)
 		;
 
 	/* dyn_copy.c ------------------------------------------------- */
 	DYN *	dyn_copy(
 		DYN *	p,
-		char *	s
+		const char *	s
 		)
 		;
 

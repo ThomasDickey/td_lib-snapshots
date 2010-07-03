@@ -12,7 +12,7 @@
 
 #include	<td_btree.h>
 
-MODULE_ID("$Id: btree.c,v 12.5 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: btree.c,v 12.6 2010/07/03 16:24:00 tom Exp $")
 
 #define	llink	links[0]
 #define	rlink	links[1]
@@ -80,7 +80,7 @@ btree_find(BI_TREE * funcs,
 
 	    if (B(s) == 0) {
 		/* ...the tree has grown higher */
-		B(s) = a;
+		B(s) = (char) a;
 		funcs->head.llink += 1;
 	    } else if (B(s) == -a) {
 		/* ...the tree has gotten more balanced */
@@ -103,13 +103,13 @@ btree_find(BI_TREE * funcs,
 		    LINK(-a, p) = s;
 
 		    if (B(p) == a) {
-			B(s) = -a;
+			B(s) = (char) -a;
 			B(r) = 0;
 		    } else if (B(p) == 0) {
 			B(s) = B(r) = 0;
 		    } else if (B(p) == -a) {
 			B(s) = 0;
-			B(r) = a;
+			B(r) = (char) a;
 		    }
 
 		    B(p) = 0;

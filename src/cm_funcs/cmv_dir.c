@@ -37,7 +37,7 @@
 #include "ptypes.h"
 #include "cmv_defs.h"
 
-MODULE_ID("$Id: cmv_dir.c,v 12.24 2004/03/07 16:31:58 tom Exp $")
+MODULE_ID("$Id: cmv_dir.c,v 12.25 2010/07/03 15:39:48 tom Exp $")
 
 /******************************************************************************/
 
@@ -146,7 +146,7 @@ NewExternal(CMTREE * parent, char *external)
 static char *
 parts_list(char *result, char *archive, int level)
 {
-    char *leaf;
+    const char *leaf;
 
     switch (level) {
     case 0:
@@ -468,7 +468,7 @@ Initialize(void)
 
 	    if ((p = add_archive(s)) != 0) {
 		while (eqls != next) {
-		    *eqls = at_eqls;
+		    *eqls = (char) at_eqls;
 		    s = eqls + 1;
 
 		    eqls = strchr(s, '=');
@@ -480,7 +480,7 @@ Initialize(void)
 		    add_working(p, s);
 		}
 	    }
-	    if ((*next = at_next) != EOS)
+	    if ((*next = (char) at_next) != EOS)
 		next++;
 	}
 	CmvVault = txtalloc(CmvVault);

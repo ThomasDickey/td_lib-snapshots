@@ -72,7 +72,7 @@
 #include	"td_curse.h"
 #include	"dyn_str.h"
 
-MODULE_ID("$Id: rawgets.c,v 12.25 2004/03/07 22:06:58 tom Exp $")
+MODULE_ID("$Id: rawgets.c,v 12.26 2010/07/03 18:27:29 tom Exp $")
 
 #define	SHIFT	5
 
@@ -107,8 +107,8 @@ int x_rawgets, y_rawgets;
 /*
  * Private functions/variables
  */
-static void MoveTo(char * at);
-static void ShowAt(char * at);
+static void MoveTo(char *at);
+static void ShowAt(char *at);
 
 static WINDOW *Z;		/* window we use in this module */
 static char **Prefix;		/* insert/scrolling prefix, if any */
@@ -244,7 +244,7 @@ ShowAt(char *at)
 	getyx(Z, y, x);
 	for (row = y, col = x; (*at != EOS) && (row < margin); row++) {
 	    (void) wmove(Z, row, col);
-	    len = strlen(at);
+	    len = (int) strlen(at);
 	    cnt = xlast - col;
 	    while (len-- > 0) {
 		chtype c;
@@ -289,7 +289,7 @@ InsertAt(char *at, int c)
     for (;;) {
 	if ((c = d) != EOS) {
 	    d = *s;
-	    *s++ = c;
+	    *s++ = (char) c;
 	} else
 	    break;
     }
@@ -378,7 +378,7 @@ ShowPrefix(void)
 	char *prefix = Prefix[Imode];
 
 	(void) NoHighlight(Z);
-	(void) wmove(Z, y_rawgets, (int) (x_rawgets - strlen(prefix)));
+	(void) wmove(Z, y_rawgets, (x_rawgets - (int) strlen(prefix)));
 	while (*prefix)
 	    (void) waddch(Z, (chtype) (*prefix++));
     }

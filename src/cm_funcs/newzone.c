@@ -37,7 +37,7 @@
 #define	TIM_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: newzone.c,v 12.8 2004/03/07 16:31:58 tom Exp $")
+MODULE_ID("$Id: newzone.c,v 12.9 2010/07/03 15:41:37 tom Exp $")
 
 #define	SIX_MM	(6 * (30 * DAY))
 
@@ -67,7 +67,8 @@ name_of_tz(int minutes)
 {
     int hours = (minutes / 60);
     static char computed[NAMELEN];
-    char *s = computed, *standard, *DayLight;
+    char *s = computed;
+    const char *standard, *DayLight;
 
     switch (hours) {
     case 5:

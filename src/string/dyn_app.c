@@ -14,10 +14,10 @@
 #include "ptypes.h"
 #include "dyn_str.h"
 
-MODULE_ID("$Id: dyn_app.c,v 12.4 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: dyn_app.c,v 12.5 2010/07/03 16:14:47 tom Exp $")
 
 DYN *
-dyn_append(DYN * p, char *s)
+dyn_append(DYN * p, const char *s)
 {
     if (s != 0) {
 	size_t len = strlen(s);

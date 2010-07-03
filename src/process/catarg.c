@@ -21,17 +21,17 @@
 #include	"ptypes.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: catarg.c,v 12.5 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: catarg.c,v 12.6 2010/07/03 16:17:37 tom Exp $")
 
 void
-catarg(char *dst, char *src)
+catarg(char *dst, const char *src)
 {
     dst += strlen(dst);
     if (*src) {
 	(void) strcpy(dst, src);
 	while (*dst) {
 	    if (isspace(UCH(*dst)))
-		*dst |= 0200;
+		*dst = (char) (*dst | 0200);
 	    dst++;
 	}
 	*dst++ = ' ';
@@ -40,7 +40,7 @@ catarg(char *dst, char *src)
 }
 
 void
-catarg2(char *dst, char *opt, char *arg)
+catarg2(char *dst, const char *opt, const char *arg)
 {
     catarg(dst, opt);
     dst[strlen(dst) - 1] = EOS;

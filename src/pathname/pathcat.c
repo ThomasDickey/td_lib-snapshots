@@ -25,10 +25,10 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: pathcat.c,v 12.6 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: pathcat.c,v 12.7 2010/07/03 15:55:57 tom Exp $")
 
 char *
-pathcat2(char *dst, char *dname, char *fname)
+pathcat2(char *dst, const char *dname, const char *fname)
 {
     char tmp[MAXPATHLEN], *s;
 
@@ -49,7 +49,7 @@ pathcat2(char *dst, char *dname, char *fname)
 }
 
 char *
-pathcat(char *dst, char *dname, char *fname)
+pathcat(char *dst, const char *dname, const char *fname)
 {
     if (*fname == '~')
 	return (strcpy(dst, fname));

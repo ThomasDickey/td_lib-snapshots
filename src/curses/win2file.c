@@ -37,9 +37,7 @@
 #include	<ctype.h>
 #include	<time.h>
 
-MODULE_ID("$Id: win2file.c,v 12.17 2004/03/07 22:03:45 tom Exp $")
-
-#define	OUT	FPRINTF(fp,
+MODULE_ID("$Id: win2file.c,v 12.18 2010/07/03 18:28:25 tom Exp $")
 
 #ifndef A_ALTCHARSET
 #define A_ALTCHARSET 0
@@ -78,7 +76,7 @@ CursesLine(WINDOW *win, int row)
     if (result != 0)
 	free(result);
 
-    if ((result = malloc(COLS)) != 0) {
+    if ((result = malloc((size_t) COLS)) != 0) {
 	int y, x;
 
 	getyx(win, y, x);
@@ -112,12 +110,12 @@ win2fp(WINDOW *win,
     int rows = wMaxY(win);
     int cols = wMaxX(win);
 
-    OUT "%sscreen saved at %s", *prefix ? prefix : "\f", ctime(&now));
-    OUT "%s----------------(%dx%d)\n", prefix, rows, cols);
+    FPRINTF(fp, "%sscreen saved at %s", *prefix ? prefix : "\f", ctime(&now));
+    FPRINTF(fp, "%s----------------(%dx%d)\n", prefix, rows, cols);
 
     getyx(win, y, x);
     for (j = 0; j < rows; j++) {
-	OUT "%s", prefix);
+	FPRINTF(fp, "%s", prefix);
 	if (CursesLine(win, j) != NULL) {
 	    int last = -1;
 
@@ -166,21 +164,23 @@ win2fp(WINDOW *win,
 #endif
 		if (isprint(khr)) {
 		    if (bold)
-			OUT "%c\b", (int) khr);
-		    OUT "%c", (int) khr);
+			FPRINTF(fp, "%c\b", (int) khr);
+		    FPRINTF(fp, "%c", (int) khr);
 		} else
-		    OUT "?");
+		    FPRINTF(fp, "?");
 	    }
 	}
-	OUT "\n");
+	FPRINTF(fp, "\n");
     }
     (void) wmove(win, y, x);
     (void) wrefresh(win);
 }
 
-int win2file(
-		WINDOW *win,
-		char *file) {
+int
+win2file(
+	    WINDOW *win,
+	    char *file)
+{
     FILE *fp;
 
     if ((fp = fopen(file, "a+")) != NULL) {

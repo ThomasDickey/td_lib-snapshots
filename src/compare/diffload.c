@@ -19,7 +19,7 @@
 #include	<ctype.h>
 #include	<time.h>
 
-MODULE_ID("$Id: diffload.c,v 12.6 2004/03/07 22:05:24 tom Exp $")
+MODULE_ID("$Id: diffload.c,v 12.7 2010/07/03 16:07:37 tom Exp $")
 
 #ifdef	TEST
 #define	DEBUG(s) PRINTF s;
@@ -44,7 +44,7 @@ load_file(DELTREE * p, char *name)
 static void
 load_diff(DELTREE * p, char *name1, char *name2)
 {
-    static char *verb = "diff -n ";
+    static const char *verb = "diff -n ";
     static DYN *cmd;
 
     FILE *pp;

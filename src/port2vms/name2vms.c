@@ -29,7 +29,7 @@
 #define	STR_PTYPES
 #include	"port2vms.h"
 
-MODULE_ID("$Id: name2vms.c,v 12.5 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: name2vms.c,v 12.6 2010/07/03 16:26:59 tom Exp $")
 
 static int leaf_dot;		/* counts dots found in a particular leaf */
 static int leaf_ver;		/* set if we found a DECshell version */
@@ -64,7 +64,7 @@ translate(int c)
     } else if (!strchr("0123456789_-", c)) {
 	c = '$';
     }
-    return (c);
+    return (char) (c);
 }
 
 static int
@@ -79,13 +79,13 @@ leading_uc(char *dst, char *src)
 		return (0);
 	} else if (!strchr("0123456789$_", c))
 	    return (0);
-	*dst++ = c;
+	*dst++ = (char) c;
 	*dst = EOS;
 	src++;
     }
     *dst = EOS;
     if ((*base) && (dst = getenv(base)) != 0) {
-	c = strlen(base);
+	c = (int) strlen(base);
 	while (isspace(UCH(*dst)))
 	    dst++;
 	(void) strcpy(base, dst);
@@ -112,7 +112,7 @@ name2vms(char *dst, char *src)
      */
     if ((len = leading_uc(token, s)) != 0) {
 	s += len;
-	len = strlen(strcpy(d, token));
+	len = (int) strlen(strcpy(d, token));
 	while (len > 1 && d[len - 1] == ' ')
 	    len--;
 	if (*s) {		/* text follows leading token */
