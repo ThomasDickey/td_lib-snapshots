@@ -40,13 +40,13 @@
 #define	STR_PTYPES
 #include	"port2vms.h"
 
-MODULE_ID("$Id: vms2name.c,v 12.6 2010/05/24 22:25:22 tom Exp $")
+MODULE_ID("$Id: vms2name.c,v 12.7 2010/07/03 16:26:36 tom Exp $")
 
 #define	LOWER(p)	((isalpha(UCH(*p)) && isupper(UCH(*p))) ? LowerMacro(*p) : *p)
 
 static struct {
     int len;			/* number of chars to uppercase */
-    char *name;			/* lowercase string to check for */
+    const char *name;		/* lowercase string to check for */
 } uc_names[] = {
 
     {
@@ -92,7 +92,7 @@ vms2name(char *dst, char *src)
     if ((s = strchr(base, ':')) != 0
 	&& (s[1] == ':')) {
 	while (base < s) {
-	    *dst++ = LOWER(base);
+	    *dst++ = (char) LOWER(base);
 	    base++;
 	}
 	*dst++ = '!';
@@ -108,7 +108,7 @@ vms2name(char *dst, char *src)
     if ((s = strchr(base, ':')) != NULL) {
 	*dst++ = '/';
 	while (base < s) {
-	    *dst++ = LOWER(base);
+	    *dst++ = (char) LOWER(base);
 	    base++;
 	}
 	base++;			/* skip over ":" */
@@ -133,7 +133,7 @@ vms2name(char *dst, char *src)
 	if (b != 0) {
 	    *dst++ = '/';	/* begin the device */
 	    while (a < b) {
-		*dst++ = LOWER(a);
+		*dst++ = (char) LOWER(a);
 		a++;
 	    }
 	    have_dev = TRUE;

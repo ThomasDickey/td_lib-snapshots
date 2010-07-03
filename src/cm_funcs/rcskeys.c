@@ -27,14 +27,14 @@
 #include	"rcsdefs.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: rcskeys.c,v 12.6 2004/03/07 16:31:58 tom Exp $")
+MODULE_ID("$Id: rcskeys.c,v 12.7 2010/07/03 15:39:16 tom Exp $")
 
 int
 rcskeys(char *arg)
 {
     static struct {
 	int code;
-	char *text;
+	const char *text;
     } keys[] = {
 	/* <admin> section                      */
 	{

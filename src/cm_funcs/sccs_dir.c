@@ -41,7 +41,7 @@
 #include "ptypes.h"
 #include "sccsdefs.h"
 
-MODULE_ID("$Id: sccs_dir.c,v 12.12 2010/05/24 22:25:22 tom Exp $")
+MODULE_ID("$Id: sccs_dir.c,v 12.13 2010/07/03 15:47:33 tom Exp $")
 
 #define	WORKING	struct	Working
 WORKING {
@@ -158,7 +158,7 @@ Initialize(void)
 
 	    if ((p = add_archive(s)) != 0) {
 		while (eqls != next) {
-		    *eqls = at_eqls;
+		    *eqls = (char) at_eqls;
 		    s = eqls + 1;
 
 		    eqls = strchr(s, '=');
@@ -170,7 +170,7 @@ Initialize(void)
 		    add_working(p, s);
 		}
 	    }
-	    if ((*next = at_next) != EOS)
+	    if ((*next = (char) at_next) != EOS)
 		next++;
 	}
 	SccsVault = path_alloc(SccsVault);
@@ -179,7 +179,7 @@ Initialize(void)
 
 /******************************************************************************/
 char *
-sccs_dir(char *working_directory, char *filename)
+sccs_dir(const char *working_directory, const char *filename)
 {
     char *name;
     int vault = FALSE;

@@ -29,7 +29,7 @@
 #include	"td_curse.h"
 #include	<time.h>
 
-MODULE_ID("$Id: dumpwin.c,v 12.21 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: dumpwin.c,v 12.22 2010/07/03 16:30:07 tom Exp $")
 
 #define	OUT	FPRINTF
 
@@ -42,7 +42,7 @@ line_data(WINDOW *win, int row)
     if (result != 0)
 	free(result);
 
-    if ((result = malloc(len)) != 0) {
+    if ((result = malloc((size_t) len)) != 0) {
 #if defined(HAVE_WINNSTR)
 	int y, x;
 
@@ -76,7 +76,7 @@ dumpwin(WINDOW *w, char *tag)
 	getyx(w, current_y, current_x);
 
 	OUT(fp, "%s: %s", tag, ctime(&now));
-	OUT(fp, "window @ %p (LINES=%d, COLS=%d)\n", w, LINES, COLS);
+	OUT(fp, "window @ %p (LINES=%d, COLS=%d)\n", (void *) w, LINES, COLS);
 
 	OUT(fp, "   _cury:%d, _curx:%d\n", current_y, current_x);
 	OUT(fp, "   _maxy:%d, _maxx:%d\n", wMaxY(w), wMaxX(w));

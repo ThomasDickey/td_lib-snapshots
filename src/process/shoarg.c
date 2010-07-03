@@ -15,14 +15,14 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: shoarg.c,v 12.6 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: shoarg.c,v 12.7 2010/07/03 16:13:44 tom Exp $")
 
 /*
  * Function:	Writes a new string with the non-ascii characters escaped.
  */
 char *
 bldcmd(char *dst,
-       char *src,
+       const char *src,
        size_t len)
 {
     char *base = dst;
@@ -35,7 +35,7 @@ bldcmd(char *dst,
 	    *dst++ = '\\';
 	    *dst++ = toascii(c);
 	} else
-	    *dst++ = c;
+	    *dst++ = (char) c;
     }
     *dst = EOS;
     return (base);
@@ -47,16 +47,16 @@ bldcmd(char *dst,
  */
 char *
 bldcmd2(char *dst,
-	char *src1,
-	char *src2,
+	const char *src1,
+	const char *src2,
 	size_t len)
 {
     char *base = dst;
     (void) bldcmd(dst, src1, len);
     dst += strlen(dst);
-    (void) bldcmd(dst, " ", len - (dst - base));
+    (void) bldcmd(dst, " ", len - (size_t) (dst - base));
     dst += strlen(dst);
-    (void) bldcmd(dst, src2, len - (dst - base));
+    (void) bldcmd(dst, src2, len - (size_t) (dst - base));
     return base;
 }
 

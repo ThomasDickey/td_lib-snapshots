@@ -14,10 +14,10 @@
 #define	ERR_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: stat_fil.c,v 12.5 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: stat_fil.c,v 12.6 2010/07/03 16:03:13 tom Exp $")
 
 int
-stat_file(char *path, Stat_t * sb)
+stat_file(const char *path, Stat_t * sb)
 {
     if (stat(path, sb) >= 0) {
 	if (isFILE(sb->st_mode))

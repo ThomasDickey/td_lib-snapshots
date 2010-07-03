@@ -27,12 +27,12 @@
 
 #include	"ptypes.h"
 
-MODULE_ID("$Id: doalloc.c,v 12.8 2004/03/07 22:07:10 tom Exp $")
+MODULE_ID("$Id: doalloc.c,v 12.9 2010/07/03 15:53:42 tom Exp $")
 
 static long count_alloc, count_freed;
 
 static void
-fail_alloc(char *msg, void *ptr)
+fail_alloc(const char *msg, void *ptr)
 {
     PRINTF("%s: %p\n", msg, ptr);
 #ifdef	SYS_UNIX
@@ -194,7 +194,7 @@ dofree(void *oldp)
 void
 show_alloc(void)
 {
-    static char *fmt = ".. %-24.24s %10ld\n";
+    static const char *fmt = ".. %-24.24s %10ld\n";
 
     PRINTF("** allocator metrics:\n");
     PRINTF(fmt, "allocs:", count_alloc);

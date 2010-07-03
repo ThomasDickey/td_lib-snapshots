@@ -1,4 +1,4 @@
-/* $Id: sccsdefs.h,v 12.11 2004/03/07 21:45:11 tom Exp $ */
+/* $Id: sccsdefs.h,v 12.12 2010/07/03 15:47:11 tom Exp $ */
 
 #ifndef	SCCSDEFS_H
 #define	SCCSDEFS_H
@@ -12,8 +12,8 @@
 
 	/* sccs_dir.c ------------------------------------------------- */
 	char *	sccs_dir(
-			char *	working_dir,
-			char *	pathname
+			const char * working_dir,
+			const char * pathname
 			)
 			;
 

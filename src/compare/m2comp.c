@@ -21,7 +21,7 @@
 #define	SCOMP	m2comp		/* name of this module */
 #include "td_scomp.h"
 
-MODULE_ID("$Id: m2comp.c,v 12.6 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: m2comp.c,v 12.7 2010/07/03 16:10:01 tom Exp $")
 
 #define	INSERT	1
 #define	DELETE	2
@@ -86,9 +86,9 @@ m2comp(SCOMP_TYPE v1,		/* "old" vector to compare  */
 
     save_list = 0;
     save_size = (n1 + n2 + 1) / 2;
-    save_SIZE = sizeof(SAVE) + (save_size - 1) * sizeof(EDIT);
+    save_SIZE = sizeof(SAVE) + (unsigned) (save_size - 1) * sizeof(EDIT);
 
-    ORIGIN = (n1 > n2) ? n1 : n2;
+    ORIGIN = (Line) ((n1 > n2) ? n1 : n2);
     max_d = 2 * ORIGIN;
     last_d = NEW(Line, max_d + 1);
     script = NEW(EDIT *, max_d + 1);
@@ -101,8 +101,8 @@ m2comp(SCOMP_TYPE v1,		/* "old" vector to compare  */
     last_d[ORIGIN] = row;
     script[ORIGIN] = NULL;
 
-    lower = (row == n1) ? ORIGIN + 1 : ORIGIN - 1;
-    upper = (row == n2) ? ORIGIN - 1 : ORIGIN + 1;
+    lower = (Line) ((row == n1) ? ORIGIN + 1 : ORIGIN - 1);
+    upper = (Line) ((row == n2) ? ORIGIN - 1 : ORIGIN + 1);
 
     if (lower > upper) {
 	dofree((char *) last_d);

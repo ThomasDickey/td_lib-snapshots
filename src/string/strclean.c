@@ -19,7 +19,7 @@
 #include	"ptypes.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: strclean.c,v 12.5 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: strclean.c,v 12.6 2010/07/03 16:16:15 tom Exp $")
 
 int
 strclean(char *string)
@@ -40,5 +40,5 @@ strclean(char *string)
 		s++;
 	}
     }
-    return (strlen(string));
+    return (int) strlen(string);
 }

@@ -39,7 +39,7 @@
 #include "rcsdefs.h"
 #include <errno.h>
 
-MODULE_ID("$Id: rcstemp.c,v 12.9 2004/03/07 16:31:58 tom Exp $")
+MODULE_ID("$Id: rcstemp.c,v 12.10 2010/07/03 15:46:41 tom Exp $")
 
 #define	DEBUG	if (RCS_DEBUG) PRINTF
 
@@ -70,7 +70,7 @@ rcstemp(char *working, int copy)
 	      (int) getegid(), gid2s((int) getegid()));
 
 	if (stat_dir(tf, &sb) < 0) {
-	    int oldmask = umask(0);
+	    int oldmask = (int) umask(0);
 
 	    DEBUG("%% mkdir %s\n", tf);
 	    if (mkdir(tf, (mode_t) mode) < 0) {
@@ -79,7 +79,7 @@ rcstemp(char *working, int copy)
 	    }
 
 	    /* make sure we get the right group */
-	    if (chown(tf, (int) geteuid(), (int) getegid()) < 0) {
+	    if (chown(tf, geteuid(), getegid()) < 0) {
 		failed("chown");
 		/*NOTREACHED */
 	    }

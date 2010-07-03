@@ -17,7 +17,7 @@
 #include	<time.h>
 #include	"rcsdefs.h"
 
-MODULE_ID("$Id: cvslast.c,v 12.5 2004/03/09 00:09:22 tom Exp $")
+MODULE_ID("$Id: cvslast.c,v 12.6 2010/07/03 15:42:55 tom Exp $")
 
 #define NAME_LIST "Entries"
 #define NAME_ARCH "Repository"
@@ -57,7 +57,7 @@ typedef struct _cvs_work {
 static CVS_WORK *my_work = 0;
 
 static char *
-admin_filename(char *dest, CVS_WORK * cache, char *leaf)
+admin_filename(char *dest, CVS_WORK * cache, const char *leaf)
 {
     return pathcat(dest, cvs_dir(cache->working), leaf);
 }
@@ -98,7 +98,7 @@ string2time(char *string)
     int sec = 0;
     char day_of_week[80];
     char month_of_year[80];
-    static char *months[] =
+    static const char *months[] =
     {
 	"Jan", "Feb", "Mar", "Apr", "May", "Jun",
 	"Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
@@ -113,7 +113,7 @@ string2time(char *string)
 	unsigned n;
 	for (n = 0; n < SIZEOF(months); ++n) {
 	    if (!strcmp(months[n], month_of_year)) {
-		mon = n + 1;
+		mon = (int) (n + 1);
 		break;
 	    }
 	}
@@ -171,7 +171,7 @@ read_entries(CVS_WORK * cache)
     int j, k;
 
     if ((k = file2argv(admin_filename(name, cache, NAME_LIST), &list)) > 0) {
-	cache->Entries = DOALLOC(0, CVS_ENTRY, k);
+	cache->Entries = DOALLOC(0, CVS_ENTRY, (size_t) k);
 	for (j = k = 0; list[j] != 0; ++j) {
 	    char *s = list[j];
 	    char *t;

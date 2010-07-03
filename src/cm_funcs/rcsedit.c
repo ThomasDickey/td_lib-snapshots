@@ -40,7 +40,7 @@
 #include	"rcsdefs.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: rcsedit.c,v 12.10 2004/03/07 16:31:58 tom Exp $")
+MODULE_ID("$Id: rcsedit.c,v 12.11 2010/07/03 15:44:10 tom Exp $")
 
 /* local definitions */
 #define	VERBOSE	if (verbose) PRINTF
@@ -63,7 +63,7 @@ static int in_string;		/* true only while parsing string */
  ************************************************************************/
 
 static void
-Show(char *tag, char *text)
+Show(const char *tag, const char *text)
 {
     if ((RCS_DEBUG > 1) && text != 0 && verbose) {
 	FFLUSH(stdout);
@@ -81,8 +81,8 @@ dir_access(void)
 {
     char *s;
     char temp[MAXPATHLEN];
-    int uid = geteuid();
-    int gid = getegid();
+    int uid = (int) geteuid();
+    int gid = (int) getegid();
     Stat_t sb;
 
     if ((s = fleaf_delim(strcpy(temp, fname))) != NULL)
@@ -93,8 +93,8 @@ dir_access(void)
 	return FALSE;
 
     if (!uid) {			/* root can do anything */
-	uid = sb.st_uid;
-	gid = sb.st_gid;
+	uid = (int) sb.st_uid;
+	gid = (int) sb.st_gid;
     }
     if (uid == (int) sb.st_uid)
 	return (sb.st_mode & S_IWRITE);

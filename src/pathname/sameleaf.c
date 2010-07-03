@@ -33,7 +33,7 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: sameleaf.c,v 12.6 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: sameleaf.c,v 12.7 2010/07/03 15:58:19 tom Exp $")
 
 int
 sameleaf(char *path, char *leaf)
@@ -60,7 +60,7 @@ sameleaf(char *path, char *leaf)
      * Even after trimming, 'leaf' may contain a delimiter.  If so, we must
      * readjust the pointer to the path which we compare:
      */
-    if ((adjust = strlen(s) - strlen(leaf)) < 0) {
+    if ((adjust = (int) strlen(s) - (int) strlen(leaf)) < 0) {
 	if (s + adjust == tmp)
 	    s = tmp;
 	else if (((s + adjust) > tmp) && (isSlash(s[adjust - 1])))

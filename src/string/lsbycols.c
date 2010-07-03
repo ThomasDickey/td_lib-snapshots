@@ -21,7 +21,7 @@
 #define	STR_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: lsbycols.c,v 12.5 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: lsbycols.c,v 12.6 2010/07/03 16:16:42 tom Exp $")
 
 #ifdef	lint
 #define	LIST(n)	(*(listp + n))	/* close enough to fool lint */
@@ -42,7 +42,7 @@ list_by_cols(char **listp, int sizep, int num)
     int rows;			/* last row-number */
 
     for (j = 0; j < num; j++)
-	if ((len = strlen(LIST(j))) > maxlen)
+	if ((len = (int) strlen(LIST(j))) > maxlen)
 	    maxlen = len;
     gap = (maxlen / 4) + 3;
     cols = MAXCOL / (maxlen + gap);

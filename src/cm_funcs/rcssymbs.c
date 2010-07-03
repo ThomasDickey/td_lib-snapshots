@@ -27,7 +27,7 @@
 #include "rcsdefs.h"
 #include <ctype.h>
 
-MODULE_ID("$Id: rcssymbs.c,v 12.7 2010/05/24 22:25:22 tom Exp $")
+MODULE_ID("$Id: rcssymbs.c,v 12.8 2010/07/03 15:45:59 tom Exp $")
 
 #define	isname(c)	(isalnum(UCH(c)) || (c == '_'))
 
@@ -85,7 +85,7 @@ expand(char *in_out,
 	    first = FALSE;
 	    base = d;
 	}
-	*d++ = item;
+	*d++ = (char) item;
 	*d = EOS;
     }
     substitute(base, name, value);

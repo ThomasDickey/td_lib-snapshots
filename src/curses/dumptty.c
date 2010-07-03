@@ -13,20 +13,20 @@
 #define TRM_PTYPES		/* <termios.h> */
 #include <td_curse.h>
 
-MODULE_ID("$Id: dumptty.c,v 12.6 2005/01/25 01:42:31 tom Exp $")
+MODULE_ID("$Id: dumptty.c,v 12.7 2010/07/03 18:27:03 tom Exp $")
 
 #define	CONTRAST(msg,f) Contrast(msg, (long)(tst.f), (long)(ref.f))
 #define	SHOWMASK(t,m)   ShowMasks(t, SIZEOF(t), m)
 
 typedef struct {
     long code;
-    char *name;
+    const char *name;
 } TABLE;
 
 static FILE *the_fp;
 
 #if defined(USING_TERMIOS_H) || defined(USING_TERMIO_H)
-static char *
+static const char *
 CtlChar(int c)			/* c_cc[] characters */
 {
     static TABLE table[] =
@@ -278,9 +278,8 @@ ShowMasks(TABLE * table, int length, long mask)
 }
 #endif /* #if USING_TERMIOS_H || USING_TERMIO_H */
 
-static
-long
-Contrast(char *msg, long tst, long ref)
+static long
+Contrast(const char *msg, long tst, long ref)
 {
     long diff = 0;
 

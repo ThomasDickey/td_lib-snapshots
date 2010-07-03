@@ -31,7 +31,7 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: which.c,v 12.10 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: which.c,v 12.11 2010/07/03 16:02:11 tom Exp $")
 
 #ifdef MSDOS
 #define PROG_EXTS "PIF", "BAT", "EXE", "COM"
@@ -42,7 +42,7 @@ MODULE_ID("$Id: which.c,v 12.10 2004/03/07 22:03:45 tom Exp $")
 #endif
 
 static int
-executable(char *name)
+executable(const char *name)
 {
 #ifdef	PROG_EXTS
     char *s = ftype(name);
@@ -77,8 +77,8 @@ executable(char *name)
 int
 which(char *bfr,
       unsigned len,
-      char *find,
-      char *dot)
+      const char *find,
+      const char *dot)
 {
     char *s, *d;
     char *path = getenv("PATH");

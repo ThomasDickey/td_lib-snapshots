@@ -14,7 +14,7 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: track_wd.c,v 12.4 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: track_wd.c,v 12.5 2010/07/03 18:28:50 tom Exp $")
 
 void
 track_wd(char *path)
@@ -22,11 +22,13 @@ track_wd(char *path)
     static char current[BUFSIZ];
     static char original[BUFSIZ];
 
-    if (path == 0)		/* initialization-call */
-	(void) getwd(original);
-    else if (strcmp(path, current)) {
-	char *ddir = (strlen(current) > strlen(path))
-	? "return to" : "process";
+    if (path == 0) {		/* initialization-call */
+	if (getwd(original) == 0)
+	    strcpy(original, ".");
+    } else if (strcmp(path, current)) {
+	const char *ddir = ((strlen(current) > strlen(path))
+			    ? "return to"
+			    : "process");
 	PRINTF("** %s %s\n", ddir, relpath(current, original, path));
 	(void) strcpy(current, path);
     }
