@@ -1,3 +1,37 @@
+2010-07-03  dickey@invisible-island.net
+
+	* src/pathname/track_wd.c, src/curses/win2file.c, src/curses/rawgets.c, src/curses/dumptty.c, src/cm_funcs/rcslast.c, src/unix/uid2s.c, src/curses/dumpwin.c, src/port2vms/name2vms.c, src/port2vms/vms2name.c, src/unix/gid2s.c, src/memory/txtalloc.c, include/td_btree.h, src/compare/btree.c, src/curses/cmdch.c, src/process/catarg.c, src/string/lsbycols.c, src/string/strucpy.c, src/string/strclean.c, include/td_lib.h, src/string/dyn_copy.c, src/string/dyn_cata.c, src/string/dyn_appc.c, src/string/dyn_app.c, src/process/shoarg.c, src/process/walkback.c, src/process/failed.c, src/process/egress.c, src/compare/m2comp.c, src/compare/diffload.c, src/memory/vecedit.c, src/memory/stralloc.c, src/pathname/trnstree.c, src/pathname/stat_fil.c, src/pathname/stat_dir.c, src/pathname/which.c, src/pathname/fp2argv.c, src/pathname/sameleaf.c, src/pathname/fleaf.c, src/pathname/pathcat.c, src/pathname/name2s.c, src/pathname/arg2file.c, src/memory/doalloc.c, include/dyn_str.h, src/cm_funcs/rcsname.c, src/cm_funcs/rcsload.c, src/cm_funcs/svn_last.c, src/cm_funcs/sccs_dir.c, include/sccsdefs.h, src/cm_funcs/rcstemp.c, src/cm_funcs/rcssymbs.c, src/cm_funcs/rcsedit.c, src/cm_funcs/rcs_dir.c, src/cm_funcs/cvslast.c, src/cm_funcs/newzone.c, src/cm_funcs/cmv_dir.c, src/cm_funcs/rcskeys.c:
+	stricter gcc warnings
+
+	* package/td_lib.spec: RCS_BASE
+
+	* package/debian/changelog: bump
+
+2010-07-02  dickey@invisible-island.net
+
+	* package/debian/changelog: bump
+
+	* package/debian/control: fix build-depends
+
+	* support/ins_mak: fix for empty $DESTDIR
+
+	* package/debian/rules:
+	use --disable-echo, since that passes through to ded, etc., when built with this package
+
+	* support/ins_mak, support/ins_hdr, makefile.in:
+	factor DESTDIR out of edits in ins_hdr
+
+	* package/debian/rules: suppress selflink when building package
+
+	* configure: regen
+
+	* makefile.in, configure.in:
+	add --disable-selflink option, since ../td_lib link can interfere with package
+
+	* package/debian/rules: add CHANGES file
+	use dh_prep rather than "dh_clean -k"
+	make DESTDIR match package name
+
 2010-07-01  dickey@invisible-island.net
 
 	* package/debian/control: improve dependencies

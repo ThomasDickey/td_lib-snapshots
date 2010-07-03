@@ -35,6 +35,8 @@ configure-stamp:
 		--libdir=\$${prefix}/lib \
 		--mandir=\$${prefix}/share/man \
 		--sysconfdir=/etc \
+		--disable-echo \
+		--disable-selflink \
 		--with-ncursesw
 
 	touch configure-stamp
@@ -62,10 +64,10 @@ install: install-stamp
 install-stamp: build-stamp
 	dh_testdir
 	dh_testroot
-	dh_clean -k
+	dh_prep
 	dh_installdirs
 
-	$(MAKE) install DESTDIR=$(CURDIR)/debian/td_lib
+	$(MAKE) install DESTDIR=$(CURDIR)/debian/tdlib-dev
 
 	touch install-stamp
 
@@ -79,7 +81,7 @@ binary-arch: build install
 	dh_testroot
 	dh_installdocs
 	dh_installexamples
-	dh_installchangelogs
+	dh_installchangelogs CHANGES
 	dh_strip
 	dh_compress
 	dh_fixperms

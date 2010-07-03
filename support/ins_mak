@@ -1,5 +1,5 @@
 #! /bin/sh
-# $Id: ins_mak,v 12.2 1997/09/14 23:04:03 tom Exp $
+# $Id: ins_mak,v 12.4 2010/07/02 23:03:40 tom Exp $
 #
 # Install the td_lib make include-file.  We adjust the symbols that refer
 # to the location of the include- and lib-directory.
@@ -12,10 +12,19 @@ PRG="$1"
 shift
 
 if test $# = 0 ; then
+	echo '? No DESTDIR given'
+	exit 1
+fi
+DESTDIR=$1
+shift
+
+if test $# = 0 ; then
 	echo '? No LIBDIR given'
 	exit 1
 fi
 LIBDIR=$1
+my_LIB=$1
+test -n "$DESTDIR" && my_LIB=`echo "$LIBDIR" | sed -e "s,$DESTDIR,,"`
 shift
 
 if test $# = 0 ; then
@@ -23,6 +32,8 @@ if test $# = 0 ; then
 	exit 1
 fi
 INCDIR=$1
+my_INC=$1
+test -n "$DESTDIR" && my_INC=`echo "$INCDIR" | sed -e "s,$DESTDIR,,"`
 shift
 
 if test $# = 0 ; then
@@ -34,8 +45,8 @@ SED=${TMPDIR-/tmp}/sed$$
 trap "rm -f $SED" 0 1 2 5 15
 
 cat >$SED <<EOF
-s@^TD_LIB[ 	]*=.*@TD_LIB = $LIBDIR@
-s@^TD_INC[ 	]*=.*@TD_INC = $INCDIR@
+s@^TD_LIB[ 	]*=.*@TD_LIB = $my_LIB@
+s@^TD_INC[ 	]*=.*@TD_INC = $my_INC@
 EOF
 
 for SRC in $*

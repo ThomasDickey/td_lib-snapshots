@@ -1,4 +1,4 @@
-# $Id: makefile.in,v 12.19 2010/07/01 09:22:36 tom Exp $
+# $Id: makefile.in,v 12.21 2010/07/02 10:48:36 tom Exp $
 # Top-level makefile for TD_LIB common library
 
 SHELL		= /bin/sh
@@ -9,6 +9,7 @@ SHELL		= /bin/sh
 TOP		= .
 THIS		= td_lib
 THAT		= libtd
+@MAKE_SELFLINK@SELFLINK	= ../td_lib
 
 prefix		= @prefix@
 exec_prefix	= @exec_prefix@
@@ -54,7 +55,7 @@ MFILES	=\
 ####### (Standard Productions) #################################################
 all\
 lintlib\
-install::	../td_lib lib $(I_CFG) $(MDEFN)
+install::	$(SELFLINK) lib $(I_CFG) $(MDEFN)
 
 clean\
 clobber ::	td_make.in
@@ -87,11 +88,11 @@ distclean:	clobber
 	-cd test &&	$(MAKE) $(MAKE_OPTS) $@
 	-$(RM) $(PURE)
 	-$(RM) makefile src/makefile test/makefile
-	-$(RM) ../td_lib
+	-$(RM) $(SELFLINK)
 
 install::	all $(bindir) $(my_incdir) $(my_libdir)
-	$(srcdir)/support/ins_hdr "$(INSTALL_DATA)" $(my_incdir) $(I_LIST)
-	$(srcdir)/support/ins_mak "$(INSTALL_DATA)" $(my_libdir) $(my_incdir) support/$(THIS).mk
+	$(srcdir)/support/ins_hdr "$(INSTALL_DATA)" "$(DESTDIR)" $(my_incdir) $(I_LIST)
+	$(srcdir)/support/ins_mak "$(INSTALL_DATA)" "$(DESTDIR)" $(my_libdir) $(my_incdir) support/$(THIS).mk
 	$(INSTALL_DATA) lib/$(THAT).a $(my_libdir)
 	$(RANLIB) $(my_libdir)/$(THAT).a
 
@@ -107,4 +108,4 @@ $(my_libdir) \
 lib:					; mkdir -p $@
 $(SOURCES):
 
-../td_lib:				; $(SHELL) $(srcdir)/support/selflink.sh
+@MAKE_SELFLINK@$(SELFLINK):				; $(SHELL) $(srcdir)/support/selflink.sh
