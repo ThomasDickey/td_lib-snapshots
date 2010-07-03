@@ -1,5 +1,5 @@
 #! /bin/sh
-# $Id: ins_hdr,v 12.1 1997/09/08 01:03:08 tom Exp $
+# $Id: ins_hdr,v 12.2 2010/07/02 10:50:12 tom Exp $
 #
 # This script is used to adjust includes for header files that reside in a
 # subdirectory of /usr/include, etc.
@@ -9,6 +9,13 @@ if test $# = 0 ; then
 	exit 1
 fi
 PRG="$1"
+shift
+
+if test $# = 0 ; then
+	echo '? No DESTDIR given'
+	exit 1
+fi
+DESTDIR=$1
 shift
 
 if test $# = 0 ; then
