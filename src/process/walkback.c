@@ -15,7 +15,7 @@
 #include	"ptypes.h"
 #include	<errno.h>
 
-MODULE_ID("$Id: walkback.c,v 12.8 2010/07/03 16:12:16 tom Exp $")
+MODULE_ID("$Id: walkback.c,v 12.9 2010/07/04 13:16:31 tom Exp $")
 
 #ifdef	SYS_UNIX
 
@@ -51,7 +51,8 @@ walkback(
     if (program) {
 #if	defined(SYS_UNIX) && !defined(apollo)
 	char dot[MAXPATHLEN], bfr[256];
-	(void) getwd(dot);
+	if (getcwd(dot, sizeof(dot) - 1) == 0)
+	    strcpy(dot, ".");
 	(void) which(bfr, sizeof(bfr), program, dot);
 	caller = stralloc(bfr);
 #endif

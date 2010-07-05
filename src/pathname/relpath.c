@@ -23,21 +23,22 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: relpath.c,v 12.5 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: relpath.c,v 12.6 2010/07/04 15:34:38 tom Exp $")
 
 char *
-relpath(char *dst, char *cwd, char *src)
+relpath(char *dst, const char *cwd_param, const char *src)
 {
     char current[BUFSIZ];
     char tmp[BUFSIZ];
     char pre[BUFSIZ];
+    char *cwd;
     size_t j;
 
     src = strcpy(tmp, src);	/* dst may be the same as src; copy it */
-    if (cwd == 0 || !*cwd)	/* if cwd not given, get the actual path */
+    if (cwd_param == 0 || !*cwd_param)	/* if cwd not given, get the actual path */
 	cwd = getwd(current);
     else
-	cwd = strcpy(current, cwd);
+	cwd = strcpy(current, cwd_param);
 
     if (cwd != 0) {
 #ifdef	apollo

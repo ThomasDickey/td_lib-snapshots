@@ -24,7 +24,7 @@
 #include "ptypes.h"
 #include "rcsdefs.h"
 
-MODULE_ID("$Id: rcs_dir.c,v 12.9 2010/07/03 15:43:24 tom Exp $")
+MODULE_ID("$Id: rcs_dir.c,v 12.10 2010/07/04 15:48:18 tom Exp $")
 
 #define	WORKING	struct	Working
 WORKING {
@@ -139,7 +139,7 @@ Initialize(void)
 
 /******************************************************************************/
 char *
-rcs_dir(char *working_directory, char *filename)
+rcs_dir(const char *working_directory, const char *filename)
 {
     char *name;
     int vault = FALSE;

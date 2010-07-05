@@ -19,7 +19,7 @@
 #include	<ctype.h>
 #include	<time.h>
 
-MODULE_ID("$Id: diffload.c,v 12.7 2010/07/03 16:07:37 tom Exp $")
+MODULE_ID("$Id: diffload.c,v 12.8 2010/07/04 15:28:35 tom Exp $")
 
 #ifdef	TEST
 #define	DEBUG(s) PRINTF s;
@@ -104,13 +104,16 @@ diffload(char **names,		/* names of file(s) to open */
 
     int j;
 
+    (void) load;
+    (void) verbose;
+
     for (j = 0; j < total; j++) {
 	vec[j] = nil;
 	if (stat_file(names[j], &sb) < 0)
 	    break;		/* patch? */
 
 	vec[j].tstamp = sb.st_mtime;
-	vec[j].author = uid2s((int) sb.st_uid);
+	vec[j].author = uid2s(sb.st_uid);
 	vec[j].revision = txtalloc(names[j]);
 	vec[j].parent = (j > 0) ? names[j - 1] : txtalloc("");
 

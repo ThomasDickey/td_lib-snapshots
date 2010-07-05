@@ -41,7 +41,7 @@
 #include "ptypes.h"
 #include "sccsdefs.h"
 
-MODULE_ID("$Id: sccs_dir.c,v 12.13 2010/07/03 15:47:33 tom Exp $")
+MODULE_ID("$Id: sccs_dir.c,v 12.14 2010/07/04 16:53:05 tom Exp $")
 
 #define	WORKING	struct	Working
 WORKING {
@@ -133,7 +133,7 @@ Initialize(void)
     initialized = TRUE;
     SccsDir = getenv("SCCS_DIR");
     if (SccsDir == 0)
-	SccsDir = "SCCS";
+	SccsDir = txtalloc("SCCS");
     SccsDir = path_alloc(SccsDir);
 
     SccsVault = getenv("SCCS_VAULT");

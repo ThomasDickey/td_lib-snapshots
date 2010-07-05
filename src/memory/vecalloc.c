@@ -16,10 +16,10 @@
 
 #include "ptypes.h"
 
-MODULE_ID("$Id: vecalloc.c,v 12.5 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: vecalloc.c,v 12.6 2010/07/04 20:13:25 tom Exp $")
 
 char **
-vecalloc(unsigned len)
+vecalloc(size_t len)
 {
     return (ALLOC(char *, len));
 }

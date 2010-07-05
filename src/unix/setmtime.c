@@ -20,7 +20,7 @@
 #include	"ptypes.h"
 #include	<time.h>
 
-MODULE_ID("$Id: setmtime.c,v 12.10 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: setmtime.c,v 12.11 2010/07/04 10:53:59 tom Exp $")
 
 #if defined(HAVE_UTIME_H)
 #include	<utime.h>
@@ -32,7 +32,7 @@ extern int utime(const char *, const struct utimbuf *);
 #endif
 
 int
-setmtime(char *name,		/* name of file to touch */
+setmtime(const char *name,	/* name of file to touch */
 	 time_t mtime,		/* modification time we want to leave */
 	 time_t atime)		/* access time we want to leave */
 {

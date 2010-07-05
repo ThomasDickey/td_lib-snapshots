@@ -28,7 +28,7 @@
 #include	"port2vms.h"
 #include	"td_qsort.h"
 
-MODULE_ID("$Id: edittree.c,v 12.5 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: edittree.c,v 12.7 2010/07/04 19:18:14 tom Exp $")
 
 typedef char *PTR;
 #define	CHUNK	127		/* 1 less than a power of 2 */
@@ -61,7 +61,7 @@ editfile(char *n,
  ************************************************************************/
 
 int
-edittree(char *oldname,
+edittree(const char *oldname,
 	 int (*func) (FILE *o, FILE *i, Stat_t * s),
 	 int recur,
 	 int links)
@@ -75,7 +75,7 @@ edittree(char *oldname,
     PTR *vec;
     char newname[MAXPATHLEN];
     char oldpath[MAXPATHLEN];
-    char *newpath;
+    const char *newpath;
 
 #ifdef	TEST
     static char stack[] = ". . . . . . . ";
@@ -120,8 +120,7 @@ edittree(char *oldname,
 	    }
 	    closedir(dirp);
 	    if (num != 0) {
-		qsort((PTR) vec, (LEN_QSORT) num,
-		      sizeof(PTR), cmp_qsort);
+		qsort((PTR) vec, num, sizeof(PTR), cmp_qsort);
 		while (num-- != 0) {
 		    if (LOOK(vec[num], &sb) < 0) {
 			perror(vec[num]);
@@ -138,7 +137,8 @@ edittree(char *oldname,
 		dofree((PTR) vec);
 	    }
 	}
-	(void) chdir(oldpath);
+	if (chdir(oldpath) != 0)
+	    failed(oldpath);
     } else {
 	TELL_FILE(oldname);
 	changes += editfile(oldname, func, &sb);

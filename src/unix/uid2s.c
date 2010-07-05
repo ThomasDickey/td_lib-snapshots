@@ -26,12 +26,12 @@
 #define	STR_PTYPES
 #include <td_btree.h>
 
-MODULE_ID("$Id: uid2s.c,v 12.13 2010/07/03 16:41:51 tom Exp $")
+MODULE_ID("$Id: uid2s.c,v 12.14 2010/07/04 18:17:16 tom Exp $")
 
 #if defined(HAVE_GETPWUID)
 
 typedef struct {
-    int user;
+    uid_t user;
     char *name;
 } UID_DATA;
 
@@ -67,7 +67,7 @@ find_uid(char *bfr)
 #endif
 
 static char *
-lookup_uid(int uid)
+lookup_uid(uid_t uid)
 {
     struct passwd *p;
 
@@ -101,8 +101,8 @@ new_node(void *data)
 static int
 cmp_node(const void *a, const void *b)
 {
-    return ((const UID_DATA *) a)->user
-	- ((const UID_DATA *) b)->user;
+    return ((int) ((const UID_DATA *) a)->user
+	    - (int) ((const UID_DATA *) b)->user);
 }
 
 static void
@@ -122,7 +122,7 @@ static BI_TREE uid2s_tree =
 };
 
 char *
-uid2s(int user)
+uid2s(uid_t user)
 {
     static UID_DATA data;
     data.user = user;

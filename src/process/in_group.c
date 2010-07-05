@@ -12,7 +12,7 @@
 #include <ptypes.h>
 #include <grp.h>
 
-MODULE_ID("$Id: in_group.c,v 12.7 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: in_group.c,v 12.9 2010/07/04 20:49:03 tom Exp $")
 
 #if defined(HAVE_GETGROUPS)
 #  if defined(HAVE_SYS_PARAM_H)
@@ -24,7 +24,7 @@ MODULE_ID("$Id: in_group.c,v 12.7 2004/03/07 22:03:45 tom Exp $")
 #endif
 
 int
-in_group(int given_gid)
+in_group(gid_t given_gid)
 {
 #ifdef	HAVE_GETGROUPS
     int i;
@@ -39,14 +39,15 @@ in_group(int given_gid)
 	ngroups_max = NGROUPS_MAX;
 	groups = (GETGROUPS_T *) malloc(ngroups_max * sizeof(GETGROUPS_T));
     }
+    if (groups != 0)
 #endif
-    if (groups != 0 && ngroups == -1)
-	ngroups = getgroups(ngroups_max, groups);
+	if (ngroups == -1)
+	    ngroups = getgroups(ngroups_max, groups);
 #endif /* Have getgroups.  */
 
 #ifdef	HAVE_GETGROUPS
     for (i = 0; i < ngroups; ++i)
-	if ((int) groups[i] == given_gid)
+	if (groups[i] == given_gid)
 	    return TRUE;
 #else
     if (given_gid == getgid())

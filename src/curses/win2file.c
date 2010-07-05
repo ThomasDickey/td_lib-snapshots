@@ -37,7 +37,7 @@
 #include	<ctype.h>
 #include	<time.h>
 
-MODULE_ID("$Id: win2file.c,v 12.18 2010/07/03 18:28:25 tom Exp $")
+MODULE_ID("$Id: win2file.c,v 12.20 2010/07/05 00:04:29 tom Exp $")
 
 #ifndef A_ALTCHARSET
 #define A_ALTCHARSET 0
@@ -87,7 +87,7 @@ CursesLine(WINDOW *win, int row)
     return result;
 }
 
-#define CursesData(win,y,x)  CursesLine(win,y)[x]
+#define CursesData(win,y,x)  (unsigned char)CursesLine(win,y)[x]
 #endif
 
 static void
@@ -100,7 +100,7 @@ MarkIt(WINDOW *win, int row, chtype c)
 void
 win2fp(WINDOW *win,
        FILE *fp,
-       char *prefix)
+       const char *prefix)
 {
     time_t now = time((time_t *) 0);
     int y, x;

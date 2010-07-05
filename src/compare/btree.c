@@ -12,7 +12,7 @@
 
 #include	<td_btree.h>
 
-MODULE_ID("$Id: btree.c,v 12.6 2010/07/03 16:24:00 tom Exp $")
+MODULE_ID("$Id: btree.c,v 12.7 2010/07/05 00:01:18 tom Exp $")
 
 #define	llink	links[0]
 #define	rlink	links[1]
@@ -123,8 +123,7 @@ btree_find(BI_TREE * funcs,
     return (value);
 }
 
-static
-void
+static void
 dump_nodes(BI_TREE * funcs,
 	   BI_NODE * p,
 	   int level)

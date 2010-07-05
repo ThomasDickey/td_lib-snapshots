@@ -30,7 +30,7 @@
 
 #include "ptypes.h"
 
-MODULE_ID("$Id: file2arg.c,v 12.6 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: file2arg.c,v 12.7 2010/07/04 20:11:39 tom Exp $")
 
 #define	AVG_LINE	25	/* nominal line-length */
 #define	AMOUNT(n)	(unsigned)(n)
@@ -67,7 +67,7 @@ file2argv(char *name, char ***vec)
     /*
      * Allocate space for the vector pointing to the strings
      */
-    *vec = p = vecalloc((unsigned) ((lines + 1) * sizeof(char *)));
+    *vec = p = vecalloc((size_t) (lines + 1) * sizeof(char *));
 
     /*
      * Recopy the blob onto itself, putting a null after each newline.

@@ -40,7 +40,7 @@
 #define	STR_PTYPES
 #include	"port2vms.h"
 
-MODULE_ID("$Id: vms2name.c,v 12.7 2010/07/03 16:26:36 tom Exp $")
+MODULE_ID("$Id: vms2name.c,v 12.8 2010/07/04 17:42:48 tom Exp $")
 
 #define	LOWER(p)	((isalpha(UCH(*p)) && isupper(UCH(*p))) ? LowerMacro(*p) : *p)
 
@@ -118,7 +118,7 @@ vms2name(char *dst, char *src)
 		   && (base[1] != '-')
 		   && (base[1] != '.')
 		   && (base[1] != ']'))) {	/* must supply a device */
-	char *a = getwd(current);
+	const char *a = getwd(current);
 	char *b;
 
 	if (a == 0)

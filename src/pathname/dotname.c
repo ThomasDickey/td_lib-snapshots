@@ -12,10 +12,10 @@
 
 #include "ptypes.h"
 
-MODULE_ID("$Id: dotname.c,v 12.4 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: dotname.c,v 12.5 2010/07/04 15:33:03 tom Exp $")
 
 int
-dotname(char *path)
+dotname(const char *path)
 {
     if (*path++ == '.') {
 	if (*path == '.')

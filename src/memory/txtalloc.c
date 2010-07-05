@@ -14,7 +14,7 @@
 #define	STR_PTYPES
 #include <td_btree.h>
 
-MODULE_ID("$Id: txtalloc.c,v 12.10 2010/07/03 16:24:50 tom Exp $")
+MODULE_ID("$Id: txtalloc.c,v 12.11 2010/07/05 00:01:42 tom Exp $")
 
 static BI_NODE *
 new_node(void *data)
@@ -50,7 +50,7 @@ static BI_TREE text_tree =
 char *
 txtalloc(const char *text)
 {
-    return btree_find(&text_tree, text);
+    return btree_find(&text_tree, (void *) text);
 }
 
 /*

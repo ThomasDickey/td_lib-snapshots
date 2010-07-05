@@ -33,12 +33,12 @@
 #include	"dyn_str.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: rcsperm.c,v 12.6 2004/03/07 16:31:58 tom Exp $")
+MODULE_ID("$Id: rcsperm.c,v 12.7 2010/07/04 17:38:44 tom Exp $")
 
 int
-rcspermit(char *path,
+rcspermit(const char *path,
 	  char *base,
-	  char **accflag)
+	  const char **accflag)
 {
     static DYN *access_list;
     Stat_t sb;
@@ -73,7 +73,7 @@ rcspermit(char *path,
      * (or if the access list is blank)
      * set the corresponding copy of $RCS_BASE and return true.
      */
-    (void) strcpy(user, uid2s((int) getuid()));
+    (void) strcpy(user, uid2s(getuid()));
 
     if (!rcsopen(path, RCS_DEBUG, TRUE))
 	return (FALSE);		/* could not open file anyway */

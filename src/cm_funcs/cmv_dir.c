@@ -37,7 +37,7 @@
 #include "ptypes.h"
 #include "cmv_defs.h"
 
-MODULE_ID("$Id: cmv_dir.c,v 12.25 2010/07/03 15:39:48 tom Exp $")
+MODULE_ID("$Id: cmv_dir.c,v 12.27 2010/07/04 21:47:40 tom Exp $")
 
 /******************************************************************************/
 
@@ -315,7 +315,7 @@ read_r_curr(CMTREE * parent)
 	    if ((s = strchr(description, ' ')) != 0) {
 		*s = EOS;
 	    } else {
-		description = "";
+		description = txtalloc("");
 	    }
 	    description = txtalloc(description);
 
@@ -551,7 +551,9 @@ StripToTop(char *dst, char *src)
 
 /******************************************************************************/
 static VAULTS *
-LookupVault(char *working_directory, char *filename, char *result)
+LookupVault(const char *working_directory,
+	    const char *filename,
+	    char *result)
 {
     Stat_t sb;
     VAULTS *p, *max_p = 0;
@@ -616,9 +618,9 @@ LookupVault(char *working_directory, char *filename, char *result)
 char *
 cmv_dir(char *working_directory, char *filename)
 {
-    auto char *name = 0;
-    auto char temp[MAXPATHLEN];
-    auto VAULTS *max_p = LookupVault(working_directory, filename, temp);
+    char *name = 0;
+    char temp[MAXPATHLEN];
+    VAULTS *max_p = LookupVault(working_directory, filename, temp);
 
     if (max_p != 0) {		/* we found a match */
 	char archive[MAXPATHLEN];
@@ -638,11 +640,12 @@ cmv_dir(char *working_directory, char *filename)
 
 /******************************************************************************/
 char *
-cmv_file(char *working_directory, char *filename)
+cmv_file(const char *working_directory,
+	 const char *filename)
 {
-    auto char *name = 0;
-    auto char temp[MAXPATHLEN];
-    auto VAULTS *max_p = LookupVault(working_directory, filename, temp);
+    char *name = 0;
+    char temp[MAXPATHLEN];
+    VAULTS *max_p = LookupVault(working_directory, filename, temp);
 
     if (max_p != 0) {		/* we found a match */
 	char archive[MAXPATHLEN];
@@ -673,14 +676,14 @@ cmv_file(char *working_directory, char *filename)
 
 /******************************************************************************/
 void
-get_cmv_lock(char *working_directory,
-	     char *filename,
-	     char **lockedby,
-	     char **revision,
+get_cmv_lock(const char *working_directory,
+	     const char *filename,
+	     const char **lockedby,
+	     const char **revision,
 	     time_t * modtime)
 {
-    auto char temp[MAXPATHLEN];
-    auto VAULTS *max_p = LookupVault(working_directory, filename, temp);
+    char temp[MAXPATHLEN];
+    VAULTS *max_p = LookupVault(working_directory, filename, temp);
 
     *lockedby =
 	*revision = "?";
@@ -701,10 +704,10 @@ get_cmv_lock(char *working_directory,
 
 /******************************************************************************/
 void
-purge_cmv_dir(char *working_directory, char *filename)
+purge_cmv_dir(const char *working_directory, const char *filename)
 {
-    auto char temp[MAXPATHLEN];
-    auto VAULTS *max_p = LookupVault(working_directory, filename, temp);
+    char temp[MAXPATHLEN];
+    VAULTS *max_p = LookupVault(working_directory, filename, temp);
 
     if (max_p != 0) {		/* we found a match */
 	CMTREE *it = FindInternalDir(max_p->cmtree, temp);

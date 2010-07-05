@@ -47,7 +47,7 @@
 #include	<ctype.h>
 #include	<time.h>
 
-MODULE_ID("$Id: rcsload.c,v 12.11 2010/07/03 15:50:14 tom Exp $")
+MODULE_ID("$Id: rcsload.c,v 12.12 2010/07/04 17:41:26 tom Exp $")
 
 #ifdef	TEST
 #define	DEBUG(s) PRINTF s;
@@ -62,11 +62,12 @@ static int cur_added, cur_deleted;
 static int log_or_edit;		/* -1=log, 0=text, 1=delta */
 
 /* data used for loading text */
+static char empty[] = "";
 static char **load_vector;	/* one-shot pointer to line-pointers */
 static char *load_buffer;	/* one-shot pointer to file-contents */
 static char *load_logged;	/* one-shot pointer to log-comment   */
 static char *load_last;		/* => current storage in load_buffer */
-static char *last_rev = "";	/* test-only                         */
+static char *last_rev = empty;	/* test-only                         */
 
 /* buffer maintained by 'loadtext()' */
 static char *my_buffer;

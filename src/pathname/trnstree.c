@@ -23,7 +23,7 @@
 #include	"port2vms.h"
 #include	"td_qsort.h"
 
-MODULE_ID("$Id: trnstree.c,v 12.4 2010/07/03 16:03:42 tom Exp $")
+MODULE_ID("$Id: trnstree.c,v 12.6 2010/07/04 22:51:25 tom Exp $")
 
 typedef char *PTR;
 #define	CHUNK	127		/* 1 less than a power of 2 */
@@ -108,8 +108,7 @@ transtree(char *oldname,
 	    }
 	    closedir(dirp);
 	    if (num != 0) {
-		qsort((PTR) vec, (LEN_QSORT) num,
-		      sizeof(PTR), cmp_qsort);
+		qsort((PTR) vec, num, sizeof(PTR), cmp_qsort);
 		while (num-- != 0) {
 		    if (LOOK(vec[num], &sb) < 0) {
 			perror(vec[num]);
@@ -129,7 +128,8 @@ transtree(char *oldname,
 		dofree((PTR) vec);
 	    }
 	}
-	(void) chdir(oldpath);
+	if (chdir(oldpath) != 0)
+	    failed(oldpath);
     } else if (isFILE(sb.st_mode)) {
 	TELL_FILE(oldname);
 	(*func) (oldname, &sb);

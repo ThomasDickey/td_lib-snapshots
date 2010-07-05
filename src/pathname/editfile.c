@@ -23,7 +23,7 @@
 #define		STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: editfile.c,v 12.5 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: editfile.c,v 12.6 2010/07/04 15:12:47 tom Exp $")
 
 #ifdef	vms
 #define	NEWVER(name)	(name)
@@ -32,7 +32,7 @@ MODULE_ID("$Id: editfile.c,v 12.5 2004/03/07 22:03:45 tom Exp $")
 #endif /* vms/SYS_UNIX */
 
 int
-editfile(char *oldname,
+editfile(const char *oldname,
 	 int (*func) (FILE *o, FILE *i, Stat_t * s),
 	 Stat_t * sb)
 {

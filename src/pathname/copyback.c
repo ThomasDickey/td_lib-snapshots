@@ -19,7 +19,7 @@
 #include	"ptypes.h"
 #include	<signal.h>
 
-MODULE_ID("$Id: copyback.c,v 12.5 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: copyback.c,v 12.6 2010/07/04 19:56:04 tom Exp $")
 
 int
 copyback(FILE *fpT,		/* temporary-file pointer */
@@ -38,7 +38,8 @@ copyback(FILE *fpT,		/* temporary-file pointer */
     if ((fpS = fopen(name, "w")) != 0) {
 	(void) rewind(fpT);
 	while (lines-- > 0) {
-	    (void) fgets(bfr, sizeof(bfr), fpT);
+	    if (fgets(bfr, sizeof(bfr), fpT) == 0)
+		break;
 	    (void) fputs(bfr, fpS);
 	}
 	(void) fclose(fpS);

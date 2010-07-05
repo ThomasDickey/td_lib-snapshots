@@ -1,4 +1,4 @@
-/* $Id: sccsdefs.h,v 12.12 2010/07/03 15:47:11 tom Exp $ */
+/* $Id: sccsdefs.h,v 12.14 2010/07/04 16:45:52 tom Exp $ */
 
 #ifndef	SCCSDEFS_H
 #define	SCCSDEFS_H
@@ -27,30 +27,30 @@
 			;
 
 	void	sccslast(
-			char *	wd,
-			char *	n,
-			char **	v_,
+			const char *	wd,
+			const char *	n,
+			const char **	v_,
 			time_t *	t_,
-			char **	l_
+			const char **	l_
 			)
 			;
 
 	/* sccsname.c ------------------------------------------------- */
 	char *	sccs2name(
-			char *	name,
-			int	full
+			const char *	name,
+			int		full
 			)
 			;
 
 	char *	name2sccs(
-			char *	name,
-			int	full
+			const char *	name,
+			int		full
 			)
 			;
 
 	/* sccspath.c ------------------------------------------------- */
 	char *	sccspath(
-			char *	name
+			const char *	name
 			)
 			;
 

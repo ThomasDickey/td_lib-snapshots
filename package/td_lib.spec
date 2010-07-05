@@ -2,7 +2,7 @@ Summary: Thomas Dickeys library
 %define AppProgram td_lib
 %define AppVersion 12.x
 %define AppRelease 20100704
-# $Id: td_lib.spec,v 1.1 2010/07/03 15:20:52 tom Exp $
+# $Id: td_lib.spec,v 1.2 2010/07/04 13:38:52 tom Exp $
 Name: %{AppProgram}
 Version: %{AppVersion}
 Release: %{AppRelease}
@@ -51,7 +51,7 @@ make install                    DESTDIR=$RPM_BUILD_ROOT
 %files
 %defattr(-,root,root)
 %{_libdir}/libtd.a
-%{_libdir}/td_lib.mk
+%{_datadir}/td/td_lib.mk
 %{_includedir}/td/cmv_defs.h
 %{_includedir}/td/deltree.h
 %{_includedir}/td/dyn_str.h

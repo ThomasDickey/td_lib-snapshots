@@ -25,10 +25,10 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: pathleaf.c,v 12.5 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: pathleaf.c,v 12.6 2010/07/04 09:42:54 tom Exp $")
 
 char *
-pathleaf(char *path)
+pathleaf(const char *path)
 {
     char *s;
     static char buffer[BUFSIZ];
@@ -48,7 +48,7 @@ pathleaf(char *path)
 #endif
 	    return (++s);
     }
-    return (path);
+    return (buffer);
 }
 
 #ifdef	TEST

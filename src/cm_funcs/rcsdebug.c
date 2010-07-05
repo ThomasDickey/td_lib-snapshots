@@ -20,7 +20,7 @@
 #include "ptypes.h"
 #include "rcsdefs.h"
 
-MODULE_ID("$Id: rcsdebug.c,v 12.4 2004/03/07 16:31:58 tom Exp $")
+MODULE_ID("$Id: rcsdebug.c,v 12.5 2010/07/04 15:31:45 tom Exp $")
 
 int
 rcs_debug(void)
@@ -33,7 +33,7 @@ rcs_debug(void)
 	if ((s = getenv("RCS_DEBUG")) != 0) {
 	    if (*s) {
 		char *d;
-		flag = strtol(s, &d, 0);
+		flag = (int) strtol(s, &d, 0);
 		if (*d)
 		    flag = 1;	/* not a number */
 	    }

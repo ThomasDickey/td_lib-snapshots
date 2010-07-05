@@ -1,5 +1,5 @@
 #! /bin/sh
-# $Id: ins_mak,v 12.4 2010/07/02 23:03:40 tom Exp $
+# $Id: ins_mak,v 12.5 2010/07/04 12:55:34 tom Exp $
 #
 # Install the td_lib make include-file.  We adjust the symbols that refer
 # to the location of the include- and lib-directory.
@@ -16,6 +16,15 @@ if test $# = 0 ; then
 	exit 1
 fi
 DESTDIR=$1
+shift
+
+if test $# = 0 ; then
+	echo '? No DATADIR given'
+	exit 1
+fi
+CFGDIR=$1
+my_CFG=$1
+test -n "$DESTDIR" && my_CFG=`echo "$CFGDIR" | sed -e "s,$DESTDIR,,"`
 shift
 
 if test $# = 0 ; then
@@ -54,6 +63,6 @@ do
 	src=`basename $SRC`
 	TMP=${TMPDIR-/tmp}/$src
 	sed -f $SED $SRC > $TMP
-	eval $PRG $TMP $LIBDIR
+	eval $PRG $TMP $CFGDIR
 	rm -f $TMP
 done

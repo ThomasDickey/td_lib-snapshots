@@ -19,14 +19,14 @@
 #include	"ptypes.h"
 #include	"rcsdefs.h"
 
-MODULE_ID("$Id: vcs_file.c,v 12.5 2004/03/07 16:31:58 tom Exp $")
+MODULE_ID("$Id: vcs_file.c,v 12.6 2010/07/04 17:26:37 tom Exp $")
 
 char *
-vcs_file(char *path,		/* pathname to prepend, if nonnull */
+vcs_file(const char *path,	/* pathname to prepend, if nonnull */
 	 char *name,		/* where to write the name */
 	 int temp)		/* TRUE iff we provide temporary-name */
 {
-    char *s = pathleaf(rcs_dir(NULL, NULL));
+    const char *s = pathleaf(rcs_dir(NULL, NULL));
 
     if (!strcmp(s, ".")
 	|| isSlash(*s))

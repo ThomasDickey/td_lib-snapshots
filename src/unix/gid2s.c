@@ -24,17 +24,17 @@
 #define	STR_PTYPES
 #include <td_btree.h>
 
-MODULE_ID("$Id: gid2s.c,v 12.13 2010/07/03 16:25:50 tom Exp $")
+MODULE_ID("$Id: gid2s.c,v 12.15 2010/07/04 18:17:16 tom Exp $")
 
 #if defined(HAVE_GETGRGID)
 
 typedef struct {
-    int user;
+    gid_t user;
     char *name;
 } GID_DATA;
 
 static char *
-lookup_gid(int gid)
+lookup_gid(gid_t gid)
 {
     struct group *p;
 
@@ -67,8 +67,8 @@ new_node(void *data)
 static int
 cmp_node(const void *a, const void *b)
 {
-    return ((const GID_DATA *) a)->user
-	- ((const GID_DATA *) b)->user;
+    return ((int) ((const GID_DATA *) a)->user
+	    - (int) ((const GID_DATA *) b)->user);
 }
 
 static void
@@ -88,7 +88,7 @@ static BI_TREE gid2s_tree =
 };
 
 char *
-gid2s(int user)
+gid2s(gid_t user)
 {
     static GID_DATA data;
     data.user = user;

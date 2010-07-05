@@ -20,7 +20,7 @@
 
 #include	"td_curse.h"
 
-MODULE_ID("$Id: viewfile.c,v 12.7 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: viewfile.c,v 12.8 2010/07/04 17:44:31 tom Exp $")
 
 #ifdef	SYS_UNIX
 
@@ -28,7 +28,7 @@ int
 view_file(char *fname, int readonly)
 {
     int code;
-    char *editor = dftenv(readonly ? "view" : "vi", "EDITOR");
+    const char *editor = dftenv(readonly ? "view" : "vi", "EDITOR");
 
     if ((code = padedit(fname, readonly, editor)) < 0) {
 	/* give up: put it in the current process's window */

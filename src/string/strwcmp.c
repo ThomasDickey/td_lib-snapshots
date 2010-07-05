@@ -14,13 +14,13 @@
 
 #include "ptypes.h"
 
-MODULE_ID("$Id: strwcmp.c,v 12.5 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: strwcmp.c,v 12.6 2010/07/04 14:54:49 tom Exp $")
 
 #define	SINGLE	'?'
 #define	MULTI	'*'
 
 int
-strwcmp(char *wild, char *name)
+strwcmp(const char *wild, const char *name)
 {
     while (*wild || *name) {
 	if (*wild == MULTI) {

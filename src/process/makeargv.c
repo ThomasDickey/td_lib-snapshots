@@ -19,17 +19,20 @@
 #include "ptypes.h"
 #include <ctype.h>
 
-MODULE_ID("$Id: makeargv.c,v 12.5 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: makeargv.c,v 12.7 2010/07/04 17:46:38 tom Exp $")
 
 int
 makeargv(char **argv,
 	 int maxarg,
 	 char *dst,
-	 char *src)
+	 const char *src)
 {
-    auto int argc;
+    static char empty[1];
+    int argc;
 
-    for (argc = 1; argc < maxarg; argv[argc++] = "") ;
+    for (argc = 1; argc < maxarg; argv[argc++] = empty) {
+	;
+    }
     argv[argc = 0] = dst;
     argc++;
 

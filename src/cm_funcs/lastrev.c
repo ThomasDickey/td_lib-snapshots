@@ -18,7 +18,7 @@
 #include	"rcsdefs.h"
 #include	"sccsdefs.h"
 
-MODULE_ID("$Id: lastrev.c,v 12.12 2009/10/16 01:06:15 tom Exp $")
+MODULE_ID("$Id: lastrev.c,v 12.13 2010/07/04 16:43:58 tom Exp $")
 
 #if defined(CMV_PATH) && !(defined(RCS_PATH) || defined(SCCS_PATH))
 #undef CMV_PATH
@@ -87,11 +87,11 @@ try_order(int tried)
 #define	LAST(p)	p(working_dir, filename, vers_ptr, time_ptr, lock_ptr)
 
 void
-lastrev(char *working_dir,
-	char *filename,
-	char **vers_ptr,
+lastrev(const char *working_dir,
+	const char *filename,
+	const char **vers_ptr,
 	time_t * time_ptr,
-	char **lock_ptr)
+	const char **lock_ptr)
 {
     int n;
     TRY tried;

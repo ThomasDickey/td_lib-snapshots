@@ -1,4 +1,4 @@
-# $Id: makefile.in,v 12.21 2010/07/02 10:48:36 tom Exp $
+# $Id: makefile.in,v 12.22 2010/07/04 12:58:23 tom Exp $
 # Top-level makefile for TD_LIB common library
 
 SHELL		= /bin/sh
@@ -15,9 +15,11 @@ prefix		= @prefix@
 exec_prefix	= @exec_prefix@
 includedir	= @includedir@
 bindir		= @bindir@
+datadir		= @datadir@
 libdir		= @libdir@
 srcdir		= @srcdir@
 
+my_cfgdir	= $(DESTDIR)$(datadir)/td
 my_incdir	= $(DESTDIR)$(includedir)/td
 my_libdir	= $(DESTDIR)$(libdir)
 
@@ -90,19 +92,20 @@ distclean:	clobber
 	-$(RM) makefile src/makefile test/makefile
 	-$(RM) $(SELFLINK)
 
-install::	all $(bindir) $(my_incdir) $(my_libdir)
+install::	all $(bindir) $(my_cfgdir) $(my_incdir) $(my_libdir)
 	$(srcdir)/support/ins_hdr "$(INSTALL_DATA)" "$(DESTDIR)" $(my_incdir) $(I_LIST)
-	$(srcdir)/support/ins_mak "$(INSTALL_DATA)" "$(DESTDIR)" $(my_libdir) $(my_incdir) support/$(THIS).mk
+	$(srcdir)/support/ins_mak "$(INSTALL_DATA)" "$(DESTDIR)" $(my_cfgdir) $(my_libdir) $(my_incdir) support/$(THIS).mk
 	$(INSTALL_DATA) lib/$(THAT).a $(my_libdir)
 	$(RANLIB) $(my_libdir)/$(THAT).a
 
 uninstall::
 	$(srcdir)/support/rem_hdr $(my_incdir) $(I_LIST)
-	$(RM) $(my_libdir)/$(THIS).mk
+	$(RM) $(my_cfgdir)/$(THIS).mk
 	$(RM) $(my_libdir)/$(THAT).a
 
 ####### (Details of Productions) ###############################################
 $(bindir) \
+$(my_cfgdir) \
 $(my_incdir) \
 $(my_libdir) \
 lib:					; mkdir -p $@

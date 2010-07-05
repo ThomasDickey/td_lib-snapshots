@@ -17,7 +17,7 @@
 #include	<time.h>
 #include	"rcsdefs.h"
 
-MODULE_ID("$Id: cvslast.c,v 12.6 2010/07/03 15:42:55 tom Exp $")
+MODULE_ID("$Id: cvslast.c,v 12.7 2010/07/04 16:52:03 tom Exp $")
 
 #define NAME_LIST "Entries"
 #define NAME_ARCH "Repository"
@@ -198,10 +198,10 @@ read_entries(CVS_WORK * cache)
 
 static int
 read_from_cache(CVS_WORK * cache,
-		char *leaf,
-		char **vers_,
+		const char *leaf,
+		const char **vers_,
 		time_t * date_,
-		char **lock_)
+		const char **lock_)
 {
     int n;
     CVS_ENTRY *my_list = cache->Entries;
@@ -218,10 +218,10 @@ read_from_cache(CVS_WORK * cache,
 }
 
 static void
-tryCVS(char *path,
-       char **vers_,
+tryCVS(const char *path,
+       const char **vers_,
        time_t * date_,
-       char **lock_)
+       const char **lock_)
 {
     char working[MAXPATHLEN];
     char *leaf = fleaf(path);
@@ -268,11 +268,11 @@ tryCVS(char *path,
 }
 
 void
-cvslast(char *working,		/* working directory (absolute) */
-	char *path,		/* pathname to check (may be relative) */
-	char **vers_,
+cvslast(const char *working,	/* working directory (absolute) */
+	const char *path,	/* pathname to check (may be relative) */
+	const char **vers_,
 	time_t * date_,
-	char **lock_)
+	const char **lock_)
 {
     char temp[MAXPATHLEN];
 

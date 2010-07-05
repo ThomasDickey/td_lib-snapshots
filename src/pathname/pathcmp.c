@@ -19,7 +19,7 @@
 #define		STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: pathcmp.c,v 12.5 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: pathcmp.c,v 12.6 2010/07/04 21:43:38 tom Exp $")
 
 #define	CUT(p,s)	if ((s = strchr(p, PATH_SLASH)) != 0) *s = EOS
 
@@ -35,7 +35,7 @@ MODULE_ID("$Id: pathcmp.c,v 12.5 2004/03/07 22:03:45 tom Exp $")
 #define	GT	1
 
 int
-pathcmp(char *p1, char *p2)
+pathcmp(const char *p1, const char *p2)
 {
     char *s1, *s2;
     int code;

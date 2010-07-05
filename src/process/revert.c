@@ -18,14 +18,14 @@
 
 #include	"ptypes.h"
 
-MODULE_ID("$Id: revert.c,v 12.5 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: revert.c,v 12.6 2010/07/04 10:53:43 tom Exp $")
 
 #ifdef	SYS_UNIX
 
 #define	TELL	if (msg) FPRINTF(stderr,
 
 int
-revert(char *msg)
+revert(const char *msg)
 {
     int changed = 0;
     uid_t id;
@@ -34,12 +34,12 @@ revert(char *msg)
 
     if ((id = getuid()) != geteuid()) {
 	TELL fmt, "uid", geteuid(), id);
-	(void) setuid((int) id);
+	(void) setuid(id);
 	changed++;
     }
     if ((gid = getgid()) != getegid()) {
 	TELL fmt, "gid", getegid(), gid);
-	(void) setgid((int) gid);
+	(void) setgid(gid);
 	changed++;
     }
     if (changed)

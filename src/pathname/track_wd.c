@@ -14,10 +14,10 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: track_wd.c,v 12.5 2010/07/03 18:28:50 tom Exp $")
+MODULE_ID("$Id: track_wd.c,v 12.6 2010/07/04 09:39:12 tom Exp $")
 
 void
-track_wd(char *path)
+track_wd(const char *path)
 {
     static char current[BUFSIZ];
     static char original[BUFSIZ];

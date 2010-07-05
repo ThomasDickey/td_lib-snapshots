@@ -29,20 +29,20 @@
 #include	"ptypes.h"
 #include	<errno.h>
 
-MODULE_ID("$Id: for_user.c,v 12.7 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: for_user.c,v 12.8 2010/07/04 13:14:43 tom Exp $")
 
 #ifdef	SYS_UNIX
 int
 for_user2(void (*func) (void),
-	  int the_uid,
-	  int the_gid)
+	  uid_t the_uid,
+	  gid_t the_gid)
 {
     int count, pid;
 
     DCL_WAIT(status);
 
-    if (the_uid == (int) geteuid()
-	&& the_gid == (int) getegid()) {
+    if (the_uid == geteuid()
+	&& the_gid == getegid()) {
 	errno = 0;		/* ensure that 'errno' is reset */
 	(void) (*func) ();	/* invoke the special function */
 	return (errno ? -1 : 0);
@@ -76,7 +76,7 @@ for_user2(void (*func) (void),
 int
 for_user(void (*func) (void))
 {
-    return for_user2(func, (int) getuid(), (int) getgid());
+    return for_user2(func, getuid(), getgid());
 }
 
 #endif /* SYS_UNIX */

@@ -22,7 +22,7 @@
 #include	"ptypes.h"
 #include	<errno.h>
 
-MODULE_ID("$Id: userprot.c,v 12.8 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: userprot.c,v 12.9 2010/07/04 13:16:25 tom Exp $")
 
 #ifdef	SYS_UNIX
 
@@ -45,10 +45,11 @@ userprot(
 	    time_t mtime)
 {
     upr_name = name;
-    upr_mode = mode;
+    upr_mode = (mode_t) mode;
     upr_time = mtime;
+
     if (!geteuid()) {
-	if (chown(upr_name, (int) getuid(), (int) getgid()) < 0)
+	if (chown(upr_name, getuid(), getgid()) < 0)
 	    return (-1);
 	errno = 0;
 	upr_func();

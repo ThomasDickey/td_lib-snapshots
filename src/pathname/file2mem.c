@@ -23,15 +23,16 @@
 #define	STR_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: file2mem.c,v 12.8 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: file2mem.c,v 12.10 2010/07/04 19:57:26 tom Exp $")
 
 char *
-file2mem(char *name)
+file2mem(const char *name)
 {
     FILE *fp;
     int j;
-    off_t expected,		/* expected file-size */
-      length;
+    size_t expected;		/* expected file-size */
+    size_t length;
+    off_t offset;
     char *blob;
 
     if (!strcmp(name, "-")) {
@@ -54,8 +55,9 @@ file2mem(char *name)
 	 * to read it in a single chunk.  Assume a nominal line-size
 	 * so that we will cut the average time on realloc.
 	 */
-	if ((length = filesize(name)) < 0)
+	if ((offset = filesize(name)) < 0)
 	    return (0);
+	length = (size_t) offset;
 #ifdef	vms
 	/* on vms, 'stat()' returns size in terms of blocks */
 	expected = length & ~511;
@@ -87,7 +89,7 @@ file2mem(char *name)
 	return (0);
     }
     errno = 0;			/* in case system does not flag actual err */
-    length = fread(blob, sizeof(char), (LEN_FREAD) length, fp);
+    length = fread(blob, sizeof(char), (size_t) length, fp);
     (void) fclose(fp);
 
     /*

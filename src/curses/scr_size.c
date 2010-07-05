@@ -32,7 +32,7 @@
 #include "ptypes.h"
 #include "td_curse.h"
 
-MODULE_ID("$Id: scr_size.c,v 12.10 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: scr_size.c,v 12.11 2010/07/04 22:50:34 tom Exp $")
 
 #ifdef	apollo
 #  ifdef	apollo_sr10
@@ -58,6 +58,10 @@ MODULE_ID("$Id: scr_size.c,v 12.10 2004/03/07 22:03:45 tom Exp $")
 #ifdef SCO
 #include <sys/stream.h>
 #include <sys/ptem.h>
+#endif
+
+#ifndef NCURSES_CONST
+#define NCURSES_CONST		/*nothing */
 #endif
 
 #define	my_LINES	retval[0]
@@ -125,9 +129,9 @@ scr_size(int *retval)
      * info under X11.2 on Apollo SR9.7
      */
     if (tgetent(i_blk, getenv("TERM")) >= 0) {
-	if ((my_LINES = tgetnum("li")) < 0)
+	if ((my_LINES = tgetnum((NCURSES_CONST char *) "li")) < 0)
 	    my_LINES = 24 - sr10_bug;
-	if ((my_COLS = tgetnum("co")) < 0)
+	if ((my_COLS = tgetnum((NCURSES_CONST char *) "co")) < 0)
 	    my_COLS = 80 - sr10_bug;
 #if sr10_bug
 	my_LINES += sr10_bug;

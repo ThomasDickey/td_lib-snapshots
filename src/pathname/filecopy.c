@@ -33,10 +33,10 @@
 #define	SIG_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: filecopy.c,v 12.9 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: filecopy.c,v 12.12 2010/07/04 20:00:53 tom Exp $")
 
 int
-filecopy(char *src, char *dst, int copy)
+filecopy(const char *src, const char *dst, int copy)
 {
     Stat_t sb1, sb2;
     int count, fi, fo;
@@ -76,8 +76,8 @@ filecopy(char *src, char *dst, int copy)
 	    if (copy) {
 		char bfr[BUFSIZ];
 
-		while ((count = read(fi, bfr, sizeof(bfr))) > 0)
-		    if (write(fo, bfr, (LEN_READ) count) < 0)
+		while ((count = (int) read(fi, bfr, sizeof(bfr))) > 0)
+		    if (write(fo, bfr, (size_t) count) < 0)
 			break;
 	    }
 	    (void) close(fo);

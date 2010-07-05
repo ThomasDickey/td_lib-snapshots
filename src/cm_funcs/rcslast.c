@@ -31,19 +31,20 @@
  */
 
 #define	STR_PTYPES
-#include	"ptypes.h"
-#include	<ctype.h>
-#include	<time.h>
-#include	"rcsdefs.h"
+#include <ptypes.h>
+#include <ctype.h>
+#include <time.h>
+#include <rcsdefs.h>
+#include <dyn_str.h>
 
-MODULE_ID("$Id: rcslast.c,v 12.11 2010/07/03 18:25:16 tom Exp $")
+MODULE_ID("$Id: rcslast.c,v 12.13 2010/07/05 00:19:15 tom Exp $")
 
 /*
  * Returns the modification date of the given file, or 0 if not found
  * FIXME: should split-out
  */
 static time_t
-filedate(char *path)
+filedate(const char *path)
 {
     Stat_t sb;
     if (stat(path, &sb) >= 0)
@@ -66,10 +67,10 @@ ShowDate(const char *tag, time_t t)
  * 'path[]'.  We scan for the following:
  */
 static void
-tryRCS(char *path,
-       char **vers_,
+tryRCS(const char *path,
+       const char **vers_,
        time_t * date_,
-       char **lock_)
+       const char **lock_)
 {
     int finish = FALSE, skip = FALSE, code = S_FAIL;
     char *s = 0;
@@ -81,7 +82,7 @@ tryRCS(char *path,
 
     if (rcsopen(path, RCS_DEBUG, TRUE)) {
 
-	(void) strcpy(user, uid2s((int) getuid()));
+	(void) strcpy(user, uid2s(getuid()));
 	(void) strcpy(lstring, strcpy(vstring, "?"));
 
 	while (!finish && (s = rcsread(s, code)) != 0) {
@@ -145,11 +146,11 @@ tryRCS(char *path,
  ************************************************************************/
 
 void
-rcslast(char *working,		/* working directory (absolute) */
-	char *path,		/* pathname to check (may be relative) */
-	char **vers_,
+rcslast(const char *working,	/* working directory (absolute) */
+	const char *path,	/* pathname to check (may be relative) */
+	const char **vers_,
 	time_t * date_,
-	char **lock_)
+	const char **lock_)
 {
     static char dotdot[] =
     {'.', '.', PATH_SLASH, EOS};
@@ -157,10 +158,16 @@ rcslast(char *working,		/* working directory (absolute) */
     static char slash[] =
     {PATH_SLASH, EOS};		/* "/"   */
 
+    static DYN local;
+
     char name[BUFSIZ + 1];
     char *dname = rcs_dir(working, path);
-    int len_s = strlen(RCS_SUFFIX), is_RCS, len;
+    int len_s = strlen(RCS_SUFFIX);
+    int is_RCS;
+    int len;
     char *s, *t;
+
+    dyn_copy(&local, path);
 
     *lock_ =
 	*vers_ = "?";
@@ -170,16 +177,18 @@ rcslast(char *working,		/* working directory (absolute) */
      * If the file resides in an RCS-directory and its name ends with
      * an appropriate suffix (i.e., ",v") assume it is an RCS file.
      */
-    if ((s = fleaf_delim(t = path)) != NULL) {	/* determine directory from path */
+    if ((s = fleaf_delim(t = dyn_string(&local))) != NULL) {
+	/* determine directory from path */
 	*(t = s) = EOS;
 	if ((s = fleaf(path)) == NULL)
-	    s = path;
+	    s = dyn_string(&local);
 	is_RCS = !strcmp(s, dname);
 	*t++ = PATH_SLASH;
     } else if ((s = fleaf(working)) != NULL) {
 	is_RCS = !strcmp(s, dname);
-    } else
+    } else {
 	return;			/* illegal input: give up */
+    }
 
     /*
      * If the file is an RCS-file, we wish to show the file-modification
@@ -212,7 +221,7 @@ rcslast(char *working,		/* working directory (absolute) */
      * The file was not itself an RCS-file.  Construct the name of an
      * RCS-file assuming the standard naming convention, and try again.
      */
-    (void) strcpy(name, s = path);
+    (void) strcpy(name, s = dyn_string(&local));
     (void) strcat(
 		     strcat(
 			       strcat(

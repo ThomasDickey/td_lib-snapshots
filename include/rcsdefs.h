@@ -1,4 +1,4 @@
-/* $Id: rcsdefs.h,v 12.10 2009/10/16 00:23:51 tom Exp $ */
+/* $Id: rcsdefs.h,v 12.11 2010/07/04 17:39:37 tom Exp $ */
 
 #ifndef	RCSDEFS_H
 #define	RCSDEFS_H
@@ -58,8 +58,8 @@ typedef	void	(*RcsparseStr)(int);
 
 	/* rcs_dir.c ------------------------------------------------- */
 	char *	rcs_dir(
-			char *	working_dir,
-			char *	pathname
+			const char *	working_dir,
+			const char *	pathname
 			)
 			;
 
@@ -91,9 +91,9 @@ typedef	void	(*RcsparseStr)(int);
 
 	/* rcsedit.c ------------------------------------------------- */
 	int	rcsopen(
-			char *	name,
-			int	show,
-			int	readonly
+			const char *	name,
+			int		show,
+			int		readonly
 			)
 			;
 
@@ -138,11 +138,11 @@ typedef	void	(*RcsparseStr)(int);
 
 	/* rcslast.c ------------------------------------------------- */
 	void	rcslast(
-			char *	wd,
-			char *	n,
-			char **	v_,
+			const char *	wd,
+			const char *	n,
+			const char **	v_,
 			time_t *	t_,
-			char **	l_
+			const char **	l_
 			)
 			;
 
@@ -183,23 +183,23 @@ typedef	void	(*RcsparseStr)(int);
 
 	/* rcspath.c -------------------------------------------------- */
 	char *	rcspath(
-			char *	name
+			const char *	name
 			)
 			;
 
 	/* rcspermit.c ------------------------------------------------ */
 	int	rcspermit(
-			char *	path,
-			char *	base,
-			char **	accflag
+			const char *	path,
+			char *		base,
+			const char **	accflag
 			)
 			;
 
 	/* rcssymbols.c ---------------------------------------------- */
 	char *	rcssymbols(
-			char *	s,
-			char *	dst,
-			char *	src
+			char *		s,
+			char *		dst,
+			const char *	src
 			)
 			;
 
@@ -224,27 +224,27 @@ typedef	void	(*RcsparseStr)(int);
 
 	/* samebranch.c ----------------------------------------------- */
 	int	samebranch(
-			char *	rev1,
-			char *	rev2
+			const char *	rev1,
+			const char *	rev2
 			)
 			;
 
 	/* vcs_file.c ------------------------------------------------- */
 	char *	vcs_file(
-			char *	path,
-			char *	name,
-			int	temp
+			const char *	path,
+			char *		name,
+			int		temp
 			)
 			;
 
 #ifdef CVS_PATH
 	/* cvslast.c -------------------------------------------------- */
 	void	cvslast(
-			char *	wd,
-			char *	n,
-			char **	v_,
+			const char *	wd,
+			const char *	n,
+			const char **	v_,
 			time_t *	t_,
-			char **	l_
+			const char **	l_
 			)
 			;
 
@@ -252,11 +252,11 @@ typedef	void	(*RcsparseStr)(int);
 #ifdef SVN_PATH
 	/* svnlast.c -------------------------------------------------- */
 	void	svnlast(
-			char *	wd,
-			char *	n,
-			char **	v_,
+			const char *	wd,
+			const char *	n,
+			const char **	v_,
 			time_t *	t_,
-			char **	l_
+			const char **	l_
 			)
 			;
 

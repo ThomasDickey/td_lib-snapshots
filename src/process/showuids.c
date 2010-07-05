@@ -13,20 +13,19 @@
 
 #include "ptypes.h"
 
-MODULE_ID("$Id: showuids.c,v 12.5 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: showuids.c,v 12.6 2010/07/04 15:26:46 tom Exp $")
 
 #ifdef	SYS_UNIX
 void
-show_uids(
-	     FILE *fp)
+show_uids(FILE *fp)
 {
-    FPRINTF(fp, "...uid=%d(%s)", (int) getuid(), uid2s((int) getuid()));
+    FPRINTF(fp, "...uid=%d(%s)", (int) getuid(), uid2s(getuid()));
     if (geteuid() != getuid())
-	FPRINTF(fp, ", euid=%d(%s)", (int) geteuid(), uid2s((int) geteuid()));
+	FPRINTF(fp, ", euid=%d(%s)", (int) geteuid(), uid2s(geteuid()));
 
-    FPRINTF(fp, ", gid=%d(%s)", (int) getgid(), gid2s((int) getgid()));
+    FPRINTF(fp, ", gid=%d(%s)", (int) getgid(), gid2s(getgid()));
     if (getegid() != getgid())
-	FPRINTF(fp, ", egid=%d(%s)", (int) getegid(), gid2s((int) getegid()));
+	FPRINTF(fp, ", egid=%d(%s)", (int) getegid(), gid2s(getegid()));
 
     FPRINTF(fp, "\n");
 }

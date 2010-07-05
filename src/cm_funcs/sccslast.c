@@ -43,7 +43,7 @@
 #include	<sccsdefs.h>
 #include	<ctype.h>
 
-MODULE_ID("$Id: sccslast.c,v 12.19 2006/10/01 13:39:24 tom Exp $")
+MODULE_ID("$Id: sccslast.c,v 12.22 2010/07/04 22:29:33 tom Exp $")
 
 /*
  * Post-Y2K years require special decoding
@@ -70,7 +70,7 @@ sccsyear(char *src)
     }
     if (value < 38)		/* 2037 is last 32-bit date */
 	value += 100;
-    return value;
+    return (int) value;
 }
 
 /*
@@ -78,10 +78,10 @@ sccsyear(char *src)
  * 'path[]'.
  */
 static void
-trysccs(char *path,
-	char **vers_,
+trySCCS(const char *path,
+	const char **vers_,
 	time_t * date_,
-	char **lock_)
+	const char **lock_)
 {
     FILE *fp;
     int gotten = 0;
@@ -160,11 +160,11 @@ static char the_prefix[] = SCCS_PREFIX;
 #define	LEN_PREFIX	sizeof(the_prefix)-1
 
 void
-sccslast(char *working,		/* working directory (absolute) */
-	 char *path,		/* pathname to check (may be relative) */
-	 char **vers_,
+sccslast(const char *working,	/* working directory (absolute) */
+	 const char *path,	/* pathname to check (may be relative) */
+	 const char **vers_,
 	 time_t * date_,
-	 char **lock_)
+	 const char **lock_)
 {
     Stat_t sbfr;
     char fname[MAXPATHLEN];
@@ -183,10 +183,10 @@ sccslast(char *working,		/* working directory (absolute) */
      * an appropriate prefix (lowercase letter followed by '.' and then
      * more characters) assume it is an sccs file.
      */
-    if ((s = fleaf_delim(the_leaf = path)) != NULL) {	/* determine directory from path */
+    if ((s = fleaf_delim(the_leaf = local)) != NULL) {	/* determine directory from path */
 	*(the_leaf = s) = EOS;
-	if ((s = fleaf(path)) == NULL)
-	    s = path;
+	if ((s = fleaf(local)) == NULL)
+	    s = local;
 	is_sccs = sameleaf(s, dname) || sameleaf(dname, s);
 	*the_leaf++ = PATH_SLASH;
     } else if ((s = fleaf(working)) != NULL) {
@@ -209,7 +209,7 @@ sccslast(char *working,		/* working directory (absolute) */
 	*the_leaf = 's';
 	(void) strcpy(fname, path);
 	*the_leaf = xx;
-	trysccs(fname, vers_, date_, lock_);
+	trySCCS(fname, vers_, date_, lock_);
 	if (*date_) {		/* it was an ok sccs file */
 	    /* look for checked-out file */
 
@@ -247,5 +247,5 @@ sccslast(char *working,		/* working directory (absolute) */
     }
     (void) strcat(pathcat(fname, fname, SCCS_PREFIX), the_leaf);
 
-    trysccs(fname, vers_, date_, lock_);
+    trySCCS(fname, vers_, date_, lock_);
 }

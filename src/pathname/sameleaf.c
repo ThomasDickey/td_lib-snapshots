@@ -33,10 +33,10 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: sameleaf.c,v 12.7 2010/07/03 15:58:19 tom Exp $")
+MODULE_ID("$Id: sameleaf.c,v 12.8 2010/07/04 09:27:00 tom Exp $")
 
 int
-sameleaf(char *path, char *leaf)
+sameleaf(const char *path, const char *leaf)
 {
     static char dotdot[] =
     {'.', '.', PATH_SLASH, EOS};

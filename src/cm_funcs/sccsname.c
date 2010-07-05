@@ -36,7 +36,7 @@
 
 #include	<ctype.h>
 
-MODULE_ID("$Id: sccsname.c,v 12.7 2004/03/07 16:31:58 tom Exp $")
+MODULE_ID("$Id: sccsname.c,v 12.9 2010/07/04 22:31:28 tom Exp $")
 
 #define	LEN_PREFIX	(sizeof(prefix)-1)
 
@@ -53,13 +53,20 @@ leaf(char *name)
     return ((s != 0) ? s : name);
 }
 
+static const char *
+cleaf(const char *name)
+{
+    const char *s = fleaf(name);
+    return ((s != 0) ? s : name);
+}
+
 /*
  * Returns TRUE if the name begins with SCCS_PREFIX.
  */
 static int
-sccs_prefix(char *name)
+sccs_prefix(const char *name)
 {
-    char *s = leaf(name);
+    const char *s = cleaf(name);
     return (strlen(s) > LEN_PREFIX && !strncmp(s, prefix, LEN_PREFIX));
 }
 
@@ -81,7 +88,7 @@ trim_leaf(char *name)
  * of the working file.
  */
 char *
-sccs2name(char *name, int full)
+sccs2name(const char *name, int full)
 {
     char *s, *t;
     static char fname[BUFSIZ];
@@ -89,8 +96,7 @@ sccs2name(char *name, int full)
     if (sccs_prefix(name)) {
 
 	s = leaf(strcpy(fname, name));
-	t = leaf(name) + LEN_PREFIX;
-	while ((*s++ = *t++) != EOS) ;
+	strcpy(s, cleaf(name) + LEN_PREFIX);
 
 	if ((s = leaf(fname)) > fname) {
 	    char *d = fname;
@@ -113,7 +119,7 @@ sccs2name(char *name, int full)
  * of the SCCS-file.
  */
 char *
-name2sccs(char *name, int full)
+name2sccs(const char *name, int full)
 {
     static char fname[MAXPATHLEN];
 
@@ -137,7 +143,7 @@ name2sccs(char *name, int full)
 
 	(void) strcat(
 			 pathcat(fname, fname, prefix),
-			 leaf(name));
+			 cleaf(name));
     }
     return (fname);
 }
