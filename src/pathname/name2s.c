@@ -40,7 +40,7 @@
 #define	STR_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: name2s.c,v 12.9 2010/07/04 20:48:28 tom Exp $")
+MODULE_ID("$Id: name2s.c,v 12.10 2010/07/05 14:27:36 tom Exp $")
 
 #define	isshell(c)	(strchr("*%?$()[]{}|<>^&;#\\\"`'~", c) != 0)
 #define	isAEGIS(c)	(strchr("*%?()[]{}\\", c) != 0)
@@ -82,13 +82,13 @@ name2s(char *bfr, int len, const char *name, int opt)
 		    if ((opt & 1) && isshell(c))
 			bfr[num++] = '\\';
 		}
-		bfr[num++] = c;
+		bfr[num++] = (char) c;
 	    } else if (c == ' ') {
 		bfr[num++] = ':';
 		bfr[num++] = '_';
 	    } else {
 		FORMAT(bfr + num, ":%s#%02x", esc ? "\\" : "", c);
-		num = strlen(bfr);
+		num = (int) strlen(bfr);
 	    }
 	} else
 #endif /* doAegis */

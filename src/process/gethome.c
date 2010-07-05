@@ -16,7 +16,7 @@
 #define PWD_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: gethome.c,v 12.8 2010/07/04 09:14:39 tom Exp $")
+MODULE_ID("$Id: gethome.c,v 12.9 2010/07/05 16:17:46 tom Exp $")
 
 char *
 gethome(void)
@@ -47,6 +47,9 @@ gethome(void)
 #ifdef	TEST
 _MAIN
 {
+    (void) argc;
+    (void) argv;
+
     printf("HOME= \"%s\"\n", gethome());
     exit(SUCCESS);
 }

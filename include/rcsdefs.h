@@ -1,4 +1,4 @@
-/* $Id: rcsdefs.h,v 12.11 2010/07/04 17:39:37 tom Exp $ */
+/* $Id: rcsdefs.h,v 12.12 2010/07/05 11:09:27 tom Exp $ */
 
 #ifndef	RCSDEFS_H
 #define	RCSDEFS_H
@@ -170,14 +170,14 @@ typedef	void	(*RcsparseStr)(int);
 
 	/* rcsname.c -------------------------------------------------- */
 	char *	rcs2name(
-			char *	name,
-			int	full
+			const char *	name,
+			int		full
 			)
 			;
 
 	char *	name2rcs(
-			char *	name,
-			int	full
+			const char *	name,
+			int		full
 			)
 			;
 

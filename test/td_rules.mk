@@ -1,4 +1,4 @@
-# $Id: td_rules.mk,v 12.6 1997/09/11 21:55:48 tom Exp $
+# $Id: td_rules.mk,v 12.7 2010/07/05 10:04:22 tom Exp $
 # common rules for TD_LIB common/test library
 
 ALL	= $(PROGS)
@@ -10,5 +10,5 @@ clobber:	clean		; -$(RM) $(ALL)
 distclean:	clean
 sources:	$(SOURCES)
 programs:	$(PROGS)
-run_test:	$(SOURCES) $(PROGS) ; $(RUN_TESTS)
+check:		$(SOURCES) $(PROGS) ; $(RUN_TESTS)
 lint.out:

@@ -23,7 +23,7 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: relpath.c,v 12.6 2010/07/04 15:34:38 tom Exp $")
+MODULE_ID("$Id: relpath.c,v 12.7 2010/07/05 14:34:21 tom Exp $")
 
 char *
 relpath(char *dst, const char *cwd_param, const char *src)
@@ -142,8 +142,8 @@ relpath(char *dst, const char *cwd_param, const char *src)
 }
 
 #ifdef	TEST
-void
-do_test(char *s)
+static void
+do_test(const char *s)
 {
     char tmp[BUFSIZ];
     PRINTF(" %s <= %s\n", relpath(tmp, (char *) 0, s), s);
@@ -151,7 +151,7 @@ do_test(char *s)
 
 _MAIN
 {
-    static char *tbl[] =
+    static const char *tbl[] =
     {
 	"RCS"
 	,"."
@@ -174,7 +174,7 @@ _MAIN
 	for (j = 1; j < argc; j++)
 	    do_test(argv[j]);
     } else {
-	for (j = 0; j < SIZEOF(tbl); j++) {
+	for (j = 0; j < (int) SIZEOF(tbl); j++) {
 	    PRINTF("case %2d) ", j);
 	    do_test(tbl[j]);
 	    abspath(strcpy(tmp, tbl[j]));

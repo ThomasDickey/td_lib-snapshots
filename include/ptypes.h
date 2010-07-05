@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 12.52 2005/10/16 23:14:18 tom Exp $ */
+/* $Id: ptypes.h,v 12.54 2010/07/05 16:42:33 tom Exp $ */
 
 #ifndef	PTYPES_H
 #define	PTYPES_H
@@ -559,6 +559,30 @@ extern	long	timezone;
 #endif
 
 #endif	/* WAI_PTYPES */
+
+#ifndef GCC_NORETURN
+#define GCC_NORETURN /* nothing */
+#endif
+
+#ifndef GCC_PRINTF
+#define GCC_PRINTF /* nothing */
+#endif
+
+#ifndef GCC_PRINTFLIKE
+#define GCC_PRINTFLIKE(fmt,var) /* nothing */
+#endif
+
+#ifndef GCC_SCANF
+#define GCC_SCANF /* nothing */
+#endif
+
+#ifndef GCC_SCANFLIKE
+#define GCC_SCANFLIKE(fmt,var) /* nothing */
+#endif
+
+#ifndef GCC_UNUSED
+#define GCC_UNUSED /* nothing */
+#endif
 
 /******************************************************************************
  * Definitions of procedures in TD_LIB common library                         *

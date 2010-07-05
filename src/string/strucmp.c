@@ -12,7 +12,7 @@
 #define CHR_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: strucmp.c,v 12.5 2010/07/04 19:18:27 tom Exp $")
+MODULE_ID("$Id: strucmp.c,v 12.6 2010/07/05 16:07:32 tom Exp $")
 
 int
 strucmp(const char *a, const char *b)
@@ -37,7 +37,7 @@ strucmp(const char *a, const char *b)
 _MAIN
 {
     int j, k;
-    static char *tag[] =
+    static const char *tag[] =
     {"<", "==", ">"};
 
     for (j = 1; j < argc; j++) {

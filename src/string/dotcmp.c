@@ -21,7 +21,7 @@
 
 #include "ptypes.h"
 
-MODULE_ID("$Id: dotcmp.c,v 12.5 2010/05/24 23:50:41 tom Exp $")
+MODULE_ID("$Id: dotcmp.c,v 12.6 2010/07/05 16:02:09 tom Exp $")
 
 #define	DOT	'.'
 #define	LAST(s,l)	for (l = 0; (s[l] != DOT) && (s[l] != EOS); l++)
@@ -67,7 +67,7 @@ _MAIN
     int j;
 
     if (argc > 1) {
-	qsort((char *) &argv[1], argc - 1, sizeof(argv[0]), compare);
+	qsort((char *) &argv[1], (size_t) (argc - 1), sizeof(argv[0]), compare);
 	for (j = 1; j < argc; j++)
 	    printf("%3d: %s\n", j, argv[j]);
     }

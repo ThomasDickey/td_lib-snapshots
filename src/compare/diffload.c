@@ -19,7 +19,7 @@
 #include	<ctype.h>
 #include	<time.h>
 
-MODULE_ID("$Id: diffload.c,v 12.8 2010/07/04 15:28:35 tom Exp $")
+MODULE_ID("$Id: diffload.c,v 12.9 2010/07/05 14:15:38 tom Exp $")
 
 #ifdef	TEST
 #define	DEBUG(s) PRINTF s;
@@ -176,6 +176,8 @@ _MAIN
 {
     DELTREE *p = diffload(argv + 1, TRUE, TRUE);
     int j, k;
+
+    (void) argc;
 
     if (p != 0) {
 	for (k = 0; p[k].tstamp; k++) {

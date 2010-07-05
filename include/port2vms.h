@@ -1,5 +1,5 @@
 /*
- * $Id: port2vms.h,v 12.9 2004/03/07 21:44:57 tom Exp $
+ * $Id: port2vms.h,v 12.10 2010/07/05 15:54:43 tom Exp $
  *
  * VMS-definitions for supporting unix/vms port
  */
@@ -44,7 +44,7 @@ typedef	struct	timeval {
 #endif	/* vms/SYS_UNIX/MSDOS */
 
 extern	char *	dir2path(
-		char *		src
+		const char *	src
 		)
 		;
 
@@ -57,18 +57,18 @@ extern	char *	gid2s(
 
 extern	char *	name2vms(
 		char *		dst,
-		char *		src
+		const char *	src
 		)
 		;
 
 extern	char *	path2dir(
-		char *		src
+		const char *	src
 		)
 		;
 
 extern	char *	path2vms(
 		char *		dst,
-		char *		src
+		const char *	src
 		)
 		;
 
@@ -141,12 +141,12 @@ extern	int	utimes(
 
 extern	char *	vms2name(
 		char *		dst,
-		char *		src
+		const char *	src
 		)
 		;
 
 extern	int	vms_iswild(
-		char *		name
+		const char *	name
 		)
 		;
 

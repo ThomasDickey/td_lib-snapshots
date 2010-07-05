@@ -32,7 +32,7 @@
 #include "ptypes.h"
 #include "td_curse.h"
 
-MODULE_ID("$Id: scr_size.c,v 12.11 2010/07/04 22:50:34 tom Exp $")
+MODULE_ID("$Id: scr_size.c,v 12.12 2010/07/05 15:38:50 tom Exp $")
 
 #ifdef	apollo
 #  ifdef	apollo_sr10
@@ -148,6 +148,9 @@ _MAIN
 {
     int lc[2];
     int code;
+
+    (void) argc;
+    (void) argv;
 
     if ((code = scr_size(lc)) >= 0) {
 	FPRINTF(stderr, "%s %d lines, %d columns\n",

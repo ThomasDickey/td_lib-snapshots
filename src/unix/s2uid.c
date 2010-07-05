@@ -20,7 +20,7 @@
 #define	STR_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: s2uid.c,v 12.7 2010/07/04 09:27:38 tom Exp $")
+MODULE_ID("$Id: s2uid.c,v 12.8 2010/07/05 10:56:40 tom Exp $")
 
 #ifdef	SYS_UNIX
 
@@ -32,7 +32,7 @@ MODULE_ID("$Id: s2uid.c,v 12.7 2010/07/04 09:27:38 tom Exp $")
 extern int len_passwd;		/* share with 'uid2s.c' */
 extern char **vec_passwd;
 
-static
+static int
 unknown_uid(char *s)
 {
     size_t len = strlen(s);
@@ -52,14 +52,14 @@ unknown_uid(char *s)
     return (-1);
 }
 #else
-#define	unknown_uid(s)	-1
+#define	unknown_uid(s)	(uid_t) -1
 #endif
 
 int
 s2uid(const char *s)
 {
     char *d;
-    long val = strtol(s, &d, 0);
+    uid_t val = (uid_t) strtol(s, &d, 0);
 
     if (*d) {
 	struct passwd *p;

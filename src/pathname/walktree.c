@@ -50,7 +50,7 @@
 #include	"ptypes.h"
 #include	"td_qsort.h"
 
-MODULE_ID("$Id: walktree.c,v 12.11 2010/07/04 20:12:21 tom Exp $")
+MODULE_ID("$Id: walktree.c,v 12.12 2010/07/05 15:05:55 tom Exp $")
 
 /************************************************************************
  *	local definitions						*
@@ -145,14 +145,19 @@ walktree(const char *patharg,
 
 #ifdef	TEST
 static
-void do_arg(char *name, char *type);
+void do_arg(const char *name, const char *type);
 
 static int
 WALK_FUNC(display)
 {
+    (void) path;
+
+    /* filter out source-tree artifacts to make tests regress */
+    if (!strcmp(name, ".@-RCS"))
+	return -1;
     if (!strcmp(name, "RCS/"))
 	return -1;
-    if (!strcmp(name, "RCS"))	/* filter this out to make tests regress */
+    if (!strcmp(name, "RCS"))
 	return -1;
 
     PRINTF("%c\t", (readable < 0) ? '?' : ' ');
@@ -167,7 +172,7 @@ WALK_FUNC(display)
 }
 
 static void
-do_arg(char *name, char *type)
+do_arg(const char *name, const char *type)
 {
     PRINTF("** path = %s\n", name);
     PRINTF("** total= %d\n", walktree((PTR) 0, name, display, type, 0));
@@ -177,7 +182,7 @@ do_arg(char *name, char *type)
 _MAIN
 {
     int j;
-    char *opts = "wrx";
+    const char *opts = "wrx";
     char need[BUFSIZ];
     int len = 0;
 
@@ -186,7 +191,7 @@ _MAIN
 	case 'w':
 	case 'r':
 	case 'x':
-	    need[len++] = j;
+	    need[len++] = (char) j;
 	    break;
 	default:
 	    FPRINTF(stderr, "usage: walktree [-%s] [dir [...]]\n",
@@ -199,8 +204,9 @@ _MAIN
     if (optind < argc) {
 	for (j = optind; j < argc; j++)
 	    do_arg(argv[j], need);
-    } else
+    } else {
 	do_arg(".", need);
+    }
 
     (void) exit(SUCCESS);
     /*NOTREACHED */

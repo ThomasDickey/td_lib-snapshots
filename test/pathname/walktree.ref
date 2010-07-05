@@ -1,10 +1,10 @@
 ** mode = x
 ** path = ../pathname
  	../pathname/
-?	|-- Makefile
  	|-- abspath
 ?	|-- abspath.ref
  	|-- abspath.sh
+?	|-- check.out
  	|-- dlettree
 ?	|-- dlettree.ref
  	|-- dlettree.sh
@@ -21,6 +21,8 @@
 ?	|-- file2mem.ref
  	|-- file2mem.sh
  	|-- fileblox
+?	|-- fileblox.ref
+ 	|-- fileblox.sh
  	|-- filecopy
 ?	|-- filecopy.ref
  	|-- filecopy.sh
@@ -28,6 +30,8 @@
 ?	|-- fp2argv.ref
  	|-- fp2argv.sh
 ?	|-- make.out
+?	|-- makefile
+?	|-- modules
  	|-- name2s
 ?	|-- name2s.ref
  	|-- name2s.sh
@@ -43,7 +47,6 @@
  	|-- relpath
 ?	|-- relpath.ref
  	|-- relpath.sh
-?	|-- run_test.out
  	|-- run_test.sh
  	|-- sameleaf
 ?	|-- sameleaf.ref
@@ -61,4 +64,4 @@
  	|-- which
 ?	|-- which.ref
  	|-- which.sh
-** total= 40
+** total= 41

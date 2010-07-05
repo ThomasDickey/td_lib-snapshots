@@ -40,7 +40,7 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: abspath.c,v 12.12 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: abspath.c,v 12.13 2010/07/05 14:25:31 tom Exp $")
 
 #ifdef	apollo
 #ifdef	apollo_sr10
@@ -325,8 +325,8 @@ abspath(char *path)
 }
 
 #ifdef	TEST
-void
-do_test(int argc, char **argv)
+static void
+do_test(int argc, const char **argv)
 {
     int j;
     char bfr[MAXPATHLEN];
@@ -340,10 +340,11 @@ do_test(int argc, char **argv)
 
 _MAIN
 {
-    if (argc > 1)
-	do_test(argc, argv);
-    else {
-	static char *tbl[] =
+    if (argc > 1) {
+	const char **params = (const char **) argv;
+	do_test(argc, params);
+    } else {
+	static const char *tbl[] =
 	{
 	    "?"
 	    ,"."

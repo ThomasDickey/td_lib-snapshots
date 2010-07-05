@@ -39,7 +39,7 @@
 #include "rcsdefs.h"
 #include <errno.h>
 
-MODULE_ID("$Id: rcstemp.c,v 12.11 2010/07/04 15:31:34 tom Exp $")
+MODULE_ID("$Id: rcstemp.c,v 12.12 2010/07/05 16:31:30 tom Exp $")
 
 #define	DEBUG	if (RCS_DEBUG) PRINTF
 
@@ -66,8 +66,8 @@ rcstemp(char *working, int copy)
 
 	DEBUG(".. rcstemp mode is %o gid:%d(%s) egid:%d(%s)\n",
 	      mode,
-	      getgid(), gid2s(getgid()),
-	      getegid(), gid2s(getegid()));
+	      (int) getgid(), gid2s(getgid()),
+	      (int) getegid(), gid2s(getegid()));
 
 	if (stat_dir(tf, &sb) < 0) {
 	    int oldmask = (int) umask(0);

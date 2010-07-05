@@ -1,9 +1,13 @@
 .  scan directory ../../support
 .  (directory) ../../support
 .  => Makefile
+.  => ins_hdr
+.  => ins_mak
 .  => lib_top.mms
 .  => linkopts.opt
 .  => prog_top.mms
+.  => rem_hdr
+.  => selflink.sh
 .  => td_lib.mk
 .  => td_lib.mms
 .  => td_progs.mms

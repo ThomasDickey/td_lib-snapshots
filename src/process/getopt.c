@@ -11,7 +11,7 @@
 #define	STR_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: getopt.c,v 12.5 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: getopt.c,v 12.6 2010/07/05 16:32:56 tom Exp $")
 
 #if !defined(HAVE_GETOPT)
 
@@ -36,8 +36,8 @@ char *optarg;
 
 int
 getopt(int argc,
-       char **argv,
-       char *opts)
+       char *const *argv,
+       const char *opts)
 {
     static int sp = 1;
     int c;

@@ -26,7 +26,7 @@
 #include	<sccsdefs.h>
 #include	<cmv_defs.h>
 
-MODULE_ID("$Id: cmv_last.c,v 12.14 2010/07/04 16:49:33 tom Exp $")
+MODULE_ID("$Id: cmv_last.c,v 12.15 2010/07/05 11:00:21 tom Exp $")
 
 /*
  * Set the release.version and date values iff we find a legal sccs-file at
@@ -116,11 +116,12 @@ _MAIN
     char current[MAXPATHLEN];
     int n;
 
-    (void) getwd(current);
+    if (getcwd(current, sizeof(current)) == 0)
+	strcpy(current, ".");
 
     for (n = 1; n < argc; n++) {
-	char *vers;
-	char *lock;
+	const char *vers;
+	const char *lock;
 	time_t date;
 	cmv_last(current, argv[n], &vers, &date, &lock);
 	PRINTF("%s vers %s, lock %s %s",

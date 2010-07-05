@@ -44,7 +44,7 @@
 
 #include	<ctype.h>
 
-MODULE_ID("$Id: rcsname.c,v 12.10 2010/07/03 15:51:15 tom Exp $")
+MODULE_ID("$Id: rcsname.c,v 12.11 2010/07/05 11:11:15 tom Exp $")
 
 #define	LEN_SUFFIX	(sizeof(suffix)-1)
 
@@ -58,7 +58,7 @@ static char suffix[] = RCS_SUFFIX;
  * Returns TRUE if the name ends with RCS_SUFFIX.
  */
 static int
-rcs_suffix(char *name)
+rcs_suffix(const char *name)
 {
     size_t len = strlen(name);
     if (len >= LEN_SUFFIX)
@@ -83,6 +83,13 @@ leaf(char *name)
     return ((s != 0) ? s : name);
 }
 
+static const char *
+cleaf(const char *name)
+{
+    const char *s = fleaf(name);
+    return ((s != 0) ? s : name);
+}
+
 /************************************************************************
  *	public entrypoints						*
  ************************************************************************/
@@ -92,7 +99,7 @@ leaf(char *name)
  * of the working file.
  */
 char *
-rcs2name(char *name, int full)
+rcs2name(const char *name, int full)
 {
     char *s, *t;
     static char fname[BUFSIZ];
@@ -122,7 +129,7 @@ rcs2name(char *name, int full)
  * of the RCS-file.
  */
 char *
-name2rcs(char *name, int full)
+name2rcs(const char *name, int full)
 {
     static char slash[] =
     {PATH_SLASH, EOS};		/* "/"   */
@@ -131,7 +138,7 @@ name2rcs(char *name, int full)
     if (rcs_suffix(name)) {
 	(void) strcpy(fname, name);
     } else if (*rcs_dir(NULL, NULL) == PATH_SLASH) {
-	(void) strcat(pathcat(fname, rcs_dir(NULL, NULL), leaf(name)), suffix);
+	(void) strcat(pathcat(fname, rcs_dir(NULL, NULL), cleaf(name)), suffix);
     } else {
 	if (full) {
 	    trim_leaf(strcpy(fname, name));
@@ -147,15 +154,15 @@ name2rcs(char *name, int full)
 				   strcat(
 					     strcat(fname, rcs_dir(NULL, NULL)),
 					     slash),
-				   leaf(name)),
+				   cleaf(name)),
 			 suffix);
     }
     return (fname);
 }
 
 #ifdef	TEST
-void
-do_test(int argc, char **argv, int full)
+static void
+do_test(int argc, const char **argv, int full)
 {
     int j;
     char old[BUFSIZ], *new;
@@ -179,7 +186,7 @@ do_test(int argc, char **argv, int full)
 		   strcmp(old, new) ? " (*)" : "");
 	}
     } else {
-	static char *test[] =
+	static const char *test[] =
 	{
 	    "?",
 	    "name", "name,v",
@@ -193,8 +200,10 @@ do_test(int argc, char **argv, int full)
 
 _MAIN
 {
-    do_test(argc, argv, FALSE);
-    do_test(argc, argv, TRUE);
+    const char **params = (const char **) argv;
+
+    do_test(argc, params, FALSE);
+    do_test(argc, params, TRUE);
     exit(SUCCESS);
 }
 #endif /* TEST */

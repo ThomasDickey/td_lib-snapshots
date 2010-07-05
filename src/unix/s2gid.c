@@ -16,7 +16,7 @@
 
 #include	"ptypes.h"
 
-MODULE_ID("$Id: s2gid.c,v 12.7 2010/07/04 09:27:26 tom Exp $")
+MODULE_ID("$Id: s2gid.c,v 12.8 2010/07/05 12:29:12 tom Exp $")
 
 #ifdef	SYS_UNIX
 #include	<grp.h>
@@ -25,7 +25,7 @@ int
 s2gid(const char *s)
 {
     char *d;
-    long val = strtol(s, &d, 0);
+    gid_t val = (gid_t) strtol(s, &d, 0);
 
     if (*d) {
 	struct group *p;
@@ -33,7 +33,7 @@ s2gid(const char *s)
 	if ((p = getgrnam(s)) != 0)
 	    val = p->gr_gid;
 	else
-	    val = -1;
+	    val = (gid_t) (-1);
     }
     return ((int) val);
 }

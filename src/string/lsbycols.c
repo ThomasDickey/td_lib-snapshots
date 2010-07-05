@@ -21,7 +21,7 @@
 #define	STR_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: lsbycols.c,v 12.6 2010/07/03 16:16:42 tom Exp $")
+MODULE_ID("$Id: lsbycols.c,v 12.7 2010/07/05 16:04:36 tom Exp $")
 
 #ifdef	lint
 #define	LIST(n)	(*(listp + n))	/* close enough to fool lint */
@@ -32,7 +32,7 @@ MODULE_ID("$Id: lsbycols.c,v 12.6 2010/07/03 16:16:42 tom Exp $")
 
 /*ARGSUSED*/
 void
-list_by_cols(char **listp, int sizep, int num)
+list_by_cols(const char **listp, int sizep, int num)
 {
     int j, k;
     int maxlen = 0;		/* length of widest column */
@@ -70,10 +70,10 @@ list_by_cols(char **listp, int sizep, int num)
 #ifdef	TEST
 _MAIN
 {
-    if (argc > 1)
-	list_by_cols(argv + 1, sizeof(argv[0]), argc - 1);
-    else {
-	static char *tbl[] =
+    if (argc > 1) {
+	list_by_cols((const char **) argv + 1, sizeof(argv[0]), argc - 1);
+    } else {
+	static const char *tbl[] =
 	{
 	    "a_potato",
 	    "b_potato",

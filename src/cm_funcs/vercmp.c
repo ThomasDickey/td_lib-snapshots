@@ -19,9 +19,10 @@
  *		The RCS tool must then simply test for a match.
  */
 
+#define STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: vercmp.c,v 12.9 2010/05/24 23:50:41 tom Exp $")
+MODULE_ID("$Id: vercmp.c,v 12.10 2010/07/05 11:03:51 tom Exp $")
 
 #define	DOT	'.'
 
@@ -95,7 +96,7 @@ do_test(int argc, char **argv)
     int j;
 
     if (argc > 1) {
-	qsort((char *) &argv[1], argc - 1, sizeof(argv[0]), compare);
+	qsort((char *) &argv[1], (size_t) (argc - 1), sizeof(argv[0]), compare);
 	for (j = 1; j < argc; j++)
 	    PRINTF("%3d: %s\n", j, argv[j]);
     } else {

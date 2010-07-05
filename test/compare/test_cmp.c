@@ -1,5 +1,5 @@
-#ifndef	lint
-static char II[] = "$Id: test_cmp.c,v 12.4 2004/03/07 22:03:45 tom Exp $";
+#ifndef	NO_IDENT
+static const char II[] = "$Id: test_cmp.c,v 12.5 2010/07/05 15:12:52 tom Exp $";
 #endif /*lint */
 
 /*
@@ -19,10 +19,10 @@ static int c_opt;
 extern char *ctime(time_t * t);
 
 static char **
-load(char *name, int *num, char *tag)
+load(const char *name, int *num, const char *tag)
 {
-    auto char **v;
-    auto Stat_t sb;
+    char **v;
+    Stat_t sb;
 
     if (stat(name, &sb) < 0)
 	failed(name);
@@ -53,7 +53,7 @@ SCOMP_MATCH(s_match)
 static
 SCOMP_REPORT(s_report)
 {
-    auto int both = (lo_1 <= hi_1) && (lo_2 <= hi_2);
+    int both = (lo_1 <= hi_1) && (lo_2 <= hi_2);
 
     if (lo_1 >= hi_1)
 	PRINTF("%d", 1 + hi_1);
@@ -73,12 +73,10 @@ SCOMP_REPORT(s_report)
 	PRINTF("> %s", v2[lo_2++]);
 }
 
-static
-int
-argv_last(
-	     SCOMP_TYPE v,
-	     int now,
-	     int want)
+static int
+argv_last(SCOMP_TYPE v,
+	  int now,
+	  int want)
 {
     while (v[now] != 0 && now < want)
 	now++;
@@ -88,10 +86,10 @@ argv_last(
 static
 SCOMP_REPORT(s_context)
 {
-    auto int both = (lo_1 <= hi_1) && (lo_2 <= hi_2);
-    auto int first, last;
-    auto char mark;
-    register int j;
+    int both = (lo_1 <= hi_1) && (lo_2 <= hi_2);
+    int first, last;
+    char mark;
+    int j;
 
     PRINTF("***************\n");	/* 15-'*' */
 
@@ -123,8 +121,8 @@ SCOMP_REPORT(s_context)
 
 _MAIN
 {
-    auto char buffer[BUFSIZ];
-    auto void (*func) (SCOMP_REPORT_ARGS(p1, p2)) = s_report;
+    char buffer[BUFSIZ];
+    void (*func) (SCOMP_REPORT_ARGS(p1, p2)) = s_report;
 
     setbuf(stdout, buffer);
     if ((argc > 1) && !strncmp(argv[1], "-c", 2)) {
@@ -134,9 +132,9 @@ _MAIN
 	argc--, argv++;
     }
     if (argc > 2) {
-	auto int n1, n2;
-	auto char **v1 = load(argv[1], &n1, "***");
-	auto char **v2 = load(argv[2], &n2, "---");
+	int n1, n2;
+	char **v1 = load(argv[1], &n1, "***");
+	char **v2 = load(argv[2], &n2, "---");
 	SCOMP((SCOMP_TYPE) v1, n1, (SCOMP_TYPE) v2, n2,
 	      sizeof(char *), s_match, func);
 	freefile(v1);

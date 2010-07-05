@@ -29,7 +29,7 @@
 #define	STR_PTYPES
 #include	"port2vms.h"
 
-MODULE_ID("$Id: name2vms.c,v 12.6 2010/07/03 16:26:59 tom Exp $")
+MODULE_ID("$Id: name2vms.c,v 12.7 2010/07/05 15:44:21 tom Exp $")
 
 static int leaf_dot;		/* counts dots found in a particular leaf */
 static int leaf_ver;		/* set if we found a DECshell version */
@@ -42,7 +42,7 @@ static int leaf_ver;		/* set if we found a DECshell version */
 #define	ONE_CHAR_DOT	"sp"	/* e.g., for SCCS */
 
 static int
-prefix(char *s)
+prefix(const char *s)
 {
     if (s[0] != EOS
 	&& s[1] == '.'
@@ -68,7 +68,7 @@ translate(int c)
 }
 
 static int
-leading_uc(char *dst, char *src)
+leading_uc(char *dst, const char *src)
 {
     char *base = dst;
     int c;
@@ -95,7 +95,7 @@ leading_uc(char *dst, char *src)
 }
 
 char *
-name2vms(char *dst, char *src)
+name2vms(char *dst, const char *src)
 {
     char tmp[MAXPATHLEN], token[MAXPATHLEN], *t, *s = strcpy(tmp, src),		/* ... to permit src == dst */
      *d = dst, c = '?';
@@ -223,13 +223,13 @@ name2vms(char *dst, char *src)
 
 #ifdef	TEST
 static void
-do_test(int argc, char **argv)
+do_test(int argc, const char **argv)
 {
     int j;
     char buffer[MAXPATHLEN];
 
     if (argc <= 1) {
-	static char *array[] =
+	static const char *array[] =
 	{
 	    "name",
 	    ".type",
@@ -280,7 +280,7 @@ do_test(int argc, char **argv)
 /*ARGSUSED*/
 _MAIN
 {
-    do_test(argc, argv);
+    do_test(argc, (const char **) argv);
     exit(SUCCESS);
     /*NOTREACHED */
 }

@@ -46,7 +46,7 @@
 #define TIM_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: packdate.c,v 12.23 2004/03/07 16:31:58 tom Exp $")
+MODULE_ID("$Id: packdate.c,v 12.24 2010/07/05 11:01:17 tom Exp $")
 
 #define	LEAP(y)	(!(y&3))
 
@@ -154,6 +154,9 @@ _MAIN
     time_t then;
     struct tm tm;
     tm = *localtime(&now);
+
+    (void) argc;
+    (void) argv;
 
     printf("Current time: %s", ctime(&now));
     printf("  sec   =%d\n", tm.tm_sec);

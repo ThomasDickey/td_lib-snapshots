@@ -19,7 +19,7 @@
 #include	"ptypes.h"
 #include	"rcsdefs.h"
 
-MODULE_ID("$Id: vcs_file.c,v 12.6 2010/07/04 17:26:37 tom Exp $")
+MODULE_ID("$Id: vcs_file.c,v 12.7 2010/07/05 11:01:03 tom Exp $")
 
 char *
 vcs_file(const char *path,	/* pathname to prepend, if nonnull */
@@ -41,6 +41,9 @@ vcs_file(const char *path,	/* pathname to prepend, if nonnull */
 _MAIN
 {
     char bfr[BUFSIZ];
+
+    (void) argc;
+    (void) argv;
 
     PRINTF("vcs_file='%s'\n", vcs_file("./", bfr, 0));
     exit(SUCCESS);

@@ -18,10 +18,10 @@
 #define		STR_PTYPES
 #include	"port2vms.h"
 
-MODULE_ID("$Id: path2dir.c,v 12.3 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: path2dir.c,v 12.4 2010/07/05 15:44:39 tom Exp $")
 
 char *
-path2dir(char *src)
+path2dir(const char *src)
 {
     static char buffer[MAXPATHLEN];
     char *s = buffer + strlen(strcpy(buffer, src));
@@ -50,7 +50,7 @@ path2dir(char *src)
 
 #ifdef	TEST
 static void
-do_test(char *path)
+do_test(const char *path)
 {
     PRINTF("%s => %s\n", path, path2dir(path));
 }
@@ -58,11 +58,11 @@ do_test(char *path)
 _MAIN
 {
     int j;
-    if (argc > 1)
+    if (argc > 1) {
 	for (j = 1; j < argc; j++)
 	    do_test(argv[j]);
-    else {
-	static char *tbl[] =
+    } else {
+	static const char *tbl[] =
 	{
 	    "foo",
 	    "dev:foo",
@@ -73,7 +73,7 @@ _MAIN
 	    "dev:[bar]",
 	    "dev:[bar];"
 	};
-	for (j = 0; j < SIZEOF(tbl); j++)
+	for (j = 0; j < (int) SIZEOF(tbl); j++)
 	    do_test(tbl[j]);
     }
     exit(SUCCESS);

@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	19 Aug 1988
  * Modified:
+ *		05 Jul 2010, use environment's $TMPDIR in test-driver.
  *		07 Mar 2004, remove K&R support, indent'd.
  *		30 May 1998, compile with g++
  *		29 Oct 1993, ifdef-ident
@@ -47,7 +48,7 @@
 #include	<ctype.h>
 #include	<time.h>
 
-MODULE_ID("$Id: rcsload.c,v 12.12 2010/07/04 17:41:26 tom Exp $")
+MODULE_ID("$Id: rcsload.c,v 12.14 2010/07/05 14:05:41 tom Exp $")
 
 #ifdef	TEST
 #define	DEBUG(s) PRINTF s;
@@ -80,8 +81,8 @@ static size_t my_limit;
 
 #ifdef	TEST
 static void
-show_vector(char *tag,
-	    char *rev,
+show_vector(const char *tag,
+	    const char *rev,
 	    char **v)
 {
     int j;
@@ -466,11 +467,17 @@ compare(char *name,
 	char **vector,
 	char *revision)
 {
-    char temp[BUFSIZ], version[80], buffer[BUFSIZ];
+    char temp[BUFSIZ];
+    char version[80];
+    char buffer[BUFSIZ];
     FILE *fp;
+    const char *tmpdir = getenv("TMPDIR");
 
-    strcat(strcpy(temp, "/usr/tmp/"), pathleaf(name));
-    PRINTF("compare(%s) %s\n", temp, revision);
+    if (tmpdir == 0)
+	tmpdir = "/tmp";
+
+    sprintf(temp, "%s/%s", tmpdir, pathleaf(name));
+    PRINTF("compare(%s) %s\n", pathleaf(name), revision);
     (void) unlink(temp);
 
     if (!(fp = fopen(temp, "w")))

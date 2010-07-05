@@ -19,7 +19,7 @@
 #define	STR_PTYPES
 #include	"port2vms.h"
 
-MODULE_ID("$Id: vms_rpth.c,v 12.5 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: vms_rpth.c,v 12.6 2010/07/05 16:17:29 tom Exp $")
 
 static char *
 after_leaf(char *path)
@@ -129,18 +129,25 @@ vms_relpath(char *dst, char *cwd, char *src)
 
 #ifdef	TEST
 static void
-do_test(char *s, char *wd)
+do_test(char *s, const char *wd)
 {
     char dst[BUFSIZ];
+    char src[BUFSIZ];
+    char current[BUFSIZ];
+
     if (wd == 0)
 	wd = "(getwd)";
-    printf("%-24s %-24s => %-24s\n", wd, s, vms_relpath(dst, wd, s));
+
+    printf("%-24s %-24s => %-24s\n", wd, s,
+	   vms_relpath(dst,
+		       strcpy(current, wd),
+		       strcpy(src, s)));
 }
 
 /*ARGSUSED*/
 _MAIN
 {
-    static char *tbl[] =
+    static const char *tbl[] =
     {
 	"dev:[1st]"
 	,"dev:[aaa]"
@@ -157,8 +164,8 @@ _MAIN
 	    do_test(argv[j], (char *) 0);
     } else {
 	FPRINTF(stderr, "Testing...\n");
-	for (j = 0; j < SIZEOF(tbl); j++) {
-	    for (k = 0; k < SIZEOF(tbl); k++) {
+	for (j = 0; j < (int) SIZEOF(tbl); j++) {
+	    for (k = 0; k < (int) SIZEOF(tbl); k++) {
 		do_test(strcpy(src, tbl[k]), tbl[j]);
 		do_test(strcat(src, "name"), tbl[j]);
 	    }

@@ -27,7 +27,7 @@
 
 #include	"ptypes.h"
 
-MODULE_ID("$Id: doalloc.c,v 12.10 2010/07/04 15:25:56 tom Exp $")
+MODULE_ID("$Id: doalloc.c,v 12.11 2010/07/05 15:10:04 tom Exp $")
 
 static long count_alloc, count_freed;
 
@@ -51,22 +51,24 @@ fail_alloc(const char *msg, void *ptr)
 
 #ifdef	DEBUG
 typedef struct {
-    long size;			/* ...its size */
+    size_t size;		/* ...its size */
     void *text;			/* the actual segment */
     int note;			/* ...last value of 'count_alloc' */
 } AREA;
 
 static AREA area[DEBUG];
 
-static long maxAllocated,	/* maximum # of bytes allocated */
-  nowAllocated,			/* current # of bytes allocated */
+static size_t
+  maxAllocated,			/* maximum # of bytes allocated */
+  nowAllocated;			/* current # of bytes allocated */
+static long
   nowPending,			/* current end of 'area[]' table */
   maxPending;			/* maximum # of segments allocated */
 
 static int
 FindArea(void *ptr)
 {
-    register int j;
+    int j;
     for (j = 0; j < DEBUG; j++)
 	if (area[j].text == ptr) {
 	    if (j >= nowPending) {
@@ -83,14 +85,14 @@ static
 int
 record_freed(void *ptr)
 {
-    register int j;
+    int j;
     if ((j = FindArea(ptr)) >= 0) {
 	nowAllocated -= area[j].size;
 	area[j].size = 0;
 	area[j].text = 0;
 	area[j].note = count_freed;
 	if ((j + 1) == nowPending) {
-	    register int k;
+	    int k;
 	    for (k = j; (k >= 0) && !area[k].size; k--)
 		nowPending = k;
 	}
@@ -99,9 +101,9 @@ record_freed(void *ptr)
 }
 
 static int
-record_alloc(void *newp, void *oldp, unsigned len)
+record_alloc(void *newp, void *oldp, size_t len)
 {
-    register int j;
+    int j;
 
     if (newp == oldp) {
 	if ((j = FindArea(oldp)) >= 0) {
@@ -160,7 +162,7 @@ logit(char *msg, int num)
 void *
 doalloc(void *oldp, size_t amount)
 {
-    register void *newp;
+    void *newp;
 
     count_alloc += (oldp == 0);
     LOGIT("allocate", amount)
@@ -201,15 +203,15 @@ show_alloc(void)
     PRINTF(fmt, "frees:", count_freed);
 #ifdef	DEBUG
     {
-	register int j, count = 0;
-	register long total = 0;
+	int j, count = 0;
+	size_t total = 0;
 
 	for (j = 0; j < nowPending; j++) {
 	    if (area[j].text) {
 		if (count++ < 10)
-		    PRINTF("...%d) %ld bytes in alloc #%d:%p\n",
+		    PRINTF("...%d) %lu bytes in alloc #%d:%p\n",
 			   j,
-			   area[j].size,
+			   (unsigned long) area[j].size,
 			   area[j].note,
 			   area[j].text);
 		total += area[j].size;
@@ -229,6 +231,9 @@ show_alloc(void)
 _MAIN
 {
     void *p = 0, *q = 0;
+
+    (void) argc;
+    (void) argv;
 
     p = doalloc(p, 100);
     dofree(p);

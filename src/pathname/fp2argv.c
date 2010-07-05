@@ -23,7 +23,7 @@
 #include	"ptypes.h"
 #include	"dyn_str.h"
 
-MODULE_ID("$Id: fp2argv.c,v 12.6 2010/07/03 15:59:30 tom Exp $")
+MODULE_ID("$Id: fp2argv.c,v 12.7 2010/07/05 14:32:23 tom Exp $")
 
 #define	CHUNK	32
 
@@ -79,6 +79,9 @@ _MAIN
 {
     char **list;
     int j;
+
+    (void) argc;
+    (void) argv;
 
     fp2argv(stdin, &list, 0);
     for (j = 0; list[j]; j++)

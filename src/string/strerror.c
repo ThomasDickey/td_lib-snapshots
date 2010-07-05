@@ -11,7 +11,7 @@
 #define STR_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: strerror.c,v 12.8 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: strerror.c,v 12.9 2010/07/05 16:37:13 tom Exp $")
 
 #if !defined(HAVE_STRERROR)
 char *
@@ -20,7 +20,7 @@ strerror(int errnum)
     static char unknown[20] = "error ";
 #if defined(HAVE_SYS_ERRLIST)
     if (errnum > 0 && errnum < sys_nerr)
-	return sys_errlist[errnum];
+	return (char *) sys_errlist[errnum];
 #endif
     (void) l2str(unknown + 6, (long) errnum, 10);
     return unknown;

@@ -36,7 +36,7 @@
 
 #include	<ctype.h>
 
-MODULE_ID("$Id: sccsname.c,v 12.9 2010/07/04 22:31:28 tom Exp $")
+MODULE_ID("$Id: sccsname.c,v 12.10 2010/07/05 11:15:26 tom Exp $")
 
 #define	LEN_PREFIX	(sizeof(prefix)-1)
 
@@ -149,8 +149,8 @@ name2sccs(const char *name, int full)
 }
 
 #ifdef	TEST
-void
-do_test(int argc, char **argv, int full)
+static void
+do_test(int argc, const char **argv, int full)
 {
     int j;
     char old[BUFSIZ], *new;
@@ -174,7 +174,8 @@ do_test(int argc, char **argv, int full)
 		   strcmp(old, new) ? " (*)" : "");
 	}
     } else {
-	static char *test[] =
+	static char my_putenv[80];
+	static const char *test[] =
 	{
 	    "?",
 	    "name", "s.name",
@@ -182,15 +183,17 @@ do_test(int argc, char **argv, int full)
 	    "path/SCCS/name", "path/SCCS/s.name",
 	    "SCCS/name", "SCCS/s.name"
 	};
-	(void) putenv("SCCS_DIR=SCCS");
+	(void) putenv(strcpy(my_putenv, "SCCS_DIR=SCCS"));
 	do_test(SIZEOF(test), test, full);
     }
 }
 
 _MAIN
 {
-    do_test(argc, argv, FALSE);
-    do_test(argc, argv, TRUE);
+    const char **params = (const char **) argv;
+
+    do_test(argc, params, FALSE);
+    do_test(argc, params, TRUE);
     exit(SUCCESS);
 }
 #endif /* TEST */

@@ -1,9 +1,9 @@
-# $Id: td_rules.mk,v 12.7 1997/09/11 01:11:52 tom Exp $
+# $Id: td_rules.mk,v 12.8 2010/07/05 10:04:22 tom Exp $
 # Common make-rules for TD_LIB
 
 ####### (Standard Productions) #################################################
 all\
-run_test\
+check\
 install:	$(SOURCES) $(ALL)
 	@echo '** made '$@
 
