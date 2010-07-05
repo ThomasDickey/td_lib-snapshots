@@ -31,7 +31,7 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: which.c,v 12.11 2010/07/03 16:02:11 tom Exp $")
+MODULE_ID("$Id: which.c,v 12.12 2010/07/04 17:27:55 tom Exp $")
 
 #ifdef MSDOS
 #define PROG_EXTS "PIF", "BAT", "EXE", "COM"
@@ -80,12 +80,14 @@ which(char *bfr,
       const char *find,
       const char *dot)
 {
+    static char just_dot[] = ".";
+
     char *s, *d;
     char *path = getenv("PATH");
     char test[BUFSIZ];
 
     if (path == 0)
-	path = ".";
+	path = just_dot;
     s = path;
     *test = *bfr = EOS;
 
@@ -117,7 +119,7 @@ which(char *bfr,
 
     if (len > strlen(test))
 	(void) strcpy(bfr, test);
-    return (strlen(bfr));
+    return (int) (strlen(bfr));
 }
 
 #ifdef	TEST

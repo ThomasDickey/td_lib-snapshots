@@ -39,7 +39,7 @@
 #include	"ptypes.h"
 #include	<errno.h>
 
-MODULE_ID("$Id: execute.c,v 12.12 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: execute.c,v 12.13 2010/07/04 13:13:33 tom Exp $")
 
 #ifdef	vms
 #  include	<descrip.h>
@@ -63,10 +63,11 @@ static void dump_exec(char *verb, char **args);
 #endif
 
 int
-execute(char *verb, char *args)
+execute(const char *verb, const char *args)
 {
     /* patch: dyn_string? */
-    char cmds[BUFSIZ], *s = strcat(strcat(strcpy(cmds, verb), " "), args);
+    char cmds[BUFSIZ];
+    char *s = strcat(strcat(strcpy(cmds, verb), " "), args);
 
 #ifdef	vms
 
@@ -122,12 +123,12 @@ execute(char *verb, char *args)
 #ifdef	SYS_UNIX
     static char **myargv;	/* argument vector for 'bldarg()' */
 #if defined(HAVE_EXECVP)
-    auto char *what;
+    char *what;
 #else
-    auto char what[BUFSIZ];
+    char what[BUFSIZ];
 #endif /* HAVE_EXECVP */
-    auto int count = 3,		/* minimum needed for 'bldarg()' */
-      pid;
+    int count = 3;		/* minimum needed for 'bldarg()' */
+    int pid;
 
     DCL_WAIT(status);
 

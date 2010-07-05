@@ -18,7 +18,7 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: mem2file.c,v 12.6 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: mem2file.c,v 12.7 2010/07/04 17:42:23 tom Exp $")
 
 int
 mem2file(char *blob, char *name, char *mode)
@@ -42,7 +42,7 @@ mem2file(char *blob, char *name, char *mode)
 
     if ((fp = fopen(name, mode)) != 0) {
 
-	len = fwrite(blob, sizeof(char), (LEN_FREAD) strlen(blob), fp);
+	len = (int) fwrite(blob, sizeof(char), strlen(blob), fp);
 	(void) fclose(fp);
 
 	if ((save >= 0)

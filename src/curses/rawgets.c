@@ -72,7 +72,7 @@
 #include	"td_curse.h"
 #include	"dyn_str.h"
 
-MODULE_ID("$Id: rawgets.c,v 12.26 2010/07/03 18:27:29 tom Exp $")
+MODULE_ID("$Id: rawgets.c,v 12.28 2010/07/04 21:45:47 tom Exp $")
 
 #define	SHIFT	5
 
@@ -111,7 +111,7 @@ static void MoveTo(char *at);
 static void ShowAt(char *at);
 
 static WINDOW *Z;		/* window we use in this module */
-static char **Prefix;		/* insert/scrolling prefix, if any */
+static const char **Prefix;	/* insert/scrolling prefix, if any */
 static DYN *history;		/* record of keystrokes if logging active */
 static int xlast;		/* last usable column in screen */
 static int shift;		/* amount shifted in no-wrap mode */
@@ -363,7 +363,7 @@ DeleteWordBefore(char *at, int count)
 	    } else
 		found++;
 	}
-	at = DeleteBefore(at, at - s);
+	at = DeleteBefore(at, (int) (at - s));
     }
     return (at);
 }
@@ -375,7 +375,7 @@ static void
 ShowPrefix(void)
 {
     if (Z && Prefix) {
-	char *prefix = Prefix[Imode];
+	const char *prefix = Prefix[Imode];
 
 	(void) NoHighlight(Z);
 	(void) wmove(Z, y_rawgets, (x_rawgets - (int) strlen(prefix)));
@@ -446,7 +446,7 @@ Redisplay(void)
 int
 wrawgets(WINDOW *win,
 	 char *bfr,		/* in/out buffer */
-	 char **pref,		/* prefix, for insert/scroll */
+	 const char **pref,	/* prefix, for insert/scroll */
 	 int buffer_len,	/* maximum length of 'bfr' */
 	 int field_len,		/* maximum length of display-field */
 	 int first_col,		/* initial column for editing */
@@ -456,9 +456,13 @@ wrawgets(WINDOW *win,
 	 char **command,	/* nonnull: read inputs */
 	 int logging)		/* nonnull: write inputs */
 {
-    int c, EraseChar = erasechar(), EraseWord = eraseword(), EraseLine =
-    killchar();
-    int count, log_count, literal;
+    int c;
+    int EraseChar = erasechar();
+    int EraseWord = eraseword();
+    int EraseLine = killchar();
+    int count;
+    int log_count;
+    int literal;
     static DYN *saved;
 
     saved = dyn_copy(saved, bfr);
@@ -497,8 +501,8 @@ wrawgets(WINDOW *win,
     }
 
     /* set editing-position to initial column */
-    if ((count = strlen(CurIns)) < first_col)
-	first_col = count;
+    if ((count = (int) strlen(CurIns)) < first_col)
+	first_col = (int) count;
     CurIns += first_col;
     MoveTo(CurIns);
 
@@ -628,16 +632,16 @@ wrawgets(WINDOW *win,
 	}
 
 	if ((c == EraseChar) || (c == '\b')) {
-	    CurIns = DeleteBefore(CurIns, count);
+	    CurIns = DeleteBefore(CurIns, (int) count);
 	} else if (c == EraseWord) {
-	    CurIns = DeleteWordBefore(CurIns, count);
+	    CurIns = DeleteWordBefore(CurIns, (int) count);
 	} else if (c == EraseLine) {
 	    if (Imode) {
-		count = strlen(bfr);
-		(void) DeleteBefore(bfr + count, count);
+		count = (int) strlen(bfr);
+		(void) DeleteBefore(bfr + count, (int) count);
 		break;
 	    } else
-		CurIns = DeleteBefore(CurIns, CurIns - bfr);
+		CurIns = DeleteBefore(CurIns, (int) (CurIns - bfr));
 
 	} else if (to_left(c)) {
 	    if (CurIns > bfr) {

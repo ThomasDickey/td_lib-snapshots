@@ -13,10 +13,10 @@
 
 #include "ptypes.h"
 
-MODULE_ID("$Id: filesize.c,v 12.4 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: filesize.c,v 12.5 2010/07/04 10:27:36 tom Exp $")
 
 off_t
-filesize(char *name)
+filesize(const char *name)
 {
     Stat_t sb;
 

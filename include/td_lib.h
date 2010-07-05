@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 12.27 2010/07/03 16:15:44 tom Exp $ */
+/* $Id: td_lib.h,v 12.30 2010/07/04 21:19:44 tom Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for TD_LIB common
@@ -122,9 +122,9 @@
 #endif	/* SYS_UNIX */
 
 	/* dftenv.c --------------------------------------------------- */
-	char *	dftenv(
-			char *	value,
-			char *	name
+	const char *	dftenv(
+			const char *	value,
+			const char *	name
 			)
 			;
 
@@ -143,13 +143,13 @@
 
 	/* doalloc.c -------------------------------------------------- */
 	void *	doalloc(
-			void *	oldp,
-			unsigned	len
+			void *		oldp,
+			size_t		len
 			)
 			;
 
 	void	dofree(
-			void *	oldp
+			void *		oldp
 			)
 			;
 
@@ -165,7 +165,7 @@
 
 	/* dotname.c -------------------------------------------------- */
 	int	dotname (
-			char *	path
+			const char *	path
 			)
 			;
 
@@ -178,15 +178,15 @@
 
 	/* editfile.c ------------------------------------------------- */
 	int	editfile(
-			char *		name,
+			const char *	name,
 			int (*func) (FILE* o, FILE* i, Stat_t* s),
-			Stat_t *		sb
+			Stat_t *	sb
 			)
 			;
 
 	/* edittree.c ------------------------------------------------- */
 	int	edittree(
-			char *		name,
+			const char *	name,
 			int (*func) (FILE* o, FILE* i, Stat_t* s),
 			int		recur,
 			int		links
@@ -202,8 +202,8 @@
 
 	/* execute.c -------------------------------------------------- */
 	int	execute(
-			char *	verb,
-			char *	args
+			const char *	verb,
+			const char *	args
 			)
 			;
 
@@ -216,7 +216,7 @@
 
 	/* file2mem.c ------------------------------------------------- */
 	char *	file2mem(
-			char *	name
+			const char *	name
 			)
 			;
 
@@ -235,15 +235,15 @@
 	/* filecopy.c ------------------------------------------------- */
 #if	defined(SYS_UNIX) || defined(MSDOS)
 	int	filecopy(
-			char *	src,
-			char *	dst,
+			const char *	src,
+			const char *	dst,
 			int	copy
 			)
 			;
 
 	/* filesize.c ------------------------------------------------- */
 	off_t	filesize(
-			char *	name
+			const char *	name
 			)
 			;
 #endif	/* SYS_UNIX or MSDOS */
@@ -268,8 +268,8 @@
 #ifdef	SYS_UNIX
 	int	for_admin2(
 			int (*func)	(void),
-			int	the_uid,
-			int	the_gid
+			uid_t		the_uid,
+			gid_t		the_gid
 			)
 			;
 
@@ -281,8 +281,8 @@
 	/* for_user.c ------------------------------------------------- */
 	int	for_user2(
 			void (*func)	(void),
-			int	the_uid,
-			int	the_gid
+			uid_t		the_uid,
+			gid_t		the_gid
 			)
 			;
 
@@ -324,14 +324,14 @@
 
 	/* gid2s.c ---------------------------------------------------- */
 	char *	gid2s(
-			int	gid
+			gid_t	gid
 			)
 			;
 
 	/* in_group.c ------------------------------------------------- */
 #ifdef SYS_UNIX
 	int	in_group(
-			int	gid
+			gid_t	gid
 			)
 			;
 #endif
@@ -349,7 +349,7 @@
 
 	/* istextfl.c ------------------------------------------------- */
 	int	istextfile(
-			char *	name
+			const char *	name
 			)
 			;
 
@@ -385,10 +385,10 @@
 
 	/* makeargv.c ------------------------------------------------- */
 	int	makeargv(
-			char **	argv,
-			int	maxarg,
-			char *	dst,
-			char *	src
+			char **		argv,
+			int		maxarg,
+			char *		dst,
+			const char *	src
 			)
 			;
 
@@ -408,10 +408,10 @@
 
 	/* name2s.c --------------------------------------------------- */
 	int	name2s(
-			char *	bfr,
-			int	maxbfr,
-			char *	name,
-			int	opt
+			char *		bfr,
+			int		maxbfr,
+			const char *	name,
+			int		opt
 			)
 			;
 
@@ -455,9 +455,9 @@ extern	int	localzone;
 	/* padedit.c -------------------------------------------------- */
 #ifdef	SYS_UNIX
 	int	padedit(
-			char *	name,
-			int	readonly,
-			char *	editor
+			const char *	name,
+			int		readonly,
+			const char *	editor
 			)
 			;
 #endif	/* SYS_UNIX */
@@ -480,8 +480,8 @@ extern	int	localzone;
 
 	/* pathcmp.c -------------------------------------------------- */
 	int	pathcmp(
-			char *	p1,
-			char *	p2
+			const char *	p1,
+			const char *	p2
 			)
 			;
 
@@ -494,15 +494,15 @@ extern	int	localzone;
 
 	/* pathleaf.c ------------------------------------------------- */
 	char *	pathleaf(
-			char *	path
+			const char *	path
 			)
 			;
 
 	/* relpath.c -------------------------------------------------- */
 	char *	relpath(
-			char *	dst,
-			char *	cwd,
-			char *	src
+			char *		dst,
+			const char *	cwd,
+			const char *	src
 			)
 			;
 #endif	/* SYS_UNIX or MSDOS */
@@ -510,34 +510,34 @@ extern	int	localzone;
 	/* revert.c --------------------------------------------------- */
 #ifdef	SYS_UNIX
 	int	revert(
-			char *	msg
+			const char *	msg
 			)
 			;
 
 	/* s2gid.c ---------------------------------------------------- */
 	int	s2gid(
-			char *	s
+			const char *	s
 			)
 			;
 
 	/* s2uid.c ---------------------------------------------------- */
 	int	s2uid(
-			char *	s
+			const char *	s
 			)
 			;
 #endif	/* SYS_UNIX */
 
 	/* samehead.c ------------------------------------------------- */
 	int	samehead(
-			char *	path,
-			char *	leaf
+			const char *	path,
+			const char *	leaf
 			)
 			;
 
 	/* sameleaf.c ------------------------------------------------- */
 	int	sameleaf(
-			char *	path,
-			char *	leaf
+			const char *	path,
+			const char *	leaf
 			)
 			;
 
@@ -555,17 +555,17 @@ extern	int	localzone;
 
 	/* setmtime.c ------------------------------------------------- */
 	int	setmtime(
-			char *	name,
-			time_t	mtime,
-			time_t	atime
+			const char *	name,
+			time_t		mtime,
+			time_t		atime
 			)
 			;
 
 	/* shoarg.c --------------------------------------------------- */
 	char 	*bldcmd (
-			char *	dst,
+			char *		dst,
 			const char *	src,
-			size_t	len
+			size_t		len
 			)
 			;
 
@@ -579,8 +579,8 @@ extern	int	localzone;
 
 	void	shoarg (
 			FILE *	fp,
-			char *	command,
-			char *	args
+			const char *	command,
+			const char *	args
 			)
 			;
 
@@ -651,34 +651,34 @@ extern	int	localzone;
 
 	/* strucmp.c -------------------------------------------------- */
 	int	strucmp(
-			char *	a,
-			char *	b
+			const char *	a,
+			const char *	b
 			)
 			;
 
 	/* strucpy.c -------------------------------------------------- */
 	char *	strucpy(
-			char *	a,
-			char *	b
+			char *		a,
+			const char *	b
 			)
 			;
 
 	char *	strlwrcpy(
-			char *	a,
-			char *	b
+			char *		a,
+			const char *	b
 			)
 			;
 
 	/* strwcmp.c -------------------------------------------------- */
 	int	strwcmp(
-			char *	wild,
-			char *	name
+			const char *	wild,
+			const char *	name
 			)
 			;
 
 	/* track_wd.c ------------------------------------------------- */
 	void	track_wd(
-			char *	path
+			const char *	path
 			)
 			;
 
@@ -718,15 +718,15 @@ extern	int	localzone;
 	char	**vec_passwd;
 #endif
 	char *	uid2s(
-			int	uid
+			uid_t	uid
 			)
 			;
 
 	/* usercopy.c ------------------------------------------------- */
 #ifdef	SYS_UNIX
 	int	usercopy(
-			char *	src,
-			char *	dst
+			const char *	src,
+			const char *	dst
 			)
 			;
 
@@ -741,7 +741,7 @@ extern	int	localzone;
 
 	/* vecalloc.c ------------------------------------------------- */
 	char	**vecalloc(
-			unsigned	len
+			size_t	len
 			)
 			;
 
@@ -792,8 +792,8 @@ extern	int	localzone;
 #if	defined(SYS_UNIX) || defined(MSDOS)
 
 #define	WALK_FUNC_ARGS	\
-			char *		path,\
-			char *		name,\
+			const char *	path,\
+			const char *	name,\
 			Stat_t *	sp,\
 			int		readable,\
 			int		level
@@ -801,10 +801,10 @@ extern	int	localzone;
 #define	WALK_FUNC(f)	f(WALK_FUNC_ARGS)
 
 	int	walktree(
-			char *	p,
-			char *	n,
+			const char *	p,
+			const char *	n,
 			int (*f)	(WALK_FUNC_ARGS),
-			char *	m,
+			const char *	m,
 			int	lvl
 			)
 			;

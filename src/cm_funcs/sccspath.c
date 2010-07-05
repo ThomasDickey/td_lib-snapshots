@@ -13,10 +13,10 @@
 #include	"ptypes.h"
 #include	"sccsdefs.h"
 
-MODULE_ID("$Id: sccspath.c,v 12.3 2004/03/07 16:31:58 tom Exp $")
+MODULE_ID("$Id: sccspath.c,v 12.4 2010/07/04 09:22:22 tom Exp $")
 
 char *
-sccspath(char *utility)
+sccspath(const char *utility)
 {
     static char bfr[BUFSIZ];
 #ifdef	SCCS_PATH

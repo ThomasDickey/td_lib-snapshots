@@ -27,7 +27,7 @@
 
 #include	"ptypes.h"
 
-MODULE_ID("$Id: doalloc.c,v 12.9 2010/07/03 15:53:42 tom Exp $")
+MODULE_ID("$Id: doalloc.c,v 12.10 2010/07/04 15:25:56 tom Exp $")
 
 static long count_alloc, count_freed;
 
@@ -158,7 +158,7 @@ logit(char *msg, int num)
  *	public entrypoints						*
  ************************************************************************/
 void *
-doalloc(void *oldp, unsigned amount)
+doalloc(void *oldp, size_t amount)
 {
     register void *newp;
 

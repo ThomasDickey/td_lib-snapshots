@@ -13,12 +13,12 @@
 
 #include "ptypes.h"
 
-MODULE_ID("$Id: dftenv.c,v 12.3 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: dftenv.c,v 12.4 2010/07/04 10:29:34 tom Exp $")
 
-char *
-dftenv(char *value, char *name)
+const char *
+dftenv(const char *value, const char *name)
 {
-    char *s;
+    const char *s;
     if ((s = getenv(name)) == 0)
 	s = value;
     return (s);

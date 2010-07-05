@@ -12,10 +12,10 @@
 #define CHR_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: strucmp.c,v 12.4 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: strucmp.c,v 12.5 2010/07/04 19:18:27 tom Exp $")
 
 int
-strucmp(char *a, char *b)
+strucmp(const char *a, const char *b)
 {
     int x, y;
 

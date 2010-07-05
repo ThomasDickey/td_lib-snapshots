@@ -25,7 +25,7 @@
 #include	"port2vms.h"
 #include	"td_qsort.h"
 
-MODULE_ID("$Id: dlettree.c,v 12.7 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: dlettree.c,v 12.9 2010/07/04 22:50:34 tom Exp $")
 
 typedef char *PTR;
 #define	CHUNK	127		/* 1 less than a power of 2 */
@@ -65,8 +65,8 @@ deletetree(char *oldname, int recur)
     Stat_t sb;
     char newname[MAXPATHLEN];
     char oldpath[MAXPATHLEN];
-    char *newpath;
-    int old_mode;
+    const char *newpath;
+    mode_t old_mode;
     unsigned num;
     PTR *vec;
     int ok = TRUE;
@@ -113,8 +113,7 @@ deletetree(char *oldname, int recur)
 	    }
 	    closedir(dirp);
 	    if (num) {
-		qsort((PTR) vec, (LEN_QSORT) num,
-		      sizeof(PTR), cmp_qsort);
+		qsort((PTR) vec, num, sizeof(PTR), cmp_qsort);
 		while (num-- != 0) {
 		    if (lstat(vec[num], &sb) < 0) {
 			fail(vec[num]);
@@ -140,7 +139,8 @@ deletetree(char *oldname, int recur)
 		dofree((PTR) vec);
 	    }
 	}
-	(void) chdir(oldpath);
+	if (chdir(oldpath) != 0)
+	    failed(oldpath);
 	if (ok && isDIR(old_mode)) {
 	    changes += deletedir(oldname);
 	    TELL_DIR(DIR2PATH(oldname));

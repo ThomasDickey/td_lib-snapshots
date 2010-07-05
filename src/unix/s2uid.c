@@ -20,7 +20,7 @@
 #define	STR_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: s2uid.c,v 12.6 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: s2uid.c,v 12.7 2010/07/04 09:27:38 tom Exp $")
 
 #ifdef	SYS_UNIX
 
@@ -56,7 +56,7 @@ unknown_uid(char *s)
 #endif
 
 int
-s2uid(char *s)
+s2uid(const char *s)
 {
     char *d;
     long val = strtol(s, &d, 0);

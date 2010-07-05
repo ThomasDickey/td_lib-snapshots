@@ -15,12 +15,12 @@
 #include "ptypes.h"
 #include "rcsdefs.h"
 
-MODULE_ID("$Id: samebr.c,v 12.5 2004/03/07 16:31:58 tom Exp $")
+MODULE_ID("$Id: samebr.c,v 12.6 2010/07/04 17:39:59 tom Exp $")
 
 static size_t
-two_dots(char *rev)
+two_dots(const char *rev)
 {
-    char *base = rev;
+    const char *base = rev;
     int dots = 0;
     while (*rev) {
 	if (*rev++ == '.')
@@ -31,7 +31,7 @@ two_dots(char *rev)
 }
 
 int
-samebranch(char *rev1, char *rev2)
+samebranch(const char *rev1, const char *rev2)
 {
     while (*rev1 && *rev2) {
 	size_t dots1 = two_dots(rev1), dots2 = two_dots(rev2);

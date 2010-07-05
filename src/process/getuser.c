@@ -17,14 +17,14 @@
 #define PWD_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: getuser.c,v 12.6 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: getuser.c,v 12.7 2010/07/04 09:14:53 tom Exp $")
 
 #ifdef	SYS_UNIX
 char *
 getuser(void)
 {
     static struct passwd p;
-    p = *getpwuid((int) getuid());
+    p = *getpwuid(getuid());
     return (p.pw_name);
 }
 #endif /* SYS_UNIX */

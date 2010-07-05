@@ -50,7 +50,7 @@
 #include	"ptypes.h"
 #include	"td_qsort.h"
 
-MODULE_ID("$Id: walktree.c,v 12.8 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: walktree.c,v 12.11 2010/07/04 20:12:21 tom Exp $")
 
 /************************************************************************
  *	local definitions						*
@@ -70,10 +70,10 @@ typedef char *PTR;
  * nest to a new level.
  */
 int
-walktree(char *patharg,
-	 char *namearg,
+walktree(const char *patharg,
+	 const char *namearg,
 	 int (*func) (WALK_FUNC_ARGS),
-	 char *type,
+	 const char *type,
 	 int level)
 {
     int total = 0, ok_acc = -1, mode = 0;
@@ -126,15 +126,15 @@ walktree(char *patharg,
 	    }
 	    (void) closedir(dp);
 	    if (num != 0) {
-		qsort((PTR) vec, (LEN_QSORT) num,
-		      sizeof(PTR), cmp_qsort);
+		qsort((PTR) vec, num, sizeof(PTR), cmp_qsort);
 		while (num-- != 0)
 		    total += walktree(new_wd, vec[num],
 				      func, type, level + 1);
 		dofree((PTR) vec);
 	    }
 	}
-	(void) chdir(old_wd);
+	if (chdir(old_wd) != 0)
+	    failed(old_wd);
     }
     return (total);
 }

@@ -22,7 +22,7 @@
 #define SIG_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: on_winch.c,v 12.8 2004/03/07 22:05:43 tom Exp $")
+MODULE_ID("$Id: on_winch.c,v 12.9 2010/07/04 17:47:36 tom Exp $")
 
 #ifdef SIGWINCH
 #define	ON_WINCH struct OnWinch
@@ -98,6 +98,8 @@ handle_resize(void)
 static
 SIGNAL_FUNC(catch_winch)
 {
+    (void) sig;
+
     caught_this = TRUE;
     if (!disable_this)
 	handle_resize();

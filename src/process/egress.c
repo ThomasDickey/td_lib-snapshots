@@ -14,7 +14,7 @@
 #define ERR_PTYPES
 #include <ptypes.h>
 
-MODULE_ID("$Id: egress.c,v 12.5 2010/07/03 16:11:42 tom Exp $")
+MODULE_ID("$Id: egress.c,v 12.7 2010/07/04 20:50:01 tom Exp $")
 
 int
 egress(char *pathname, int mode)
@@ -26,27 +26,28 @@ egress(char *pathname, int mode)
     } else if (mode == 0) {
 	return 0;
     } else {
-	int uid = (int) geteuid();
-	int gid = (int) getegid();
+	uid_t uid = geteuid();
+	gid_t gid = getegid();
 	unsigned mask;
+	unsigned umode = (unsigned) mode;
 
-	if (in_group((int) sb.st_gid))
+	if (in_group(sb.st_gid))
 	    gid = sb.st_gid;
 
 	if (!uid) {		/* root works with u+o+g rights */
-	    if (mode & X_OK) {
+	    if (umode & X_OK) {
 		if ((sb.st_mode & 0111) != 0)
 		    return 0;
 		mask = 0;	/* force error-return */
 	    } else {		/* root can r/w anything */
 		return 0;
 	    }
-	} else if (uid == (int) sb.st_uid) {
-	    mask = mode << 6;
-	} else if (gid == (int) sb.st_gid) {
-	    mask = mode << 3;
+	} else if (uid == sb.st_uid) {
+	    mask = umode << 6;
+	} else if (gid == sb.st_gid) {
+	    mask = umode << 3;
 	} else {
-	    mask = mode;
+	    mask = umode;
 	}
 	if ((sb.st_mode & mask) == mask)
 	    return 0;

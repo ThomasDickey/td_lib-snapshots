@@ -40,7 +40,7 @@
 #include	"rcsdefs.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: rcsedit.c,v 12.11 2010/07/03 15:44:10 tom Exp $")
+MODULE_ID("$Id: rcsedit.c,v 12.12 2010/07/04 15:52:24 tom Exp $")
 
 /* local definitions */
 #define	VERBOSE	if (verbose) PRINTF
@@ -194,7 +194,7 @@ SkipPastSemicolon(char *s)
  * Open the RCS file corresponding to 'name'.
  */
 int
-rcsopen(char *name, int show, int readonly)
+rcsopen(const char *name, int show, int readonly)
 {
     Stat_t sb;
     int fd;

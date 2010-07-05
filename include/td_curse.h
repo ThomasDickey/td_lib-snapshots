@@ -1,4 +1,4 @@
-/* $Id: td_curse.h,v 12.59 2010/03/24 00:38:05 tom Exp $ */
+/* $Id: td_curse.h,v 12.62 2010/07/05 00:30:41 tom Exp $ */
 
 /*
  * TD_LIB CURSES-related definitions
@@ -56,8 +56,8 @@
 
 #if defined(NEED_TERM_H)
 
-#if defined(HAVE_NCURSES_TERM_H)
-#include	<ncurses/term.h>
+#if defined(HAVE_NCURSESW_TERM_H)
+#include	<ncursesw/term.h>
 #elif defined(HAVE_NCURSES_TERM_H)
 #include	<ncurses/term.h>
 #elif defined(HAVE_TERM_H)
@@ -430,16 +430,16 @@ extern	int	y_rawgets;
 #endif
 	int	wrawgets (
 			WINDOW *	win,
-			char *	buffer,
-			char **	prefix,
-			int	buffer_len,
-			int	field_len,
-			int	first_col,
-			int	first_mode,
-			int	new_line,
-			int	fast_q,
-			char **	command,
-			int	logging
+			char *		buffer,
+			const char **	prefix,
+			int		buffer_len,
+			int		field_len,
+			int		first_col,
+			int		first_mode,
+			int		new_line,
+			int		fast_q,
+			char **		command,
+			int		logging
 			)
 			;
 
@@ -486,7 +486,7 @@ extern	int	y_rawgets;
 	void	win2fp(
 			WINDOW *	win,
 			FILE *	fp,
-			char *	prefix
+			const char *	prefix
 			)
 			;
 

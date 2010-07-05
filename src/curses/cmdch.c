@@ -48,7 +48,7 @@
 #include	"td_curse.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: cmdch.c,v 12.32 2010/07/03 16:18:22 tom Exp $")
+MODULE_ID("$Id: cmdch.c,v 12.33 2010/07/04 20:09:19 tom Exp $")
 
 #define	ESC(c)	((c) == '\033')
 #define	END(s)	s[strlen(s)-1]
@@ -125,7 +125,10 @@ int
 cmdch(int *cnt_)
 {
     int j = 0;
-    int c = EOS, done = FALSE, had_c = 0, count = 0;
+    int c = EOS;
+    int done = FALSE;
+    int had_c = 0;
+    int count = 0;
     char i_blk[1024];
     static int init = FALSE;
 #if defined(NCURSES_MOUSE_VERSION) && !defined(NO_XTERM_MOUSE)
@@ -317,7 +320,7 @@ cmdch(int *cnt_)
 	    }
 	} else if ((cnt_ != 0) && isdigit(c)) {
 	    had_c++;
-	    count = (count * 10) + (c - '0');
+	    count = ((count * 10) + (c - '0'));
 	} else
 	    done = TRUE;
     }

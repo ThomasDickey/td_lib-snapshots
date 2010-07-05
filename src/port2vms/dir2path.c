@@ -19,18 +19,18 @@
 #define	STR_PTYPES
 #include	"port2vms.h"
 
-MODULE_ID("$Id: dir2path.c,v 12.3 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: dir2path.c,v 12.4 2010/07/04 15:27:39 tom Exp $")
 
 static void
-insert(char *dst, char *src)
+insert(char *dst, const char *src)
 {
     int c, d;
 
-    for (d = strlen(src), c = strlen(dst); c >= 0; c--)
+    for (d = (int) strlen(src), c = (int) strlen(dst); c >= 0; c--)
 	dst[c + d] = dst[c];
 
     while ((c = *src++) != EOS)
-	*dst++ = c;
+	*dst++ = (char) c;
 }
 
 char *

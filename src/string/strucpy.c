@@ -19,13 +19,13 @@
 #define CHR_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: strucpy.c,v 12.6 2010/07/03 16:16:24 tom Exp $")
+MODULE_ID("$Id: strucpy.c,v 12.7 2010/07/04 14:54:38 tom Exp $")
 
 /*
  * Copy string, converting to uppercase
  */
 char *
-strucpy(char *dst, char *src)
+strucpy(char *dst, const char *src)
 {
     char *base = dst;
     int c;
@@ -42,7 +42,7 @@ strucpy(char *dst, char *src)
  * Copy string, converting to lowercase
  */
 char *
-strlwrcpy(char *dst, char *src)
+strlwrcpy(char *dst, const char *src)
 {
     char *base = dst;
     int c;

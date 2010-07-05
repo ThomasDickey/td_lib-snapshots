@@ -19,14 +19,14 @@
 #include	"ptypes.h"
 #include	"rcsdefs.h"
 
-MODULE_ID("$Id: rcspath.c,v 12.5 2004/03/07 16:31:58 tom Exp $")
+MODULE_ID("$Id: rcspath.c,v 12.6 2010/07/04 17:30:10 tom Exp $")
 
 char *
-rcspath(char *utility)
+rcspath(const char *utility)
 {
     static char bfr[BUFSIZ];
 #ifdef	RCS_PATH
-    auto char tmp[BUFSIZ];
+    char tmp[BUFSIZ];
     utility = pathcat(tmp, RCS_PATH, utility);
 #endif
     if (which(bfr, sizeof(bfr), utility, ".") <= 0) {

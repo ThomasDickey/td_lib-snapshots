@@ -25,7 +25,7 @@
 
 #include	"td_curse.h"
 
-MODULE_ID("$Id: wrepaint.c,v 12.15 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: wrepaint.c,v 12.16 2010/07/04 20:00:27 tom Exp $")
 
 void
 wrepaint(WINDOW *win,
@@ -37,6 +37,7 @@ wrepaint(WINDOW *win,
      * 'touchwin()'.
      */
 #if	defined(GOOD_TOUCHWIN)
+    (void) row;
     touchwin(win);
     wrefresh(curscr);
 #else

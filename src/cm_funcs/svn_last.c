@@ -12,7 +12,7 @@
 #include	<time.h>
 #include	"rcsdefs.h"
 
-MODULE_ID("$Id: svn_last.c,v 12.3 2010/07/03 15:49:19 tom Exp $")
+MODULE_ID("$Id: svn_last.c,v 12.4 2010/07/04 16:51:34 tom Exp $")
 
 #define NAME_LIST "entries"
 
@@ -144,10 +144,10 @@ read_entries(SVN_WORK * cache)
 
 static int
 read_from_cache(SVN_WORK * cache,
-		char *leaf,
-		char **vers_,
+		const char *leaf,
+		const char **vers_,
 		time_t * date_,
-		char **lock_)
+		const char **lock_)
 {
     int n;
     SVN_ENTRY *my_list = cache->Entries;
@@ -164,10 +164,10 @@ read_from_cache(SVN_WORK * cache,
 }
 
 static void
-trySVN(char *path,
-       char **vers_,
+trySVN(const char *path,
+       const char **vers_,
        time_t * date_,
-       char **lock_)
+       const char **lock_)
 {
     char working[MAXPATHLEN];
     char *leaf = fleaf(path);
@@ -214,11 +214,11 @@ trySVN(char *path,
 }
 
 void
-svnlast(char *working,		/* working directory (absolute) */
-	char *path,		/* pathname to check (may be relative) */
-	char **vers_,
+svnlast(const char *working,	/* working directory (absolute) */
+	const char *path,	/* pathname to check (may be relative) */
+	const char **vers_,
 	time_t * date_,
-	char **lock_)
+	const char **lock_)
 {
     char temp[MAXPATHLEN];
 

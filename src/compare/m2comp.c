@@ -21,7 +21,7 @@
 #define	SCOMP	m2comp		/* name of this module */
 #include "td_scomp.h"
 
-MODULE_ID("$Id: m2comp.c,v 12.7 2010/07/03 16:10:01 tom Exp $")
+MODULE_ID("$Id: m2comp.c,v 12.8 2010/07/04 22:34:10 tom Exp $")
 
 #define	INSERT	1
 #define	DELETE	2
@@ -82,14 +82,14 @@ m2comp(SCOMP_TYPE v1,		/* "old" vector to compare  */
 
     SAVE *save_list;		/* global, so we can free cells */
     int save_size;		/* # we get per allocation */
-    unsigned save_SIZE;		/* actual allocation-size */
+    size_t save_SIZE;		/* actual allocation-size */
 
     save_list = 0;
     save_size = (n1 + n2 + 1) / 2;
     save_SIZE = sizeof(SAVE) + (unsigned) (save_size - 1) * sizeof(EDIT);
 
     ORIGIN = (Line) ((n1 > n2) ? n1 : n2);
-    max_d = 2 * ORIGIN;
+    max_d = (unsigned) (2 * ORIGIN);
     last_d = NEW(Line, max_d + 1);
     script = NEW(EDIT *, max_d + 1);
 
@@ -117,7 +117,7 @@ m2comp(SCOMP_TYPE v1,		/* "old" vector to compare  */
      */
     for (d = 1; d <= max_d; ++d) {
 	/* for each relevant diagonal */
-	for (k = lower; k <= upper; k += 2) {
+	for (k = lower; k <= upper; k = (Line) (k + 2)) {
 
 	    /* get space for the next edit instruction */
 	    if ((ptr = save_list) == 0
@@ -139,7 +139,7 @@ m2comp(SCOMP_TYPE v1,		/* "old" vector to compare  */
 		 * moving right from the last d-1 on diagonal
 		 * k-1.
 		 */
-		row = last_d[k + 1] + 1;
+		row = (Line) (last_d[k + 1] + 1);
 		nxt->link = script[k + 1];
 		nxt->op = DELETE;
 	    } else {
@@ -153,7 +153,7 @@ m2comp(SCOMP_TYPE v1,		/* "old" vector to compare  */
 
 	    /* Code common to the two cases */
 	    nxt->line1 = row;
-	    nxt->line2 = col = row + k - ORIGIN;
+	    nxt->line2 = col = (Line) (row + k - ORIGIN);
 	    script[k] = nxt;
 
 	    /* Slide down the diagonal */
@@ -173,13 +173,15 @@ m2comp(SCOMP_TYPE v1,		/* "old" vector to compare  */
 		break;
 	    }
 
-	    if (row == n1)
+	    if (row == n1) {
 		/* Hit last row, don't look to the left */
-		lower = k + 2;
+		lower = (Line) (k + 2);
+	    }
 
-	    if (col == n2)
+	    if (col == n2) {
 		/* Hit last column, don't look to the right */
-		upper = k - 2;
+		upper = (Line) (k - 2);
+	    }
 	}
 	if (done)
 	    break;

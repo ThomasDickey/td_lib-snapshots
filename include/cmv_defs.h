@@ -1,4 +1,4 @@
-/* $Id: cmv_defs.h,v 12.6 2004/03/07 21:07:17 tom Exp $ */
+/* $Id: cmv_defs.h,v 12.8 2010/07/04 21:47:57 tom Exp $ */
 
 #ifndef	CMV_DEFS_H
 #define	CMV_DEFS_H
@@ -33,23 +33,23 @@
 			;
 
 	char *	cmv_file(
-			char *	working_dir,
-			char *	pathname
+			const char *	working_dir,
+			const char *	pathname
 			)
 			;
 
 	void	get_cmv_lock(
-			char *	working_dir,
-			char *	pathname,
-			char **	lockedby,
-			char **	revision,
+			const char *	working_dir,
+			const char *	pathname,
+			const char **	lockedby,
+			const char **	revision,
 			time_t *	t_
 			)
 			;
 
 	void	purge_cmv_dir(
-			char *	working_dir,
-			char *	pathname
+			const char *	working_dir,
+			const char *	pathname
 			)
 			;
 
@@ -59,21 +59,21 @@
 
 	/* cmv_last.c ------------------------------------------------- */
 	void	cmv_last(
-			char *	wd,
-			char *	n,
-			char **	v_,
+			const char *	wd,
+			const char *	n,
+			const char **	v_,
 			time_t *	t_,
-			char **	l_
+			const char **	l_
 			)
 			;
 
 	/* lastrev.c -------------------------------------------------- */
 	void	lastrev(
-			char *	wd,
-			char *	n,
-			char **	v_,
+			const char *	wd,
+			const char *	n,
+			const char **	v_,
 			time_t *	t_,
-			char **	l_
+			const char **	l_
 			)
 			;
 

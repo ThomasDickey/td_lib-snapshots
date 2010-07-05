@@ -15,10 +15,10 @@
 #define	STR_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: samehead.c,v 12.4 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: samehead.c,v 12.5 2010/07/04 09:26:50 tom Exp $")
 
 int
-samehead(char *path1, char *path2)
+samehead(const char *path1, const char *path2)
 {
     int match = 0;
     int n;

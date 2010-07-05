@@ -23,7 +23,7 @@
 #include "td_sheet.h"
 #include <ctype.h>
 
-MODULE_ID("$Id: field_of.c,v 12.7 2010/05/24 22:25:22 tom Exp $")
+MODULE_ID("$Id: field_of.c,v 12.9 2010/07/04 23:57:06 tom Exp $")
 
 static int opt_Blanks;
 
@@ -132,7 +132,7 @@ skip_to_field(char *list,
 	}
     } else {
 	*first = 0;
-	*last = "";
+	*last = txtalloc("");
 	N = -1;
     }
     return N;
@@ -145,7 +145,9 @@ static char *
 UnquotedField(DYN ** dst, char *src)
 {
     char *next = skip_to_comma(src);
-    int quote = EOS, first = TRUE, last = -1;
+    int quote = EOS;
+    int first = TRUE;
+    int last = -1;
     int c;
 
     dyn_init(dst, BUFSIZ);
@@ -168,7 +170,7 @@ UnquotedField(DYN ** dst, char *src)
 		if (first)	/* ignore leading blank */
 		    continue;
 	    } else		/* point to last nonblank */
-		last = dyn_length(*dst);
+		last = (int) dyn_length(*dst);
 	}
 
 	*dst = dyn_append_c(*dst, c);
@@ -177,7 +179,7 @@ UnquotedField(DYN ** dst, char *src)
 
     if (last >= 0) {
 	dyn_string(*dst)[last + 1] = EOS;
-	(*dst)->cur_length = last;	/* patch */
+	(*dst)->cur_length = (size_t) last;	/* patch */
     }
 
     return dyn_string(*dst);
@@ -239,15 +241,15 @@ set_field_of(char *list,
 
     /* ensure that the argument is nonnull */
     if (buffer == 0)
-	buffer = "";
+	buffer = txtalloc("");
 
     /* check to see if we must quote the string */
     if (must_quote(buffer))
 	buffer = QuotedField(buffer);
 
     /* allocate sufficient space for the new data */
-    need = strlen(buffer) + strlen(next) + (item - list) + N;
-    list = doalloc(list, (unsigned) need + 1);
+    need = strlen(buffer) + strlen(next) + (size_t) ((item - list) + N);
+    list = doalloc(list, need + 1);
 
     /*
      * If we had prior contents, must reformat

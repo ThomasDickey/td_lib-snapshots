@@ -16,13 +16,13 @@
 
 #include	"ptypes.h"
 
-MODULE_ID("$Id: s2gid.c,v 12.6 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: s2gid.c,v 12.7 2010/07/04 09:27:26 tom Exp $")
 
 #ifdef	SYS_UNIX
 #include	<grp.h>
 
 int
-s2gid(char *s)
+s2gid(const char *s)
 {
     char *d;
     long val = strtol(s, &d, 0);

@@ -26,7 +26,7 @@
 #include	<sccsdefs.h>
 #include	<cmv_defs.h>
 
-MODULE_ID("$Id: cmv_last.c,v 12.13 2006/10/01 13:38:33 tom Exp $")
+MODULE_ID("$Id: cmv_last.c,v 12.14 2010/07/04 16:49:33 tom Exp $")
 
 /*
  * Set the release.version and date values iff we find a legal sccs-file at
@@ -37,8 +37,8 @@ MODULE_ID("$Id: cmv_last.c,v 12.13 2006/10/01 13:38:33 tom Exp $")
  * (except for the last line, each also ends with a ':').
  */
 static void
-ScanSCCS(char *path,
-	 char **vers_,
+ScanSCCS(const char *path,
+	 const char **vers_,
 	 time_t * date_)
 {
     FILE *fp = fopen(path, "r");
@@ -90,11 +90,11 @@ ScanSCCS(char *path,
 /******************************************************************************/
 
 void
-cmv_last(char *working,		/* working directory (absolute) */
-	 char *path,		/* pathname to check (may be relative) */
-	 char **vers_,
+cmv_last(const char *working,	/* working directory (absolute) */
+	 const char *path,	/* pathname to check (may be relative) */
+	 const char **vers_,
 	 time_t * date_,
-	 char **lock_)
+	 const char **lock_)
 {
     char *archive = cmv_file(working, path);
 

@@ -15,13 +15,13 @@
 #define		STR_PTYPES
 #include	"port2vms.h"
 
-MODULE_ID("$Id: path2vms.c,v 12.3 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: path2vms.c,v 12.4 2010/07/04 15:29:37 tom Exp $")
 
 char *
 path2vms(char *dst, char *src)
 {
     char tmp[MAXPATHLEN];
-    int len = strlen(strcpy(tmp, src));
+    int len = (int) strlen(strcpy(tmp, src));
     if (len == 0 || tmp[len - 1] != '/')
 	(void) strcat(tmp, "/");
     return (name2vms(dst, tmp));

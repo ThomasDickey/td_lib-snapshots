@@ -39,7 +39,7 @@
 #include "rcsdefs.h"
 #include <errno.h>
 
-MODULE_ID("$Id: rcstemp.c,v 12.10 2010/07/03 15:46:41 tom Exp $")
+MODULE_ID("$Id: rcstemp.c,v 12.11 2010/07/04 15:31:34 tom Exp $")
 
 #define	DEBUG	if (RCS_DEBUG) PRINTF
 
@@ -58,7 +58,7 @@ rcstemp(char *working, int copy)
 	&& !saves_uid()
 #endif
 	) {
-	char *tf = pathcat(tmp, "/tmp", uid2s((int) getuid()));
+	char *tf = pathcat(tmp, "/tmp", uid2s(getuid()));
 	int mode = ((getgid() == getegid())
 		    ? GROUP_OPEN
 		    : WORLD_OPEN);
@@ -66,8 +66,8 @@ rcstemp(char *working, int copy)
 
 	DEBUG(".. rcstemp mode is %o gid:%d(%s) egid:%d(%s)\n",
 	      mode,
-	      (int) getgid(), gid2s((int) getgid()),
-	      (int) getegid(), gid2s((int) getegid()));
+	      getgid(), gid2s(getgid()),
+	      getegid(), gid2s(getegid()));
 
 	if (stat_dir(tf, &sb) < 0) {
 	    int oldmask = (int) umask(0);
@@ -89,7 +89,7 @@ rcstemp(char *working, int copy)
 	    DEBUG(".. %s group is %d(%s)\n",
 		  tf,
 		  (int) (sb.st_gid),
-		  gid2s((int) (sb.st_gid)));
+		  gid2s(sb.st_gid));
 
 	    if (getgid() != sb.st_gid)
 		mode = WORLD_OPEN;

@@ -39,7 +39,7 @@
 #include	"ptypes.h"
 #include	<errno.h>
 
-MODULE_ID("$Id: padedit.c,v 12.7 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: padedit.c,v 12.9 2010/07/04 22:35:02 tom Exp $")
 
 #ifdef	SYS_UNIX
 
@@ -167,7 +167,7 @@ spawn(char *cmd, char **argv)
 }
 
 int
-padedit(char *name, int readonly, char *editor)
+padedit(const char *name, int readonly, const char *editor)
 {
     int lc[2];
     int code = scr_size(lc);
@@ -194,14 +194,14 @@ padedit(char *name, int readonly, char *editor)
 	argc = 0;
 	argv[argc++] = xt;
 	if ((display = getenv("DISPLAY")) != NULL) {
-	    argv[argc++] = "-display";
+	    argv[argc++] = txtalloc("-display");
 	    argv[argc++] = display;
 	}
-	argv[argc++] = "-title";
+	argv[argc++] = txtalloc("-title");
 	argv[argc++] = the_title;
-	argv[argc++] = "-e";
-	argc += makeargv(&argv[argc], (int) (SIZEOF(argv) - argc - 2), tmp, editor);
-	argv[argc++] = name;
+	argv[argc++] = txtalloc("-e");
+	argc += makeargv(&argv[argc], ((int) SIZEOF(argv) - argc - 2), tmp, editor);
+	argv[argc++] = txtalloc(name);
 	argv[argc] = 0;
 
 	if (readonly) {		/* spawn and run away */

@@ -16,14 +16,14 @@
 #define PWD_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: gethome.c,v 12.7 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: gethome.c,v 12.8 2010/07/04 09:14:39 tom Exp $")
 
 char *
 gethome(void)
 {
 #ifdef	SYS_UNIX
     struct passwd *q;
-    char *r;
+    const char *r;
     static char *home;
 
     if (home == 0) {

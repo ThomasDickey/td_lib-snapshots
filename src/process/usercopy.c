@@ -17,11 +17,12 @@
 
 #include	"ptypes.h"
 
-MODULE_ID("$Id: usercopy.c,v 12.6 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: usercopy.c,v 12.7 2010/07/04 18:18:04 tom Exp $")
 
 #ifdef	SYS_UNIX
 
-static char *ucp_src, *ucp_dst;
+static const char *ucp_src, *ucp_dst;
+
 static void
 ucp_func(void)
 {
@@ -29,9 +30,8 @@ ucp_func(void)
 }
 
 int
-usercopy(
-	    char *src,
-	    char *dst)
+usercopy(const char *src,
+	 const char *dst)
 {
     ucp_src = src;
     ucp_dst = dst;

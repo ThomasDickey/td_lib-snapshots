@@ -40,7 +40,7 @@
 #define	STR_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: name2s.c,v 12.8 2010/07/03 15:55:31 tom Exp $")
+MODULE_ID("$Id: name2s.c,v 12.9 2010/07/04 20:48:28 tom Exp $")
 
 #define	isshell(c)	(strchr("*%?$()[]{}|<>^&;#\\\"`'~", c) != 0)
 #define	isAEGIS(c)	(strchr("*%?()[]{}\\", c) != 0)
@@ -51,7 +51,7 @@ MODULE_ID("$Id: name2s.c,v 12.8 2010/07/03 15:55:31 tom Exp $")
 #endif
 
 int
-name2s(char *bfr, int len, char *name, int opt)
+name2s(char *bfr, int len, const char *name, int opt)
 {
     int num = 0;
     int c;
