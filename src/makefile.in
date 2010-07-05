@@ -1,4 +1,4 @@
-# $Id: makefile.in,v 12.4 1997/09/11 10:38:35 tom Exp $
+# $Id: makefile.in,v 12.5 2010/07/05 10:02:43 tom Exp $
 # MAKE-file for miscellaneous library routines
 
 ####### (Environment) ##########################################################
@@ -19,5 +19,5 @@ clean \
 clobber \
 distclean \
 lint.out \
-run_test \
+check \
 install ::	$(SOURCES)

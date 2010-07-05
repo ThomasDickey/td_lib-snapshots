@@ -19,7 +19,7 @@
 #define TIM_PTYPES
 #include	"port2vms.h"
 
-MODULE_ID("$Id: zone2vms.c,v 12.6 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: zone2vms.c,v 12.7 2010/07/05 15:42:31 tom Exp $")
 
 #define	M_APR	3
 #define	M_OCT	9
@@ -59,6 +59,9 @@ _MAIN
     time_t unix_time = 722271384;	/* time(0) for Nov 20, 1992 */
     time_t real_time;
     int j;
+
+    (void) argc;
+    (void) argv;
 
     for (j = 0; j < 27; j++) {
 	real_time = unix_time + zone2vms(unix_time);

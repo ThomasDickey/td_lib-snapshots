@@ -16,9 +16,10 @@
  *		list are computed by copying pointers from the input-arguments.
  */
 
+#define STR_PTYPES
 #include <ptypes.h>
 
-MODULE_ID("$Id: vecedit.c,v 12.6 2010/07/03 16:06:15 tom Exp $")
+MODULE_ID("$Id: vecedit.c,v 12.7 2010/07/05 14:21:35 tom Exp $")
 
 char **
 vecedit(char **text, char **script)
@@ -85,9 +86,10 @@ vecedit(char **text, char **script)
 }
 
 #ifdef	TEST
-void
+static void
 show_delta(char *buffer)
 {
+    PRINTF("delta:%s\n", buffer);
 }
 
 _MAIN

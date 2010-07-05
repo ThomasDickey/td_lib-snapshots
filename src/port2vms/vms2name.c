@@ -40,7 +40,7 @@
 #define	STR_PTYPES
 #include	"port2vms.h"
 
-MODULE_ID("$Id: vms2name.c,v 12.8 2010/07/04 17:42:48 tom Exp $")
+MODULE_ID("$Id: vms2name.c,v 12.9 2010/07/05 16:17:29 tom Exp $")
 
 #define	LOWER(p)	((isalpha(UCH(*p)) && isupper(UCH(*p))) ? LowerMacro(*p) : *p)
 
@@ -73,7 +73,7 @@ static struct {
 };
 
 char *
-vms2name(char *dst, char *src)
+vms2name(char *dst, const char *src)
 {
     size_t j;
     int uc_len = 0;
@@ -238,7 +238,7 @@ vms2name(char *dst, char *src)
 
 #ifdef	TEST
 static void
-dotest(int argc, char **argv)
+dotest(int argc, const char **argv)
 {
     int j;
     char buffer[MAXPATHLEN];
@@ -254,12 +254,14 @@ _MAIN
 {
     char current[MAXPATHLEN];
 
-    (void) getwd(current);
+    if (getcwd(current, sizeof(current)) == 0)
+	strcpy(current, ".");
+
     printf("current directory = \"%s\"\n", current);
-    if (argc > 1)
-	dotest(argc, argv);
-    else {
-	static char *testv[] =
+    if (argc > 1) {
+	dotest(argc, (const char **) argv);
+    } else {
+	static const char *testv[] =
 	{
 	    "A",
 	    "[A]",

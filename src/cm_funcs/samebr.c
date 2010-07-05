@@ -15,7 +15,7 @@
 #include "ptypes.h"
 #include "rcsdefs.h"
 
-MODULE_ID("$Id: samebr.c,v 12.6 2010/07/04 17:39:59 tom Exp $")
+MODULE_ID("$Id: samebr.c,v 12.7 2010/07/05 11:13:04 tom Exp $")
 
 static size_t
 two_dots(const char *rev)
@@ -54,14 +54,14 @@ samebranch(const char *rev1, const char *rev2)
 #ifdef	TEST
 static
 void
-do_test(char *rev1, char *rev2)
+do_test(const char *rev1, const char *rev2)
 {
     PRINTF("%8s %8s => %d\n", rev1, rev2, samebranch(rev1, rev2));
 }
 
 _MAIN
 {
-    static char *tbl[] =
+    static const char *tbl[] =
     {
 	"1",
 	"21",
@@ -74,15 +74,17 @@ _MAIN
 	"1.1.1.1",
 	"1.1.21.1"
     };
-    int j, k;
+    size_t j;
+    size_t k;
 
-    if (argc > 1)
-	for (j = 1; j < argc; j++)
+    if (argc > 1) {
+	for (j = 1; j < (size_t) argc; j++)
 	    do_test(argv[1], argv[j]);
-    else
+    } else {
 	for (j = 0; j < SIZEOF(tbl); j++)
 	    for (k = 0; k < SIZEOF(tbl); k++)
 		do_test(tbl[j], tbl[k]);
+    }
     exit(SUCCESS);
 }
 #endif

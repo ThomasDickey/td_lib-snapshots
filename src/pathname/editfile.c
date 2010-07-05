@@ -23,7 +23,7 @@
 #define		STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: editfile.c,v 12.6 2010/07/04 15:12:47 tom Exp $")
+MODULE_ID("$Id: editfile.c,v 12.7 2010/07/05 14:29:20 tom Exp $")
 
 #ifdef	vms
 #define	NEWVER(name)	(name)
@@ -87,6 +87,9 @@ int
 do_copy(FILE *ofp, FILE *ifp, Stat_t * sb)
 {
     char buffer[BUFSIZ];
+
+    (void) sb;
+
     while (fgets(buffer, sizeof(buffer), ifp))
 	if (fputs(buffer, ofp) < 0) {
 	    perror("do_copy");

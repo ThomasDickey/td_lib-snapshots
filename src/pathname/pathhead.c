@@ -30,10 +30,10 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: pathhead.c,v 12.6 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: pathhead.c,v 12.7 2010/07/05 17:32:33 tom Exp $")
 
 char *
-pathhead(char *path, Stat_t * sb_)
+pathhead(const char *path, Stat_t * sb_)
 {
     int trimmed = 0;
     Stat_t sb;
@@ -42,31 +42,31 @@ pathhead(char *path, Stat_t * sb_)
 
     if (sb_ == 0)
 	sb_ = &sb;
-    path = strcpy(buffer, path);
-    while ((s = fleaf_delim(path)) != NULL) {
+    strcpy(buffer, path);
+    while ((s = fleaf_delim(buffer)) != NULL) {
 #ifdef	apollo
-	if (!strcmp(path, "//"))
+	if (!strcmp(buffer, "//"))
 	    break;
 #endif
 	if (s[1] == EOS) {	/* trailing delimiter ? */
-	    if (path == s)
+	    if (buffer == s)
 		break;
 	    *s = EOS;		/* trim it */
 	    trimmed++;
 	} else {
-	    if (stat_dir(path, sb_) < 0) {
+	    if (stat_dir(buffer, sb_) < 0) {
 		*s = EOS;
 		trimmed++;
 	    } else
 		break;
 	}
     }
-    if (stat_dir(path, sb_) < 0
-	|| (*path == EOS)
+    if (stat_dir(buffer, sb_) < 0
+	|| (*buffer == EOS)
 	|| (s == 0 && !trimmed)) {
-	(void) stat(strcpy(path, "."), sb_);
+	(void) stat(strcpy(buffer, "."), sb_);
     }
-    return (path);
+    return (buffer);
 }
 
 #ifdef	TEST

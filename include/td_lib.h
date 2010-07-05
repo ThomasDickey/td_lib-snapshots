@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 12.30 2010/07/04 21:19:44 tom Exp $ */
+/* $Id: td_lib.h,v 12.33 2010/07/05 17:33:34 tom Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for TD_LIB common
@@ -15,7 +15,7 @@
 	void	failed(
 			const char * s
 			)
-			;
+			GCC_NORETURN ;
 
 	/* GENERIC-LIBRARY ******************************************** */
 
@@ -131,12 +131,12 @@
 	/* dlettree.c ------------------------------------------------- */
 #ifndef	LINTLIBRARY
 	extern	void	fail      (const char * text);
-	extern	int	deletefile(char * name);
-	extern	int	deletedir (char * name);
+	extern	int	deletefile(const char * name);
+	extern	int	deletedir (const char * name);
 #endif
 
 	int	deletetree(
-			char *		path,
+			const char *	path,
 			int		recur
 			)
 			;
@@ -209,7 +209,7 @@
 
 	/* file2arg.c ------------------------------------------------- */
 	int	file2argv(
-			char *	name,
+			const char *	name,
 			char ***	vec
 			)
 			;
@@ -355,9 +355,9 @@
 
 	/* lsbycols.c ------------------------------------------------- */
 	void	list_by_cols(
-			char **	listp,
-			int	sizep,
-			int	num
+			const char **	listp,
+			int		sizep,
+			int		num
 			)
 			;
 
@@ -487,7 +487,7 @@ extern	int	localzone;
 
 	/* pathhead.c ------------------------------------------------- */
 	char *	pathhead(
-			char *	path,
+			const char *	path,
 			Stat_t *	s
 			)
 			;
@@ -617,8 +617,8 @@ extern	int	localzone;
 
 	/* strbcmp.c -------------------------------------------------- */
 	int	strbcmp(
-			char *	a,
-			char *	b
+			const char *	a,
+			const char *	b
 			)
 			;
 
@@ -693,19 +693,19 @@ extern	int	localzone;
 
 	/* trimpath.c ------------------------------------------------- */
 	char *	trimpath(
-			char *	path,
-			char *	cwd
+			char *		path,
+			const char *	cwd
 			)
 			;
 
 	/* txtalloc.c ------------------------------------------------- */
 	char *	txtalloc(
-			const char * string
+			const char *	string
 			)
 			;
 
 	void	txtfree(
-			char *	string
+			char *		string
 			)
 			;
 

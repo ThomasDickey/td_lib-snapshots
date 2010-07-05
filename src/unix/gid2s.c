@@ -24,7 +24,7 @@
 #define	STR_PTYPES
 #include <td_btree.h>
 
-MODULE_ID("$Id: gid2s.c,v 12.15 2010/07/04 18:17:16 tom Exp $")
+MODULE_ID("$Id: gid2s.c,v 12.17 2010/07/05 16:38:00 tom Exp $")
 
 #if defined(HAVE_GETGRGID)
 
@@ -74,9 +74,11 @@ cmp_node(const void *a, const void *b)
 static void
 dpy_node(const void *a)
 {
+    const GID_DATA *p = (const GID_DATA *) a;
+
     PRINTF("%d:%s",
-	   ((const GID_DATA *) a)->user,
-	   ((const GID_DATA *) a)->name);
+	   (int) p->user,
+	   p->name);
 }
 
 static BI_TREE gid2s_tree =
@@ -111,7 +113,7 @@ _MAIN
 		PRINTF("? illegal character /%s/\n", d);
 		continue;
 	    }
-	    PRINTF("%d => \"%s\"\n", user, gid2s(user));
+	    PRINTF("%d => \"%s\"\n", user, gid2s((gid_t) user));
 	}
     } else {
 	int tst_len;
@@ -125,7 +127,7 @@ _MAIN
 	    if ((d = strchr(d, ':')) == 0)
 		continue;
 	    user = atoi(++d);
-	    PRINTF("%s -> %d -> %s\n", tst_vec[j], user, d = gid2s(user));
+	    PRINTF("%s -> %d -> %s\n", tst_vec[j], user, d = gid2s((gid_t) user));
 	    if (strcmp(tst_vec[j], d))
 		PRINTF("** DIFF\n");
 	}

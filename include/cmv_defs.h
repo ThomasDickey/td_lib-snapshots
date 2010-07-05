@@ -1,4 +1,4 @@
-/* $Id: cmv_defs.h,v 12.8 2010/07/04 21:47:57 tom Exp $ */
+/* $Id: cmv_defs.h,v 12.9 2010/07/05 10:59:41 tom Exp $ */
 
 #ifndef	CMV_DEFS_H
 #define	CMV_DEFS_H
@@ -27,8 +27,8 @@
 
 	/* cmv_dir.c ------------------------------------------------- */
 	char *	cmv_dir(
-			char *	working_dir,
-			char *	pathname
+			const char *	working_dir,
+			const char *	pathname
 			)
 			;
 

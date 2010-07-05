@@ -37,7 +37,7 @@
 #include "ptypes.h"
 #include "cmv_defs.h"
 
-MODULE_ID("$Id: cmv_dir.c,v 12.27 2010/07/04 21:47:40 tom Exp $")
+MODULE_ID("$Id: cmv_dir.c,v 12.28 2010/07/05 10:59:41 tom Exp $")
 
 /******************************************************************************/
 
@@ -616,7 +616,7 @@ LookupVault(const char *working_directory,
 
 /******************************************************************************/
 char *
-cmv_dir(char *working_directory, char *filename)
+cmv_dir(const char *working_directory, const char *filename)
 {
     char *name = 0;
     char temp[MAXPATHLEN];
@@ -724,8 +724,8 @@ _MAIN
 {
     int n;
     for (n = 1; n < argc; n++) {
-	char *s = cmv_dir(".", argv[n]);
-	char *t = cmv_file(".", argv[n]);
+	const char *s = cmv_dir(".", argv[n]);
+	const char *t = cmv_file(".", argv[n]);
 	if (s == 0)
 	    s = "?";
 	if (t == 0)

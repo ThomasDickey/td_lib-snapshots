@@ -25,7 +25,7 @@
 #include	"port2vms.h"
 #include	"td_qsort.h"
 
-MODULE_ID("$Id: dlettree.c,v 12.9 2010/07/04 22:50:34 tom Exp $")
+MODULE_ID("$Id: dlettree.c,v 12.10 2010/07/05 14:31:00 tom Exp $")
 
 typedef char *PTR;
 #define	CHUNK	127		/* 1 less than a power of 2 */
@@ -40,14 +40,16 @@ typedef char *PTR;
 #define	TELL_SCAN(name)	FPRINTF(stderr, "%d\t%s scan directory %s\n", TELL_(name))
 
 int
-deletedir(char *s)
+deletedir(const char *s)
 {
+    (void) s;
     return 1;
 }
 
 int
-deletefile(char *s)
+deletefile(const char *s)
 {
+    (void) s;
     return 1;
 }
 #else
@@ -57,7 +59,7 @@ deletefile(char *s)
 #endif
 
 int
-deletetree(char *oldname, int recur)
+deletetree(const char *oldname, int recur)
 {
     DIR *dirp;
     DirentT *dp;
@@ -73,7 +75,7 @@ deletetree(char *oldname, int recur)
 
 #ifdef	TEST
     static char stack[] = ". . . . . . . ";
-    char *nesting = &stack[sizeof(stack) - (recur * 2) - 1];
+    char *nesting = &stack[(int) sizeof(stack) - (recur * 2) - 1];
 #endif
 
     if (stat(oldname, &sb) < 0) {
@@ -157,7 +159,7 @@ deletetree(char *oldname, int recur)
 
 #ifdef	TEST
 static void
-do_test(int argc, char **argv)
+do_test(int argc, const char **argv)
 {
     int j;
     int recur = FALSE;
@@ -173,10 +175,10 @@ do_test(int argc, char **argv)
 /*ARGSUSED*/
 _MAIN
 {
-    if (argc > 1)
-	do_test(argc, argv);
-    else {
-	static char *tbl[] =
+    if (argc > 1) {
+	do_test(argc, (const char **) argv);
+    } else {
+	static const char *tbl[] =
 	{
 	    "?",
 #ifdef	vms

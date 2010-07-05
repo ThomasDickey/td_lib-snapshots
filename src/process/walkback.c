@@ -15,7 +15,7 @@
 #include	"ptypes.h"
 #include	<errno.h>
 
-MODULE_ID("$Id: walkback.c,v 12.9 2010/07/04 13:16:31 tom Exp $")
+MODULE_ID("$Id: walkback.c,v 12.10 2010/07/05 16:17:46 tom Exp $")
 
 #ifdef	SYS_UNIX
 
@@ -119,6 +119,8 @@ do_test(void)
 
 _MAIN
 {
+    (void) argc;
+
     walkback(argv[0]);
     do_test();
     walkback((char *) 0);

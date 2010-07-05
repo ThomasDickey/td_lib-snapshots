@@ -37,7 +37,7 @@
 #define	TIM_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: newzone.c,v 12.9 2010/07/03 15:41:37 tom Exp $")
+MODULE_ID("$Id: newzone.c,v 12.10 2010/07/05 11:00:45 tom Exp $")
 
 #define	SIX_MM	(6 * (30 * DAY))
 
@@ -186,6 +186,9 @@ test(void)
 
 _MAIN
 {
+    (void) argc;
+    (void) argv;
+
     now = EST_REF;
     PRINTF("** now = %s", ctime(&now));
     test();

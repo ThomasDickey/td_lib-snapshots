@@ -20,10 +20,10 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: trimpath.c,v 12.7 2010/05/24 23:51:19 tom Exp $")
+MODULE_ID("$Id: trimpath.c,v 12.8 2010/07/05 15:03:35 tom Exp $")
 
 char *
-trimpath(char *path, char *cwd)
+trimpath(char *path, const char *cwd)
 {
     static char slash[] =
     {PATH_SLASH, EOS};
@@ -102,13 +102,15 @@ trimpath(char *path, char *cwd)
 }
 
 #ifdef	TEST
-void
-do_test(int argc, char **argv)
+static void
+do_test(int argc, const char **argv)
 {
     int j;
     char bfr[BUFSIZ];
 
     for (j = 1; j < argc; j++) {
+	if (argv[j] == 0)
+	    break;
 	(void) trimpath(strcpy(bfr, argv[j]), "/usr/local");
 	PRINTF("%d: %s => %s\n", j, argv[j], bfr);
     }
@@ -116,10 +118,10 @@ do_test(int argc, char **argv)
 
 _MAIN
 {
-    if (argc > 1)
-	do_test(argc, argv);
-    else {
-	static char *tbl[] =
+    if (argc > 1) {
+	do_test(argc, (const char **) argv);
+    } else {
+	static const char *tbl[] =
 	{
 	    "?",
 	    ".",
@@ -130,7 +132,8 @@ _MAIN
 	    "a/b",
 	    "../a/b",
 	    "../../../a/b",
-	    ".//.//./tmp"
+	    ".//.//./tmp",
+	    0
 	};
 	do_test(SIZEOF(tbl), tbl);
     }

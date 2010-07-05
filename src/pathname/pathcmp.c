@@ -19,7 +19,7 @@
 #define		STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: pathcmp.c,v 12.6 2010/07/04 21:43:38 tom Exp $")
+MODULE_ID("$Id: pathcmp.c,v 12.7 2010/07/05 15:11:08 tom Exp $")
 
 #define	CUT(p,s)	if ((s = strchr(p, PATH_SLASH)) != 0) *s = EOS
 
@@ -73,15 +73,16 @@ pathcmp(const char *p1, const char *p2)
  */
 #define	LOOP(i)	for (i = 1; i < argc; i++)
 
-void
-do_test(int argc, char **argv)
+static void
+do_test(int argc, const char **argv)
 {
     int j, k;
     int len = 0;
 
-    LOOP(j)
-	if ((k = strlen(argv[j])) > len)
-	len = k;
+    LOOP(j) {
+	if ((k = (int) strlen(argv[j])) > len)
+	    len = k;
+    }
 
     LOOP(j) {
 	PRINTF("%-*s ", len, argv[j]);
@@ -96,10 +97,10 @@ do_test(int argc, char **argv)
 
 _MAIN
 {
-    if (argc > 1)
-	do_test(argc, argv);
-    else {
-	static char *vec[] =
+    if (argc > 1) {
+	do_test(argc, (const char **) argv);
+    } else {
+	static const char *vec[] =
 	{
 	    "?"
 	    ,"/x"

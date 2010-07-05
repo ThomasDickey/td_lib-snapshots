@@ -1,4 +1,4 @@
-# $Id: td_make.in,v 12.27 2010/07/01 09:12:13 tom Exp $
+# $Id: td_make.in,v 12.28 2010/07/05 09:53:48 tom Exp $
 # common definitions for makefiles built over TD_LIB library.
 # vile:makemode
 
@@ -61,7 +61,7 @@ LINTOPTS	= $(CPP_OPTS) -DNO_IDENT $(LINTLIBS)
 # don't put .a into CLEAN, because VERDIX-ADA uses that for source!
 CLEAN	= *.[oi] *.lint *.bak *.log *.out *.tst .nfs* *.pure* core tags
 DESTROY	=$(SHELL) -c 'for i in *;do case $$i in RCS);; *) $(RM) $$i;;esac;done;exit 0'
-RUN_TESTS=$(SHELL) -c '$@.sh 2>&1 | tee -a $@.out'
+RUN_TESTS=$(SHELL) -c './run_test.sh 2>&1 | tee -a $@.out'
 
 PTYPES_H =	$(TD_INC)/ptypes.h \
 		$(TD_INC)/td_ext.h \

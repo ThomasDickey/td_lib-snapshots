@@ -28,7 +28,7 @@
 #include	"port2vms.h"
 #include	"td_qsort.h"
 
-MODULE_ID("$Id: edittree.c,v 12.7 2010/07/04 19:18:14 tom Exp $")
+MODULE_ID("$Id: edittree.c,v 12.9 2010/07/05 14:31:38 tom Exp $")
 
 typedef char *PTR;
 #define	CHUNK	127		/* 1 less than a power of 2 */
@@ -39,10 +39,13 @@ typedef char *PTR;
 #define	TELL_FILE(name)	FPRINTF(stderr, "%d\t%s => %s\n", changes, nesting, name);
 #define	TELL_DIR(name)	FPRINTF(stderr, "%d\t%s directory %s\n", changes, nesting, name);
 int
-editfile(char *n,
+editfile(const char *n,
 	 int (*func) (FILE *o, FILE *i, Stat_t * s),
 	 Stat_t * s)
 {
+    (void) n;
+    (void) func;
+    (void) s;
     return 1;
 }
 #else
@@ -80,7 +83,7 @@ edittree(const char *oldname,
 #ifdef	TEST
     static char stack[] = ". . . . . . . ";
     int level = recur ? recur : 1;
-    char *nesting = &stack[sizeof(stack) - (level * 2)];
+    char *nesting = &stack[(int) sizeof(stack) - (level * 2)];
 #endif
 
     if (LOOK(oldname, &sb) < 0) {
@@ -151,13 +154,16 @@ static int
 do_copy(FILE *ofp, FILE *ifp, Stat_t * sb)
 {
     char buffer[BUFSIZ];
+
+    (void) sb;
+
     while (fgets(buffer, sizeof(buffer), ifp))
 	fputs(buffer, ofp);
     return (1);
 }
 
 static void
-do_test(int argc, char **argv)
+do_test(int argc, const char **argv)
 {
     int j;
     int recur = FALSE;
@@ -176,10 +182,10 @@ do_test(int argc, char **argv)
 /*ARGSUSED*/
 _MAIN
 {
-    if (argc > 1)
-	do_test(argc, argv);
-    else {
-	static char *tbl[] =
+    if (argc > 1) {
+	do_test(argc, (const char **) argv);
+    } else {
+	static const char *tbl[] =
 	{
 	    "?",
 #ifdef	vms

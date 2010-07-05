@@ -15,10 +15,10 @@
 #define		STR_PTYPES
 #include	"port2vms.h"
 
-MODULE_ID("$Id: path2vms.c,v 12.4 2010/07/04 15:29:37 tom Exp $")
+MODULE_ID("$Id: path2vms.c,v 12.5 2010/07/05 15:45:30 tom Exp $")
 
 char *
-path2vms(char *dst, char *src)
+path2vms(char *dst, const char *src)
 {
     char tmp[MAXPATHLEN];
     int len = (int) strlen(strcpy(tmp, src));
@@ -29,7 +29,7 @@ path2vms(char *dst, char *src)
 
 #ifdef	TEST
 static void
-do_test(char *path)
+do_test(const char *path)
 {
     char tmp[MAXPATHLEN];
     PRINTF("%s => %s\n", path, path2vms(tmp, path));
@@ -42,14 +42,14 @@ _MAIN
 	for (j = 1; j < argc; j++)
 	    do_test(argv[j]);
     else {
-	static char *tbl[] =
+	static const char *tbl[] =
 	{
 	    "foo",
 	    "foo/bar",
 	    "foo.bar",
 	    "foo/bar.twice"
 	};
-	for (j = 0; j < SIZEOF(tbl); j++)
+	for (j = 0; j < (int) SIZEOF(tbl); j++)
 	    do_test(tbl[j]);
     }
     exit(SUCCESS);

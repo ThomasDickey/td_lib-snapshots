@@ -1,4 +1,4 @@
-# $Id: makefile.in,v 12.22 2010/07/04 12:58:23 tom Exp $
+# $Id: makefile.in,v 12.23 2010/07/05 10:02:43 tom Exp $
 # Top-level makefile for TD_LIB common library
 
 SHELL		= /bin/sh
@@ -67,7 +67,7 @@ clobber ::	td_make.in
 all\
 clean\
 clobber\
-run_test\
+check\
 sources\
 lint.out ::	$(MFILES)
 	cd support &&	$(MAKE) $(MAKE_OPTS) $@

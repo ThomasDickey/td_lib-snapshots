@@ -16,7 +16,7 @@
 #define ERR_PTYPES
 #include <ptypes.h>
 
-MODULE_ID("$Id: fileblox.c,v 12.9 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: fileblox.c,v 12.10 2010/07/05 14:33:30 tom Exp $")
 
 #ifdef SYS_UNIX
 #if !defined(STAT_HAS_ST_BLOCKS)
@@ -63,9 +63,9 @@ do_file(char *name)
 {
     Stat_t sb;
     if (stat_file(name, &sb) >= 0) {
-	printf("%8ld >%8ld %s\n",
-	       sb.st_size,
-	       fileblocks(&sb),
+	printf("%8lu >%8ld %s\n",
+	       (unsigned long) sb.st_size,
+	       (long) fileblocks(&sb),
 	       name);
     } else if (errno != EISDIR) {
 	perror(name);
@@ -80,7 +80,7 @@ _MAIN
 	    do_file(argv[n]);
     } else {
 	char buffer[BUFSIZ];
-	while (gets(buffer)) {
+	while (fgets(buffer, sizeof(buffer), stdin)) {
 	    strtrim(buffer);
 	    do_file(buffer);
 	}

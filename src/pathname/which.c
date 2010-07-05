@@ -31,7 +31,7 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: which.c,v 12.12 2010/07/04 17:27:55 tom Exp $")
+MODULE_ID("$Id: which.c,v 12.13 2010/07/05 14:38:17 tom Exp $")
 
 #ifdef MSDOS
 #define PROG_EXTS "PIF", "BAT", "EXE", "COM"
@@ -128,7 +128,9 @@ _MAIN
     int j;
     char bfr[BUFSIZ], dot[BUFSIZ];
 
-    (void) getwd(dot);
+    if (getcwd(dot, sizeof(dot)) == 0)
+	strcpy(dot, ".");
+
     for (j = 1; j < argc; j++) {
 	which(bfr, sizeof(bfr), argv[j], dot);
 	printf("%d '%s' = '%s'\n", j, argv[j], bfr);

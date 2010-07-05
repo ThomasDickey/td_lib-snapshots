@@ -19,7 +19,7 @@
 #include "ptypes.h"
 #include <ctype.h>
 
-MODULE_ID("$Id: makeargv.c,v 12.7 2010/07/04 17:46:38 tom Exp $")
+MODULE_ID("$Id: makeargv.c,v 12.8 2010/07/05 16:01:19 tom Exp $")
 
 int
 makeargv(char **argv,
@@ -63,7 +63,7 @@ _MAIN
     int j, k;
     char *vec[BUFSIZ];
     char tmp[80];
-    static char *tbl[] =
+    static const char *tbl[] =
     {
 	"abc",
 	"a bz cx dy w",
@@ -71,7 +71,10 @@ _MAIN
 	"ab\"quoted' 'quote\" more stuff"
     };
 
-    for (j = 0; j < SIZEOF(tbl); j++) {
+    (void) argc;
+    (void) argv;
+
+    for (j = 0; j < (int) SIZEOF(tbl); j++) {
 	int last = makeargv(vec, BUFSIZ, tmp, tbl[j]);
 	printf("%s\n", tbl[j]);
 	for (k = 0; k < last; k++)

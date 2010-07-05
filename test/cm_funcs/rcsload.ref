@@ -1,4 +1,4 @@
-++ rcs-scan(/tmp/dummy3.txt,v)
+++ rcs-scan(TMPDIR/dummy3.txt,v)
 27 newlines, filesize=259
 < 0	head     11.1;
 ++ rcskeys(head) = 0
@@ -52,9 +52,9 @@ FILE:11.1
     2	# &Id&
     3	./rcsload
 00003/00000      => 11.1 	Wed Nov 18 05:55:17 1992
-compare(/usr/tmp/dummy3.txt) 11.1
-% rcsdiff -r11.1 /tmp/dummy3.txt,v /usr/tmp/dummy3.txt 
-++ rcs-scan(/tmp/dummy4.txt,v)
+compare(dummy3.txt) 11.1
+% rcsdiff -r11.1 TMPDIR/dummy3.txt,v TMPDIR/dummy3.txt 
+++ rcs-scan(TMPDIR/dummy4.txt,v)
 417 newlines, filesize=6777
 NOTES:3.2
 (shafron) put -g (debug) option back in for compilation
@@ -322,44 +322,44 @@ DELTA:1.1
    14	$i/$(LLIB).ln:	$(LLIB) $I/dbs.h
    15		$(TOP)/support/makellib.sh $i $(LLIB) dbs $(INCLUDES)
 00002/00002  3.1 => 3.2 	Tue Aug 16 19:39:33 1988
-compare(/usr/tmp/dummy4.txt) 3.2
-% rcsdiff -r3.2 /tmp/dummy4.txt,v /usr/tmp/dummy4.txt 
+compare(dummy4.txt) 3.2
+% rcsdiff -r3.2 TMPDIR/dummy4.txt,v TMPDIR/dummy4.txt 
 00002/00003  3.0 => 3.1 	Wed Aug 10 05:51:11 1988
-compare(/usr/tmp/dummy4.txt) 3.1
-% rcsdiff -r3.1 /tmp/dummy4.txt,v /usr/tmp/dummy4.txt 
+compare(dummy4.txt) 3.1
+% rcsdiff -r3.1 TMPDIR/dummy4.txt,v TMPDIR/dummy4.txt 
 00001/00001  2.4 => 3.0 	Thu Jul 14 07:48:46 1988
-compare(/usr/tmp/dummy4.txt) 3.0
-% rcsdiff -r3.0 /tmp/dummy4.txt,v /usr/tmp/dummy4.txt 
+compare(dummy4.txt) 3.0
+% rcsdiff -r3.0 TMPDIR/dummy4.txt,v TMPDIR/dummy4.txt 
 00001/00002  2.3 => 2.4 	Thu Jul 14 07:48:46 1988
-compare(/usr/tmp/dummy4.txt) 2.4
-% rcsdiff -r2.4 /tmp/dummy4.txt,v /usr/tmp/dummy4.txt 
+compare(dummy4.txt) 2.4
+% rcsdiff -r2.4 TMPDIR/dummy4.txt,v TMPDIR/dummy4.txt 
 00001/00002  2.2 => 2.3 	Thu Jul 14 07:01:40 1988
-compare(/usr/tmp/dummy4.txt) 2.3
-% rcsdiff -r2.3 /tmp/dummy4.txt,v /usr/tmp/dummy4.txt 
+compare(dummy4.txt) 2.3
+% rcsdiff -r2.3 TMPDIR/dummy4.txt,v TMPDIR/dummy4.txt 
 00008/00011  2.1 => 2.2 	Thu Jul 14 04:57:46 1988
-compare(/usr/tmp/dummy4.txt) 2.2
-% rcsdiff -r2.2 /tmp/dummy4.txt,v /usr/tmp/dummy4.txt 
+compare(dummy4.txt) 2.2
+% rcsdiff -r2.2 TMPDIR/dummy4.txt,v TMPDIR/dummy4.txt 
 00003/00003  2.0 => 2.1 	Wed Jul 13 10:53:09 1988
-compare(/usr/tmp/dummy4.txt) 2.1
-% rcsdiff -r2.1 /tmp/dummy4.txt,v /usr/tmp/dummy4.txt 
+compare(dummy4.txt) 2.1
+% rcsdiff -r2.1 TMPDIR/dummy4.txt,v TMPDIR/dummy4.txt 
 00001/00001  1.4 => 2.0 	Thu Jul  7 09:26:30 1988
-compare(/usr/tmp/dummy4.txt) 2.0
-% rcsdiff -r2.0 /tmp/dummy4.txt,v /usr/tmp/dummy4.txt 
+compare(dummy4.txt) 2.0
+% rcsdiff -r2.0 TMPDIR/dummy4.txt,v TMPDIR/dummy4.txt 
 00001/00003  1.3 => 1.4 	Thu Jul  7 09:26:30 1988
-compare(/usr/tmp/dummy4.txt) 1.4
-% rcsdiff -r1.4 /tmp/dummy4.txt,v /usr/tmp/dummy4.txt 
+compare(dummy4.txt) 1.4
+% rcsdiff -r1.4 TMPDIR/dummy4.txt,v TMPDIR/dummy4.txt 
 00002/00010  1.2 => 1.3 	Tue Jul  5 10:58:14 1988
-compare(/usr/tmp/dummy4.txt) 1.3
-% rcsdiff -r1.3 /tmp/dummy4.txt,v /usr/tmp/dummy4.txt 
+compare(dummy4.txt) 1.3
+% rcsdiff -r1.3 TMPDIR/dummy4.txt,v TMPDIR/dummy4.txt 
 00006/00015  1.1 => 1.2 	Tue Jul  5 09:41:09 1988
-compare(/usr/tmp/dummy4.txt) 1.2
-% rcsdiff -r1.2 /tmp/dummy4.txt,v /usr/tmp/dummy4.txt 
+compare(dummy4.txt) 1.2
+% rcsdiff -r1.2 TMPDIR/dummy4.txt,v TMPDIR/dummy4.txt 
 00000/00000      => 1.1 	Fri Jul  1 11:54:45 1988
-compare(/usr/tmp/dummy4.txt) 1.1
-% rcsdiff -r1.1 /tmp/dummy4.txt,v /usr/tmp/dummy4.txt 
+compare(dummy4.txt) 1.1
+% rcsdiff -r1.1 TMPDIR/dummy4.txt,v TMPDIR/dummy4.txt 
 00002/00002  2.0.1.2 => 2.0.1.1 	Fri Aug 19 09:34:19 1988
-compare(/usr/tmp/dummy4.txt) 2.0.1.1
-% rcsdiff -r2.0.1.1 /tmp/dummy4.txt,v /usr/tmp/dummy4.txt 
+compare(dummy4.txt) 2.0.1.1
+% rcsdiff -r2.0.1.1 TMPDIR/dummy4.txt,v TMPDIR/dummy4.txt 
 00001/00006      => 2.0.1.2 	Fri Aug 19 10:52:50 1988
-compare(/usr/tmp/dummy4.txt) 2.0.1.2
-% rcsdiff -r2.0.1.2 /tmp/dummy4.txt,v /usr/tmp/dummy4.txt 
+compare(dummy4.txt) 2.0.1.2
+% rcsdiff -r2.0.1.2 TMPDIR/dummy4.txt,v TMPDIR/dummy4.txt 

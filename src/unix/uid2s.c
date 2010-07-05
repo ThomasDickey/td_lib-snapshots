@@ -26,7 +26,7 @@
 #define	STR_PTYPES
 #include <td_btree.h>
 
-MODULE_ID("$Id: uid2s.c,v 12.14 2010/07/04 18:17:16 tom Exp $")
+MODULE_ID("$Id: uid2s.c,v 12.15 2010/07/05 16:14:07 tom Exp $")
 
 #if defined(HAVE_GETPWUID)
 
@@ -145,7 +145,7 @@ _MAIN
 		PRINTF("? illegal character /%s/\n", d);
 		continue;
 	    }
-	    PRINTF("%d => \"%s\"\n", user, uid2s(user));
+	    PRINTF("%d => \"%s\"\n", user, uid2s((uid_t) user));
 	}
     } else {
 	int tst_len;
@@ -159,7 +159,7 @@ _MAIN
 	    if ((d = strchr(d, ':')) == 0)
 		continue;
 	    user = atoi(++d);
-	    PRINTF("%s -> %d -> %s\n", tst_vec[j], user, d = uid2s(user));
+	    PRINTF("%s -> %d -> %s\n", tst_vec[j], user, d = uid2s((uid_t) user));
 	    if (strcmp(tst_vec[j], d))
 		PRINTF("** DIFF\n");
 	}

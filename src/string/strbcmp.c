@@ -17,15 +17,17 @@
  *		otherwise negative).
  */
 
+#define STR_PTYPES
+#define TIM_PTYPES
 #include	<ptypes.h>
 #include	<ctype.h>
 
-MODULE_ID("$Id: strbcmp.c,v 12.5 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: strbcmp.c,v 12.6 2010/07/05 16:12:01 tom Exp $")
 
 #define	SKIP(p)	while (isspace(UCH(*p)))	p++;
 
 int
-strbcmp(char *a, char *b)
+strbcmp(const char *a, const char *b)
 {
     int cmp;
 
@@ -48,7 +50,7 @@ _MAIN
 #ifdef	TEST2
     time_t now;
 #endif
-    static char *tbl[] =
+    static const char *tbl[] =
     {
 	"ab",
 	" ab",
@@ -57,10 +59,16 @@ _MAIN
 	" ab ",
 	"a b "
     };
-    int j, k, cmp;
+    int j, k;
+#ifdef TEST2
+    int cmp;
+#endif
 
-#define	LOOP(j)	for (j = 0; j < SIZEOF(tbl); j++)
-#define	CMP(f)	((cmp = f(tbl[j],tbl[k])) ? (cmp > 0 ? ">" : "<") : "=")
+    (void) argc;
+    (void) argv;
+
+#define	LOOP(j)	for (j = 0; j < (int) SIZEOF(tbl); j++)
+#define	CMP(f)	(f(tbl[j],tbl[k]) ? ((f(tbl[j],tbl[k]) > 0) ? ">" : "<") : "=")
     LOOP(j) {
 	printf("\n");
 	LOOP(k) {
@@ -78,7 +86,7 @@ _MAIN
 	    (void) strbcmp(tbl[j], tbl[k]);
 	}
 	}
-    printf("# %d seconds\n", time(0) - now);
+    printf("# %ld seconds\n", (long) (time(0) - now));
 #endif
     (void) exit(SUCCESS);
     /*NOTREACHED */

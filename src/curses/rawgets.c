@@ -72,7 +72,7 @@
 #include	"td_curse.h"
 #include	"dyn_str.h"
 
-MODULE_ID("$Id: rawgets.c,v 12.28 2010/07/04 21:45:47 tom Exp $")
+MODULE_ID("$Id: rawgets.c,v 12.29 2010/07/05 15:37:48 tom Exp $")
 
 #define	SHIFT	5
 
@@ -699,13 +699,13 @@ _MAIN
     int j = 0;
     int w_flag = ((argc > 1) && !strcmp(argv[1], "-w"));
     char bfr[BUFSIZ];
-    static char *pref[] =
+    static const char *pref[] =
     {"^ ", "> "};
 
     initscr();
     rawterm();
     *bfr = EOS;
-    while (strlen(bfr) < 3 * COLS) {
+    while ((int) strlen(bfr) < 3 * COLS) {
 	(void) strcat(bfr, "abcdefghijklmnopqrstuvwxyz.");
 	(void) sprintf(bfr + strlen(bfr), "%d ", j++);
     }
@@ -718,7 +718,7 @@ _MAIN
 	move(j, 0);
 	printw("%05d> ", j);
 	rawgets(bfr, pref, sizeof(bfr),
-		COLS / 2, strlen(bfr), TRUE,
+		COLS / 2, (int) strlen(bfr), TRUE,
 		w_flag, 'q',
 		(char **) 0, FALSE);
 	if (!*bfr)

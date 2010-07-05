@@ -15,10 +15,10 @@
 #define	STR_PTYPES
 #include	"port2vms.h"
 
-MODULE_ID("$Id: vms_wild.c,v 12.3 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: vms_wild.c,v 12.4 2010/07/05 15:47:49 tom Exp $")
 
 int
-vms_iswild(char *name)
+vms_iswild(const char *name)
 {
     if (strchr(name, '*') != 0
 	|| strchr(name, '?') != 0)
@@ -33,7 +33,7 @@ vms_iswild(char *name)
 
 #ifdef	TEST
 static void
-do_test(char *path)
+do_test(const char *path)
 {
     PRINTF("%s => %d\n", path, vms_iswild(path));
 }
@@ -45,14 +45,14 @@ _MAIN
 	for (j = 1; j < argc; j++)
 	    do_test(argv[j]);
     else {
-	static char *tbl[] =
+	static const char *tbl[] =
 	{
 	    "foo",
 	    "foo.*",
 	    "foo?",
 	    "dev:[bar...]foo",
 	};
-	for (j = 0; j < SIZEOF(tbl); j++)
+	for (j = 0; j < (int) SIZEOF(tbl); j++)
 	    do_test(tbl[j]);
     }
     exit(SUCCESS);

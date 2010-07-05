@@ -14,7 +14,7 @@
 
 #include "ptypes.h"
 
-MODULE_ID("$Id: strwcmp.c,v 12.6 2010/07/04 14:54:49 tom Exp $")
+MODULE_ID("$Id: strwcmp.c,v 12.7 2010/07/05 16:07:46 tom Exp $")
 
 #define	SINGLE	'?'
 #define	MULTI	'*'
@@ -46,11 +46,11 @@ strwcmp(const char *wild, const char *name)
 static void
 default_test(void)
 {
-    static char *names[] =
+    static const char *names[] =
     {
 	"", "a", "b", "ab", "ba", "aa", "bb", "aba"
     };
-    static char *wilds[] =
+    static const char *wilds[] =
     {
 	"",
 	"*", "?", "a", "b",
@@ -60,13 +60,13 @@ default_test(void)
     int j, k;
 
     PRINTF("\t");
-    for (k = 0; k < SIZEOF(names); k++)
+    for (k = 0; k < (int) SIZEOF(names); k++)
 	PRINTF("%-5s", names[k]);
     PRINTF("\n");
 
-    for (j = 0; j < SIZEOF(wilds); j++) {
+    for (j = 0; j < (int) SIZEOF(wilds); j++) {
 	PRINTF("%s\t", wilds[j]);
-	for (k = 0; k < SIZEOF(names); k++)
+	for (k = 0; k < (int) SIZEOF(names); k++)
 	    PRINTF("%3d  ", strwcmp(wilds[j], names[k]));
 	PRINTF("\n");
     }
