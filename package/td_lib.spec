@@ -1,8 +1,8 @@
 Summary: Thomas Dickeys library
 %define AppProgram td_lib
 %define AppVersion 12.x
-%define AppRelease 20100705
-# $Id: td_lib.spec,v 1.3 2010/07/05 10:01:36 tom Exp $
+%define AppRelease 20100711
+# $Id: td_lib.spec,v 1.4 2010/07/09 21:02:09 tom Exp $
 Name: %{AppProgram}
 Version: %{AppVersion}
 Release: %{AppRelease}
@@ -73,6 +73,9 @@ make install                    DESTDIR=$RPM_BUILD_ROOT
 
 %changelog
 # each patch should add its ChangeLog entries here
+
+* Fri Jul 09 2010 Thomas Dickey
+- implement ded "-m" mouse option
 
 * Sat Jul 03 2010 Thomas Dickey
 - initial version

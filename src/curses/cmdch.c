@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	01 Dec 1987 (broke out of 'ded.c')
  * Modified:
+ *		09 Jul 2010, add xt_enabled, to control mouse-initialization.
  *		07 Mar 2004, remove K&R support, indent'd.
  *		03 Jul 2003, check for KEY_RESIZE makes ncurses sigwinch work
  *		15 Feb 1998, add home/end/ppage/npage keys.
@@ -48,7 +49,7 @@
 #include	"td_curse.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: cmdch.c,v 12.33 2010/07/04 20:09:19 tom Exp $")
+MODULE_ID("$Id: cmdch.c,v 12.34 2010/07/09 21:39:38 tom Exp $")
 
 #define	ESC(c)	((c) == '\033')
 #define	END(s)	s[strlen(s)-1]
@@ -59,6 +60,7 @@ MODULE_ID("$Id: cmdch.c,v 12.33 2010/07/04 20:09:19 tom Exp $")
 
 #define XtermPos() (getch() - 041)	/* 0..COLS-1 or 0..LINES-1 */
 
+int xt_enabled = TRUE;		/* true if we accept XTerm-mouse events */
 XtermMouse xt_mouse;		/* state of XTerm-mouse */
 
 #if !defined(NCURSES_MOUSE_VERSION)

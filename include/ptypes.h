@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 12.54 2010/07/05 16:42:33 tom Exp $ */
+/* $Id: ptypes.h,v 12.55 2010/07/09 23:11:07 tom Exp $ */
 
 #ifndef	PTYPES_H
 #define	PTYPES_H
@@ -445,15 +445,23 @@ extern int sys_nerr;
 #  if !defined(STDC_HEADERS) && defined(HAVE_MEMORY_H)
 #    include <memory.h>
 #  endif /* not STDC_HEADERS and HAVE_MEMORY_H */
-#  define bcopy(s, d, n) memcpy ((d), (s), (n))
-#  define bcmp(s1, s2, n) memcmp ((s1), (s2), (n))
-#  if !defined(HAVE_BZERO)
+#  ifndef bcopy
+#    define bcopy(s, d, n) memcpy ((d), (s), (n))
+#  endif
+#  ifndef bcmp
+#    define bcmp(s1, s2, n) memcmp ((s1), (s2), (n))
+#  endif
+#  if !defined(HAVE_BZERO) && !defined(bzero)
 #    define bzero(s, n) memset ((s), 0, (n))
 #  endif
 #else /* not STDC_HEADERS and not HAVE_STRING_H */
 #  include <strings.h>
-#  define strchr index
-#  define strrchr rindex
+#  ifndef strchr
+#    define strchr index
+#  endif
+#  ifndef strrchr
+#    define strrchr rindex
+#  endif
 /* memory.h and strings.h conflict on some systems.  */
 #endif /* not STDC_HEADERS and not HAVE_STRING_H */
 

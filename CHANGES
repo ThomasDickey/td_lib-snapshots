@@ -1,3 +1,20 @@
+2010-07-09  dickey@invisible-island.net
+
+	* src/curses/rawgets.c, src/sheet/field_of.c, src/string/dyn_str.c, src/pathname/fp2argv.c, src/pathname/sameleaf.c, src/pathname/trnstree.c, src/pathname/walktree.c, src/port2vms/dir2path.c, src/port2vms/name2vms.c, src/port2vms/vms2name.c, src/port2vms/vms_wild.c, src/process/walkback.c, src/pathname/file2mem.c, src/memory/vecedit.c, src/pathname/copyback.c, src/pathname/dlettree.c, src/pathname/edittree.c, src/pathname/file2arg.c, src/curses/is_xterm.c, src/curses/padedit.c, src/memory/stralloc.c, src/cm_funcs/sccspath.c, src/compare/diffload.c, src/curses/dumptty.c, src/cm_funcs/rcsedit.c, src/cm_funcs/rcsload.c, src/cm_funcs/rcspath.c, src/cm_funcs/rcsperm.c, src/cm_funcs/sccslast.c, src/cm_funcs/cmv_dir.c, src/cm_funcs/cmv_last.c, src/cm_funcs/cutoff.c, src/cm_funcs/rcsargpr.c, include/td_ext.h:
+	stricter gcc warnings
+
+	* include/ptypes.h: avoid redefinition of bcopy and related functions
+
+	* src/curses/rawterm.c:
+	use new flag xt_enabled to control whether we use the mouse.  This is a
+	workaround for breakage done to ncurses by linking to the GPM library.
+
+	* src/curses/cmdch.c: add xt_enabled flag.
+
+	* package/debian/changelog, package/td_lib.spec: adding ded "-m"
+
+	* include/td_curse.h: add xt_enabled flag
+
 2010-07-05  dickey@invisible-island.net
 
 	* include/td_lib.h, src/pathname/pathhead.c: stricter gcc warnings
