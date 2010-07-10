@@ -14,7 +14,7 @@
 #include "ptypes.h"
 #include "dyn_str.h"
 
-MODULE_ID("$Id: dyn_str.c,v 12.3 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: dyn_str.c,v 12.4 2010/07/10 00:12:28 tom Exp $")
 
 /************************************************************************
  *	public entrypoints						*
@@ -34,7 +34,7 @@ dyn_alloc(DYN * p, size_t len)
 
     if (p->max_length < len) {
 	p->max_length = (len * 5) / 4;
-	p->text = doalloc(p->text, (unsigned) (p->max_length));
+	p->text = doalloc(p->text, (p->max_length));
 	p->text[p->cur_length] = EOS;
     }
     return p;

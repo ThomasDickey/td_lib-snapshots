@@ -80,7 +80,7 @@
 #include "rcsdefs.h"
 #include <errno.h>
 
-MODULE_ID("$Id: rcsargpr.c,v 12.9 2010/05/24 22:25:22 tom Exp $")
+MODULE_ID("$Id: rcsargpr.c,v 12.10 2010/07/10 00:08:21 tom Exp $")
 
 /************************************************************************
  *	local data							*
@@ -195,9 +195,9 @@ initialize(void)
     if (!done) {
 	done = TRUE;
 
-	*(name_working = doalloc((char *) 0, MAXPATHLEN + 1)) = EOS;
-	*(name_archive = doalloc((char *) 0, MAXPATHLEN + 1)) = EOS;
-	*(name_located = doalloc((char *) 0, MAXPATHLEN + 1)) = EOS;
+	*(name_working = doalloc((char *) 0, (size_t) MAXPATHLEN + 1)) = EOS;
+	*(name_archive = doalloc((char *) 0, (size_t) MAXPATHLEN + 1)) = EOS;
+	*(name_located = doalloc((char *) 0, (size_t) MAXPATHLEN + 1)) = EOS;
     }
 }
 

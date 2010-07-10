@@ -33,7 +33,7 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: sameleaf.c,v 12.8 2010/07/04 09:27:00 tom Exp $")
+MODULE_ID("$Id: sameleaf.c,v 12.9 2010/07/10 00:12:09 tom Exp $")
 
 int
 sameleaf(const char *path, const char *leaf)
@@ -46,7 +46,7 @@ sameleaf(const char *path, const char *leaf)
     char *s;
 
     (void) strcpy(tmp, path);
-    while (!strncmp(leaf, dotdot, 3))
+    while (!strncmp(leaf, dotdot, (size_t) 3))
 	leaf += 3;
     while ((s = fleaf(tmp)) != NULL) {	/* find real leaf-name */
 	if (*s != EOS)

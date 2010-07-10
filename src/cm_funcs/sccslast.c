@@ -43,7 +43,7 @@
 #include	<sccsdefs.h>
 #include	<ctype.h>
 
-MODULE_ID("$Id: sccslast.c,v 12.22 2010/07/04 22:29:33 tom Exp $")
+MODULE_ID("$Id: sccslast.c,v 12.23 2010/07/10 00:09:35 tom Exp $")
 
 /*
  * Post-Y2K years require special decoding
@@ -103,15 +103,15 @@ trySCCS(const char *path,
 
     if ((fp = fopen(path, "r")) != 0) {
 	newzone(5, 0, FALSE);	/* interpret in EST5EDT */
-	while (fgets(bfr, sizeof(bfr), fp)) {
+	while (fgets(bfr, (int) sizeof(bfr), fp)) {
 	    if (*bfr != '\001')
 		break;
 	    if (!gotten) {
-		if (strncmp(bfr, "\001h", 2))
+		if (strncmp(bfr, "\001h", (size_t) 2))
 		    break;
 		gotten++;
 	    }
-	    if (!strncmp(bfr, "\001d D ", 4)) {
+	    if (!strncmp(bfr, "\001d D ", (size_t) 4)) {
 		if (sscanf(bfr + 4, "%s %[^/]/%d/%d %d:%d:%d ",
 			   ver,
 			   bfr2, &mm, &dd,
@@ -125,10 +125,10 @@ trySCCS(const char *path,
 		have_rev = TRUE;
 	    }
 #ifdef CMV_PATH			/* for CmVision */
-	    if (have_rev && !strncmp(bfr, "\001c ", 3)) {
+	    if (have_rev && !strncmp(bfr, "\001c ", (size_t) 3)) {
 		long when;
 		if ((s = strstr(bfr, "\\\001O")) != 0) {
-		    while (strncmp(s, ":M", 2) && *s)
+		    while (strncmp(s, ":M", (size_t) 2) && *s)
 			s++;
 		    if (sscanf(s, ":M%ld:", &when))
 			*date_ = when;
@@ -146,7 +146,7 @@ trySCCS(const char *path,
 	    s = bfr;
 	*s = 'p';
 	if ((fp = fopen(bfr, "r")) != 0) {
-	    if (fgets(bfr, sizeof(bfr), fp)) {
+	    if (fgets(bfr, (int) sizeof(bfr), fp)) {
 		if (sscanf(bfr, "%d.%d %d.%d %s",
 			   &yy, &mm, &dd, &hr, ver) == 5)
 		    *lock_ = txtalloc(ver);

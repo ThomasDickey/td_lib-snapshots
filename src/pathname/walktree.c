@@ -50,7 +50,7 @@
 #include	"ptypes.h"
 #include	"td_qsort.h"
 
-MODULE_ID("$Id: walktree.c,v 12.12 2010/07/05 15:05:55 tom Exp $")
+MODULE_ID("$Id: walktree.c,v 12.13 2010/07/10 00:12:09 tom Exp $")
 
 /************************************************************************
  *	local definitions						*
@@ -126,7 +126,7 @@ walktree(const char *patharg,
 	    }
 	    (void) closedir(dp);
 	    if (num != 0) {
-		qsort((PTR) vec, num, sizeof(PTR), cmp_qsort);
+		qsort((PTR) vec, (size_t) num, sizeof(PTR), cmp_qsort);
 		while (num-- != 0)
 		    total += walktree(new_wd, vec[num],
 				      func, type, level + 1);

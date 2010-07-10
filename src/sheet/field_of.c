@@ -23,7 +23,7 @@
 #include "td_sheet.h"
 #include <ctype.h>
 
-MODULE_ID("$Id: field_of.c,v 12.9 2010/07/04 23:57:06 tom Exp $")
+MODULE_ID("$Id: field_of.c,v 12.10 2010/07/10 00:12:28 tom Exp $")
 
 static int opt_Blanks;
 
@@ -56,7 +56,7 @@ QuotedField(char *src)
     static DYN *tmp;
     int c;
 
-    dyn_init(&tmp, BUFSIZ);
+    dyn_init(&tmp, (size_t) BUFSIZ);
     if (*src) {
 	tmp = dyn_append_c(tmp, QUOTE);
 	while ((c = *src++) != EOS) {
@@ -150,7 +150,7 @@ UnquotedField(DYN ** dst, char *src)
     int last = -1;
     int c;
 
-    dyn_init(dst, BUFSIZ);
+    dyn_init(dst, (size_t) BUFSIZ);
     while (src != next) {
 	c = *src++;
 	if (quote) {

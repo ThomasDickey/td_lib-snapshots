@@ -39,7 +39,7 @@
 #include	"ptypes.h"
 #include	<errno.h>
 
-MODULE_ID("$Id: padedit.c,v 12.9 2010/07/04 22:35:02 tom Exp $")
+MODULE_ID("$Id: padedit.c,v 12.10 2010/07/10 00:10:42 tom Exp $")
 
 #ifdef	SYS_UNIX
 
@@ -186,7 +186,7 @@ padedit(const char *name, int readonly, const char *editor)
 
 	if (getwd(wd) == 0)
 	    return (-1);
-	if (which(xt, sizeof(xt), "xterm", wd) <= 0)
+	if (which(xt, (int) sizeof(xt), "xterm", wd) <= 0)
 	    return (-1);
 
 	FORMAT(the_title, "%s:%s", readonly ? "view" : "edit", name);

@@ -19,7 +19,7 @@
 #define	STR_PTYPES
 #include	"port2vms.h"
 
-MODULE_ID("$Id: dir2path.c,v 12.5 2010/07/05 15:40:35 tom Exp $")
+MODULE_ID("$Id: dir2path.c,v 12.6 2010/07/10 00:12:09 tom Exp $")
 
 static void
 insert(char *dst, const char *src)
@@ -45,7 +45,7 @@ dir2path(const char *src)
 	    (void) strcat(buffer, ";1");
 	if (!s[1])
 	    (void) strcat(buffer, "1");
-	if (!strncmp(t, ".DIR;1", 6)) {
+	if (!strncmp(t, ".DIR;1", (size_t) 6)) {
 	    *t = '\0';
 	    if ((s = strrchr(buffer, ']')) != NULL) {
 		*s = '.';

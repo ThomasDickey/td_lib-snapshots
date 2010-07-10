@@ -13,10 +13,10 @@
 #define TRM_PTYPES		/* <termios.h> */
 #include <td_curse.h>
 
-MODULE_ID("$Id: dumptty.c,v 12.7 2010/07/03 18:27:03 tom Exp $")
+MODULE_ID("$Id: dumptty.c,v 12.8 2010/07/10 00:10:13 tom Exp $")
 
 #define	CONTRAST(msg,f) Contrast(msg, (long)(tst.f), (long)(ref.f))
-#define	SHOWMASK(t,m)   ShowMasks(t, SIZEOF(t), m)
+#define	SHOWMASK(t,m)   ShowMasks(t, (int) SIZEOF(t), m)
 
 typedef struct {
     long code;

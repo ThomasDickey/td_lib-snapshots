@@ -23,7 +23,7 @@
 #define	STR_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: file2mem.c,v 12.10 2010/07/04 19:57:26 tom Exp $")
+MODULE_ID("$Id: file2mem.c,v 12.11 2010/07/10 00:11:34 tom Exp $")
 
 char *
 file2mem(const char *name)
@@ -83,7 +83,7 @@ file2mem(const char *name)
      * We now have a file-pointer open on a file of known length, which
      * we can read into memory using a single 'malloc()'
      */
-    blob = doalloc((char *) 0, (unsigned) (length + 2));
+    blob = doalloc((char *) 0, (length + 2));
     if (blob == 0) {
 	(void) fclose(fp);
 	return (0);

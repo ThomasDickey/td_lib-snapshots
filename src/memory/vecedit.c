@@ -19,7 +19,7 @@
 #define STR_PTYPES
 #include <ptypes.h>
 
-MODULE_ID("$Id: vecedit.c,v 12.7 2010/07/05 14:21:35 tom Exp $")
+MODULE_ID("$Id: vecedit.c,v 12.8 2010/07/10 00:11:18 tom Exp $")
 
 char **
 vecedit(char **text, char **script)
@@ -52,7 +52,7 @@ vecedit(char **text, char **script)
 	    len_out -= e_len;
 	}
     }
-    result = vecalloc(len_out + 3);	/* patch */
+    result = vecalloc((size_t) len_out + 3);	/* patch */
 
     /*
      * Now, compute the contents of the edited-file
