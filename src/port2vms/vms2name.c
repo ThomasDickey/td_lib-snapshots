@@ -40,7 +40,7 @@
 #define	STR_PTYPES
 #include	"port2vms.h"
 
-MODULE_ID("$Id: vms2name.c,v 12.9 2010/07/05 16:17:29 tom Exp $")
+MODULE_ID("$Id: vms2name.c,v 12.10 2010/07/10 00:12:09 tom Exp $")
 
 #define	LOWER(p)	((isalpha(UCH(*p)) && isupper(UCH(*p))) ? LowerMacro(*p) : *p)
 
@@ -218,7 +218,7 @@ vms2name(char *dst, const char *src)
 	s[j - 2] = EOS;
     }
 
-    if (!strncmp(s, "readme.", 7))
+    if (!strncmp(s, "readme.", (size_t) 7))
 	uc_len = 6;
     for (j = 0; j < SIZEOF(uc_names); j++) {
 	if (!strcmp(s, uc_names[j].name)) {

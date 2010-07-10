@@ -40,7 +40,7 @@
 #include	"rcsdefs.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: rcsedit.c,v 12.12 2010/07/04 15:52:24 tom Exp $")
+MODULE_ID("$Id: rcsedit.c,v 12.13 2010/07/10 00:09:35 tom Exp $")
 
 /* local definitions */
 #define	VERBOSE	if (verbose) PRINTF
@@ -114,7 +114,7 @@ delim(int c)
 static char *
 readit(void)
 {
-    char *p = fgets(buffer, sizeof(buffer), fpS);
+    char *p = fgets(buffer, (int) sizeof(buffer), fpS);
     Show("<", p);
     edit_at = 0;
     return p;

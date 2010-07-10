@@ -10,7 +10,7 @@
 #define STR_PTYPES
 #include "td_curse.h"
 
-MODULE_ID("$Id: is_xterm.c,v 12.4 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: is_xterm.c,v 12.5 2010/07/10 00:10:42 tom Exp $")
 
 #if !defined(HAVE_IS_XTERM)
 /*
@@ -29,12 +29,12 @@ is_xterm(void)
 	char *term = getenv("TERM");
 	initialized = TRUE;
 	if (term != 0) {
-	    if (!strncmp(term, "mterm", 5)
-		|| !strncmp(term, "hpterm", 6)) {
+	    if (!strncmp(term, "mterm", (size_t) 5)
+		|| !strncmp(term, "hpterm", (size_t) 6)) {
 		result = TRUE;
 	    } else {
 		while (*term != EOS) {
-		    if (!strncmp(term++, "xterm", 5)) {
+		    if (!strncmp(term++, "xterm", (size_t) 5)) {
 			result = TRUE;
 			break;
 		    }

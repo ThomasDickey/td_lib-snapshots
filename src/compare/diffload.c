@@ -19,7 +19,7 @@
 #include	<ctype.h>
 #include	<time.h>
 
-MODULE_ID("$Id: diffload.c,v 12.9 2010/07/05 14:15:38 tom Exp $")
+MODULE_ID("$Id: diffload.c,v 12.10 2010/07/10 00:10:13 tom Exp $")
 
 #ifdef	TEST
 #define	DEBUG(s) PRINTF s;
@@ -52,8 +52,8 @@ load_diff(DELTREE * p, char *name1, char *name2)
     char tmp2[MAXPATHLEN * 2 + 1];
     void (*trace) (char *s) = 0;
 
-    (void) name2s(tmp1, sizeof(tmp1), name1, 1);
-    (void) name2s(tmp2, sizeof(tmp2), name2, 1);
+    (void) name2s(tmp1, (int) sizeof(tmp1), name1, 1);
+    (void) name2s(tmp2, (int) sizeof(tmp2), name2, 1);
 
     dyn_init(&cmd, strlen(verb) + 2 + strlen(tmp1) + strlen(tmp2));
     APPEND(cmd, verb);

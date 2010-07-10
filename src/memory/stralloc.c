@@ -28,12 +28,12 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: stralloc.c,v 12.5 2010/07/03 16:04:50 tom Exp $")
+MODULE_ID("$Id: stralloc.c,v 12.6 2010/07/10 00:10:42 tom Exp $")
 
 char *
 stralloc(const char *s)
 {
-    return (strcpy(doalloc((char *) 0, (unsigned) strlen(s) + 1), s));
+    return (strcpy(doalloc((char *) 0, strlen(s) + 1), s));
 }
 
 void

@@ -72,7 +72,7 @@
 #include	"td_curse.h"
 #include	"dyn_str.h"
 
-MODULE_ID("$Id: rawgets.c,v 12.29 2010/07/05 15:37:48 tom Exp $")
+MODULE_ID("$Id: rawgets.c,v 12.31 2010/07/10 00:21:56 tom Exp $")
 
 #define	SHIFT	5
 
@@ -139,7 +139,7 @@ ClearIt(void)
 	getyx(Z, y, x);
 	limit = (y >= LINES - 1 && xlast >= COLS - 1) ? COLS - 2 : xlast;
 	while (++x <= limit)
-	    (void) waddch(Z, ' ');
+	    (void) waddch(Z, (chtype) ' ');
 	if (highlighted)
 	    Highlight(Z);
     }
@@ -253,7 +253,7 @@ ShowAt(char *at)
 		c = *at++ & 0xff;
 		if (!isprint(c)) {
 		    x++;
-		    (void) waddch(Z, '^');
+		    (void) waddch(Z, (chtype) '^');
 		    if (cnt-- <= 0)
 			break;
 		    if (c == '\177')
@@ -261,7 +261,7 @@ ShowAt(char *at)
 		    else
 			c |= '@';
 		}
-		(void) waddch(Z, c);
+		(void) waddch(Z, (chtype) c);
 	    }
 	    if (!wrap) {
 		if (len > 0 || cnt <= 0) {
@@ -467,7 +467,7 @@ wrawgets(WINDOW *win,
 
     saved = dyn_copy(saved, bfr);
     if (logging)
-	dyn_init(&history, 1);
+	dyn_init(&history, (size_t) 1);
 
     FieldLen = field_len;
     Prefix = pref;
@@ -589,7 +589,7 @@ wrawgets(WINDOW *win,
 	    if (c == '\n') {
 		MoveTo(bbase + strlen(bbase));
 		if (Z && new_line)
-		    (void) waddch(Z, '\n');
+		    (void) waddch(Z, (chtype) '\n');
 		break;
 	    }
 	    if (to_up(c)) {

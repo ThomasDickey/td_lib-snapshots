@@ -19,7 +19,7 @@
 #include	"ptypes.h"
 #include	"rcsdefs.h"
 
-MODULE_ID("$Id: rcspath.c,v 12.6 2010/07/04 17:30:10 tom Exp $")
+MODULE_ID("$Id: rcspath.c,v 12.7 2010/07/10 00:09:35 tom Exp $")
 
 char *
 rcspath(const char *utility)
@@ -29,7 +29,7 @@ rcspath(const char *utility)
     char tmp[BUFSIZ];
     utility = pathcat(tmp, RCS_PATH, utility);
 #endif
-    if (which(bfr, sizeof(bfr), utility, ".") <= 0) {
+    if (which(bfr, (int) sizeof(bfr), utility, ".") <= 0) {
 	failed(utility);
 	/*NOTREACHED */
     }

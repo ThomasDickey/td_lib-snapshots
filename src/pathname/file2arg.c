@@ -30,10 +30,10 @@
 
 #include "ptypes.h"
 
-MODULE_ID("$Id: file2arg.c,v 12.8 2010/07/05 14:24:46 tom Exp $")
+MODULE_ID("$Id: file2arg.c,v 12.9 2010/07/10 00:11:18 tom Exp $")
 
 #define	AVG_LINE	25	/* nominal line-length */
-#define	AMOUNT(n)	(unsigned)(n)
+#define	AMOUNT(n)	(size_t)(n)
 
 int
 file2argv(const char *name, char ***vec)

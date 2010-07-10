@@ -48,7 +48,7 @@
 #include	<ctype.h>
 #include	<time.h>
 
-MODULE_ID("$Id: rcsload.c,v 12.14 2010/07/05 14:05:41 tom Exp $")
+MODULE_ID("$Id: rcsload.c,v 12.15 2010/07/10 00:09:35 tom Exp $")
 
 #ifdef	TEST
 #define	DEBUG(s) PRINTF s;
@@ -194,7 +194,7 @@ eat_text(char *s, int code)
 	char *p;
 
 	for (j = 0, p = base; p != load_last; p += strlen(p) + 1, j++) ;
-	load_vector = vecalloc(++j);
+	load_vector = vecalloc((size_t) (++j));
 	for (j = 0, p = base; p != load_last; p += strlen(p) + 1, j++)
 	    load_vector[j] = p;
 	load_vector[j] = 0;
@@ -322,7 +322,7 @@ rcsload(char *archive,		/* name of file to open             */
 		length++;
 	DEBUG(("%d newlines, filesize=%d\n", length, t - load_buffer))
 	    length += (unsigned) (t - load_buffer) + 2;
-	load_buffer = doalloc(load_buffer, length);
+	load_buffer = doalloc(load_buffer, (size_t) length);
     } else
 	load_buffer = 0;
     load_last = load_buffer;

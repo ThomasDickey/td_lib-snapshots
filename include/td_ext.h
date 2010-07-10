@@ -1,4 +1,4 @@
-/* $Id: td_ext.h,v 12.18 2004/03/07 21:54:17 tom Exp $ */
+/* $Id: td_ext.h,v 12.19 2010/07/10 00:04:23 tom Exp $ */
 
 #ifndef	TD_EXT_H
 #define	TD_EXT_H
@@ -447,7 +447,7 @@ extern	int	vfork	 (void);
 #endif /* HAVE_VFORK */
 
 #if defined(HAVE_GETCWD)	/* prefer Posix functions */
-#define	getwd(p)	getcwd(p,MAXPATHLEN)
+#define	getwd(p)	getcwd((p), (size_t)MAXPATHLEN)
 #endif
 
 #ifdef __cplusplus

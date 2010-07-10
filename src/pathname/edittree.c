@@ -28,7 +28,7 @@
 #include	"port2vms.h"
 #include	"td_qsort.h"
 
-MODULE_ID("$Id: edittree.c,v 12.9 2010/07/05 14:31:38 tom Exp $")
+MODULE_ID("$Id: edittree.c,v 12.10 2010/07/10 00:11:18 tom Exp $")
 
 typedef char *PTR;
 #define	CHUNK	127		/* 1 less than a power of 2 */
@@ -123,7 +123,7 @@ edittree(const char *oldname,
 	    }
 	    closedir(dirp);
 	    if (num != 0) {
-		qsort((PTR) vec, num, sizeof(PTR), cmp_qsort);
+		qsort((PTR) vec, (size_t) num, sizeof(PTR), cmp_qsort);
 		while (num-- != 0) {
 		    if (LOOK(vec[num], &sb) < 0) {
 			perror(vec[num]);

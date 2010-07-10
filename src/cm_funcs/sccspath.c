@@ -13,7 +13,7 @@
 #include	"ptypes.h"
 #include	"sccsdefs.h"
 
-MODULE_ID("$Id: sccspath.c,v 12.4 2010/07/04 09:22:22 tom Exp $")
+MODULE_ID("$Id: sccspath.c,v 12.5 2010/07/10 00:10:13 tom Exp $")
 
 char *
 sccspath(const char *utility)
@@ -23,7 +23,7 @@ sccspath(const char *utility)
     char tmp[BUFSIZ];
     utility = pathcat(tmp, SCCS_PATH, utility);
 #endif
-    if (which(bfr, sizeof(bfr), utility, ".") <= 0) {
+    if (which(bfr, (int) sizeof(bfr), utility, ".") <= 0) {
 	failed(utility);
 	/*NOTREACHED */
     }

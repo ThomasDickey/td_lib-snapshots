@@ -37,7 +37,7 @@
 #include "ptypes.h"
 #include "cmv_defs.h"
 
-MODULE_ID("$Id: cmv_dir.c,v 12.28 2010/07/05 10:59:41 tom Exp $")
+MODULE_ID("$Id: cmv_dir.c,v 12.29 2010/07/10 00:08:21 tom Exp $")
 
 /******************************************************************************/
 
@@ -178,7 +178,7 @@ read_s_curr(CMTREE * parent)	/* parent node to populate */
 
     if ((fp = fopen(parts_list(temp, parent->fullpath, parent->level), "r"))
 	!= 0) {
-	while (fgets(temp, sizeof(temp), fp) != 0) {
+	while (fgets(temp, (int) sizeof(temp), fp) != 0) {
 	    char *s = strchr(strtrim(temp), ';');
 	    if (s == 0)
 		continue;
@@ -289,7 +289,7 @@ read_r_curr(CMTREE * parent)
     }
 
     if ((fp = fopen(temp, "r")) != 0) {
-	while (fgets(temp, sizeof(temp), fp) != 0) {
+	while (fgets(temp, (int) sizeof(temp), fp) != 0) {
 	    char *external;
 	    char *internal;
 	    char *description;

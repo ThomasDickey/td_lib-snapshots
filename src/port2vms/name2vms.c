@@ -29,7 +29,7 @@
 #define	STR_PTYPES
 #include	"port2vms.h"
 
-MODULE_ID("$Id: name2vms.c,v 12.7 2010/07/05 15:44:21 tom Exp $")
+MODULE_ID("$Id: name2vms.c,v 12.8 2010/07/10 00:12:09 tom Exp $")
 
 static int leaf_dot;		/* counts dots found in a particular leaf */
 static int leaf_ver;		/* set if we found a DECshell version */
@@ -168,11 +168,11 @@ name2vms(char *dst, const char *src)
     }
 
     /* permit leading "./" to simplify cases in which we concatenate */
-    if (!strncmp(s, "./", 2))
+    if (!strncmp(s, "./", (size_t) 2))
 	s += 2;
 
     /* translate repeated leading "../" */
-    while (!strncmp(s, "../", 3)) {
+    while (!strncmp(s, "../", (size_t) 3)) {
 	s += 3;
 	if (!bracket++)
 	    *d++ = '[';

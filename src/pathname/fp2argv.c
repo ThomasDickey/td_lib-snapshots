@@ -23,7 +23,7 @@
 #include	"ptypes.h"
 #include	"dyn_str.h"
 
-MODULE_ID("$Id: fp2argv.c,v 12.7 2010/07/05 14:32:23 tom Exp $")
+MODULE_ID("$Id: fp2argv.c,v 12.8 2010/07/10 00:12:09 tom Exp $")
 
 #define	CHUNK	32
 
@@ -33,7 +33,7 @@ get_line(FILE *fp)
     static DYN *bfr;
     static char tmp[] = "?";
 
-    dyn_init(&bfr, BUFSIZ);
+    dyn_init(&bfr, (size_t) BUFSIZ);
 
     do {
 	tmp[0] = (char) fgetc(fp);

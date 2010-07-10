@@ -25,7 +25,7 @@
 #include	<ctype.h>
 #include	<time.h>
 
-MODULE_ID("$Id: cutoff.c,v 12.6 2004/03/07 16:31:58 tom Exp $")
+MODULE_ID("$Id: cutoff.c,v 12.7 2010/07/10 00:08:21 tom Exp $")
 
 #define	Z(n)	twod(&bfr[n+n])
 
@@ -54,9 +54,9 @@ cutoff(int argc, char **argv)
 
 	    if (first && (d - bfr) == 2) {
 		first = FALSE;
-		if (!strncmp(bfr, "19", 2))
+		if (!strncmp(bfr, "19", (size_t) 2))
 		    d = bfr;
-		else if (!strncmp(bfr, "20", 2)) {
+		else if (!strncmp(bfr, "20", (size_t) 2)) {
 		    year = 2000;
 		    d = bfr;
 		} else if (Z(0) < 38) {

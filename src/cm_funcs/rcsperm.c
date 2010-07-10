@@ -33,7 +33,7 @@
 #include	"dyn_str.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: rcsperm.c,v 12.7 2010/07/04 17:38:44 tom Exp $")
+MODULE_ID("$Id: rcsperm.c,v 12.8 2010/07/10 00:09:35 tom Exp $")
 
 int
 rcspermit(const char *path,
@@ -54,7 +54,7 @@ rcspermit(const char *path,
     int ok = FALSE;		/* assume no permission */
 
     path = vcs_file(path, tmp, FALSE);
-    dyn_init(&access_list, BUFSIZ);
+    dyn_init(&access_list, (size_t) BUFSIZ);
 
     /*
      * Reset caller's copy of $RCS_BASE in case we are processing more than
