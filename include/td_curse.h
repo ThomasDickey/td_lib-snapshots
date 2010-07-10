@@ -1,4 +1,4 @@
-/* $Id: td_curse.h,v 12.62 2010/07/05 00:30:41 tom Exp $ */
+/* $Id: td_curse.h,v 12.63 2010/07/09 20:59:43 tom Exp $ */
 
 /*
  * TD_LIB CURSES-related definitions
@@ -361,6 +361,7 @@ typedef	struct	{
 	int	released;	/* boolean */
 	int	dbl_clik;	/* boolean */
 	} XtermMouse;
+extern	int xt_enabled;		/* state of XTerm-mouse */
 extern	XtermMouse xt_mouse;	/* state of XTerm-mouse */
 #endif
 
