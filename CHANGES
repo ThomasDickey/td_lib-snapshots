@@ -1,3 +1,17 @@
+2011-01-30  dickey@invisible-island.net
+
+	* configure: regen
+
+	* aclocal.m4:
+	modify test-program to account for ncurses' different interface.
+
+	* aclocal.m4:
+	resync with my-autoconf (mostly to deprecate usage of shell ${name-value}
+	in favor of ${name:-value}).
+
+	* package/debian/changelog, package/td_lib.spec:
+	bump, for configure script changes
+
 2010-09-28  dickey@invisible-island.net
 
 	* config.guess: 2010-09-24
