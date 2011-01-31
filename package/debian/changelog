@@ -1,3 +1,9 @@
+tdlib (20110130) unstable; urgency=low
+
+  * configure-script fixes/updates
+
+ -- Thomas E. Dickey <dickey@invisible-island.net>  Sun, 30 Jan 2011 17:08:36 -0500
+
 tdlib (20100711) unstable; urgency=low
 
   * implement ded "-m" mouse option
