@@ -40,7 +40,7 @@
 #define	STR_PTYPES
 #include	"port2vms.h"
 
-MODULE_ID("$Id: vms2name.c,v 12.10 2010/07/10 00:12:09 tom Exp $")
+MODULE_ID("$Id: vms2name.c,v 12.11 2012/01/13 18:14:42 tom Exp $")
 
 #define	LOWER(p)	((isalpha(UCH(*p)) && isupper(UCH(*p))) ? LowerMacro(*p) : *p)
 
@@ -177,7 +177,7 @@ vms2name(char *dst, const char *src)
 	    s++;
 	}
 	if (*s)
-	    *s = s[1] ? '/' : EOS;
+	    *s = (char) (s[1] ? '/' : EOS);
     } else {
 	if (have_dev)
 	    *dst++ = '/';
@@ -191,7 +191,7 @@ vms2name(char *dst, const char *src)
      */
     for (s = dst; *d; s++, d++) {
 	if (isalpha(UCH(*d)) && isupper(UCH(*d)))
-	    *s = tolower(*d);
+	    *s = (char) tolower(*d);
 	else {
 	    *s = *d;
 	    if (*s == '.' && d[1] == EOS)
@@ -228,7 +228,7 @@ vms2name(char *dst, const char *src)
     }
     while (uc_len-- > 0 && *s) {
 	if (isalpha(UCH(*s)))
-	    *s = UpperMacro(*s);
+	    *s = (char) UpperMacro(*s);
 	s++;
     }
     if (rcs_suffix)

@@ -12,7 +12,7 @@
 
 #include	<td_btree.h>
 
-MODULE_ID("$Id: btree.c,v 12.7 2010/07/05 00:01:18 tom Exp $")
+MODULE_ID("$Id: btree.c,v 12.8 2012/01/13 18:14:42 tom Exp $")
 
 #define	llink	links[0]
 #define	rlink	links[1]
@@ -70,7 +70,7 @@ btree_find(BI_TREE * funcs,
 
 	    while (p != q) {
 		if ((a = (*funcs->compare) (data, KEY(p))) != 0) {
-		    B(p) = (a < 0) ? -1 : 1;
+		    B(p) = (char) ((a < 0) ? -1 : 1);
 		    p = LINK(a, p);
 		}
 	    }

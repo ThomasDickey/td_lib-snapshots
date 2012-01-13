@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t20110130
+MANIFEST for td_lib, version t20120113
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         restrictions on copying/using this software
@@ -6,7 +6,6 @@ README                          read-me file for this directory
 aclocal.m4                      local autoconf macros
 config.guess                    configure utility-script
 config.sub                      configure utility-script
-config_h.in                     autoconf template for include/config.h
 configure                       generated configure script
 configure.in                    autoconf script for td_lib
 descrip.mms                     top-level MMS script for this library on VMS

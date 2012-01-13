@@ -40,7 +40,7 @@
 #include	"rcsdefs.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: rcsedit.c,v 12.13 2010/07/10 00:09:35 tom Exp $")
+MODULE_ID("$Id: rcsedit.c,v 12.14 2012/01/13 18:14:42 tom Exp $")
 
 /* local definitions */
 #define	VERBOSE	if (verbose) PRINTF
@@ -97,10 +97,10 @@ dir_access(void)
 	gid = (int) sb.st_gid;
     }
     if (uid == (int) sb.st_uid)
-	return (sb.st_mode & S_IWRITE);
+	return (int) (sb.st_mode & S_IWRITE);
     else if (gid == (int) sb.st_gid)
-	return (sb.st_mode & (S_IWRITE >> 3));
-    return (sb.st_mode & (S_IWRITE >> 6));
+	return (int) (sb.st_mode & (S_IWRITE >> 3));
+    return (int) (sb.st_mode & (S_IWRITE >> 6));
 }
 
 static int
@@ -216,7 +216,7 @@ rcsopen(const char *name, int show, int readonly)
 	else
 	    FORMAT(tmp_name, "%s/rcsedit%d", P_tmpdir, (int) getpid());
 
-	fmode = sb.st_mode & 0555;
+	fmode = (int) (sb.st_mode & 0555);
 	if ((fd = open(tmp_name, O_CREAT | O_EXCL | O_WRONLY, fmode)) < 0
 	    || !(fpT = fdopen(fd, "w"))) {
 	    perror(tmp_name);

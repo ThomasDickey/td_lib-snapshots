@@ -18,7 +18,7 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: mem2file.c,v 12.7 2010/07/04 17:42:23 tom Exp $")
+MODULE_ID("$Id: mem2file.c,v 12.8 2012/01/13 18:14:42 tom Exp $")
 
 int
 mem2file(char *blob, char *name, char *mode)
@@ -34,7 +34,7 @@ mem2file(char *blob, char *name, char *mode)
     if (stat(name, &sb) >= 0) {
 	if ((sb.st_mode & S_IFMT) != S_IFREG)
 	    return (-1);
-	if (((save = (sb.st_mode & 0777)) & 0222) == 0)
+	if (((save = (int) (sb.st_mode & 0777)) & 0222) == 0)
 	    if (chmod(name, (mode_t) (save | 0600)) < 0)
 		return (-1);
     } else
