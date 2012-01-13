@@ -1,3 +1,9 @@
+tdlib (20120113) unstable; urgency=low
+
+  * configure-script fixes/updates
+
+ -- Thomas E. Dickey <dickey@invisible-island.net>  Fri, 13 Jan 2012 13:05:31 -0500
+
 tdlib (20110130) unstable; urgency=low
 
   * configure-script fixes/updates

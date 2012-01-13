@@ -1,3 +1,46 @@
+2012-01-13  dickey@invisible-island.net
+
+	* configure: regen
+
+	* configure.in:
+	remove check for bcopy in bsd library; that would only be found currently
+	in the Debian bsd library, which is unneeded.
+
+	* COPYING: bump
+
+	* src/cm_funcs/cvslast.c, src/cm_funcs/rcsedit.c, src/compare/btree.c, src/curses/rawgets.c, src/pathname/filecopy.c, src/pathname/mem2file.c, src/pathname/walktree.c, src/port2vms/vms2name.c, src/process/bldarg.c, src/process/shoarg.c:
+	gcc-warnings
+
+	* configure: regen
+
+	* package/debian/changelog, package/td_lib.spec: bump
+
+	* aclocal.m4:
+	change CF_WITH_NCURSES_ETC to use define() rather than AC_DEFUN() to fix
+	order of evaluation.
+
+	* configure.in: add configure-check for groff and nroff
+
+	* td_make.in:
+	use configure check for groff and nroff to disable rules which may not run
+
+	* configure.in:
+	OnHost and related config_h.in files are obsolete - removed.
+
+	* aclocal.m4:
+	moved configure.in's --with-ncurses and related options here as CF_WITH_NCURSES_ETC
+	macro.  That provides also --with-pdcurses as well as specific options for
+	antique HPUX and Sun libraries. PDCurses depends on X libraries, so this
+	adds all of the related macros.
+
+	* configure: regen
+
+	* configure.in: split-out CF_WITH_NCURSES_ETC macro
+
+	* aclocal.m4:
+	resync with my-autoconf, mostly improvements for curses library checks,
+	and CF_XOPEN_SOURCE changes.
+
 2011-01-30  dickey@invisible-island.net
 
 	* configure: regen

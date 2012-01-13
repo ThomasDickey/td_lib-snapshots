@@ -17,7 +17,7 @@
 #include	<time.h>
 #include	"rcsdefs.h"
 
-MODULE_ID("$Id: cvslast.c,v 12.7 2010/07/04 16:52:03 tom Exp $")
+MODULE_ID("$Id: cvslast.c,v 12.8 2012/01/13 18:14:42 tom Exp $")
 
 #define NAME_LIST "Entries"
 #define NAME_ARCH "Repository"
@@ -129,7 +129,7 @@ string2time(char *string)
 static char *
 parse_field(char **s)
 {
-    int skip = strcspn(*s, "/");
+    int skip = (int) strcspn(*s, "/");
     char *result = 0;
 
     if (skip != 0) {

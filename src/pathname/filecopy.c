@@ -33,7 +33,7 @@
 #define	SIG_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: filecopy.c,v 12.12 2010/07/04 20:00:53 tom Exp $")
+MODULE_ID("$Id: filecopy.c,v 12.13 2012/01/13 18:14:42 tom Exp $")
 
 int
 filecopy(const char *src, const char *dst, int copy)
@@ -68,7 +68,7 @@ filecopy(const char *src, const char *dst, int copy)
 
     catchall(SIG_IGN);
     if ((fi = open(src, O_RDONLY, 0)) >= 0) {
-	int mode = sb1.st_mode & 0777;
+	int mode = (int) (sb1.st_mode & 0777);
 	if (((unlink(dst) >= 0) || (errno == ENOENT))
 	    && ((fo = open(dst, O_CREAT | O_WRONLY, mode)) >= 0)) {
 

@@ -15,7 +15,7 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: shoarg.c,v 12.8 2010/07/04 09:18:23 tom Exp $")
+MODULE_ID("$Id: shoarg.c,v 12.9 2012/01/13 18:14:42 tom Exp $")
 
 /*
  * Function:	Writes a new string with the non-ascii characters escaped.
@@ -33,7 +33,7 @@ bldcmd(char *dst,
 	    if (--len <= 0)
 		break;
 	    *dst++ = '\\';
-	    *dst++ = toascii(c);
+	    *dst++ = (char) toascii(c);
 	} else
 	    *dst++ = (char) c;
     }

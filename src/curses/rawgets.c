@@ -72,7 +72,7 @@
 #include	"td_curse.h"
 #include	"dyn_str.h"
 
-MODULE_ID("$Id: rawgets.c,v 12.31 2010/07/10 00:21:56 tom Exp $")
+MODULE_ID("$Id: rawgets.c,v 12.32 2012/01/13 18:14:42 tom Exp $")
 
 #define	SHIFT	5
 
@@ -250,7 +250,7 @@ ShowAt(char *at)
 		chtype c;
 		if (cnt-- <= 0)
 		    break;
-		c = *at++ & 0xff;
+		c = (chtype) (*at++ & 0xff);
 		if (!isprint(c)) {
 		    x++;
 		    (void) waddch(Z, (chtype) '^');

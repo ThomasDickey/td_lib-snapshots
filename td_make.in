@@ -1,4 +1,4 @@
-# $Id: td_make.in,v 12.28 2010/07/05 09:53:48 tom Exp $
+# $Id: td_make.in,v 12.29 2012/01/13 15:27:59 tom Exp $
 # common definitions for makefiles built over TD_LIB library.
 # vile:makemode
 
@@ -106,31 +106,26 @@ LINT_EACH = $(SHELL) -c 'for i in $?;do echo $$i:; $(LINT) $(LINTOPTS) $$i >>$@;
 .c.tst:
 	@ECHO_LD@$(CC) -o $@ -DTEST $(CFLAGS) $(EXTRA_CFLAGS) $(CPP_OPTS) $< $Z $(LIB_ARGS)
 
-CLEAN__MAN = .cat .pdf .ps .html .png .txt
+CLEAN__MAN = @USE_NROFF@ .cat @USE_GROFF@ .pdf .ps .html .png .txt 
 
-.SUFFIXES: .man .cat .pdf .ps .html .txt
+@USE_NROFF@.SUFFIXES: .man .cat @USE_GROFF@ .pdf .ps .html .txt 
+@USE_NROFF@
+@USE_NROFF@NROFF	= @NROFF_PATH@
+@USE_NROFF@
+@USE_NROFF@.man.cat:
+@USE_NROFF@	-$(RM) $@
+@USE_NROFF@	$(NROFF) -man $? >$@
 
-.man.cat:
-	-$(RM) $@
-	nroff -man $? >$@
-
-.man.html :
-	GROFF_NO_SGR=stupid $(SHELL) -c "tbl $*.man | groff -Thtml -man" >$@
-
-.man.ps :
-	$(SHELL) -c "tbl $*.man | groff -man" >$@
-
-.man.txt :
-	GROFF_NO_SGR=stupid $(SHELL) -c "tbl $*.man | nroff -Tascii -man | col -bx" >$@
-
-.ms.html :
-	GROFF_NO_SGR=stupid $(SHELL) -c "tbl $*.ms | groff -Thtml -ms" >$@
-
-.ms.ps :
-	$(SHELL) -c "tbl $*.ms | groff -ms" >$@
-
-.ms.txt :
-	GROFF_NO_SGR=stupid $(SHELL) -c "tbl $*.ms | nroff -Tascii -ms | col -bx" >$@
-
-.ps.pdf :
-	ps2pdf $*.ps
+@USE_GROFF@GROFF	= @GROFF_PATH@
+@USE_GROFF@
+@USE_GROFF@.man.html :
+@USE_GROFF@	GROFF_NO_SGR=stupid $(SHELL) -c "tbl $*.man | $(GROFF) -Thtml -man" >$@
+@USE_GROFF@
+@USE_GROFF@.man.ps :
+@USE_GROFF@	$(SHELL) -c "tbl $*.man | $(GROFF) -man" >$@
+@USE_GROFF@
+@USE_GROFF@.man.txt :
+@USE_GROFF@	GROFF_NO_SGR=stupid $(SHELL) -c "tbl $*.man | $(GROFF) -Tascii -man | col -bx" >$@
+@USE_GROFF@
+@USE_GROFF@.ps.pdf :
+@USE_GROFF@	ps2pdf $*.ps
