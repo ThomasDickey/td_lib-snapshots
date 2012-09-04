@@ -1,3 +1,18 @@
+2012-09-04  dickey@invisible-island.net
+
+	* td_make.in: support --datarootdir
+
+	* configure: regen using newer autoconf patch, supporting --datarootdir
+
+	* package/debian/copyright, package/debian/changelog, package/td_lib.spec:
+	bump
+
+	* makefile.in: support --datarootdir
+
+	* aclocal.m4:
+	resync with my-autoconf, adding CF_CLANG_COMPILER as well as updates to
+	CF_LIB_PREFIX, CF_GCC_WARNINGS and CF_PATH_SYNTAX
+
 2012-02-25  dickey@invisible-island.net
 
 	* config.guess, config.sub: update to 2012-02-10

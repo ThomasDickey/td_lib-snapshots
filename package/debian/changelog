@@ -1,3 +1,10 @@
+tdlib (20120904) unstable; urgency=low
+
+  * configure-script fixes/updates
+  * bug-fix for checkout utility
+
+ -- Thomas E. Dickey <dickey@invisible-island.net>  Tue, 04 Sep 2012 04:26:24 -0400
+
 tdlib (20120113) unstable; urgency=low
 
   * configure-script fixes/updates

@@ -1,4 +1,4 @@
-# $Id: td_make.in,v 12.29 2012/01/13 15:27:59 tom Exp $
+# $Id: td_make.in,v 12.30 2012/09/04 08:39:42 tom Exp $
 # common definitions for makefiles built over TD_LIB library.
 # vile:makemode
 
@@ -11,6 +11,7 @@ exec_prefix	= @exec_prefix@
 
 bindir		= @bindir@
 libdir		= @libdir@
+datarootdir	= @datarootdir@
 mandir		= @mandir@
 datadir		= @datadir@
 
