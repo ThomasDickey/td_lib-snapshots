@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Id: aclocal.m4,v 12.181 2012/01/13 15:50:17 tom Exp $
+dnl $Id: aclocal.m4,v 12.182 2012/09/04 08:23:26 tom Exp $
 dnl vi:set ts=4:
 dnl
 dnl see
@@ -613,6 +613,39 @@ if	test $cf_cv_REGEX_H = no && \
 fi
 ])dnl
 dnl ---------------------------------------------------------------------------
+dnl CF_CLANG_COMPILER version: 1 updated: 2012/06/16 14:55:39
+dnl -----------------
+dnl Check if the given compiler is really clang.  clang's C driver defines
+dnl __GNUC__ (fooling the configure script into setting $GCC to yes) but does
+dnl not ignore some gcc options.
+dnl
+dnl This macro should be run "soon" after AC_PROG_CC or AC_PROG_CPLUSPLUS, to
+dnl ensure that it is not mistaken for gcc/g++.  It is normally invoked from
+dnl the wrappers for gcc and g++ warnings.
+dnl
+dnl $1 = GCC (default) or GXX
+dnl $2 = INTEL_COMPILER (default) or INTEL_CPLUSPLUS
+dnl $3 = CFLAGS (default) or CXXFLAGS
+AC_DEFUN([CF_CLANG_COMPILER],[
+ifelse([$2],,CLANG_COMPILER,[$2])=no
+
+if test "$ifelse([$1],,[$1],GCC)" = yes ; then
+	AC_MSG_CHECKING(if this is really Clang ifelse([$1],GXX,C++,C) compiler)
+	cf_save_CFLAGS="$ifelse([$3],,CFLAGS,[$3])"
+	ifelse([$3],,CFLAGS,[$3])="$ifelse([$3],,CFLAGS,[$3]) -Qunused-arguments"
+	AC_TRY_COMPILE([],[
+#ifdef __clang__
+#else
+make an error
+#endif
+],[ifelse([$2],,CLANG_COMPILER,[$2])=yes
+cf_save_CFLAGS="$cf_save_CFLAGS -Qunused-arguments"
+],[])
+	ifelse([$3],,CFLAGS,[$3])="$cf_save_CFLAGS"
+	AC_MSG_RESULT($ifelse([$2],,CLANG_COMPILER,[$2]))
+fi
+])
+dnl ---------------------------------------------------------------------------
 dnl CF_CURSES_CCHAR_T version: 4 updated: 2010/10/23 15:54:49
 dnl -----------------
 dnl Test if curses defines 'cchar_t' (usually a 'long' type for SysV curses).
@@ -784,7 +817,7 @@ fi
 AC_CHECK_HEADERS($cf_cv_ncurses_header)
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_CURSES_LIBS version: 35 updated: 2011/08/09 21:06:37
+dnl CF_CURSES_LIBS version: 36 updated: 2012/07/07 21:02:48
 dnl --------------
 dnl Look for the curses libraries.  Older curses implementations may require
 dnl termcap/termlib to be linked as well.  Call CF_CURSES_CPPFLAGS first.
@@ -864,7 +897,7 @@ if test ".$ac_cv_func_initscr" != .yes ; then
     # Check for library containing tgoto.  Do this before curses library
     # because it may be needed to link the test-case for initscr.
     AC_CHECK_FUNC(tgoto,[cf_term_lib=predefined],[
-        for cf_term_lib in $cf_check_list otermcap termcap termlib unknown
+        for cf_term_lib in $cf_check_list otermcap termcap tinfo termlib unknown
         do
             AC_CHECK_LIB($cf_term_lib,tgoto,[break])
         done
@@ -1569,7 +1602,7 @@ if test "$GCC" = yes ; then
 fi
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_GCC_WARNINGS version: 27 updated: 2010/10/23 15:52:32
+dnl CF_GCC_WARNINGS version: 29 updated: 2012/06/16 14:55:39
 dnl ---------------
 dnl Check if the compiler supports useful warning options.  There's a few that
 dnl we don't use, simply because they're too noisy:
@@ -1592,6 +1625,7 @@ AC_DEFUN([CF_GCC_WARNINGS],
 [
 AC_REQUIRE([CF_GCC_VERSION])
 CF_INTEL_COMPILER(GCC,INTEL_COMPILER,CFLAGS)
+CF_CLANG_COMPILER(GCC,CLANG_COMPILER,CFLAGS)
 
 cat > conftest.$ac_ext <<EOF
 #line __oline__ "${as_me:-configure}"
@@ -1663,6 +1697,13 @@ then
 			Winline) #(vi
 				case $GCC_VERSION in
 				[[34]].*)
+					CF_VERBOSE(feature is broken in gcc $GCC_VERSION)
+					continue;;
+				esac
+				;;
+			Wpointer-arith) #(vi
+				case $GCC_VERSION in
+				[[12]].*)
 					CF_VERBOSE(feature is broken in gcc $GCC_VERSION)
 					continue;;
 				esac
@@ -1996,11 +2037,11 @@ CF_SUBDIR_PATH($1,$2,lib)
 $1="$cf_library_path_list [$]$1"
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_LIB_PREFIX version: 8 updated: 2008/09/13 11:34:16
+dnl CF_LIB_PREFIX version: 9 updated: 2012/01/21 19:28:10
 dnl -------------
 dnl Compute the library-prefix for the given host system
 dnl $1 = variable to set
-AC_DEFUN([CF_LIB_PREFIX],
+define([CF_LIB_PREFIX],
 [
 	case $cf_cv_system_name in #(vi
 	OS/2*|os2*) #(vi
@@ -2623,7 +2664,7 @@ ifelse([$1],,,[$1=$PATH_SEPARATOR])
 	AC_SUBST(PATH_SEPARATOR)
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_PATH_SYNTAX version: 13 updated: 2010/05/26 05:38:42
+dnl CF_PATH_SYNTAX version: 14 updated: 2012/06/19 20:58:54
 dnl --------------
 dnl Check the argument to see that it looks like a pathname.  Rewrite it if it
 dnl begins with one of the prefix/exec_prefix variables, and then again if the
@@ -2643,7 +2684,7 @@ case ".[$]$1" in #(vi
   ;;
 .[[a-zA-Z]]:[[\\/]]*) #(vi OS/2 EMX
   ;;
-.\[$]{*prefix}*) #(vi
+.\[$]{*prefix}*|.\[$]{*dir}*) #(vi
   eval $1="[$]$1"
   case ".[$]$1" in #(vi
   .NONE/*)
