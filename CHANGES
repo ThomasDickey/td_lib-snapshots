@@ -1,3 +1,7 @@
+2013-09-07  dickey@invisible-island.net
+
+	* config.guess: 2013-06-10
+
 2012-09-04  dickey@invisible-island.net
 
 	* td_make.in: support --datarootdir
