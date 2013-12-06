@@ -1,3 +1,24 @@
+2013-12-05  dickey@invisible-island.net
+
+	* configure.in: bump prereq
+
+	* package/debian/changelog, package/td_lib.spec, package/debian/copyright, COPYING:
+	bump
+
+	* configure: regen
+
+	* aclocal.m4: resync with my-autoconf
+
+	* aclocal.m4: appease autoheader-252 for consistency
+
+	* configure.in: appease autoheader
+
+	* configure.in: use CF_PROG_CC
+
+	* aclocal.m4: use CF_PROG_CC, drop K&R checks
+
+	* aclocal.m4: resync with my-autoconf
+
 2013-10-25  dickey@invisible-island.net
 
 	* config.sub: 2013-10-01
