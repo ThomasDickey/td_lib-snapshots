@@ -1,3 +1,9 @@
+2014-04-19  dickey@invisible-island.net
+
+	* config.sub: 2014-04-03
+
+	* config.guess: 2014-03-23
+
 2013-12-05  dickey@invisible-island.net
 
 	* configure.in: bump prereq
