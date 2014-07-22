@@ -1,3 +1,41 @@
+2014-07-22  dickey@invisible-island.net
+
+	* aclocal.m4: resync with my-autoconf
+
+	* configure: regen
+
+	* src/cm_funcs/cvslast.c, src/cm_funcs/svn_last.c, src/port2vms/vms2name.c, src/pathname/which.c:
+	cygwin-compiler-warnings
+
+	* include/td_ext.h:
+	avoid declaring externs for optind / optarg, e.g., for Cygwin which uses
+	extra storage-class keywords.
+
+	* aclocal.m4: add CF_GETOPT-HEADER, for td_lib/td_ext.h
+
+	* configure.in: use CF_GETOPT_HEADER
+
+	* src/cm_funcs/rcsedit.c, src/curses/erasechr.c, src/curses/scr_size.c, src/curses/cmdch.c, src/curses/rawterm.c:
+	minix3.2-build-fixes
+
+	* include/ptypes.h:
+	turn off ident's with clang (noisy) and gcc (not supported)
+
+	* src/curses/addchnst.c, src/curses/beep.c, src/curses/getmaxx.c, src/curses/killchar.c, src/curses/padedit.c, src/curses/savewin.c, src/curses/wresize.c, src/memory/memmove.c, src/pathname/fileblox.c, src/compare/scomp.c, src/compare/m2comp.c, src/string/lsbycols.c, src/curses/win2file.c, src/cm_funcs/sccslast.c:
+	clang-warnings
+
+	* package/debian/copyright, package/debian/changelog, package/td_lib.spec, COPYING:
+	bump
+
+	* td_make.in: use variables from CF_INSTALL_OPTS
+
+	* configure.in, aclocal.m4:
+	add CF_INSTALL_OPTS, to help with minix port
+
+	* configure: regen
+
+	* aclocal.m4: resync with my-autoconf
+
 2014-04-19  dickey@invisible-island.net
 
 	* config.sub: 2014-04-03

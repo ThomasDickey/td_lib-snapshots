@@ -40,7 +40,7 @@
 #include	"rcsdefs.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: rcsedit.c,v 12.14 2012/01/13 18:14:42 tom Exp $")
+MODULE_ID("$Id: rcsedit.c,v 12.15 2014/07/22 15:09:07 tom Exp $")
 
 /* local definitions */
 #define	VERBOSE	if (verbose) PRINTF
@@ -97,10 +97,10 @@ dir_access(void)
 	gid = (int) sb.st_gid;
     }
     if (uid == (int) sb.st_uid)
-	return (int) (sb.st_mode & S_IWRITE);
+	return (int) (sb.st_mode & S_IWUSR);
     else if (gid == (int) sb.st_gid)
-	return (int) (sb.st_mode & (S_IWRITE >> 3));
-    return (int) (sb.st_mode & (S_IWRITE >> 6));
+	return (int) (sb.st_mode & (S_IWUSR >> 3));
+    return (int) (sb.st_mode & (S_IWUSR >> 6));
 }
 
 static int

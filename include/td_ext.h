@@ -1,4 +1,4 @@
-/* $Id: td_ext.h,v 12.19 2010/07/10 00:04:23 tom Exp $ */
+/* $Id: td_ext.h,v 12.20 2014/07/22 18:08:53 tom Exp $ */
 
 #ifndef	TD_EXT_H
 #define	TD_EXT_H
@@ -384,11 +384,19 @@ extern	int	_flsbuf	 (int n, FILE *s);
 extern	void	bzero	 (V_OR_P p, int n);
 #endif /* HAVE_BZERO */
 
-#if defined(HAVE_GETOPT) && defined(NEED_GETOPT)
+#if defined(HAVE_GETOPT)
+#if defined(HAVE_GETOPT_HEADER)
+#if defined(NEED_GETOPT_H)
+#include <getopt.h>
+#endif
+#elif defined(NEED_GETOPT)
 extern	int	getopt   (int argc, char * const *argv, const char *opts);
-#endif /* HAVE_GETOPT */
+#if defined(NEED_GETOPT)
 extern	char *	optarg;
 extern	int	optind;
+#endif
+#endif
+#endif /* HAVE_GETOPT */
 
 #if defined(HAVE_GETWD) /*&& NEED_GETWD*/
 #if defined(HAVE_GETWD) && defined(NEED_GETWD)

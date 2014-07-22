@@ -49,7 +49,7 @@
 #include	"td_curse.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: cmdch.c,v 12.34 2010/07/09 21:39:38 tom Exp $")
+MODULE_ID("$Id: cmdch.c,v 12.35 2014/07/22 15:02:05 tom Exp $")
 
 #define	ESC(c)	((c) == '\033')
 #define	END(s)	s[strlen(s)-1]
@@ -70,11 +70,10 @@ double_click(void)
 #if defined(HAVE_GETTIMEOFDAY)
     static struct timeval last_time;
     struct timeval this_time;
-    struct timezone this_zone;
     int event = FALSE;
     long diff;
 
-    (void) gettimeofday(&this_time, &this_zone);
+    (void) gettimeofday(&this_time, NULL);
 
     diff = this_time.tv_sec - last_time.tv_sec;
     if (diff <= 1) {

@@ -15,7 +15,7 @@
 
 #include	"td_curse.h"
 
-MODULE_ID("$Id: killchar.c,v 12.8 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: killchar.c,v 12.9 2014/07/22 13:51:29 tom Exp $")
 
 #if	!defined(HAVE_KILLCHAR) && !defined(killchar)
 int
@@ -27,5 +27,11 @@ killchar(void)
     if (ioctl(0, TIOCGETP, (caddr_t) & buf) >= 0)
 	code = buf.sg_kill;
     return (code);
+}
+#else
+void dummy_killchar(void);
+void
+dummy_killchar(void)
+{
 }
 #endif /* HAVE_KILLCHAR */

@@ -16,7 +16,7 @@
 #define ERR_PTYPES
 #include <ptypes.h>
 
-MODULE_ID("$Id: fileblox.c,v 12.10 2010/07/05 14:33:30 tom Exp $")
+MODULE_ID("$Id: fileblox.c,v 12.11 2014/07/22 13:51:29 tom Exp $")
 
 #ifdef SYS_UNIX
 #if !defined(STAT_HAS_ST_BLOCKS)
@@ -53,6 +53,12 @@ fileblocks(const Stat_t * sb)
 	}
     }
     return (blocks);
+}
+#else
+void dummy_fileblox(void);
+void
+dummy_fileblox(void)
+{
 }
 #endif /* !STAT_HAS_ST_BLOCKS */
 #endif /* SYS_UNIX */

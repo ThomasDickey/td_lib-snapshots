@@ -31,7 +31,7 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: which.c,v 12.13 2010/07/05 14:38:17 tom Exp $")
+MODULE_ID("$Id: which.c,v 12.14 2014/07/22 18:18:26 tom Exp $")
 
 #ifdef MSDOS
 #define PROG_EXTS "PIF", "BAT", "EXE", "COM"
@@ -59,7 +59,7 @@ executable(const char *name)
     } else {
 	static char *exectypes[] =
 	{PROG_EXTS};
-	for (j = 0; j < SIZEOF(exectypes); j++) {
+	for (j = 0; j < (int) SIZEOF(exectypes); j++) {
 	    strcpy(s, exectypes[j]);
 	    if (access(name, R_OK) >= 0) {
 		ok = TRUE;

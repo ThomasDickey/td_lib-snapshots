@@ -39,7 +39,7 @@
 #include	"ptypes.h"
 #include	<errno.h>
 
-MODULE_ID("$Id: padedit.c,v 12.10 2010/07/10 00:10:42 tom Exp $")
+MODULE_ID("$Id: padedit.c,v 12.11 2014/07/22 13:51:29 tom Exp $")
 
 #ifdef	SYS_UNIX
 
@@ -142,7 +142,9 @@ spawn(char *cmd, char **argv)
 
     if ((pid = fork()) > 0) {
 	DEBUG("** spawn-1st (pid= %d)\r\n", pid);
-	while (wait(ARG_WAIT(status)) >= 0) ;
+	while (wait(ARG_WAIT(status)) >= 0) {
+	    ;
+	}
 	DEBUG("spawn-1st (status= %#x)\n", W_RETCODE(status));
 	if ((errno = W_RETCODE(status)) != 0)
 	    return (-1);

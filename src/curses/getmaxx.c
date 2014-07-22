@@ -5,7 +5,7 @@
  */
 #include	"td_curse.h"
 
-MODULE_ID("$Id: getmaxx.c,v 12.1 2003/11/06 01:26:36 tom Exp $")
+MODULE_ID("$Id: getmaxx.c,v 12.2 2014/07/22 13:51:29 tom Exp $")
 
 #ifdef HAVE_GETMAXYX
 
@@ -17,6 +17,12 @@ getmaxx(WINDOW *win)
     int y, x;
     getmaxyx(win, y, x);
     return x;
+}
+#else
+void dummy_getmaxx(void);
+void
+dummy_getmaxx(void)
+{
 }
 #endif
 
