@@ -37,7 +37,7 @@
 #include	<ctype.h>
 #include	<time.h>
 
-MODULE_ID("$Id: win2file.c,v 12.20 2010/07/05 00:04:29 tom Exp $")
+MODULE_ID("$Id: win2file.c,v 12.21 2014/07/22 13:36:08 tom Exp $")
 
 #ifndef A_ALTCHARSET
 #define A_ALTCHARSET 0
@@ -87,6 +87,7 @@ CursesLine(WINDOW *win, int row)
     return result;
 }
 
+#undef CursesData
 #define CursesData(win,y,x)  (unsigned char)CursesLine(win,y)[x]
 #endif
 

@@ -21,7 +21,7 @@
 #define	SCOMP	m2comp		/* name of this module */
 #include "td_scomp.h"
 
-MODULE_ID("$Id: m2comp.c,v 12.8 2010/07/04 22:34:10 tom Exp $")
+MODULE_ID("$Id: m2comp.c,v 12.9 2014/07/22 13:49:07 tom Exp $")
 
 #define	INSERT	1
 #define	DELETE	2
@@ -44,7 +44,7 @@ SAVE {
 };
 
 #define	NEW(cast,n)	(cast *)doalloc((char *)0, (n) * sizeof(cast))
-#define	REF(v,n)	(SCOMP_TYPE)(((n)*size)+((char *)v))
+#define	REF(v,n)	(SCOMP_TYPE)((void *)(((n)*size)+((char *)v)))
 
 #define	MATCH(ref,tst)	((*match)(REF(V1,ref), REF(V2,tst)))
 

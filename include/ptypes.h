@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 12.55 2010/07/09 23:11:07 tom Exp $ */
+/* $Id: ptypes.h,v 12.56 2014/07/22 13:57:18 tom Exp $ */
 
 #ifndef	PTYPES_H
 #define	PTYPES_H
@@ -37,6 +37,14 @@
 
 #if defined(HAVE_SYS_PARAM_H)
 #include <sys/param.h>
+#endif
+
+#ifndef NO_IDENT
+#if defined(__clang__)
+#define NO_IDENT
+#elif defined(__GNUC__)
+#define NO_IDENT
+#endif
 #endif
 
 #ifdef	NO_IDENT

@@ -1,4 +1,4 @@
-# $Id: td_make.in,v 12.30 2012/09/04 08:39:42 tom Exp $
+# $Id: td_make.in,v 12.31 2014/07/22 12:19:07 tom Exp $
 # common definitions for makefiles built over TD_LIB library.
 # vile:makemode
 
@@ -26,8 +26,8 @@ ETAGS		= @ETAGS@
 
 CC		= @CC@
 CPP		= @CPP@
-INSTALL		= @INSTALL@
-INSTALL_PROGRAM	= @INSTALL_PROGRAM@
+INSTALL		= @INSTALL@ @INSTALL_OPT_O@
+INSTALL_PROGRAM	= @INSTALL_PROGRAM@ @INSTALL_OPT_S@
 INSTALL_DATA	= @INSTALL_DATA@
 RANLIB		= @RANLIB@
 MAKE_OPTS	= @cf_cv_makeflags@

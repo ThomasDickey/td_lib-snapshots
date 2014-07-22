@@ -21,9 +21,9 @@
 #define STR_PTYPES
 #include	"td_scomp.h"
 
-MODULE_ID("$Id: scomp.c,v 12.5 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: scomp.c,v 12.6 2014/07/22 13:49:29 tom Exp $")
 
-#define	REF(v,n)	(SCOMP_TYPE)(((n)*size)+((char *)v))
+#define	REF(v,n)	(SCOMP_TYPE)((void *)(((n)*size)+((char *)v)))
 
 #define	MATCH(ref,tst)	((*match)(REF(V1,ref), REF(V2,tst)))
 

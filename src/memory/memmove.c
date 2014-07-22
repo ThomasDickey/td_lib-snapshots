@@ -11,7 +11,7 @@
 #define	STR_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: memmove.c,v 12.6 2009/10/15 23:18:27 tom Exp $")
+MODULE_ID("$Id: memmove.c,v 12.7 2014/07/22 13:51:29 tom Exp $")
 
 #if	!defined(HAVE_MEMMOVE)
 char *
@@ -32,5 +32,11 @@ memmove(char *s1, char *s2, size_t n)
 	    s1[n] = s2[n];
     }
     return s1;
+}
+#else
+void dummy_memmove(void);
+void
+dummy_memmove(void)
+{
 }
 #endif /* HAVE_MEMMOVE */

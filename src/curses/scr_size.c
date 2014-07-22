@@ -32,7 +32,7 @@
 #include "ptypes.h"
 #include "td_curse.h"
 
-MODULE_ID("$Id: scr_size.c,v 12.12 2010/07/05 15:38:50 tom Exp $")
+MODULE_ID("$Id: scr_size.c,v 12.13 2014/07/22 15:09:07 tom Exp $")
 
 #ifdef	apollo
 #  ifdef	apollo_sr10
@@ -40,7 +40,7 @@ MODULE_ID("$Id: scr_size.c,v 12.12 2010/07/05 15:38:50 tom Exp $")
 #    include <apollo/base.h>
 #  else
 #    include </sys/ins/base.ins.c>
-#  endif			/* apollo_sr10  */
+#  endif /* apollo_sr10  */
 #else /* SYS_UNIX */
 #  if defined(HAVE_IOCTL_H)
 #    include <ioctl.h>
@@ -58,6 +58,12 @@ MODULE_ID("$Id: scr_size.c,v 12.12 2010/07/05 15:38:50 tom Exp $")
 #ifdef SCO
 #include <sys/stream.h>
 #include <sys/ptem.h>
+#endif
+
+#ifndef NCURSES_VERSION
+#ifdef HAVE_TERMCAP_H
+#include <termcap.h>
+#endif
 #endif
 
 #ifndef NCURSES_CONST

@@ -40,9 +40,9 @@
 #define	STR_PTYPES
 #include	"port2vms.h"
 
-MODULE_ID("$Id: vms2name.c,v 12.11 2012/01/13 18:14:42 tom Exp $")
+MODULE_ID("$Id: vms2name.c,v 12.12 2014/07/22 18:20:15 tom Exp $")
 
-#define	LOWER(p)	((isalpha(UCH(*p)) && isupper(UCH(*p))) ? LowerMacro(*p) : *p)
+#define	LOWER(p)	((isalpha(UCH(*p)) && isupper(UCH(*p))) ? LowerMacro(UCH(*p)) : *p)
 
 static struct {
     int len;			/* number of chars to uppercase */
@@ -191,7 +191,7 @@ vms2name(char *dst, const char *src)
      */
     for (s = dst; *d; s++, d++) {
 	if (isalpha(UCH(*d)) && isupper(UCH(*d)))
-	    *s = (char) tolower(*d);
+	    *s = (char) tolower(UCH(*d));
 	else {
 	    *s = *d;
 	    if (*s == '.' && d[1] == EOS)
@@ -228,7 +228,7 @@ vms2name(char *dst, const char *src)
     }
     while (uc_len-- > 0 && *s) {
 	if (isalpha(UCH(*s)))
-	    *s = (char) UpperMacro(*s);
+	    *s = (char) UpperMacro(UCH(*s));
 	s++;
     }
     if (rcs_suffix)

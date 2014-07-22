@@ -15,12 +15,19 @@
 
 #include	"td_curse.h"
 
-MODULE_ID("$Id: beep.c,v 12.9 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: beep.c,v 12.10 2014/07/22 13:51:29 tom Exp $")
 
 #if !defined(HAVE_BEEP)
 void
 beep(void)
 {
     blip('\007');
+}
+
+#else
+void dummy_beep(void);
+void
+dummy_beep(void)
+{
 }
 #endif

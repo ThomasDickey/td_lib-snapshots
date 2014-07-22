@@ -16,7 +16,7 @@
 #include	"ptypes.h"
 #include	"td_curse.h"
 
-MODULE_ID("$Id: addchnst.c,v 12.6 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: addchnst.c,v 12.7 2014/07/22 13:51:29 tom Exp $")
 
 #ifndef OK
 #define OK 0
@@ -43,5 +43,11 @@ waddchnstr(WINDOW *win, chtype *s, int len)
 	wmove(win, y, x);
     }
     return OK;
+}
+#else
+void dummy_addchnst(void);
+void
+dummy_addchnst(void)
+{
 }
 #endif

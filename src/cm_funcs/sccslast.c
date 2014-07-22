@@ -43,7 +43,7 @@
 #include	<sccsdefs.h>
 #include	<ctype.h>
 
-MODULE_ID("$Id: sccslast.c,v 12.23 2010/07/10 00:09:35 tom Exp $")
+MODULE_ID("$Id: sccslast.c,v 12.24 2014/07/22 13:29:03 tom Exp $")
 
 /*
  * Post-Y2K years require special decoding
@@ -156,8 +156,7 @@ trySCCS(const char *path,
     }
 }
 
-static char the_prefix[] = SCCS_PREFIX;
-#define	LEN_PREFIX	sizeof(the_prefix)-1
+#define	LEN_PREFIX	sizeof(SCCS_PREFIX)-1
 
 void
 sccslast(const char *working,	/* working directory (absolute) */

@@ -17,7 +17,9 @@
 #include	<time.h>
 #include	"rcsdefs.h"
 
-MODULE_ID("$Id: cvslast.c,v 12.8 2012/01/13 18:14:42 tom Exp $")
+MODULE_ID("$Id: cvslast.c,v 12.9 2014/07/22 18:34:46 tom Exp $")
+
+#ifdef CVS_PATH
 
 #define NAME_LIST "Entries"
 #define NAME_ARCH "Repository"
@@ -279,3 +281,11 @@ cvslast(const char *working,	/* working directory (absolute) */
     abspath(pathcat(temp, working, path));
     tryCVS(temp, vers_, date_, lock_);
 }
+
+#else
+void dummy_cvslast(void);
+void
+dummy_cvslast(void)
+{
+}
+#endif

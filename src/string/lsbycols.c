@@ -21,12 +21,12 @@
 #define	STR_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: lsbycols.c,v 12.7 2010/07/05 16:04:36 tom Exp $")
+MODULE_ID("$Id: lsbycols.c,v 12.8 2014/07/22 13:47:34 tom Exp $")
 
 #ifdef	lint
 #define	LIST(n)	(*(listp + n))	/* close enough to fool lint */
 #else /* !lint */
-#define	LIST(n)	(*(char **)((char *)listp + (sizep * n)))
+#define	LIST(n)	(*(char **)((void *)((char *)listp + (sizep * n))))
 #endif
 #define	MAXCOL	80
 

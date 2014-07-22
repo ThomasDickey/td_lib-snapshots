@@ -15,7 +15,7 @@
 #include "ptypes.h"
 #include "td_curse.h"
 
-MODULE_ID("$Id: wresize.c,v 12.13 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: wresize.c,v 12.14 2014/07/22 13:51:29 tom Exp $")
 
 #if defined(CURSES_LIKE_BSD)
 
@@ -209,5 +209,11 @@ wresize(WINDOW *w,
 #if !defined(GOOD_RESIZE)
     return ERR;
 #endif
+}
+#else
+void dummy_wresize(void);
+void
+dummy_wresize(void)
+{
 }
 #endif /* !HAVE_WRESIZE */

@@ -20,7 +20,7 @@
 #define  TRM_PTYPES
 #include "td_curse.h"
 
-MODULE_ID("$Id: erasechr.c,v 12.12 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: erasechr.c,v 12.13 2014/07/22 15:09:07 tom Exp $")
 
 #define	STDIN_FD 0
 
@@ -53,23 +53,24 @@ eraseword(void)
 {
     int code = CTL('W');	/* default value */
 #if defined(USING_TERMIOS_H)
-    TermioT buf;
 # ifdef VWERASE			/* SunOS has it */
-    if (tcgetattr(0, &buf) >= 0)
-	code = buf.c_cc[VWERASE];
+    {
+	TermioT buf;
+	if (tcgetattr(0, &buf) >= 0)
+	    code = buf.c_cc[VWERASE];
+    }
 # endif
-#else
-# if defined(USING_TERMIO_H)
-    if (ioctl(0, TCGETA, (char *) &buf) >= 0)
-	code = buf.c_cc[VWERASE];
-# else
-#  if defined(USING_SGTTY_H)
+#elif defined(USING_TERMIO_H)
+    {
+	TermioT buf;
+	if (ioctl(0, TCGETA, (char *) &buf) >= 0)
+	    code = buf.c_cc[VWERASE];
+    }
+#elif defined(USING_SGTTY_H)
     struct ltchars buf;
 
     if (ioctl(STDIN_FD, TIOCGLTC, (caddr_t) & buf) >= 0)
 	code = buf.t_werasc;
-#  endif
-# endif
 #endif
     return (code);
 }
