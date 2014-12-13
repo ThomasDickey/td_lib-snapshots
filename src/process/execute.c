@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	21 May 1988
  * Modified:
+ *		12 Dec 2014, fix memory leak (coverity).
  *		07 Mar 2004, remove K&R support, indent'd.
  *		24 Dec 2000, ctype.h fix for QNX
  *		21 May 1994, mods for 'autoconf'
@@ -37,9 +38,10 @@
 #define	STR_PTYPES
 #define	WAI_PTYPES
 #include	"ptypes.h"
+#include	"dyn_str.h"
 #include	<errno.h>
 
-MODULE_ID("$Id: execute.c,v 12.13 2010/07/04 13:13:33 tom Exp $")
+MODULE_ID("$Id: execute.c,v 12.14 2014/12/12 23:38:56 tom Exp $")
 
 #ifdef	vms
 #  include	<descrip.h>
@@ -48,7 +50,7 @@ MODULE_ID("$Id: execute.c,v 12.13 2010/07/04 13:13:33 tom Exp $")
 #else /* bsd4.x */
 #  if defined(HAVE_EXECVP)
 #    define	EXECV(c,v,e)	execvp(c,v)
-#  else				/* assume bsd4.x */
+#  else	/* assume bsd4.x */
 extern char **environ;
 #    define	EXECV(c,v,e)	execve(c,v,e)
 #  endif
@@ -65,10 +67,13 @@ static void dump_exec(char *verb, char **args);
 int
 execute(const char *verb, const char *args)
 {
-    /* patch: dyn_string? */
-    char cmds[BUFSIZ];
-    char *s = strcat(strcat(strcpy(cmds, verb), " "), args);
-
+    int result;
+    size_t need = strlen(verb) + strlen(args) + 2;
+    DYN *dyn = 0;
+    char *s = strcat(
+			strcat(
+				  strcpy((dyn = dyn_alloc((DYN *) 0,
+					 need))->text, verb), " "), args);
 #ifdef	vms
 
     /* If this is run on vms, we may be processing a foreign command, or
@@ -78,10 +83,10 @@ execute(const char *verb, const char *args)
      * of this procedure is to execute w/o losing or capturing I/O, we use
      * 'lib$spawn()'.
      */
-    auto struct dsc$descriptor_s desc;
-    auto long st, st2;
-    auto char tmp[BUFSIZ], *t = tmp;
-    auto int count = 0, quoted = FALSE;
+    struct dsc$descriptor_s desc;
+    long st, st2;
+    char tmp[BUFSIZ], *t = tmp;
+    int count = 0, quoted = FALSE;
 
     /* Quote mixed-case stuff so that foreign commands work better */
     while (*t = *s) {
@@ -115,8 +120,10 @@ execute(const char *verb, const char *args)
     st = lib$spawn(&desc, 0, 0, 0, 0, 0, &st2);
 
     if ($VMS_STATUS_SUCCESS(st)
-	&& $VMS_STATUS_SUCCESS(st2))
+	&& $VMS_STATUS_SUCCESS(st2)) {
+	dyn_free(dyn);
 	return (0);
+    }
     errno = EVMSERR;		/* can't do much better than that! */
 
 #endif /* vms */
@@ -144,7 +151,7 @@ execute(const char *verb, const char *args)
 	    s++;
     }
     myargv = DOALLOC(myargv, char *, (unsigned) count);
-    bldarg(count, myargv, cmds);
+    bldarg(count, myargv, dyn->text);
 
 #if defined(HAVE_EXECVP)
     what = *myargv;
@@ -156,6 +163,7 @@ execute(const char *verb, const char *args)
      */
     if (which(what, sizeof(what), *myargv, ".") <= 0) {
 	errno = ENOENT;
+	dyn_free(dyn);
 	return (-1);
     }
 #endif /* HAVE_EXECVP */
@@ -172,8 +180,10 @@ execute(const char *verb, const char *args)
 		break;
 	    errno = 0;
 	}
-	if ((errno = W_RETCODE(status)) != 0)
+	if ((errno = W_RETCODE(status)) != 0) {
+	    dyn_free(dyn);
 	    return (-1);
+	}
 #ifdef	NO_LEAKS
 	dofree((char *) myargv);
 	myargv = 0;
@@ -184,7 +194,7 @@ execute(const char *verb, const char *args)
 	(void) _exit(errno);	/* just in case exec-failed */
 	/*NOTREACHED */
     }
-    return (0);
+    result = 0;
 #endif /* SYS_UNIX */
     /*
      * TurboC 3.0 for MS-DOS doesn't have 'fork()' or 'wait()', but it
@@ -193,7 +203,7 @@ execute(const char *verb, const char *args)
      */
 #if	defined(__TURBOC__)
     static char **myargv;	/* argument vector for 'bldarg()' */
-    auto int count = 3;		/* minimum needed for 'bldarg()' */
+    int count = 3;		/* minimum needed for 'bldarg()' */
 
     /* Split the command-string into an argv-like structure suitable for
      * the 'spawnv()' procedure:
@@ -207,7 +217,7 @@ execute(const char *verb, const char *args)
 	    s++;
     }
     myargv = DOALLOC(myargv, char *, (unsigned) count);
-    bldarg(count, myargv, cmds);
+    bldarg(count, myargv, p->text);
 
 #ifdef	TEST
     dump_exec(*myargv, myargv);
@@ -215,8 +225,10 @@ execute(const char *verb, const char *args)
     FFLUSH(stdout);
     FFLUSH(stderr);
     /* patch: NO_LEAK(myargv) */
-    return spawnvp(P_WAIT, *myargv, myargv);
+    result = spawnvp(P_WAIT, *myargv, myargv);
 #endif /* __TURBOC__ */
+    dyn_free(dyn);
+    return result;
 }
 
 /************************************************************************

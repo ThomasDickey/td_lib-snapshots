@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	03 Oct 1988
  * Modified:
+ *		12 Dec 2014, fix memory leak (coverity).
  *		07 Mar 2004, remove K&R support, indent'd.
  *		21 Aug 1994, argument of mktemp is volatile on Linux.
  *		01 Dec 1993, ifdefs, TurboC warnings.
@@ -23,7 +24,7 @@
 #define		STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: editfile.c,v 12.7 2010/07/05 14:29:20 tom Exp $")
+MODULE_ID("$Id: editfile.c,v 12.8 2014/12/12 23:19:22 tom Exp $")
 
 #ifdef	vms
 #define	NEWVER(name)	(name)
@@ -52,38 +53,40 @@ editfile(const char *oldname,
     (void) strcpy(newname, "fileXXXXXX");
 #endif /* vms/SYS_UNIX */
 
-    if ((ifp != 0)
-	&& (ofp = fopen(NEWVER(newname), "w")) != 0) {
-	FPRINTF(stderr, "** edit \"%s\" => \"%s\"\n", oldname, newname);
-	changes += (*func) (ofp, ifp, sb);
-	(void) fclose(ifp);
-	(void) fclose(ofp);
-	if (changes == 0) {
-	    FPRINTF(stderr, "** no change made\n");
-	    (void) unlink(newname);
-	}
-#ifndef	vms
-	else {
-	    if (rename(newname, oldname) >= 0) {
+    if (ifp != 0) {
+	if ((ofp = fopen(NEWVER(newname), "w")) != 0) {
+	    FPRINTF(stderr, "** edit \"%s\" => \"%s\"\n", oldname, newname);
+	    changes += (*func) (ofp, ifp, sb);
+	    (void) fclose(ofp);
+	    if (changes == 0) {
+		FPRINTF(stderr, "** no change made\n");
 		(void) unlink(newname);
-	    } else {
-		perror(newname);
-		return (0);
 	    }
-	}
+#ifndef	vms
+	    else {
+		if (rename(newname, oldname) >= 0) {
+		    (void) unlink(newname);
+		} else {
+		    perror(newname);
+		    return (0);
+		}
+	    }
 #endif
-	if (changes > 0) {
-	    FPRINTF(stderr, "** %d change(s) made\n", changes);
+	    if (changes > 0) {
+		FPRINTF(stderr, "** %d change(s) made\n", changes);
+	    }
+	} else {
+	    perror(newname);
 	}
+	(void) fclose(ifp);
     } else {
-	perror(newname);
+	perror(oldname);
     }
     return (changes);
 }
 
 #ifdef	TEST
-static
-int
+static int
 do_copy(FILE *ofp, FILE *ifp, Stat_t * sb)
 {
     char buffer[BUFSIZ];

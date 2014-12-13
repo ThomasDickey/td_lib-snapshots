@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	02 Aug 1994, from 'sccs_dir.c'
  * Modified:
+ *		12 Dec 2014, fix buffer-overrun (coverity).
  *		07 Mar 2004, remove K&R support, indent'd.
  *		25 Apr 2003, split-out samehead.c, add check on return-value.
  *		21 Aug 1998, get_cmv_lock now returns binary-file mod-times.
@@ -36,8 +37,9 @@
 #define	STR_PTYPES
 #include "ptypes.h"
 #include "cmv_defs.h"
+#include "dyn_str.h"
 
-MODULE_ID("$Id: cmv_dir.c,v 12.29 2010/07/10 00:08:21 tom Exp $")
+MODULE_ID("$Id: cmv_dir.c,v 12.30 2014/12/12 23:58:11 tom Exp $")
 
 /******************************************************************************/
 
@@ -97,7 +99,7 @@ static VAULTS *VaultList;
  * Allocate a CMTREE node and insert default values
  */
 static CMTREE *
-NewCmTree(char *pathname)
+NewCmTree(const char *pathname)
 {
     CMTREE *p = typealloc(CMTREE);
 
@@ -115,7 +117,7 @@ NewCmTree(char *pathname)
  * Returns a relative path for the given internal leaf name
  */
 static char *
-NewInternal(CMTREE * parent, char *internal)
+NewInternal(CMTREE * parent, const char *internal)
 {
     if (parent != 0 && parent->internal[0] != EOS) {
 	char temp[MAXPATHLEN];
@@ -129,7 +131,7 @@ NewInternal(CMTREE * parent, char *internal)
  * Returns a relative path for the given internal leaf name
  */
 static char *
-NewExternal(CMTREE * parent, char *external)
+NewExternal(CMTREE * parent, const char *external)
 {
     if (parent != 0 && parent->external[0] != EOS) {
 	char temp[MAXPATHLEN];
@@ -144,7 +146,7 @@ NewExternal(CMTREE * parent, char *external)
  * directories.  We use these also for navigating.
  */
 static char *
-parts_list(char *result, char *archive, int level)
+parts_list(char *result, const char *archive, int level)
 {
     const char *leaf;
 
@@ -206,7 +208,7 @@ read_s_curr(CMTREE * parent)	/* parent node to populate */
  * to the top of the working tree.
  */
 static CMTREE *
-FindInternalDir(CMTREE * parent, char *external)
+FindInternalDir(CMTREE * parent, const char *external)
 {
     CMTREE *p;
     size_t len1 = strlen(external);
@@ -239,7 +241,7 @@ FindInternalDir(CMTREE * parent, char *external)
  * Binary files are simply snapshots whose date is stored in the r-curr file.
  */
 static time_t
-cmv_date(char *src)
+cmv_date(const char *src)
 {
     time_t result = 0;
 
@@ -339,7 +341,7 @@ read_r_curr(CMTREE * parent)
 }
 
 static CMFILE *
-FindInternalFile(CMTREE * parent, char *external)
+FindInternalFile(CMTREE * parent, const char *external)
 {
     CMFILE *p;
     if (parent->filelist == 0)
@@ -357,7 +359,7 @@ FindInternalFile(CMTREE * parent, char *external)
  * Test existence of a parts-list file at a given level
  */
 static int
-part_exists(char *pathname, int level)
+part_exists(const char *pathname, int level)
 {
     char full[MAXPATHLEN];
     struct stat sb;
@@ -369,13 +371,12 @@ part_exists(char *pathname, int level)
  * Infer the level of a vault directory by the presence of parts-list files.
  */
 static int
-level_of(char *pathname)
+level_of(const char *pathname)
 {
     int level;
     int found;
     char part[MAXPATHLEN];
 
-    (void) strcpy(part, pathname);
     for (level = 0, found = FALSE; level <= 2; level++) {
 	if (part_exists(part, level)) {
 	    found = TRUE;
@@ -383,13 +384,17 @@ level_of(char *pathname)
 	}
     }
     if (found) {
+
 	if (level == 2) {
+	    DYN *p = dyn_alloc((DYN *) 0, strlen(pathname) + 1);
+	    (void) strcpy(p->text, pathname);
 	    do {
-		*strrchr(part, '/') = EOS;
-		if (!part_exists(part, level + 1))
+		*strrchr(p->text, '/') = EOS;
+		if (!part_exists(p->text, level + 1))
 		    break;
 		level++;
 	    } while (*part != EOS);
+	    dyn_free(p);
 	}
     } else {
 	level = -1;
@@ -404,7 +409,7 @@ level_of(char *pathname)
  * of the search path.
  */
 static VAULTS *
-add_archive(char *pathname)
+add_archive(const char *pathname)
 {
     if (*pathname != EOS) {
 	VAULTS *p, *q, *r;

@@ -1,3 +1,29 @@
+2014-12-12  dickey@invisible-island.net
+
+	* src/port2vms/name2vms.c:
+	coverity #78345 - possible buffer overrun - tell coverity more details
+
+	* src/cm_funcs/svn_last.c: coverity #78348 - memory leak
+
+	* src/cm_funcs/cmv_dir.c:
+	coverity #78356 - pointer to local outside scope
+
+	* src/pathname/abspath.c:
+	coverity #78361 - tell coverity the expected buffer sizes to aid analysis
+
+	* src/cm_funcs/rcsperm.c:
+	coverity #78370 - reports unbounded buffer.  Modify to address the warning.
+
+	* src/cm_funcs/cmv_dir.c: coverity #78372 - buffer overrun
+
+	* src/process/execute.c: coverity #78375 - possible buffer overrun
+
+	* src/pathname/file2mem.c:
+	coverity #78389 - memory leak if file cannot be read into memory
+
+	* src/pathname/editfile.c:
+	coverity #78392 - possible memory leak if output file cannot be opened
+
 2014-07-22  dickey@invisible-island.net
 
 	* aclocal.m4: resync with my-autoconf
