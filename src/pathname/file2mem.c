@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	11 May 1989
  * Modified:
+ *		12 Dec 2014, fix memory leak (coverity).
  *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
@@ -23,7 +24,7 @@
 #define	STR_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: file2mem.c,v 12.11 2010/07/10 00:11:34 tom Exp $")
+MODULE_ID("$Id: file2mem.c,v 12.12 2014/12/12 23:21:59 tom Exp $")
 
 char *
 file2mem(const char *name)
@@ -96,7 +97,9 @@ file2mem(const char *name)
      * Ensure that we read the entire file.
      */
     if (length < expected) {
-	if (!errno)
+	int save = errno;
+	free(blob);
+	if (!save)
 	    errno = EFBIG;
 	return (0);
     }
