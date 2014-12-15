@@ -39,7 +39,7 @@
 #include "cmv_defs.h"
 #include "dyn_str.h"
 
-MODULE_ID("$Id: cmv_dir.c,v 12.30 2014/12/12 23:58:11 tom Exp $")
+MODULE_ID("$Id: cmv_dir.c,v 12.31 2014/12/13 00:11:36 tom Exp $")
 
 /******************************************************************************/
 
@@ -119,8 +119,8 @@ NewCmTree(const char *pathname)
 static char *
 NewInternal(CMTREE * parent, const char *internal)
 {
+    char temp[MAXPATHLEN];
     if (parent != 0 && parent->internal[0] != EOS) {
-	char temp[MAXPATHLEN];
 	FORMAT(temp, "%s%c%s", parent->internal, PATH_SLASH, internal);
 	internal = temp;
     }
@@ -133,8 +133,8 @@ NewInternal(CMTREE * parent, const char *internal)
 static char *
 NewExternal(CMTREE * parent, const char *external)
 {
+    char temp[MAXPATHLEN];
     if (parent != 0 && parent->external[0] != EOS) {
-	char temp[MAXPATHLEN];
 	FORMAT(temp, "%s%c%s", parent->external, PATH_SLASH, external);
 	external = temp;
     }

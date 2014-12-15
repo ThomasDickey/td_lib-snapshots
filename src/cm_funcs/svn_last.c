@@ -4,6 +4,7 @@
  * Created:	15 Oct 2009
  *
  * Modified:
+ *		12 Dec 2014, fix memory leak (coverity).
  */
 
 #define	STR_PTYPES
@@ -12,7 +13,7 @@
 #include	<time.h>
 #include	"rcsdefs.h"
 
-MODULE_ID("$Id: svn_last.c,v 12.5 2014/07/22 18:34:46 tom Exp $")
+MODULE_ID("$Id: svn_last.c,v 12.6 2014/12/13 00:28:12 tom Exp $")
 
 #ifdef SVN_PATH
 
@@ -140,8 +141,9 @@ read_entries(SVN_WORK * cache)
 	    ++k;
 	}
 	cache->num_entries = k;
-	vecfree(list);
     }
+    if (list)
+	vecfree(list);
 }
 
 static int
