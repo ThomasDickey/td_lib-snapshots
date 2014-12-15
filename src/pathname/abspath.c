@@ -2,6 +2,7 @@
  * Author:	T.E.Dickey
  * Created:	17 Sep 1987
  * Modified:
+ *		12 Dec 2014, tell coverity the expected buffer-sizes.
  *		07 Mar 2004, remove K&R support, indent'd.
  *		01 Nov 2000, modified to work with OS/2 EMX.
  *		10 Jan 1996, corrected handling of "~foo/bar/bar" in abshome.
@@ -40,7 +41,7 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: abspath.c,v 12.13 2010/07/05 14:25:31 tom Exp $")
+MODULE_ID("$Id: abspath.c,v 12.14 2014/12/13 00:09:47 tom Exp $")
 
 #ifdef	apollo
 #ifdef	apollo_sr10
@@ -125,16 +126,19 @@ apollo_name(char *path)
  * Concatenate two pathnames to make a longer one.
  */
 static void
-precat(char *prefix, char *string)
+precat(const char *prefix, char string[MAXPATHLEN])
 {
     char *s;
     char tmp[MAXPATHLEN];
+    size_t need = strlen(prefix);
 
-    s = strcpy(tmp, prefix) + strlen(prefix);
-    if (*string)
-	(void) strcat(strcat(s, slash), string);
-    (void) strcpy(string, tmp);
-    *s = EOS;
+    if (need + 1 < sizeof(tmp)) {
+	s = strcpy(tmp, prefix) + strlen(prefix);
+	if (*string)
+	    (void) strcat(strcat(s, slash), string);
+	(void) strcpy(string, tmp);
+	*s = EOS;
+    }
 }
 
 /************************************************************************
@@ -181,7 +185,7 @@ abshome(char *path)
 #endif
 
 void
-abspath(char *path)
+abspath(char path[MAXPATHLEN])
 {
     char *base = path;
     char *s, *d = base;

@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	08 Mar 1989
  * Modified:
+ *		12 Dec 2014, tell coverity the expected buffer-sizes.
  *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
@@ -33,11 +34,11 @@
 #include	"dyn_str.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: rcsperm.c,v 12.8 2010/07/10 00:09:35 tom Exp $")
+MODULE_ID("$Id: rcsperm.c,v 12.9 2014/12/13 00:05:31 tom Exp $")
 
 int
 rcspermit(const char *path,
-	  char *base,
+	  char base[MAXPATHLEN],
 	  const char **accflag)
 {
     static DYN *access_list;
@@ -62,10 +63,12 @@ rcspermit(const char *path,
      */
     if (base != 0) {
 	char *t;
-	if ((t = getenv("RCS_BASE")) != NULL)
+	if ((t = getenv("RCS_BASE")) != NULL
+	    && strlen(t) < (MAXPATHLEN - 1)) {
 	    (void) strcpy(base, t);
-	else
+	} else {
 	    *base = EOS;
+	}
     }
 
     /*

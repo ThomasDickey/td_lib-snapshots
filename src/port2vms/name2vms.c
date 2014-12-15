@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	29 Sep 1988
  * Modified:
+ *		12 Dec 2014, tell coverity the expected buffer-sizes.
  *		07 Mar 2004, remove K&R support, indent'd.
  *		25 Aug 1994, allow ".type" names as-is, and always uppercase.
  *		01 Dec 1993, ifdefs, TurboC warnings.
@@ -29,7 +30,7 @@
 #define	STR_PTYPES
 #include	"port2vms.h"
 
-MODULE_ID("$Id: name2vms.c,v 12.8 2010/07/10 00:12:09 tom Exp $")
+MODULE_ID("$Id: name2vms.c,v 12.9 2014/12/13 00:30:37 tom Exp $")
 
 static int leaf_dot;		/* counts dots found in a particular leaf */
 static int leaf_ver;		/* set if we found a DECshell version */
@@ -68,7 +69,7 @@ translate(int c)
 }
 
 static int
-leading_uc(char *dst, const char *src)
+leading_uc(char dst[MAXPATHLEN], const char *src)
 {
     char *base = dst;
     int c;
@@ -95,7 +96,7 @@ leading_uc(char *dst, const char *src)
 }
 
 char *
-name2vms(char *dst, const char *src)
+name2vms(char dst[MAXPATHLEN], const char *src)
 {
     char tmp[MAXPATHLEN], token[MAXPATHLEN], *t, *s = strcpy(tmp, src),		/* ... to permit src == dst */
      *d = dst, c = '?';

@@ -1,3 +1,7 @@
+2014-12-14  dickey@invisible-island.net
+
+	* package/debian/changelog, package/td_lib.spec: bump
+
 2014-12-12  dickey@invisible-island.net
 
 	* src/port2vms/name2vms.c:
