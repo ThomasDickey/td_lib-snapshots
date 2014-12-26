@@ -1,3 +1,42 @@
+2014-12-26  dickey@invisible-island.net
+
+	* src/port2vms/vms2name.c:
+	coverity #78390 - copy into fixed size buffer
+
+	* src/pathname/pathcmp.c: coverity #78391 - copy into fixed size buffer
+
+	* src/port2vms/path2dir.c:
+	coverity #78394 - copy into fixed size buffer
+
+	* src/cm_funcs/sccs_dir.c:
+	coverity #78395 - copy into fixed size buffer
+
+	* src/cm_funcs/rcsname.c: coverity #78340 - copy into fixed size buffer
+
+	* src/port2vms/name2vms.c: coverity #78345 - unbounded source buffer
+
+	* src/cm_funcs/cvslast.c: coverity #78348 - resource leak
+
+	* src/cm_funcs/rcsname.c: coverity #78339 - copy into fixed size buffer
+
+	* src/cm_funcs/rcsedit.c: coverity #78338 - copy into fixed size buffer
+
+2014-12-25  dickey@invisible-island.net
+
+	* src/cm_funcs/cmv_last.c: coverity #78380 - dereference null value
+
+	* src/curses/dumpwin.c: coverity #78367 - argument cannot be negative
+
+	* src/cm_funcs/cvslast.c: coverity #78365 - dereference null value
+
+	* src/port2vms/vms_rpth.c: coverity #78364 - dereference null value
+
+	* src/cm_funcs/svn_last.c: coverity #78359 - dereference null value
+
+	* src/curses/logch.c: tidy
+
+	* src/curses/cmdch.c: coverity #78337 - dead code
+
 2014-12-14  dickey@invisible-island.net
 
 	* package/debian/changelog, package/td_lib.spec: bump

@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	02 Nov 1988
  * Modified:
+ *		26 Dec 2014, coverify warnings
  *		24 May 2010, fix clang --analyze warnings.
  *		07 Mar 2004, remove K&R support, indent'd.
  *		01 Dec 1993, ifdefs, TurboC warnings.
@@ -40,7 +41,7 @@
 #define	STR_PTYPES
 #include	"port2vms.h"
 
-MODULE_ID("$Id: vms2name.c,v 12.12 2014/07/22 18:20:15 tom Exp $")
+MODULE_ID("$Id: vms2name.c,v 12.13 2014/12/26 14:07:03 tom Exp $")
 
 #define	LOWER(p)	((isalpha(UCH(*p)) && isupper(UCH(*p))) ? LowerMacro(UCH(*p)) : *p)
 
@@ -82,8 +83,12 @@ vms2name(char *dst, const char *src)
     char tmp[MAXPATHLEN];
     char *output = dst;
     char *base = tmp;
-    char *s = strcpy(tmp, src);	/* ... to permit src == dst */
+    char *s = tmp;
     char *d;
+
+    if (strlen(src) >= sizeof(tmp))
+	return 0;
+    (void) strcpy(tmp, src);	/* in case src==dst */
 
     if ((s = strchr(s, ';')) != NULL)	/* trim off version */
 	*s = EOS;

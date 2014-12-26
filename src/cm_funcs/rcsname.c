@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	27 May 1988
  * Modified:
+ *		26 Dec 2014, coverity warnings
  *		07 Mar 2004, remove K&R support, indent'd.
  *		02 Jul 1994, allow rcs_dir() to be absolute path.
  *		29 Oct 1993, ifdef-ident
@@ -44,7 +45,7 @@
 
 #include	<ctype.h>
 
-MODULE_ID("$Id: rcsname.c,v 12.11 2010/07/05 11:11:15 tom Exp $")
+MODULE_ID("$Id: rcsname.c,v 12.13 2014/12/26 13:51:26 tom Exp $")
 
 #define	LEN_SUFFIX	(sizeof(suffix)-1)
 
@@ -102,24 +103,28 @@ char *
 rcs2name(const char *name, int full)
 {
     char *s, *t;
-    static char fname[BUFSIZ];
+    static char fname[MAXPATHLEN];
 
-    if (rcs_suffix(name)) {
-	size_t len = strlen(strcpy(fname, name));
+    if (strlen(name) < sizeof(fname)) {
+	if (rcs_suffix(name)) {
+	    size_t len = strlen(strcpy(fname, name));
 
-	fname[len - LEN_SUFFIX] = EOS;
-	if ((s = leaf(fname)) > fname) {
-	    char *d = fname;
-	    if (full) {
-		s[-1] = EOS;
-		if (((t = leaf(d)) > d)
-		    && sameleaf(t, rcs_dir(NULL, NULL)))
-		    d = t;
+	    fname[len - LEN_SUFFIX] = EOS;
+	    if ((s = leaf(fname)) > fname) {
+		char *d = fname;
+		if (full) {
+		    s[-1] = EOS;
+		    if (((t = leaf(d)) > d)
+			&& sameleaf(t, rcs_dir(NULL, NULL)))
+			d = t;
+		}
+		while ((*d++ = *s++) != EOS) ;
 	    }
-	    while ((*d++ = *s++) != EOS) ;
+	} else {
+	    (void) strcpy(fname, name);
 	}
     } else {
-	(void) strcpy(fname, name);
+	strcpy(fname, ".");
     }
     return (fname);
 }
@@ -135,27 +140,41 @@ name2rcs(const char *name, int full)
     {PATH_SLASH, EOS};		/* "/"   */
     static char fname[MAXPATHLEN];
 
-    if (rcs_suffix(name)) {
-	(void) strcpy(fname, name);
-    } else if (*rcs_dir(NULL, NULL) == PATH_SLASH) {
-	(void) strcat(pathcat(fname, rcs_dir(NULL, NULL), cleaf(name)), suffix);
-    } else {
-	if (full) {
-	    trim_leaf(strcpy(fname, name));
-	    if (sameleaf(fname, rcs_dir(NULL, NULL)))
-		trim_leaf(fname);
-	    if (*fname)
-		(void) strcat(fname, slash);
-	} else
-	    *fname = EOS;
+    if (strlen(name) < sizeof(fname)) {
+	char *my_dir = rcs_dir(NULL, NULL);
+	const char *my_leaf = cleaf(name);
 
-	(void) strcat(
-			 strcat(
-				   strcat(
-					     strcat(fname, rcs_dir(NULL, NULL)),
-					     slash),
-				   cleaf(name)),
-			 suffix);
+	if (rcs_suffix(name)) {
+	    (void) strcpy(fname, name);
+	} else if (*my_dir == PATH_SLASH) {
+	    (void) strcat(pathcat(fname, my_dir, my_leaf), suffix);
+	} else {
+	    if (full) {
+		trim_leaf(strcpy(fname, name));
+		if (sameleaf(fname, my_dir)) {
+		    trim_leaf(fname);
+		}
+		if (*fname) {
+		    (void) strcat(fname, slash);
+		}
+	    } else {
+		*fname = EOS;
+	    }
+	    if ((strlen(fname) + strlen(my_dir) + strlen(my_leaf) + 3) < MAXPATHLEN) {
+
+		(void) strcat(
+				 strcat(
+					   strcat(
+						     strcat(fname, my_dir),
+						     slash),
+					   my_leaf),
+				 suffix);
+	    } else {
+		strcpy(fname, ".");
+	    }
+	}
+    } else {
+	strcpy(fname, ".");
     }
     return (fname);
 }

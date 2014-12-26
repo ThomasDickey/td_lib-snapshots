@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	01 Dec 1987 (broke out of 'ded.c')
  * Modified:
+ *		25 Dec 2014, coverity warnings
  *		09 Jul 2010, add xt_enabled, to control mouse-initialization.
  *		07 Mar 2004, remove K&R support, indent'd.
  *		03 Jul 2003, check for KEY_RESIZE makes ncurses sigwinch work
@@ -49,7 +50,7 @@
 #include	"td_curse.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: cmdch.c,v 12.35 2014/07/22 15:02:05 tom Exp $")
+MODULE_ID("$Id: cmdch.c,v 12.36 2014/12/26 02:36:28 tom Exp $")
 
 #define	ESC(c)	((c) == '\033')
 #define	END(s)	s[strlen(s)-1]
@@ -266,6 +267,7 @@ cmdch(int *cnt_)
 		c = known_key(i_blk);
 	    else
 #endif /* !HAVE_KEYPAD */
+#if !defined(HAVE_KEYPAD) && !defined(NO_XTERM_MOUSE)
 	    if (j > 1) {	/* extended escapes */
 #if !defined(NO_XTERM_MOUSE) && !defined(NCURSES_MOUSE_VERSION)
 		/* patch: should test for xterm_mouse */
@@ -319,6 +321,7 @@ cmdch(int *cnt_)
 		    done = FALSE;
 		}
 	    }
+#endif /* !defined(HAVE_KEYPAD) && !defined(NO_XTERM_MOUSE) */
 	} else if ((cnt_ != 0) && isdigit(c)) {
 	    had_c++;
 	    count = ((count * 10) + (c - '0'));

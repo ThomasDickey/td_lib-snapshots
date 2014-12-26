@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	02 Sep 1988
  * Modified:
+ *		26 Dec 2014, coverity warnings
  *		24 May 2010, fix clang --analyze warnings.
  *		07 Mar 2004, remove K&R support, indent'd.
  *		25 Apr 2003, split-out samehead.c, add check on return-value.
@@ -41,7 +42,7 @@
 #include "ptypes.h"
 #include "sccsdefs.h"
 
-MODULE_ID("$Id: sccs_dir.c,v 12.14 2010/07/04 16:53:05 tom Exp $")
+MODULE_ID("$Id: sccs_dir.c,v 12.15 2014/12/26 13:54:28 tom Exp $")
 
 #define	WORKING	struct	Working
 WORKING {
@@ -249,9 +250,10 @@ sccs_dir(const char *working_directory, const char *filename)
 		 * vault!)
 		 */
 		name = path_alloc(temp);
-	    } else {
-		if (temp[max_n] != EOS)
+	    } else if (strlen(max_p->archive) + strlen(temp) < MAXPATHLEN) {
+		if (temp[max_n] != EOS) {
 		    max_n++;
+		}
 		pathcat(
 			   archive,
 			   pathcat(

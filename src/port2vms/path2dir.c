@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	30 Sep 1988
  * Modified:
+ *		26 Dec 2014, coverity warnings
  *		07 Mar 2004, remove K&R support, indent'd.
  *		01 Dec 1993, ifdefs.
  *		22 Sep 1993, gcc warnings
@@ -18,32 +19,36 @@
 #define		STR_PTYPES
 #include	"port2vms.h"
 
-MODULE_ID("$Id: path2dir.c,v 12.4 2010/07/05 15:44:39 tom Exp $")
+MODULE_ID("$Id: path2dir.c,v 12.5 2014/12/26 14:00:09 tom Exp $")
 
 char *
 path2dir(const char *src)
 {
     static char buffer[MAXPATHLEN];
-    char *s = buffer + strlen(strcpy(buffer, src));
+    if (strlen(src) < sizeof(buffer)) {
+	char *s = buffer + strlen(strcpy(buffer, src));
 
-    if (s != buffer && *(--s) == ']') {
-	(void) strcpy(s, ".DIR");
-	while (--s >= buffer) {
-	    if (*s == '.') {
-		*s = ']';
-		if (s == buffer + 1) {	/* absorb "[]" */
-		    char *t = s + 1;
-		    s = buffer;
-		    while ((*s++ = *t++) != EOS) ;
+	if (s != buffer && *(--s) == ']') {
+	    (void) strcpy(s, ".DIR");
+	    while (--s >= buffer) {
+		if (*s == '.') {
+		    *s = ']';
+		    if (s == buffer + 1) {	/* absorb "[]" */
+			char *t = s + 1;
+			s = buffer;
+			while ((*s++ = *t++) != EOS) ;
+		    }
+		    break;
 		}
-		break;
-	    }
-	    if (*s == '[') {	/* absorb "[" */
-		char *t = s + 1;
-		while ((*s++ = *t++) != EOS) ;
-		break;
+		if (*s == '[') {	/* absorb "[" */
+		    char *t = s + 1;
+		    while ((*s++ = *t++) != EOS) ;
+		    break;
+		}
 	    }
 	}
+    } else {
+	strcpy(buffer, ".");
     }
     return (buffer);
 }
