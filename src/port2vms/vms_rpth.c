@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	26 Jun 1990
  * Modified:
+ *		25 Dec 2014, coverity warnings.
  *		07 Mar 2004, remove K&R support, indent'd.
  *		01 Dec 1993, ifdefs, TurboC warnings.
  *		22 Sep 1993, gcc warnings
@@ -19,7 +20,7 @@
 #define	STR_PTYPES
 #include	"port2vms.h"
 
-MODULE_ID("$Id: vms_rpth.c,v 12.6 2010/07/05 16:17:29 tom Exp $")
+MODULE_ID("$Id: vms_rpth.c,v 12.7 2014/12/26 02:46:53 tom Exp $")
 
 static char *
 after_leaf(char *path)
@@ -45,10 +46,15 @@ vms_relpath(char *dst, char *cwd, char *src)
     if (cwd == 0) {		/* if cwd not given, get the actual path */
 	cwd = getwd(current);
 #ifdef	SYS_UNIX
-	cwd = name2vms(current, strcat(cwd, "/"));
+	if (cwd != 0) {
+	    cwd = name2vms(current, strcat(cwd, "/"));
+	} else {
+	    return 0;
+	}
 #endif
-    } else
+    } else {
 	cwd = strlwrcpy(current, cwd);
+    }
 
     /* We must have a directory-path in 'src' to change, as well as obtain
      * a working-directory. Further, VMS pathnames always contain at least

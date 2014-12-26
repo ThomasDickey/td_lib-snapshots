@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	02 Aug 1994, from 'sccslast.c'
  * Modified:
+ *		25 Dec 2014, coverity warnings
  *		07 Mar 2004, remove K&R support, indent'd.
  *		31 Dec 1999, move 1900's to packdate().
  *		21 Aug 1998, change cmv_lock to return binary file's mod-times.
@@ -26,7 +27,7 @@
 #include	<sccsdefs.h>
 #include	<cmv_defs.h>
 
-MODULE_ID("$Id: cmv_last.c,v 12.16 2010/07/10 00:08:21 tom Exp $")
+MODULE_ID("$Id: cmv_last.c,v 12.17 2014/12/26 02:53:15 tom Exp $")
 
 /*
  * Set the release.version and date values iff we find a legal sccs-file at
@@ -104,9 +105,11 @@ cmv_last(const char *working,	/* working directory (absolute) */
 
     if (archive != 0) {
 	char *arcleaf = fleaf(archive);
-	get_cmv_lock(working, path, lock_, vers_, date_);
-	if (strncmp(arcleaf, "b-", (size_t) 2) || isdigit((int) (*vers_)[0]))
-	    ScanSCCS(archive, vers_, date_);
+	if (arcleaf != 0) {
+	    get_cmv_lock(working, path, lock_, vers_, date_);
+	    if (strncmp(arcleaf, "b-", (size_t) 2) || isdigit((int) (*vers_)[0]))
+		ScanSCCS(archive, vers_, date_);
+	}
     }
 }
 

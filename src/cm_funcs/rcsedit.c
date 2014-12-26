@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	26 May 1988
  * Modified:
+ *		26 Dec 2014, coverity warnings
  *		07 Mar 2004, remove K&R support, indent'd.
  *		30 May 1998, compile with g++
  *		29 Oct 1993, ifdef-ident
@@ -40,7 +41,7 @@
 #include	"rcsdefs.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: rcsedit.c,v 12.15 2014/07/22 15:09:07 tom Exp $")
+MODULE_ID("$Id: rcsedit.c,v 12.16 2014/12/26 13:02:08 tom Exp $")
 
 /* local definitions */
 #define	VERBOSE	if (verbose) PRINTF
@@ -84,23 +85,28 @@ dir_access(void)
     int uid = (int) geteuid();
     int gid = (int) getegid();
     Stat_t sb;
+    int rc = FALSE;
 
-    if ((s = fleaf_delim(strcpy(temp, fname))) != NULL)
-	*s = EOS;
-    else
-	(void) strcpy(temp, ".");
-    if (stat_dir(temp, &sb) < 0)
-	return FALSE;
-
-    if (!uid) {			/* root can do anything */
-	uid = (int) sb.st_uid;
-	gid = (int) sb.st_gid;
+    if (strlen(fname) < sizeof(temp)) {
+	if ((s = fleaf_delim(strcpy(temp, fname))) != NULL) {
+	    *s = EOS;
+	} else {
+	    (void) strcpy(temp, ".");
+	}
+	if (stat_dir(temp, &sb) >= 0) {
+	    if (!uid) {			/* root can do anything */
+		uid = (int) sb.st_uid;
+		gid = (int) sb.st_gid;
+	    }
+	    if (uid == (int) sb.st_uid)
+		rc = (int) (sb.st_mode & S_IWUSR);
+	    else if (gid == (int) sb.st_gid)
+		rc = (int) (sb.st_mode & (S_IWUSR >> 3));
+	    else
+		rc = (int) (sb.st_mode & (S_IWUSR >> 6));
+	}
     }
-    if (uid == (int) sb.st_uid)
-	return (int) (sb.st_mode & S_IWUSR);
-    else if (gid == (int) sb.st_gid)
-	return (int) (sb.st_mode & (S_IWUSR >> 3));
-    return (int) (sb.st_mode & (S_IWUSR >> 6));
+    return rc;
 }
 
 static int
@@ -198,35 +204,41 @@ rcsopen(const char *name, int show, int readonly)
 {
     Stat_t sb;
     int fd;
+    int rc = FALSE;
 
-    (void) strcpy(fname, name);
-    fpT = 0;
-    changes = 0;
-    verbose = show;
-    edit_at = 0;
-    VERBOSE("++ rcs-%s(%s)\n", readonly ? "scan" : "edit", fname);
-    if ((stat_file(fname, &sb) >= 0)
-	&& (fpS = fopen(fname, "r")) != 0) {
-	int fmode;
+    if (strlen(name) < sizeof(fname)) {
+	(void) strcpy(fname, name);
+	fpT = 0;
+	changes = 0;
+	verbose = show;
+	edit_at = 0;
+	VERBOSE("++ rcs-%s(%s)\n", readonly ? "scan" : "edit", fname);
+	if ((stat_file(fname, &sb) >= 0)
+	    && (fpS = fopen(fname, "r")) != 0) {
+	    int fmode;
 
-	if (readonly)
-	    return (TRUE);
-	else if (dir_access())
-	    strcpy(tmp_name, fname)[strlen(fname) - 1] = 'V';
-	else
-	    FORMAT(tmp_name, "%s/rcsedit%d", P_tmpdir, (int) getpid());
+	    if (readonly) {
+		rc = TRUE;
+	    } else {
+		if (dir_access())
+		    strcpy(tmp_name, fname)[strlen(fname) - 1] = 'V';
+		else
+		    FORMAT(tmp_name, "%s/rcsedit%d", P_tmpdir, (int) getpid());
 
-	fmode = (int) (sb.st_mode & 0555);
-	if ((fd = open(tmp_name, O_CREAT | O_EXCL | O_WRONLY, fmode)) < 0
-	    || !(fpT = fdopen(fd, "w"))) {
-	    perror(tmp_name);
-	    return (FALSE);
+		fmode = (int) (sb.st_mode & 0555);
+		if ((fd = open(tmp_name, O_CREAT | O_EXCL | O_WRONLY, fmode)) < 0
+		    || !(fpT = fdopen(fd, "w"))) {
+		    perror(tmp_name);
+		} else {
+		    VERBOSE(".. opened \"%s\", copy \"%s\"\n", fname, tmp_name);
+		    rc = TRUE;
+		}
+	    }
+	} else {
+	    VERBOSE("?? Cannot open \"%s\"\n", fname);
 	}
-	VERBOSE(".. opened \"%s\", copy \"%s\"\n", fname, tmp_name);
-	return (TRUE);
     }
-    VERBOSE("?? Cannot open \"%s\"\n", fname);
-    return (FALSE);
+    return rc;
 }
 
 /*
@@ -279,12 +291,13 @@ rcsedit(char *oldname, char *newname)
 
     if ((edit_at < buffer)
 	|| (edit_at > buffer + strlen(buffer))
-	|| strncmp(oldname, edit_at, len))
+	|| strncmp(oldname, edit_at, len)) {
 	failed("rcsedit");
-
-    (void) strcpy(tmp, edit_at + len);
-    (void) strcat(strcpy(edit_at, newname), tmp);
-    changes++;
+    } else {
+	(void) strcpy(tmp, edit_at + len);
+	(void) strcat(strcpy(edit_at, newname), tmp);
+	changes++;
+    }
 }
 
 /*

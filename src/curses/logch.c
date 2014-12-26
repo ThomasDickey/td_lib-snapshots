@@ -18,7 +18,7 @@
 #include	<ptypes.h>
 #include	<td_curse.h>
 
-MODULE_ID("$Id: logch.c,v 12.11 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: logch.c,v 12.12 2014/12/26 02:37:50 tom Exp $")
 
 #define	CONVERT(base,p,n)	n = (base * n) + (*p++ - '0')
 
@@ -139,8 +139,9 @@ decode_logch(char **buffer, int *count_)
 	    }
 	}
 	pointer++;		/* point past decoded char */
-    } else
+    } else {
 	c = (*pointer++);
+    }
 
     *buffer = pointer;
     return c;

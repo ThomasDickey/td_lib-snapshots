@@ -4,7 +4,7 @@
  * Created:	15 Oct 2009
  *
  * Modified:
- *		12 Dec 2014, fix memory leak (coverity).
+ *		25 Dec 2014, fix memory leak (coverity).
  */
 
 #define	STR_PTYPES
@@ -13,7 +13,7 @@
 #include	<time.h>
 #include	"rcsdefs.h"
 
-MODULE_ID("$Id: svn_last.c,v 12.6 2014/12/13 00:28:12 tom Exp $")
+MODULE_ID("$Id: svn_last.c,v 12.7 2014/12/26 02:44:08 tom Exp $")
 
 #ifdef SVN_PATH
 
@@ -174,9 +174,12 @@ trySVN(const char *path,
        const char **lock_)
 {
     char working[MAXPATHLEN];
-    char *leaf = fleaf(path);
+    char *leaf;
     char *s;
     SVN_WORK *cache;
+
+    if ((leaf = fleaf(path)) == 0)
+	return;
 
     strcpy(working, path);
     if ((s = fleaf_delim(working)) != 0)

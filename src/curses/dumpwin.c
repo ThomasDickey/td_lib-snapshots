@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	20 Apr 1988 (from code written 13 Nov 1987)
  * Modified:
+ *		25 Dec 2014, coverity warnings
  *		07 Mar 2004, remove K&R support, indent'd.
  *		18 Oct 2000, don't bother with _leave/_leaveok except for the
  *			     known cases.
@@ -29,7 +30,7 @@
 #include	"td_curse.h"
 #include	<time.h>
 
-MODULE_ID("$Id: dumpwin.c,v 12.22 2010/07/03 16:30:07 tom Exp $")
+MODULE_ID("$Id: dumpwin.c,v 12.23 2014/12/26 02:51:34 tom Exp $")
 
 #define	OUT	FPRINTF
 
@@ -39,23 +40,27 @@ line_data(WINDOW *win, int row)
     static char *result;
     int len = wMaxX(win);
 
-    if (result != 0)
+    if (result != 0) {
 	free(result);
+	result = 0;
+    }
 
-    if ((result = malloc((size_t) len)) != 0) {
+    if (len > 0) {
+	if ((result = malloc((size_t) len)) != 0) {
 #if defined(HAVE_WINNSTR)
-	int y, x;
+	    int y, x;
 
-	getyx(win, y, x);
-	wmove(win, row, 0);
-	winnstr(win, result, len);
-	wmove(win, y, x);
+	    getyx(win, y, x);
+	    wmove(win, row, 0);
+	    winnstr(win, result, len);
+	    wmove(win, y, x);
 #else /* assume: TYPE_CHTYPE_IS_SCALAR */
-	int x;
-	for (x = 0; x < len; x++) {
-	    result[x] = CursesData(win, row, x);
-	}
+	    int x;
+	    for (x = 0; x < len; x++) {
+		result[x] = CursesData(win, row, x);
+	    }
 #endif
+	}
     }
     return result;
 }

@@ -3,7 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	29 Sep 1988
  * Modified:
- *		12 Dec 2014, tell coverity the expected buffer-sizes.
+ *		26 Dec 2014, coverity warnings
  *		07 Mar 2004, remove K&R support, indent'd.
  *		25 Aug 1994, allow ".type" names as-is, and always uppercase.
  *		01 Dec 1993, ifdefs, TurboC warnings.
@@ -30,7 +30,7 @@
 #define	STR_PTYPES
 #include	"port2vms.h"
 
-MODULE_ID("$Id: name2vms.c,v 12.9 2014/12/13 00:30:37 tom Exp $")
+MODULE_ID("$Id: name2vms.c,v 12.10 2014/12/26 13:45:07 tom Exp $")
 
 static int leaf_dot;		/* counts dots found in a particular leaf */
 static int leaf_ver;		/* set if we found a DECshell version */
@@ -85,7 +85,9 @@ leading_uc(char dst[MAXPATHLEN], const char *src)
 	src++;
     }
     *dst = EOS;
-    if ((*base) && (dst = getenv(base)) != 0) {
+    if ((*base != EOS)
+	&& (dst = getenv(base)) != 0
+	&& (strlen(dst) < MAXPATHLEN)) {
 	c = (int) strlen(base);
 	while (isspace(UCH(*dst)))
 	    dst++;
@@ -98,13 +100,21 @@ leading_uc(char dst[MAXPATHLEN], const char *src)
 char *
 name2vms(char dst[MAXPATHLEN], const char *src)
 {
-    char tmp[MAXPATHLEN], token[MAXPATHLEN], *t, *s = strcpy(tmp, src),		/* ... to permit src == dst */
-     *d = dst, c = '?';
+    char tmp[MAXPATHLEN];
+    char token[MAXPATHLEN];
+    char *t;
+    char *s = tmp;		/* ... to permit src == dst */
+    char *d = dst;
+    char c = '?';
     int bracket = FALSE;	/* true when "[" passed. */
     int on_top = FALSE;		/* true when no "[." lead */
     int node = FALSE;		/* true when node found */
     int device = FALSE;		/* true when device found */
     int len;
+
+    if (strlen(src) >= MAXPATHLEN)
+	return 0;
+    (void) strcpy(tmp, src);
 
     /*
      * If VMS 'getenv()' is given an upper-case name, it assumes that
@@ -113,9 +123,13 @@ name2vms(char dst[MAXPATHLEN], const char *src)
      */
     if ((len = leading_uc(token, s)) != 0) {
 	s += len;
-	len = (int) strlen(strcpy(d, token));
-	while (len > 1 && d[len - 1] == ' ')
+	len = strlen(token);
+	if (len >= MAXPATHLEN)
+	    return 0;
+	(void) strcpy(d, token);
+	while (len > 1 && d[len - 1] == ' ') {
 	    len--;
+	}
 	if (*s) {		/* text follows leading token */
 	    s++;		/* skip (assumed) '/' */
 	    if ((len > 1)
@@ -125,11 +139,12 @@ name2vms(char dst[MAXPATHLEN], const char *src)
 		if ((len > 2)
 		    && (d[len - 1] == ']')) {
 		    bracket++;
-		    if (d[len - 2] == '.')
+		    if (d[len - 2] == '.') {
 			/* rooted-device ? */
 			len -= 2;
-		    else
+		    } else {
 			len--;
+		    }
 		}
 	    }
 	}
@@ -137,10 +152,12 @@ name2vms(char dst[MAXPATHLEN], const char *src)
 	if ((t = strchr(d, ':')) != NULL) {
 	    if (t[1] == ':') {
 		node = TRUE;
-		if ((t = strchr(t + 2, ':')) != NULL)
+		if ((t = strchr(t + 2, ':')) != NULL) {
 		    device = TRUE;
-	    } else
+		}
+	    } else {
 		device = TRUE;
+	    }
 	}
 	d += len;
     }
@@ -150,8 +167,9 @@ name2vms(char dst[MAXPATHLEN], const char *src)
 	&& (t = strchr(s, '!')) != 0
 	&& (t[1] == '/' || t[1] == EOS)) {
 	leaf_dot = prefix(s);
-	while (s < t)
+	while (s < t) {
 	    *d++ = translate(*s++);
+	}
 	*d++ = ':';
 	*d++ = ':';
 	s++;			/* skip over '!' */
@@ -161,28 +179,33 @@ name2vms(char dst[MAXPATHLEN], const char *src)
     if (!device
 	&& (*s == '/')) {
 	leaf_dot = prefix(++s);
-	if ((t = strchr(s, '/')) == 0)
+	if ((t = strchr(s, '/')) == 0) {
 	    t = s + strlen(s);
-	while (s < t)
+	}
+	while (s < t) {
 	    *d++ = translate(*s++);
+	}
 	*d++ = ':';
     }
 
     /* permit leading "./" to simplify cases in which we concatenate */
-    if (!strncmp(s, "./", (size_t) 2))
+    if (!strncmp(s, "./", (size_t) 2)) {
 	s += 2;
+    }
 
     /* translate repeated leading "../" */
     while (!strncmp(s, "../", (size_t) 3)) {
 	s += 3;
-	if (!bracket++)
+	if (!bracket++) {
 	    *d++ = '[';
+	}
 	*d++ = '-';
     }
 
     if (strchr(s, '/')) {
-	if (!bracket++)
+	if (!bracket++) {
 	    *d++ = '[';
+	}
 	if (*s == '/') {
 	    s++;
 	} else if (!on_top) {
@@ -192,9 +215,9 @@ name2vms(char dst[MAXPATHLEN], const char *src)
 	while ((c = *s++) != EOS) {
 	    if (c == '/') {
 		leaf_dot = prefix(s);
-		if (strchr(s, '/'))
+		if (strchr(s, '/')) {
 		    *d++ = '.';
-		else {
+		} else {
 		    break;
 		}
 	    } else {
@@ -208,15 +231,18 @@ name2vms(char dst[MAXPATHLEN], const char *src)
 	leaf_dot = prefix(s);
 	while ((c = *s++) != EOS) {
 	    if (c == '.'
-		&& (leaf_ver = (strtol(s, &t, 0) && (t != s) && !*t)))
+		&& (leaf_ver = (strtol(s, &t, 0) && (t != s) && !*t))) {
 		*d++ = ';';
-	    else
+	    } else {
 		*d++ = translate(c);
+	    }
 	}
-	if (!leaf_dot)
+	if (!leaf_dot) {
 	    *d++ = '.';
-	if (!leaf_ver)
+	}
+	if (!leaf_ver) {
 	    *d++ = ';';
+	}
     }
     *d = EOS;
     return (dst);
