@@ -17,7 +17,7 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: is_spath.c,v 12.5 2010/07/04 15:28:07 tom Exp $")
+MODULE_ID("$Id: is_spath.c,v 12.6 2014/12/28 01:10:51 tom Exp $")
 
 int
 is_subpath(char *name_ref, char *name_tst)
@@ -36,3 +36,14 @@ is_subpath(char *name_ref, char *name_tst)
 
     return -1;
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

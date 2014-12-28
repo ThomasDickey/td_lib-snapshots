@@ -15,7 +15,7 @@
 #include "ptypes.h"
 #include "td_curse.h"
 
-MODULE_ID("$Id: wresize.c,v 12.14 2014/07/22 13:51:29 tom Exp $")
+MODULE_ID("$Id: wresize.c,v 12.15 2014/12/28 01:10:44 tom Exp $")
 
 #if defined(CURSES_LIKE_BSD)
 
@@ -217,3 +217,14 @@ dummy_wresize(void)
 {
 }
 #endif /* !HAVE_WRESIZE */
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

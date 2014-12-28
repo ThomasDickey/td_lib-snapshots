@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	19 Aug 1988
  * Modified:
+ *		27 Dec 2014, coverity warnings.
  *		05 Jul 2010, use environment's $TMPDIR in test-driver.
  *		07 Mar 2004, remove K&R support, indent'd.
  *		30 May 1998, compile with g++
@@ -48,7 +49,7 @@
 #include	<ctype.h>
 #include	<time.h>
 
-MODULE_ID("$Id: rcsload.c,v 12.15 2010/07/10 00:09:35 tom Exp $")
+MODULE_ID("$Id: rcsload.c,v 12.16 2014/12/27 20:48:55 tom Exp $")
 
 #ifdef	TEST
 #define	DEBUG(s) PRINTF s;
@@ -223,18 +224,23 @@ static char *
 branch_of(char *rev)
 {
     char bfr[BUFSIZ];
-    char *s = strcpy(bfr, rev), *t = bfr;
+    char *result = 0;
 
-    while (t != 0) {
-	if ((t = strchr(s, '.')) != NULL)
-	    if ((t = strchr(t + 1, '.')) != NULL)
-		s = t + 1;
+    if (strlen(rev) < sizeof(bfr)) {
+	char *s = strcpy(bfr, rev);
+	char *t = bfr;
+
+	while (t != 0) {
+	    if ((t = strchr(s, '.')) != NULL)
+		if ((t = strchr(t + 1, '.')) != NULL)
+		    s = t + 1;
+	}
+	if (s != bfr) {
+	    *(--s) = EOS;
+	    result = txtalloc(bfr);
+	}
     }
-    if (s != bfr) {
-	*(--s) = EOS;
-	return txtalloc(bfr);
-    }
-    return 0;
+    return result;
 }
 
 /*

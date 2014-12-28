@@ -12,7 +12,7 @@
 
 #include "ptypes.h"
 
-MODULE_ID("$Id: dotname.c,v 12.5 2010/07/04 15:33:03 tom Exp $")
+MODULE_ID("$Id: dotname.c,v 12.6 2014/12/28 01:10:51 tom Exp $")
 
 int
 dotname(const char *path)
@@ -24,3 +24,14 @@ dotname(const char *path)
     } else
 	return (0);
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

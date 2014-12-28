@@ -18,7 +18,7 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: mem2file.c,v 12.8 2012/01/13 18:14:42 tom Exp $")
+MODULE_ID("$Id: mem2file.c,v 12.9 2014/12/28 01:10:51 tom Exp $")
 
 int
 mem2file(char *blob, char *name, char *mode)
@@ -51,3 +51,14 @@ mem2file(char *blob, char *name, char *mode)
     }
     return (len);
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	02 Sep 1988
  * Modified:
+ *		27 Dec 2014, coverity warnings.
  *		24 May 2010, fix clang --analyze warnings.
  *		07 Mar 2004, remove K&R support, indent'd.
  *		25 Apr 2003, split-out samehead.c, add check on return-value.
@@ -24,7 +25,7 @@
 #include "ptypes.h"
 #include "rcsdefs.h"
 
-MODULE_ID("$Id: rcs_dir.c,v 12.10 2010/07/04 15:48:18 tom Exp $")
+MODULE_ID("$Id: rcs_dir.c,v 12.13 2014/12/28 01:10:33 tom Exp $")
 
 #define	WORKING	struct	Working
 WORKING {
@@ -141,17 +142,19 @@ Initialize(void)
 char *
 rcs_dir(const char *working_directory, const char *filename)
 {
-    char *name;
+    char *result;
     int vault = FALSE;
     int n;
+    char temp[MAXPATHLEN];
 
     if (!initialized)
 	Initialize();
 
-    name = RcsDir;
-    if (filename != 0 && RcsVault != 0) {
+    result = RcsDir;
+    if (filename != 0
+	&& (strlen(working_directory) + strlen(filename) + 3) < sizeof(temp)
+	&& RcsVault != 0) {
 	Stat_t sb;
-	char temp[MAXPATHLEN];
 	VAULTS *p, *max_p = 0;
 	WORKING *q;
 	int max_n = 0;
@@ -208,8 +211,10 @@ rcs_dir(const char *working_directory, const char *filename)
 		 * the working directory corresponds to this
 		 * vault!)
 		 */
-		name = txtalloc(temp);
-	    } else {
+		result = txtalloc(temp);
+	    } else if ((strlen(max_p->archive)
+			+ strlen(temp)
+			+ strlen(result) + 5) < sizeof(archive)) {
 		if (temp[max_n] != EOS)
 		    max_n++;
 		pathcat(
@@ -218,11 +223,22 @@ rcs_dir(const char *working_directory, const char *filename)
 				      archive,
 				      strcpy(archive, max_p->archive),
 				      temp + max_n),
-			   name);
-		name = txtalloc(archive);
+			   result);
+		result = txtalloc(archive);
 	    }
 	}
     }
 
-    return (name);
+    return (result);
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

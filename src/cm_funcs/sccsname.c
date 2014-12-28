@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	08 May 1990
  * Modified:
+ *		27 Dec 2014, coverity warnings
  *		07 Mar 2004, remove K&R support, indent'd.
  *		13 Jul 1994, modified interface with 'sccs_dir()'
  *		29 Oct 1993, ifdef-ident
@@ -36,7 +37,7 @@
 
 #include	<ctype.h>
 
-MODULE_ID("$Id: sccsname.c,v 12.10 2010/07/05 11:15:26 tom Exp $")
+MODULE_ID("$Id: sccsname.c,v 12.13 2014/12/27 21:18:35 tom Exp $")
 
 #define	LEN_PREFIX	(sizeof(prefix)-1)
 
@@ -91,27 +92,32 @@ char *
 sccs2name(const char *name, int full)
 {
     char *s, *t;
-    static char fname[BUFSIZ];
+    static char fname[MAXPATHLEN];
+    char *result = fname;
 
-    if (sccs_prefix(name)) {
+    if (strlen(name) < sizeof(fname)) {
+	if (sccs_prefix(name)) {
 
-	s = leaf(strcpy(fname, name));
-	strcpy(s, cleaf(name) + LEN_PREFIX);
+	    s = leaf(strcpy(fname, name));
+	    strcpy(s, cleaf(name) + LEN_PREFIX);
 
-	if ((s = leaf(fname)) > fname) {
-	    char *d = fname;
-	    if (full) {
-		s[-1] = EOS;
-		if (((t = leaf(d)) > d)
-		    && sameleaf(t, sccs_dir((char *) 0, (char *) 0)))
-		    d = t;
+	    if ((s = leaf(fname)) > fname) {
+		char *d = fname;
+		if (full) {
+		    s[-1] = EOS;
+		    if (((t = leaf(d)) > d)
+			&& sameleaf(t, sccs_dir((char *) 0, (char *) 0)))
+			d = t;
+		}
+		while ((*d++ = *s++) != EOS) ;
 	    }
-	    while ((*d++ = *s++) != EOS) ;
+	} else {
+	    (void) strcpy(fname, name);
 	}
     } else {
-	(void) strcpy(fname, name);
+	result = 0;
     }
-    return (fname);
+    return result;
 }
 
 /*
@@ -122,30 +128,39 @@ char *
 name2sccs(const char *name, int full)
 {
     static char fname[MAXPATHLEN];
+    char *result = 0;
 
-    if (sccs_prefix(name)) {
-	(void) strcpy(fname, name);
-    } else {
-	char *dname = sccs_dir(".", name);
-
-	if (full) {
-	    trim_leaf(strcpy(fname, name));
-	    if (sameleaf(fname, dname))
-		trim_leaf(fname);
+    if (strlen(name) < sizeof(fname)) {
+	if (sccs_prefix(name)) {
+	    (void) strcpy(fname, name);
+	    result = fname;
 	} else {
-	    *fname = EOS;
+	    char *dname = sccs_dir(".", name);
+
+	    if (full) {
+		trim_leaf(strcpy(fname, name));
+		if (sameleaf(fname, dname)) {
+		    trim_leaf(fname);
+		}
+	    } else {
+		*fname = EOS;
+	    }
+
+	    if ((strlen(dname) + strlen(name) + strlen(prefix)) < sizeof(fname)) {
+		if (isSlash(*dname) || *dname == '~') {
+		    (void) strcpy(fname, dname);
+		} else {
+		    (void) pathcat(fname, fname, dname);
+		}
+
+		(void) strcat(
+				 pathcat(fname, fname, prefix),
+				 cleaf(name));
+		result = fname;
+	    }
 	}
-
-	if (isSlash(*dname) || *dname == '~')
-	    (void) strcpy(fname, dname);
-	else
-	    (void) pathcat(fname, fname, dname);
-
-	(void) strcat(
-			 pathcat(fname, fname, prefix),
-			 cleaf(name));
     }
-    return (fname);
+    return result;
 }
 
 #ifdef	TEST
@@ -153,7 +168,7 @@ static void
 do_test(int argc, const char **argv, int full)
 {
     int j;
-    char old[BUFSIZ], *new;
+    char old[MAXPATHLEN], *new;
 
     if (argc > 1) {
 	printf("** %s-path\n", full ? "full" : "local");
@@ -168,10 +183,13 @@ do_test(int argc, const char **argv, int full)
 	printf("sccs2name:\n");
 	for (j = 1; j < argc; j++) {
 	    (void) strcpy(old, sccs2name(argv[j], !full));
-	    new = sccs2name(argv[j], full);
-	    printf("  %-20s => %s%s\n",
-		   argv[j], new,
-		   strcmp(old, new) ? " (*)" : "");
+	    if ((new = sccs2name(argv[j], full)) != 0) {
+		printf("  %-20s => %s%s\n",
+		       argv[j], new,
+		       strcmp(old, new) ? " (*)" : "");
+	    } else {
+		printf("  %-20s => ??\n", argv[j]);
+	    }
 	}
     } else {
 	static char my_putenv[80];

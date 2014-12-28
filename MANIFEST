@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t20141226
+MANIFEST for td_lib, version t20141227
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         restrictions on copying/using this software
@@ -273,44 +273,131 @@ test/cm_funcs/cmv_last.ref      reference for 'cmv_last'
 test/cm_funcs/cmv_last.sh       test-script for cmv_last
 test/cm_funcs/cutoff.ref        reference for 'dotcmp'
 test/cm_funcs/cutoff.sh         test-script for cutoff
+test/cm_funcs/cvslast.ref       test-reference file
+test/cm_funcs/cvslast.sh        add stubs for modules which had no test-driver
+test/cm_funcs/lastrev.ref       test-reference file
+test/cm_funcs/lastrev.sh        add stubs for modules which had no test-driver
 test/cm_funcs/modules           test/cm_funcs modules
 test/cm_funcs/newzone.ref       test result for newzone.sh
 test/cm_funcs/newzone.sh        test-script for newzone
+test/cm_funcs/next_ver.ref      test-reference file
+test/cm_funcs/next_ver.sh       add stubs for modules which had no test-driver
 test/cm_funcs/packdate.ref      test result for packdate.sh
 test/cm_funcs/packdate.sh       test-script for packdate
+test/cm_funcs/prcslast.ref      test-reference file
+test/cm_funcs/prcslast.sh       add stubs for modules which had no test-driver
+test/cm_funcs/rcs_dir.ref       test-reference file
+test/cm_funcs/rcs_dir.sh        add stubs for modules which had no test-driver
 test/cm_funcs/rcsargpr.ref      test-result
 test/cm_funcs/rcsargpr.sh       test-script for rcsargpr
+test/cm_funcs/rcsdebug.ref      test-reference file
+test/cm_funcs/rcsdebug.sh       add stubs for modules which had no test-driver
+test/cm_funcs/rcsedit.ref       test-reference file
+test/cm_funcs/rcsedit.sh        add stubs for modules which had no test-driver
+test/cm_funcs/rcskeys.ref       test-reference file
+test/cm_funcs/rcskeys.sh        add stubs for modules which had no test-driver
+test/cm_funcs/rcslast.ref       test-reference file
+test/cm_funcs/rcslast.sh        add stubs for modules which had no test-driver
 test/cm_funcs/rcsload.ref       reference for 'rcsload.sh'
 test/cm_funcs/rcsload.sh        test-script for rcsload
+test/cm_funcs/rcslocks.ref      test-reference file
+test/cm_funcs/rcslocks.sh       add stubs for modules which had no test-driver
 test/cm_funcs/rcsname.ref       test result
 test/cm_funcs/rcsname.sh        test-script for rcsname
+test/cm_funcs/rcspath.ref       test-reference file
+test/cm_funcs/rcspath.sh        add stubs for modules which had no test-driver
+test/cm_funcs/rcsperm.ref       test-reference file
+test/cm_funcs/rcsperm.sh        add stubs for modules which had no test-driver
+test/cm_funcs/rcssymbs.ref      test-reference file
+test/cm_funcs/rcssymbs.sh       add stubs for modules which had no test-driver
+test/cm_funcs/rcstemp.ref       test-reference file
+test/cm_funcs/rcstemp.sh        add stubs for modules which had no test-driver
+test/cm_funcs/rcstime.ref       test-reference file
+test/cm_funcs/rcstime.sh        add stubs for modules which had no test-driver
 test/cm_funcs/run_test.sh       general test-script: td_lib/test/cm_funcs
 test/cm_funcs/samebr.ref        reference for samebr test
 test/cm_funcs/samebr.sh         test-script for samebr
+test/cm_funcs/sccs_dir.ref      test-reference file
+test/cm_funcs/sccs_dir.sh       add stubs for modules which had no test-driver
+test/cm_funcs/sccsdbug.ref      test-reference file
+test/cm_funcs/sccsdbug.sh       add stubs for modules which had no test-driver
+test/cm_funcs/sccslast.ref      test-reference file
+test/cm_funcs/sccslast.sh       add stubs for modules which had no test-driver
 test/cm_funcs/sccsname.ref      reference for sccsname test
 test/cm_funcs/sccsname.sh       test-script for sccsname
+test/cm_funcs/sccspath.ref      test-reference file
+test/cm_funcs/sccspath.sh       add stubs for modules which had no test-driver
+test/cm_funcs/svn_last.ref      test-reference file
+test/cm_funcs/svn_last.sh       add stubs for modules which had no test-driver
 test/cm_funcs/vcs_file.ref      test-result for vcs_file
 test/cm_funcs/vcs_file.sh       test-script for vcs_file
 test/cm_funcs/vercmp.ref        reference for vercmp test
 test/cm_funcs/vercmp.sh         test-script for vercmp
 test/compare                    subdirectory
+test/compare/btree.ref          test-reference file
+test/compare/btree.sh           add stubs for modules which had no test-driver
+test/compare/cmpqsort.ref       test-reference file
+test/compare/cmpqsort.sh        add stubs for modules which had no test-driver
 test/compare/diffload.ref       test result
 test/compare/diffload.sh        =============================================================================
 test/compare/m2comp.ref         reference for 'm2comp.sh'
 test/compare/m2comp.sh          test-script for 'm2comp'
+test/compare/modules            add stubs for modules which had no test-driver
 test/compare/run_test.sh        general test-script
 test/compare/scomp.ref          reference for 'scomp.sh'
 test/compare/scomp.sh           test-script for 'scomp'
 test/compare/test_cmp.c         test-driver for scomp/mcomp modules
 test/curses                     subdirectory
+test/curses/addchnst.ref        test-reference file
+test/curses/addchnst.sh         add stubs for modules which had no test-driver
+test/curses/beep.ref            test-reference file
+test/curses/beep.sh             add stubs for modules which had no test-driver
+test/curses/blip.ref            test-reference file
+test/curses/blip.sh             add stubs for modules which had no test-driver
+test/curses/cmdch.ref           test-reference file
+test/curses/cmdch.sh            add stubs for modules which had no test-driver
+test/curses/dumpchr.ref         test-reference file
+test/curses/dumpchr.sh          add stubs for modules which had no test-driver
+test/curses/dumptty.ref         test-reference file
+test/curses/dumptty.sh          add stubs for modules which had no test-driver
+test/curses/dumpwin.ref         test-reference file
+test/curses/dumpwin.sh          add stubs for modules which had no test-driver
+test/curses/erasechr.ref        test-reference file
+test/curses/erasechr.sh         add stubs for modules which had no test-driver
+test/curses/getmaxx.ref         test-reference file
+test/curses/getmaxx.sh          add stubs for modules which had no test-driver
+test/curses/is_xterm.ref        test-reference file
+test/curses/is_xterm.sh         add stubs for modules which had no test-driver
+test/curses/killchar.ref        test-reference file
+test/curses/killchar.sh         add stubs for modules which had no test-driver
+test/curses/lnextchr.ref        test-reference file
+test/curses/lnextchr.sh         add stubs for modules which had no test-driver
+test/curses/logch.ref           test-reference file
+test/curses/logch.sh            add stubs for modules which had no test-driver
 test/curses/modules             test/curses modules
+test/curses/on_winch.ref        test-reference file
+test/curses/on_winch.sh         add stubs for modules which had no test-driver
 test/curses/padedit.ref         reference for 'padedit'
 test/curses/padedit.sh          test-script for 'padedit'
 test/curses/rawgets.ref         reference for 'rawgets'
 test/curses/rawgets.sh          test-script for 'rawgets'
+test/curses/rawterm.ref         test-reference file
+test/curses/rawterm.sh          add stubs for modules which had no test-driver
+test/curses/resizwin.ref        test-reference file
+test/curses/resizwin.sh         add stubs for modules which had no test-driver
 test/curses/run_test.sh         general test script
+test/curses/savewin.ref         test-reference file
+test/curses/savewin.sh          add stubs for modules which had no test-driver
 test/curses/scr_size.ref        reference for 'scr_size'
 test/curses/scr_size.sh         test-script for 'scr_size'
+test/curses/viewfile.ref        test-reference file
+test/curses/viewfile.sh         add stubs for modules which had no test-driver
+test/curses/win2file.ref        test-reference file
+test/curses/win2file.sh         add stubs for modules which had no test-driver
+test/curses/wrepaint.ref        test-reference file
+test/curses/wrepaint.sh         add stubs for modules which had no test-driver
+test/curses/wresize.ref         test-reference file
+test/curses/wresize.sh          add stubs for modules which had no test-driver
 test                            subdirectory
 test/descrip.mms                =============================================================================
 test/dummy.txt                  test-file #1
@@ -322,17 +409,37 @@ test/makefile.in                test/makefile template
 test/memory                     subdirectory
 test/memory/doalloc.ref         reference for 'doalloc'
 test/memory/doalloc.sh          test-script for 'doalloc'
+test/memory/memmove.ref         test-reference file
+test/memory/memmove.sh          add stubs for modules which had no test-driver
 test/memory/modules             test/memory modules
 test/memory/run_test.sh         general test script
+test/memory/stralloc.ref        test-reference file
+test/memory/stralloc.sh         add stubs for modules which had no test-driver
 test/memory/txtalloc.ref        reference for 'txtalloc'
 test/memory/txtalloc.sh         test-script for 'txtalloc'
+test/memory/vecalloc.ref        test-reference file
+test/memory/vecalloc.sh         add stubs for modules which had no test-driver
 test/memory/vecedit.ref         reference for 'vecedit'
 test/memory/vecedit.sh          test-script for 'vecedit'
+test/memory/veclen.ref          test-reference file
+test/memory/veclen.sh           add stubs for modules which had no test-driver
 test/pathname                   subdirectory
 test/pathname/abspath.ref       reference for 'abspath'
 test/pathname/abspath.sh        test-script for 'abspath'
+test/pathname/acc_mode.ref      test-reference file
+test/pathname/acc_mode.sh       add stubs for modules which had no test-driver
+test/pathname/add2fnam.ref      test-reference file
+test/pathname/add2fnam.sh       add stubs for modules which had no test-driver
+test/pathname/arg2file.ref      test-reference file
+test/pathname/arg2file.sh       add stubs for modules which had no test-driver
+test/pathname/copyback.ref      test-reference file
+test/pathname/copyback.sh       add stubs for modules which had no test-driver
+test/pathname/denode.ref        test-reference file
+test/pathname/denode.sh         add stubs for modules which had no test-driver
 test/pathname/dlettree.ref      reference for deletetree
 test/pathname/dlettree.sh       test script for deletetree
+test/pathname/dotname.ref       test-reference file
+test/pathname/dotname.sh        add stubs for modules which had no test-driver
 test/pathname/editfile.ref      reference for editfile
 test/pathname/editfile.sh       test script for editfile
 test/pathname/edittree.ref      reference for edittree
@@ -345,11 +452,31 @@ test/pathname/fileblox.ref      reference for 'fileblox'
 test/pathname/fileblox.sh       test-script for 'fileblox'
 test/pathname/filecopy.ref      reference for 'filecopy'
 test/pathname/filecopy.sh       test-script for 'filecopy'
+test/pathname/filesize.ref      test-reference file
+test/pathname/filesize.sh       add stubs for modules which had no test-driver
+test/pathname/fleaf.ref         test-reference file
+test/pathname/fleaf.sh          add stubs for modules which had no test-driver
+test/pathname/fleaf14.ref       test-reference file
+test/pathname/fleaf14.sh        add stubs for modules which had no test-driver
 test/pathname/fp2argv.ref       reference for 'fp2argv'
 test/pathname/fp2argv.sh        test-script for 'fp2argv'
+test/pathname/ftype.ref         test-reference file
+test/pathname/ftype.sh          add stubs for modules which had no test-driver
+test/pathname/ftype2.ref        test-reference file
+test/pathname/ftype2.sh         add stubs for modules which had no test-driver
+test/pathname/is_spath.ref      test-reference file
+test/pathname/is_spath.sh       add stubs for modules which had no test-driver
+test/pathname/istextfl.ref      test-reference file
+test/pathname/istextfl.sh       add stubs for modules which had no test-driver
+test/pathname/mem2file.ref      test-reference file
+test/pathname/mem2file.sh       add stubs for modules which had no test-driver
+test/pathname/modechar.ref      test-reference file
+test/pathname/modechar.sh       add stubs for modules which had no test-driver
 test/pathname/modules           test/pathname modules
 test/pathname/name2s.ref        reference for 'name2s'
 test/pathname/name2s.sh         test-script for 'name2s'
+test/pathname/pathcat.ref       test-reference file
+test/pathname/pathcat.sh        add stubs for modules which had no test-driver
 test/pathname/pathcmp.ref       reference for 'pathcmp'
 test/pathname/pathcmp.sh        test-script for 'pathcmp'
 test/pathname/pathhead.ref      reference for 'pathhead'
@@ -359,8 +486,16 @@ test/pathname/pathleaf.sh       test-script for 'pathleaf'
 test/pathname/relpath.ref       reference for 'relpath'
 test/pathname/relpath.sh        test-script for 'relpath'
 test/pathname/run_test.sh       general test script
+test/pathname/samehead.ref      test-reference file
+test/pathname/samehead.sh       add stubs for modules which had no test-driver
 test/pathname/sameleaf.ref      reference for 'sameleaf'
 test/pathname/sameleaf.sh       test-script for 'sameleaf'
+test/pathname/stat_dir.ref      test-reference file
+test/pathname/stat_dir.sh       add stubs for modules which had no test-driver
+test/pathname/stat_fil.ref      test-reference file
+test/pathname/stat_fil.sh       add stubs for modules which had no test-driver
+test/pathname/track_wd.ref      test-reference file
+test/pathname/track_wd.sh       add stubs for modules which had no test-driver
 test/pathname/trimpath.ref      reference for 'trimpath'
 test/pathname/trimpath.sh       test-script for 'trimpath'
 test/pathname/trnstree.ref      reference for 'trnstree'
@@ -381,9 +516,19 @@ test/port2vms/path2dir.ref      reference for 'path2dir'
 test/port2vms/path2dir.sh       test-script for path2dir
 test/port2vms/path2vms.ref      reference for 'path2vms'
 test/port2vms/path2vms.sh       test script for path2vms
+test/port2vms/rmsio.ref         test-reference file
+test/port2vms/rmsio.sh          add stubs for modules which had no test-driver
 test/port2vms/run_test.sh       general test-script
+test/port2vms/time2vms.ref      test-reference file
+test/port2vms/time2vms.sh       add stubs for modules which had no test-driver
+test/port2vms/uid2s.ref         test-reference file
+test/port2vms/uid2s.sh          add stubs for modules which had no test-driver
+test/port2vms/utimes.ref        test-reference file
+test/port2vms/utimes.sh         add stubs for modules which had no test-driver
 test/port2vms/vms2name.ref      reference for vms2name
 test/port2vms/vms2name.sh       test-script for vms2name
+test/port2vms/vms_dirs.ref      test-reference file
+test/port2vms/vms_dirs.sh       add stubs for modules which had no test-driver
 test/port2vms/vms_pthc.ref      reference for 'vms_pthc'
 test/port2vms/vms_pthc.sh       test-script for 'vms_pthc'
 test/port2vms/vms_rpth.ref      reference for 'vms_rpth'
@@ -393,25 +538,74 @@ test/port2vms/vms_wild.sh       test-script for 'vms_wild'
 test/port2vms/zone2vms.ref      reference for zone2vms
 test/port2vms/zone2vms.sh       test script for zone2vms
 test/process                    subdirectory
+test/process/bldarg.ref         test-reference file
+test/process/bldarg.sh          add stubs for modules which had no test-driver
+test/process/catarg.ref         test-reference file
+test/process/catarg.sh          add stubs for modules which had no test-driver
+test/process/catchall.ref       test-reference file
+test/process/catchall.sh        add stubs for modules which had no test-driver
+test/process/egress.ref         test-reference file
+test/process/egress.sh          add stubs for modules which had no test-driver
 test/process/execute.ref        reference for 'execute'
 test/process/execute.sh         test-script for 'execute'
 test/process/failed.ref         reference for 'failed'
 test/process/failed.sh          test-script for 'failed'
+test/process/for_admn.ref       test-reference file
+test/process/for_admn.sh        add stubs for modules which had no test-driver
+test/process/for_user.ref       test-reference file
+test/process/for_user.sh        add stubs for modules which had no test-driver
 test/process/gethome.ref        reference for 'gethome'
 test/process/gethome.sh         test-script for 'gethome'
+test/process/getopt.ref         test-reference file
+test/process/getopt.sh          add stubs for modules which had no test-driver
+test/process/getuser.ref        test-reference file
+test/process/getuser.sh         add stubs for modules which had no test-driver
+test/process/in_group.ref       test-reference file
+test/process/in_group.sh        add stubs for modules which had no test-driver
+test/process/interact.ref       test-reference file
+test/process/interact.sh        add stubs for modules which had no test-driver
 test/process/makeargv.ref       reference for 'makeargv'
 test/process/makeargv.sh        test-script for 'makeargv'
 test/process/modules            test/process modules
+test/process/revert.ref         test-reference file
+test/process/revert.sh          add stubs for modules which had no test-driver
 test/process/run_test.sh        general test script
+test/process/savesuid.ref       test-reference file
+test/process/savesuid.sh        add stubs for modules which had no test-driver
+test/process/shoarg.ref         test-reference file
+test/process/shoarg.sh          add stubs for modules which had no test-driver
+test/process/showuids.ref       test-reference file
+test/process/showuids.sh        add stubs for modules which had no test-driver
 test/process/usercopy.ref       reference for 'usercopy'
 test/process/usercopy.sh        test-script for 'usercopy'
+test/process/userprot.ref       test-reference file
+test/process/userprot.sh        add stubs for modules which had no test-driver
 test/process/walkback.ref       reference (apollo only) for walkback
 test/process/walkback.sh        test script for walkback
 test/sheet                      subdirectory
+test/sheet/count_ss.ref         test-reference file
+test/sheet/count_ss.sh          add stubs for modules which had no test-driver
+test/sheet/field_of.ref         test-reference file
+test/sheet/field_of.sh          add stubs for modules which had no test-driver
+test/sheet/modules              add stubs for modules which had no test-driver
 test/sheet/run_test.sh          general test script
+test/sheet/ss_field.ref         test-reference file
+test/sheet/ss_field.sh          add stubs for modules which had no test-driver
 test/string                     subdirectory
+test/string/dftenv.ref          test-reference file
+test/string/dftenv.sh           add stubs for modules which had no test-driver
 test/string/dotcmp.ref          reference for 'dotcmp'
 test/string/dotcmp.sh           test-script for 'dotcmp'
+test/string/dyn_app.ref         test-reference file
+test/string/dyn_app.sh          add stubs for modules which had no test-driver
+test/string/dyn_appc.ref        test-reference file
+test/string/dyn_appc.sh         add stubs for modules which had no test-driver
+test/string/dyn_cata.ref        test-reference file
+test/string/dyn_cata.sh         add stubs for modules which had no test-driver
+test/string/dyn_copy.ref        test-reference file
+test/string/dyn_copy.sh         add stubs for modules which had no test-driver
+test/string/dyn_str.ref         test-reference file
+test/string/dyn_str.sh          add stubs for modules which had no test-driver
 test/string/lsbycols.ref        reference for 'lsbycols'
 test/string/lsbycols.sh         test-script for 'lsbycols'
 test/string/ltostr.ref          reference for 'ltostr' 
@@ -420,8 +614,18 @@ test/string/modules             test/string modules
 test/string/run_test.sh         general test script
 test/string/strbcmp.ref         reference for 'strbcmp'
 test/string/strbcmp.sh          test-script for 'strbcmp'
+test/string/strclean.ref        test-reference file
+test/string/strclean.sh         add stubs for modules which had no test-driver
+test/string/strcount.ref        test-reference file
+test/string/strcount.sh         add stubs for modules which had no test-driver
+test/string/strerror.ref        test-reference file
+test/string/strerror.sh         add stubs for modules which had no test-driver
+test/string/strtrim.ref         test-reference file
+test/string/strtrim.sh          add stubs for modules which had no test-driver
 test/string/strucmp.ref         reference for 'strucmp'
 test/string/strucmp.sh          test-script for 'strucmp'
+test/string/strucpy.ref         test-reference file
+test/string/strucpy.sh          add stubs for modules which had no test-driver
 test/string/strwcmp.ref         reference for 'strwcmp'
 test/string/strwcmp.sh          test-script for 'strwcmp'
 test                            subdirectory
@@ -435,7 +639,11 @@ test/unix/gid2s.ref             reference for 'gid2s'
 test/unix/gid2s.sh              test-script for 'gid2s'
 test/unix/modules               test/unix modules
 test/unix/run_test.sh           general test script
+test/unix/s2gid.ref             test-reference file
+test/unix/s2gid.sh              add stubs for modules which had no test-driver
 test/unix/s2uid.ref             reference for 's2uid'
 test/unix/s2uid.sh              test-script for 's2uid'
+test/unix/setmtime.ref          test-reference file
+test/unix/setmtime.sh           add stubs for modules which had no test-driver
 test/unix/uid2s.ref             reference for 'uid2s'
 test/unix/uid2s.sh              test-script for 'uid2s'

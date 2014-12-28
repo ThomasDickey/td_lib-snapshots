@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	18 Aug 1988
  * Modified:
+ *		27 Dec 2014, coverity warnings.
  *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
@@ -25,30 +26,35 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: pathleaf.c,v 12.6 2010/07/04 09:42:54 tom Exp $")
+MODULE_ID("$Id: pathleaf.c,v 12.8 2014/12/27 22:16:18 tom Exp $")
 
 char *
 pathleaf(const char *path)
 {
     char *s;
-    static char buffer[BUFSIZ];
+    static char buffer[MAXPATHLEN];
+    char *result = buffer;
 
-    path = strcpy(buffer, path);
-    while ((s = fleaf_delim(path)) != NULL) {
+    if (strlen(path) < sizeof(buffer)) {
+	path = strcpy(buffer, path);
+	while ((s = fleaf_delim(path)) != NULL) {
 #ifdef	apollo
-	if (!strcmp(path, "//"))
-	    break;
+	    if (!strcmp(path, "//"))
+		break;
 #endif
 #ifndef	vms
-	if (s[1] == EOS) {	/* trailing delimiter ? */
-	    if (path == s)
-		break;
-	    *s = EOS;		/* trim it */
-	} else
+	    if (s[1] == EOS) {	/* trailing delimiter ? */
+		if (path == s)
+		    break;
+		*s = EOS;	/* trim it */
+	    } else
 #endif
-	    return (++s);
+		return (++s);
+	}
+    } else {
+	result = 0;
     }
-    return (buffer);
+    return result;
 }
 
 #ifdef	TEST

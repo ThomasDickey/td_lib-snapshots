@@ -20,7 +20,7 @@
 #include	"ptypes.h"
 #include	<time.h>
 
-MODULE_ID("$Id: setmtime.c,v 12.11 2010/07/04 10:53:59 tom Exp $")
+MODULE_ID("$Id: setmtime.c,v 12.12 2014/12/28 01:11:09 tom Exp $")
 
 #if defined(HAVE_UTIME_H)
 #include	<utime.h>
@@ -42,3 +42,14 @@ setmtime(const char *name,	/* name of file to touch */
     tp.actime = (atime != 0) ? atime : time((time_t *) 0);
     return (utime(name, &tp));
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

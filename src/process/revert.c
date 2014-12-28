@@ -18,7 +18,7 @@
 
 #include	"ptypes.h"
 
-MODULE_ID("$Id: revert.c,v 12.6 2010/07/04 10:53:43 tom Exp $")
+MODULE_ID("$Id: revert.c,v 12.7 2014/12/28 01:11:01 tom Exp $")
 
 #ifdef	SYS_UNIX
 
@@ -47,3 +47,14 @@ revert(const char *msg)
     return changed;
 }
 #endif /* SYS_UNIX */
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

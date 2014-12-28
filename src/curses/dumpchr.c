@@ -18,7 +18,7 @@
 #define CHR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: dumpchr.c,v 12.5 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: dumpchr.c,v 12.6 2014/12/28 01:10:44 tom Exp $")
 
 #define	OUT	FPRINTF(fp,
 
@@ -59,3 +59,14 @@ dumpchr(FILE *fp, int c)
 	}
     }
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

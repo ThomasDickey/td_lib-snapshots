@@ -14,7 +14,7 @@
 #define	ERR_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: stat_fil.c,v 12.6 2010/07/03 16:03:13 tom Exp $")
+MODULE_ID("$Id: stat_fil.c,v 12.7 2014/12/28 01:10:51 tom Exp $")
 
 int
 stat_file(const char *path, Stat_t * sb)
@@ -26,3 +26,14 @@ stat_file(const char *path, Stat_t * sb)
     }
     return -1;
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

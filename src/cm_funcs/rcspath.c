@@ -19,7 +19,7 @@
 #include	"ptypes.h"
 #include	"rcsdefs.h"
 
-MODULE_ID("$Id: rcspath.c,v 12.7 2010/07/10 00:09:35 tom Exp $")
+MODULE_ID("$Id: rcspath.c,v 12.8 2014/12/28 01:10:33 tom Exp $")
 
 char *
 rcspath(const char *utility)
@@ -35,3 +35,14 @@ rcspath(const char *utility)
     }
     return bfr;
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

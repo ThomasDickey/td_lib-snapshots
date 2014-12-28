@@ -12,7 +12,7 @@
 #include <ptypes.h>
 #include <grp.h>
 
-MODULE_ID("$Id: in_group.c,v 12.9 2010/07/04 20:49:03 tom Exp $")
+MODULE_ID("$Id: in_group.c,v 12.10 2014/12/28 01:11:01 tom Exp $")
 
 #if defined(HAVE_GETGROUPS)
 #  if defined(HAVE_SYS_PARAM_H)
@@ -55,3 +55,14 @@ in_group(gid_t given_gid)
 #endif /* Have getgroups.  */
     return FALSE;
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

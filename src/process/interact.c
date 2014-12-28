@@ -14,7 +14,7 @@
 #define OPN_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: interact.c,v 12.5 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: interact.c,v 12.6 2014/12/28 01:11:01 tom Exp $")
 
 int
 interactive(void)
@@ -29,3 +29,14 @@ interactive(void)
     }
     return opened_tty >= 0;
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

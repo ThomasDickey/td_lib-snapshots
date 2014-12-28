@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id: run_test.sh,v 12.1 1993/09/23 15:07:41 tom Exp $
+# $Id: run_test.sh,v 12.2 2014/12/28 01:42:43 tom Exp $
 if test $# != 0
 then
 	echo '** '`date`
@@ -10,8 +10,6 @@ then
 		N=`basename $N .sh`
 		LOG=../$N.purelog
 		rm -f $N.tmp $LOG
-		PURIFYOPTIONS="-logfile=$LOG -program-name=$N -chain-length=10"
-		export PURIFYOPTIONS
 		if ( ./$N.sh )
 		then
 			if test -f $N.tmp

@@ -10,7 +10,7 @@
 #define STR_PTYPES
 #include "td_curse.h"
 
-MODULE_ID("$Id: is_xterm.c,v 12.5 2010/07/10 00:10:42 tom Exp $")
+MODULE_ID("$Id: is_xterm.c,v 12.6 2014/12/28 01:10:44 tom Exp $")
 
 #if !defined(HAVE_IS_XTERM)
 /*
@@ -45,3 +45,14 @@ is_xterm(void)
     return result;
 }
 #endif
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

@@ -13,7 +13,7 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: arg2file.c,v 12.5 2010/07/03 15:55:02 tom Exp $")
+MODULE_ID("$Id: arg2file.c,v 12.6 2014/12/28 01:10:51 tom Exp $")
 
 int
 argv2file(char **vec,
@@ -35,3 +35,14 @@ argv2file(char **vec,
 
     return (count);
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

@@ -19,7 +19,7 @@
 #include	"ptypes.h"
 #include	<signal.h>
 
-MODULE_ID("$Id: copyback.c,v 12.7 2010/07/10 00:11:18 tom Exp $")
+MODULE_ID("$Id: copyback.c,v 12.8 2014/12/28 01:10:51 tom Exp $")
 
 int
 copyback(FILE *fpT,		/* temporary-file pointer */
@@ -49,3 +49,14 @@ copyback(FILE *fpT,		/* temporary-file pointer */
     }
     return (FALSE);
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

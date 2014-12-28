@@ -13,7 +13,7 @@
 #include	"ptypes.h"
 #include	"sccsdefs.h"
 
-MODULE_ID("$Id: sccspath.c,v 12.5 2010/07/10 00:10:13 tom Exp $")
+MODULE_ID("$Id: sccspath.c,v 12.6 2014/12/28 01:10:33 tom Exp $")
 
 char *
 sccspath(const char *utility)
@@ -29,3 +29,14 @@ sccspath(const char *utility)
     }
     return bfr;
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

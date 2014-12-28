@@ -1,6 +1,17 @@
+dftenv
 dotcmp
+dyn_app
+dyn_appc
+dyn_cata
+dyn_copy
+dyn_str
 lsbycols
 ltostr
 strbcmp
+strclean
+strcount
+strerror
+strtrim
 strucmp
+strucpy
 strwcmp

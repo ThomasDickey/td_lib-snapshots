@@ -21,7 +21,7 @@
 
 #include	"ptypes.h"
 
-MODULE_ID("$Id: modechar.c,v 12.6 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: modechar.c,v 12.7 2014/12/28 01:10:51 tom Exp $")
 
 #ifdef	apollo
 #define	S_IFFIFO	010000
@@ -75,3 +75,14 @@ modechar(unsigned mode)
     }
     return (c);
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

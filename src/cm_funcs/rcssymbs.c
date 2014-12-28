@@ -27,7 +27,7 @@
 #include "rcsdefs.h"
 #include <ctype.h>
 
-MODULE_ID("$Id: rcssymbs.c,v 12.9 2010/07/04 17:39:20 tom Exp $")
+MODULE_ID("$Id: rcssymbs.c,v 12.10 2014/12/28 01:10:33 tom Exp $")
 
 #define	isname(c)	(isalnum(UCH(c)) || (c == '_'))
 
@@ -121,3 +121,14 @@ rcssymbols(char *s,		/* current scan position */
     }
     return (s);
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

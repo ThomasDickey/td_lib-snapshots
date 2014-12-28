@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	18 Nov 1987
  * Modified:
+ *		27 Dec 2014, coverity warnings.
  *		07 Mar 2004, remove K&R support, indent'd.
  *		04 Dec 1993, port to MSDOS.
  *		29 Oct 1993, ifdef-ident
@@ -31,7 +32,7 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: which.c,v 12.14 2014/07/22 18:18:26 tom Exp $")
+MODULE_ID("$Id: which.c,v 12.16 2014/12/27 23:01:39 tom Exp $")
 
 #ifdef MSDOS
 #define PROG_EXTS "PIF", "BAT", "EXE", "COM"
@@ -84,49 +85,65 @@ which(char *bfr,
 
     char *s, *d;
     char *path = getenv("PATH");
-    char test[BUFSIZ];
+    char test[MAXPATHLEN];
 
-    if (path == 0)
-	path = just_dot;
-    s = path;
-    *test = *bfr = EOS;
+    int result = 0;
 
-    if (fleaf_delim(find) != 0) {
-	if (executable(find))
-	    (void) pathcat(test, dot, find);
-    } else {
-#ifdef	MSDOS			/* "." is at the beginning of the implied path */
-	if (executable(pathcat(test, dot, find))) ;
-	else
-#endif
-	    while (*s) {
-		size_t n;
-		for (n = 0; s[n] != EOS && s[n] != PATHLIST_SEP; n++) ;
-		d = s + n;
-		if ((n == 0) || !strncmp(s, ".", n)) {
-		    (void) strcpy(test, dot);
-		} else {
-		    strncpy(test, s, n)[n] = EOS;
-		}
-		abspath(test);
-		(void) pathcat(test, test, find);
-		if (executable(test))
-		    break;
-		for (s = d; (*s != EOS) && (*s == PATHLIST_SEP); s++) ;
-		*test = EOS;
+    if (strlen(find) < MAXPATHLEN
+	&& strlen(dot) < MAXPATHLEN) {
+
+	if (path == 0)
+	    path = just_dot;
+	s = path;
+	*test = *bfr = EOS;
+
+	if (fleaf_delim(find) != 0) {
+	    if (executable(find)) {
+		(void) pathcat(test, dot, find);
 	    }
-    }
+	} else {
+#ifdef	MSDOS			/* "." is at the beginning of the implied path */
+	    if (executable(pathcat(test, dot, find))) {
+		;
+	    } else
+#endif
+	    {
+		while (*s) {
+		    size_t n;
+		    for (n = 0; s[n] != EOS && s[n] != PATHLIST_SEP; n++) {
+			;
+		    }
+		    d = s + n;
+		    if ((n == 0) || !strncmp(s, ".", n)) {
+			(void) strcpy(test, dot);
+		    } else {
+			strncpy(test, s, n)[n] = EOS;
+		    }
+		    abspath(test);
+		    (void) pathcat(test, test, find);
+		    if (executable(test)) {
+			break;
+		    }
+		    for (s = d; (*s != EOS) && (*s == PATHLIST_SEP); s++) {
+			;
+		    }
+		    *test = EOS;
+		}
+	    }
+	}
 
-    if (len > strlen(test))
-	(void) strcpy(bfr, test);
-    return (int) (strlen(bfr));
+	if (len > strlen(test))
+	    (void) strcpy(bfr, test);
+	result = (int) (strlen(bfr));
+    }
+    return result;
 }
 
 #ifdef	TEST
 _MAIN
 {
     int j;
-    char bfr[BUFSIZ], dot[BUFSIZ];
+    char bfr[MAXPATHLEN], dot[MAXPATHLEN];
 
     if (getcwd(dot, sizeof(dot)) == 0)
 	strcpy(dot, ".");

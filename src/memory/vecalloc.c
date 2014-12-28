@@ -16,7 +16,7 @@
 
 #include "ptypes.h"
 
-MODULE_ID("$Id: vecalloc.c,v 12.6 2010/07/04 20:13:25 tom Exp $")
+MODULE_ID("$Id: vecalloc.c,v 12.7 2014/12/28 01:10:47 tom Exp $")
 
 char **
 vecalloc(size_t len)
@@ -29,3 +29,14 @@ vecfree(char **s)
 {
     dofree((char *) s);
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

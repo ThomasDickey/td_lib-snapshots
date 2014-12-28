@@ -1,3 +1,7 @@
 doalloc
+memmove
+stralloc
 txtalloc
+vecalloc
 vecedit
+veclen

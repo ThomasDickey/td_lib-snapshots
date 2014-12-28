@@ -1,13 +1,15 @@
 #!/bin/sh
-# $Id: run_test.sh,v 8.0 1992/11/20 08:43:25 ste_cm Rel $
+# $Id: run_test.sh,v 8.1 2014/12/28 01:42:43 tom Exp $
 if test $# != 0
 then
 	echo '** '`date`
+	rm -f *.tmp
 	for n in $*
 	do
 		N=`basename $n .ref`
 		N=`basename $N .sh`
-		rm -f $N.tmp
+		LOG=../$N.purelog
+		rm -f $N.tmp $LOG
 		if ( ./$N.sh )
 		then
 			if test -f $N.tmp

@@ -15,7 +15,7 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: ftype.c,v 12.4 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: ftype.c,v 12.5 2014/12/28 01:10:51 tom Exp $")
 
 char *
 ftype(char *path)
@@ -28,3 +28,14 @@ ftype(char *path)
 	t = s + strlen(s);
     return (t);
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

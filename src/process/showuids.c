@@ -13,7 +13,7 @@
 
 #include "ptypes.h"
 
-MODULE_ID("$Id: showuids.c,v 12.6 2010/07/04 15:26:46 tom Exp $")
+MODULE_ID("$Id: showuids.c,v 12.7 2014/12/28 01:11:01 tom Exp $")
 
 #ifdef	SYS_UNIX
 void
@@ -31,3 +31,14 @@ show_uids(FILE *fp)
 }
 
 #endif /* SYS_UNIX */
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

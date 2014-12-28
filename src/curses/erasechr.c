@@ -20,7 +20,7 @@
 #define  TRM_PTYPES
 #include "td_curse.h"
 
-MODULE_ID("$Id: erasechr.c,v 12.13 2014/07/22 15:09:07 tom Exp $")
+MODULE_ID("$Id: erasechr.c,v 12.14 2014/12/28 01:10:44 tom Exp $")
 
 #define	STDIN_FD 0
 
@@ -74,3 +74,14 @@ eraseword(void)
 #endif
     return (code);
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

@@ -22,7 +22,7 @@
 #include	"ptypes.h"
 #include	<errno.h>
 
-MODULE_ID("$Id: userprot.c,v 12.9 2010/07/04 13:16:25 tom Exp $")
+MODULE_ID("$Id: userprot.c,v 12.10 2014/12/28 01:11:01 tom Exp $")
 
 #ifdef	SYS_UNIX
 
@@ -59,3 +59,14 @@ userprot(
 }
 
 #endif /* SYS_UNIX */
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

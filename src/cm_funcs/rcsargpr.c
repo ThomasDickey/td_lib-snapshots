@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	05 Feb 1992
  * Modified:
+ *		27 Dec 2014, coverity warnings.
  *		24 May 2010, fix clang --analyze warnings.
  *		05 Sep 2006, allow '$' in filenames
  *		07 Mar 2004, remove K&R support, indent'd.
@@ -80,7 +81,7 @@
 #include "rcsdefs.h"
 #include <errno.h>
 
-MODULE_ID("$Id: rcsargpr.c,v 12.10 2010/07/10 00:08:21 tom Exp $")
+MODULE_ID("$Id: rcsargpr.c,v 12.11 2014/12/27 20:09:44 tom Exp $")
 
 /************************************************************************
  *	local data							*
@@ -160,12 +161,21 @@ static int
 same_name(char *name1,
 	  char *name2)
 {
-    char leaf1[MAXPATHLEN], leaf2[MAXPATHLEN];
+    char leaf1[MAXPATHLEN];
+    char leaf2[MAXPATHLEN];
+    int rc = -1;
 
-    return !strcmp(
-		      strip_suffix(strcpy(leaf1, leaf_of(name1))),
-		      strip_suffix(strcpy(leaf2, leaf_of(name2)))
-	);
+    name1 = leaf_of(name1);
+    name2 = leaf_of(name2);
+
+    if (strlen(name1) < sizeof(leaf1)
+	&& strlen(name2) < sizeof(leaf2)) {
+	rc = !strcmp(
+			strip_suffix(strcpy(leaf1, name1)),
+			strip_suffix(strcpy(leaf2, name2))
+	    );
+    }
+    return rc;
 }
 
 /*

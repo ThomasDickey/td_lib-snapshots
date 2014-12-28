@@ -39,7 +39,7 @@
 #include "rcsdefs.h"
 #include <errno.h>
 
-MODULE_ID("$Id: rcstemp.c,v 12.12 2010/07/05 16:31:30 tom Exp $")
+MODULE_ID("$Id: rcstemp.c,v 12.13 2014/12/28 01:10:33 tom Exp $")
 
 #define	DEBUG	if (RCS_DEBUG) PRINTF
 
@@ -117,3 +117,14 @@ rcstemp(char *working, int copy)
     }
     return (working);
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

@@ -15,7 +15,7 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: ftype2.c,v 12.5 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: ftype2.c,v 12.6 2014/12/28 01:10:51 tom Exp $")
 
 #ifdef	SYS_UNIX
 char *
@@ -30,3 +30,14 @@ ftype2(char *path)
     return (t);
 }
 #endif /* SYS_UNIX */
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

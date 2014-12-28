@@ -24,7 +24,7 @@
 #define	SIG_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: catchall.c,v 12.7 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: catchall.c,v 12.8 2014/12/28 01:11:01 tom Exp $")
 
 void
 catchall(SIG_T(*catchsig) (SIGNAL_ARGS))
@@ -53,3 +53,14 @@ catchall(SIG_T(*catchsig) (SIGNAL_ARGS))
 	}
     }
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

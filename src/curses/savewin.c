@@ -28,7 +28,7 @@
 #include	"td_curse.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: savewin.c,v 12.13 2014/07/22 13:51:29 tom Exp $")
+MODULE_ID("$Id: savewin.c,v 12.14 2014/12/28 01:10:44 tom Exp $")
 
 #if defined(CURSES_LIKE_BSD) && (defined(TYPE_CCHAR_T_IS_SCALAR) || !defined(HAVE_TYPE_CCHAR_T)) && (defined(TYPE_CHTYPE_IS_SCALAR) || !defined(HAVE_TYPE_CHTYPE))
 
@@ -163,3 +163,14 @@ dummy_savewin(void)
 {
 }
 #endif /* CURSES_LIKE_BSD */
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

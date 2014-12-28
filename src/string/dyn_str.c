@@ -14,7 +14,7 @@
 #include "ptypes.h"
 #include "dyn_str.h"
 
-MODULE_ID("$Id: dyn_str.c,v 12.4 2010/07/10 00:12:28 tom Exp $")
+MODULE_ID("$Id: dyn_str.c,v 12.5 2014/12/28 01:11:07 tom Exp $")
 
 /************************************************************************
  *	public entrypoints						*
@@ -82,3 +82,14 @@ dyn_length(DYN * p)
 {
     return (p != 0) ? p->cur_length : 0;
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

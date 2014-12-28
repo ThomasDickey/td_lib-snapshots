@@ -4,7 +4,7 @@
  * Created:	15 Feb 1988
  *
  * Modified:
- *		26 Dec 2014, coverity warnings
+ *		27 Dec 2014, coverity warnings
  *		08 Mar 2004, fix a couple of logic errors that made this
  *			     read the cache an extra time and omit data for
  *			     the first two items requested per directory.
@@ -18,7 +18,7 @@
 #include	<time.h>
 #include	"rcsdefs.h"
 
-MODULE_ID("$Id: cvslast.c,v 12.11 2014/12/26 13:35:08 tom Exp $")
+MODULE_ID("$Id: cvslast.c,v 12.13 2014/12/28 01:10:33 tom Exp $")
 
 #ifdef CVS_PATH
 
@@ -232,6 +232,9 @@ tryCVS(const char *path,
     char *s;
     CVS_WORK *cache;
 
+    if (strlen(path) >= sizeof(working))
+	return;
+
     if ((leaf = fleaf(path)) == 0)
 	return;
 
@@ -294,3 +297,14 @@ dummy_cvslast(void)
 {
 }
 #endif
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

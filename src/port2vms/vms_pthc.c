@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	26 Jun 1990
  * Modified:
+ *		27 Dec 2014, coverity warnings.
  *		24 May 2010, fix typo in test-driver.
  *		07 Mar 2004, remove K&R support, indent'd.
  *		01 Dec 1993, ifdefs, TurboC warnings.
@@ -22,7 +23,7 @@
 #define	STR_PTYPES
 #include	"port2vms.h"
 
-MODULE_ID("$Id: vms_pthc.c,v 12.4 2010/05/24 23:51:19 tom Exp $")
+MODULE_ID("$Id: vms_pthc.c,v 12.6 2014/12/27 22:42:38 tom Exp $")
 
 #define	A_NODE	8
 #define	A_DEV	4
@@ -32,60 +33,73 @@ MODULE_ID("$Id: vms_pthc.c,v 12.4 2010/05/24 23:51:19 tom Exp $")
 char *
 vms_pathcat(char *dst, char *dname, char *fname)
 {
-    char tmp[BUFSIZ], *s;
+    char tmp[MAXPATHLEN], *s;
     int f_code;
+    char *result = 0;
 
-    /* find the highest-level of object in 'fname' */
-    if ((s = strchr(fname, ':')) != NULL) {
-	f_code = (s[1] == ':') ? A_NODE : A_DEV;
-    } else if ((s = strrchr(fname, ':')) != NULL) {
-	f_code = A_DEV;
-    } else if ((s = strchr(fname, ']')) != NULL) {
-	f_code = A_DIR;
-    } else
-	f_code = A_NAME;
-
-    (void) strcpy(tmp, dname);
-
-    /* append to the next-highest level in 'dname' */
-    switch (f_code) {
-    case A_NODE:		/* replace the entire string */
-	s = tmp;
-	break;
-    case A_DEV:		/* append after NODE */
-	if ((s = strchr(tmp, ':')) != NULL) {
-	    if (s[1] == ':')
-		s += 2;
-	    else
-		s = tmp;
-	} else
-	    s = tmp;
-	break;
-    case A_DIR:		/* append after NODE or DEV (before DIR) */
-	if (!(s = strchr(tmp, '['))) {
-	    if ((s = strrchr(tmp, ':')) != NULL)
-		s++;
-	    else
-		s = tmp;
+    if (strlen(dname) < sizeof(tmp)) {
+	/* find the highest-level of object in 'fname' */
+	if ((s = strchr(fname, ':')) != NULL) {
+	    f_code = (s[1] == ':') ? A_NODE : A_DEV;
+	} else if ((s = strrchr(fname, ':')) != NULL) {
+	    f_code = A_DEV;
+	} else if ((s = strchr(fname, ']')) != NULL) {
+	    f_code = A_DIR;
+	} else {
+	    f_code = A_NAME;
 	}
-	break;
-    case A_NAME:		/* append after NODE, DEV or DIR */
-	if ((s = strchr(tmp, ']')) != 0
-	    || (s = strrchr(tmp, ':')) != 0)
-	    s++;
-	else
-	    s = tmp;
-    }
 
-    (void) strcpy(s, fname);
-    return (strcpy(dst, tmp));
+	(void) strcpy(tmp, dname);
+
+	/* append to the next-highest level in 'dname' */
+	switch (f_code) {
+	case A_NODE:		/* replace the entire string */
+	    s = tmp;
+	    break;
+	case A_DEV:		/* append after NODE */
+	    if ((s = strchr(tmp, ':')) != NULL) {
+		if (s[1] == ':') {
+		    s += 2;
+		} else {
+		    s = tmp;
+		}
+	    } else {
+		s = tmp;
+	    }
+	    break;
+	case A_DIR:		/* append after NODE or DEV (before DIR) */
+	    if (!(s = strchr(tmp, '['))) {
+		if ((s = strrchr(tmp, ':')) != NULL) {
+		    s++;
+		} else {
+		    s = tmp;
+		}
+	    }
+	    break;
+	case A_NAME:		/* append after NODE, DEV or DIR */
+	    if ((s = strchr(tmp, ']')) != 0
+		|| (s = strrchr(tmp, ':')) != 0) {
+		s++;
+	    } else {
+		s = tmp;
+	    }
+	    break;
+	}
+
+	if ((strlen(fname) + (s - tmp) + 3) < MAXPATHLEN) {
+	    (void) strcpy(s, fname);
+	    (void) strcpy(dst, tmp);
+	    result = dst;
+	}
+    }
+    return result;
 }
 
 #ifdef	TEST
 static void
 do_test(char *path, char *leaf)
 {
-    char tmp[BUFSIZ];
+    char tmp[MAXPATHLEN];
     printf("%s + %s => \"%s\"\n", path, leaf, vms_pathcat(tmp, path, leaf));
 }
 
@@ -109,7 +123,7 @@ do_name(char *dst, int inx)
 _MAIN
 {
     int j, k;
-    char tmp1[BUFSIZ], tmp2[BUFSIZ];
+    char tmp1[MAXPATHLEN], tmp2[MAXPATHLEN];
 
     if (argc > 1) {
 	for (j = 1; j < argc; j++) {

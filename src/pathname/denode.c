@@ -26,7 +26,7 @@
 
 #include "ptypes.h"
 
-MODULE_ID("$Id: denode.c,v 12.5 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: denode.c,v 12.6 2014/12/28 01:10:51 tom Exp $")
 
 char *
 denode(char *path, char *node, int *opt)
@@ -61,3 +61,14 @@ denode(char *path, char *node, int *opt)
     }
     return (path);
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

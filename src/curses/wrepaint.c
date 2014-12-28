@@ -25,7 +25,7 @@
 
 #include	"td_curse.h"
 
-MODULE_ID("$Id: wrepaint.c,v 12.16 2010/07/04 20:00:27 tom Exp $")
+MODULE_ID("$Id: wrepaint.c,v 12.17 2014/12/28 01:10:44 tom Exp $")
 
 void
 wrepaint(WINDOW *win,
@@ -70,3 +70,14 @@ wrepaint(WINDOW *win,
     (void) wrefresh(win);
 #endif
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

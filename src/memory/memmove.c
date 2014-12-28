@@ -11,7 +11,7 @@
 #define	STR_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: memmove.c,v 12.7 2014/07/22 13:51:29 tom Exp $")
+MODULE_ID("$Id: memmove.c,v 12.8 2014/12/28 01:10:47 tom Exp $")
 
 #if	!defined(HAVE_MEMMOVE)
 char *
@@ -40,3 +40,14 @@ dummy_memmove(void)
 {
 }
 #endif /* HAVE_MEMMOVE */
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

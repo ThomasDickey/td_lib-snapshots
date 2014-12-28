@@ -14,7 +14,7 @@
 #define ERR_PTYPES
 #include <ptypes.h>
 
-MODULE_ID("$Id: egress.c,v 12.7 2010/07/04 20:50:01 tom Exp $")
+MODULE_ID("$Id: egress.c,v 12.8 2014/12/28 01:11:01 tom Exp $")
 
 int
 egress(char *pathname, int mode)
@@ -55,3 +55,14 @@ egress(char *pathname, int mode)
     errno = EACCES;
     return -1;
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

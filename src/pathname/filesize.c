@@ -13,7 +13,7 @@
 
 #include "ptypes.h"
 
-MODULE_ID("$Id: filesize.c,v 12.5 2010/07/04 10:27:36 tom Exp $")
+MODULE_ID("$Id: filesize.c,v 12.6 2014/12/28 01:10:51 tom Exp $")
 
 off_t
 filesize(const char *name)
@@ -22,3 +22,14 @@ filesize(const char *name)
 
     return (stat_file(name, &sb) < 0) ? -1 : sb.st_size;
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

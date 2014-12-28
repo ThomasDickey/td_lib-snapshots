@@ -50,7 +50,7 @@
 #include	"td_curse.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: cmdch.c,v 12.36 2014/12/26 02:36:28 tom Exp $")
+MODULE_ID("$Id: cmdch.c,v 12.37 2014/12/28 01:10:44 tom Exp $")
 
 #define	ESC(c)	((c) == '\033')
 #define	END(s)	s[strlen(s)-1]
@@ -336,3 +336,14 @@ cmdch(int *cnt_)
 	c = '\n';
     return (c);
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

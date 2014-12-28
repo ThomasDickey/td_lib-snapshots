@@ -13,7 +13,7 @@
 
 #include "ptypes.h"
 
-MODULE_ID("$Id: dftenv.c,v 12.4 2010/07/04 10:29:34 tom Exp $")
+MODULE_ID("$Id: dftenv.c,v 12.5 2014/12/28 01:11:07 tom Exp $")
 
 const char *
 dftenv(const char *value, const char *name)
@@ -23,3 +23,14 @@ dftenv(const char *value, const char *name)
 	s = value;
     return (s);
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

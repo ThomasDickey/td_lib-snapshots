@@ -15,7 +15,7 @@
 
 #include	"td_curse.h"
 
-MODULE_ID("$Id: beep.c,v 12.10 2014/07/22 13:51:29 tom Exp $")
+MODULE_ID("$Id: beep.c,v 12.11 2014/12/28 01:10:44 tom Exp $")
 
 #if !defined(HAVE_BEEP)
 void
@@ -31,3 +31,14 @@ dummy_beep(void)
 {
 }
 #endif
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

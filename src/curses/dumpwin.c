@@ -30,7 +30,7 @@
 #include	"td_curse.h"
 #include	<time.h>
 
-MODULE_ID("$Id: dumpwin.c,v 12.23 2014/12/26 02:51:34 tom Exp $")
+MODULE_ID("$Id: dumpwin.c,v 12.24 2014/12/28 01:10:44 tom Exp $")
 
 #define	OUT	FPRINTF
 
@@ -125,3 +125,14 @@ dumpwin(WINDOW *w, char *tag)
 	FCLOSE(fp);
     }
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

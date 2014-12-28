@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	18 May 1988, from 'sccslast.c'
  * Modified:
+ *		27 Dec 2014, coverity warnings
  *		24 May 2010, fix clang --analyze warnings.
  *		07 Mar 2004, remove K&R support, indent'd.
  *		11 Dec 2001, modify rcs_dir() interface to implement $RCS_VAULT
@@ -37,7 +38,7 @@
 #include <rcsdefs.h>
 #include <dyn_str.h>
 
-MODULE_ID("$Id: rcslast.c,v 12.13 2010/07/05 00:19:15 tom Exp $")
+MODULE_ID("$Id: rcslast.c,v 12.16 2014/12/28 01:10:33 tom Exp $")
 
 /*
  * Returns the modification date of the given file, or 0 if not found
@@ -74,6 +75,7 @@ tryRCS(const char *path,
 {
     int finish = FALSE, skip = FALSE, code = S_FAIL;
     char *s = 0;
+    char *p;
     char user[BUFSIZ];
     char key[BUFSIZ];
     char arg[BUFSIZ];
@@ -82,7 +84,10 @@ tryRCS(const char *path,
 
     if (rcsopen(path, RCS_DEBUG, TRUE)) {
 
-	(void) strcpy(user, uid2s(getuid()));
+	p = uid2s(getuid());
+	(void) strcpy(user, ((strlen(p) < sizeof(user))
+			     ? p
+			     : "?"));
 	(void) strcpy(lstring, strcpy(vstring, "?"));
 
 	while (!finish && (s = rcsread(s, code)) != 0) {
@@ -109,7 +114,9 @@ tryRCS(const char *path,
 		    s = rcsparse_id(arg, s + 1);
 		    if (!strcmp(key, user)
 			|| strcmp(lstring, user)) {
-			(void) strcpy(lstring, key);
+			(void) strcpy(lstring, ((strlen(key) < sizeof(lstring))
+						? key
+						: "?"));
 			(void) strcpy(vstring, arg);
 		    }
 		}
@@ -160,18 +167,21 @@ rcslast(const char *working,	/* working directory (absolute) */
 
     static DYN local;
 
-    char name[BUFSIZ + 1];
+    char name[MAXPATHLEN];
     char *dname = rcs_dir(working, path);
     int len_s = strlen(RCS_SUFFIX);
     int is_RCS;
     int len;
     char *s, *t;
 
-    dyn_copy(&local, path);
-
-    *lock_ =
-	*vers_ = "?";
+    *lock_ = "?";
+    *vers_ = "?";
     *date_ = 0;
+
+    if (strlen(path) >= sizeof(name))
+	return;
+
+    dyn_copy(&local, path);
 
     /*
      * If the file resides in an RCS-directory and its name ends with
@@ -221,13 +231,27 @@ rcslast(const char *working,	/* working directory (absolute) */
      * The file was not itself an RCS-file.  Construct the name of an
      * RCS-file assuming the standard naming convention, and try again.
      */
-    (void) strcpy(name, s = dyn_string(&local));
-    (void) strcat(
-		     strcat(
-			       strcat(
-					 strcpy(&name[t - s], dname),
-					 slash),
-			       t),
-		     RCS_SUFFIX);
-    tryRCS(name, vers_, date_, lock_);
+    s = dyn_string(&local);
+    if ((strlen(s) + strlen(dname) + 10) < sizeof(name)) {
+	(void) strcpy(name, s);
+	(void) strcat(
+			 strcat(
+				   strcat(
+					     strcpy(&name[t - s], dname),
+					     slash),
+				   t),
+			 RCS_SUFFIX);
+	tryRCS(name, vers_, date_, lock_);
+    }
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

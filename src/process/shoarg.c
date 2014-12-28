@@ -15,7 +15,7 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: shoarg.c,v 12.9 2012/01/13 18:14:42 tom Exp $")
+MODULE_ID("$Id: shoarg.c,v 12.10 2014/12/28 01:11:01 tom Exp $")
 
 /*
  * Function:	Writes a new string with the non-ascii characters escaped.
@@ -76,3 +76,14 @@ shoarg(FILE *fp,
 
     FPRINTF(fp, "%% %s\n", bldcmd2(temp, command, string, sizeof(temp)));
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

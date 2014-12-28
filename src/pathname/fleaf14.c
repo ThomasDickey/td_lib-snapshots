@@ -13,7 +13,7 @@
 #define STR_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: fleaf14.c,v 12.3 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: fleaf14.c,v 12.4 2014/12/28 01:10:51 tom Exp $")
 
 char *
 fleaf14(char *path)
@@ -25,3 +25,14 @@ fleaf14(char *path)
 	leaf[14] = EOS;
     return path;
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

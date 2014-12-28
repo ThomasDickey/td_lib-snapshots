@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	25 Aug 1988
  * Modified:
+ *		27 Dec 2014, coverity warnings.
  *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
@@ -30,7 +31,7 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: pathhead.c,v 12.7 2010/07/05 17:32:33 tom Exp $")
+MODULE_ID("$Id: pathhead.c,v 12.9 2014/12/27 21:41:52 tom Exp $")
 
 char *
 pathhead(const char *path, Stat_t * sb_)
@@ -38,35 +39,41 @@ pathhead(const char *path, Stat_t * sb_)
     int trimmed = 0;
     Stat_t sb;
     char *s;
-    static char buffer[BUFSIZ];
+    static char buffer[MAXPATHLEN];
+    char *result = buffer;
 
-    if (sb_ == 0)
-	sb_ = &sb;
-    strcpy(buffer, path);
-    while ((s = fleaf_delim(buffer)) != NULL) {
+    if (strlen(path) < sizeof(buffer)) {
+	if (sb_ == 0)
+	    sb_ = &sb;
+	(void) strcpy(buffer, path);
+	while ((s = fleaf_delim(buffer)) != NULL) {
 #ifdef	apollo
-	if (!strcmp(buffer, "//"))
-	    break;
+	    if (!strcmp(buffer, "//"))
+		break;
 #endif
-	if (s[1] == EOS) {	/* trailing delimiter ? */
-	    if (buffer == s)
-		break;
-	    *s = EOS;		/* trim it */
-	    trimmed++;
-	} else {
-	    if (stat_dir(buffer, sb_) < 0) {
-		*s = EOS;
+	    if (s[1] == EOS) {	/* trailing delimiter ? */
+		if (buffer == s)
+		    break;
+		*s = EOS;	/* trim it */
 		trimmed++;
-	    } else
-		break;
+	    } else {
+		if (stat_dir(buffer, sb_) < 0) {
+		    *s = EOS;
+		    trimmed++;
+		} else {
+		    break;
+		}
+	    }
 	}
+	if (stat_dir(buffer, sb_) < 0
+	    || (*buffer == EOS)
+	    || (s == 0 && !trimmed)) {
+	    (void) stat(strcpy(buffer, "."), sb_);
+	}
+    } else {
+	result = 0;
     }
-    if (stat_dir(buffer, sb_) < 0
-	|| (*buffer == EOS)
-	|| (s == 0 && !trimmed)) {
-	(void) stat(strcpy(buffer, "."), sb_);
-    }
-    return (buffer);
+    return result;
 }
 
 #ifdef	TEST

@@ -34,7 +34,7 @@
 #define TRM_PTYPES		/* <termios.h> */
 #include	"td_curse.h"
 
-MODULE_ID("$Id: rawterm.c,v 12.26 2014/07/22 14:59:03 tom Exp $")
+MODULE_ID("$Id: rawterm.c,v 12.27 2014/12/28 01:10:44 tom Exp $")
 
 TermioT original_tty;
 TermioT modified_tty;
@@ -211,3 +211,14 @@ cookterm(void)
     restore_terminal();		/* replaces 'resetty()' */
     show_term("after--cook");
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

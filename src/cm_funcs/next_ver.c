@@ -13,7 +13,7 @@
 #define		STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: next_ver.c,v 12.6 2004/03/07 16:31:58 tom Exp $")
+MODULE_ID("$Id: next_ver.c,v 12.7 2014/12/28 01:10:33 tom Exp $")
 
 void
 next_version(char *dst, char *src)
@@ -29,3 +29,14 @@ next_version(char *dst, char *src)
     }
     FORMAT(dst, "%ld", strtol(src, &t, 0) + 1);
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

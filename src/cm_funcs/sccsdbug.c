@@ -16,7 +16,7 @@
 #include "ptypes.h"
 #include "sccsdefs.h"
 
-MODULE_ID("$Id: sccsdbug.c,v 12.4 2010/07/04 15:53:58 tom Exp $")
+MODULE_ID("$Id: sccsdbug.c,v 12.5 2014/12/28 01:10:33 tom Exp $")
 
 int
 sccs_debug(void)
@@ -37,3 +37,14 @@ sccs_debug(void)
     }
     return (flag);
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */
