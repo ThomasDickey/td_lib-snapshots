@@ -16,7 +16,7 @@
 #include	"ptypes.h"
 #include	"td_curse.h"
 
-MODULE_ID("$Id: addchnst.c,v 12.7 2014/07/22 13:51:29 tom Exp $")
+MODULE_ID("$Id: addchnst.c,v 12.8 2014/12/28 01:10:44 tom Exp $")
 
 #ifndef OK
 #define OK 0
@@ -51,3 +51,14 @@ dummy_addchnst(void)
 {
 }
 #endif
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

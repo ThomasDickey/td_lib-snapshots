@@ -18,7 +18,7 @@
 #include "ptypes.h"
 #include "rcsdefs.h"
 
-MODULE_ID("$Id: rcstime.c,v 12.6 2004/03/07 16:31:58 tom Exp $")
+MODULE_ID("$Id: rcstime.c,v 12.7 2014/12/28 01:10:33 tom Exp $")
 
 #if	RCS_VERSION >= 5
 #define	RCS_ZONE(t)	gmt_offset(t)
@@ -69,3 +69,14 @@ time2rcs(char *to, time_t from)
 	   t->tm_mday, t->tm_hour,
 	   t->tm_min, t->tm_sec);
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

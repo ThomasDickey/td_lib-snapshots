@@ -5,7 +5,7 @@
  */
 #include	"td_curse.h"
 
-MODULE_ID("$Id: getmaxx.c,v 12.2 2014/07/22 13:51:29 tom Exp $")
+MODULE_ID("$Id: getmaxx.c,v 12.3 2014/12/28 01:10:44 tom Exp $")
 
 #ifdef HAVE_GETMAXYX
 
@@ -64,3 +64,14 @@ getbegy(WINDOW *win)
 #endif
 
 #endif /* HAVE_GETBEGYX */
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

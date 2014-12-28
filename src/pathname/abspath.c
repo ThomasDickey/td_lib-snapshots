@@ -2,7 +2,7 @@
  * Author:	T.E.Dickey
  * Created:	17 Sep 1987
  * Modified:
- *		12 Dec 2014, tell coverity the expected buffer-sizes.
+ *		27 Dec 2014, coverity warnings.
  *		07 Mar 2004, remove K&R support, indent'd.
  *		01 Nov 2000, modified to work with OS/2 EMX.
  *		10 Jan 1996, corrected handling of "~foo/bar/bar" in abshome.
@@ -41,7 +41,7 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: abspath.c,v 12.14 2014/12/13 00:09:47 tom Exp $")
+MODULE_ID("$Id: abspath.c,v 12.15 2014/12/27 22:23:49 tom Exp $")
 
 #ifdef	apollo
 #ifdef	apollo_sr10
@@ -153,28 +153,40 @@ abshome(char *path)
     if (*d == '~') {		/* my home directory */
 	s = d + 1;
 	if ((*s == EOS) || isSlash(*s)) {
-	    if (*s != EOS)
+	    if (*s != EOS) {
 		s++;
-	    while ((*d++ = *s++) != EOS) ;
+	    }
+	    while ((*d++ = *s++) != EOS) {
+		;
+	    }
 	    precat(getenv("HOME"), path);
 	} else {		/* someone else's home */
 #ifdef	MSDOS
-	    while ((*d++ = *s++) != EOS) ;
+	    while ((*d++ = *s++) != EOS) {
+		;
+	    }
 	    precat("/users", path);
 #else
 	    struct passwd *p;
 	    char user[MAXPATHLEN];
-	    for (s = strcpy(user, d + 1); *s != EOS; s++) {
-		if (isSlash(*s)) {
-		    *s++ = EOS;
-		    break;
+
+	    if (strlen(d) < sizeof(user)) {
+		for (s = strcpy(user, d + 1); *s != EOS; s++) {
+		    if (isSlash(*s)) {
+			*s++ = EOS;
+			break;
+		    }
 		}
+		if ((p = getpwnam(user)) != 0) {
+		    while ((*d++ = *s++) != EOS) {
+			;
+		    }
+		    if ((strlen(p->pw_dir) + strlen(path)) < MAXPATHLEN) {
+			precat(p->pw_dir, path);
+		    }
+		}
+		/* else no such home directory! */
 	    }
-	    if ((p = getpwnam(user)) != 0) {
-		while ((*d++ = *s++) != EOS) ;
-		precat(p->pw_dir, path);
-	    }
-	    /* else no such home directory! */
 #endif
 	}
     }

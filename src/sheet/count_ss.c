@@ -12,7 +12,7 @@
 
 #include "td_sheet.h"
 
-MODULE_ID("$Id: count_ss.c,v 12.3 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: count_ss.c,v 12.4 2014/12/28 01:11:04 tom Exp $")
 
 int
 count_ss_cols(char **vec)
@@ -31,3 +31,14 @@ count_ss_rows(char **vec)
 {
     return veclen(vec);
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

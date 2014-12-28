@@ -18,7 +18,7 @@
 #include	"rcsdefs.h"
 #include	"sccsdefs.h"
 
-MODULE_ID("$Id: lastrev.c,v 12.13 2010/07/04 16:43:58 tom Exp $")
+MODULE_ID("$Id: lastrev.c,v 12.14 2014/12/28 01:10:33 tom Exp $")
 
 #if defined(CMV_PATH) && !(defined(RCS_PATH) || defined(SCCS_PATH))
 #undef CMV_PATH
@@ -129,3 +129,14 @@ lastrev(const char *working_dir,
     }
 }
 #endif /* RCS_PATH || SCCS_PATH */
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

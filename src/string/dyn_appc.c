@@ -13,7 +13,7 @@
 #include "ptypes.h"
 #include "dyn_str.h"
 
-MODULE_ID("$Id: dyn_appc.c,v 12.4 2010/07/03 16:15:01 tom Exp $")
+MODULE_ID("$Id: dyn_appc.c,v 12.5 2014/12/28 01:11:07 tom Exp $")
 
 DYN *
 dyn_append_c(DYN * p, int c)
@@ -25,3 +25,14 @@ dyn_append_c(DYN * p, int c)
     }
     return p;
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

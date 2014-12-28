@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	31 Aug 1988
  * Modified:
+ *		27 Dec 2014, coverity warnings.
  *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
@@ -50,7 +51,7 @@
 #include	"ptypes.h"
 #include	"td_qsort.h"
 
-MODULE_ID("$Id: walktree.c,v 12.14 2012/01/13 18:14:42 tom Exp $")
+MODULE_ID("$Id: walktree.c,v 12.17 2014/12/28 02:06:12 tom Exp $")
 
 /************************************************************************
  *	local definitions						*
@@ -76,65 +77,74 @@ walktree(const char *patharg,
 	 const char *type,
 	 int level)
 {
-    int total = 0, ok_acc = -1, mode = 0;
+    int total = 0;
+    int ok_acc = -1;
+    int mode = 0;
     Stat_t sb, *sb_ = &sb;
     unsigned num;
     PTR *vec;
-    char old_wd[BUFSIZ];
-    char new_wd[BUFSIZ];
+    char old_wd[MAXPATHLEN];
+    char new_wd[MAXPATHLEN];
     DIR *dp;
     DirentT *de;
 
-    if (stat(namearg, sb_) >= 0) {
-	mode = (int) (sb.st_mode & S_IFMT);
-	ok_acc = 0;
-	if (mode == S_IFDIR)
-	    ok_acc |= (R_OK | X_OK);
-	if (type) {
-	    if (strchr(type, 'r'))
-		ok_acc |= R_OK;
-	    if (strchr(type, 'w'))
-		ok_acc |= W_OK;
-	    if (strchr(type, 'x'))
-		ok_acc |= X_OK;
-	}
-	if (ok_acc != 0) {
-	    if ((ok_acc = access(namearg, ok_acc)) >= 0)
+    if (((level == 0) || (strlen(patharg) < MAXPATHLEN))
+	&& strlen(namearg) < MAXPATHLEN) {
+
+	if (stat(namearg, sb_) >= 0) {
+	    mode = (int) (sb.st_mode & S_IFMT);
+	    ok_acc = 0;
+	    if (mode == S_IFDIR)
+		ok_acc |= (R_OK | X_OK);
+	    if (type) {
+		if (strchr(type, 'r'))
+		    ok_acc |= R_OK;
+		if (strchr(type, 'w'))
+		    ok_acc |= W_OK;
+		if (strchr(type, 'x'))
+		    ok_acc |= X_OK;
+	    }
+	    if (ok_acc != 0) {
+		if ((ok_acc = access(namearg, ok_acc)) >= 0)
+		    total++;
+	    } else {
 		total++;
-	} else
-	    total++;
-    } else
-	sb_ = 0;
-
-    if (level == 0)		/* do this once, to initialize */
-	patharg = getwd(old_wd);
-    else			/* ...and inherit otherwise */
-	(void) strcpy(old_wd, patharg);
-
-    if (((*func) (patharg, namearg, sb_, ok_acc, level) >= 0)
-	&& (ok_acc >= 0)
-	&& (mode == S_IFDIR)) {
-	if ((chdir(namearg) >= 0)
-	    && (dp = opendir(".")) != 0) {
-	    abspath(strcpy(new_wd, "."));
-	    num = 0;
-	    vec = 0;
-	    while ((de = readdir(dp)) != NULL) {
-		if (dotname(de->d_name))
-		    continue;
-		v_ALLOC(vec, num, de->d_name);
 	    }
-	    (void) closedir(dp);
-	    if (num != 0) {
-		qsort((PTR) vec, (size_t) num, sizeof(PTR), cmp_qsort);
-		while (num-- != 0)
-		    total += walktree(new_wd, vec[num],
-				      func, type, level + 1);
-		dofree((PTR) vec);
-	    }
+	} else {
+	    sb_ = 0;
 	}
-	if (chdir(old_wd) != 0)
-	    failed(old_wd);
+
+	if (level == 0) {	/* do this once, to initialize */
+	    patharg = getwd(old_wd);
+	} else {		/* ...and inherit otherwise */
+	    (void) strcpy(old_wd, patharg);
+	}
+
+	if (((*func) (patharg, namearg, sb_, ok_acc, level) >= 0)
+	    && (ok_acc >= 0)
+	    && (mode == S_IFDIR)) {
+	    if ((chdir(namearg) >= 0)
+		&& (dp = opendir(".")) != 0) {
+		abspath(strcpy(new_wd, "."));
+		num = 0;
+		vec = 0;
+		while ((de = readdir(dp)) != NULL) {
+		    if (dotname(de->d_name))
+			continue;
+		    v_ALLOC(vec, num, de->d_name);
+		}
+		(void) closedir(dp);
+		if (num != 0) {
+		    qsort((PTR) vec, (size_t) num, sizeof(PTR), cmp_qsort);
+		    while (num-- != 0)
+			total += walktree(new_wd, vec[num],
+					  func, type, level + 1);
+		    dofree((PTR) vec);
+		}
+	    }
+	    if (chdir(old_wd) != 0)
+		failed(old_wd);
+	}
     }
     return (total);
 }

@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	30 Sep 1988
  * Modified:
+ *		27 Dec 2014, coverity warnings.
  *		07 Mar 2004, remove K&R support, indent'd.
  *		01 Dec 1993, ifdefs.
  *		20 Nov 1992, use prototypes.  Added a test-driver
@@ -15,16 +16,24 @@
 #define		STR_PTYPES
 #include	"port2vms.h"
 
-MODULE_ID("$Id: path2vms.c,v 12.5 2010/07/05 15:45:30 tom Exp $")
+MODULE_ID("$Id: path2vms.c,v 12.6 2014/12/27 22:01:41 tom Exp $")
 
 char *
 path2vms(char *dst, const char *src)
 {
     char tmp[MAXPATHLEN];
-    int len = (int) strlen(strcpy(tmp, src));
-    if (len == 0 || tmp[len - 1] != '/')
-	(void) strcat(tmp, "/");
-    return (name2vms(dst, tmp));
+    size_t len = strlen(src);
+    char *result = dst;
+
+    if ((len + 2) < sizeof(tmp)) {
+	(void) strcpy(tmp, src);
+	if (len == 0 || tmp[len - 1] != '/')
+	    (void) strcat(tmp, "/");
+	result = name2vms(dst, tmp);
+    } else {
+	result = 0;
+    }
+    return result;
 }
 
 #ifdef	TEST

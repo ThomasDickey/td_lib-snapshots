@@ -3,7 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	02 Aug 1994, from 'sccs_dir.c'
  * Modified:
- *		12 Dec 2014, fix buffer-overrun (coverity).
+ *		27 Dec 2014, coverity warnings.
  *		07 Mar 2004, remove K&R support, indent'd.
  *		25 Apr 2003, split-out samehead.c, add check on return-value.
  *		21 Aug 1998, get_cmv_lock now returns binary-file mod-times.
@@ -39,7 +39,7 @@
 #include "cmv_defs.h"
 #include "dyn_str.h"
 
-MODULE_ID("$Id: cmv_dir.c,v 12.31 2014/12/13 00:11:36 tom Exp $")
+MODULE_ID("$Id: cmv_dir.c,v 12.36 2014/12/27 19:09:57 tom Exp $")
 
 /******************************************************************************/
 
@@ -161,7 +161,12 @@ parts_list(char *result, const char *archive, int level)
 	leaf = "s-curr";
 	break;
     }
-    pathcat(result, archive, leaf);
+
+    if ((strlen(archive) + strlen(leaf) + 3) < MAXPATHLEN)
+	pathcat(result, archive, leaf);
+    else
+	result = 0;
+
     return result;
 }
 
@@ -173,13 +178,13 @@ static void
 read_s_curr(CMTREE * parent)	/* parent node to populate */
 {
     char temp[MAXPATHLEN];
-    char internal[BUFSIZ];
-    char external[BUFSIZ];
+    char internal[MAXPATHLEN];
+    char external[MAXPATHLEN];
     FILE *fp;
     CMTREE *p, *q;
+    char *fname = parts_list(temp, parent->fullpath, parent->level);
 
-    if ((fp = fopen(parts_list(temp, parent->fullpath, parent->level), "r"))
-	!= 0) {
+    if ((fname != 0) && (fp = fopen(fname, "r")) != 0) {
 	while (fgets(temp, (int) sizeof(temp), fp) != 0) {
 	    char *s = strchr(strtrim(temp), ';');
 	    if (s == 0)
@@ -271,7 +276,7 @@ cmv_date(const char *src)
 static void
 read_r_curr(CMTREE * parent)
 {
-    char temp[BUFSIZ];
+    char temp[MAXPATHLEN];
     FILE *fp;
     CMFILE *p;
     Stat_t sb;
@@ -363,8 +368,11 @@ part_exists(const char *pathname, int level)
 {
     char full[MAXPATHLEN];
     struct stat sb;
+    int rc;
+    char *fname = parts_list(full, pathname, level);
 
-    return (stat_file(parts_list(full, pathname, level), &sb) == 0);
+    rc = ((fname != 0) && (stat_file(fname, &sb) == 0));
+    return rc;
 }
 
 /*
@@ -631,7 +639,8 @@ cmv_dir(const char *working_directory, const char *filename)
 	char archive[MAXPATHLEN];
 	CMTREE *it = FindInternalDir(max_p->cmtree, temp);
 
-	if (it != 0) {
+	if (it != 0
+	    && (strlen(max_p->archive) + strlen(it->internal) + 3) < sizeof(archive)) {
 	    (void) pathcat(
 			      archive,
 			      strcpy(archive, max_p->archive),
@@ -657,22 +666,37 @@ cmv_file(const char *working_directory,
 	CMTREE *p;
 	CMFILE *q;
 
-	if ((p = FindInternalDir(max_p->cmtree, temp)) != 0
-	    && (q = FindInternalFile(p, pathcat(temp, temp,
-						pathleaf(filename)))) != 0) {
-	    if (q->internal[0] == PATH_SLASH) {
-		StripToTop(archive, max_p->archive);
-		(void) strcat(archive, q->internal);
-	    } else {
-		(void) pathcat(
-				  archive,
-				  pathcat(
-					     archive,
-					     strcpy(archive, max_p->archive),
-					     p->internal),
-				  q->internal);
+	if ((p = FindInternalDir(max_p->cmtree, temp)) != 0) {
+	    char *my_leaf = pathleaf(filename);
+	    if (strlen(temp) + strlen(my_leaf) + 3 >= sizeof(temp)) {
+		;		/* give up */
+	    } else if ((q = FindInternalFile(p,
+					     pathcat(temp, temp, my_leaf)))
+		       != 0) {
+		*archive = EOS;
+		if (q->internal[0] == PATH_SLASH) {
+		    StripToTop(archive, max_p->archive);
+		    if (strlen(archive) + strlen(q->internal) < sizeof(archive)) {
+			(void) strcat(archive, q->internal);
+		    } else {
+			*archive = EOS;
+		    }
+		} else if ((strlen(max_p->archive)
+			    + strlen(p->internal)
+			    + strlen(q->internal)
+			    + 5) < sizeof(archive)) {
+		    (void) pathcat(
+				      archive,
+				      pathcat(
+						 archive,
+						 strcpy(archive, max_p->archive),
+						 p->internal),
+				      q->internal);
+		}
+		if (*archive != EOS) {
+		    name = txtalloc(archive);
+		}
 	    }
-	    name = txtalloc(archive);
 	}
     }
 

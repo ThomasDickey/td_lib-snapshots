@@ -36,7 +36,7 @@
 #define CHR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: bldarg.c,v 12.7 2012/01/13 18:14:42 tom Exp $")
+MODULE_ID("$Id: bldarg.c,v 12.8 2014/12/28 01:11:01 tom Exp $")
 
 #define	blank(c)	(isascii(c) && isspace(c))
 
@@ -57,3 +57,14 @@ bldarg(int argc, char **argv, char *string)
     }
     argv[j] = 0;
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

@@ -37,7 +37,7 @@
 #include	<ctype.h>
 #include	<time.h>
 
-MODULE_ID("$Id: win2file.c,v 12.21 2014/07/22 13:36:08 tom Exp $")
+MODULE_ID("$Id: win2file.c,v 12.22 2014/12/28 01:10:44 tom Exp $")
 
 #ifndef A_ALTCHARSET
 #define A_ALTCHARSET 0
@@ -191,3 +191,14 @@ win2file(
     }
     return (-1);
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

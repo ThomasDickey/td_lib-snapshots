@@ -20,7 +20,7 @@
 
 #include	"td_curse.h"
 
-MODULE_ID("$Id: viewfile.c,v 12.8 2010/07/04 17:44:31 tom Exp $")
+MODULE_ID("$Id: viewfile.c,v 12.9 2014/12/28 01:10:44 tom Exp $")
 
 #ifdef	SYS_UNIX
 
@@ -42,3 +42,14 @@ view_file(char *fname, int readonly)
 }
 
 #endif /* SYS_UNIX */
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

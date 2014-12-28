@@ -22,7 +22,7 @@
 #define SIG_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: on_winch.c,v 12.9 2010/07/04 17:47:36 tom Exp $")
+MODULE_ID("$Id: on_winch.c,v 12.10 2014/12/28 01:10:44 tom Exp $")
 
 #ifdef SIGWINCH
 #define	ON_WINCH struct OnWinch
@@ -159,3 +159,14 @@ enable_winch(int enabled)
 	set_handler(catch_winch);
 }
 #endif /* SIGWINCH */
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

@@ -19,7 +19,7 @@
 #define CHR_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: strucpy.c,v 12.7 2010/07/04 14:54:38 tom Exp $")
+MODULE_ID("$Id: strucpy.c,v 12.8 2014/12/28 01:11:07 tom Exp $")
 
 /*
  * Copy string, converting to uppercase
@@ -54,3 +54,14 @@ strlwrcpy(char *dst, const char *src)
     *dst = EOS;
     return (base);
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

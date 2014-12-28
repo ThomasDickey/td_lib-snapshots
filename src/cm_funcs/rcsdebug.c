@@ -20,7 +20,7 @@
 #include "ptypes.h"
 #include "rcsdefs.h"
 
-MODULE_ID("$Id: rcsdebug.c,v 12.5 2010/07/04 15:31:45 tom Exp $")
+MODULE_ID("$Id: rcsdebug.c,v 12.6 2014/12/28 01:10:33 tom Exp $")
 
 int
 rcs_debug(void)
@@ -41,3 +41,14 @@ rcs_debug(void)
     }
     return (flag);
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

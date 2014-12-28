@@ -18,7 +18,7 @@
 #include	<ptypes.h>
 #include	<td_curse.h>
 
-MODULE_ID("$Id: logch.c,v 12.12 2014/12/26 02:37:50 tom Exp $")
+MODULE_ID("$Id: logch.c,v 12.13 2014/12/28 01:10:44 tom Exp $")
 
 #define	CONVERT(base,p,n)	n = (base * n) + (*p++ - '0')
 
@@ -237,3 +237,14 @@ encode_logch(char *buffer, int *count_, int c)
 #endif
 	}
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

@@ -18,7 +18,7 @@
 #include	"ptypes.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: strtrim.c,v 12.5 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: strtrim.c,v 12.6 2014/12/28 01:11:07 tom Exp $")
 
 char *
 strtrim(char *s)
@@ -33,3 +33,14 @@ strtrim(char *s)
     }
     return (base);
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

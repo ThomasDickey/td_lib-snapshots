@@ -27,7 +27,7 @@
 #include	"rcsdefs.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: rcskeys.c,v 12.7 2010/07/03 15:39:16 tom Exp $")
+MODULE_ID("$Id: rcskeys.c,v 12.8 2014/12/28 01:10:33 tom Exp $")
 
 int
 rcskeys(char *arg)
@@ -109,3 +109,14 @@ rcskeys(char *arg)
 	PRINTF("++ rcskeys(%s) = %d\n", arg, code);
     return (code);
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

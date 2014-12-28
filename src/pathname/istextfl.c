@@ -18,7 +18,7 @@
 #define CHR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: istextfl.c,v 12.6 2010/07/04 10:48:14 tom Exp $")
+MODULE_ID("$Id: istextfl.c,v 12.7 2014/12/28 01:10:51 tom Exp $")
 
 int
 istextfile(const char *name)
@@ -44,3 +44,14 @@ istextfile(const char *name)
     }
     return (FALSE);
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

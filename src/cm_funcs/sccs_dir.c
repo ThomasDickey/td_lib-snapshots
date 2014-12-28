@@ -3,7 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	02 Sep 1988
  * Modified:
- *		26 Dec 2014, coverity warnings
+ *		27 Dec 2014, coverity warnings
  *		24 May 2010, fix clang --analyze warnings.
  *		07 Mar 2004, remove K&R support, indent'd.
  *		25 Apr 2003, split-out samehead.c, add check on return-value.
@@ -42,7 +42,7 @@
 #include "ptypes.h"
 #include "sccsdefs.h"
 
-MODULE_ID("$Id: sccs_dir.c,v 12.15 2014/12/26 13:54:28 tom Exp $")
+MODULE_ID("$Id: sccs_dir.c,v 12.18 2014/12/28 01:10:33 tom Exp $")
 
 #define	WORKING	struct	Working
 WORKING {
@@ -183,6 +183,7 @@ char *
 sccs_dir(const char *working_directory, const char *filename)
 {
     char *name;
+    char temp[MAXPATHLEN];
     int vault = FALSE;
     int n;
 
@@ -190,9 +191,10 @@ sccs_dir(const char *working_directory, const char *filename)
 	Initialize();
 
     name = SccsDir;
-    if (filename != 0 && SccsVault != 0) {
+    if (filename != 0
+	&& SccsVault != 0
+	&& (strlen(filename) + strlen(working_directory) + 10) < sizeof(temp)) {
 	Stat_t sb;
-	char temp[MAXPATHLEN];
 	VAULTS *p, *max_p = 0;
 	WORKING *q;
 	int max_n = 0;
@@ -268,3 +270,14 @@ sccs_dir(const char *working_directory, const char *filename)
 
     return (name);
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

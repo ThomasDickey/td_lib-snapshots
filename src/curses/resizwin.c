@@ -39,7 +39,7 @@
 
 #include	"td_curse.h"
 
-MODULE_ID("$Id: resizwin.c,v 12.21 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: resizwin.c,v 12.22 2014/12/28 01:10:44 tom Exp $")
 
 #if defined(HAVE_RESIZETERM)
 extern WINDOW *newscr;
@@ -99,3 +99,14 @@ resizewin(void)
     }
     return (FALSE);
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

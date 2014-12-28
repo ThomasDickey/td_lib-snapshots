@@ -28,7 +28,7 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: stralloc.c,v 12.6 2010/07/10 00:10:42 tom Exp $")
+MODULE_ID("$Id: stralloc.c,v 12.7 2014/12/28 01:10:47 tom Exp $")
 
 char *
 stralloc(const char *s)
@@ -41,3 +41,14 @@ strfree(char *s)
 {
     dofree(s);
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

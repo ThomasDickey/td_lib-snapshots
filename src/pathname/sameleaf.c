@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	19 Sep 1988
  * Modified:
+ *		27 Dec 2014, coverity warnings.
  *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
@@ -33,7 +34,7 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: sameleaf.c,v 12.9 2010/07/10 00:12:09 tom Exp $")
+MODULE_ID("$Id: sameleaf.c,v 12.11 2014/12/27 22:19:04 tom Exp $")
 
 int
 sameleaf(const char *path, const char *leaf)
@@ -42,34 +43,38 @@ sameleaf(const char *path, const char *leaf)
     {'.', '.', PATH_SLASH, EOS};
 
     int adjust;
-    char tmp[BUFSIZ];
+    char tmp[MAXPATHLEN];
     char *s;
+    int result = -1;
 
-    (void) strcpy(tmp, path);
-    while (!strncmp(leaf, dotdot, (size_t) 3))
-	leaf += 3;
-    while ((s = fleaf(tmp)) != NULL) {	/* find real leaf-name */
-	if (*s != EOS)
-	    break;
-	*(--s) = EOS;		/* ...trimming off trailing delimiter */
-    }
-    if (s == 0)
-	s = tmp;
-
-    /*
-     * Even after trimming, 'leaf' may contain a delimiter.  If so, we must
-     * readjust the pointer to the path which we compare:
-     */
-    if ((adjust = (int) strlen(s) - (int) strlen(leaf)) < 0) {
-	if (s + adjust == tmp)
+    if (strlen(path) < sizeof(tmp)) {
+	(void) strcpy(tmp, path);
+	while (!strncmp(leaf, dotdot, (size_t) 3))
+	    leaf += 3;
+	while ((s = fleaf(tmp)) != NULL) {	/* find real leaf-name */
+	    if (*s != EOS)
+		break;
+	    *(--s) = EOS;	/* ...trimming off trailing delimiter */
+	}
+	if (s == 0)
 	    s = tmp;
-	else if (((s + adjust) > tmp) && (isSlash(s[adjust - 1])))
-	    s += adjust;
-    }
+
+	/*
+	 * Even after trimming, 'leaf' may contain a delimiter.  If so, we must
+	 * readjust the pointer to the path which we compare:
+	 */
+	if ((adjust = (int) strlen(s) - (int) strlen(leaf)) < 0) {
+	    if (s + adjust == tmp)
+		s = tmp;
+	    else if (((s + adjust) > tmp) && (isSlash(s[adjust - 1])))
+		s += adjust;
+	}
 #ifdef	TEST
-    printf("\tcompare \"%s\" \"%s\"\n", s, leaf);
+	printf("\tcompare \"%s\" \"%s\"\n", s, leaf);
 #endif
-    return (!strcmp(s, leaf));
+	result = (!strcmp(s, leaf));
+    }
+    return result;
 }
 
 #ifdef	TEST

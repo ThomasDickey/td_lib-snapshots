@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	20 Oct 1986
  * Modified:
+ *		27 Dec 2014, coverity warnings.
  *		07 Mar 2004, remove K&R support, indent'd.
  *		30 Apr 2002, check for SunOS 4.x's pre-Y2K years (a colon).
  *		21 Jul 2000, mods to support $SCCS_VAULT
@@ -43,7 +44,7 @@
 #include	<sccsdefs.h>
 #include	<ctype.h>
 
-MODULE_ID("$Id: sccslast.c,v 12.24 2014/07/22 13:29:03 tom Exp $")
+MODULE_ID("$Id: sccslast.c,v 12.27 2014/12/28 01:10:33 tom Exp $")
 
 /*
  * Post-Y2K years require special decoding
@@ -87,6 +88,7 @@ trySCCS(const char *path,
     int gotten = 0;
     char bfr[BUFSIZ];
     char bfr2[BUFSIZ];
+    char tmp1[MAXPATHLEN];
     char *s;
     int yy, mm, dd, hr, mn, sc;
     char ver[80];
@@ -100,6 +102,9 @@ trySCCS(const char *path,
 	path = temp;
     }
 #endif
+
+    if (strlen(path) >= MAXPATHLEN)
+	return;
 
     if ((fp = fopen(path, "r")) != 0) {
 	newzone(5, 0, FALSE);	/* interpret in EST5EDT */
@@ -142,10 +147,10 @@ trySCCS(const char *path,
     }
 
     if (gotten) {
-	if ((s = fleaf(strcpy(bfr, path))) == NULL)
-	    s = bfr;
+	if ((s = fleaf(strcpy(tmp1, path))) == NULL)
+	    s = tmp1;
 	*s = 'p';
-	if ((fp = fopen(bfr, "r")) != 0) {
+	if ((fp = fopen(tmp1, "r")) != 0) {
 	    if (fgets(bfr, (int) sizeof(bfr), fp)) {
 		if (sscanf(bfr, "%d.%d %d.%d %s",
 			   &yy, &mm, &dd, &hr, ver) == 5)
@@ -172,10 +177,15 @@ sccslast(const char *working,	/* working directory (absolute) */
     int is_sccs;
     char *s, *the_leaf;
 
-    path = strcpy(local, path);
-    *lock_ =
-	*vers_ = "?";
+    *lock_ = "?";
+    *vers_ = "?";
     *date_ = 0;
+
+    if (strlen(dname) >= sizeof(fname))
+	return;
+    if (strlen(path) >= sizeof(local))
+	return;
+    path = strcpy(local, path);
 
     /*
      * If the file resides in an sccs-directory and its name begins with
@@ -241,10 +251,27 @@ sccslast(const char *working,	/* working directory (absolute) */
 
     if (isSlash(*dname) || *dname == '~') {
 	(void) strcpy(fname, dname);
-    } else {
+    } else if ((strlen(fname) + strlen(dname) + 3) < sizeof(fname)) {
 	(void) pathcat(fname, fname, dname);
+    } else {
+	return;
     }
-    (void) strcat(pathcat(fname, fname, SCCS_PREFIX), the_leaf);
 
-    trySCCS(fname, vers_, date_, lock_);
+    if ((strlen(fname)
+	 + strlen(SCCS_PREFIX)
+	 + strlen(the_leaf) + 5) < sizeof(fname)) {
+	(void) strcat(pathcat(fname, fname, SCCS_PREFIX), the_leaf);
+	trySCCS(fname, vers_, date_, lock_);
+    }
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

@@ -17,7 +17,7 @@
 #define PWD_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: getuser.c,v 12.7 2010/07/04 09:14:53 tom Exp $")
+MODULE_ID("$Id: getuser.c,v 12.8 2014/12/28 01:11:01 tom Exp $")
 
 #ifdef	SYS_UNIX
 char *
@@ -28,3 +28,14 @@ getuser(void)
     return (p.pw_name);
 }
 #endif /* SYS_UNIX */
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

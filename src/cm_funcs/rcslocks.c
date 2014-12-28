@@ -27,7 +27,7 @@
 #include	"ptypes.h"
 #include	"rcsdefs.h"
 
-MODULE_ID("$Id: rcslocks.c,v 12.3 2004/03/07 16:31:58 tom Exp $")
+MODULE_ID("$Id: rcslocks.c,v 12.4 2014/12/28 01:10:33 tom Exp $")
 
 char *
 rcslocks(char *s,		/* current scan position */
@@ -57,3 +57,14 @@ rcslocks(char *s,		/* current scan position */
     } while (*locked_by);
     return (s);
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

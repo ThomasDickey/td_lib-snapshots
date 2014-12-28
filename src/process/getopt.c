@@ -11,7 +11,7 @@
 #define	STR_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: getopt.c,v 12.6 2010/07/05 16:32:56 tom Exp $")
+MODULE_ID("$Id: getopt.c,v 12.7 2014/12/28 01:11:01 tom Exp $")
 
 #if !defined(HAVE_GETOPT)
 
@@ -80,3 +80,14 @@ getopt(int argc,
     return (c);
 }
 #endif /* !HAVE_GETOPT */
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

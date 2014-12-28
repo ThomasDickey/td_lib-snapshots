@@ -13,7 +13,7 @@
 #define TRM_PTYPES		/* <termios.h> */
 #include <td_curse.h>
 
-MODULE_ID("$Id: dumptty.c,v 12.8 2010/07/10 00:10:13 tom Exp $")
+MODULE_ID("$Id: dumptty.c,v 12.9 2014/12/28 01:10:44 tom Exp $")
 
 #define	CONTRAST(msg,f) Contrast(msg, (long)(tst.f), (long)(ref.f))
 #define	SHOWMASK(t,m)   ShowMasks(t, (int) SIZEOF(t), m)
@@ -332,3 +332,14 @@ dumptty(FILE *fp, char *msg)
 #endif
     FFLUSH(fp);			/* just in case the program dies! */
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

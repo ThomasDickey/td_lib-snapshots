@@ -29,7 +29,7 @@
 #include	"ptypes.h"
 #include	<errno.h>
 
-MODULE_ID("$Id: for_user.c,v 12.8 2010/07/04 13:14:43 tom Exp $")
+MODULE_ID("$Id: for_user.c,v 12.9 2014/12/28 01:11:01 tom Exp $")
 
 #ifdef	SYS_UNIX
 int
@@ -80,3 +80,14 @@ for_user(void (*func) (void))
 }
 
 #endif /* SYS_UNIX */
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

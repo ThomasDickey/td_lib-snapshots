@@ -17,7 +17,7 @@
 #define STR_PTYPES
 #include	"td_qsort.h"
 
-MODULE_ID("$Id: cmpqsort.c,v 12.4 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: cmpqsort.c,v 12.5 2014/12/28 01:10:39 tom Exp $")
 
 QSORT_FUNC(cmp_qsort)
 {
@@ -25,3 +25,14 @@ QSORT_FUNC(cmp_qsort)
     QSORT_CAST(q2, p2);
     return (-strcmp(*p1, *p2));
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

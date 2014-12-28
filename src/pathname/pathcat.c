@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	12 Sep 1988
  * Modified:
+ *		27 Dec 2014, coverity warnings.
  *		07 Mar 2004, remove K&R support, indent'd.
  *		05 Nov 1995, added 'pathcat2()' entrypoint for instances where
  *			     we don't want to expand tilde.
@@ -25,33 +26,67 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: pathcat.c,v 12.7 2010/07/03 15:55:57 tom Exp $")
+MODULE_ID("$Id: pathcat.c,v 12.10 2014/12/28 01:10:51 tom Exp $")
 
 char *
 pathcat2(char *dst, const char *dname, const char *fname)
 {
     char tmp[MAXPATHLEN], *s;
+    char *result = dst;
 
-    if (isSlash(*fname) || !dname || !*dname)
-	return (strcpy(dst, fname));
-    else if (*fname == EOS) {
-	if (dst != dname)
-	    (void) strcpy(dst, dname);
-	return (dst);
+    if (isSlash(*fname) || !dname || !*dname) {
+	if (strlen(fname) < MAXPATHLEN) {
+	    (void) strcpy(dst, fname);
+	} else {
+	    result = 0;
+	}
+    } else if (*fname == EOS) {
+	if (dst != dname) {
+	    if (strlen(dname) < MAXPATHLEN) {
+		(void) strcpy(dst, dname);
+	    } else {
+		result = 0;
+	    }
+	}
+    } else if (strlen(dname) < sizeof(tmp)) {
+	(void) strcpy(tmp, dname);
+	if ((s = fleaf_delim(tmp)) != 0 && (s[1] == EOS)) {
+	    *s = EOS;		/* trim excess path-delimiter */
+	}
+	s = tmp + strlen(tmp);
+	if (((s - tmp) + strlen(fname) + 3) < MAXPATHLEN) {
+	    *s++ = PATH_SLASH;
+	    (void) strcpy(s, fname);
+	    (void) strcpy(dst, tmp);
+	} else {
+	    result = 0;
+	}
+    } else {
+	result = 0;
     }
-    (void) strcpy(tmp, dname);
-    if ((s = fleaf_delim(tmp)) != 0 && (s[1] == EOS))
-	*s = EOS;		/* trim excess path-delimiter */
-    s = tmp + strlen(tmp);
-    *s++ = PATH_SLASH;
-    (void) strcpy(s, fname);
-    return (strcpy(dst, tmp));
+    return result;
 }
 
 char *
 pathcat(char *dst, const char *dname, const char *fname)
 {
-    if (*fname == '~')
-	return (strcpy(dst, fname));
-    return pathcat2(dst, dname, fname);
+    char *result = dst;
+
+    if (*fname == '~') {
+	(void) strcpy(dst, fname);
+    } else {
+	result = pathcat2(dst, dname, fname);
+    }
+    return result;
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

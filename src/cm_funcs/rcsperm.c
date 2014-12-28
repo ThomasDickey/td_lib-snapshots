@@ -3,7 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	08 Mar 1989
  * Modified:
- *		12 Dec 2014, tell coverity the expected buffer-sizes.
+ *		27 Dec 2014, coverity warnings.
  *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
@@ -34,7 +34,7 @@
 #include	"dyn_str.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: rcsperm.c,v 12.9 2014/12/13 00:05:31 tom Exp $")
+MODULE_ID("$Id: rcsperm.c,v 12.11 2014/12/28 01:10:33 tom Exp $")
 
 int
 rcspermit(const char *path,
@@ -53,6 +53,7 @@ rcspermit(const char *path,
     int my_file;
     int code = S_FAIL;
     int ok = FALSE;		/* assume no permission */
+    char *t;
 
     path = vcs_file(path, tmp, FALSE);
     dyn_init(&access_list, (size_t) BUFSIZ);
@@ -62,7 +63,6 @@ rcspermit(const char *path,
      * one RCS directory.
      */
     if (base != 0) {
-	char *t;
 	if ((t = getenv("RCS_BASE")) != NULL
 	    && strlen(t) < (MAXPATHLEN - 1)) {
 	    (void) strcpy(base, t);
@@ -76,7 +76,8 @@ rcspermit(const char *path,
      * (or if the access list is blank)
      * set the corresponding copy of $RCS_BASE and return true.
      */
-    (void) strcpy(user, uid2s(getuid()));
+    t = uid2s(getuid());
+    (void) strcpy(user, (strlen(t) < sizeof(user) ? t : "?"));
 
     if (!rcsopen(path, RCS_DEBUG, TRUE))
 	return (FALSE);		/* could not open file anyway */
@@ -126,3 +127,14 @@ rcspermit(const char *path,
 	*accflag = txtalloc(dyn_string(access_list));
     return (ok);
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

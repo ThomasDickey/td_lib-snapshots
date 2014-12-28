@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	07 Sep 1989
  * Modified:
+ *		27 Dec 2014, coverity warnings.
  *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
@@ -23,22 +24,27 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: relpath.c,v 12.7 2010/07/05 14:34:21 tom Exp $")
+MODULE_ID("$Id: relpath.c,v 12.10 2014/12/27 22:46:31 tom Exp $")
 
 char *
 relpath(char *dst, const char *cwd_param, const char *src)
 {
-    char current[BUFSIZ];
-    char tmp[BUFSIZ];
-    char pre[BUFSIZ];
-    char *cwd;
+    char current[MAXPATHLEN];
+    char tmp[MAXPATHLEN];
+    char pre[MAXPATHLEN];
+    char *cwd = 0;
     size_t j;
 
-    src = strcpy(tmp, src);	/* dst may be the same as src; copy it */
-    if (cwd_param == 0 || !*cwd_param)	/* if cwd not given, get the actual path */
-	cwd = getwd(current);
-    else
-	cwd = strcpy(current, cwd_param);
+    if (strlen(src) < sizeof(tmp)) {
+	/* dst may be the same as src; copy it */
+	src = strcpy(tmp, src);
+	if (cwd_param == 0 || !*cwd_param) {
+	    /* if cwd not given, get the actual path */
+	    cwd = getwd(current);
+	} else if (strlen(cwd_param) < sizeof(current)) {
+	    cwd = strcpy(current, cwd_param);
+	}
+    }
 
     if (cwd != 0) {
 #ifdef	apollo
@@ -51,7 +57,7 @@ relpath(char *dst, const char *cwd_param, const char *src)
 	 */
 	if ((p = strchr(src, '$'))
 	    && (p[1] == L_PAREN)) {
-	    char tmp2[BUFSIZ];
+	    char tmp2[MAXPATHLEN];
 	    char *s, *d;
 	    int cc;
 
@@ -167,7 +173,7 @@ _MAIN
 	,"$(HOME)/src"
 #endif
     };
-    char tmp[BUFSIZ];
+    char tmp[MAXPATHLEN];
     int j;
 
     if (argc > 1) {

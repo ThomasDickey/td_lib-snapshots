@@ -1,3 +1,115 @@
+2014-12-27  dickey@invisible-island.net
+
+	* test/pathname/walktree.ref: regen
+
+	* src/pathname/walktree.c: fix regression
+
+	* test/cm_funcs/run_test.sh, test/compare/run_test.sh, test/curses/run_test.sh, test/memory/run_test.sh, test/pathname/run_test.sh, test/port2vms/run_test.sh, test/process/run_test.sh, test/sheet/run_test.sh, test/string/run_test.sh, test/unix/run_test.sh:
+	remove purify from test-scripts
+
+	* test/port2vms/modules: remove vms-only modules
+
+	* test/cm_funcs/modules: remove unimplemented prcslast
+
+	* src/unix/s2gid.c, src/unix/setmtime.c, src/string/dftenv.c, src/string/dyn_app.c, src/string/dyn_appc.c, src/string/dyn_cata.c, src/string/dyn_copy.c, src/string/dyn_str.c, src/string/strclean.c, src/string/strcount.c, src/string/strtrim.c, src/string/strucpy.c, src/sheet/count_ss.c, src/sheet/ss_field.c, src/process/bldarg.c, src/process/catarg.c, src/process/catchall.c, src/process/egress.c, src/process/for_admn.c, src/process/for_user.c, src/process/getopt.c, src/process/getuser.c, src/process/in_group.c, src/process/interact.c, src/process/revert.c, src/process/savesuid.c, src/process/shoarg.c, src/process/showuids.c, src/process/userprot.c, src/pathname/acc_mode.c, src/pathname/add2fnam.c, src/pathname/arg2file.c, src/pathname/copyback.c, src/pathname/denode.c, src/pathname/dotname.c, src/pathname/filesize.c, src/pathname/fleaf.c, src/pathname/fleaf14.c, src/pathname/ftype.c, src/pathname/ftype2.c, src/pathname/is_spath.c, src/pathname/istextfl.c, src/pathname/mem2file.c, src/pathname/modechar.c, src/pathname/pathcat.c, src/pathname/samehead.c, src/pathname/stat_dir.c, src/pathname/stat_fil.c, src/pathname/track_wd.c, src/memory/memmove.c, src/memory/stralloc.c, src/memory/vecalloc.c, src/memory/veclen.c, src/curses/addchnst.c, src/curses/beep.c, src/curses/blip.c, src/curses/cmdch.c, src/curses/dumpchr.c, src/curses/dumptty.c, src/curses/dumpwin.c, src/curses/erasechr.c, src/curses/getmaxx.c, src/curses/is_xterm.c, src/curses/killchar.c, src/curses/lnextchr.c, src/curses/logch.c, src/curses/on_winch.c, src/curses/rawterm.c, src/curses/resizwin.c, src/curses/savewin.c, src/curses/viewfile.c, src/curses/win2file.c, src/curses/wrepaint.c, src/curses/wresize.c, src/compare/btree.c, src/compare/cmpqsort.c, src/cm_funcs/cvslast.c, src/cm_funcs/lastrev.c, src/cm_funcs/next_ver.c, src/cm_funcs/rcs_dir.c, src/cm_funcs/rcsdebug.c, src/cm_funcs/rcsedit.c, src/cm_funcs/rcskeys.c, src/cm_funcs/rcslast.c, src/cm_funcs/rcslocks.c, src/cm_funcs/rcspath.c, src/cm_funcs/rcsperm.c, src/cm_funcs/rcssymbs.c, src/cm_funcs/rcstemp.c, src/cm_funcs/rcstime.c, src/cm_funcs/sccs_dir.c, src/cm_funcs/sccsdbug.c, src/cm_funcs/sccslast.c, src/cm_funcs/sccspath.c, src/cm_funcs/svn_last.c:
+	add test-driver stub
+
+	* test/unix/s2gid.ref, test/unix/setmtime.ref, test/string/dftenv.ref, test/string/dyn_app.ref, test/string/dyn_appc.ref, test/string/dyn_cata.ref, test/string/dyn_copy.ref, test/string/dyn_str.ref, test/string/strclean.ref, test/string/strcount.ref, test/string/strerror.ref, test/string/strtrim.ref, test/string/strucpy.ref, test/sheet/count_ss.ref, test/sheet/field_of.ref, test/sheet/ss_field.ref, test/process/bldarg.ref, test/process/catarg.ref, test/process/catchall.ref, test/process/egress.ref, test/process/for_admn.ref, test/process/for_user.ref, test/process/getopt.ref, test/process/getuser.ref, test/process/in_group.ref, test/process/interact.ref, test/process/revert.ref, test/process/savesuid.ref, test/process/shoarg.ref, test/process/showuids.ref, test/process/userprot.ref, test/port2vms/rmsio.ref, test/port2vms/time2vms.ref, test/port2vms/uid2s.ref, test/port2vms/utimes.ref, test/port2vms/vms_dirs.ref, test/pathname/acc_mode.ref, test/pathname/add2fnam.ref, test/pathname/arg2file.ref, test/pathname/copyback.ref, test/pathname/denode.ref, test/pathname/dotname.ref, test/pathname/filesize.ref, test/pathname/fleaf.ref, test/pathname/fleaf14.ref, test/pathname/ftype.ref, test/pathname/ftype2.ref, test/pathname/is_spath.ref, test/pathname/istextfl.ref, test/pathname/mem2file.ref, test/pathname/modechar.ref, test/pathname/pathcat.ref, test/pathname/samehead.ref, test/pathname/stat_dir.ref, test/pathname/stat_fil.ref, test/pathname/track_wd.ref, test/memory/memmove.ref, test/memory/stralloc.ref, test/memory/vecalloc.ref, test/memory/veclen.ref, test/curses/addchnst.ref, test/curses/beep.ref, test/curses/blip.ref, test/curses/cmdch.ref, test/curses/dumpchr.ref, test/curses/dumptty.ref, test/curses/dumpwin.ref, test/curses/erasechr.ref, test/curses/getmaxx.ref, test/curses/is_xterm.ref, test/curses/killchar.ref, test/curses/lnextchr.ref, test/curses/logch.ref, test/curses/on_winch.ref, test/curses/rawterm.ref, test/curses/resizwin.ref, test/curses/savewin.ref, test/curses/viewfile.ref, test/curses/win2file.ref, test/curses/wrepaint.ref, test/curses/wresize.ref, test/compare/btree.ref, test/compare/cmpqsort.ref, test/cm_funcs/cvslast.ref, test/cm_funcs/lastrev.ref, test/cm_funcs/next_ver.ref, test/cm_funcs/prcslast.ref, test/cm_funcs/rcs_dir.ref, test/cm_funcs/rcsdebug.ref, test/cm_funcs/rcsedit.ref, test/cm_funcs/rcskeys.ref, test/cm_funcs/rcslast.ref, test/cm_funcs/rcslocks.ref, test/cm_funcs/rcspath.ref, test/cm_funcs/rcsperm.ref, test/cm_funcs/rcssymbs.ref, test/cm_funcs/rcstemp.ref, test/cm_funcs/rcstime.ref, test/cm_funcs/sccs_dir.ref, test/cm_funcs/sccsdbug.ref, test/cm_funcs/sccslast.ref, test/cm_funcs/sccspath.ref, test/cm_funcs/svn_last.ref:
+	test-reference file
+
+	* test/compare/modules, test/memory/modules, test/unix/modules, test/string/modules, test/sheet/modules, test/process/modules, test/port2vms/modules, test/pathname/modules, test/curses/modules, test/cm_funcs/cvslast.sh, test/cm_funcs/lastrev.sh, test/cm_funcs/next_ver.sh, test/cm_funcs/prcslast.sh, test/cm_funcs/rcs_dir.sh, test/cm_funcs/rcsdebug.sh, test/cm_funcs/rcsedit.sh, test/cm_funcs/rcskeys.sh, test/cm_funcs/rcslast.sh, test/cm_funcs/rcslocks.sh, test/cm_funcs/rcspath.sh, test/cm_funcs/rcsperm.sh, test/cm_funcs/rcssymbs.sh, test/cm_funcs/rcstemp.sh, test/cm_funcs/rcstime.sh, test/cm_funcs/sccs_dir.sh, test/cm_funcs/sccsdbug.sh, test/cm_funcs/sccslast.sh, test/cm_funcs/sccspath.sh, test/cm_funcs/svn_last.sh, test/compare/btree.sh, test/compare/cmpqsort.sh, test/curses/addchnst.sh, test/curses/beep.sh, test/curses/blip.sh, test/curses/cmdch.sh, test/curses/dumpchr.sh, test/curses/dumptty.sh, test/curses/dumpwin.sh, test/curses/erasechr.sh, test/curses/getmaxx.sh, test/curses/is_xterm.sh, test/curses/killchar.sh, test/curses/lnextchr.sh, test/curses/logch.sh, test/curses/on_winch.sh, test/curses/rawterm.sh, test/curses/resizwin.sh, test/curses/savewin.sh, test/curses/viewfile.sh, test/curses/win2file.sh, test/curses/wrepaint.sh, test/curses/wresize.sh, test/memory/memmove.sh, test/memory/stralloc.sh, test/memory/vecalloc.sh, test/memory/veclen.sh, test/pathname/acc_mode.sh, test/pathname/add2fnam.sh, test/pathname/arg2file.sh, test/pathname/copyback.sh, test/pathname/denode.sh, test/pathname/dotname.sh, test/pathname/filesize.sh, test/pathname/fleaf.sh, test/pathname/fleaf14.sh, test/pathname/ftype.sh, test/pathname/ftype2.sh, test/pathname/is_spath.sh, test/pathname/istextfl.sh, test/pathname/mem2file.sh, test/pathname/modechar.sh, test/pathname/pathcat.sh, test/pathname/samehead.sh, test/pathname/stat_dir.sh, test/pathname/stat_fil.sh, test/pathname/track_wd.sh, test/port2vms/rmsio.sh, test/port2vms/time2vms.sh, test/port2vms/uid2s.sh, test/port2vms/utimes.sh, test/port2vms/vms_dirs.sh, test/process/bldarg.sh, test/process/catarg.sh, test/process/catchall.sh, test/process/egress.sh, test/process/for_admn.sh, test/process/for_user.sh, test/process/getopt.sh, test/process/getuser.sh, test/process/in_group.sh, test/process/interact.sh, test/process/revert.sh, test/process/savesuid.sh, test/process/shoarg.sh, test/process/showuids.sh, test/process/userprot.sh, test/sheet/count_ss.sh, test/sheet/field_of.sh, test/sheet/ss_field.sh, test/string/dftenv.sh, test/string/dyn_app.sh, test/string/dyn_appc.sh, test/string/dyn_cata.sh, test/string/dyn_copy.sh, test/string/dyn_str.sh, test/string/strclean.sh, test/string/strcount.sh, test/string/strerror.sh, test/string/strtrim.sh, test/string/strucpy.sh, test/unix/s2gid.sh, test/unix/setmtime.sh, test/cm_funcs/modules:
+	add stubs for modules which had no test-driver
+
+	* src/pathname/walktree.c:
+	coverity #78387 - copy into fixed size buffer
+
+	* src/pathname/which.c: coverity #78357 - copy into fixed size buffer
+
+	* src/pathname/relpath.c: coverity #78362 - copy into fixed size buffer
+
+	* src/port2vms/vms_pthc.c:
+	coverity #78342 - copy into fixed size buffer
+
+	* src/pathname/abspath.c: coverity #78343 - copy into fixed size buffer
+
+	* src/pathname/sameleaf.c:
+	coverity #78349 - copy into fixed size buffer
+
+	* src/pathname/pathleaf.c:
+	coverity #78350 - copy into fixed size buffer
+
+	* src/pathname/trimpath.c:
+	coverity #78360 - copy into fixed size buffer
+
+	* src/pathname/relpath.c: coverity #78362 - copy into fixed size buffer
+
+	* src/port2vms/path2vms.c:
+	coverity #78378 - copy into fixed size buffer
+
+	* src/pathname/pathhead.c:
+	coverity #78382 - copy into fixed size buffer
+
+	* src/pathname/pathcat.c: coverity #78384 - copy into fixed size buffer
+
+	* src/cm_funcs/sccs_dir.c:
+	coverity #78395 - copy into fixed size buffer
+
+	* src/cm_funcs/rcs_dir.c: coverity #78374 - copy into fixed size buffer
+
+	* src/cm_funcs/sccsname.c:
+	coverity #78366 - copy into fixed size buffer
+
+	* src/cm_funcs/rcsedit.c: coverity #78386 - copy into fixed size buffer
+
+	* src/cm_funcs/rcslast.c: coverity #78385 - copy into fixed size buffer
+
+	* src/cm_funcs/cvslast.c: coverity #78377 - copy into fixed size buffer
+
+	* src/cm_funcs/rcsload.c: coverity #78376 - copy into fixed size buffer
+
+	* src/cm_funcs/rcs_dir.c: coverity #78374 - copy into fixed size buffer
+
+	* src/cm_funcs/sccsname.c:
+	coverity #78366 - copy into fixed size buffer
+
+	* src/cm_funcs/svn_last.c:
+	coverity #78353 - copy into fixed size buffer
+
+	* src/cm_funcs/rcsargpr.c:
+	coverity #78347 - copy into fixed size buffer
+
+	* src/cm_funcs/rcsperm.c: coverity #78346 - copy into fixed buffer
+
+	* src/pathname/which.c, src/pathname/walktree.c, src/pathname/trimpath.c, src/pathname/track_wd.c, src/pathname/sameleaf.c, src/pathname/relpath.c, src/pathname/pathleaf.c, src/pathname/pathhead.c:
+	BUFSIZE != MAXPATHLEN
+
+	* src/cm_funcs/cmv_dir.c: coverity #78381 - copy into fixed size buffer
+
+	* src/cm_funcs/cmv_dir.c: typo
+
+	* src/cm_funcs/rcslast.c: coverity #78363 - copy into fixed size buffer
+
+	* src/cm_funcs/sccslast.c:
+	coverity #78355 - copy into fixed size buffer
+
+	* src/cm_funcs/sccslast.c:
+	coverity #78354 - copy into fixed size buffer
+
+	* src/cm_funcs/sccsname.c:
+	coverity #78344 - copy into fixed size buffer
+
+	* src/cm_funcs/cmv_dir.c: coverity #78373 - copy into fixed size buffer
+
+	* src/cm_funcs/cmv_dir.c: coverity #78381 - copy into fixed size buffer
+
+	* src/pathname/pathcat.c:
+	tidy - use single return, but no real logic change
+
+	* src/cm_funcs/cmv_dir.c: coverity #78388 - copy into fixed size buffer
+
+	* src/cm_funcs/sccs_dir.c:
+	coverity #78395 - copy into fixed size buffer
+
 2014-12-26  dickey@invisible-island.net
 
 	* src/port2vms/vms2name.c:

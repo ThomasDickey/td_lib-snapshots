@@ -4,10 +4,27 @@
  	|-- abspath
 ?	|-- abspath.ref
  	|-- abspath.sh
-?	|-- check.out
+ 	|-- acc_mode
+?	|-- acc_mode.ref
+ 	|-- acc_mode.sh
+ 	|-- add2fnam
+?	|-- add2fnam.ref
+ 	|-- add2fnam.sh
+ 	|-- arg2file
+?	|-- arg2file.ref
+ 	|-- arg2file.sh
+ 	|-- copyback
+?	|-- copyback.ref
+ 	|-- copyback.sh
+ 	|-- denode
+?	|-- denode.ref
+ 	|-- denode.sh
  	|-- dlettree
 ?	|-- dlettree.ref
  	|-- dlettree.sh
+ 	|-- dotname
+?	|-- dotname.ref
+ 	|-- dotname.sh
  	|-- editfile
 ?	|-- editfile.ref
  	|-- editfile.sh
@@ -26,15 +43,45 @@
  	|-- filecopy
 ?	|-- filecopy.ref
  	|-- filecopy.sh
+ 	|-- filesize
+?	|-- filesize.ref
+ 	|-- filesize.sh
+ 	|-- fleaf
+?	|-- fleaf.ref
+ 	|-- fleaf.sh
+ 	|-- fleaf14
+?	|-- fleaf14.ref
+ 	|-- fleaf14.sh
  	|-- fp2argv
 ?	|-- fp2argv.ref
  	|-- fp2argv.sh
+ 	|-- ftype
+?	|-- ftype.ref
+ 	|-- ftype.sh
+ 	|-- ftype2
+?	|-- ftype2.ref
+ 	|-- ftype2.sh
+ 	|-- is_spath
+?	|-- is_spath.ref
+ 	|-- is_spath.sh
+ 	|-- istextfl
+?	|-- istextfl.ref
+ 	|-- istextfl.sh
 ?	|-- make.out
 ?	|-- makefile
+ 	|-- mem2file
+?	|-- mem2file.ref
+ 	|-- mem2file.sh
+ 	|-- modechar
+?	|-- modechar.ref
+ 	|-- modechar.sh
 ?	|-- modules
  	|-- name2s
 ?	|-- name2s.ref
  	|-- name2s.sh
+ 	|-- pathcat
+?	|-- pathcat.ref
+ 	|-- pathcat.sh
  	|-- pathcmp
 ?	|-- pathcmp.ref
  	|-- pathcmp.sh
@@ -48,9 +95,21 @@
 ?	|-- relpath.ref
  	|-- relpath.sh
  	|-- run_test.sh
+ 	|-- samehead
+?	|-- samehead.ref
+ 	|-- samehead.sh
  	|-- sameleaf
 ?	|-- sameleaf.ref
  	|-- sameleaf.sh
+ 	|-- stat_dir
+?	|-- stat_dir.ref
+ 	|-- stat_dir.sh
+ 	|-- stat_fil
+?	|-- stat_fil.ref
+ 	|-- stat_fil.sh
+ 	|-- track_wd
+?	|-- track_wd.ref
+ 	|-- track_wd.sh
  	|-- trimpath
 ?	|-- trimpath.ref
  	|-- trimpath.sh
@@ -64,4 +123,4 @@
  	|-- which
 ?	|-- which.ref
  	|-- which.sh
-** total= 41
+** total= 81

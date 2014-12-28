@@ -16,7 +16,7 @@
 
 #include	"ptypes.h"
 
-MODULE_ID("$Id: s2gid.c,v 12.8 2010/07/05 12:29:12 tom Exp $")
+MODULE_ID("$Id: s2gid.c,v 12.9 2014/12/28 01:11:09 tom Exp $")
 
 #ifdef	SYS_UNIX
 #include	<grp.h>
@@ -38,3 +38,14 @@ s2gid(const char *s)
     return ((int) val);
 }
 #endif /* SYS_UNIX */
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

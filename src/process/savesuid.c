@@ -12,7 +12,7 @@
 
 #include "ptypes.h"
 
-MODULE_ID("$Id: savesuid.c,v 12.3 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: savesuid.c,v 12.4 2014/12/28 01:11:01 tom Exp $")
 
 int
 saves_uid(void)
@@ -23,3 +23,14 @@ saves_uid(void)
     return TRUE;		/* patch: SunOs */
 #endif
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

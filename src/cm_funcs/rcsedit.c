@@ -3,7 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	26 May 1988
  * Modified:
- *		26 Dec 2014, coverity warnings
+ *		27 Dec 2014, coverity warnings.
  *		07 Mar 2004, remove K&R support, indent'd.
  *		30 May 1998, compile with g++
  *		29 Oct 1993, ifdef-ident
@@ -41,7 +41,7 @@
 #include	"rcsdefs.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: rcsedit.c,v 12.16 2014/12/26 13:02:08 tom Exp $")
+MODULE_ID("$Id: rcsedit.c,v 12.18 2014/12/28 01:10:33 tom Exp $")
 
 /* local definitions */
 #define	VERBOSE	if (verbose) PRINTF
@@ -94,7 +94,7 @@ dir_access(void)
 	    (void) strcpy(temp, ".");
 	}
 	if (stat_dir(temp, &sb) >= 0) {
-	    if (!uid) {			/* root can do anything */
+	    if (!uid) {		/* root can do anything */
 		uid = (int) sb.st_uid;
 		gid = (int) sb.st_gid;
 	    }
@@ -226,7 +226,8 @@ rcsopen(const char *name, int show, int readonly)
 		    FORMAT(tmp_name, "%s/rcsedit%d", P_tmpdir, (int) getpid());
 
 		fmode = (int) (sb.st_mode & 0555);
-		if ((fd = open(tmp_name, O_CREAT | O_EXCL | O_WRONLY, fmode)) < 0
+		if ((fd = open(tmp_name, O_CREAT | O_EXCL | O_WRONLY,
+		    fmode)) < 0
 		    || !(fpT = fdopen(fd, "w"))) {
 		    perror(tmp_name);
 		} else {
@@ -287,11 +288,12 @@ void
 rcsedit(char *oldname, char *newname)
 {
     size_t len = strlen(oldname);
-    char tmp[BUFSIZ];
+    char tmp[MAXPATHLEN];
 
     if ((edit_at < buffer)
 	|| (edit_at > buffer + strlen(buffer))
-	|| strncmp(oldname, edit_at, len)) {
+	|| strncmp(oldname, edit_at, len)
+	|| (strlen(edit_at + len) + strlen(newname) + 3) >= sizeof(tmp)) {
 	failed("rcsedit");
     } else {
 	(void) strcpy(tmp, edit_at + len);
@@ -399,3 +401,14 @@ rcsparse_str(char *s,
     }
     return s;
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

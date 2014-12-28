@@ -17,7 +17,7 @@
 #define	STR_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: add2fnam.c,v 12.6 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: add2fnam.c,v 12.7 2014/12/28 01:10:51 tom Exp $")
 
 int
 add2fname(char *name,
@@ -49,3 +49,14 @@ add2fname(char *name,
     (void) strcat(name, suffix);
     return (TRUE);
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

@@ -14,7 +14,7 @@
 #include "ptypes.h"
 #include "dyn_str.h"
 
-MODULE_ID("$Id: dyn_copy.c,v 12.5 2010/07/03 16:15:22 tom Exp $")
+MODULE_ID("$Id: dyn_copy.c,v 12.6 2014/12/28 01:11:07 tom Exp $")
 
 DYN *
 dyn_copy(DYN * p, const char *s)
@@ -29,3 +29,14 @@ dyn_copy(DYN * p, const char *s)
 	dyn_init(&p, len + 1);
     return p;
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */

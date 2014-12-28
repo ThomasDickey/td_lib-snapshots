@@ -12,7 +12,7 @@
 
 #include	<td_btree.h>
 
-MODULE_ID("$Id: btree.c,v 12.8 2012/01/13 18:14:42 tom Exp $")
+MODULE_ID("$Id: btree.c,v 12.9 2014/12/28 01:10:39 tom Exp $")
 
 #define	llink	links[0]
 #define	rlink	links[1]
@@ -148,3 +148,14 @@ btree_dump(BI_TREE * funcs)
 {
     dump_nodes(funcs, funcs->head.rlink, 0);
 }
+
+/******************************************************************************/
+#ifdef	TEST
+_MAIN
+{
+    (void) argc;
+    (void) argv;
+    exit(EXIT_FAILURE);
+    /*NOTREACHED */
+}
+#endif /* TEST */
