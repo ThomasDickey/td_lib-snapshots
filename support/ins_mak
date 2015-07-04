@@ -1,5 +1,5 @@
 #! /bin/sh
-# $Id: ins_mak,v 12.5 2010/07/04 12:55:34 tom Exp $
+# $Id: ins_mak,v 12.6 2015/07/04 15:05:05 tom Exp $
 #
 # Install the td_lib make include-file.  We adjust the symbols that refer
 # to the location of the include- and lib-directory.
@@ -56,6 +56,7 @@ trap "rm -f $SED" 0 1 2 5 15
 cat >$SED <<EOF
 s@^TD_LIB[ 	]*=.*@TD_LIB = $my_LIB@
 s@^TD_INC[ 	]*=.*@TD_INC = $my_INC@
+s@^TD_CFG[ 	]*=.*@TD_CFG = $my_CFG@
 EOF
 
 for SRC in $*

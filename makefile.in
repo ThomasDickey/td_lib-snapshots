@@ -1,4 +1,4 @@
-# $Id: makefile.in,v 12.24 2012/09/04 08:25:22 tom Exp $
+# $Id: makefile.in,v 12.25 2015/07/04 15:13:37 tom Exp $
 # Top-level makefile for TD_LIB common library
 
 SHELL		= /bin/sh
@@ -37,7 +37,7 @@ MAKE_OPTS	= @cf_cv_makeflags@
 CC		= @CC@
 RM		= -rm -f
 CLEAN		= *.bak *.log *.out *.tst .nfs* core
-PURE		= config_h *.cache *.status $(I_CFG) $(MDEFN)
+PURE		= config_h *.cache *.status $(I_CFG) $(MDEFN) support/man2html.sh
 
 ####### (Standard Lists) #######################################################
 CONFIG_H=\
@@ -96,13 +96,22 @@ distclean:	clobber
 install::	all $(bindir) $(my_cfgdir) $(my_incdir) $(my_libdir)
 	$(srcdir)/support/ins_hdr "$(INSTALL_DATA)" "$(DESTDIR)" $(my_incdir) $(I_LIST)
 	$(srcdir)/support/ins_mak "$(INSTALL_DATA)" "$(DESTDIR)" $(my_cfgdir) $(my_libdir) $(my_incdir) support/$(THIS).mk
+	$(INSTALL_DATA) -m 755 support/man2html.sh $(my_cfgdir)
 	$(INSTALL_DATA) lib/$(THAT).a $(my_libdir)
 	$(RANLIB) $(my_libdir)/$(THAT).a
 
 uninstall::
+	-rmdir $(bindir)
 	$(srcdir)/support/rem_hdr $(my_incdir) $(I_LIST)
+	-rmdir $(my_incdir)
+	-rmdir $(includedir)
+	$(RM) $(my_cfgdir)/man2html.sh
 	$(RM) $(my_cfgdir)/$(THIS).mk
+	-rmdir $(my_cfgdir)
+	-rmdir $(datarootdir)
 	$(RM) $(my_libdir)/$(THAT).a
+	-rmdir $(my_libdir)
+	-@echo "** uninstalled"
 
 ####### (Details of Productions) ###############################################
 $(bindir) \
