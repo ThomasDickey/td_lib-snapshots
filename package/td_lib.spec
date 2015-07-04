@@ -1,8 +1,8 @@
 Summary: Thomas Dickeys library
 %define AppProgram td_lib
 %define AppVersion 12.x
-%define AppRelease 20141214
-# $Id: td_lib.spec,v 1.10 2014/12/14 21:00:49 tom Exp $
+%define AppRelease 20150704
+# $Id: td_lib.spec,v 1.13 2015/07/04 19:08:00 tom Exp $
 Name: %{AppProgram}
 Version: %{AppVersion}
 Release: %{AppRelease}
@@ -35,7 +35,8 @@ INSTALL_PROGRAM='${INSTALL}' \
 		--datadir=%{_datadir} \
 		--disable-echo \
 		--disable-selflink \
-		--with-ncursesw
+		--with-man2html \
+		--with-screen=ncursesw6
 
 make
 

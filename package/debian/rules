@@ -37,7 +37,8 @@ configure-stamp:
 		--sysconfdir=/etc \
 		--disable-echo \
 		--disable-selflink \
-		--with-ncursesw
+		--with-man2html \
+		--with-screen=ncursesw6
 
 	touch configure-stamp
 

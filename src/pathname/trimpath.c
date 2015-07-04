@@ -21,7 +21,7 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: trimpath.c,v 12.10 2014/12/27 22:11:56 tom Exp $")
+MODULE_ID("$Id: trimpath.c,v 12.11 2015/07/04 15:31:44 tom Exp $")
 
 char *
 trimpath(char *path, const char *cwd)
@@ -45,7 +45,7 @@ trimpath(char *path, const char *cwd)
 		if (s[1] == EOS || isSlash(s[1]))
 		    s++;	/* absorb "." */
 	    d += strlen(tmp);
-	    if ((strlen(s) + 3 + (d - tmp)) < MAXPATHLEN) {
+	    if (((int) strlen(s) + 3 + (d - tmp)) < MAXPATHLEN) {
 		if (!isSlash(d[-1]))	/* add delim iff we need it */
 		    (void) strcat(d, slash);
 		(void) strcat(d, s);

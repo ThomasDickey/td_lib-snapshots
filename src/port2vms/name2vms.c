@@ -30,7 +30,7 @@
 #define	STR_PTYPES
 #include	"port2vms.h"
 
-MODULE_ID("$Id: name2vms.c,v 12.10 2014/12/26 13:45:07 tom Exp $")
+MODULE_ID("$Id: name2vms.c,v 12.11 2015/07/04 15:31:48 tom Exp $")
 
 static int leaf_dot;		/* counts dots found in a particular leaf */
 static int leaf_ver;		/* set if we found a DECshell version */
@@ -123,7 +123,7 @@ name2vms(char dst[MAXPATHLEN], const char *src)
      */
     if ((len = leading_uc(token, s)) != 0) {
 	s += len;
-	len = strlen(token);
+	len = (int) strlen(token);
 	if (len >= MAXPATHLEN)
 	    return 0;
 	(void) strcpy(d, token);

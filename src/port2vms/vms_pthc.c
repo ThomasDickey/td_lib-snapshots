@@ -23,7 +23,7 @@
 #define	STR_PTYPES
 #include	"port2vms.h"
 
-MODULE_ID("$Id: vms_pthc.c,v 12.6 2014/12/27 22:42:38 tom Exp $")
+MODULE_ID("$Id: vms_pthc.c,v 12.7 2015/07/04 15:31:52 tom Exp $")
 
 #define	A_NODE	8
 #define	A_DEV	4
@@ -86,7 +86,7 @@ vms_pathcat(char *dst, char *dname, char *fname)
 	    break;
 	}
 
-	if ((strlen(fname) + (s - tmp) + 3) < MAXPATHLEN) {
+	if (((int) strlen(fname) + (s - tmp) + 3) < MAXPATHLEN) {
 	    (void) strcpy(s, fname);
 	    (void) strcpy(dst, tmp);
 	    result = dst;

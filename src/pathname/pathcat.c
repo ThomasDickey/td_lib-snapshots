@@ -26,7 +26,7 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: pathcat.c,v 12.10 2014/12/28 01:10:51 tom Exp $")
+MODULE_ID("$Id: pathcat.c,v 12.11 2015/07/04 15:31:39 tom Exp $")
 
 char *
 pathcat2(char *dst, const char *dname, const char *fname)
@@ -54,7 +54,7 @@ pathcat2(char *dst, const char *dname, const char *fname)
 	    *s = EOS;		/* trim excess path-delimiter */
 	}
 	s = tmp + strlen(tmp);
-	if (((s - tmp) + strlen(fname) + 3) < MAXPATHLEN) {
+	if (((s - tmp) + (int) strlen(fname) + 3) < MAXPATHLEN) {
 	    *s++ = PATH_SLASH;
 	    (void) strcpy(s, fname);
 	    (void) strcpy(dst, tmp);

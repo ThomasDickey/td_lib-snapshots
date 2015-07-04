@@ -1,3 +1,39 @@
+2015-07-04  dickey@invisible-island.net
+
+	* package/td_lib.spec, package/debian/rules: use ncurses6
+
+	* package/td_lib.spec, package/debian/rules:
+	prefer man2html for documentation
+
+	* td_make.in:
+	use a single ".SUFFIXES" line, with $(SUFFIX_MAN) derived from configure script
+
+	* src/port2vms/vms_pthc.c, src/port2vms/name2vms.c, src/pathname/trimpath.c, src/pathname/pathcat.c:
+	gcc-warnings
+
+	* package/debian/copyright, package/debian/changelog, package/td_lib.spec:
+	bump
+
+	* configure: regen
+
+	* aclocal.m4: add CF_WITH_MAN2HTML
+
+	* makefile.in: integrate CF_WITH_MAN2HTML macro
+
+	* support/ins_mak:
+	add TD_CFG symbol, to allow consistent references to man2html.sh
+
+	* td_make.in: integrate CF_WITH_MAN2HTML macro
+
+	* configure.in:
+	use CF_WITH_MAN2HTML rather than just groff's man/html conversion
+
+	* configure: regen
+
+	* COPYING: bump
+
+	* aclocal.m4: resync with my-autoconf
+
 2015-05-02  dickey@invisible-island.net
 
 	* config.guess: 2015-03-04

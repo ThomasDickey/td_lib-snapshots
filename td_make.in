@@ -1,4 +1,4 @@
-# $Id: td_make.in,v 12.31 2014/07/22 12:19:07 tom Exp $
+# $Id: td_make.in,v 12.33 2015/07/04 18:06:41 tom Exp $
 # common definitions for makefiles built over TD_LIB library.
 # vile:makemode
 
@@ -17,6 +17,7 @@ datadir		= @datadir@
 
 TD_LIB		= @TOP_SRCDIR@/lib
 TD_INC		= @TOP_SRCDIR@/include
+TD_CFG		= @TOP_SRCDIR@/support
 
 AR		= ar crv
 RM		= rm -f
@@ -83,9 +84,6 @@ CPROTO	= cproto -e -i -fo'\\n\\t\\t' -fp'\\n\\t\\t'
 
 LINT_EACH = $(SHELL) -c 'for i in $?;do echo $$i:; $(LINT) $(LINTOPTS) $$i >>$@;done'
 
-#.SUFFIXES:
-.SUFFIXES: .c .o .a
-
 .c.o:
 	@RULE_CC@
 	@ECHO_CC@$(CC) $(CPP_OPTS) $(CFLAGS) $(EXTRA_CFLAGS) -c $<
@@ -98,8 +96,6 @@ LINT_EACH = $(SHELL) -c 'for i in $?;do echo $$i:; $(LINT) $(LINTOPTS) $$i >>$@;
 	@$(AR) $@ $*.o
 	-@$(RM) $*.o
 
-.SUFFIXES: .i .proto .lint .tst
-
 .c.i:		; $(CC) $(CPP_OPTS) -E -C $< >$@
 .c.proto:	; $(CPROTO) $(CPP_OPTS) $< >$@
 .c.lint:	; $(LINT) $(LINTOPTS) $< >$@
@@ -107,26 +103,29 @@ LINT_EACH = $(SHELL) -c 'for i in $?;do echo $$i:; $(LINT) $(LINTOPTS) $$i >>$@;
 .c.tst:
 	@ECHO_LD@$(CC) -o $@ -DTEST $(CFLAGS) $(EXTRA_CFLAGS) $(CPP_OPTS) $< $Z $(LIB_ARGS)
 
-CLEAN__MAN = @USE_NROFF@ .cat @USE_GROFF@ .pdf .ps .html .png .txt 
+@NROFF_NOTE@SUFFIX_MAN = .txt @MAN2HTML_NOTE@ .html
+@NROFF_NOTE@CLEAN__MAN = *.txt @MAN2HTML_NOTE@ *.html
+@NROFF_NOTE@NROFF	= @NROFF_PATH@
+@NROFF_NOTE@
+@NROFF_NOTE@.man.txt:
+@NROFF_NOTE@	-$(RM) $@
+@NROFF_NOTE@	$(NROFF) -man $? >$@
 
-@USE_NROFF@.SUFFIXES: .man .cat @USE_GROFF@ .pdf .ps .html .txt 
-@USE_NROFF@
-@USE_NROFF@NROFF	= @NROFF_PATH@
-@USE_NROFF@
-@USE_NROFF@.man.cat:
-@USE_NROFF@	-$(RM) $@
-@USE_NROFF@	$(NROFF) -man $? >$@
+@GROFF_NOTE@SUFFIX_MAN = .txt .pdf .ps .png @MAN2HTML_NOTE@ .html
+@GROFF_NOTE@CLEAN__MAN = *.txt *.pdf *.ps *.png @MAN2HTML_NOTE@ *.html
+@GROFF_NOTE@GROFF	= @GROFF_PATH@
+@GROFF_NOTE@
+@GROFF_NOTE@.man.ps :
+@GROFF_NOTE@	$(SHELL) -c "tbl $*.man | $(GROFF) -man" >$@
+@GROFF_NOTE@
+@GROFF_NOTE@.man.txt :
+@GROFF_NOTE@	GROFF_NO_SGR=stupid $(SHELL) -c "tbl $*.man | $(GROFF) -Tascii -man | col -bx" >$@
+@GROFF_NOTE@
+@GROFF_NOTE@.ps.pdf :
+@GROFF_NOTE@	ps2pdf $*.ps
 
-@USE_GROFF@GROFF	= @GROFF_PATH@
-@USE_GROFF@
-@USE_GROFF@.man.html :
-@USE_GROFF@	GROFF_NO_SGR=stupid $(SHELL) -c "tbl $*.man | $(GROFF) -Thtml -man" >$@
-@USE_GROFF@
-@USE_GROFF@.man.ps :
-@USE_GROFF@	$(SHELL) -c "tbl $*.man | $(GROFF) -man" >$@
-@USE_GROFF@
-@USE_GROFF@.man.txt :
-@USE_GROFF@	GROFF_NO_SGR=stupid $(SHELL) -c "tbl $*.man | $(GROFF) -Tascii -man | col -bx" >$@
-@USE_GROFF@
-@USE_GROFF@.ps.pdf :
-@USE_GROFF@	ps2pdf $*.ps
+@MAN2HTML_NOTE@.man.html :
+@MAN2HTML_NOTE@	$(TD_CFG)/man2html.sh $* man man >$@
+@MAN2HTML_NOTE@
+
+.SUFFIXES: .c .o .a .i .proto .lint .tst .man $(SUFFIX_MAN)
