@@ -32,14 +32,14 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: which.c,v 12.16 2014/12/27 23:01:39 tom Exp $")
+MODULE_ID("$Id: which.c,v 12.17 2017/06/02 00:56:10 tom Exp $")
 
 #ifdef MSDOS
-#define PROG_EXTS "PIF", "BAT", "EXE", "COM"
+#define PROG_EXTS "pif", "bat", "exe", "com"
 #endif
 
 #if defined(__EMX__) || defined(__CYGWIN32__) || defined(__CYGWIN__)
-#define PROG_EXTS "EXE"
+#define PROG_EXTS "exe"
 #endif
 
 static int

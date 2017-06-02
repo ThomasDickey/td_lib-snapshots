@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t20150704
+MANIFEST for td_lib, version t20170601
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         restrictions on copying/using this software
@@ -14,6 +14,7 @@ makefile.in                     template for generated top-level makefile
 td_make.in                      autoconf template for support/td_lib.mk
 include                         subdirectory
 include/.vilerc                 macro to use in ifdef'ing td_ext.h for autoconf
+include/Makefile                make-file for CM_TOOLS common interface directory
 include/cmv_defs.h              definitions for CmVision wrappers
 include/config.hin              template for include/td_config.h
 include/deltree.h               delta-tree function interface
@@ -255,6 +256,7 @@ src/unix/s2uid.c                convert string to user-id
 src/unix/setmtime.c             set mtime/atime of a file
 src/unix/uid2s.c                convert user-id to string
 support                         subdirectory
+support/Makefile                makefile for td_lib/support
 support/ins_hdr                 script to install header files
 support/ins_mak                 script to install td_lib.mk
 support/lib_top.mms             same as STANDARD_RULES, save that we generate lib-directory, rather than bin
@@ -334,6 +336,7 @@ test/cm_funcs/vcs_file.sh       test-script for vcs_file
 test/cm_funcs/vercmp.ref        reference for vercmp test
 test/cm_funcs/vercmp.sh         test-script for vercmp
 test/compare                    subdirectory
+test/compare/Makefile           makefile for td_lib/test/compare
 test/compare/btree.ref          test-reference file
 test/compare/btree.sh           add stubs for modules which had no test-driver
 test/compare/cmpqsort.ref       test-reference file
@@ -583,6 +586,7 @@ test/process/userprot.sh        add stubs for modules which had no test-driver
 test/process/walkback.ref       reference (apollo only) for walkback
 test/process/walkback.sh        test script for walkback
 test/sheet                      subdirectory
+test/sheet/Makefile             makefile for td_lib/test/sheet
 test/sheet/count_ss.ref         test-reference file
 test/sheet/count_ss.sh          add stubs for modules which had no test-driver
 test/sheet/field_of.ref         test-reference file
