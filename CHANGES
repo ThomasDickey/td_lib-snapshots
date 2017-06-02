@@ -1,4 +1,14 @@
-2015-07-04  dickey@invisible-island.net
+2017-06-01  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* src/pathname/which.c:
+	after installing SFU on Windows7, it was necessary to lowercase the table
+	of extensions here, to find ".exe" files.
+
+2017-04-29  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* config.sub: 2017-04-02
+
+2015-07-04  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* package/td_lib.spec, package/debian/rules: use ncurses6
 
@@ -34,13 +44,13 @@
 
 	* aclocal.m4: resync with my-autoconf
 
-2015-05-02  dickey@invisible-island.net
+2015-05-02  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* config.guess: 2015-03-04
 
 	* config.sub: 2015-03-08
 
-2014-12-27  dickey@invisible-island.net
+2014-12-27  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* test/pathname/walktree.ref: regen
 
@@ -152,7 +162,7 @@
 	* src/cm_funcs/sccs_dir.c:
 	coverity #78395 - copy into fixed size buffer
 
-2014-12-26  dickey@invisible-island.net
+2014-12-26  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* src/port2vms/vms2name.c:
 	coverity #78390 - copy into fixed size buffer
@@ -175,7 +185,7 @@
 
 	* src/cm_funcs/rcsedit.c: coverity #78338 - copy into fixed size buffer
 
-2014-12-25  dickey@invisible-island.net
+2014-12-25  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* src/cm_funcs/cmv_last.c: coverity #78380 - dereference null value
 
@@ -191,11 +201,11 @@
 
 	* src/curses/cmdch.c: coverity #78337 - dead code
 
-2014-12-14  dickey@invisible-island.net
+2014-12-14  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* package/debian/changelog, package/td_lib.spec: bump
 
-2014-12-12  dickey@invisible-island.net
+2014-12-12  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* src/port2vms/name2vms.c:
 	coverity #78345 - possible buffer overrun - tell coverity more details
@@ -221,7 +231,7 @@
 	* src/pathname/editfile.c:
 	coverity #78392 - possible memory leak if output file cannot be opened
 
-2014-07-22  dickey@invisible-island.net
+2014-07-22  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* aclocal.m4: resync with my-autoconf
 
@@ -259,13 +269,13 @@
 
 	* aclocal.m4: resync with my-autoconf
 
-2014-04-19  dickey@invisible-island.net
+2014-04-19  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* config.sub: 2014-04-03
 
 	* config.guess: 2014-03-23
 
-2013-12-05  dickey@invisible-island.net
+2013-12-05  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* configure.in: bump prereq
 
@@ -286,15 +296,15 @@
 
 	* aclocal.m4: resync with my-autoconf
 
-2013-10-25  dickey@invisible-island.net
+2013-10-25  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* config.sub: 2013-10-01
 
-2013-09-07  dickey@invisible-island.net
+2013-09-07  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* config.guess: 2013-06-10
 
-2012-09-04  dickey@invisible-island.net
+2012-09-04  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* td_make.in: support --datarootdir
 
@@ -309,11 +319,11 @@
 	resync with my-autoconf, adding CF_CLANG_COMPILER as well as updates to
 	CF_LIB_PREFIX, CF_GCC_WARNINGS and CF_PATH_SYNTAX
 
-2012-02-25  dickey@invisible-island.net
+2012-02-25  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* config.guess, config.sub: update to 2012-02-10
 
-2012-01-13  dickey@invisible-island.net
+2012-01-13  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* configure: regen
 
@@ -356,7 +366,7 @@
 	resync with my-autoconf, mostly improvements for curses library checks,
 	and CF_XOPEN_SOURCE changes.
 
-2011-01-30  dickey@invisible-island.net
+2011-01-30  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* configure: regen
 
@@ -370,15 +380,15 @@
 	* package/debian/changelog, package/td_lib.spec:
 	bump, for configure script changes
 
-2010-09-28  dickey@invisible-island.net
+2010-09-28  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* config.guess: 2010-09-24
 
-2010-09-10  dickey@invisible-island.net
+2010-09-10  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* config.sub: 2010-09-11
 
-2010-07-09  dickey@invisible-island.net
+2010-07-09  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* src/curses/rawgets.c, src/sheet/field_of.c, src/string/dyn_str.c, src/pathname/fp2argv.c, src/pathname/sameleaf.c, src/pathname/trnstree.c, src/pathname/walktree.c, src/port2vms/dir2path.c, src/port2vms/name2vms.c, src/port2vms/vms2name.c, src/port2vms/vms_wild.c, src/process/walkback.c, src/pathname/file2mem.c, src/memory/vecedit.c, src/pathname/copyback.c, src/pathname/dlettree.c, src/pathname/edittree.c, src/pathname/file2arg.c, src/curses/is_xterm.c, src/curses/padedit.c, src/memory/stralloc.c, src/cm_funcs/sccspath.c, src/compare/diffload.c, src/curses/dumptty.c, src/cm_funcs/rcsedit.c, src/cm_funcs/rcsload.c, src/cm_funcs/rcspath.c, src/cm_funcs/rcsperm.c, src/cm_funcs/sccslast.c, src/cm_funcs/cmv_dir.c, src/cm_funcs/cmv_last.c, src/cm_funcs/cutoff.c, src/cm_funcs/rcsargpr.c, include/td_ext.h:
 	stricter gcc warnings
@@ -395,7 +405,7 @@
 
 	* include/td_curse.h: add xt_enabled flag
 
-2010-07-05  dickey@invisible-island.net
+2010-07-05  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* include/td_lib.h, src/pathname/pathhead.c: stricter gcc warnings
 
@@ -442,7 +452,7 @@
 
 	* td_make.in: use ./ for run_test path
 
-2010-07-04  dickey@invisible-island.net
+2010-07-04  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* include/td_curse.h: if ncursesw/term.h was found, use that
 
@@ -468,7 +478,7 @@
 	* src/unix/setmtime.c, src/process/revert.c, include/td_lib.h, src/pathname/istextfl.c, include/sccsdefs.h, src/cm_funcs/sccslast.c, src/cm_funcs/sccsname.c, src/string/dftenv.c, src/pathname/filesize.c, src/pathname/filecopy.c, src/pathname/pathleaf.c, include/td_curse.h, src/curses/win2file.c, src/pathname/track_wd.c, src/pathname/walktree.c, src/unix/s2uid.c, src/unix/s2gid.c, src/pathname/sameleaf.c, src/pathname/samehead.c, src/cm_funcs/sccspath.c, src/process/shoarg.c, src/process/getuser.c, src/process/gethome.c, src/process/egress.c:
 	stricter gcc warnings
 
-2010-07-03  dickey@invisible-island.net
+2010-07-03  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* src/pathname/track_wd.c, src/curses/win2file.c, src/curses/rawgets.c, src/curses/dumptty.c, src/cm_funcs/rcslast.c, src/unix/uid2s.c, src/curses/dumpwin.c, src/port2vms/name2vms.c, src/port2vms/vms2name.c, src/unix/gid2s.c, src/memory/txtalloc.c, include/td_btree.h, src/compare/btree.c, src/curses/cmdch.c, src/process/catarg.c, src/string/lsbycols.c, src/string/strucpy.c, src/string/strclean.c, include/td_lib.h, src/string/dyn_copy.c, src/string/dyn_cata.c, src/string/dyn_appc.c, src/string/dyn_app.c, src/process/shoarg.c, src/process/walkback.c, src/process/failed.c, src/process/egress.c, src/compare/m2comp.c, src/compare/diffload.c, src/memory/vecedit.c, src/memory/stralloc.c, src/pathname/trnstree.c, src/pathname/stat_fil.c, src/pathname/stat_dir.c, src/pathname/which.c, src/pathname/fp2argv.c, src/pathname/sameleaf.c, src/pathname/fleaf.c, src/pathname/pathcat.c, src/pathname/name2s.c, src/pathname/arg2file.c, src/memory/doalloc.c, include/dyn_str.h, src/cm_funcs/rcsname.c, src/cm_funcs/rcsload.c, src/cm_funcs/svn_last.c, src/cm_funcs/sccs_dir.c, include/sccsdefs.h, src/cm_funcs/rcstemp.c, src/cm_funcs/rcssymbs.c, src/cm_funcs/rcsedit.c, src/cm_funcs/rcs_dir.c, src/cm_funcs/cvslast.c, src/cm_funcs/newzone.c, src/cm_funcs/cmv_dir.c, src/cm_funcs/rcskeys.c:
 	stricter gcc warnings
@@ -477,7 +487,7 @@
 
 	* package/debian/changelog: bump
 
-2010-07-02  dickey@invisible-island.net
+2010-07-02  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* package/debian/changelog: bump
 
@@ -502,7 +512,7 @@
 	use dh_prep rather than "dh_clean -k"
 	make DESTDIR match package name
 
-2010-07-01  dickey@invisible-island.net
+2010-07-01  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* package/debian/control: improve dependencies
 
@@ -525,7 +535,7 @@
 
 	* package/debian/watch: RCS_BASE
 
-2010-06-30  dickey@invisible-island.net
+2010-06-30  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* configure: regen
 
@@ -537,15 +547,15 @@
 
 	* td_make.in: use DESTDIR in INSTALL_BIN, etc., for consistency
 
-2010-06-27  dickey@invisible-island.net
+2010-06-27  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* package/debian/docs: RCS_BASE
 
-2010-06-24  dickey@invisible-island.net
+2010-06-24  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* td_make.in: add $(EXTRA_CPP_OPTS)
 
-2010-06-23  dickey@invisible-island.net
+2010-06-23  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* configure: regen
 
@@ -556,7 +566,7 @@
 	* aclocal.m4: quote params of ifelse()
 	add/use CF_ADD_LIB and CF_ADD_LIBS, for consistency
 
-2010-05-24  dickey@invisible-island.net
+2010-05-24  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* COPYING: update
 
@@ -593,11 +603,11 @@
 	improve checks in CF_CURSES_HEADER, CF_XOPEN_CURSES, CF_XOPEN_SOURCE, e.g.,
 	to work with OpenSolaris.
 
-2010-04-20  dickey@invisible-island.net
+2010-04-20  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* package/debian/compat: RCS_BASE
 
-2010-03-23  dickey@invisible-island.net
+2010-03-23  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* configure: regen
 
@@ -607,7 +617,7 @@
 	improve CF_CURSES_TERM_H for cygwin, which puts term.h in different directory
 	than curses.h
 
-2010-01-14  dickey@invisible-island.net
+2010-01-14  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* configure: regen
 
@@ -617,17 +627,17 @@
 	* aclocal.m4:
 	updates to reduce redefinitions in CF_XOPEN_SOURCE and related macros.
 
-2010-01-01  dickey@invisible-island.net
+2010-01-01  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* package/debian/source/format: RCS_BASE
 
-2009-12-31  dickey@invisible-island.net
+2009-12-31  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* config.guess: 2009-12-30
 
 	* config.sub: 2009-12-31
 
-2009-10-16  dickey@invisible-island.net
+2009-10-16  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* configure: regen
 
@@ -635,7 +645,7 @@
 
 	* src/cm_funcs/svn_last.c: implemented...
 
-2009-10-15  dickey@invisible-island.net
+2009-10-15  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* src/cm_funcs/lastrev.c: add svn to DED_CM_LOOKUP as needed
 
@@ -656,15 +666,15 @@
 
 	* aclocal.m4: resync with my-autoconf (lots of changes)
 
-2009-08-25  dickey@invisible-island.net
+2009-08-25  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* config.guess, config.sub: 2009-08-19
 
-2007-03-25  dickey@invisible-island.net
+2007-03-25  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* mkdirs.sh: resync with my-autoconf
 
-2006-10-29  dickey@invisible-island.net
+2006-10-29  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* configure: regen'd
 
@@ -673,12 +683,12 @@
 	* aclocal.m4: add CF_CURSES_CONFIG and CF_NCURSES_CONFIG
 	fix for CF_MAKEFLAGS
 
-2006-10-01  dickey@invisible-island.net
+2006-10-01  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* src/cm_funcs/sccslast.c, src/cm_funcs/cmv_last.c:
 	gcc warning (time_t != long)
 
-2006-09-05  dickey@invisible-island.net
+2006-09-05  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* src/cm_funcs/rcsargpr.c:
 	allow '$' characters in filenames.  Probably did not originally for some
@@ -697,15 +707,15 @@
 
 	* src/memory/memmove.c: gcc warning
 
-2006-08-14  dickey@invisible-island.net
+2006-08-14  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* config.sub: 2006-8-14
 
-2006-07-22  dickey@invisible-island.net
+2006-07-22  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* config.guess, config.sub: 2006/7/2
 
-2005-10-16  dickey@invisible-island.net
+2005-10-16  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* src/cm_funcs/rcsload.c: appease gcc 4.0.2
 
@@ -717,13 +727,13 @@
 
 	* include/ptypes.h: AIX 5.3 compiler did not accept C++ comments
 
-2005-09-24  dickey@invisible-island.net
+2005-09-24  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* config.guess: 2005/9/19
 
 	* config.sub: 2005/7/8
 
-2005-01-24  dickey@invisible-island.net
+2005-01-24  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* configure: RCS_BASE
 
@@ -739,13 +749,13 @@
 	Fixes from lynx, vile: add check for Intel 8.0 compiler, ensure that
 	_POSIX_C_SOURCE and _XOPEN_SOURCE have values.
 
-2005-01-01  dickey@invisible-island.net
+2005-01-01  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* config.sub: update to 2004/11/30
 
 	* config.guess: update to 2004/11/12
 
-2004-09-16  dickey@invisible-island.net
+2004-09-16  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* aclocal.m4: resync - miscellaneous fixes from lynx, xterm and cdk
 
@@ -753,16 +763,16 @@
 
 	* COPYING: change to diffstat's copyright style
 
-2004-06-26  dickey@invisible-island.net
+2004-06-26  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* config.sub, config.guess: 2004-06-24
 
-2004-03-21  dickey@invisible-island.net
+2004-03-21  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* support/selflink.sh:
 	FreeBSD sh does not set $PWD (apparently csh does).  Use `pwd` instead.
 
-2004-03-08  dickey@invisible-island.net
+2004-03-08  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* configure.in: typo
 
@@ -778,7 +788,7 @@
 	had a couple of flaws (did not initialize the data for check_timestamp
 	properly, and did not read the data from the cache on the first item).
 
-2004-03-07  dickey@invisible-island.net
+2004-03-07  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* include/ptypes.h, src/memory/txtalloc.c, src/memory/doalloc.c, src/curses/rawgets.c, src/curses/on_winch.c, src/compare/diffload.c, src/compare/btree.c, src/compare/cmpqsort.c, src/compare/m2comp.c, src/compare/scomp.c, src/curses/addchnst.c, src/curses/beep.c, src/curses/blip.c, src/curses/cmdch.c, src/curses/dumpchr.c, src/curses/dumptty.c, src/curses/dumpwin.c, src/curses/erasechr.c, src/curses/is_xterm.c, src/curses/killchar.c, src/curses/lnextchr.c, src/curses/logch.c, src/curses/padedit.c, src/curses/rawterm.c, src/curses/resizwin.c, src/curses/savewin.c, src/curses/scr_size.c, src/curses/viewfile.c, src/curses/win2file.c, src/curses/wrepaint.c, src/curses/wresize.c, src/memory/memmove.c, src/memory/stralloc.c, src/memory/vecalloc.c, src/memory/vecedit.c, src/memory/veclen.c, src/pathname/abspath.c, src/pathname/acc_mode.c, src/pathname/add2fnam.c, src/pathname/arg2file.c, src/pathname/copyback.c, src/pathname/denode.c, src/pathname/dlettree.c, src/pathname/dotname.c, src/pathname/editfile.c, src/pathname/edittree.c, src/pathname/file2arg.c, src/pathname/file2mem.c, src/pathname/fileblox.c, src/pathname/filecopy.c, src/pathname/filesize.c, src/pathname/fleaf.c, src/pathname/fleaf14.c, src/pathname/fp2argv.c, src/pathname/ftype.c, src/pathname/ftype2.c, src/pathname/is_spath.c, src/pathname/istextfl.c, src/pathname/mem2file.c, src/pathname/modechar.c, src/pathname/name2s.c, src/pathname/pathcat.c, src/pathname/pathcmp.c, src/pathname/pathhead.c, src/pathname/pathleaf.c, src/pathname/relpath.c, src/pathname/samehead.c, src/pathname/sameleaf.c, src/pathname/stat_dir.c, src/pathname/stat_fil.c, src/pathname/track_wd.c, src/pathname/trimpath.c, src/pathname/trnstree.c, src/pathname/walktree.c, src/pathname/which.c, src/port2vms/dir2path.c, src/port2vms/name2vms.c, src/port2vms/path2dir.c, src/port2vms/path2vms.c, src/port2vms/rmsio.c, src/port2vms/time2vms.c, src/port2vms/uid2s.c, src/port2vms/utimes.c, src/port2vms/vms2name.c, src/port2vms/vms_dirs.c, src/port2vms/vms_pthc.c, src/port2vms/vms_rpth.c, src/port2vms/vms_wild.c, src/port2vms/zone2vms.c, src/process/bldarg.c, src/process/catarg.c, src/process/catchall.c, src/process/egress.c, src/process/execute.c, src/process/failed.c, src/process/for_admn.c, src/process/for_user.c, src/process/gethome.c, src/process/getopt.c, src/process/getuser.c, src/process/in_group.c, src/process/interact.c, src/process/makeargv.c, src/process/revert.c, src/process/savesuid.c, src/process/shoarg.c, src/process/showuids.c, src/process/usercopy.c, src/process/userprot.c, src/process/walkback.c, src/sheet/count_ss.c, src/sheet/field_of.c, src/sheet/ss_field.c, src/string/dftenv.c, src/string/dotcmp.c, src/string/dyn_app.c, src/string/dyn_appc.c, src/string/dyn_cata.c, src/string/dyn_copy.c, src/string/dyn_str.c, src/string/lsbycols.c, src/string/ltostr.c, src/string/strbcmp.c, src/string/strclean.c, src/string/strcount.c, src/string/strerror.c, src/string/strtrim.c, src/string/strucmp.c, src/string/strucpy.c, src/string/strwcmp.c, src/unix/gid2s.c, src/unix/s2gid.c, src/unix/s2uid.c, src/unix/setmtime.c, src/unix/uid2s.c, test/compare/test_cmp.c, include/td_ext.h, include/td_curse.h, include/td_regex.h, include/td_scomp.h, include/td_lib.h, include/dyn_str.h, include/deltree.h, include/td_btree.h, include/td_qsort.h, include/vms_dirs.h, include/td_sheet.h, include/sccsdefs.h, include/rcsdefs.h, include/port2vms.h, include/cmv_defs.h, src/cm_funcs/cmv_dir.c, src/cm_funcs/cmv_last.c, src/cm_funcs/cutoff.c, src/cm_funcs/cvslast.c, src/cm_funcs/lastrev.c, src/cm_funcs/newzone.c, src/cm_funcs/next_ver.c, src/cm_funcs/packdate.c, src/cm_funcs/rcs_dir.c, src/cm_funcs/rcsargpr.c, src/cm_funcs/rcsdebug.c, src/cm_funcs/rcsedit.c, src/cm_funcs/rcskeys.c, src/cm_funcs/rcslast.c, src/cm_funcs/rcsload.c, src/cm_funcs/rcslocks.c, src/cm_funcs/rcsname.c, src/cm_funcs/rcspath.c, src/cm_funcs/rcsperm.c, src/cm_funcs/rcssymbs.c, src/cm_funcs/rcstemp.c, src/cm_funcs/rcstime.c, src/cm_funcs/samebr.c, src/cm_funcs/sccs_dir.c, src/cm_funcs/sccsdbug.c, src/cm_funcs/sccslast.c, src/cm_funcs/sccsname.c, src/cm_funcs/sccspath.c, src/cm_funcs/vcs_file.c, src/cm_funcs/vercmp.c:
 	remove K&R support, indent'd
@@ -797,20 +807,20 @@
 
 	* makefile.in: remove certify
 
-2004-02-23  dickey@invisible-island.net
+2004-02-23  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* config.sub: 2004-02-23
 
-2004-02-20  dickey@invisible-island.net
+2004-02-20  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* aclocal.m4:
 	resync (mostly CF_XOPEN_SOURCE) with macros from lynx/ncurses/tin
 
-2004-02-17  dickey@invisible-island.net
+2004-02-17  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* config.guess: 2004-02-16
 
-2004-02-09  dickey@invisible-island.net
+2004-02-09  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* include/td_curse.h:
 	030430 Solaris 2.5.1 curses.h includes both termio.h and termios.h;
@@ -819,15 +829,15 @@
 	VINTR, which turns off the ifdef in Sun's curses.h that would include
 	termio.h
 
-2004-01-06  dickey@invisible-island.net
+2004-01-06  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* config.sub, config.guess: 2004-01-05
 
-2003-11-29  dickey@invisible-island.net
+2003-11-29  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* install-sh: resync with my-autoconf
 
-2003-11-07  dickey@invisible-island.net
+2003-11-07  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* aclocal.m4: workaround for HPUX 11.23
 
@@ -838,12 +848,12 @@
 	* configure.in:
 	use CF_XOPEN_SOURCE rather than CF_GNU_SOURCE (HPUX's a worse case)
 
-2003-11-06  dickey@invisible-island.net
+2003-11-06  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* aclocal.m4:
 	ensure we're always using the derived curses.h header include
 
-2003-11-05  dickey@invisible-island.net
+2003-11-05  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* include/td_curse.h:
 	workaround for HPUX curses, which has no getmaxx(), etc.,
@@ -862,13 +872,13 @@
 	case-independent names on cygwin and os/2,
 	use EXEEXT and OBJEXT
 
-2003-10-23  dickey@invisible-island.net
+2003-10-23  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* config.sub: 2003-08-18
 
 	* config.guess: update
 
-2003-07-02  dickey@invisible-island.net
+2003-07-02  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* src/curses/cmdch.c: add a check for KEY_RESIZE
 
@@ -893,27 +903,27 @@
 	add fallback definitions for wBegX() and wBegY(), needed with netbsd curses
 	since it isn't like BSD 4.4 curses any more.
 
-2003-06-10  dickey@invisible-island.net
+2003-06-10  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* aclocal.m4:
 	resync (fix for -Winline with gcc 3.3, fix for CSSC search path on Debian 3.0)
 
-2003-06-02  dickey@invisible-island.net
+2003-06-02  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* config.sub: 2003-05-24 (tin)
 
-2003-05-22  dickey@invisible-island.net
+2003-05-22  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* config.guess: 2003-05-22 (tin)
 
-2003-04-30  dickey@invisible-island.net
+2003-04-30  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* src/pathname/samehead.c:
 	didn't notice when changing isPath() to isSlash() that the former did a
 	strchr, which allowed an EOS character to "match".  Change logic to explicitly
 	allow EOS.
 
-2003-04-26  dickey@invisible-island.net
+2003-04-26  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* src/cm_funcs/cvslast.c:
 	fix timezone of timestamps (it looked harder than it really was)
@@ -922,7 +932,7 @@
 
 	* src/cm_funcs/lastrev.c: add cvslast
 
-2003-04-25  dickey@invisible-island.net
+2003-04-25  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* src/cm_funcs/modules: add cvslast
 
@@ -950,17 +960,17 @@
 	* aclocal.m4:
 	resync - my-autoconf uses version-number/timestamp on each macro now.
 
-2003-02-22  dickey@invisible-island.net
+2003-02-22  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* config.sub, config.guess: resync from tin
 
-2003-01-16  dickey@invisible-island.net
+2003-01-16  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* aclocal.m4:
 	oops - fixes for --with-ncurses, --with-ncursesw in almost all locations
 	outside /usr
 
-2002-12-21  dickey@invisible-island.net
+2002-12-21  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* aclocal.m4:
 	fixes to make --with-ncursesw configure not be confused by older curses.h's
@@ -983,11 +993,11 @@
 
 	* configure.in: first cut of cleanup for --with-ncursesw option
 
-2002-12-04  dickey@invisible-island.net
+2002-12-04  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* config.sub, config.guess: resync with my-autoconf
 
-2002-07-05  dickey@invisible-island.net
+2002-07-05  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* include/td_curse.h, include/ptypes.h, src/curses/cmdch.c:
 	change ifdef convention to work with "gcc -Wundef"
@@ -1010,7 +1020,7 @@
 	* configure.in:
 	folded checks for term.h and termcap.h into CF_CURSES_TERM_H and CF_CURSES_TERMCAP
 
-2002-07-03  dickey@invisible-island.net
+2002-07-03  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* src/cm_funcs/packdate.c:
 	make this work on Solaris (and seems to work still on Linux).
@@ -1033,28 +1043,28 @@
 
 	* include/ptypes.h: use UCH() to fix char-subscript warnings in gcc.
 
-2002-06-29  dickey@invisible-island.net
+2002-06-29  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* mkdirs.sh: resync with my-autoconf
 
-2002-05-02  dickey@invisible-island.net
+2002-05-02  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* src/cm_funcs/packdate.c:
 	a tiny nit to adjust the year if it's given as 1999 rather than 99.
 
-2002-04-30  dickey@invisible-island.net
+2002-04-30  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* src/cm_funcs/sccslast.c:
 	jedmics/config/make_dll.w95 used ":0" for "2000", so I tweaked to workaround
 
-2002-04-26  dickey@invisible-island.net
+2002-04-26  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* aclocal.m4:
 	oops - noticed with tin that I had an error in the $HOME stuff
 
 	* config.sub: resync
 
-2002-04-21  dickey@invisible-island.net
+2002-04-21  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* src/cm_funcs/packdate.c: use mktime() if available.
 
@@ -1062,7 +1072,7 @@
 
 	* configure.in: add check for mktime()
 
-2002-04-16  dickey@invisible-island.net
+2002-04-16  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* aclocal.m4: add CF_GNU_SOURCE (needed for Debian unstable).
 	change CF_TM_GMTOFF to use headers/ifdef's from AC_HEADER_TIME
@@ -1083,7 +1093,7 @@
 
 	* include/td_curse.h: correct include-path for <ncurses/termcap.h>
 
-2002-03-26  dickey@invisible-island.net
+2002-03-26  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* src/cm_funcs/sccs_dir.c:
 	got cm-fetch to work by lowercasing the pathnames, to work around occasional
@@ -1095,21 +1105,21 @@
 
 	* src/pathname/abspath.c: force results to lowercase with cygwin.
 
-2002-03-20  dickey@invisible-island.net
+2002-03-20  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* config.guess: resync
 
-2002-03-19  dickey@invisible-island.net
+2002-03-19  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* include/sccsdefs.h:
 	don't use 14-character names just because of CmVision, since that makes it
 	hard to distinguish linux/linux2 builds
 
-2002-01-23  dickey@invisible-island.net
+2002-01-23  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* config.guess: resync with my-autoconf
 
-2002-01-13  dickey@invisible-island.net
+2002-01-13  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* include/td_curse.h: fix for ncurses termcap.h
 
@@ -1123,19 +1133,19 @@
 
 	* aclocal.m4: resync with my-autoconf
 
-2002-01-02  dickey@invisible-island.net
+2002-01-02  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* config.sub: resync with my-autoconf
 
-2001-12-15  dickey@invisible-island.net
+2001-12-15  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* config.guess, config.sub: resync with my-autoconf
 
-2001-12-12  dickey@invisible-island.net
+2001-12-12  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* td_make.in: add @CURSES_LIBS@ and @LDFLAGS@ substitutions.
 
-2001-12-11  dickey@invisible-island.net
+2001-12-11  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* src/cm_funcs/rcslast.c: nit to make rcs_dir() provide $RCS_VAULT info
 
@@ -1153,24 +1163,24 @@
 
 	* aclocal.m4: check for -lregex, for cygwin
 
-2001-12-07  dickey@invisible-island.net
+2001-12-07  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* aclocal.m4: resync with macro updates for lynx
 
-2001-10-19  dickey@invisible-island.net
+2001-10-19  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* include/td_curse.h:
 	add ifdef for <ncurses/curses.h>, needed to use <unctrl.h> if I build using
 	the with-local-ncurses script, i.e., putting it in /usr/local/ncurses/...
 
-2001-08-28  dickey@invisible-island.net
+2001-08-28  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* aclocal.m4: fix for ncurses/term.h
 	fix for SHELL in CF_MAKEFLAGS
 
 	* configure.in: add check for ncurses/term.h
 
-2001-07-15  dickey@clark.net
+2001-07-15  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/curses/dumpwin.c:
 	fix for unknown curses style (struct ldat not defined in ncurses)
@@ -1181,20 +1191,20 @@
 	* configure.in: split-out CF_CURSES_CPPFLAGS
 	use AC_FUNC_VFORK rather than AC_VFORK
 
-2001-07-11  dickey@clark.net
+2001-07-11  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/cm_funcs/packdate.c:
 	undef timezone, which is (mis)defined in U/Win's time.h for some macro
 
-2001-06-22  dickey@clark.net
+2001-06-22  Thomas E. Dickey  <dickey@clark.net>
 
 	* install-sh: resync with my-autoconf
 
-2001-05-19  dickey@clark.net
+2001-05-19  Thomas E. Dickey  <dickey@clark.net>
 
 	* config.sub, config.guess: resync: autoconf 2.50
 
-2001-05-14  dickey@clark.net
+2001-05-14  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/curses/rawgets.c:
 	rename 'newline' to 'new_line' to work with U/Win curses
@@ -1207,7 +1217,7 @@
 	* src/curses/blip.c, src/curses/padedit.c, src/curses/scr_size.c, src/curses/viewfile.c, src/memory/doalloc.c, src/pathname/abspath.c, src/pathname/add2fnam.c, src/pathname/dlettree.c, src/pathname/editfile.c, src/pathname/edittree.c, src/pathname/file2mem.c, src/pathname/fileblox.c, src/pathname/fleaf.c, src/pathname/ftype2.c, src/pathname/which.c, src/port2vms/vms_rpth.c, src/process/catchall.c, src/process/execute.c, src/process/for_admn.c, src/process/for_user.c, src/process/gethome.c, src/process/getopt.c, src/process/getuser.c, src/process/revert.c, src/process/showuids.c, src/process/usercopy.c, src/process/userprot.c, src/process/walkback.c, src/unix/s2gid.c, src/unix/s2uid.c, include/port2vms.h, include/ptypes.h, include/td_ext.h, include/vms_dirs.h:
 	rename 'unix' to 'SYS_UNIX' since U/Win complains
 
-2001-04-15  dickey@clark.net
+2001-04-15  Thomas E. Dickey  <dickey@clark.net>
 
 	* aclocal.m4:
 	fixes for CF_NCURSES_CPPFLAGS to work around conflicting header files in
@@ -1217,11 +1227,11 @@
 
 	* configure.in: use "sort -u" anyway...
 
-2001-02-13  dickey@clark.net
+2001-02-13  Thomas E. Dickey  <dickey@clark.net>
 
 	* config.sub, config.guess: resync with my-autoconf
 
-2001-01-29  dickey@clark.net
+2001-01-29  Thomas E. Dickey  <dickey@clark.net>
 
 	* configure.in: add CF_MIXEDCASE_FILENAMES
 
@@ -1231,18 +1241,18 @@
 	* aclocal.m4: add CF_MIXEDCASE_FILENAMES
 	updates for OS/2 and ncurses
 
-2001-01-11  dickey@clark.net
+2001-01-11  Thomas E. Dickey  <dickey@clark.net>
 
 	* config.guess: update
 
 	* config.sub: update - OS/2 EMX in subversions
 
-2001-01-10  dickey@clark.net
+2001-01-10  Thomas E. Dickey  <dickey@clark.net>
 
 	* aclocal.m4:
 	more resync for CFLAGS/CPPFLAGS, and a fix for ncurses-version not checked
 
-2000-12-24  dickey@clark.net
+2000-12-24  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/pathname/istextfl.c, src/curses/logch.c:
 	use CHR_PTYPES rather than ctype.h to cover isascii() fallback
@@ -1258,7 +1268,7 @@
 	* src/process/shoarg.c, src/process/execute.c, src/curses/dumpchr.c:
 	replace ctype.h by CHR_PTYPES to allow for toascii() fallback
 
-2000-12-23  dickey@clark.net
+2000-12-23  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/process/bldarg.c:
 	use CHR_PTYPES to resolve toascii() properly on QNX
@@ -1269,7 +1279,7 @@
 	* include/ptypes.h:
 	add quick hack for toascii() to make this build on QNX
 
-2000-12-02  dickey@clark.net
+2000-12-02  Thomas E. Dickey  <dickey@clark.net>
 
 	* include/td_lib.h:
 	renamed strlcpy() to strlwcpy() to avoid bogus function on *BSD's
@@ -1277,7 +1287,7 @@
 	* src/cm_funcs/lastrev.c, src/port2vms/vms_rpth.c, src/string/strucpy.c:
 	renamed strlcpy() to strlwrcpy() to avoid conflict with bogus function on *BSD's
 
-2000-11-01  dickey@clark.net
+2000-11-01  Thomas E. Dickey  <dickey@clark.net>
 
 	* aclocal.m4: various changes to port to OS/2 EMX
 
@@ -1285,15 +1295,15 @@
 
 	* include/ptypes.h: OS/2 EMX has DOS-style path-separator
 
-2000-10-25  dickey@clark.net
+2000-10-25  Thomas E. Dickey  <dickey@clark.net>
 
 	* config.guess, config.sub: resync
 
-2000-10-19  dickey@clark.net
+2000-10-19  Thomas E. Dickey  <dickey@clark.net>
 
 	* configure.in: add a check for newterm
 
-2000-10-18  dickey@clark.net
+2000-10-18  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/curses/dumpwin.c:
 	OSF1 doesn't use _leave/_leaveok, but _leave_ (I don't want to write a
@@ -1301,25 +1311,25 @@
 
 	* aclocal.m4: updates from lynx/tin/xterm, mainly CF_CURSES_LIBS
 
-2000-08-24  dickey@clark.net
+2000-08-24  Thomas E. Dickey  <dickey@clark.net>
 
 	* config.guess, config.sub: OS/2
 
-2000-07-21  dickey@clark.net
+2000-07-21  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/cm_funcs/sccs_dir.c:
 	fix in case we're inside the vault and want to read the path w/o translation
 
 	* src/cm_funcs/sccslast.c: mods to support $SCCS_VAULT
 
-2000-07-18  dickey@clark.net
+2000-07-18  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/cm_funcs/cutoff.c:
 	a Y2K fix: SunOS and Solaris both don't use an extra 2 digits for century,
 	so we need the leading 2-digit 'yy' field which is less than (20)38 for
 	adding an offset of 100.
 
-2000-06-30  dickey@clark.net
+2000-06-30  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/memory/txtalloc.c: gcc warnings (missing initializer)
 
@@ -1337,11 +1347,11 @@
 	* src/cm_funcs/sccs_dir.c:
 	oops - I was not skipping ':' if I found one, making an infinite loop
 
-2000-06-18  dickey@clark.net
+2000-06-18  Thomas E. Dickey  <dickey@clark.net>
 
 	* config.guess, config.sub: RCS_BASE
 
-2000-01-24  dickey@clark.net
+2000-01-24  Thomas E. Dickey  <dickey@clark.net>
 
 	* aclocal.m4: resync with my-autoconf
 
@@ -1357,7 +1367,7 @@
 	revise DIR_PTYPES as per autoconf advice, making dirent.h the preferred one,
 	and adding NAMLEN() macro.
 
-2000-01-17  dickey@clark.net
+2000-01-17  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/td_defns.mk:
 	change definition of $Z to $(LIB_DEPS) to get the LIB_PREFIX variable
@@ -1366,14 +1376,14 @@
 	* src/pathname/which.c:
 	mods to check for ".exe" suffixes in 'executable()' on OS/2 and Win32.
 
-2000-01-09  dickey@clark.net
+2000-01-09  Thomas E. Dickey  <dickey@clark.net>
 
 	* aclocal.m4: various minor fixes from tin and ncurses
 
 	* src/cm_funcs/sccslast.c:
 	fix for Solaris after Y2K fix (uses "00" for 2000).
 
-2000-01-04  dickey@clark.net
+2000-01-04  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/cm_funcs/sccslast.c:
 	add sccsyear() to workaround Solaris's y2k problem
@@ -1383,11 +1393,11 @@
 
 	* include/sccsdefs.h: add 'sccsyear()' to hide y2k problem
 
-2000-01-01  dickey@clark.net
+2000-01-01  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/curses/erasechr.c, src/curses/killchar.c: fix for bsd 4.4 curses
 
-1999-12-31  dickey@clark.net
+1999-12-31  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/cm_funcs/cmv_last.c: move 1900's to packdate()
 
@@ -1404,15 +1414,15 @@
 
 	* td_make.in: split-out CPP_CONFIG to make my override with -DTEST work
 
-1999-11-30  dickey@clark.net
+1999-11-30  Thomas E. Dickey  <dickey@clark.net>
 
 	* mkdirs.sh: OS/2 fix
 
-1999-08-16  dickey@clark.net
+1999-08-16  Thomas E. Dickey  <dickey@clark.net>
 
 	* configure.in: add test for ttyname(), needed for BeOS port
 
-1999-08-10  dickey@clark.net
+1999-08-10  Thomas E. Dickey  <dickey@clark.net>
 
 	* include/td_curse.h: oops - wrong place for the last definitions
 
@@ -1431,25 +1441,25 @@
 	* configure.in:
 	chown and link have to be tested for existence, for 'ded'
 
-1999-01-15  dickey@clark.net
+1999-01-15  Thomas E. Dickey  <dickey@clark.net>
 
 	* aclocal.m4: nits from lynx
 
 	* aclocal.m4: oops: typo in the function that tests for stat.st_blocks
 
-1998-12-09  dickey@clark.net
+1998-12-09  Thomas E. Dickey  <dickey@clark.net>
 
 	* install-sh: resync with my-autoconf
 
-1998-09-17  dickey@clark.net
+1998-09-17  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/cm_funcs/cmv_last.c: fix a nit with the binary-files
 
-1998-08-22  dickey@clark.net
+1998-08-22  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/cm_funcs/cmv_dir.c: fix an int/long mismatch
 
-1998-08-21  dickey@clark.net
+1998-08-21  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/cm_funcs/packdate.c:
 	back out the 'daylight' symbol change since it does not work on Solaris.
@@ -1463,23 +1473,23 @@
 	* src/cm_funcs/cmv_last.c:
 	change so cmv_lock returns binary-file's mod-times.
 
-1998-08-20  dickey@clark.net
+1998-08-20  Thomas E. Dickey  <dickey@clark.net>
 
 	* include/cmv_defs.h:
 	add to cmv_lock's interface so we return binary-file's mod-time.
 
-1998-07-21  dickey@clark.net
+1998-07-21  Thomas E. Dickey  <dickey@clark.net>
 
 	* configure.in: add a check for gethostname()
 
 	* aclocal.m4:
 	improved CF_CURSES_FUNCS using a check for _XOPEN_SOURCE_EXTENDED
 
-1998-07-01  dickey@clark.net
+1998-07-01  Thomas E. Dickey  <dickey@clark.net>
 
 	* aclocal.m4: pick up change the puts cursesX ahead of curses
 
-1998-06-29  dickey@clark.net
+1998-06-29  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/pathname/fileblox.c: use 'const' because dedsort.c is doing that.
 
@@ -1491,7 +1501,7 @@
 	* aclocal.m4:
 	tweaks for detecting putp and tigetstr functions, which are declared in term.h
 
-1998-05-30  dickey@clark.net
+1998-05-30  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/cm_funcs/lastrev.c: g++
 
@@ -1516,7 +1526,7 @@
 	* src/cm_funcs/rcsedit.c, src/cm_funcs/rcsload.c, src/cm_funcs/rcssymbs.c, src/compare/m2comp.c, src/sheet/field_of.c, src/string/dyn_app.c, src/string/dyn_cata.c, src/string/dyn_copy.c, src/string/lsbycols.c:
 	compile:g++
 
-1998-05-29  dickey@clark.net
+1998-05-29  Thomas E. Dickey  <dickey@clark.net>
 
 	* include/td_ext.h: compile with g++
 
@@ -1535,15 +1545,15 @@
 
 	* aclocal.m4: add a test for cchar_t, needed for ifdef's for OSF/1 4.0
 
-1998-04-27  dickey@clark.net
+1998-04-27  Thomas E. Dickey  <dickey@clark.net>
 
 	* configure.in: must test for seteuid for HP-UX's checkin
 
-1998-04-25  dickey@clark.net
+1998-04-25  Thomas E. Dickey  <dickey@clark.net>
 
 	* aclocal.m4: resync, from xterm/ncurses/lynx fixes
 
-1998-03-19  dickey@clark.net
+1998-03-19  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/curses/win2file.c:
 	hack to build on OSF/1 4.0, where cchar_t is what we assume for chtype.
@@ -1552,7 +1562,7 @@
 	define _XOPEN_SOURCE_EXTENDED to pick up the extended curses functions
 	such as winnstr on OSF/1 4.0
 
-1998-03-01  dickey@clark.net
+1998-03-01  Thomas E. Dickey  <dickey@clark.net>
 
 	* configure.in: invoke CF_PROG_EXT, CF_LIB_PREFIX
 
@@ -1576,23 +1586,23 @@
 
 	* aclocal.m4: EMX puts sys_errlist in <stdlib.h>!
 
-1998-02-20  dickey@clark.net
+1998-02-20  Thomas E. Dickey  <dickey@clark.net>
 
 	* aclocal.m4: update CF_DISABLE_ECHO's help-message
 
-1998-02-19  dickey@clark.net
+1998-02-19  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/curses/resizwin.c: fix for SunOS 4.x BSD-curses
 
 	* src/curses/savewin.c: fix for SunOS 4.x BSD curses
 
-1998-02-18  dickey@clark.net
+1998-02-18  Thomas E. Dickey  <dickey@clark.net>
 
 	* include/headers: dropped acl.h, since it is apollo-specific
 
 	* configure.in: trim off leading dot as special-case
 
-1998-02-17  dickey@clark.net
+1998-02-17  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/curses/cmdch.c:
 	make this actually work for bsd4.4 curses on Linux (the home/end/ppage/npage
@@ -1615,7 +1625,7 @@
 
 	* src/string/strerror.c: must define ERR_PTYPES to get extern sys_nerr
 
-1998-02-16  dickey@clark.net
+1998-02-16  Thomas E. Dickey  <dickey@clark.net>
 
 	* include/Makefile: drop acl.h from list
 
@@ -1625,7 +1635,7 @@
 
 	* configure.in: check for putp, tigetstr, but no winchstr
 
-1998-02-15  dickey@clark.net
+1998-02-15  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/curses/logch.c, src/curses/cmdch.c: add home/end/ppage/npage keys
 
@@ -1664,21 +1674,21 @@
 	* makefile.in:
 	remove td_config program, because my autoconf patch makes it obsolete
 
-1998-02-02  dickey@clark.net
+1998-02-02  Thomas E. Dickey  <dickey@clark.net>
 
 	* mkdirs.sh: from autoconf
 
-1997-09-16  dickey@clark.net
+1997-09-16  Thomas E. Dickey  <dickey@clark.net>
 
 	* makefile.in: add dummy $(SOURCES) for stupid 'make' programs
 
-1997-09-14  dickey@clark.net
+1997-09-14  Thomas E. Dickey  <dickey@clark.net>
 
 	* support/ins_mak: remove the sed script when done
 
 	* makefile.in: install td_config
 
-1997-09-13  dickey@clark.net
+1997-09-13  Thomas E. Dickey  <dickey@clark.net>
 
 	* configure.in: test for touchwin
 
@@ -1691,7 +1701,7 @@
 
 	* aclocal.m4: split-out CF_SRC_MAKEFILE macro
 
-1997-09-12  dickey@clark.net
+1997-09-12  Thomas E. Dickey  <dickey@clark.net>
 
 	* aclocal.m4: add CF_TOP_SRCDIR
 
@@ -1705,7 +1715,7 @@
 
 	* aclocal.m4: fixes for TD_CONFIG
 
-1997-09-11  dickey@clark.net
+1997-09-11  Thomas E. Dickey  <dickey@clark.net>
 
 	* makefile.in: add td_config to install/deinstall rules
 
@@ -1769,7 +1779,7 @@
 
 	* td_make.in: use TD_LIB,TD_INC symbols instead of $L, $I
 
-1997-09-10  dickey@clark.net
+1997-09-10  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/td_rules.mk, aclocal.m4: first cut of FreeBSD port
 
@@ -1785,7 +1795,7 @@
 
 	* test/td_rules.mms, test/td_defns.mms: RCS_BASE
 
-1997-09-09  dickey@clark.net
+1997-09-09  Thomas E. Dickey  <dickey@clark.net>
 
 	* test/unix/modules, test/string/modules, test/process/modules, test/port2vms/modules, test/pathname/modules, test/memory/modules, test/curses/modules:
 	RCS_BASE
@@ -1830,7 +1840,7 @@
 
 	* src/makefile.in: all makefiles are generated
 
-1997-09-08  dickey@clark.net
+1997-09-08  Thomas E. Dickey  <dickey@clark.net>
 
 	* aclocal.m4: first cut of macro to make src/*/makefiles
 
@@ -1854,7 +1864,7 @@
 
 	* td_make.in: SET_MAKE macro
 
-1997-09-07  dickey@clark.net
+1997-09-07  Thomas E. Dickey  <dickey@clark.net>
 
 	* support/ins_hdr: RCS_BASE
 
@@ -1928,7 +1938,7 @@
 
 	* configure.in: rename td_XXX/TD_XXX to cf_XXX/CF_XXX
 
-1997-03-15  dickey@clark.net
+1997-03-15  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/curses/cmdch.c: fix an ifdef-conflict
 
@@ -1936,17 +1946,17 @@
 	ifdef'd out the code that looks for escape sequences which was conflicting
 	with the keypad() code
 
-1997-02-11  dickey@clark.net
+1997-02-11  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/curses/resizwin.c: add fall-thru for SVr4-style resizing
 
 	* aclocal.m4: add test for gpm before ncurses
 
-1997-01-18  dickey@clark.net
+1997-01-18  Thomas E. Dickey  <dickey@clark.net>
 
 	* configure.in: add test for use_default_colors
 
-1997-01-04  dickey@clark.net
+1997-01-04  Thomas E. Dickey  <dickey@clark.net>
 
 	* aclocal.m4:
 	when adding subdirectories of .../include to include-path, add the
@@ -1956,13 +1966,13 @@
 	oops: ANSI_VARARGS test broke because I declared foo as void.
 	(wasn't an _error_ with gcc)
 
-1997-01-02  dickey@clark.net
+1997-01-02  Thomas E. Dickey  <dickey@clark.net>
 
 	* include/td_ext.h: realpath()
 
 	* configure.in: forgot to change --with-prototypes internal variable
 
-1996-12-27  dickey@clark.net
+1996-12-27  Thomas E. Dickey  <dickey@clark.net>
 
 	* aclocal.m4: add TD_VARARGS
 
@@ -1981,28 +1991,28 @@
 	* aclocal.m4:
 	corrected tests for tm.tm_isdst and tm.tm_zone, which somehow ran together
 
-1996-10-20  dickey@clark.net
+1996-10-20  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/curses/wrepaint.c: fix bsd4.4 version on Linux using macros
 
 	* aclocal.m4: $ac_cv_lib_XXXX needs function name also
 
-1996-09-25  dickey@clark.net
+1996-09-25  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/curses/cmdch.c:
 	repair interpretation of arrow-keys (broken during mods for sysv-curses,
 	which _has_ arrow keys)
 
-1996-09-03  dickey@clark.net
+1996-09-03  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/cm_funcs/sccslast.c: ignore removed-revisions
 
-1996-05-23  dickey@clark.net
+1996-05-23  Thomas E. Dickey  <dickey@clark.net>
 
 	* include/td_regex.h:
 	oops: on Unixware, was freeing address of pointer, not pointer
 
-1996-04-10  dickey@clark.net
+1996-04-10  Thomas E. Dickey  <dickey@clark.net>
 
 	* aclocal.m4: check for 'timezone' and 'daylight' symbols
 
@@ -2010,41 +2020,41 @@
 	corrected a problem with computing the file's path for a branch that
 	is off a subdirectory rather than the whole project-tree
 
-1996-04-08  dickey@clark.net
+1996-04-08  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/cm_funcs/packdate.c:
 	extern symbol 'daylight' is an extra flag on IRIX (probably other sysvr4)
 	to indicate whether we do daylight-savings adjustment.  I'm pretty sure
 	that older systems embedded the adjustment into 'timezone'.
 
-1996-03-20  dickey@clark.net
+1996-03-20  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/curses/lnextchr.c: both HPUX and CLIX don't have VLNEXT
 
-1996-02-16  dickey@clark.net
+1996-02-16  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/cm_funcs/newzone.c: args to 'putenv()' cannot be on the stack...
 
-1996-02-05  dickey@clark.net
+1996-02-05  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/curses/rawgets.c:
 	prevent write to lower-right corner; sysvr4 curses emits a newline...
 
-1996-01-10  dickey@clark.net
+1996-01-10  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/pathname/abspath.c:
 	was incorrectly getting leaf in abshome for ~-parsing, rather than the
 	first segment of the pathname
 
-1996-01-09  dickey@clark.net
+1996-01-09  Thomas E. Dickey  <dickey@clark.net>
 
 	* configure.in: added tests for wscrl, wsetscrreg
 
-1995-12-24  dickey@clark.net
+1995-12-24  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/curses/bindkeys.c: typo
 
-1995-12-16  dickey@clark.net
+1995-12-16  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/curses/rawterm.c:
 	moved intrflush & keypad calls from cmdch, just in case spawned process
@@ -2058,7 +2068,7 @@
 	* src/curses/cmdch.c, src/curses/rawterm.c:
 	added hooks to use ncurses mouse-support
 
-1995-12-15  dickey@clark.net
+1995-12-15  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/curses/wresize.c:
 	use definition for GOOD_TOUCHWIN to distinguish solaris-curses from
@@ -2069,11 +2079,11 @@
 
 	* include/td_curse.h: added def for GOOD_TOUCHWIN
 
-1995-11-07  dickey@clark.net
+1995-11-07  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/curses/rawgets.c: corrected loop-limit in ShowAt()
 
-1995-11-05  dickey@clark.net
+1995-11-05  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/pathname/name2s.c: added tilde to shell-chars
 
@@ -2088,7 +2098,7 @@
 	corrected a test that's designed to prevent invoking ClearIt() if we've
 	filled the line anyway (prevents wraparound problems in ncurses, etc.)
 
-1995-11-04  dickey@clark.net
+1995-11-04  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/curses/rawgets.c:
 	lots of little tweaks to make column-80 work properly (tested with ncurses
@@ -2099,7 +2109,7 @@
 	* include/td_curse.h: drop SYS5_CURSES definition
 	added better fallbacks for wMaxX/wMaxY
 
-1995-11-02  dickey@clark.net
+1995-11-02  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/curses/rawgets.c: mods to display 80th column
 
@@ -2114,7 +2124,7 @@
 	further disentangling predefined $LIBS values with -lcurses vs -lncurses
 	(to make cfg-bsd43 work)
 
-1995-10-31  dickey@clark.net
+1995-10-31  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/port2vms/zone2vms.c: mods so this (should) compile on AIX
 
@@ -2123,11 +2133,11 @@
 	* src/curses/cmdch.c:
 	mods to work on AIX, whose curses maps newline to KEY_ENTER
 
-1995-10-21  dickey@clark.net
+1995-10-21  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/curses/erasechr.c: corrected ifdefs in eraseword()
 
-1995-10-20  dickey@clark.net
+1995-10-20  Thomas E. Dickey  <dickey@clark.net>
 
 	* include/td_curse.h: added function lnext_char()
 
@@ -2135,7 +2145,7 @@
 
 	* src/curses/Makefile: added lnextchr.c
 
-1995-10-14  dickey@clark.net
+1995-10-14  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/port2vms/Makefile: dummy 'ALL' breaks normal compiles...
 
@@ -2173,14 +2183,14 @@
 
 	* src/pathname/fleaf14.c: use MODULE_ID
 
-1995-09-20  dickey@clark.net
+1995-09-20  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/pathname/fileblox.c:
 	make this compile on HPUX (which has NINDIR with arguments for file-system)
 
 	* src/pathname/fileblox.c: use MODULE_ID
 
-1995-09-18  dickey@clark.net
+1995-09-18  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/curses/bindkeys.c: draft (incomplete) of hashing
 
@@ -2188,12 +2198,12 @@
 
 	* src/curses/keycode.c: RCS_BASE
 
-1995-09-16  dickey@clark.net
+1995-09-16  Thomas E. Dickey  <dickey@clark.net>
 
 	* configure.in, aclocal.m4:
 	hack to make 'lstat' configure with Linux + gcc 2.7.0
 
-1995-09-14  dickey@clark.net
+1995-09-14  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/unix/gid2s.c: lint test-driver
 	use memcpy to avoid possible alignment problem
@@ -2212,7 +2222,7 @@
 
 	* src/memory/txtalloc.c: use MODULE_ID
 
-1995-09-04  dickey@clark.net
+1995-09-04  Thomas E. Dickey  <dickey@clark.net>
 
 	* aclocal.m4:
 	added fix to let me override curses libs (since the shared libraries
@@ -2261,7 +2271,7 @@
 
 	* src/compare/btree.c: use MODULE_ID
 
-1995-09-03  dickey@clark.net
+1995-09-03  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/unix/gid2s.c:
 	rewrote using btree to allow for systems that may have a _lot_ of groups
@@ -2273,11 +2283,11 @@
 	rewrote to use btree (some hosts have 1000's of users!) to speed up
 	sorting in 'ded'.
 
-1995-08-15  dickey@clark.net
+1995-08-15  Thomas E. Dickey  <dickey@clark.net>
 
 	* aclocal.m4: corrected --with-prototypes default
 
-1995-08-06  dickey@clark.net
+1995-08-06  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/curses/rawgets.c: guard against characters wider than 8 bits
 
@@ -2286,11 +2296,11 @@
 
 	* src/curses/logch.c: use MODULE_ID
 
-1995-08-01  dickey@clark.net
+1995-08-01  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/curses/cmdch.c: oops: still have to test for arrow keys!
 
-1995-07-30  dickey@clark.net
+1995-07-30  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/memory/txtalloc.c:
 	use 'doalloc()' to ensure we'll check the result...
@@ -2345,13 +2355,13 @@
 	use CFLAGS on link-command
 	use standard prefix/exec_prefix symbols
 
-1995-07-07  dickey@clark.net
+1995-07-07  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/cm_funcs/cmv_dir.c: corrected (again) 'samehead()'
 
 	* src/cm_funcs/cmv_dir.c: use MODULE_ID
 
-1995-07-06  dickey@clark.net
+1995-07-06  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/cm_funcs/cmv_dir.c:
 	mods to check for the level of the given vault-directory
@@ -2366,7 +2376,7 @@
 	* src/curses/resizwin.c:
 	rephrased so that hpux doesn't get in the way of ncurses
 
-1995-07-05  dickey@clark.net
+1995-07-05  Thomas E. Dickey  <dickey@clark.net>
 
 	* include/td_curse.h:
 	change interface of wresize to match what I did for ncurses
@@ -2378,7 +2388,7 @@
 	* src/curses/wresize.c:
 	quick hack to make this compile with ncurse's resizeterm
 
-1995-07-04  dickey@clark.net
+1995-07-04  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/curses/resizwin.c: moved wresize calls into resizeterm
 
@@ -2392,34 +2402,34 @@
 
 	* src/curses/on_winch.c: use MODULE_ID
 
-1995-07-03  dickey@clark.net
+1995-07-03  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/curses/resizwin.c:
 	refresh curscr to force screen update in ncurses
 
 	* src/curses/wresize.c: corrected ncurses' first/last change
 
-1995-07-01  dickey@clark.net
+1995-07-01  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/curses/resizwin.c: I don't seem to need savewin with ncurses
 
 	* src/curses/wresize.c: made this "work" with ncurses 1.9.3
 
-1995-06-06  dickey@clark.net
+1995-06-06  Thomas E. Dickey  <dickey@clark.net>
 
 	* aclocal.m4: corrected quoting for 'tr' command
 
-1995-05-15  dickey@clark.net
+1995-05-15  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/curses/dumpwin.c: removed some obscure stuff...
 
 	* include/td_curse.h: correction for bsd-ifdef
 
-1995-04-26  dickey@clark.net
+1995-04-26  Thomas E. Dickey  <dickey@clark.net>
 
 	* aclocal.m4: fixes for ncurses/normal
 
-1995-04-22  dickey@clark.net
+1995-04-22  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/process/userprot.c: interface change of 'setmtime()'
 
@@ -2435,17 +2445,17 @@
 
 	* include/td_lib.h: interface change of 'setmtime()'
 
-1995-04-19  dickey@clark.net
+1995-04-19  Thomas E. Dickey  <dickey@clark.net>
 
 	* include/td_curse.h: correction for CURSES_LIKE_SYSV
 
-1995-04-06  dickey@clark.net
+1995-04-06  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/curses/cmdch.c:
 	test control chars _after_ testing for function-keys (osf1 uses 32-bit code
 	for backspace)
 
-1995-04-01  dickey@clark.net
+1995-04-01  Thomas E. Dickey  <dickey@clark.net>
 
 	* aclocal.m4:
 	look for ncurses's _line first, since it's the most restrictive case.
@@ -2470,7 +2480,7 @@
 	* src/curses/resizwin.c:
 	make ncurses hack directly depend on resizeterm
 
-1995-03-30  dickey@clark.net
+1995-03-30  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/curses/dumpwin.c: 'nother nit for ncurses
 
@@ -2485,29 +2495,29 @@
 
 	* src/cm_funcs/cmv_dir.c: fixed another spurious ';'
 
-1995-03-25  dickey@clark.net
+1995-03-25  Thomas E. Dickey  <dickey@clark.net>
 
 	* configure.in:
 	applied kev's vile-fix to avoid making grep produce long lines
 
-1995-03-22  dickey@clark.net
+1995-03-22  Thomas E. Dickey  <dickey@clark.net>
 
 	* aclocal.m4: reorder librarys to account for autoconf 2.2
 
 	* configure.in: reorder libraries for autoconf 2.2
 
-1995-03-13  dickey@clark.net
+1995-03-13  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/cm_funcs/cmv_dir.c: mods to support release-branches
 
-1995-02-26  dickey@clark.net
+1995-02-26  Thomas E. Dickey  <dickey@clark.net>
 
 	* include/td_ext.h:
 	use 'getcwd()' if we've got it -- not if we don't have getwd!
 
 	* configure.in: solaris's -lucb is afu'd.
 
-1995-02-17  dickey@clark.net
+1995-02-17  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/cm_funcs/sccslast.c:
 	added a check for ^A to ensure we don't waste time scanning junk-files
@@ -2535,7 +2545,7 @@
 	* src/cm_funcs/cmv_dir.c:
 	version-string ends with either space or semicolon
 
-1995-02-11  dickey@clark.net
+1995-02-11  Thomas E. Dickey  <dickey@clark.net>
 
 	* configure.in: moved the datatypes up so I can use them in prototypes
 
@@ -2588,7 +2598,7 @@
 	turn off 'main' prototype when doing autoconf stuff (IRIX breaks with the
 	'main()' stuff).
 
-1995-02-03  dickey@clark.net
+1995-02-03  Thomas E. Dickey  <dickey@clark.net>
 
 	* Makefile: added some stuff for distclean of autoconf 2.1
 
@@ -2598,7 +2608,7 @@
 
 	* config_h.in: moved OnHost substitution here, from configure.in
 
-1995-02-02  dickey@clark.net
+1995-02-02  Thomas E. Dickey  <dickey@clark.net>
 
 	* configure.in:
 	test environment-variables before actual programs for editor, etc.
@@ -2612,11 +2622,11 @@
 
 	* configure.in: first cut of rewrite using autoconf 2.1
 
-1995-02-01  dickey@clark.net
+1995-02-01  Thomas E. Dickey  <dickey@clark.net>
 
 	* aclocal.m4: first cut of rewrite using autoconf 2.1
 
-1995-01-30  dickey@clark.net
+1995-01-30  Thomas E. Dickey  <dickey@clark.net>
 
 	* include/ptypes.h: some symbols change with autoconf 2.1
 
@@ -2625,13 +2635,13 @@
 
 	* src/cm_funcs/cmv_dir.c: lock-owner must not be null-pointer!
 
-1995-01-29  dickey@clark.net
+1995-01-29  Thomas E. Dickey  <dickey@clark.net>
 
 	* Makefile: use SHELL variable locally
 
 	* configure.in: touch stamp-h to avoid re-invoking autoconf
 
-1995-01-28  dickey@clark.net
+1995-01-28  Thomas E. Dickey  <dickey@clark.net>
 
 	* test/cm_funcs/Makefile, test/compare/Makefile, test/curses/Makefile, test/memory/Makefile, test/pathname/Makefile, test/port2dos/Makefile, test/port2vms/Makefile, test/process/Makefile, test/sheet/Makefile, test/string/Makefile, test/unix/Makefile, test/td_defns.mk:
 	osf1-port
@@ -2667,19 +2677,19 @@
 	* src/cm_funcs/cmv_dir.c:
 	oops: not-found values for lockedby, revision are "?", not null.
 
-1995-01-27  dickey@clark.net
+1995-01-27  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/cm_funcs/cmv_dir.c: quick fix for binary-file version parsing
 
-1995-01-26  dickey@clark.net
+1995-01-26  Thomas E. Dickey  <dickey@clark.net>
 
 	* aclocal.m4: added support for "--with-ncurses" flag
 
-1995-01-06  dickey@clark.net
+1995-01-06  Thomas E. Dickey  <dickey@clark.net>
 
 	* install-sh: RCS_BASE
 
-1995-01-05  dickey@clark.net
+1995-01-05  Thomas E. Dickey  <dickey@clark.net>
 
 	* aclocal.m4: added a test for addchnstr
 
@@ -2691,7 +2701,7 @@
 	* src/cm_funcs/cmv_dir.c:
 	fixed a place that caused infinite loop when parsing multiple archives
 
-1994-12-16  dickey@clark.net
+1994-12-16  Thomas E. Dickey  <dickey@clark.net>
 
 	* test/port2vms/descrip.mms: RCS_BASE
 
@@ -2706,7 +2716,7 @@
 	first cut of splitting warning-related prototypes from the ones
 	used only for driving ifdefs
 
-1994-12-15  dickey@clark.net
+1994-12-15  Thomas E. Dickey  <dickey@clark.net>
 
 	* include/td_curse.h: added def for 'beep()'
 
@@ -2716,22 +2726,22 @@
 
 	* src/process/in_group.c: use MODULE_ID
 
-1994-12-14  dickey@clark.net
+1994-12-14  Thomas E. Dickey  <dickey@clark.net>
 
 	* configure.in: added test for limits.h
 
-1994-11-17  dickey@clark.net
+1994-11-17  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/memory/vecalloc.c: redundant ';'
 
 	* src/memory/vecalloc.c: use MODULE_ID
 
-1994-11-16  dickey@clark.net
+1994-11-16  Thomas E. Dickey  <dickey@clark.net>
 
 	* include/td_lib.h:
 	don't use 'trace' as parameter, conflicts with name in sys-includes
 
-1994-11-12  dickey@clark.net
+1994-11-12  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/process/Makefile, src/process/descrip.mms: added:egress
 
@@ -2754,7 +2764,7 @@
 
 	* include/td_ext.h: added 'getgroups()'
 
-1994-11-06  dickey@clark.net
+1994-11-06  Thomas E. Dickey  <dickey@clark.net>
 
 	* td_make.in: added defs for SHELL, COPY
 
@@ -2764,16 +2774,16 @@
 
 	* aclocal.m4: spurious comma
 
-1994-11-04  dickey@clark.net
+1994-11-04  Thomas E. Dickey  <dickey@clark.net>
 
 	* include/td_regex.h: added some casts
 
-1994-10-18  dickey@clark.net
+1994-10-18  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/curses/win2file.c:
 	mods to handle alternate character-set (ncurses 1.8.5)
 
-1994-10-06  dickey@clark.net
+1994-10-06  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/Makefile: propagate lint rule
 
@@ -2784,7 +2794,7 @@
 	* src/pathname/acc_mode.c, src/curses/on_winch.c, src/curses/wresize.c, src/curses/win2file.c:
 	lint
 
-1994-10-05  dickey@clark.net
+1994-10-05  Thomas E. Dickey  <dickey@clark.net>
 
 	* configure.in: added test for getgroups
 
@@ -2794,13 +2804,13 @@
 
 	* aclocal.m4: added CMV_PATH
 
-1994-09-29  dickey@clark.net
+1994-09-29  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/cm_funcs/cmv_dir.c:
 	consolidated some logic so that this (should) automatically purge the
 	directory's copy of r-curr only when the r-curr file changes.
 
-1994-09-28  dickey@clark.net
+1994-09-28  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/cm_funcs/cmv_dir.c: implemented 'purge_cmv_dir()'
 
@@ -2815,16 +2825,16 @@
 	* src/cm_funcs/lastrev.c:
 	oops: fixed this so it works when DED_CM_LOOKUP isn't set
 
-1994-09-27  dickey@clark.net
+1994-09-27  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/curses/win2file.c: mods to handle alternate character-set
 
-1994-09-22  dickey@clark.net
+1994-09-22  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/curses/resizwin.c:
 	forgot to initialize 'lc[]' in case 'scr_size()' fails
 
-1994-08-25  dickey@clark.net
+1994-08-25  Thomas E. Dickey  <dickey@clark.net>
 
 	* test/port2vms/name2vms.ref:
 	stripped line numbers to make this simpler to regression-test
@@ -2833,7 +2843,7 @@
 
 	* src/port2vms/name2vms.c: use MODULE_ID
 
-1994-08-21  dickey@clark.net
+1994-08-21  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/Makefile: added descrip.mms
 
@@ -2974,7 +2984,7 @@
 
 	* include/vms_dirs.h: renamed from unixdir.h
 
-1994-08-15  dickey@clark.net
+1994-08-15  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/cm_funcs/cmv_last.c:
 	decode the file-modification time in the change-comment
@@ -2982,17 +2992,17 @@
 	* src/cm_funcs/sccslast.c:
 	added logic to decode CMVision's date, which is encoded in the comment
 
-1994-08-12  dickey@clark.net
+1994-08-12  Thomas E. Dickey  <dickey@clark.net>
 
 	* include/td_curse.h: hack extern's for lintlibrary
 
-1994-08-10  dickey@clark.net
+1994-08-10  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/cm_funcs/cmv_dir.c:
 	corrected a place where recursion was done incorrectly because I forgot to
 	test for a pathname delimiter
 
-1994-08-03  dickey@clark.net
+1994-08-03  Thomas E. Dickey  <dickey@clark.net>
 
 	* include/cmv_defs.h: added 'lastrev()' (does it belong here?)
 
@@ -3000,7 +3010,7 @@
 
 	* src/cm_funcs/lastrev.c: RCS_BASE
 
-1994-08-02  dickey@clark.net
+1994-08-02  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/cm_funcs/cmv_dir.c: RCS_BASE
 
@@ -3017,7 +3027,7 @@
 
 	* include/td_local.h: include CmVision defs
 
-1994-08-01  dickey@clark.net
+1994-08-01  Thomas E. Dickey  <dickey@clark.net>
 
 	* configure.in: try to show result of `uname -a` in config.h header
 
@@ -3029,7 +3039,7 @@
 
 	* include/.vilerc: don't assume ~ works w/o glob!
 
-1994-07-29  dickey@clark.net
+1994-07-29  Thomas E. Dickey  <dickey@clark.net>
 
 	* include/td_regex.h: hacks needed for CLIX regex
 
@@ -3043,7 +3053,7 @@
 
 	* Makefile: be more explicity about sh-commands for CLIX
 
-1994-07-26  dickey@clark.net
+1994-07-26  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/curses/resizwin.c:
 	simplified so I don't try to resize SYS5_CURSES (yet)
@@ -3055,7 +3065,7 @@
 
 	* src/curses/on_winch.c: corrected prototype def for 'catch_winch()'
 
-1994-07-23  dickey@clark.net
+1994-07-23  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/curses/scr_size.c:
 	patch to make ded work on ClarkNet (termcap breaks curses)
@@ -3088,7 +3098,7 @@
 	* src/curses/resizwin.c:
 	intermediate adaptation for ncurses 1.8.6 and HP/UX
 
-1994-07-22  dickey@clark.net
+1994-07-22  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/curses/wresize.c: RCS_BASE
 
@@ -3103,7 +3113,7 @@
 	to use dumpwin within resizewin!).
 	Changed OUT macro to be more conventional..
 
-1994-07-20  dickey@clark.net
+1994-07-20  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/curses/rawgets.c: hide ncurses bug in a macro
 
@@ -3113,7 +3123,7 @@
 	* src/curses/win2file.c, src/curses/wrepaint.c:
 	hide ncurses bug in a macro
 
-1994-07-19  dickey@clark.net
+1994-07-19  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/curses/bindkeys.c: still just notes
 
@@ -3122,7 +3132,7 @@
 
 	* src/curses/dumpwin.c: use 'pathcat()'
 
-1994-07-18  dickey@clark.net
+1994-07-18  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/curses/rawgets.c:
 	Running with ncurses 1.8.5, at least, I'm seeing the Z->_maxy value as the
@@ -3136,7 +3146,7 @@
 
 	* src/cm_funcs/sccs_dir.c: use MODULE_ID
 
-1994-07-17  dickey@clark.net
+1994-07-17  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/pathname/fileblox.c: added a simple test-driver
 
@@ -3146,7 +3156,7 @@
 	cut over to ncurses (?)
 	added <sys/param.h>
 
-1994-07-16  dickey@clark.net
+1994-07-16  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/curses/rawgets.c:
 	explicitly want reverse-video here (rather than Sys5's bold) for standout,
@@ -3195,7 +3205,7 @@
 	* src/cm_funcs/rcstemp.c:
 	use chmod-symbols; fixed Solaris compiler warning
 
-1994-07-15  dickey@clark.net
+1994-07-15  Thomas E. Dickey  <dickey@clark.net>
 
 	* include/td_lib.h: added strerror if we don't already have it
 
@@ -3208,7 +3218,7 @@
 
 	* src/cm_funcs/Makefile: added sccspath.c
 
-1994-07-13  dickey@clark.net
+1994-07-13  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/pathname/fileblox.c: RCS_BASE
 
@@ -3227,7 +3237,7 @@
 
 	* src/cm_funcs/sccs_dir.c, src/cm_funcs/sccslast.c: sccs_dir-interface
 
-1994-07-12  dickey@clark.net
+1994-07-12  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/pathname/acc_mode.c: typo
 
@@ -3259,7 +3269,7 @@
 	* include/td_curse.h:
 	don't prototype erasechar/killchar if they're macros
 
-1994-07-11  dickey@clark.net
+1994-07-11  Thomas E. Dickey  <dickey@clark.net>
 
 	* include/td_regex.h: corrected test for strwcmp
 
@@ -3273,7 +3283,7 @@
 
 	* include/ptypes.h: SunOS cpp doesn't have "#error"
 
-1994-07-10  dickey@clark.net
+1994-07-10  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/cm_funcs/rcstemp.c, src/cm_funcs/rcsedit.c: compiler warning
 
@@ -3301,7 +3311,7 @@
 
 	* configure.in: added has_colors
 
-1994-07-04  dickey@clark.net
+1994-07-04  Thomas E. Dickey  <dickey@clark.net>
 
 	* configure.in: tweaks from first pass on Solaris
 
@@ -3377,7 +3387,7 @@
 
 	* src/cm_funcs/newzone.c: use MODULE_ID
 
-1994-07-02  dickey@clark.net
+1994-07-02  Thomas E. Dickey  <dickey@clark.net>
 
 	* include/td_ext.h: make 'ioctl()' compatible with Linux.
 
@@ -3509,7 +3519,7 @@
 
 	* Makefile: added 'distclean' rule
 
-1994-07-01  dickey@clark.net
+1994-07-01  Thomas E. Dickey  <dickey@clark.net>
 
 	* include/td_ext.h: added strerror, memmove, sys_errlist, timezone
 
@@ -3543,7 +3553,7 @@
 	* include/ptypes.h:
 	moved definitions for exit-status past all includes, just in case
 
-1994-06-30  dickey@clark.net
+1994-06-30  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/curses/rawgets.c: allow CTL/N and CTL/P as down/up arrows
 
@@ -3553,13 +3563,13 @@
 
 	* include/td_curse.h: added x_rawgets, y_rawgets
 
-1994-06-29  dickey@clark.net
+1994-06-29  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/curses/rawgets.c:
 	got this to (more or less) handle window-resizing, except that the origin
 	that the caller uses may shift (unknown to this module).
 
-1994-06-27  dickey@clark.net
+1994-06-27  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/curses/on_winch.c: made this work
 
@@ -3571,7 +3581,7 @@
 
 	* include/td_curse.h: added 'on_winch.c'
 
-1994-06-26  dickey@clark.net
+1994-06-26  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/curses/scr_size.c: use BSD-style ioctl to obtain window size
 
@@ -3596,7 +3606,7 @@
 
 	* include/td_local.h: RCS_BASE
 
-1994-06-25  dickey@clark.net
+1994-06-25  Thomas E. Dickey  <dickey@clark.net>
 
 	* configure.in: add/use TD_HAVE_FUNCS
 
@@ -3637,20 +3647,20 @@
 
 	* include/td_ext.h, include/.vilerc: RCS_BASE
 
-1994-06-24  dickey@clark.net
+1994-06-24  Thomas E. Dickey  <dickey@clark.net>
 
 	* include/td_curse.h: changed name convention for ifdef
 
 	* include/td_lib.h: changed name-convention for ifdef
 
-1994-06-23  dickey@clark.net
+1994-06-23  Thomas E. Dickey  <dickey@clark.net>
 
 	* aclocal.m4, configure.in: added macro TD_SIZE_T
 
 	* aclocal.m4, configure.in:
 	renamed _my_ macros to distinguish them from GNU's
 
-1994-05-30  dickey@clark.net
+1994-05-30  Thomas E. Dickey  <dickey@clark.net>
 
 	* include/ptypes.h: tweaks for compile on Solaris
 
@@ -3728,7 +3738,7 @@
 
 	* acconfig.h: added definitions for RCS/SCCS/VCS/CVS paths
 
-1994-05-29  dickey@clark.net
+1994-05-29  Thomas E. Dickey  <dickey@clark.net>
 
 	* configure.in:
 	use AC_REGEX to absorb some macro calls (so it's simpler to understand)
@@ -3741,7 +3751,7 @@
 
 	* include/td_regex.h: RCS_BASE
 
-1994-05-28  dickey@clark.net
+1994-05-28  Thomas E. Dickey  <dickey@clark.net>
 
 	* acconfig.h: added HAVE_REGEX_H_FUNCS
 
@@ -3765,7 +3775,7 @@
 
 	* certify/Makefile, support/old-td_lib.mk: use new symbol RM
 
-1994-05-27  dickey@clark.net
+1994-05-27  Thomas E. Dickey  <dickey@clark.net>
 
 	* acconfig.h: first cut for AC_ANSI_CPP
 
@@ -3775,11 +3785,11 @@
 
 	* include/ptypes.h: obsoleted ANSI_CPP definition
 
-1994-05-24  dickey@clark.net
+1994-05-24  Thomas E. Dickey  <dickey@clark.net>
 
 	* configure.in: added tests for <regex.h>, etc.
 
-1994-05-23  dickey@clark.net
+1994-05-23  Thomas E. Dickey  <dickey@clark.net>
 
 	* configure.in: added test for 'rename()'
 
@@ -3813,7 +3823,7 @@
 
 	* src/curses/beep.c: use MODULE_ID
 
-1994-05-22  dickey@clark.net
+1994-05-22  Thomas E. Dickey  <dickey@clark.net>
 
 	* configure.in:
 	added hooks for <termios.h>, <sgtty.h>, tcgetattr(), utime(), uid_t
@@ -3840,7 +3850,7 @@
 
 	* src/pathname/walktree.c: mods for 'autoconf'
 
-1994-05-21  dickey@clark.net
+1994-05-21  Thomas E. Dickey  <dickey@clark.net>
 
 	* test/compare/test_cmp.c: renamed-STAT
 
@@ -3887,11 +3897,11 @@
 
 	* src/curses/erasechr.c: port to Solaris
 
-1994-04-27  dickey@clark.net
+1994-04-27  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/curses/wrepaint.c, src/curses/rawterm.c: Linux-port
 
-1994-04-26  dickey@clark.net
+1994-04-26  Thomas E. Dickey  <dickey@clark.net>
 
 	* include/ptypes.h: make this compile with Linux
 
@@ -3899,13 +3909,13 @@
 
 	* include/td_curse.h: compiled on Linux
 
-1994-04-01  dickey@clark.net
+1994-04-01  Thomas E. Dickey  <dickey@clark.net>
 
 	* COPYING: notice for alt.sources
 
 	* COPYING: standardized my language
 
-1993-12-04  dickey@software.org
+1993-12-04  Thomas E. Dickey  <dickey@software.org>
 
 	* src/pathname/which.c: port to MS-DOS
 
@@ -3929,7 +3939,7 @@
 
 	* src/cm_funcs/rcslast.c, src/pathname/sameleaf.c: PATH_SLASH-hacks
 
-1993-12-02  dickey@software.org
+1993-12-02  Thomas E. Dickey  <dickey@software.org>
 
 	* src/pathname/sameleaf.c: use MODULE_ID
 
@@ -3938,7 +3948,7 @@
 	* src/cm_funcs/sccsname.c, src/cm_funcs/rcsname.c, src/pathname/trimpath.c:
 	PATH_SLASH-hacks
 
-1993-12-02  dickey@software.org
+1993-12-02  Thomas E. Dickey  <dickey@software.org>
 
 	* src/pathname/trimpath.c: use MODULE_ID
 
@@ -3948,7 +3958,7 @@
 	do a 'refresh()' in 'cookterm()' to allow most 'refresh()' calls in DED
 	to be removed.
 
-1993-12-01  dickey@software.org
+1993-12-01  Thomas E. Dickey  <dickey@software.org>
 
 	* src/port2vms/vms_rpth.c: ifdefs/TurboC-warnings
 
@@ -3973,7 +3983,7 @@
 
 	* src/process/gethome.c: compiler-warning (clcc)
 
-1993-12-01  dickey@software.org
+1993-12-01  Thomas E. Dickey  <dickey@software.org>
 
 	* src/process/gethome.c: use MODULE_ID
 
@@ -3982,7 +3992,7 @@
 	* src/cm_funcs/packdate.c, src/pathname/file2mem.c, src/pathname/file2arg.c:
 	CLCC-warnings
 
-1993-12-01  dickey@software.org
+1993-12-01  Thomas E. Dickey  <dickey@software.org>
 
 	* src/pathname/file2arg.c: use MODULE_ID
 
@@ -4001,7 +4011,7 @@
 
 	* src/pathname/fleaf.c: tweaks for trailing newline
 
-1993-11-30  dickey@software.org
+1993-11-30  Thomas E. Dickey  <dickey@software.org>
 
 	* src/pathname/fleaf.c: use MODULE_ID
 
@@ -4015,7 +4025,7 @@
 
 	* src/pathname/denode.c: mods for MSDOS
 
-1993-11-28  dickey@software.org
+1993-11-28  Thomas E. Dickey  <dickey@software.org>
 
 	* src/pathname/denode.c: use MODULE_ID
 
@@ -4027,7 +4037,7 @@
 
 	* src/pathname/relpath.c: mods for MSDOS
 
-1993-11-27  dickey@software.org
+1993-11-27  Thomas E. Dickey  <dickey@software.org>
 
 	* src/pathname/relpath.c: use MODULE_ID
 
@@ -4037,7 +4047,7 @@
 
 	* src/curses/blip.c: mods for MSDOS
 
-1993-11-27  dickey@software.org
+1993-11-27  Thomas E. Dickey  <dickey@software.org>
 
 	* src/curses/blip.c: use MODULE_ID
 
@@ -4047,7 +4057,7 @@
 
 	* src/cm_funcs/vcs_file.c: use macro 'isSlash()' for unix/MSDOS porting
 
-1993-11-27  dickey@software.org
+1993-11-27  Thomas E. Dickey  <dickey@software.org>
 
 	* src/cm_funcs/vcs_file.c: use MODULE_ID
 
@@ -4055,7 +4065,7 @@
 
 	* src/pathname/name2s.c: mods for MSDOS
 
-1993-11-27  dickey@software.org
+1993-11-27  Thomas E. Dickey  <dickey@software.org>
 
 	* src/pathname/name2s.c: use MODULE_ID
 
@@ -4066,7 +4076,7 @@
 
 	* src/pathname/pathcat.c: tweaks for porting to MSDOS
 
-1993-11-27  dickey@software.org
+1993-11-27  Thomas E. Dickey  <dickey@software.org>
 
 	* src/pathname/pathcat.c: use MODULE_ID
 
@@ -4090,7 +4100,7 @@
 
 	* src/pathname/pathleaf.c: mods to make it "should" work for MSDOS
 
-1993-11-27  dickey@software.org
+1993-11-27  Thomas E. Dickey  <dickey@software.org>
 
 	* src/pathname/pathleaf.c: use MODULE_ID
 
@@ -4098,7 +4108,7 @@
 
 	* src/pathname/ftype2.c: mods to make it "should" work on MSDOS
 
-1993-11-27  dickey@software.org
+1993-11-27  Thomas E. Dickey  <dickey@software.org>
 
 	* src/pathname/ftype2.c: use MODULE_ID
 
@@ -4106,7 +4116,7 @@
 
 	* src/pathname/ftype.c: port to MSDOS
 
-1993-11-27  dickey@software.org
+1993-11-27  Thomas E. Dickey  <dickey@software.org>
 
 	* src/pathname/ftype.c: use MODULE_ID
 
@@ -4116,7 +4126,7 @@
 
 	* src/pathname/add2fnam.c: port to MSDOS
 
-1993-11-27  dickey@software.org
+1993-11-27  Thomas E. Dickey  <dickey@software.org>
 
 	* src/pathname/add2fnam.c: use MODULE_ID
 
@@ -4124,7 +4134,7 @@
 
 	* src/pathname/is_spath.c: port to MSDOS
 
-1993-11-27  dickey@software.org
+1993-11-27  Thomas E. Dickey  <dickey@software.org>
 
 	* src/pathname/is_spath.c: use MODULE_ID
 
@@ -4133,7 +4143,7 @@
 	* src/pathname/file2arg.c, src/process/shoarg.c:
 	TurboC compiler warning
 
-1993-11-27  dickey@software.org
+1993-11-27  Thomas E. Dickey  <dickey@software.org>
 
 	* src/process/shoarg.c: use MODULE_ID
 
@@ -4144,7 +4154,7 @@
 	* src/cm_funcs/rcsperm.c, src/cm_funcs/samebr.c:
 	TurboC compiler warning
 
-1993-11-27  dickey@software.org
+1993-11-27  Thomas E. Dickey  <dickey@software.org>
 
 	* src/cm_funcs/samebr.c: use MODULE_ID
 
@@ -4156,7 +4166,7 @@
 
 	* src/process/usercopy.c: ifdef'd for unix-only
 
-1993-11-27  dickey@software.org
+1993-11-27  Thomas E. Dickey  <dickey@software.org>
 
 	* src/process/usercopy.c: use MODULE_ID
 
@@ -4164,7 +4174,7 @@
 
 	* src/curses/viewfile.c: ifdef'd for unix-only
 
-1993-11-27  dickey@software.org
+1993-11-27  Thomas E. Dickey  <dickey@software.org>
 
 	* src/curses/viewfile.c: use MODULE_ID
 
@@ -4172,7 +4182,7 @@
 
 	* src/process/userprot.c, src/process/showuids.c: ifdef'd for unix-only
 
-1993-11-27  dickey@software.org
+1993-11-27  Thomas E. Dickey  <dickey@software.org>
 
 	* src/process/showuids.c: use MODULE_ID
 
@@ -4182,7 +4192,7 @@
 
 	* src/compare/cmpqsort.c: compiler-warnings for MSDOS
 
-1993-11-27  dickey@software.org
+1993-11-27  Thomas E. Dickey  <dickey@software.org>
 
 	* src/compare/cmpqsort.c: use MODULE_ID
 
@@ -4190,7 +4200,7 @@
 
 	* src/process/walkback.c: ifdef'd for unix-only
 
-1993-11-26  dickey@software.org
+1993-11-26  Thomas E. Dickey  <dickey@software.org>
 
 	* src/process/walkback.c: use MODULE_ID
 
@@ -4198,7 +4208,7 @@
 
 	* src/unix/s2gid.c: ifdef'd for unix-only
 
-1993-11-26  dickey@software.org
+1993-11-26  Thomas E. Dickey  <dickey@software.org>
 
 	* src/unix/s2gid.c: use MODULE_ID
 
@@ -4206,7 +4216,7 @@
 
 	* src/unix/s2uid.c, src/unix/uid2s.c: ifdef'd for unix-only
 
-1993-11-26  dickey@software.org
+1993-11-26  Thomas E. Dickey  <dickey@software.org>
 
 	* src/unix/s2uid.c: use MODULE_ID
 
@@ -4214,7 +4224,7 @@
 
 	* src/process/revert.c: ifdef'd for unix-only
 
-1993-11-26  dickey@software.org
+1993-11-26  Thomas E. Dickey  <dickey@software.org>
 
 	* src/process/revert.c: use MODULE_ID
 
@@ -4222,7 +4232,7 @@
 
 	* src/curses/padedit.c: ifdef'd for unix-only
 
-1993-11-26  dickey@software.org
+1993-11-26  Thomas E. Dickey  <dickey@software.org>
 
 	* src/curses/padedit.c: use MODULE_ID
 
@@ -4236,7 +4246,7 @@
 
 	* src/process/getuser.c: ifdef'd for unix-only
 
-1993-11-26  dickey@software.org
+1993-11-26  Thomas E. Dickey  <dickey@software.org>
 
 	* src/process/getuser.c: use MODULE_ID
 
@@ -4246,7 +4256,7 @@
 
 	* src/process/for_user.c: ifdef'd for unix-only
 
-1993-11-26  dickey@software.org
+1993-11-26  Thomas E. Dickey  <dickey@software.org>
 
 	* src/process/for_user.c: use MODULE_ID
 
@@ -4254,7 +4264,7 @@
 
 	* src/process/for_admn.c: ifdef'd for unix-only
 
-1993-11-26  dickey@software.org
+1993-11-26  Thomas E. Dickey  <dickey@software.org>
 
 	* src/process/for_admn.c: use MODULE_ID
 
@@ -4276,7 +4286,7 @@
 
 	* src/process/catchall.c: compiled with TurboC
 
-1993-11-26  dickey@software.org
+1993-11-26  Thomas E. Dickey  <dickey@software.org>
 
 	* src/process/catchall.c: use MODULE_ID
 
@@ -4353,7 +4363,7 @@
 	* src/compare/diffload.c: ifdef-ident
 	compile on HP/UX
 
-1993-10-29  dickey@software.org
+1993-10-29  Thomas E. Dickey  <dickey@software.org>
 
 	* src/cm_funcs/cutoff.c, src/curses/dumpchr.c, src/pathname/arg2file.c, src/pathname/dotname.c, src/process/bldarg.c, src/process/catarg.c, src/string/dftenv.c, src/string/dotcmp.c:
 	use MODULE_ID
@@ -4366,7 +4376,7 @@
 	* src/pathname/filecopy.c, src/unix/gid2s.c: ifdef-ident
 	compile on HP/UX
 
-1993-10-29  dickey@software.org
+1993-10-29  Thomas E. Dickey  <dickey@software.org>
 
 	* src/pathname/fp2argv.c, src/process/failed.c: use MODULE_ID
 
@@ -4382,7 +4392,7 @@
 
 	* src/cm_funcs/newzone.c: port to HP/UX
 
-1993-10-29  dickey@software.org
+1993-10-29  Thomas E. Dickey  <dickey@software.org>
 
 	* src/cm_funcs/rcs_dir.c, src/cm_funcs/rcsdebug.c, src/compare/m2comp.c, src/pathname/istextfl.c, src/pathname/modechar.c, src/process/makeargv.c, src/string/lsbycols.c:
 	use MODULE_ID
@@ -4397,7 +4407,7 @@
 
 	* src/unix/setmtime.c: port to HP/UX
 
-1993-10-29  dickey@software.org
+1993-10-29  Thomas E. Dickey  <dickey@software.org>
 
 	* src/cm_funcs/rcskeys.c, src/cm_funcs/rcslocks.c, src/cm_funcs/rcssymbs.c, src/compare/scomp.c, src/memory/stralloc.c, src/sheet/ss_field.c, src/string/strbcmp.c:
 	use MODULE_ID
@@ -4407,7 +4417,7 @@
 	* src/cm_funcs/rcsargpr.c, src/cm_funcs/vcs_file.c, src/cm_funcs/vercmp.c, src/curses/viewfile.c, src/memory/txtalloc.c, src/memory/vecalloc.c, src/memory/vecedit.c, src/memory/veclen.c, src/pathname/stat_dir.c, src/pathname/stat_fil.c, src/pathname/track_wd.c, src/pathname/trimpath.c, src/pathname/walktree.c, src/pathname/which.c, src/process/savesuid.c, src/process/showuids.c, src/process/usercopy.c, src/process/userprot.c, src/process/walkback.c, src/string/dyn_copy.c, src/string/dyn_str.c, src/string/strclean.c, src/string/strcount.c, src/string/strtrim.c, src/string/strucmp.c, src/string/strucpy.c, src/string/strwcmp.c, src/unix/uid2s.c:
 	ifdef-ident
 
-1993-10-29  dickey@software.org
+1993-10-29  Thomas E. Dickey  <dickey@software.org>
 
 	* src/memory/vecedit.c, src/memory/veclen.c, src/pathname/track_wd.c, src/process/savesuid.c, src/string/dyn_copy.c, src/string/dyn_str.c, src/string/strclean.c, src/string/strcount.c, src/string/strtrim.c, src/string/strucmp.c, src/string/strucpy.c, src/string/strwcmp.c:
 	use MODULE_ID
@@ -4417,7 +4427,7 @@
 	* src/sheet/count_ss.c, src/string/dyn_app.c, src/string/dyn_appc.c, src/string/dyn_cata.c:
 	ifdef-ident
 
-1993-10-29  dickey@software.org
+1993-10-29  Thomas E. Dickey  <dickey@software.org>
 
 	* src/sheet/count_ss.c, src/string/dyn_app.c, src/string/dyn_appc.c, src/string/dyn_cata.c:
 	use MODULE_ID
@@ -4465,7 +4475,7 @@
 
 	* test/run_test.sh: better Purify options
 
-1993-09-23  dickey@software.org
+1993-09-23  Thomas E. Dickey  <dickey@software.org>
 
 	* test/cm_funcs/run_test.sh, test/compare/run_test.sh, test/curses/run_test.sh, test/memory/run_test.sh, test/pathname/run_test.sh, test/port2dos/run_test.sh, test/process/run_test.sh, test/sheet/run_test.sh, test/string/run_test.sh, test/unix/run_test.sh:
 	RCS_BASE
@@ -13578,7 +13588,7 @@
 	* descrip.mms:
 	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
 
-1989-04-25  dickey@software.org
+1989-04-25  Thomas E. Dickey  <dickey@software.org>
 
 	* descrip.mms: added Ident
 
@@ -16133,29 +16143,29 @@
 	* src/string/strclean.c:
 	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
 
-1987-09-30  Thomas E. Dickey
+1987-09-30	Thomas E. Dickey
 
 	* src/cm_funcs/sccslast.c:
 	revised this so it does something meaningful for sccs-files themselves!
 
-1987-09-29  Thomas E. Dickey
+1987-09-29	Thomas E. Dickey
 
 	* src/curses/rawgets.c: New file.
 
-1987-09-17  Thomas E. Dickey
+1987-09-17	Thomas E. Dickey
 
 	* src/pathname/abspath.c: New file.
 
-1987-05-07  Thomas E. Dickey
+1987-05-07	Thomas E. Dickey
 
 	* src/memory/doalloc.c:
 	Moved the elaborate failure code to generic 'failed()' in caller.
 
-1987-01-23  Thomas E. Dickey
+1987-01-23	Thomas E. Dickey
 
 	* src/cm_funcs/sccslast.c: Increased pathlength.
 
-1987-01-22  Thomas E. Dickey
+1987-01-22	Thomas E. Dickey
 
 	* src/pathname/denode.c: New file.
 
@@ -16181,33 +16191,33 @@
 	* src/pathname/denode.c:
 	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
 
-1986-10-20  Thomas E. Dickey
+1986-10-20	Thomas E. Dickey
 
 	* src/cm_funcs/sccslast.c: New file.
 
-1986-10-14  Thomas E. Dickey
+1986-10-14	Thomas E. Dickey
 
 	* src/memory/doalloc.c: Added stuff for xenix-lint.
 
-1986-10-07  Thomas E. Dickey
+1986-10-07	Thomas E. Dickey
 
 	* src/cm_funcs/packdate.c: extern's for xenix-port.
 
 	* src/cm_funcs/packdate.c, src/memory/doalloc.c: linted.
 
-1986-03-26  Thomas E. Dickey
+1986-03-26	Thomas E. Dickey
 
 	* src/cm_funcs/packdate.c: New file.
 
-1986-01-09  Thomas E. Dickey
+1986-01-09	Thomas E. Dickey
 
 	* src/memory/doalloc.c: New file.
 
-1985-12-17  Thomas E. Dickey
+1985-12-17	Thomas E. Dickey
 
 	* src/process/bldarg.c: New file.
 
-1985-12-16  Thomas E. Dickey
+1985-12-16	Thomas E. Dickey
 
 	* src/pathname/dotname.c: New file.
 
