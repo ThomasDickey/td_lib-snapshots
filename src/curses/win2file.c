@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	07 Jun 1988
  * Modified:
+ *              21 Nov 2017, increase buffer-size for trailing nul.
  *		07 Mar 2004, remove K&R support, indent'd.
  *		15 Feb 1998, workaround for non-scalar chtype.
  *		03 Sep 1995, make this work with bsd4.4 curses
@@ -37,7 +38,7 @@
 #include	<ctype.h>
 #include	<time.h>
 
-MODULE_ID("$Id: win2file.c,v 12.22 2014/12/28 01:10:44 tom Exp $")
+MODULE_ID("$Id: win2file.c,v 12.23 2017/11/21 21:56:11 tom Exp $")
 
 #ifndef A_ALTCHARSET
 #define A_ALTCHARSET 0
@@ -76,7 +77,7 @@ CursesLine(WINDOW *win, int row)
     if (result != 0)
 	free(result);
 
-    if ((result = malloc((size_t) COLS)) != 0) {
+    if ((result = malloc((size_t) (COLS + 1))) != 0) {
 	int y, x;
 
 	getyx(win, y, x);

@@ -1,3 +1,33 @@
+2017-11-21  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* package/td_lib.spec: build-fix for Fedora26
+
+	* package/debian/rules: use Debian build-flags
+
+	* package/debian/control: fix build-warning
+
+	* package/debian/copyright, COPYING: bump
+
+	* package/debian/changelog: fix typo
+
+	* package/td_lib.spec: bump
+
+	* include/td_regex.h:
+	add TD_ERE_REGEX to allow application to set REG_EXTEND flag, etc.,
+
+	* configure: regen
+
+	* aclocal.m4: resync with my-autoconf
+
+	* package/debian/changelog: bump
+
+	* src/curses/win2file.c:
+	increase buffer-size: winnstr adds a trailing nul
+
+2017-08-08  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* config.guess: 2017-08-08
+
 2017-06-01  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* src/pathname/which.c:

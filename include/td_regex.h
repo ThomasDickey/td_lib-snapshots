@@ -1,4 +1,4 @@
-/* $Id: td_regex.h,v 12.13 2004/03/07 21:51:19 tom Exp $ */
+/* $Id: td_regex.h,v 12.14 2017/11/22 00:27:33 tom Exp $ */
 
 /*
  * SYSTEM5/BSD4.x differences between native regular-expression handling:
@@ -9,11 +9,15 @@
 
 #undef REGEX_T
 
-#if defined(HAVE_REGEX_H_FUNCS)		/* HP/UX, Linux */
+#ifndef TD_ERE_REGEX
+#define TD_ERE_REGEX 0
+#endif
+
+#if defined(HAVE_REGEX_H_FUNCS)		/* POSIX (seen first in HP/UX, Linux) */
 #  include <regex.h>
 #  define REGEX_T regex_t
 #  define OLD_REGEX(expr)		regfree(&expr)
-#  define NEW_REGEX(expr,pattern)	(regcomp(&expr, pattern,0) == 0)
+#  define NEW_REGEX(expr,pattern)	(regcomp(&expr, pattern, TD_ERE_REGEX) == 0)
 #  define GOT_REGEX(expr,string)	(regexec(&expr, string, 0, (regmatch_t*)0, 0) == 0)
 #endif
 
