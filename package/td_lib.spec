@@ -1,8 +1,8 @@
 Summary: Thomas Dickeys library
 %define AppProgram td_lib
 %define AppVersion 12.x
-%define AppRelease 20150704
-# $Id: td_lib.spec,v 1.13 2015/07/04 19:08:00 tom Exp $
+%define AppRelease 20171121
+# $Id: td_lib.spec,v 1.15 2017/11/22 01:26:26 tom Exp $
 Name: %{AppProgram}
 Version: %{AppVersion}
 Release: %{AppRelease}
@@ -19,6 +19,9 @@ curses implementation.  The ncursesw library is more useful
 to ded.
 
 %prep
+
+# no need for debugging symbols...
+%define debug_package %{nil}
 
 %setup -q -n %{AppProgram}-%{AppRelease}
 
@@ -53,6 +56,7 @@ make install                    DESTDIR=$RPM_BUILD_ROOT
 %defattr(-,root,root)
 %{_libdir}/libtd.a
 %{_datadir}/td/td_lib.mk
+%{_datadir}/td/man2html.sh
 %{_includedir}/td/cmv_defs.h
 %{_includedir}/td/deltree.h
 %{_includedir}/td/dyn_str.h
@@ -74,6 +78,9 @@ make install                    DESTDIR=$RPM_BUILD_ROOT
 
 %changelog
 # each patch should add its ChangeLog entries here
+
+* Tue Nov 21 2017 Thomas Dickey
+- add man2html.sh to build
 
 * Fri Jul 09 2010 Thomas Dickey
 - implement ded "-m" mouse option

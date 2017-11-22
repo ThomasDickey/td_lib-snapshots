@@ -1,3 +1,9 @@
+tdlib (20171121) unstable; urgency=low
+
+  * maintenance updates
+
+ -- Thomas E. Dickey <dickey@invisible-island.net>  Tue, 21 Nov 2017 16:57:00 -0500
+
 tdlib (20150704) unstable; urgency=low
 
   * integrate man2html, deprecating groff's man/html
