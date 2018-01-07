@@ -3,6 +3,8 @@
  * Author:	T.E.Dickey
  * Created:	18 May 1988, from 'sccslast.c'
  * Modified:
+ *		07 Jan 2018, correct pointer arithmetic when ded is scanning
+ *			     inside an RCS directory.
  *		27 Dec 2014, coverity warnings
  *		24 May 2010, fix clang --analyze warnings.
  *		07 Mar 2004, remove K&R support, indent'd.
@@ -38,7 +40,7 @@
 #include <rcsdefs.h>
 #include <dyn_str.h>
 
-MODULE_ID("$Id: rcslast.c,v 12.16 2014/12/28 01:10:33 tom Exp $")
+MODULE_ID("$Id: rcslast.c,v 12.17 2018/01/07 20:49:25 tom Exp $")
 
 /*
  * Returns the modification date of the given file, or 0 if not found
@@ -212,8 +214,8 @@ rcslast(const char *working,	/* working directory (absolute) */
 	if (*date_) {		/* it was an ok RCS file */
 	    /* look for checked-out file */
 
-	    if (t != path) {
-		name[t - path - 1] = EOS;
+	    if (t != (s = dyn_string(&local))) {
+		name[t - s - 1] = EOS;
 		if ((s = fleaf(name)) == NULL)
 		    s = name;
 		s[0] = EOS;

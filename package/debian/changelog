@@ -1,3 +1,9 @@
+tdlib (20180107) unstable; urgency=low
+
+  * updates for OpenBSD 6
+
+ -- Thomas E. Dickey <dickey@invisible-island.net>  Sun, 07 Jan 2018 12:14:33 -0500
+
 tdlib (20171121) unstable; urgency=low
 
   * maintenance updates

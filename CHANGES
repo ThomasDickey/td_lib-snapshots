@@ -1,3 +1,40 @@
+2018-01-07  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* configure: regen
+
+	* aclocal.m4, td_make.in, configure.in: add check for valid "ar" flags
+
+	* src/cm_funcs/rcslast.c:
+	very old bug from revision 3.1 used the wrong buffer-pointer (path rather
+	than the dyn_string copy of it) to compute length for trimming name[].
+
+	* package/debian/copyright, package/debian/changelog, package/td_lib.spec, COPYING:
+	bump
+
+	* configure: regen
+
+	* aclocal.m4: workaround to use mandoc if nroff is unavailable
+
+	* td_make.in:
+	add suffixes to work around another problem with OpenBSD make, handling "$*"
+
+	* configure: regen
+
+	* aclocal.m4:
+	resync with my-autoconf, updating CF_CURSES_FUNCS, CF_CURSES_LIBS,
+	CF_NCURSES_CONFIG and CF_WITH_MAN2HTML
+
+	* td_make.in:
+	move ".SUFFIXES" before suffix rules to work within OpenBSD make's limitations.
+	Also, change "$<" token to "$*.c", likewise (it incorrectly dies on that,
+	claiming it is a GNU make feature -- OpenBSD developers should do some reading).
+
+2017-11-25  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* config.guess: 2017-11-07
+
+	* config.sub: 2017-11-23
+
 2017-11-21  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* package/td_lib.spec: build-fix for Fedora26
@@ -3945,7 +3982,7 @@
 
 	* COPYING: standardized my language
 
-1993-12-04  Thomas E. Dickey  <dickey@software.org>
+1993-12-04  dickey@software.org
 
 	* src/pathname/which.c: port to MS-DOS
 
@@ -3969,7 +4006,7 @@
 
 	* src/cm_funcs/rcslast.c, src/pathname/sameleaf.c: PATH_SLASH-hacks
 
-1993-12-02  Thomas E. Dickey  <dickey@software.org>
+1993-12-02  dickey@software.org
 
 	* src/pathname/sameleaf.c: use MODULE_ID
 
@@ -3978,7 +4015,7 @@
 	* src/cm_funcs/sccsname.c, src/cm_funcs/rcsname.c, src/pathname/trimpath.c:
 	PATH_SLASH-hacks
 
-1993-12-02  Thomas E. Dickey  <dickey@software.org>
+1993-12-02  dickey@software.org
 
 	* src/pathname/trimpath.c: use MODULE_ID
 
@@ -3988,7 +4025,7 @@
 	do a 'refresh()' in 'cookterm()' to allow most 'refresh()' calls in DED
 	to be removed.
 
-1993-12-01  Thomas E. Dickey  <dickey@software.org>
+1993-12-01  dickey@software.org
 
 	* src/port2vms/vms_rpth.c: ifdefs/TurboC-warnings
 
@@ -4013,7 +4050,7 @@
 
 	* src/process/gethome.c: compiler-warning (clcc)
 
-1993-12-01  Thomas E. Dickey  <dickey@software.org>
+1993-12-01  dickey@software.org
 
 	* src/process/gethome.c: use MODULE_ID
 
@@ -4022,7 +4059,7 @@
 	* src/cm_funcs/packdate.c, src/pathname/file2mem.c, src/pathname/file2arg.c:
 	CLCC-warnings
 
-1993-12-01  Thomas E. Dickey  <dickey@software.org>
+1993-12-01  dickey@software.org
 
 	* src/pathname/file2arg.c: use MODULE_ID
 
@@ -4041,7 +4078,7 @@
 
 	* src/pathname/fleaf.c: tweaks for trailing newline
 
-1993-11-30  Thomas E. Dickey  <dickey@software.org>
+1993-11-30  dickey@software.org
 
 	* src/pathname/fleaf.c: use MODULE_ID
 
@@ -4055,7 +4092,7 @@
 
 	* src/pathname/denode.c: mods for MSDOS
 
-1993-11-28  Thomas E. Dickey  <dickey@software.org>
+1993-11-28  dickey@software.org
 
 	* src/pathname/denode.c: use MODULE_ID
 
@@ -4067,7 +4104,7 @@
 
 	* src/pathname/relpath.c: mods for MSDOS
 
-1993-11-27  Thomas E. Dickey  <dickey@software.org>
+1993-11-27  dickey@software.org
 
 	* src/pathname/relpath.c: use MODULE_ID
 
@@ -4077,7 +4114,7 @@
 
 	* src/curses/blip.c: mods for MSDOS
 
-1993-11-27  Thomas E. Dickey  <dickey@software.org>
+1993-11-27  dickey@software.org
 
 	* src/curses/blip.c: use MODULE_ID
 
@@ -4087,7 +4124,7 @@
 
 	* src/cm_funcs/vcs_file.c: use macro 'isSlash()' for unix/MSDOS porting
 
-1993-11-27  Thomas E. Dickey  <dickey@software.org>
+1993-11-27  dickey@software.org
 
 	* src/cm_funcs/vcs_file.c: use MODULE_ID
 
@@ -4095,7 +4132,7 @@
 
 	* src/pathname/name2s.c: mods for MSDOS
 
-1993-11-27  Thomas E. Dickey  <dickey@software.org>
+1993-11-27  dickey@software.org
 
 	* src/pathname/name2s.c: use MODULE_ID
 
@@ -4106,7 +4143,7 @@
 
 	* src/pathname/pathcat.c: tweaks for porting to MSDOS
 
-1993-11-27  Thomas E. Dickey  <dickey@software.org>
+1993-11-27  dickey@software.org
 
 	* src/pathname/pathcat.c: use MODULE_ID
 
@@ -4130,7 +4167,7 @@
 
 	* src/pathname/pathleaf.c: mods to make it "should" work for MSDOS
 
-1993-11-27  Thomas E. Dickey  <dickey@software.org>
+1993-11-27  dickey@software.org
 
 	* src/pathname/pathleaf.c: use MODULE_ID
 
@@ -4138,7 +4175,7 @@
 
 	* src/pathname/ftype2.c: mods to make it "should" work on MSDOS
 
-1993-11-27  Thomas E. Dickey  <dickey@software.org>
+1993-11-27  dickey@software.org
 
 	* src/pathname/ftype2.c: use MODULE_ID
 
@@ -4146,7 +4183,7 @@
 
 	* src/pathname/ftype.c: port to MSDOS
 
-1993-11-27  Thomas E. Dickey  <dickey@software.org>
+1993-11-27  dickey@software.org
 
 	* src/pathname/ftype.c: use MODULE_ID
 
@@ -4156,7 +4193,7 @@
 
 	* src/pathname/add2fnam.c: port to MSDOS
 
-1993-11-27  Thomas E. Dickey  <dickey@software.org>
+1993-11-27  dickey@software.org
 
 	* src/pathname/add2fnam.c: use MODULE_ID
 
@@ -4164,7 +4201,7 @@
 
 	* src/pathname/is_spath.c: port to MSDOS
 
-1993-11-27  Thomas E. Dickey  <dickey@software.org>
+1993-11-27  dickey@software.org
 
 	* src/pathname/is_spath.c: use MODULE_ID
 
@@ -4173,7 +4210,7 @@
 	* src/pathname/file2arg.c, src/process/shoarg.c:
 	TurboC compiler warning
 
-1993-11-27  Thomas E. Dickey  <dickey@software.org>
+1993-11-27  dickey@software.org
 
 	* src/process/shoarg.c: use MODULE_ID
 
@@ -4184,7 +4221,7 @@
 	* src/cm_funcs/rcsperm.c, src/cm_funcs/samebr.c:
 	TurboC compiler warning
 
-1993-11-27  Thomas E. Dickey  <dickey@software.org>
+1993-11-27  dickey@software.org
 
 	* src/cm_funcs/samebr.c: use MODULE_ID
 
@@ -4196,7 +4233,7 @@
 
 	* src/process/usercopy.c: ifdef'd for unix-only
 
-1993-11-27  Thomas E. Dickey  <dickey@software.org>
+1993-11-27  dickey@software.org
 
 	* src/process/usercopy.c: use MODULE_ID
 
@@ -4204,7 +4241,7 @@
 
 	* src/curses/viewfile.c: ifdef'd for unix-only
 
-1993-11-27  Thomas E. Dickey  <dickey@software.org>
+1993-11-27  dickey@software.org
 
 	* src/curses/viewfile.c: use MODULE_ID
 
@@ -4212,7 +4249,7 @@
 
 	* src/process/userprot.c, src/process/showuids.c: ifdef'd for unix-only
 
-1993-11-27  Thomas E. Dickey  <dickey@software.org>
+1993-11-27  dickey@software.org
 
 	* src/process/showuids.c: use MODULE_ID
 
@@ -4222,7 +4259,7 @@
 
 	* src/compare/cmpqsort.c: compiler-warnings for MSDOS
 
-1993-11-27  Thomas E. Dickey  <dickey@software.org>
+1993-11-27  dickey@software.org
 
 	* src/compare/cmpqsort.c: use MODULE_ID
 
@@ -4230,7 +4267,7 @@
 
 	* src/process/walkback.c: ifdef'd for unix-only
 
-1993-11-26  Thomas E. Dickey  <dickey@software.org>
+1993-11-26  dickey@software.org
 
 	* src/process/walkback.c: use MODULE_ID
 
@@ -4238,7 +4275,7 @@
 
 	* src/unix/s2gid.c: ifdef'd for unix-only
 
-1993-11-26  Thomas E. Dickey  <dickey@software.org>
+1993-11-26  dickey@software.org
 
 	* src/unix/s2gid.c: use MODULE_ID
 
@@ -4246,7 +4283,7 @@
 
 	* src/unix/s2uid.c, src/unix/uid2s.c: ifdef'd for unix-only
 
-1993-11-26  Thomas E. Dickey  <dickey@software.org>
+1993-11-26  dickey@software.org
 
 	* src/unix/s2uid.c: use MODULE_ID
 
@@ -4254,7 +4291,7 @@
 
 	* src/process/revert.c: ifdef'd for unix-only
 
-1993-11-26  Thomas E. Dickey  <dickey@software.org>
+1993-11-26  dickey@software.org
 
 	* src/process/revert.c: use MODULE_ID
 
@@ -4262,7 +4299,7 @@
 
 	* src/curses/padedit.c: ifdef'd for unix-only
 
-1993-11-26  Thomas E. Dickey  <dickey@software.org>
+1993-11-26  dickey@software.org
 
 	* src/curses/padedit.c: use MODULE_ID
 
@@ -4276,7 +4313,7 @@
 
 	* src/process/getuser.c: ifdef'd for unix-only
 
-1993-11-26  Thomas E. Dickey  <dickey@software.org>
+1993-11-26  dickey@software.org
 
 	* src/process/getuser.c: use MODULE_ID
 
@@ -4286,7 +4323,7 @@
 
 	* src/process/for_user.c: ifdef'd for unix-only
 
-1993-11-26  Thomas E. Dickey  <dickey@software.org>
+1993-11-26  dickey@software.org
 
 	* src/process/for_user.c: use MODULE_ID
 
@@ -4294,7 +4331,7 @@
 
 	* src/process/for_admn.c: ifdef'd for unix-only
 
-1993-11-26  Thomas E. Dickey  <dickey@software.org>
+1993-11-26  dickey@software.org
 
 	* src/process/for_admn.c: use MODULE_ID
 
@@ -4316,7 +4353,7 @@
 
 	* src/process/catchall.c: compiled with TurboC
 
-1993-11-26  Thomas E. Dickey  <dickey@software.org>
+1993-11-26  dickey@software.org
 
 	* src/process/catchall.c: use MODULE_ID
 
@@ -4393,7 +4430,7 @@
 	* src/compare/diffload.c: ifdef-ident
 	compile on HP/UX
 
-1993-10-29  Thomas E. Dickey  <dickey@software.org>
+1993-10-29  dickey@software.org
 
 	* src/cm_funcs/cutoff.c, src/curses/dumpchr.c, src/pathname/arg2file.c, src/pathname/dotname.c, src/process/bldarg.c, src/process/catarg.c, src/string/dftenv.c, src/string/dotcmp.c:
 	use MODULE_ID
@@ -4406,7 +4443,7 @@
 	* src/pathname/filecopy.c, src/unix/gid2s.c: ifdef-ident
 	compile on HP/UX
 
-1993-10-29  Thomas E. Dickey  <dickey@software.org>
+1993-10-29  dickey@software.org
 
 	* src/pathname/fp2argv.c, src/process/failed.c: use MODULE_ID
 
@@ -4422,7 +4459,7 @@
 
 	* src/cm_funcs/newzone.c: port to HP/UX
 
-1993-10-29  Thomas E. Dickey  <dickey@software.org>
+1993-10-29  dickey@software.org
 
 	* src/cm_funcs/rcs_dir.c, src/cm_funcs/rcsdebug.c, src/compare/m2comp.c, src/pathname/istextfl.c, src/pathname/modechar.c, src/process/makeargv.c, src/string/lsbycols.c:
 	use MODULE_ID
@@ -4437,7 +4474,7 @@
 
 	* src/unix/setmtime.c: port to HP/UX
 
-1993-10-29  Thomas E. Dickey  <dickey@software.org>
+1993-10-29  dickey@software.org
 
 	* src/cm_funcs/rcskeys.c, src/cm_funcs/rcslocks.c, src/cm_funcs/rcssymbs.c, src/compare/scomp.c, src/memory/stralloc.c, src/sheet/ss_field.c, src/string/strbcmp.c:
 	use MODULE_ID
@@ -4447,7 +4484,7 @@
 	* src/cm_funcs/rcsargpr.c, src/cm_funcs/vcs_file.c, src/cm_funcs/vercmp.c, src/curses/viewfile.c, src/memory/txtalloc.c, src/memory/vecalloc.c, src/memory/vecedit.c, src/memory/veclen.c, src/pathname/stat_dir.c, src/pathname/stat_fil.c, src/pathname/track_wd.c, src/pathname/trimpath.c, src/pathname/walktree.c, src/pathname/which.c, src/process/savesuid.c, src/process/showuids.c, src/process/usercopy.c, src/process/userprot.c, src/process/walkback.c, src/string/dyn_copy.c, src/string/dyn_str.c, src/string/strclean.c, src/string/strcount.c, src/string/strtrim.c, src/string/strucmp.c, src/string/strucpy.c, src/string/strwcmp.c, src/unix/uid2s.c:
 	ifdef-ident
 
-1993-10-29  Thomas E. Dickey  <dickey@software.org>
+1993-10-29  dickey@software.org
 
 	* src/memory/vecedit.c, src/memory/veclen.c, src/pathname/track_wd.c, src/process/savesuid.c, src/string/dyn_copy.c, src/string/dyn_str.c, src/string/strclean.c, src/string/strcount.c, src/string/strtrim.c, src/string/strucmp.c, src/string/strucpy.c, src/string/strwcmp.c:
 	use MODULE_ID
@@ -4457,7 +4494,7 @@
 	* src/sheet/count_ss.c, src/string/dyn_app.c, src/string/dyn_appc.c, src/string/dyn_cata.c:
 	ifdef-ident
 
-1993-10-29  Thomas E. Dickey  <dickey@software.org>
+1993-10-29  dickey@software.org
 
 	* src/sheet/count_ss.c, src/string/dyn_app.c, src/string/dyn_appc.c, src/string/dyn_cata.c:
 	use MODULE_ID
@@ -4505,7 +4542,7 @@
 
 	* test/run_test.sh: better Purify options
 
-1993-09-23  Thomas E. Dickey  <dickey@software.org>
+1993-09-23  dickey@software.org
 
 	* test/cm_funcs/run_test.sh, test/compare/run_test.sh, test/curses/run_test.sh, test/memory/run_test.sh, test/pathname/run_test.sh, test/port2dos/run_test.sh, test/process/run_test.sh, test/sheet/run_test.sh, test/string/run_test.sh, test/unix/run_test.sh:
 	RCS_BASE
@@ -13618,7 +13655,7 @@
 	* descrip.mms:
 	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
 
-1989-04-25  Thomas E. Dickey  <dickey@software.org>
+1989-04-25  dickey@software.org
 
 	* descrip.mms: added Ident
 
@@ -16173,29 +16210,29 @@
 	* src/string/strclean.c:
 	BASELINE Thu Aug 24 09:38:55 EDT 1989 -- support:navi_011(rel2)
 
-1987-09-30	Thomas E. Dickey
+1987-09-30  Thomas E. Dickey
 
 	* src/cm_funcs/sccslast.c:
 	revised this so it does something meaningful for sccs-files themselves!
 
-1987-09-29	Thomas E. Dickey
+1987-09-29  Thomas E. Dickey
 
 	* src/curses/rawgets.c: New file.
 
-1987-09-17	Thomas E. Dickey
+1987-09-17  Thomas E. Dickey
 
 	* src/pathname/abspath.c: New file.
 
-1987-05-07	Thomas E. Dickey
+1987-05-07  Thomas E. Dickey
 
 	* src/memory/doalloc.c:
 	Moved the elaborate failure code to generic 'failed()' in caller.
 
-1987-01-23	Thomas E. Dickey
+1987-01-23  Thomas E. Dickey
 
 	* src/cm_funcs/sccslast.c: Increased pathlength.
 
-1987-01-22	Thomas E. Dickey
+1987-01-22  Thomas E. Dickey
 
 	* src/pathname/denode.c: New file.
 
@@ -16221,33 +16258,33 @@
 	* src/pathname/denode.c:
 	BASELINE Thu Mar 29 07:37:55 1990 -- maintenance release (SYNTHESIS)
 
-1986-10-20	Thomas E. Dickey
+1986-10-20  Thomas E. Dickey
 
 	* src/cm_funcs/sccslast.c: New file.
 
-1986-10-14	Thomas E. Dickey
+1986-10-14  Thomas E. Dickey
 
 	* src/memory/doalloc.c: Added stuff for xenix-lint.
 
-1986-10-07	Thomas E. Dickey
+1986-10-07  Thomas E. Dickey
 
 	* src/cm_funcs/packdate.c: extern's for xenix-port.
 
 	* src/cm_funcs/packdate.c, src/memory/doalloc.c: linted.
 
-1986-03-26	Thomas E. Dickey
+1986-03-26  Thomas E. Dickey
 
 	* src/cm_funcs/packdate.c: New file.
 
-1986-01-09	Thomas E. Dickey
+1986-01-09  Thomas E. Dickey
 
 	* src/memory/doalloc.c: New file.
 
-1985-12-17	Thomas E. Dickey
+1985-12-17  Thomas E. Dickey
 
 	* src/process/bldarg.c: New file.
 
-1985-12-16	Thomas E. Dickey
+1985-12-16  Thomas E. Dickey
 
 	* src/pathname/dotname.c: New file.
 
