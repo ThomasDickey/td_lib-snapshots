@@ -1,4 +1,4 @@
-# $Id: td_make.in,v 12.33 2015/07/04 18:06:41 tom Exp $
+# $Id: td_make.in,v 12.36 2018/01/07 21:43:18 tom Exp $
 # common definitions for makefiles built over TD_LIB library.
 # vile:makemode
 
@@ -19,7 +19,8 @@ TD_LIB		= @TOP_SRCDIR@/lib
 TD_INC		= @TOP_SRCDIR@/include
 TD_CFG		= @TOP_SRCDIR@/support
 
-AR		= ar crv
+AR		= @AR@
+ARFLAGS		= @ARFLAGS@
 RM		= rm -f
 LINT		= @LINT@
 CTAGS		= @CTAGS@
@@ -84,24 +85,26 @@ CPROTO	= cproto -e -i -fo'\\n\\t\\t' -fp'\\n\\t\\t'
 
 LINT_EACH = $(SHELL) -c 'for i in $?;do echo $$i:; $(LINT) $(LINTOPTS) $$i >>$@;done'
 
+.SUFFIXES: .c .o .a .i .proto .lint .tst .man $(SUFFIX_MAN) .txt .pdf .ps .html
+
 .c.o:
 	@RULE_CC@
-	@ECHO_CC@$(CC) $(CPP_OPTS) $(CFLAGS) $(EXTRA_CFLAGS) -c $<
+	@ECHO_CC@$(CC) $(CPP_OPTS) $(CFLAGS) $(EXTRA_CFLAGS) -c $*.c
 .o.a:
-	@$(AR) $@ $*.o
+	@$(AR) $(ARFLAGS) $@ $*.o
 	-@$(RM) $*.o
 .c.a:
 	@RULE_CC@
-	@ECHO_CC@$(CC) $(CPP_OPTS) $(CFLAGS) $(EXTRA_CFLAGS) -c $<
-	@$(AR) $@ $*.o
+	@ECHO_CC@$(CC) $(CPP_OPTS) $(CFLAGS) $(EXTRA_CFLAGS) -c $*.c
+	@$(AR) $(ARFLAGS) $@ $*.o
 	-@$(RM) $*.o
 
-.c.i:		; $(CC) $(CPP_OPTS) -E -C $< >$@
-.c.proto:	; $(CPROTO) $(CPP_OPTS) $< >$@
-.c.lint:	; $(LINT) $(LINTOPTS) $< >$@
+.c.i:		; $(CC) $(CPP_OPTS) -E -C $*.c >$@
+.c.proto:	; $(CPROTO) $(CPP_OPTS) $*.c >$@
+.c.lint:	; $(LINT) $(LINTOPTS) $*.c >$@
 
 .c.tst:
-	@ECHO_LD@$(CC) -o $@ -DTEST $(CFLAGS) $(EXTRA_CFLAGS) $(CPP_OPTS) $< $Z $(LIB_ARGS)
+	@ECHO_LD@$(CC) -o $@ -DTEST $(CFLAGS) $(EXTRA_CFLAGS) $(CPP_OPTS) $*.c $Z $(LIB_ARGS)
 
 @NROFF_NOTE@SUFFIX_MAN = .txt @MAN2HTML_NOTE@ .html
 @NROFF_NOTE@CLEAN__MAN = *.txt @MAN2HTML_NOTE@ *.html
@@ -127,5 +130,3 @@ LINT_EACH = $(SHELL) -c 'for i in $?;do echo $$i:; $(LINT) $(LINTOPTS) $$i >>$@;
 @MAN2HTML_NOTE@.man.html :
 @MAN2HTML_NOTE@	$(TD_CFG)/man2html.sh $* man man >$@
 @MAN2HTML_NOTE@
-
-.SUFFIXES: .c .o .a .i .proto .lint .tst .man $(SUFFIX_MAN)
