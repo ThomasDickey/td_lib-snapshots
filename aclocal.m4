@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Id: aclocal.m4,v 12.196 2018/01/07 22:02:06 tom Exp $
+dnl $Id: aclocal.m4,v 12.197 2018/01/08 21:47:06 tom Exp $
 dnl vi:set ts=4:
 dnl
 dnl see
@@ -3534,7 +3534,7 @@ CF_EOF
 cat >>$cf_out <<CF_EOF
 
 \$Z:	\$(OBJS)
-	\$(AR) \$Z \$(OBJS)
+	\$(AR) \$(ARFLAGS) \$Z \$(OBJS)
 	\$(RANLIB) \$Z
 CF_EOF
 	fi
