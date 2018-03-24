@@ -1,14 +1,14 @@
 Summary: Thomas Dickeys library
 %define AppProgram td_lib
 %define AppVersion 12.x
-%define AppRelease 20180107
-# $Id: td_lib.spec,v 1.16 2018/01/07 19:57:59 tom Exp $
+%define AppRelease 20180324
+# $Id: td_lib.spec,v 1.19 2018/03/24 16:51:37 tom Exp $
 Name: %{AppProgram}
 Version: %{AppVersion}
 Release: %{AppRelease}
 License: MIT-X11
 Group: Development/Libraries
-URL: ftp://invisible-island.net/ded
+URL: ftp://ftp.invisible-island.net/ded
 Source0: %{AppProgram}-%{AppRelease}.tgz
 Vendor: Thomas Dickey <dickey@invisible-island.net>
 
