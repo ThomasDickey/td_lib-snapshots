@@ -1,3 +1,9 @@
+2018-03-24  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* package/debian/changelog, package/td_lib.spec: bump
+
+	* package/debian/watch, package/td_lib.spec: update url
+
 2018-01-08  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* configure: regen
@@ -7,6 +13,8 @@
 	is slow) and Debian (because GNU make supports POSIX "library" rules, as do the
 	vendor Unixes, e.g., AIX, HPUX, Solaris).  The make-program provided by NetBSD
 	7.1 does not support the feature.
+
+	* package/debian/changelog, package/td_lib.spec: bump
 
 2018-01-07  Thomas E. Dickey  <dickey@invisible-island.net>
 
