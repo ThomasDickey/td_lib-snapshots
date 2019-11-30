@@ -1,3 +1,20 @@
+2019-11-29  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* src/cm_funcs/rcslast.c, src/cm_funcs/vercmp.c, src/compare/btree.c, src/curses/cmdch.c, src/unix/gid2s.c, src/unix/uid2s.c, src/memory/txtalloc.c, include/td_btree.h:
+	gcc-warnings
+
+	* package/debian/compat, package/debian/copyright, COPYING: bump
+
+	* configure: regen
+
+	* aclocal.m4: resync with my-autoconf
+
+	* package/debian/changelog, package/td_lib.spec: bump
+
+2019-09-11  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* config.guess, config.sub: 2019-09-10
+
 2018-03-24  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* package/debian/changelog, package/td_lib.spec: bump

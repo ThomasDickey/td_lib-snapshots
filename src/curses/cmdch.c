@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	01 Dec 1987 (broke out of 'ded.c')
  * Modified:
+ *		29 Nov 2019, gcc warnings
  *		25 Dec 2014, coverity warnings
  *		09 Jul 2010, add xt_enabled, to control mouse-initialization.
  *		07 Mar 2004, remove K&R support, indent'd.
@@ -50,7 +51,7 @@
 #include	"td_curse.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: cmdch.c,v 12.37 2014/12/28 01:10:44 tom Exp $")
+MODULE_ID("$Id: cmdch.c,v 12.38 2019/11/30 01:46:23 tom Exp $")
 
 #define	ESC(c)	((c) == '\033')
 #define	END(s)	s[strlen(s)-1]

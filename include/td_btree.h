@@ -1,4 +1,5 @@
-/* $Id: td_btree.h,v 12.8 2010/07/03 16:24:13 tom Exp $ */
+/* $Id: td_btree.h,v 12.9 2019/11/30 01:44:04 tom Exp $ */
+/* *INDENT-OFF* */
 
 /*
  * TD_LIB binary-tree functions
@@ -31,14 +32,14 @@
 #define BI_TREE struct _bi_tree
 	BI_TREE	{
 	int	(*compare) (const void * a, const void * b);
-	BI_NODE*(*allocat) (void * a);
+	BI_NODE*(*allocat) (const void * a);
 	void	(*display) (const void * a);
 	BI_NODE	head;		/* root data, on end to ease initialization */
 	};
 
 	void *	btree_find(
 		BI_TREE *	tree,
-		void *		data
+		const void *	data
 			)
 		;
 
@@ -48,3 +49,4 @@
 		;
 
 #endif /* TD_BTREE_H */
+/* *INDENT-ON* */

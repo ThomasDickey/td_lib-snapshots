@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	18 May 1988, from 'sccslast.c'
  * Modified:
+ *		29 Nov 2019, gcc warnings
  *		07 Jan 2018, correct pointer arithmetic when ded is scanning
  *			     inside an RCS directory.
  *		27 Dec 2014, coverity warnings
@@ -40,7 +41,7 @@
 #include <rcsdefs.h>
 #include <dyn_str.h>
 
-MODULE_ID("$Id: rcslast.c,v 12.17 2018/01/07 20:49:25 tom Exp $")
+MODULE_ID("$Id: rcslast.c,v 12.18 2019/11/30 01:46:23 tom Exp $")
 
 /*
  * Returns the modification date of the given file, or 0 if not found
@@ -171,7 +172,7 @@ rcslast(const char *working,	/* working directory (absolute) */
 
     char name[MAXPATHLEN];
     char *dname = rcs_dir(working, path);
-    int len_s = strlen(RCS_SUFFIX);
+    int len_s = (int) strlen(RCS_SUFFIX);
     int is_RCS;
     int len;
     char *s, *t;

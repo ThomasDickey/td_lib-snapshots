@@ -3,6 +3,8 @@
  * Author:	T.E.Dickey
  * Created:	10 Nov 1987
  * Modified:
+ *		29 Nov 2019, gcc warnings
+ *		05 Jul 2010, gcc warnings
  *		07 Mar 2004, remove K&R support, indent'd.
  *		03 Sep 1995, use btree rather than linked list, to speed up
  *			     sorting in 'ded'.
@@ -26,7 +28,7 @@
 #define	STR_PTYPES
 #include <td_btree.h>
 
-MODULE_ID("$Id: uid2s.c,v 12.15 2010/07/05 16:14:07 tom Exp $")
+MODULE_ID("$Id: uid2s.c,v 12.16 2019/11/30 01:46:23 tom Exp $")
 
 #if defined(HAVE_GETPWUID)
 
@@ -88,13 +90,13 @@ lookup_uid(uid_t uid)
 }
 
 static BI_NODE *
-new_node(void *data)
+new_node(const void *data)
 {
-    UID_DATA *value = (UID_DATA *) data;
+    UID_DATA value = *(const UID_DATA *) data;
     BI_NODE *result = BI_NODE_ALLOC(sizeof(UID_DATA));
     memset(result, 0, sizeof(*result));
-    value->name = lookup_uid(value->user);
-    memcpy((char *) &(result->value), (char *) data, sizeof(UID_DATA));
+    value.name = lookup_uid(value.user);
+    memcpy(&(result->value), &value, sizeof(UID_DATA));
     return result;
 }
 
@@ -126,7 +128,7 @@ uid2s(uid_t user)
 {
     static UID_DATA data;
     data.user = user;
-    memcpy((char *) &data, (char *) btree_find(&uid2s_tree, &data), sizeof(UID_DATA));
+    memcpy(&data, btree_find(&uid2s_tree, &data), sizeof(UID_DATA));
     return data.name;
 }
 

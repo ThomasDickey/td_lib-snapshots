@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	30 Jul 1995, from txtalloc.c
  * Modified:
+ *		29 Nov 2019, gcc warnings
  *		07 Mar 2004, remove K&R support, indent'd.
  *
  * Function:	Maintains an AVL tree of unspecified nodes.
@@ -12,7 +13,7 @@
 
 #include	<td_btree.h>
 
-MODULE_ID("$Id: btree.c,v 12.9 2014/12/28 01:10:39 tom Exp $")
+MODULE_ID("$Id: btree.c,v 12.10 2019/11/30 01:46:23 tom Exp $")
 
 #define	llink	links[0]
 #define	rlink	links[1]
@@ -27,7 +28,7 @@ MODULE_ID("$Id: btree.c,v 12.9 2014/12/28 01:10:39 tom Exp $")
 
 void *
 btree_find(BI_TREE * funcs,
-	   void *data)
+	   const void *data)
 {
     /* (A1:Initialize) */
 
