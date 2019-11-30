@@ -3,6 +3,8 @@
  * Author:	T.E.Dickey
  * Created:	29 Apr 1988
  * Modified:
+ *		29 Nov 2019, gcc warnings
+ *		05 Jul 2010, gcc warnings
  *		07 Mar 2004, remove K&R support, indent'd.
  *		30 Jul 1995, split-out guts as btree.c
  *
@@ -14,12 +16,12 @@
 #define	STR_PTYPES
 #include <td_btree.h>
 
-MODULE_ID("$Id: txtalloc.c,v 12.11 2010/07/05 00:01:42 tom Exp $")
+MODULE_ID("$Id: txtalloc.c,v 12.12 2019/11/30 01:45:22 tom Exp $")
 
 static BI_NODE *
-new_node(void *data)
+new_node(const void *data)
 {
-    char *value = (char *) data;
+    const char *value = (const char *) data;
     size_t need = strlen(value) + 1;
     BI_NODE *result = BI_NODE_ALLOC(need);
     memset(result, 0, BI_NODE_SIZE + need);
@@ -50,7 +52,7 @@ static BI_TREE text_tree =
 char *
 txtalloc(const char *text)
 {
-    return btree_find(&text_tree, (void *) text);
+    return btree_find(&text_tree, (const void *) text);
 }
 
 /*

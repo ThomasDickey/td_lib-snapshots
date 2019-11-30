@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	14 Dec 1988 (from 'dotcmp()')
  * Modified:
+ *		29 Nov 2019, gcc warnings
  *		24 May 2010, change params to const.
  *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident; port to HP/UX.
@@ -22,7 +23,7 @@
 #define STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: vercmp.c,v 12.10 2010/07/05 11:03:51 tom Exp $")
+MODULE_ID("$Id: vercmp.c,v 12.11 2019/11/30 01:46:23 tom Exp $")
 
 #define	DOT	'.'
 
@@ -43,11 +44,15 @@ vercmp(const char *s1, const char *s2, int wild)
     while ((*s1 != EOS) || (*s2 != EOS)) {
 	FIRST(s1);
 	FIRST(s2);
-	LAST(s1, cmp1);
-	LAST(s2, cmp2);
+	LAST(s1, cmp1) {
+	    ;
+	}
+	LAST(s2, cmp2) {
+	    ;
+	}
 	TRACE(("\t\ttest '%s' vs '%s'\t('%.*s' vs '%.*s')\n",
-	       s1, s2, cmp1, s1, cmp2, s2))
-	    if (cmp1 == cmp2) {	/* same lengths, comparable */
+	       s1, s2, cmp1, s1, cmp2, s2));
+	if (cmp1 == cmp2) {	/* same lengths, comparable */
 	    while (cmp1-- > 0) {
 		if ((cmp2 = (*s1++ - *s2++)) != EOS)
 		    return (cmp2);

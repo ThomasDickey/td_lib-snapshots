@@ -3,6 +3,8 @@
  * Author:	T.E.Dickey
  * Created:	10 Nov 1987
  * Modified:
+ *		29 Nov 2019, gcc warnings
+ *		05 Jul 2010, gcc warnings
  *		07 Mar 2004, remove K&R support, indent'd.
  *		03 Sep 1995, use btree rather than linked list, to speed up
  *			     sorting in 'ded'.
@@ -24,7 +26,7 @@
 #define	STR_PTYPES
 #include <td_btree.h>
 
-MODULE_ID("$Id: gid2s.c,v 12.17 2010/07/05 16:38:00 tom Exp $")
+MODULE_ID("$Id: gid2s.c,v 12.18 2019/11/30 01:46:23 tom Exp $")
 
 #if defined(HAVE_GETGRGID)
 
@@ -54,13 +56,13 @@ lookup_gid(gid_t gid)
 }
 
 static BI_NODE *
-new_node(void *data)
+new_node(const void *data)
 {
-    GID_DATA *value = (GID_DATA *) data;
+    GID_DATA value = *(const GID_DATA *) data;
     BI_NODE *result = BI_NODE_ALLOC(sizeof(GID_DATA));
     memset(result, 0, sizeof(*result));
-    value->name = lookup_gid(value->user);
-    memcpy((char *) &(result->value), (char *) data, sizeof(GID_DATA));
+    value.name = lookup_gid(value.user);
+    memcpy(&(result->value), &value, sizeof(GID_DATA));
     return result;
 }
 
@@ -94,7 +96,7 @@ gid2s(gid_t user)
 {
     static GID_DATA data;
     data.user = user;
-    memcpy((char *) &data, (char *) btree_find(&gid2s_tree, &data), sizeof(GID_DATA));
+    memcpy(&data, btree_find(&gid2s_tree, &data), sizeof(GID_DATA));
     return data.name;
 }
 
