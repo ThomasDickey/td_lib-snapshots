@@ -2,6 +2,7 @@
  * Title:	bldarg.c (build argv-array)
  * Created:	17 Dec 1985
  * Modified:
+ *		01 Dec 2019, return resulting argc, for consistency.
  *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
@@ -36,11 +37,11 @@
 #define CHR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: bldarg.c,v 12.8 2014/12/28 01:11:01 tom Exp $")
+MODULE_ID("$Id: bldarg.c,v 12.9 2019/12/01 23:21:44 tom Exp $")
 
 #define	blank(c)	(isascii(c) && isspace(c))
 
-void
+int
 bldarg(int argc, char **argv, char *string)
 {
     int j = 0;
@@ -56,6 +57,7 @@ bldarg(int argc, char **argv, char *string)
 	}
     }
     argv[j] = 0;
+    return j;
 }
 
 /******************************************************************************/

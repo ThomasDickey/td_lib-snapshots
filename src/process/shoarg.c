@@ -2,6 +2,7 @@
  * Title:	shoarg.c (display argv-array)
  * Created:	20 Jun 1991
  * Modified:
+ *		01 Dec 2019, use locale-based validity check for escaping
  *		07 Mar 2004, remove K&R support, indent'd.
  *		24 Dec 2000, ctype.h fix for QNX
  *		29 Oct 1993, ifdef-ident
@@ -12,10 +13,11 @@
  */
 
 #define	CHR_PTYPES
+#define	CUR_PTYPES
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: shoarg.c,v 12.10 2014/12/28 01:11:01 tom Exp $")
+MODULE_ID("$Id: shoarg.c,v 12.11 2019/12/01 20:42:54 tom Exp $")
 
 /*
  * Function:	Writes a new string with the non-ascii characters escaped.
@@ -28,8 +30,8 @@ bldcmd(char *dst,
     char *base = dst;
     int c;
     *dst = EOS;
-    while (len-- > 0 && (c = *src++) != EOS) {
-	if (!isascii(c)) {
+    while (len-- > 0 && (c = UCH(*src++)) != EOS) {
+	if (!valid_shell_char(c)) {
 	    if (--len <= 0)
 		break;
 	    *dst++ = '\\';

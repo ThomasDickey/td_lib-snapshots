@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t20191129
+MANIFEST for td_lib, version t20191201
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         restrictions on copying/using this software
@@ -114,6 +114,7 @@ src/curses/rawterm.c            set terminal to raw (cooked) mode
 src/curses/resizwin.c           change size of curses window
 src/curses/savewin.c            save/unsave curses window
 src/curses/scr_size.c           obtain screen-size
+src/curses/valid_ch.c           check validity of char in curses or shell
 src/curses/viewfile.c           portable (curses) wrapper for padedit
 src/curses/win2file.c           dump curses window to file
 src/curses/wrepaint.c           repaint window w/o clearing it, if possible

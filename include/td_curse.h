@@ -1,4 +1,4 @@
-/* $Id: td_curse.h,v 12.63 2010/07/09 20:59:43 tom Exp $ */
+/* $Id: td_curse.h,v 12.64 2019/12/01 17:57:29 tom Exp $ */
 
 /*
  * TD_LIB CURSES-related definitions
@@ -483,6 +483,15 @@ extern	int	y_rawgets;
 			)
 			;
 
+	/* valid_ch.c ------------------------------------------------- */
+	int	valid_curses_char(
+	    		int	ch
+	    		)
+	    		;
+	int	valid_shell_char(
+	    		int	ch
+	    		)
+	    		;
 	/* win2file.c ------------------------------------------------- */
 	void	win2fp(
 			WINDOW *	win,

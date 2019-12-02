@@ -1,4 +1,4 @@
-dnl Extended Macros that test for specific features.  dnl $Id: aclocal.m4,v 12.198 2019/11/30 00:17:55 tom Exp $
+dnl Extended Macros that test for specific features.  dnl $Id: aclocal.m4,v 12.199 2019/12/01 20:36:19 tom Exp $
 dnl vi:set ts=4:
 dnl
 dnl see
@@ -7,6 +7,29 @@ dnl ---------------------------------------------------------------------------
 dnl BELOW THIS LINE CAN BE PUT INTO "acspecific.m4", by changing "CF_" to "AC_"
 dnl and "cf_" to "ac_".
 dnl ---------------------------------------------------------------------------
+dnl ---------------------------------------------------------------------------
+dnl AM_LANGINFO_CODESET version: 4 updated: 2015/04/18 08:56:57
+dnl -------------------
+dnl Inserted as requested by gettext 0.10.40
+dnl File from /usr/share/aclocal
+dnl codeset.m4
+dnl ====================
+dnl serial AM1
+dnl
+dnl From Bruno Haible.
+AC_DEFUN([AM_LANGINFO_CODESET],
+[
+AC_CACHE_CHECK([for nl_langinfo and CODESET], am_cv_langinfo_codeset,
+	[AC_TRY_LINK([#include <langinfo.h>],
+	[char* cs = nl_langinfo(CODESET);],
+	am_cv_langinfo_codeset=yes,
+	am_cv_langinfo_codeset=no)
+	])
+	if test $am_cv_langinfo_codeset = yes; then
+		AC_DEFINE(HAVE_LANGINFO_CODESET, 1,
+		[Define if you have <langinfo.h> and nl_langinfo(CODESET).])
+	fi
+])dnl
 dnl ---------------------------------------------------------------------------
 dnl CF_ACVERSION_CHECK version: 5 updated: 2014/06/04 19:11:49
 dnl ------------------
@@ -762,7 +785,7 @@ esac
 dnl ---------------------------------------------------------------------------
 dnl CF_CURSES_CCHAR_T version: 5 updated: 2013/12/05 19:11:11
 dnl -----------------
-dnl Test if curses defines 'cchar_t' (usually a 'long' type for SysV curses).
+dnl Test if curses defines 'cchar_t' (a 'struct' type for X/Open curses).
 AC_DEFUN([CF_CURSES_CCHAR_T],
 [
 AC_REQUIRE([CF_CURSES_CPPFLAGS])dnl

@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	23 Aug 1989
  * Modified:
+ *		01 Dec 2019, use executev()
  *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
@@ -18,9 +19,10 @@
  * Returns:	-1 if error occurs, 0 if success
  */
 
+#define STR_PTYPES
 #include	"td_curse.h"
 
-MODULE_ID("$Id: viewfile.c,v 12.9 2014/12/28 01:10:44 tom Exp $")
+MODULE_ID("$Id: viewfile.c,v 12.10 2019/12/01 23:54:28 tom Exp $")
 
 #ifdef	SYS_UNIX
 
@@ -32,11 +34,27 @@ view_file(char *fname, int readonly)
 
     if ((code = padedit(fname, readonly, editor)) < 0) {
 	/* give up: put it in the current process's window */
-	cookterm();
-	code = execute(editor, fname);
-	rawterm();
-	touchwin(curscr);
-	(void) wrefresh(curscr);
+	size_t need = strlen(editor);
+	int argc;
+	char **argv = calloc(need + 2, sizeof(char *));
+	char *buffer = stralloc(editor);
+
+	if (argv != NULL && buffer != NULL) {
+	    argc = (int) strlen(buffer);
+	    argc = bldarg(argc, argv, buffer);
+
+	    argv[argc++] = fname;
+	    argv[argc] = NULL;
+
+	    cookterm();
+	    code = executev(argv);
+	    rawterm();
+	    touchwin(curscr);
+	    (void) wrefresh(curscr);
+	}
+
+	free(argv);
+	free(buffer);
     }
     return (code);
 }
