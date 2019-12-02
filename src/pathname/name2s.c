@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	18 Aug 1988 (from ded2s.c)
  * Modified:
+ *		01 Dec 2019, use locale-based validity checks for escaping
  *		07 Mar 2004, remove K&R support, indent'd.
  *		05 Nov 1995, added tilde to shell-characters
  *		21 Sep 1993, gcc-warnings
@@ -37,18 +38,13 @@
  */
 
 #define	CHR_PTYPES
+#define	CUR_PTYPES
 #define	STR_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: name2s.c,v 12.10 2010/07/05 14:27:36 tom Exp $")
+MODULE_ID("$Id: name2s.c,v 12.11 2019/12/01 19:24:25 tom Exp $")
 
 #define	isshell(c)	(strchr("*%?$()[]{}|<>^&;#\\\"`'~", c) != 0)
-#define	isAEGIS(c)	(strchr("*%?()[]{}\\", c) != 0)
-
-#undef	doAEGIS
-#if	defined(apollo) || defined(TEST)
-#define	doAEGIS
-#endif
 
 int
 name2s(char *bfr, int len, const char *name, int opt)
@@ -56,54 +52,34 @@ name2s(char *bfr, int len, const char *name, int opt)
     int num = 0;
     int c;
     int esc = opt & 1;
-#ifdef	doAEGIS
-    int in_leaf = 0;
-#endif
 
     while (((c = *name++) != EOS) && (len-- > 0)) {
-#ifdef	doAEGIS
-	if (isSlash(c))
-	    in_leaf = 0;
-	else
-	    in_leaf++;
-	if (opt & 2) {		/* show underlying apollo filenames */
-	    if (isascii(c) && isgraph(c)) {
-		if (isalpha(c) && isupper(c)) {
-		    bfr[num++] = ':';
-		    c = LowerMacro(c);
-		} else if ((c == ':')
-			   || (c == '.'
-			       && in_leaf == 1
-			       && strchr("./", *name) == 0))
-		    bfr[num++] = ':';
-		else if (opt & 5) {
-		    if (isAEGIS(c))
-			bfr[num++] = '@';
-		    if ((opt & 1) && isshell(c))
-			bfr[num++] = '\\';
-		}
-		bfr[num++] = (char) c;
-	    } else if (c == ' ') {
-		bfr[num++] = ':';
-		bfr[num++] = '_';
-	    } else {
-		FORMAT(bfr + num, ":%s#%02x", esc ? "\\" : "", c);
-		num = (int) strlen(bfr);
-	    }
-	} else
-#endif /* doAegis */
 	if (esc) {
-	    if (!isascii(c)
-		|| iscntrl(c)
-		|| isspace(c)
-		|| isshell(c))
-		bfr[num++] = '\\';	/* escape the nasty thing */
+	    if (isascii(c)) {
+		if (iscntrl(c)
+		    || isspace(c)
+		    || isshell(c)) {
+		    bfr[num++] = '\\';	/* escape the nasty thing */
+		}
+	    } else {
+		if (!valid_shell_char(c))
+		    bfr[num++] = '\\';	/* escaping may help here... */
+	    }
 	    bfr[num++] = (char) c;
 	} else {
-	    if (isascii(c) && isprint(c)) {
-		bfr[num++] = (char) c;
-	    } else
-		bfr[num++] = '?';
+	    if (isascii(c)) {
+		if (isprint(c)) {
+		    bfr[num++] = (char) c;
+		} else {
+		    bfr[num++] = '?';
+		}
+	    } else {
+		if (valid_curses_char(c)) {
+		    bfr[num++] = (char) c;
+		} else {
+		    bfr[num++] = '?';
+		}
+	    }
 	}
     }
     bfr[num] = EOS;

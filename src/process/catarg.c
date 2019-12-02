@@ -12,16 +12,16 @@
  *		27 Feb 1989, treat any embedded blank as a pass-thru (even tabs)
  *
  * Function:	Concatenate strings from 'argv[]' onto a buffer which will
- *		later be split in 'bldarg[]'.  Unlike 'strcat()', however,
+ *		later be split in 'bldarg()'.  Unlike 'strcat()', however,
  *		we translate embedded blanks to another character so that
- *		they can be passed through via 'blarg()'.
+ *		they can be passed through via 'bldarg()'.
  */
 
 #define	STR_PTYPES
 #include	"ptypes.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: catarg.c,v 12.7 2014/12/28 01:11:01 tom Exp $")
+MODULE_ID("$Id: catarg.c,v 12.8 2019/12/01 19:44:12 tom Exp $")
 
 void
 catarg(char *dst, const char *src)

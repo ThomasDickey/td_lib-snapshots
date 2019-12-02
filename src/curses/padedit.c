@@ -3,6 +3,8 @@
  * Author:	T.E.Dickey
  * Created:	14 Dec 1987
  * Modified:
+ *		01 Dec 2019, use executev(), deprecate catarg().
+ *			     require $DISPLAY to be set.
  *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
@@ -39,7 +41,7 @@
 #include	"ptypes.h"
 #include	<errno.h>
 
-MODULE_ID("$Id: padedit.c,v 12.11 2014/07/22 13:51:29 tom Exp $")
+MODULE_ID("$Id: padedit.c,v 12.13 2019/12/01 23:55:59 tom Exp $")
 
 #ifdef	SYS_UNIX
 
@@ -188,6 +190,8 @@ padedit(const char *name, int readonly, const char *editor)
 
 	if (getwd(wd) == 0)
 	    return (-1);
+	if ((display = getenv("DISPLAY")) == NULL)
+	    return -1;
 	if (which(xt, (int) sizeof(xt), "xterm", wd) <= 0)
 	    return (-1);
 
@@ -195,10 +199,8 @@ padedit(const char *name, int readonly, const char *editor)
 
 	argc = 0;
 	argv[argc++] = xt;
-	if ((display = getenv("DISPLAY")) != NULL) {
-	    argv[argc++] = txtalloc("-display");
-	    argv[argc++] = display;
-	}
+	argv[argc++] = txtalloc("-display");
+	argv[argc++] = display;
 	argv[argc++] = txtalloc("-title");
 	argv[argc++] = the_title;
 	argv[argc++] = txtalloc("-e");
@@ -209,13 +211,7 @@ padedit(const char *name, int readonly, const char *editor)
 	if (readonly) {		/* spawn and run away */
 	    return (spawn(xt, argv));
 	} else {
-	    char args[BUFSIZ];
-	    int j;
-
-	    *args = EOS;
-	    for (j = 1; argv[j]; j++)
-		catarg(args, argv[j]);
-	    return (execute(xt, args));
+	    return (executev(argv));
 	}
     }
     return (-1);

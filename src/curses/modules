@@ -18,6 +18,7 @@ rawterm
 resizwin
 savewin
 scr_size
+valid_ch
 viewfile
 win2file
 wrepaint

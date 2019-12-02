@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	21 May 1988
  * Modified:
+ *		01 Dec 2019, added executev(), to deprecate execute().
  *		12 Dec 2014, fix memory leak (coverity).
  *		07 Mar 2004, remove K&R support, indent'd.
  *		24 Dec 2000, ctype.h fix for QNX
@@ -41,20 +42,14 @@
 #include	"dyn_str.h"
 #include	<errno.h>
 
-MODULE_ID("$Id: execute.c,v 12.14 2014/12/12 23:38:56 tom Exp $")
+MODULE_ID("$Id: execute.c,v 12.15 2019/12/01 22:06:02 tom Exp $")
 
 #ifdef	vms
 #  include	<descrip.h>
 #  include	<unixlib.h>
 #  include	<processes.h>
-#else /* bsd4.x */
-#  if defined(HAVE_EXECVP)
-#    define	EXECV(c,v,e)	execvp(c,v)
-#  else	/* assume bsd4.x */
-extern char **environ;
-#    define	EXECV(c,v,e)	execve(c,v,e)
-#  endif
-#endif /* sys5 vs bsd4.x/vms */
+#else /* unix */
+#endif /* unix vs vms */
 
 #ifdef	__TURBOC__
 #include <process.h>
@@ -63,6 +58,41 @@ extern char **environ;
 #ifdef	TEST
 static void dump_exec(char *verb, char **args);
 #endif
+
+#ifdef SYS_UNIX
+int
+executev(char **argv)
+{
+    int result;
+    int count;
+    int pid;
+    DCL_WAIT(status);
+
+#ifdef TEST
+    dump_exec(argv[0], argv);
+#endif
+
+    FFLUSH(stdout);
+    FFLUSH(stderr);
+    if ((pid = fork()) > 0) {
+	while ((count = wait(ARG_WAIT(status))) != pid) {
+	    if ((count < 0) || (errno == ECHILD))
+		break;
+	    errno = 0;
+	}
+	if ((errno = W_RETCODE(status)) != 0) {
+	    return (-1);
+	}
+    } else if (pid == 0) {
+	errno = 0;
+	(void) execvp(argv[0], argv);
+	(void) _exit(errno);	/* just in case exec-failed */
+	/*NOTREACHED */
+    }
+    result = 0;
+    return result;
+}
+#endif /* SYS_UNIX */
 
 int
 execute(const char *verb, const char *args)
@@ -73,8 +103,9 @@ execute(const char *verb, const char *args)
     char *s = strcat(
 			strcat(
 				  strcpy((dyn = dyn_alloc((DYN *) 0,
-					 need))->text, verb), " "), args);
-#ifdef	vms
+							  need))->text,
+					 verb), " "), args);
+#if defined(vms)
 
     /* If this is run on vms, we may be processing a foreign command, or
      * a standard dcl-command.  In either case, however, both the 'system()'
@@ -126,18 +157,9 @@ execute(const char *verb, const char *args)
     }
     errno = EVMSERR;		/* can't do much better than that! */
 
-#endif /* vms */
-#ifdef	SYS_UNIX
+#elif defined(SYS_UNIX)
     static char **myargv;	/* argument vector for 'bldarg()' */
-#if defined(HAVE_EXECVP)
-    char *what;
-#else
-    char what[BUFSIZ];
-#endif /* HAVE_EXECVP */
     int count = 3;		/* minimum needed for 'bldarg()' */
-    int pid;
-
-    DCL_WAIT(status);
 
     /* Split the command-string into an argv-like structure suitable for
      * the 'execv()' procedure:
@@ -147,61 +169,20 @@ execute(const char *verb, const char *args)
 	    count++;
 	    while (isspace(UCH(*s)))
 		s++;
-	} else
+	} else {
 	    s++;
+	}
     }
     myargv = DOALLOC(myargv, char *, (unsigned) count);
     bldarg(count, myargv, dyn->text);
 
-#if defined(HAVE_EXECVP)
-    what = *myargv;
-#else
-    /*
-     * 'execve()' needs an absolute pathname in the first argument.
-     * Use 'which()' to get it.  Note that this won't work for ".",
-     * since I didn't waste time on a getcwd...
-     */
-    if (which(what, sizeof(what), *myargv, ".") <= 0) {
-	errno = ENOENT;
-	dyn_free(dyn);
-	return (-1);
-    }
-#endif /* HAVE_EXECVP */
-
-#ifdef	TEST
-    dump_exec(what, myargv);
-#endif
-
-    FFLUSH(stdout);
-    FFLUSH(stderr);
-    if ((pid = fork()) > 0) {
-	while ((count = wait(ARG_WAIT(status))) != pid) {
-	    if ((count < 0) || (errno == ECHILD))
-		break;
-	    errno = 0;
-	}
-	if ((errno = W_RETCODE(status)) != 0) {
-	    dyn_free(dyn);
-	    return (-1);
-	}
-#ifdef	NO_LEAKS
-	dofree((char *) myargv);
-	myargv = 0;
-#endif /*NO_LEAKS */
-    } else if (pid == 0) {
-	errno = 0;
-	(void) EXECV(what, myargv, environ);
-	(void) _exit(errno);	/* just in case exec-failed */
-	/*NOTREACHED */
-    }
-    result = 0;
-#endif /* SYS_UNIX */
+    result = executev(myargv);
+#elif defined(__TURBOC__)
     /*
      * TurboC 3.0 for MS-DOS doesn't have 'fork()' or 'wait()', but it
      * does provide a similar construct that lets us get the child's
      * exit status (the whole point of this module).
      */
-#if	defined(__TURBOC__)
     static char **myargv;	/* argument vector for 'bldarg()' */
     int count = 3;		/* minimum needed for 'bldarg()' */
 

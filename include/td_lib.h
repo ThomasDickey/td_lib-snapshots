@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 12.33 2010/07/05 17:33:34 tom Exp $ */
+/* $Id: td_lib.h,v 12.35 2019/12/01 22:20:49 tom Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for TD_LIB common
@@ -64,7 +64,7 @@
 			;
 
 	/* bldarg.c --------------------------------------------------- */
-	void	bldarg (
+	int	bldarg (
 			int	argc,
 			char **	argv,
 			char *	string
@@ -204,6 +204,10 @@
 	int	execute(
 			const char *	verb,
 			const char *	args
+			)
+			;
+	int	executev(
+			char **		args
 			)
 			;
 

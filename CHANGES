@@ -1,3 +1,42 @@
+2019-12-01  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* package/debian/changelog, package/td_lib.spec: bump
+
+	* src/curses/padedit.c: require $DISPLAY to be set
+
+	* src/curses/viewfile.c: use executev(), to handle UTF-8 pathnames
+
+	* src/process/bldarg.c: return argc for consistency with makeargv()
+
+	* src/curses/padedit.c: use executev(), to handle UTF-8 pathnames
+
+	* include/td_lib.h:
+	make bldarg() return the resulting argc, for consistency with makeargv()
+
+	* src/process/execute.c:
+	split-out executev(), to deprecate catarg() because catarg()'s replacement
+	of whitespace interferes with handling UTF-8 parameters.
+
+	* include/td_lib.h: add executev() prototype
+
+	* src/process/shoarg.c: use locale-based escaping rule
+
+	* configure: regen
+
+	* aclocal.m4: add AM_LANGINFO_CODESET, for valid_ch.c
+
+	* src/process/catarg.c: fix typo in comment
+
+	* src/curses/valid_ch.c: RCS_BASE
+
+	* src/pathname/name2s.c:
+	revise, using locale-based validity check to determine which characters
+	must be escaped (and drop incompatible AEGIS code).
+
+	* configure.in: use AM_LANGINFO_CODESET, for valid_ch.c
+
+	* src/curses/modules, include/td_curse.h: add valid_ch.c
+
 2019-11-29  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* src/cm_funcs/rcslast.c, src/cm_funcs/vercmp.c, src/compare/btree.c, src/curses/cmdch.c, src/unix/gid2s.c, src/unix/uid2s.c, src/memory/txtalloc.c, include/td_btree.h:
