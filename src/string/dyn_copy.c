@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	03 Apr 1992
  * Modified:
+ *		06 Dec 2019, don't copy if the source/target are the same.
  *		07 Mar 2004, remove K&R support, indent'd.
  *		30 May 1998, compile with g++
  *		29 Oct 1993, ifdef-ident
@@ -14,7 +15,7 @@
 #include "ptypes.h"
 #include "dyn_str.h"
 
-MODULE_ID("$Id: dyn_copy.c,v 12.6 2014/12/28 01:11:07 tom Exp $")
+MODULE_ID("$Id: dyn_copy.c,v 12.7 2019/12/06 10:58:41 tom Exp $")
 
 DYN *
 dyn_copy(DYN * p, const char *s)
@@ -23,7 +24,8 @@ dyn_copy(DYN * p, const char *s)
 
     if (len != 0) {
 	p = dyn_alloc(p, len + 1);
-	(void) strcpy(p->text, s);
+	if (p->text != s)
+	    (void) strcpy(p->text, s);
 	p->cur_length = len;
     } else
 	dyn_init(&p, len + 1);

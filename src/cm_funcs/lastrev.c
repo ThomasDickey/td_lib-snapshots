@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	03 Aug 1994, from 'dedscan.c'
  * Modified:
+ *		06 Dec 2019, modify ifdef's for sccs-wrapper.
  *		15 Oct 2009, add svnlast().
  *		07 Mar 2004, remove K&R support, indent'd.
  *		25 Apr 2003, add cvslast().
@@ -18,9 +19,9 @@
 #include	"rcsdefs.h"
 #include	"sccsdefs.h"
 
-MODULE_ID("$Id: lastrev.c,v 12.14 2014/12/28 01:10:33 tom Exp $")
+MODULE_ID("$Id: lastrev.c,v 12.15 2019/12/06 12:08:05 tom Exp $")
 
-#if defined(CMV_PATH) && !(defined(RCS_PATH) || defined(SCCS_PATH))
+#if defined(CMV_PATH) && !(defined(RCS_PATH) || defined(ADMIN_PATH))
 #undef CMV_PATH
 #endif
 
@@ -28,7 +29,7 @@ MODULE_ID("$Id: lastrev.c,v 12.14 2014/12/28 01:10:33 tom Exp $")
  * This is driven by an environment variable, but ultimately should be done
  * via ".dedrc"
  */
-#if defined(RCS_PATH) || defined(SCCS_PATH) || defined(CVS_PATH) || defined(SVN_PATH)
+#if defined(RCS_PATH) || defined(ADMIN_PATH) || defined(SCCS_PATH) || defined(CVS_PATH) || defined(SVN_PATH)
 typedef enum TrySCCS {
     DontTry, TrySccs, TryRcs, TryCvs, TrySvn, TryCmVision
 } TRY;
@@ -50,7 +51,7 @@ try_order(int tried)
 	    env = strlwrcpy(temp, env);
 	} else {
 	    env = strcpy(temp, "rcs");
-#ifdef SCCS_PATH
+#if defined(ADMIN_PATH) || defined(SCCS_PATH)
 	    (void) strcat(temp, ",sccs");
 #endif
 #ifdef CVS_PATH
@@ -102,7 +103,7 @@ lastrev(const char *working_dir,
 	    LAST(rcslast);
 	}
 #endif
-#ifdef	SCCS_PATH
+#if defined(ADMIN_PATH) || defined(SCCS_PATH)
 	if (tried == TrySccs) {
 	    LAST(sccslast);
 	}
@@ -128,7 +129,7 @@ lastrev(const char *working_dir,
 	    break;
     }
 }
-#endif /* RCS_PATH || SCCS_PATH */
+#endif /* RCS_PATH || (ADMIN_PATH || SCCS_PATH) */
 
 /******************************************************************************/
 #ifdef	TEST

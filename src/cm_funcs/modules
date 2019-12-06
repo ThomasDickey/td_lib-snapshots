@@ -22,6 +22,7 @@ rcstemp
 rcstime
 samebr
 sccs_dir
+sccsargv
 sccsdbug
 sccslast
 sccsname

@@ -1,3 +1,33 @@
+2019-12-06  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* src/cm_funcs/sccsargv.c: RCS_BASE
+
+	* include/dyn_str.h: add sccs_argv()
+
+	* src/cm_funcs/modules: add sccsargv
+
+	* src/cm_funcs/lastrev.c: modify ifdef's to allow for sccs-wrapper
+
+	* configure: regen
+
+	* aclocal.m4: add check for "sccs" wrapper
+
+	* package/debian/changelog, package/td_lib.spec: bump
+
+	* configure: regen
+
+	* include/td_curse.h: add _nc_free_and_exit()
+
+	* configure.in: add check for _nc_free_and_exit()
+
+	* aclocal.m4: add --disable-leaks macros
+
+	* configure.in: add --disable-leaks option
+
+	* src/string/dyn_copy.c:
+	don't copy if source/target are the same.  technically legal, but asan
+	errors out on this.
+
 2019-12-05  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* src/string/dyn_argv.c: make the same check in argv_append2()
