@@ -27,7 +27,7 @@
 
 #include	"ptypes.h"
 
-MODULE_ID("$Id: doalloc.c,v 12.11 2010/07/05 15:10:04 tom Exp $")
+MODULE_ID("$Id: doalloc.c,v 12.12 2019/12/04 09:23:03 tom Exp $")
 
 static long count_alloc, count_freed;
 
@@ -147,12 +147,12 @@ logit(char *msg, int num)
     FPRINTF(log, "%s %#x\n", msg, num);
     FFLUSH(log);
 }
-#define	LOGIT(msg,num)	logit(msg, (long)num);
+#define	LOGIT(msg,num)	logit(msg, (long)num)
 #else
 #ifdef	DEBUG2
-#define	LOGIT(msg,num)	PRINTF("%s %#x\n", msg, num);
+#define	LOGIT(msg,num)	PRINTF("%s %#x\n", msg, num)
 #else
-#define	LOGIT(msg,num)
+#define	LOGIT(msg,num)		/* nothing */
 #endif
 #endif /* DEBUG_LOG */
 
@@ -165,15 +165,15 @@ doalloc(void *oldp, size_t amount)
     void *newp;
 
     count_alloc += (oldp == 0);
-    LOGIT("allocate", amount)
-	LOGIT("  old = ", oldp)
+    LOGIT("allocate", amount);
+    LOGIT("  old = ", oldp);
 
-	newp = (oldp != 0) ? realloc(oldp, amount) : malloc(amount);
+    newp = (oldp != 0) ? realloc(oldp, amount) : malloc(amount);
     if (!OK_ALLOC(newp, oldp, amount))
 	failed("doalloc");
 
-    LOGIT("  new = ", newp)
-	return (newp);
+    LOGIT("  new = ", newp);
+    return (newp);
 }
 
 /*
@@ -183,9 +183,9 @@ void
 dofree(void *oldp)
 {
     count_freed++;
-    LOGIT("dealloc ", oldp)
+    LOGIT("dealloc ", oldp);
 
-	if (OK_FREE(oldp)) {
+    if (OK_FREE(oldp)) {
 	free(oldp);
 	return;
     }

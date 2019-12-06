@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 12.35 2019/12/01 22:20:49 tom Exp $ */
+/* $Id: td_lib.h,v 12.37 2019/12/05 09:58:14 tom Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for TD_LIB common
@@ -585,6 +585,20 @@ extern	int	localzone;
 			FILE *	fp,
 			const char *	command,
 			const char *	args
+			)
+			;
+
+	/* showargv.c ------------------------------------------------- */
+	void	show_argv (
+			FILE *	fp,
+			char **	argv
+			)
+			;
+
+	void	show_argv2 (
+			FILE *	fp,
+			const char * verb,
+			char **	argv
 			)
 			;
 

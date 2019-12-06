@@ -2,6 +2,7 @@ dftenv
 dotcmp
 dyn_app
 dyn_appc
+dyn_argv
 dyn_cata
 dyn_copy
 dyn_str
