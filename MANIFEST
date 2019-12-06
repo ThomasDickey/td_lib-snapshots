@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t20191201
+MANIFEST for td_lib, version t20191205
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         restrictions on copying/using this software
@@ -212,6 +212,7 @@ src/process/modules             src/process modules
 src/process/revert.c            reset/disable setuid mode
 src/process/savesuid.c          tests for save-uid ability in setuid code
 src/process/shoarg.c            shows arguments built with 'catarg()'
+src/process/showargv.c          argv-based clone of shoarg()
 src/process/showuids.c          shows uid+gid, for traces
 src/process/usercopy.c          copy file for set-uid user
 src/process/userprot.c          set file protection for set-uid user
@@ -228,6 +229,7 @@ src/string/dftenv.c             returns 'getenv()' with a default (non-null) val
 src/string/dotcmp.c             compare dot-separated strings
 src/string/dyn_app.c            append to a dynamic-string
 src/string/dyn_appc.c           appends a single char to a dynamic-string
+src/string/dyn_argv.c           build argv-lists using DYN strings
 src/string/dyn_cata.c           dyn-string interface to 'catarg()'
 src/string/dyn_copy.c           copy ordinary string to DYN string
 src/string/dyn_str.c            module for managing dynamic-strings

@@ -1,3 +1,40 @@
+2019-12-05  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* src/string/dyn_argv.c: make the same check in argv_append2()
+
+	* src/string/dyn_argv.c: don't append an empty string in argv_append()
+
+	* package/debian/changelog, package/td_lib.spec: bump
+
+	* src/string/dyn_argv.c: add argv_flatten()
+
+	* include/dyn_str.h:
+	add argv_init1, argv_init2, argv_append2 and argv_flatten
+
+	* src/string/dyn_argv.c:
+	add parameter of argv_init1() to the argv[] list, like argv_init2()
+
+	* src/string/dyn_argv.c: add argv_init1(), argv_init2(), argv_append2()
+
+	* src/process/showargv.c:
+	add show_argv2() entrypoint, for cases where verb != argv[0]
+
+	* include/td_lib.h: add show_argv2()
+
+	* src/string/dyn_argv.c: RCS_BASE
+
+	* include/dyn_str.h, src/string/modules: add dyn_argv.c
+
+2019-12-04  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* src/process/showargv.c: RCS_BASE
+
+	* include/td_lib.h: add showargv.c
+
+	* src/process/modules: add showargv
+
+	* src/memory/doalloc.c: indent'd
+
 2019-12-01  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* package/debian/changelog, package/td_lib.spec: bump
