@@ -1,4 +1,4 @@
-/* $Id: td_curse.h,v 12.64 2019/12/01 17:57:29 tom Exp $ */
+/* $Id: td_curse.h,v 12.65 2019/12/06 11:40:07 tom Exp $ */
 
 /*
  * TD_LIB CURSES-related definitions
@@ -329,6 +329,16 @@ extern	int	wstandout	(WINDOW *w);
 #define	savetty()	/* empty */
 #undef	resetty
 #define	resetty()	/* empty */
+#endif
+
+#if defined(NCURSES_VERSION) && defined(HAVE__NC_FREE_AND_EXIT)
+/* nc_alloc.h normally not installed */
+extern void _nc_free_and_exit(int) GCC_NORETURN;
+#define ExitProgram(code) _nc_free_and_exit(code)
+#endif
+
+#ifndef ExitProgram
+#define ExitProgram(code) exit(code)
 #endif
 
 #if defined(LINTLIBRARY)

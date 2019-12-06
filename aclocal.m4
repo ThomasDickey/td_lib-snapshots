@@ -1,4 +1,4 @@
-dnl Extended Macros that test for specific features.  dnl $Id: aclocal.m4,v 12.199 2019/12/01 20:36:19 tom Exp $
+dnl Extended Macros that test for specific features.  dnl $Id: aclocal.m4,v 12.201 2019/12/06 11:58:43 tom Exp $
 dnl vi:set ts=4:
 dnl
 dnl see
@@ -783,7 +783,7 @@ esac
 ])
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_CURSES_CCHAR_T version: 5 updated: 2013/12/05 19:11:11
+dnl CF_CURSES_CCHAR_T version: 6 updated: 2019/12/06 06:21:53
 dnl -----------------
 dnl Test if curses defines 'cchar_t' (a 'struct' type for X/Open curses).
 AC_DEFUN([CF_CURSES_CCHAR_T],
@@ -1397,6 +1397,29 @@ AC_SUBST(ECHO_LD)
 AC_SUBST(RULE_CC)
 AC_SUBST(SHOW_CC)
 AC_SUBST(ECHO_CC)
+])dnl
+dnl ---------------------------------------------------------------------------
+dnl CF_DISABLE_LEAKS version: 7 updated: 2012/10/02 20:55:03
+dnl ----------------
+dnl Combine no-leak checks with the libraries or tools that are used for the
+dnl checks.
+AC_DEFUN([CF_DISABLE_LEAKS],[
+
+AC_REQUIRE([CF_WITH_DMALLOC])
+AC_REQUIRE([CF_WITH_DBMALLOC])
+AC_REQUIRE([CF_WITH_VALGRIND])
+
+AC_MSG_CHECKING(if you want to perform memory-leak testing)
+AC_ARG_ENABLE(leaks,
+	[  --disable-leaks         test: free permanent memory, analyze leaks],
+	[if test "x$enableval" = xno; then with_no_leaks=yes; else with_no_leaks=no; fi],
+	: ${with_no_leaks:=no})
+AC_MSG_RESULT($with_no_leaks)
+
+if test "$with_no_leaks" = yes ; then
+	AC_DEFINE(NO_LEAKS,1,[Define to 1 if you want to perform memory-leak testing.])
+	AC_DEFINE(YY_NO_LEAKS,1,[Define to 1 if you want to perform memory-leak testing.])
+fi
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl CF_ENABLE_WARNINGS version: 5 updated: 2017/09/29 20:01:16
@@ -3060,6 +3083,35 @@ EOF
 test "$cf_cv_ncurses_version" = no || AC_DEFINE(NCURSES,1,[Define to 1 if we are using ncurses headers/libraries])
 ])dnl
 dnl ---------------------------------------------------------------------------
+dnl CF_NO_LEAKS_OPTION version: 6 updated: 2015/04/12 15:39:00
+dnl ------------------
+dnl see CF_WITH_NO_LEAKS
+AC_DEFUN([CF_NO_LEAKS_OPTION],[
+AC_MSG_CHECKING(if you want to use $1 for testing)
+AC_ARG_WITH($1,
+	[$2],
+	[AC_DEFINE_UNQUOTED($3,1,"Define to 1 if you want to use $1 for testing.")ifelse([$4],,[
+	 $4
+])
+	: ${with_cflags:=-g}
+	: ${with_no_leaks:=yes}
+	 with_$1=yes],
+	[with_$1=])
+AC_MSG_RESULT(${with_$1:-no})
+
+case .$with_cflags in
+(.*-g*)
+	case .$CFLAGS in
+	(.*-g*)
+		;;
+	(*)
+		CF_ADD_CFLAGS([-g])
+		;;
+	esac
+	;;
+esac
+])dnl
+dnl ---------------------------------------------------------------------------
 dnl CF_OUTPUT_IF_CHANGED version: 2 updated: 1997/09/07 18:53:59
 dnl --------------------
 dnl Within AC_OUTPUT, check if the given file differs from the target, and
@@ -3494,7 +3546,7 @@ esac
 AC_SUBST(LINT_OPTS)
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_RCS_SCCS version: 5 updated: 2009/10/16 05:25:56
+dnl CF_RCS_SCCS version: 6 updated: 2019/12/06 06:57:36
 dnl -----------
 dnl Tests for the ensemble of programs that are used in RCS, SCCS, VCS, CVS.
 dnl We'll have to assume that the related utilities all reside in the same
@@ -3507,7 +3559,8 @@ PATH="/usr/local/libexec/cssc:$PATH"
 PATH="/usr/libexec/cssc:$PATH"
 PATH="/usr/lib/cssc:$PATH"
 CF_PROGRAM_PREFIX(RCS_PATH, rcs)
-CF_PROGRAM_PREFIX(SCCS_PATH, admin)dnl the SCCS tool
+CF_PROGRAM_PREFIX(ADMIN_PATH, admin)dnl the SCCS tool
+CF_PROGRAM_PREFIX(SCCS_PATH, sccs)dnl a later wrapper for the SCCS tools
 CF_PROGRAM_PREFIX(VCS_PATH, vcs)dnl VCS is my RCS application
 CF_PROGRAM_PREFIX(CVS_PATH, cvs)dnl CVS is a layer above RCS
 CF_PROGRAM_PREFIX(SVN_PATH, svn)dnl SVN is like CVS, using local file status
@@ -4399,6 +4452,36 @@ then
 fi
 ])dnl
 dnl ---------------------------------------------------------------------------
+dnl CF_WITH_DBMALLOC version: 7 updated: 2010/06/21 17:26:47
+dnl ----------------
+dnl Configure-option for dbmalloc.  The optional parameter is used to override
+dnl the updating of $LIBS, e.g., to avoid conflict with subsequent tests.
+AC_DEFUN([CF_WITH_DBMALLOC],[
+CF_NO_LEAKS_OPTION(dbmalloc,
+	[  --with-dbmalloc         test: use Conor Cahill's dbmalloc library],
+	[USE_DBMALLOC])
+
+if test "$with_dbmalloc" = yes ; then
+	AC_CHECK_HEADER(dbmalloc.h,
+		[AC_CHECK_LIB(dbmalloc,[debug_malloc]ifelse([$1],,[],[,$1]))])
+fi
+])dnl
+dnl ---------------------------------------------------------------------------
+dnl CF_WITH_DMALLOC version: 7 updated: 2010/06/21 17:26:47
+dnl ---------------
+dnl Configure-option for dmalloc.  The optional parameter is used to override
+dnl the updating of $LIBS, e.g., to avoid conflict with subsequent tests.
+AC_DEFUN([CF_WITH_DMALLOC],[
+CF_NO_LEAKS_OPTION(dmalloc,
+	[  --with-dmalloc          test: use Gray Watson's dmalloc library],
+	[USE_DMALLOC])
+
+if test "$with_dmalloc" = yes ; then
+	AC_CHECK_HEADER(dmalloc.h,
+		[AC_CHECK_LIB(dmalloc,[dmalloc_debug]ifelse([$1],,[],[,$1]))])
+fi
+])dnl
+dnl ---------------------------------------------------------------------------
 dnl CF_WITH_MAN2HTML version: 8 updated: 2018/06/27 18:44:03
 dnl ----------------
 dnl Check for man2html and groff.  Prefer man2html over groff, but use groff
@@ -4623,6 +4706,14 @@ esac
 
 CF_NCURSES_PTHREADS($cf_cv_screen)
 
+])dnl
+dnl ---------------------------------------------------------------------------
+dnl CF_WITH_VALGRIND version: 1 updated: 2006/12/14 18:00:21
+dnl ----------------
+AC_DEFUN([CF_WITH_VALGRIND],[
+CF_NO_LEAKS_OPTION(valgrind,
+	[  --with-valgrind         test: use valgrind],
+	[USE_VALGRIND])
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl CF_XOPEN_CURSES version: 14 updated: 2018/06/20 20:23:13

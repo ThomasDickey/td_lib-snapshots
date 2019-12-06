@@ -1,4 +1,4 @@
-/* $Id: dyn_str.h,v 12.6 2019/12/06 01:06:59 tom Exp $
+/* $Id: dyn_str.h,v 12.7 2019/12/06 17:11:51 tom Exp $
  *
  *	Functions which manage dynamic-strings.
  */
@@ -138,6 +138,12 @@ typedef struct {
 
 	size_t	dyn_length(
 		DYN *	p
+		)
+		;
+
+	/* dyn_str.c -------------------------------------------------- */
+	ARGV *	sccs_argv(
+		const char * tool
 		)
 		;
 
