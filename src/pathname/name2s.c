@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	18 Aug 1988 (from ded2s.c)
  * Modified:
+ *		11 Dec 2019, remove apollo translation-feature.
  *		01 Dec 2019, use locale-based validity checks for escaping
  *		07 Mar 2004, remove K&R support, indent'd.
  *		05 Nov 1995, added tilde to shell-characters
@@ -20,21 +21,10 @@
  *		name	= name to convert
  *		opt	= options, by bit:
  *			1=escapes,
- *			2=underlying system (e.g., DOMAIN/IX to AEGIS)
+ *			2=unused (was Apollo feature)
  *			4=underlying escapes (no unix escapes)
  *
  * Returns:	The length of the converted name.
- *
- * patch:	The apollo conversion does not handle some of the bizarre
- *		code for converting the character ".".
- *
- *		Some apollo cases not handled include those which must be
- *		quoted:
- *			"("	=> "'@\('"
- *			"\\"	=> unknown
- *
- *		Don't know if we will ever get a path with "\\" in it.
- *		This does not escape filenames containing a newline.
  */
 
 #define	CHR_PTYPES
@@ -42,7 +32,7 @@
 #define	STR_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: name2s.c,v 12.11 2019/12/01 19:24:25 tom Exp $")
+MODULE_ID("$Id: name2s.c,v 12.12 2019/12/12 00:29:17 tom Exp $")
 
 #define	isshell(c)	(strchr("*%?$()[]{}|<>^&;#\\\"`'~", c) != 0)
 
