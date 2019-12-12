@@ -1,3 +1,18 @@
+2019-12-11  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* src/cm_funcs/cmv_dir.c: clang warnings
+
+	* package/debian/changelog, package/td_lib.spec: bump
+
+	* src/pathname/name2s.c: remove apollo translation-feature
+
+	* configure: regen
+
+	* configure.in:
+	move CF_CURSES_DATA after CF_CURSES_FUNCS, so its check for cchar_t will
+	succeed with MacOS (because the latter uses CF_XOPEN_CURSES to define
+	NCURSES_WIDECHAR for this particular case).
+
 2019-12-06  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* src/cm_funcs/sccsargv.c: RCS_BASE

@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	02 Aug 1994, from 'sccs_dir.c'
  * Modified:
+ *		11 Dec 2019, clang warnings.
  *		27 Dec 2014, coverity warnings.
  *		07 Mar 2004, remove K&R support, indent'd.
  *		25 Apr 2003, split-out samehead.c, add check on return-value.
@@ -39,7 +40,7 @@
 #include "cmv_defs.h"
 #include "dyn_str.h"
 
-MODULE_ID("$Id: cmv_dir.c,v 12.36 2014/12/27 19:09:57 tom Exp $")
+MODULE_ID("$Id: cmv_dir.c,v 12.37 2019/12/12 01:21:20 tom Exp $")
 
 /******************************************************************************/
 
@@ -121,8 +122,13 @@ NewInternal(CMTREE * parent, const char *internal)
 {
     char temp[MAXPATHLEN];
     if (parent != 0 && parent->internal[0] != EOS) {
-	FORMAT(temp, "%s%c%s", parent->internal, PATH_SLASH, internal);
-	internal = temp;
+	int have = (int) strlen(strcpy(temp, parent->internal));
+	int want = (int) strlen(internal);
+	if (have + want + 2 < MAXPATHLEN) {
+	    temp[have++] = PATH_SLASH;
+	    strcpy(temp + have, internal);
+	    internal = temp;
+	}
     }
     return txtalloc(internal);
 }
@@ -135,8 +141,13 @@ NewExternal(CMTREE * parent, const char *external)
 {
     char temp[MAXPATHLEN];
     if (parent != 0 && parent->external[0] != EOS) {
-	FORMAT(temp, "%s%c%s", parent->external, PATH_SLASH, external);
-	external = temp;
+	int have = (int) strlen(strcpy(temp, parent->external));
+	int want = (int) strlen(external);
+	if (have + want + 2 < MAXPATHLEN) {
+	    temp[have++] = PATH_SLASH;
+	    strcpy(temp + have, external);
+	    external = temp;
+	}
     }
     return txtalloc(external);
 }
