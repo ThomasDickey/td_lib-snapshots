@@ -1,3 +1,29 @@
+2019-12-17  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* include/td_curse.h:
+	deprecate _nc_free_and_exit() in favor of exit_curses()
+
+	* configure: regen
+
+	* aclocal.m4: improve CF_MAKE_AR_RULES
+
+	* configure.in: add check for exit_curses()
+
+	* src/curses/cmdch.c: simplify ifdefs vs BSD-curses
+
+	* src/curses/resizwin.c, src/curses/viewfile.c, src/curses/logch.c, src/curses/dumpwin.c, src/curses/rawgets.c:
+	cppcheck
+
+	* td_make.in: add $(LINT_OPTS), from configure-script
+
+	* package/debian/changelog, package/td_lib.spec: bump
+
+	* src/curses/rawgets.c: improve handling of non-ASCII strings
+
+2019-12-13  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* include/td_curse.h: add rawgets_leaks()
+
 2019-12-11  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* src/cm_funcs/cmv_dir.c: clang warnings

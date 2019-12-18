@@ -1,4 +1,4 @@
-dnl Extended Macros that test for specific features.  dnl $Id: aclocal.m4,v 12.201 2019/12/06 11:58:43 tom Exp $
+dnl Extended Macros that test for specific features.  dnl $Id: aclocal.m4,v 12.202 2019/12/18 01:37:23 tom Exp $
 dnl vi:set ts=4:
 dnl
 dnl see
@@ -2498,10 +2498,12 @@ CF_EOF
 AC_SUBST(cf_cv_makeflags)
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_MAKE_AR_RULES version: 5 updated: 2010/10/23 15:52:32
+dnl CF_MAKE_AR_RULES version: 6 updated: 2019/12/17 20:34:13
 dnl ----------------
 dnl Check if the 'make' program knows how to interpret archive rules.  Though
-dnl this is common practice since the mid-80's, there are some holdouts (1997).
+dnl this is common practice since the mid-80's, there were some holdouts noted
+dnl in 1997 among the BSD-based Unix systems.  Twenty years later, the BSDs
+dnl still fail to provide this POSIX feature.
 AC_DEFUN([CF_MAKE_AR_RULES],
 [
 AC_MSG_CHECKING(if ${MAKE:-make} program knows about archives)
@@ -2524,15 +2526,28 @@ all:  conf.a
 	\$(AR) \$[]@ \$[]*.o
 conf.a : conf.a(conftest.o)
 CF_EOF
-touch $cf_dir/conftest.c
+cat >$cf_dir/conftest.c <<CF_EOF
+#include <stdio.h>
+extern int conftest(char *name);
+int conftest(char *name)
+{
+	FILE *fp = fopen(name, "r");
+	int rc = 0;
+	if (fp != 0) {
+		fclose(fp);
+		rc = 1;
+	}
+	return rc;
+}
+CF_EOF
 CDPATH=; export CDPATH
 if ( cd $cf_dir && ${MAKE:-make} 2>&AC_FD_CC >&AC_FD_CC && test -f conf.a )
 then
 	cf_cv_ar_rules=yes
 else
-echo ... did not find archive >&AC_FD_CC
-rm -f $cf_dir/conftest.o
-cat >$cf_dir/makefile <<CF_EOF
+	echo ... library-rule did not create an archive >&AC_FD_CC
+	rm -f $cf_dir/conftest.o
+	cat >$cf_dir/makefile <<CF_EOF
 SHELL = /bin/sh
 AR = ar crv
 CC = $CC
@@ -2548,13 +2563,13 @@ all:  conf.a
 conf.a : conftest.o
 	\$(AR) \$[]@ \$?
 CF_EOF
-CDPATH=; export CDPATH
-if ( cd $cf_dir && ${MAKE:-make} 2>&AC_FD_CC >&AC_FD_CC && test -f conf.a )
-then
-	cf_cv_ar_rules=no
-else
-	AC_MSG_ERROR(I do not know how to construct a library)
-fi
+	CDPATH=; export CDPATH
+	if ( cd $cf_dir && ${MAKE:-make} 2>&AC_FD_CC >&AC_FD_CC && test -f conf.a )
+	then
+		cf_cv_ar_rules=no
+	else
+		AC_MSG_ERROR(I do not know how to construct a library)
+	fi
 fi
 rm -rf $cf_dir
 ])

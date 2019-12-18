@@ -22,7 +22,7 @@
 #define STR_PTYPES
 #include	"td_curse.h"
 
-MODULE_ID("$Id: viewfile.c,v 12.10 2019/12/01 23:54:28 tom Exp $")
+MODULE_ID("$Id: viewfile.c,v 12.11 2019/12/17 23:38:28 tom Exp $")
 
 #ifdef	SYS_UNIX
 
@@ -35,12 +35,11 @@ view_file(char *fname, int readonly)
     if ((code = padedit(fname, readonly, editor)) < 0) {
 	/* give up: put it in the current process's window */
 	size_t need = strlen(editor);
-	int argc;
 	char **argv = calloc(need + 2, sizeof(char *));
 	char *buffer = stralloc(editor);
 
 	if (argv != NULL && buffer != NULL) {
-	    argc = (int) strlen(buffer);
+	    int argc = (int) strlen(buffer);
 	    argc = bldarg(argc, argv, buffer);
 
 	    argv[argc++] = fname;

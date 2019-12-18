@@ -18,7 +18,7 @@
 #include	<ptypes.h>
 #include	<td_curse.h>
 
-MODULE_ID("$Id: logch.c,v 12.13 2014/12/28 01:10:44 tom Exp $")
+MODULE_ID("$Id: logch.c,v 12.14 2019/12/17 23:38:01 tom Exp $")
 
 #define	CONVERT(base,p,n)	n = (base * n) + (*p++ - '0')
 
@@ -29,7 +29,7 @@ int
 decode_logch(char **buffer, int *count_)
 {
     char *pointer = *buffer;
-    int c, j;
+    int c;
 #ifndef NO_XTERM_MOUSE
     char tmp1, tmp2;
 #endif
@@ -126,6 +126,7 @@ decode_logch(char **buffer, int *count_)
 #endif
 	default:
 	    if (isdigit(UCH(*pointer))) {
+		int j;
 		c = 0;
 		for (j = 0; j < 3; j++) {
 		    if (isdigit(UCH(*pointer)))
