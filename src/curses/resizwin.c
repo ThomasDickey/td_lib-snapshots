@@ -39,7 +39,7 @@
 
 #include	"td_curse.h"
 
-MODULE_ID("$Id: resizwin.c,v 12.22 2014/12/28 01:10:44 tom Exp $")
+MODULE_ID("$Id: resizwin.c,v 12.23 2019/12/17 23:38:56 tom Exp $")
 
 #if defined(HAVE_RESIZETERM)
 extern WINDOW *newscr;
@@ -51,12 +51,14 @@ extern WINDOW *newscr;
 int
 resizewin(void)
 {
-    static int size[2];
     int lc[2];
 
     lc[0] = LINES;
     lc[1] = COLS;
+
     if (scr_size(lc) >= 0) {
+	static int size[2];
+
 	my_LINES = lc[0];
 	my_COLS = lc[1];
 	if (my_LINES != LINES || my_COLS != COLS) {

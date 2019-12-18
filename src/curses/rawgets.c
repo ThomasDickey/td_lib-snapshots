@@ -3,6 +3,7 @@
  * Title:	rawgets.c (raw-mode 'gets()')
  * Created:	29 Sep 1987 (from 'fl.c')
  * Modified:
+ *		17 Dec 2019, improve handling of non-ASCII strings.
  *		07 Mar 2004, remove K&R support, indent'd.
  *		05 Feb 1996, don't write to lower-right corner (sysvr4 bug).
  *		04 Nov 1995, mods to display on 80th column.
@@ -72,7 +73,11 @@
 #include	"td_curse.h"
 #include	"dyn_str.h"
 
-MODULE_ID("$Id: rawgets.c,v 12.32 2012/01/13 18:14:42 tom Exp $")
+#ifdef LOCALE
+#include	<wchar.h>
+#endif
+
+MODULE_ID("$Id: rawgets.c,v 12.34 2019/12/17 23:36:07 tom Exp $")
 
 #define	SHIFT	5
 
@@ -107,10 +112,10 @@ int x_rawgets, y_rawgets;
 /*
  * Private functions/variables
  */
-static void MoveTo(char *at);
 static void ShowAt(char *at);
 
-static WINDOW *Z;		/* window we use in this module */
+static WINDOW *Z;		/* window we use in this module for drawing */
+static WINDOW *fakewin;		/* window used to find character-widths */
 static const char **Prefix;	/* insert/scrolling prefix, if any */
 static DYN *history;		/* record of keystrokes if logging active */
 static int xlast;		/* last usable column in screen */
@@ -155,6 +160,120 @@ ShowAll(void)
 }
 
 /*
+ * Returns the number of bytes in the character pointed to by "source".
+ */
+static int
+bytes_of(const char *source)
+{
+    int result = 1;
+#ifdef LOCALE
+    size_t check;
+    mbstate_t state;
+    memset(&state, 0, sizeof(state));
+    check = mbrlen(source, strlen(source), &state);
+    if ((int) check > 0)
+	result = (int) check;
+#endif
+    return result;
+}
+
+/*
+ * Decode the possibly-multibyte character pointed to by "source".
+ */
+static int
+char_of(const char *source)
+{
+    int result = UCH(*source);
+#ifdef LOCALE
+    size_t limit = (size_t) bytes_of(source);
+    if (limit > 1) {
+	wchar_t value;
+	size_t check;
+	mbstate_t state;
+	memset(&state, 0, sizeof(state));
+	check = mbrtowc(&value, source, limit, &state);
+	if ((int) check > 0)
+	    result = (int) value;
+    }
+#endif
+    return result;
+}
+
+static char *
+format_valid_char(char *target, int c)
+{
+    if (c == EOS) {
+	;
+    } else if (valid_curses_char(c)) {
+#ifdef LOCALE
+	if (!isascii(c)) {
+	    mbstate_t state;
+	    size_t check;
+	    memset(&state, 0, sizeof(state));
+	    check = wcrtomb(target, c, &state);
+	    if ((int) check > 0) {
+		target += (int) check;
+	    } else if (c < 256) {
+		*target++ = (char) c;
+	    } else {
+		*target++ = '?';
+	    }
+	} else
+#endif
+	{
+	    *target++ = (char) c;
+	}
+    } else if (c == 127) {
+	*target++ = '^';
+	*target++ = '?';
+    } else if (c < 32) {
+	*target++ = '^';
+	*target++ = (char) (c | '@');
+    } else {
+	sprintf(target, "\\%03o", c & 0xff);
+	target += (int) strlen(target);
+    }
+    *target = EOS;
+    return target;
+}
+
+static int
+format_char(char *target, const char *source)
+{
+    char *base = target;
+    target = format_valid_char(target, char_of(source));
+    return (int) (target - base);
+}
+
+static int
+cols_of(int ch)
+{
+    int result;
+    if (valid_curses_char(ch)) {
+#ifdef LOCALE
+	if (!isascii(ch) && fakewin != NULL) {
+	    int y;
+	    char target[80];
+	    werase(fakewin);
+	    wmove(fakewin, 0, 0);
+	    format_valid_char(target, ch);
+	    waddstr(fakewin, target);
+	    getyx(fakewin, y, result);
+	    (void) y;
+	} else
+#endif
+	{
+	    result = 1;
+	}
+    } else if (iscntrl(ch)) {
+	result = 2;		/* ^x */
+    } else {
+	result = 4;		/* \123 */
+    }
+    return result;
+}
+
+/*
  * Position the cursor at the given index in the string.  This permits us to
  * ignore details such as wraparound, and whether the cursor is at the end of
  * string.
@@ -167,25 +286,21 @@ MoveTo(char *at)
 	int y = y_rawgets, x = x_rawgets;
 	int original = shift;
 
-	for (s = bbase, shift = 0; *s != EOS && s != at; s++) {
-	    if (!isprint(UCH(*s)))
-		x++;
-	    if (++x >= xlast) {
+	for (s = bbase, shift = 0; *s != EOS && s != at; s += bytes_of(s)) {
+	    x += cols_of(char_of(s));
+	    if (x >= xlast) {
 		if (wrap) {
 		    x = 0;
 		    y++;
 		} else {
-		    shift += SHIFT;
-		    x -= SHIFT;
+		    int goal = x - SHIFT;
+		    while (bbase[shift] != EOS && x > goal) {
+			x -= cols_of(char_of(bbase + shift));
+			shift += bytes_of(bbase + shift);
+		    }
 		}
 	    }
 	}
-	/* Control characters that are before the left shift-margin
-	 * don't count in the adjustment
-	 */
-	for (s = bbase; s - bbase < shift; s++)
-	    if (!isprint(UCH(*s)))
-		x--;
 	if (shift != original)
 	    ShowAll();
 
@@ -210,12 +325,11 @@ MoveFrom(int row, int col)
 	    col = x_rawgets;
 	}
 
-	for (s = bbase; *s != EOS; s++) {
+	for (s = bbase; *s != EOS; s += bytes_of(s)) {
 	    if (y == row
 		&& x == col)
 		break;
-	    if (!isprint(UCH(*s)))
-		x++;
+	    x += cols_of(char_of(s)) - 1;
 	    if (++x >= xlast) {
 		if (wrap) {
 		    x = 0;
@@ -230,7 +344,6 @@ MoveFrom(int row, int col)
     return 0;
 }
 #endif
-
 /*
  * Repaint the string starting at a given position
  */
@@ -238,42 +351,43 @@ static void
 ShowAt(char *at)
 {
     if (Z) {
-	int y, x, row, col, len, cnt;
+	int base_y, base_x;
+	int this_row, this_col;
 	int margin = wMaxY(Z);
+	char buffer[80];
 
-	getyx(Z, y, x);
-	for (row = y, col = x; (*at != EOS) && (row < margin); row++) {
-	    (void) wmove(Z, row, col);
-	    len = (int) strlen(at);
-	    cnt = xlast - col;
-	    while (len-- > 0) {
-		chtype c;
-		if (cnt-- <= 0)
-		    break;
-		c = (chtype) (*at++ & 0xff);
-		if (!isprint(c)) {
-		    x++;
-		    (void) waddch(Z, (chtype) '^');
-		    if (cnt-- <= 0)
-			break;
-		    if (c == '\177')
-			c = '?';
-		    else
-			c |= '@';
+	getyx(Z, base_y, base_x);
+	for (this_row = base_y,
+	     this_col = base_x;
+	     (*at != EOS) && (this_row < margin);
+	     this_row++) {
+	    int len = (int) strlen(at);
+	    int cnt = xlast - this_col;
+	    wmove(Z, this_row, this_col);
+	    while (len > 0) {
+		int step = bytes_of(at);
+		int have = format_char(buffer, at);
+		at += step;
+		len -= step;
+		if (have > cnt) {
+		    waddnstr(Z, buffer, cnt);
+		} else {
+		    waddstr(Z, buffer);
 		}
-		(void) waddch(Z, (chtype) c);
+		if ((cnt -= have) <= 0)
+		    break;
 	    }
 	    if (!wrap) {
 		if (len > 0 || cnt <= 0) {
-		    (void) wmove(Z, y, x);
+		    wmove(Z, base_y, base_x);
 		    return;
 		}
 		break;
 	    }
-	    col = 0;
+	    this_col = 0;
 	}
 	ClearIt();
-	(void) wmove(Z, y, x);
+	wmove(Z, base_y, base_x);
     }
 }
 
@@ -306,7 +420,7 @@ DeleteBefore(char *at, int count)
 {
     if (at > bbase) {
 	char *d = at, *s = at;
-	int old = 0, new_y, x;
+	int old = 0, x;
 
 	if (Z) {
 	    if (wrap) {
@@ -325,6 +439,8 @@ DeleteBefore(char *at, int count)
 
 	if (Z) {
 	    if (wrap) {
+		int new_y;
+
 		MoveTo(at + strlen(at));
 		getyx(Z, new_y, x);
 
@@ -355,7 +471,8 @@ DeleteWordBefore(char *at, int count)
 
     while ((at > bbase) && (count-- > 0)) {
 	for (s = at - 1, found = 0; s >= bbase; s--) {
-	    if (isspace(UCH(*s))) {
+	    int ch = char_of(s);
+	    if (isascii(ch) && isspace(ch)) {
 		if (found) {
 		    s++;	/* point to first nonblank */
 		    break;
@@ -465,6 +582,10 @@ wrawgets(WINDOW *win,
     int literal;
     static DYN *saved;
 
+#ifdef LOCALE
+    if (fakewin == NULL)
+	fakewin = newwin(2, 80, 0, 0);
+#endif
     saved = dyn_copy(saved, bfr);
     if (logging)
 	dyn_init(&history, (size_t) 1);
@@ -513,13 +634,14 @@ wrawgets(WINDOW *win,
 	}
 
 	if (command && *command && **command) {
+	    int ch = char_of(*command);
 	    log_count = FALSE;
-	    if (Imode || !isdigit(UCH(**command)))
+	    if (Imode || !isdigit(ch)) {
 		count = 1;
-	    else {
+	    } else {
 		char *s = *command;
 		count = 0;
-		while (isdigit(UCH(*s))) {
+		while (isascii(UCH(*s)) && isdigit(UCH(*s))) {
 		    log_count = TRUE;
 		    count = (count * 10) + (*s++ - '0');
 		}
@@ -617,7 +739,7 @@ wrawgets(WINDOW *win,
 
 	/*
 	 * Normally we insert/edit only printing characters.
-	 * In literal-mode, we can insert any ascii character.
+	 * In literal-mode, we can insert any valid character.
 	 */
 	if (literal || (Imode && !is_special(c) && isprint(c))) {
 	    while (count-- > 0) {
@@ -688,6 +810,16 @@ char *
 rawgets_log(void)
 {
     return dyn_string(history);
+}
+
+void
+rawgets_leaks(void)
+{
+    history = dyn_free(history);
+    if (fakewin != NULL) {
+	delwin(fakewin);
+	fakewin = NULL;
+    }
 }
 
 /************************************************************************

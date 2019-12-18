@@ -30,7 +30,7 @@
 #include	"td_curse.h"
 #include	<time.h>
 
-MODULE_ID("$Id: dumpwin.c,v 12.24 2014/12/28 01:10:44 tom Exp $")
+MODULE_ID("$Id: dumpwin.c,v 12.25 2019/12/17 23:37:40 tom Exp $")
 
 #define	OUT	FPRINTF
 
@@ -71,12 +71,12 @@ dumpwin(WINDOW *w, char *tag)
     char fname[MAXPATHLEN], *output = pathcat(fname, gethome(),
 					      "dumpwin.out");
     FILE *fp = fopen(output, "a+");
-    int j, k;
 
     if (fp) {
 	time_t now = time((time_t *) 0);
 	int current_x;
 	int current_y;
+	int j;
 
 	getyx(w, current_y, current_x);
 
@@ -116,6 +116,7 @@ dumpwin(WINDOW *w, char *tag)
 		CursesLastCh(w, j), CursesLine(w, j));
 #endif
 	    if ((data = line_data(w, j)) != 0) {
+		int k;
 		for (k = 0; k < wMaxX(w); k++)
 		    dumpchr(fp, data[k]);
 	    }

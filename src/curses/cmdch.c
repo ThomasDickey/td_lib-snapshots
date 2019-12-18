@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	01 Dec 1987 (broke out of 'ded.c')
  * Modified:
+ *		17 Dec 2019, simplify ifdefs vs BSD-curses.
  *		29 Nov 2019, gcc warnings
  *		25 Dec 2014, coverity warnings
  *		09 Jul 2010, add xt_enabled, to control mouse-initialization.
@@ -51,7 +52,7 @@
 #include	"td_curse.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: cmdch.c,v 12.38 2019/11/30 01:46:23 tom Exp $")
+MODULE_ID("$Id: cmdch.c,v 12.39 2019/12/18 01:10:41 tom Exp $")
 
 #define	ESC(c)	((c) == '\033')
 #define	END(s)	s[strlen(s)-1]
@@ -65,7 +66,7 @@ MODULE_ID("$Id: cmdch.c,v 12.38 2019/11/30 01:46:23 tom Exp $")
 int xt_enabled = TRUE;		/* true if we accept XTerm-mouse events */
 XtermMouse xt_mouse;		/* state of XTerm-mouse */
 
-#if !defined(NCURSES_MOUSE_VERSION)
+#if !(defined(HAVE_KEYPAD) || defined(NCURSES_MOUSE_VERSION))
 static int
 double_click(void)
 {
@@ -132,8 +133,13 @@ cmdch(int *cnt_)
     int done = FALSE;
     int had_c = 0;
     int count = 0;
-    char i_blk[1024];
+
     static int init = FALSE;
+
+#if !defined(HAVE_KEYPAD)
+    char i_blk[1024];
+#endif
+
 #if defined(NCURSES_MOUSE_VERSION) && !defined(NO_XTERM_MOUSE)
     MEVENT myevent;
 #endif
@@ -249,10 +255,10 @@ cmdch(int *cnt_)
 	if (done)
 	    break;
 #endif /* HAVE_KEYPAD */
-	if (iscntrl(c) || j != 0)
-	    i_blk[j++] = (char) c;
 
 #if !defined(HAVE_KEYPAD) && !defined(NO_XTERM_MOUSE)
+	if (iscntrl(c) || j != 0)
+	    i_blk[j++] = (char) c;
 	if (ESC(c)) {		/* assume "standard" escapes */
 	    do {
 		i_blk[j++] = c = getch();
@@ -261,16 +267,14 @@ cmdch(int *cnt_)
 	}
 #endif
 	if (j) {
-	    i_blk[j] = EOS;
 	    done = TRUE;
 #if !defined(HAVE_KEYPAD)
+	    i_blk[j] = EOS;
 	    if (known_key(i_blk))
 		c = known_key(i_blk);
 	    else
-#endif /* !HAVE_KEYPAD */
-#if !defined(HAVE_KEYPAD) && !defined(NO_XTERM_MOUSE)
+#if !defined(NO_XTERM_MOUSE)
 	    if (j > 1) {	/* extended escapes */
-#if !defined(NO_XTERM_MOUSE) && !defined(NCURSES_MOUSE_VERSION)
 		/* patch: should test for xterm_mouse */
 		if (!strncmp(i_blk, "\033[M", 3)) {
 		    int the_button;
@@ -293,10 +297,7 @@ cmdch(int *cnt_)
 			last_row = xt_mouse.row;
 			last_col = xt_mouse.col;
 		    }
-		} else
-#endif /* !NO_XTERM_MOUSE */
-#if !defined(HAVE_KEYPAD)
-		if (ansi) {
+		} else if (ansi) {
 		    j--;
 		    if (CMP('A'))
 			c = KEY_UP;
@@ -315,14 +316,13 @@ cmdch(int *cnt_)
 			    j++;	/* cannot skip */
 			done = FALSE;
 		    }
-		} else
-#endif /* !HAVE_KEYPAD */
-		{
+		} else {
 		    beep();
 		    done = FALSE;
 		}
 	    }
-#endif /* !defined(HAVE_KEYPAD) && !defined(NO_XTERM_MOUSE) */
+#endif /* !defined(NO_XTERM_MOUSE) */
+#endif /* !HAVE_KEYPAD */
 	} else if ((cnt_ != 0) && isdigit(c)) {
 	    had_c++;
 	    count = ((count * 10) + (c - '0'));
