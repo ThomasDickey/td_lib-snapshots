@@ -28,7 +28,7 @@
 #define	STR_PTYPES
 #include <td_btree.h>
 
-MODULE_ID("$Id: uid2s.c,v 12.16 2019/11/30 01:46:23 tom Exp $")
+MODULE_ID("$Id: uid2s.c,v 12.17 2019/12/18 23:20:37 tom Exp $")
 
 #if defined(HAVE_GETPWUID)
 
@@ -110,9 +110,10 @@ cmp_node(const void *a, const void *b)
 static void
 dpy_node(const void *a)
 {
+    const UID_DATA *p = (const UID_DATA *) a;
     PRINTF("%d:%s",
-	   ((const UID_DATA *) a)->user,
-	   ((const UID_DATA *) a)->name);
+	   (int) p->user,
+	   p->name);
 }
 
 static BI_TREE uid2s_tree =

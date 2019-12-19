@@ -1,4 +1,4 @@
-dnl Extended Macros that test for specific features.  dnl $Id: aclocal.m4,v 12.202 2019/12/18 01:37:23 tom Exp $
+dnl Extended Macros that test for specific features.  dnl $Id: aclocal.m4,v 12.203 2019/12/19 00:08:49 tom Exp $
 dnl vi:set ts=4:
 dnl
 dnl see
@@ -2498,12 +2498,25 @@ CF_EOF
 AC_SUBST(cf_cv_makeflags)
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_MAKE_AR_RULES version: 6 updated: 2019/12/17 20:34:13
+dnl CF_MAKE_AR_RULES version: 7 updated: 2019/12/18 19:06:19
 dnl ----------------
 dnl Check if the 'make' program knows how to interpret archive rules.  Though
-dnl this is common practice since the mid-80's, there were some holdouts noted
-dnl in 1997 among the BSD-based Unix systems.  Twenty years later, the BSDs
-dnl still fail to provide this POSIX feature.
+dnl this has been common practice since the mid-80's, there were some holdouts
+dnl noted in 1997 among the BSD-based Unix systems.  Twenty years later, some
+dnl BSDs still fail to provide this POSIX feature.
+dnl
+dnl For reference, here is the 2004 edition:
+dnl
+dnl https://pubs.opengroup.org/onlinepubs/009695399/utilities/make.html
+dnl
+dnl If a target or prerequisite contains parentheses, it shall be treated as a
+dnl member of an archive library.  For the lib( member .o) expression lib
+dnl refers to the name of the archive library and member .o to the member name. 
+dnl The application shall ensure that the member is an object file with the .o
+dnl suffix.  The modification time of the expression is the modification time
+dnl for the member as kept in the archive library; see ar.  The .a suffix shall
+dnl refer to an archive library.  The .s2.a rule shall be used to update a
+dnl member in the library from a file with a suffix .s2.
 AC_DEFUN([CF_MAKE_AR_RULES],
 [
 AC_MSG_CHECKING(if ${MAKE:-make} program knows about archives)
@@ -3766,7 +3779,7 @@ AC_MSG_RESULT($cf_cv_type_size_t)
 test $cf_cv_type_size_t = no && AC_DEFINE(size_t, unsigned, [Define to type if size_t not declared])
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_SRC_MAKEFILE version: 4 updated: 2018/01/08 18:28:33
+dnl CF_SRC_MAKEFILE version: 5 updated: 2019/12/18 19:06:19
 dnl ---------------
 dnl Append predefined lists to $2/makefile, given a path to a directory that
 dnl has a 'modules' file in $1.
@@ -3850,6 +3863,7 @@ cat >>$cf_out <<CF_EOF
 \$Z:	\$(OBJS)
 	\$(AR) \$(ARFLAGS) \$Z \$(OBJS)
 	\$(RANLIB) \$Z
+	@echo "...working around non-POSIX \"\$(MAKE)\"" && sleep 1
 CF_EOF
 	fi
 fi
