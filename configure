@@ -24006,6 +24006,7 @@ cat >>$cf_out <<CF_EOF
 \$Z:	\$(OBJS)
 	\$(AR) \$(ARFLAGS) \$Z \$(OBJS)
 	\$(RANLIB) \$Z
+	@echo "...working around non-POSIX \"\$(MAKE)\"" && sleep 1
 CF_EOF
 	fi
 fi

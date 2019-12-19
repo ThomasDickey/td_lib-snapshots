@@ -1,3 +1,14 @@
+2019-12-18  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* configure: regen
+
+	* aclocal.m4:
+	add a workaround for non-POSIX make-programs, e.g., any "pmake"
+
+	* src/unix/uid2s.c: gcc warning
+
+	* package/debian/changelog, package/td_lib.spec: bump
+
 2019-12-17  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* include/td_curse.h:
