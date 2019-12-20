@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	01 Dec 2019
  * Modified:
+ *		19 Dec 2019, adapt Latin1 check to Solaris10
  */
 
 #define STR_PTYPES
@@ -16,11 +17,16 @@
 #endif
 #endif
 
-MODULE_ID("$Id: valid_ch.c,v 12.1 2019/12/01 19:40:19 tom Exp $")
+MODULE_ID("$Id: valid_ch.c,v 12.2 2019/12/20 00:37:12 tom Exp $")
 
+/* Latin-1 should be easy to identify, even if the codeset name is odd */
 #define C1_CONTROLS	128
 #define LATIN1_BASE	160
 #define LATIN1_END	255
+
+/* ...but Solaris10's Latin-1 omits most of the punctuation  */
+#define Latin1Upper(c)	((c) >= 192 && (c) <= 222 && (c) != 215)
+#define Latin1Lower(c)	((c) >= 223 && (c) <= 255 && (c) != 247)
 
 typedef enum {
     cUNKNOWN = -1,
@@ -31,47 +37,84 @@ typedef enum {
 
 static int charset = cUNKNOWN;
 
+#ifdef LOCALE
+#ifdef HAVE_LANGINFO_CODESET
+static int
+match_encoding(const char *pattern, const char *value)
+{
+    int result = 1;
+    while (*pattern != EOS) {
+	if (*pattern == '-') {
+	    ++pattern;
+	    while (*value == '-') {
+		++value;
+	    }
+	} else if (*pattern != *value) {
+	    result = 0;
+	    break;
+	} else if (*pattern != EOS) {
+	    ++pattern;
+	    ++value;
+	}
+    }
+    return result;
+}
+#endif
+
+static int
+check_latin1(void)
+{
+    int result = 1;
+    int ch;
+
+    for (ch = C1_CONTROLS; ch <= LATIN1_END; ++ch) {
+	if (iscntrl(ch)) {
+	    if (ch >= LATIN1_BASE) {
+		result = 0;
+		break;
+	    }
+	} else if (isprint(ch)) {
+	    if (ch < LATIN1_BASE) {
+		result = 0;
+		break;
+	    } else if (Latin1Upper(ch) && !isupper(ch)) {
+		result = 0;
+		break;
+	    } else if (Latin1Lower(ch) && !islower(ch)) {
+		result = 0;
+		break;
+	    }
+	} else if (Latin1Upper(ch) || Latin1Lower(ch)) {
+	    result = 0;
+	    break;
+	}
+    }
+    return result;
+}
+#endif
+
 static void
 initialize(void)
 {
+    charset = cPOSIX;
 #ifdef LOCALE
     setlocale(LC_ALL, "");
 #ifdef HAVE_LANGINFO_CODESET
     {
 	char *env;
 	if ((env = nl_langinfo(CODESET)) != NULL) {
-	    if (!strcmp(env, "UTF-8"))
+	    if (match_encoding("UTF-8", env))
 		charset = cUTF8;
-	    else if (!strncmp(env, "ISO-8859", 8))
+	    else if (match_encoding("xISO-8859-1", env))
 		charset = cISO8859;
-	    else
-		charset = cPOSIX;
+	    else if (check_latin1())
+		charset = cISO8859;
 	}
     }
 #else /* !CODESET */
-    charset = cISO8859;
-    {
-	int ch;
-	for (ch = C1_CONTROLS; ch <= LATIN1_END; ++ch) {
-	    if (iscntrl(ch)) {
-		if (ch >= LATIN1_BASE) {
-		    charset = cPOSIX;
-		    break;
-		}
-	    } else if (isprint(ch)) {
-		if (ch < LATIN1_BASE) {
-		    charset = cPOSIX;
-		    break;
-		}
-	    } else {
-		charset = cPOSIX;
-		break;
-	    }
-	}
-    }
+    if (check_latin1())
+	charset = cISO8859;
 #endif
-#else
-    charset = cPOSIX;
 #endif
 }
 
@@ -85,9 +128,9 @@ valid_curses_char(int ch)
     ch &= 0xff;
     if (isascii(ch)) {
 	result = isprint(ch) && !iscntrl(ch);
-    } else
+    }
 #ifdef HAVE_TYPE_CCHAR_T
-    if (charset == cUTF8) {
+    else if (charset == cUTF8) {
 	result = TRUE;
     } else if (charset == cISO8859) {
 	result = (ch >= LATIN1_BASE);

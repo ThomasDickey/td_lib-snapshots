@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 12.56 2014/07/22 13:57:18 tom Exp $ */
+/* $Id: ptypes.h,v 12.57 2019/12/20 01:03:01 tom Exp $ */
 
 #ifndef	PTYPES_H
 #define	PTYPES_H
@@ -575,6 +575,18 @@ extern	long	timezone;
 #endif
 
 #endif	/* WAI_PTYPES */
+
+/*
+ * Guard against use with non-GCC when library was configured using GCC
+ */
+#if !(defined(__GNUC__) || defined(__clang__))
+#undef GCC_NORETURN
+#undef GCC_PRINTF
+#undef GCC_PRINTFLIKE
+#undef GCC_SCANF
+#undef GCC_SCANFLIKE
+#undef GCC_UNUSED
+#endif
 
 #ifndef GCC_NORETURN
 #define GCC_NORETURN /* nothing */

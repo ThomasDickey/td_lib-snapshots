@@ -1,4 +1,4 @@
-/* $Id: td_ext.h,v 12.20 2014/07/22 18:08:53 tom Exp $ */
+/* $Id: td_ext.h,v 12.21 2019/12/20 02:05:34 tom Exp $ */
 
 #ifndef	TD_EXT_H
 #define	TD_EXT_H
@@ -79,7 +79,7 @@ extern "C" {
  * Useful external-definitions                                                *
  ******************************************************************************/
 
-#if	defined(TIMEZONE_DECLARED)
+#if	!defined(TIMEZONE_DECLARED)
 extern	long	timezone;
 #endif
 
