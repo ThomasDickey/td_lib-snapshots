@@ -1,3 +1,19 @@
+2019-12-19  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* include/td_ext.h:
+	ifdef for timezone-declared was backwards, produced a warning on a Solaris 10
+	where time.h had it declared.
+
+	* package/debian/changelog, package/td_lib.spec: bump
+
+	* include/ptypes.h:
+	turn off the gcc attribute stuff if not actually compiling with gcc/clang/etc
+
+	* src/curses/valid_ch.c:
+	improve Latin1 check, to work with Solaris 10 (whose codeset for ISO-8859-1
+	omits most of the punctuation in 160-255).  Also make dashes optional when
+	matching codeset names.
+
 2019-12-18  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* configure: regen
