@@ -1,4 +1,4 @@
-dnl Extended Macros that test for specific features.  dnl $Id: aclocal.m4,v 12.203 2019/12/19 00:08:49 tom Exp $
+dnl Extended Macros that test for specific features.  dnl $Id: aclocal.m4,v 12.204 2019/12/27 00:50:12 tom Exp $
 dnl vi:set ts=4:
 dnl
 dnl see
@@ -5160,6 +5160,33 @@ AC_DEFUN([CF_X_EXT],[
 CF_TRY_PKG_CONFIG(Xext,,[
 	AC_CHECK_LIB(Xext,XextCreateExtension,
 		[CF_ADD_LIB(Xext)])])
+])dnl
+dnl ---------------------------------------------------------------------------
+dnl When building a package containing a development library, some of the
+dnl packager's LDFLAGS are useful; others cause problems.  (Try to) filter
+dnl out the common nuisances.
+AC_DEFUN([CF_TRIM_LDFLAGS],
+[
+TRIMMED_LDFLAGS=
+cf_save=
+for cf_opt in $LDFLAGS
+do
+	case "x$cf_opt" in
+	x-R)
+		TRIMMED_LDFLAGS="$TRIMMED_LDFLAGS $cf_opt"
+		cf_save=$cf_opt
+		;;
+	x-l*|x-L*|x-R*)
+		TRIMMED_LDFLAGS="$TRIMMED_LDFLAGS $cf_opt"
+		cf_save=
+		;;
+	*)
+		test -n "$cf_save" && TRIMMED_LDFLAGS="$TRIMMED_LDFLAGS $cf_opt"
+		cf_save=
+		;;
+	esac
+done
+AC_SUBST(TRIMMED_LDFLAGS)
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl CF_X_TOOLKIT version: 24 updated: 2019/03/23 19:54:44

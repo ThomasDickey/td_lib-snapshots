@@ -1,3 +1,27 @@
+2019-12-26  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* src/curses/cmdch.c: build-fix
+
+	* package/td_lib.spec: bump, start using "hardening flags"
+
+	* configure: regen
+
+	* aclocal.m4:
+	add CF_TRIM_LDFLAGS, to provide a sanitized version of LDFLAGS for td_make.in
+
+	* configure.in: use CF_TRIM_LDFLAGS
+
+	* td_make.in:
+	use trimmed-LDFLAGS for applications built with this library
+
+	* package/debian/changelog: bump
+
+	* src/curses/rawterm.c, src/curses/cmdch.c:
+	provide for ncurses6 wheel-mouse
+
+	* src/curses/rawgets.c:
+	provide vi-style h,l,b,w,e cursor-movement in non-insert mode
+
 2019-12-19  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* include/td_ext.h:

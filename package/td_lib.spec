@@ -1,8 +1,8 @@
 Summary: Thomas Dickeys library
 %define AppProgram td_lib
 %define AppVersion 12.x
-%define AppRelease 20191219
-# $Id: td_lib.spec,v 1.27 2019/12/20 01:04:54 tom Exp $
+%define AppRelease 20191226
+# $Id: td_lib.spec,v 1.28 2019/12/27 01:16:32 tom Exp $
 Name: %{AppProgram}
 Version: %{AppVersion}
 Release: %{AppRelease}
@@ -28,7 +28,7 @@ to ded.
 %build
 
 INSTALL_PROGRAM='${INSTALL}' \
-./configure \
+%configure \
 		--target %{_target_platform} \
 		--prefix=%{_prefix} \
 		--bindir=%{_bindir} \
@@ -50,7 +50,12 @@ make
 make install                    DESTDIR=$RPM_BUILD_ROOT
 
 %clean
-[ "$RPM_BUILD_ROOT" != "/" ] && rm -rf $RPM_BUILD_ROOT
+if rm -rf $RPM_BUILD_ROOT; then
+  echo OK
+else
+  find $RPM_BUILD_ROOT -type f | grep -F -v /.nfs && exit 1
+fi
+exit 0
 
 %files
 %defattr(-,root,root)
