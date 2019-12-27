@@ -1,4 +1,4 @@
-# $Id: td_make.in,v 12.37 2019/12/17 23:33:20 tom Exp $
+# $Id: td_make.in,v 12.38 2019/12/27 00:39:06 tom Exp $
 # common definitions for makefiles built over TD_LIB library.
 # vile:makemode
 
@@ -52,9 +52,9 @@ CPP_OPTS	= $(CPP_CONFIG) $(EXTRA_CPP_OPTS)
 
 x		= @PROG_EXT@
 LIB_DEPS	= $(TD_LIB)/@LIB_PREFIX@td.a
-LIB_ARGS	= @LDFLAGS@ -L$(TD_LIB) -ltd @LIBS@
+LIB_ARGS	= @TRIMMED_LDFLAGS@ -L$(TD_LIB) -ltd @LIBS@
 
-CURSES_LIBS	= @LDFLAGS@ -L$(TD_LIB) -ltd @CURSES_LIBS@ @LIBS@
+CURSES_LIBS	= @TRIMMED_LDFLAGS@ -L$(TD_LIB) -ltd @CURSES_LIBS@ @LIBS@
 
 DATE		= echo '** '`date` >> $@
 

@@ -3,6 +3,7 @@
  * Title:	rawgets.c (raw-mode 'gets()')
  * Created:	29 Sep 1987 (from 'fl.c')
  * Modified:
+ *		26 Dec 2019, add vi-like cursor movement
  *		17 Dec 2019, improve handling of non-ASCII strings.
  *		07 Mar 2004, remove K&R support, indent'd.
  *		05 Feb 1996, don't write to lower-right corner (sysvr4 bug).
@@ -75,9 +76,10 @@
 
 #ifdef LOCALE
 #include	<wchar.h>
+#include	<wctype.h>
 #endif
 
-MODULE_ID("$Id: rawgets.c,v 12.34 2019/12/17 23:36:07 tom Exp $")
+MODULE_ID("$Id: rawgets.c,v 12.35 2019/12/26 21:02:58 tom Exp $")
 
 #define	SHIFT	5
 
@@ -85,15 +87,16 @@ MODULE_ID("$Id: rawgets.c,v 12.34 2019/12/17 23:36:07 tom Exp $")
 #define KEY_MIN 256
 #endif
 
+#define like_vi(c,vi)	(!Imode && (c == vi))
 #define is_special(c)	((c) >= KEY_MIN)
 #define	to_toggle(c)	((c) == '\t')
 #define	to_literal(c)	((c) == CTL('V'))
-#define	to_home(c)	(((c) == CTL('B')))
-#define	to_up(c)	(((c) == CTL('P')) || ((c) == KEY_UP))
-#define	to_down(c)	(((c) == CTL('N')) || ((c) == KEY_DOWN))
-#define	to_left(c)	(((c) == '\b') || ((c) == KEY_LEFT))
-#define	to_right(c)	(((c) == '\f') || ((c) == KEY_RIGHT))
-#define	to_end(c)	(((c) == CTL('F')))
+#define	to_home(c)	((c) == CTL('B') || like_vi(c, '^'))
+#define	to_up(c)	((c) == CTL('P') || (c) == KEY_UP || like_vi(c, 'k'))
+#define	to_down(c)	((c) == CTL('N') || (c) == KEY_DOWN || like_vi(c, 'j'))
+#define	to_left(c)	((c) == '\b' || (c) == KEY_LEFT || like_vi(c, 'h'))
+#define	to_right(c)	((c) == '\f' || (c) == KEY_RIGHT || like_vi(c, 'l'))
+#define	to_end(c)	((c) == CTL('F') || like_vi(c, '$'))
 
 #ifdef A_REVERSE
 #define Highlight(w)	(void)wattron(w, A_REVERSE)
@@ -102,6 +105,13 @@ MODULE_ID("$Id: rawgets.c,v 12.34 2019/12/17 23:36:07 tom Exp $")
 #define Highlight(w)	(void)wstandout(w)
 #define NoHighlight(w)	(void)wstandend(w)
 #endif
+
+typedef enum {
+    cNONE = 0
+    ,cSPACE
+    ,cALPHA
+    ,cPUNCT
+} CHAR_CLASS;
 
 /*
  * Keep the base-position of 'bfr[]' visible, so that when resizing the
@@ -199,6 +209,35 @@ char_of(const char *source)
     return result;
 }
 
+/*
+ * Decode the character-class, used for vi word-movement.
+ */
+static int
+class_of(const char *source)
+{
+    int result = cNONE;
+    int ch = char_of(source);
+#ifdef LOCALE
+    if (ch >= 128) {
+	if (iswalnum(ch))
+	    result = cALPHA;
+	else if (iswpunct(ch))
+	    result = cPUNCT;
+	else if (iswspace(ch))
+	    result = cSPACE;
+    } else
+#endif
+    {
+	if (isalnum(ch))
+	    result = cALPHA;
+	else if (ispunct(ch))
+	    result = cPUNCT;
+	else if (isspace(ch))
+	    result = cSPACE;
+    }
+    return result;
+}
+
 static char *
 format_valid_char(char *target, int c)
 {
@@ -286,7 +325,7 @@ MoveTo(char *at)
 	int y = y_rawgets, x = x_rawgets;
 	int original = shift;
 
-	for (s = bbase, shift = 0; *s != EOS && s != at; s += bytes_of(s)) {
+	for (s = bbase, shift = 0; *s != EOS && s < at; s += bytes_of(s)) {
 	    x += cols_of(char_of(s));
 	    if (x >= xlast) {
 		if (wrap) {
@@ -409,7 +448,7 @@ InsertAt(char *at, int c)
     }
     *s = EOS;
     ShowAt(at);
-    MoveTo(at + 1);
+    MoveTo(at + bytes_of(at));
 }
 
 /*
@@ -483,6 +522,144 @@ DeleteWordBefore(char *at, int count)
 	at = DeleteBefore(at, (int) (at - s));
     }
     return (at);
+}
+
+/* move left by 'count' "chars" */
+static char *
+like_vi_h(char *s, int count)
+{
+    if (s > bbase) {
+	while (count-- > 0) {
+	    char *t = --s;
+	    char *p, *q;
+	    if (s == bbase)
+		break;
+	    for (p = q = bbase; *p != EOS && p < t; q = p) {
+		p += bytes_of(p);
+		if (p > t) {
+		    s = q;
+		    break;
+		} else if (p == t) {
+		    s = p;
+		    break;
+		}
+	    }
+	}
+    }
+    return s;
+}
+
+/* move right by 'count' "chars" */
+static char *
+like_vi_l(char *s, int count)
+{
+    while (count-- > 0) {
+	s += bytes_of(s);
+	if (*s == EOS)
+	    break;
+    }
+    return s;
+}
+
+/* move left by 'count' "words", stopping at the beginning of a "word" */
+static char *
+like_vi_b(char *s, int count)
+{
+    while (count-- > 0) {
+	char *p = s;
+	int sclass = class_of(s);
+	if (p > bbase) {
+	    p = like_vi_h(p, 1);
+	    sclass = class_of(p);
+	}
+	while (p > bbase) {
+	    char *t = like_vi_h(p, 1);
+	    int tclass = class_of(t);
+	    if (sclass != tclass) {
+		if (sclass > cSPACE) {
+		    s = p;
+		    break;
+		}
+		sclass = tclass;
+	    }
+	    p = t;
+	}
+	if (p == bbase) {
+	    if (class_of(p) > cSPACE)
+		s = p;
+	    break;
+	}
+	if (count <= 0)
+	    break;
+    }
+    return s;
+}
+
+/* move right by 'count' "words", stopping at the beginning of a "word" */
+static char *
+like_vi_w(char *s, int count)
+{
+    while (count-- > 0) {
+	char *p = s;
+	int sclass = class_of(s);
+	while (*p != EOS) {
+	    char *t = p + bytes_of(p);
+	    int tclass = class_of(t);
+	    if (sclass != tclass) {
+		if (tclass > cSPACE) {
+		    s = t;
+		    break;
+		}
+		sclass = tclass;
+	    }
+	    p = t;
+	}
+	if (count <= 0)
+	    break;
+	if (*s == EOS)
+	    break;
+    }
+    return s;
+}
+
+/* move right by 'count' "words", stopping at the end of a "word" */
+static char *
+like_vi_e(char *s, int count)
+{
+    while (count-- > 0) {
+	char *p = s;
+	char *q = p;
+	int sclass = class_of(p);
+
+	if (*p != EOS) {
+	    p += bytes_of(p);
+	    q = p;
+	    sclass = class_of(p);
+	}
+
+	while (*p != EOS) {
+	    char *t = p + bytes_of(p);
+	    int tclass = class_of(t);
+	    if (tclass > cSPACE)
+		q = t;
+	    if (sclass != tclass) {
+		if (sclass > cSPACE && tclass >= cSPACE) {
+		    s = p;
+		    break;
+		}
+		sclass = tclass;
+	    }
+	    p = t;
+	}
+	if (*p == EOS && q != NULL) {
+	    if (sclass != cSPACE)
+		s = q;
+	    break;
+	}
+	if (count <= 0)
+	    break;
+    }
+    return s;
 }
 
 /*
@@ -743,9 +920,10 @@ wrawgets(WINDOW *win,
 	 */
 	if (literal || (Imode && !is_special(c) && isprint(c))) {
 	    while (count-- > 0) {
-		if (CurIns - bfr < buffer_len)
-		    InsertAt(CurIns++, c);
-		else {
+		if (CurIns - bfr < buffer_len) {
+		    InsertAt(CurIns, c);
+		    CurIns += bytes_of(CurIns);
+		} else {
 		    errs++;
 		    break;
 		}
@@ -762,34 +940,27 @@ wrawgets(WINDOW *win,
 		count = (int) strlen(bfr);
 		(void) DeleteBefore(bfr + count, (int) count);
 		break;
-	    } else
+	    } else {
 		CurIns = DeleteBefore(CurIns, (int) (CurIns - bfr));
+	    }
 
 	} else if (to_left(c)) {
-	    if (CurIns > bfr) {
-		char *s = CurIns;
-		while (count-- > 0)
-		    if (--s == bfr)
-			break;
-		MoveTo(CurIns = s);
-	    } else
-		errs++;
+	    MoveTo(CurIns = like_vi_h(CurIns, count));
 	} else if (to_right(c)) {
-	    if (*CurIns != EOS) {
-		char *s = CurIns;
-		while (count-- > 0)
-		    if (*(++s) == EOS)
-			break;
-		MoveTo(CurIns = s);
-	    } else
-		errs++;
+	    MoveTo(CurIns = like_vi_l(CurIns, count));
 	} else if (to_home(c)) {
 	    MoveTo(CurIns = bbase);
 	} else if (to_end(c)) {
 	    MoveTo(CurIns = bbase + strlen(bbase));
-	} else
+	} else if (like_vi(c, 'b')) {
+	    MoveTo(CurIns = like_vi_b(CurIns, count));
+	} else if (like_vi(c, 'w')) {
+	    MoveTo(CurIns = like_vi_w(CurIns, count));
+	} else if (like_vi(c, 'e')) {
+	    MoveTo(CurIns = like_vi_e(CurIns, count));
+	} else {
 	    errs++;
-
+	}
     }
 
     if (Z) {

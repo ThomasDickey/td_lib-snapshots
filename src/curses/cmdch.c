@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	01 Dec 1987 (broke out of 'ded.c')
  * Modified:
+ *		26 Dec 2019, convert wheel-mouse to up/down arrow
  *		17 Dec 2019, simplify ifdefs vs BSD-curses.
  *		29 Nov 2019, gcc warnings
  *		25 Dec 2014, coverity warnings
@@ -52,7 +53,7 @@
 #include	"td_curse.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: cmdch.c,v 12.39 2019/12/18 01:10:41 tom Exp $")
+MODULE_ID("$Id: cmdch.c,v 12.41 2019/12/27 01:55:09 tom Exp $")
 
 #define	ESC(c)	((c) == '\033')
 #define	END(s)	s[strlen(s)-1]
@@ -230,7 +231,19 @@ cmdch(int *cnt_)
 	    } else if (myevent.bstate & BUTTON3_DOUBLE_CLICKED) {
 		xt_mouse.button = 3;
 		xt_mouse.dbl_clik = TRUE;
-	    } else
+	    }
+#if NCURSES_MOUSE_VERSION > 1
+	    else if (myevent.bstate & BUTTON4_PRESSED) {
+		c = KEY_DOWN;
+		done = TRUE;
+		break;
+	    } else if (myevent.bstate & BUTTON5_PRESSED) {
+		c = KEY_UP;
+		done = TRUE;
+		break;
+	    }
+#endif
+	    else
 		break;
 	    xt_mouse.pressed = TRUE;
 	    xt_mouse.released = TRUE;

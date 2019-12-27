@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	24 Nov 1987
  * Modified:
+ *		26 Dec 2019, provide for wheel-mouse in ncurses6
  *		09 Jul 2010, add xt_enabled flag to control whether the mouse
  *			     is used.
  *		07 Mar 2004, remove K&R support, indent'd.
@@ -34,7 +35,7 @@
 #define TRM_PTYPES		/* <termios.h> */
 #include	"td_curse.h"
 
-MODULE_ID("$Id: rawterm.c,v 12.27 2014/12/28 01:10:44 tom Exp $")
+MODULE_ID("$Id: rawterm.c,v 12.28 2019/12/26 23:50:02 tom Exp $")
 
 TermioT original_tty;
 TermioT modified_tty;
@@ -89,8 +90,12 @@ enable_mouse(void)
 	(void) mousemask(
 			    BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED
 			    | BUTTON2_CLICKED | BUTTON2_DOUBLE_CLICKED
-			    | BUTTON3_CLICKED | BUTTON3_DOUBLE_CLICKED,
-			    (mmask_t *) 0);
+			    | BUTTON3_CLICKED | BUTTON3_DOUBLE_CLICKED
+#if NCURSES_MOUSE_VERSION > 1
+			    | BUTTON4_PRESSED
+			    | BUTTON5_PRESSED
+#endif
+			    ,(mmask_t *) 0);
 #else
 	if (xterm_mouse()) {
 	    Puts(XTERM_ENABLE_TRACKING);
