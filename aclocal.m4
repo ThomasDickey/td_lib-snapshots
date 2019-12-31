@@ -1,4 +1,4 @@
-dnl Extended Macros that test for specific features.  dnl $Id: aclocal.m4,v 12.204 2019/12/27 00:50:12 tom Exp $
+dnl Extended Macros that test for specific features.  dnl $Id: aclocal.m4,v 12.205 2019/12/31 20:52:12 tom Exp $
 dnl vi:set ts=4:
 dnl
 dnl see
@@ -3503,11 +3503,15 @@ AC_DEFUN([CF_PROG_AR],[
 AC_CHECK_TOOL(AR, ar, ar)
 ])
 dnl ---------------------------------------------------------------------------
-dnl CF_PROG_CC version: 4 updated: 2014/07/12 18:57:58
+dnl CF_PROG_CC version: 5 updated: 2019/12/31 08:53:54
 dnl ----------
 dnl standard check for CC, plus followup sanity checks
 dnl $1 = optional parameter to pass to AC_PROG_CC to specify compiler name
 AC_DEFUN([CF_PROG_CC],[
+CF_ACVERSION_CHECK(2.53,
+	[AC_MSG_WARN(this will incorrectly handle gnatgcc choice)
+	 AC_REQUIRE([AC_PROG_CC])],
+	[])
 ifelse($1,,[AC_PROG_CC],[AC_PROG_CC($1)])
 CF_GCC_VERSION
 CF_ACVERSION_CHECK(2.52,
@@ -4250,6 +4254,35 @@ AC_DEFUN([CF_TOP_SRCDIR],
 CDPATH=; export CDPATH
 TOP_SRCDIR=`cd $srcdir;pwd`
 AC_SUBST(TOP_SRCDIR)
+])dnl
+dnl ---------------------------------------------------------------------------
+dnl CF_TRIM_LDFLAGS version: 1 updated: 2019/12/26 19:50:12
+dnl ---------------
+dnl When building a package containing a development library, some of the
+dnl packager's LDFLAGS are useful; others cause problems.  (Try to) filter
+dnl out the common nuisances.
+AC_DEFUN([CF_TRIM_LDFLAGS],
+[
+TRIMMED_LDFLAGS=
+cf_save=
+for cf_opt in $LDFLAGS
+do
+	case "x$cf_opt" in
+	x-R)
+		TRIMMED_LDFLAGS="$TRIMMED_LDFLAGS $cf_opt"
+		cf_save=$cf_opt
+		;;
+	x-l*|x-L*|x-R*)
+		TRIMMED_LDFLAGS="$TRIMMED_LDFLAGS $cf_opt"
+		cf_save=
+		;;
+	*)
+		test -n "$cf_save" && TRIMMED_LDFLAGS="$TRIMMED_LDFLAGS $cf_opt"
+		cf_save=
+		;;
+	esac
+done
+AC_SUBST(TRIMMED_LDFLAGS)
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl CF_TRIM_X_LIBS version: 3 updated: 2015/04/12 15:39:00
@@ -5160,33 +5193,6 @@ AC_DEFUN([CF_X_EXT],[
 CF_TRY_PKG_CONFIG(Xext,,[
 	AC_CHECK_LIB(Xext,XextCreateExtension,
 		[CF_ADD_LIB(Xext)])])
-])dnl
-dnl ---------------------------------------------------------------------------
-dnl When building a package containing a development library, some of the
-dnl packager's LDFLAGS are useful; others cause problems.  (Try to) filter
-dnl out the common nuisances.
-AC_DEFUN([CF_TRIM_LDFLAGS],
-[
-TRIMMED_LDFLAGS=
-cf_save=
-for cf_opt in $LDFLAGS
-do
-	case "x$cf_opt" in
-	x-R)
-		TRIMMED_LDFLAGS="$TRIMMED_LDFLAGS $cf_opt"
-		cf_save=$cf_opt
-		;;
-	x-l*|x-L*|x-R*)
-		TRIMMED_LDFLAGS="$TRIMMED_LDFLAGS $cf_opt"
-		cf_save=
-		;;
-	*)
-		test -n "$cf_save" && TRIMMED_LDFLAGS="$TRIMMED_LDFLAGS $cf_opt"
-		cf_save=
-		;;
-	esac
-done
-AC_SUBST(TRIMMED_LDFLAGS)
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl CF_X_TOOLKIT version: 24 updated: 2019/03/23 19:54:44
