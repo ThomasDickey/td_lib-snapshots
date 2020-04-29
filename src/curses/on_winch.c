@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	27 Jun 1994
  * Modified:
+ *		28 Apr 2020, suppress if using ncurses.
  *		07 Mar 2004, remove K&R support, indent'd.
  *		23 Jul 1994, retain 'saved_winch' to use for HP/UX curses.
  *
@@ -22,7 +23,7 @@
 #define SIG_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: on_winch.c,v 12.10 2014/12/28 01:10:44 tom Exp $")
+MODULE_ID("$Id: on_winch.c,v 12.11 2020/04/28 20:26:40 tom Exp $")
 
 #ifdef SIGWINCH
 #define	ON_WINCH struct OnWinch
@@ -71,8 +72,9 @@ set_handler(RETSIGTYPE (*new_handler) (SIGNAL_ARGS))
 static void
 handle_resize(void)
 {
-    if (saved_winch != 0)
-	(*saved_winch) (SIGWINCH);
+    if (saved_winch != 0) {
+	(saved_winch) (SIGWINCH);
+    }
 
     set_handler(SIG_IGN);
     if (list != 0 && resizewin()) {
@@ -111,6 +113,10 @@ on_winch(void (*func) (void))
 {
     ON_WINCH *p, *q;
 
+#ifdef NCURSES_VERSION
+    if (!(isendwin() || stdscr == NULL))
+	return;
+#endif
     disable_this = TRUE;
     if (func != 0) {		/* add function to end of our list */
 	p = ALLOC(ON_WINCH, 1);
@@ -153,6 +159,10 @@ on_winch(void (*func) (void))
 void
 enable_winch(int enabled)
 {
+#ifdef NCURSES_VERSION
+    if (!(isendwin() || stdscr == NULL))
+	return;
+#endif
     if ((disable_this = !enabled))
 	set_handler(SIG_IGN);
     else

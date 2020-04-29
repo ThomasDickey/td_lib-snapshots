@@ -40,14 +40,14 @@
 #include "cmv_defs.h"
 #include "dyn_str.h"
 
-MODULE_ID("$Id: cmv_dir.c,v 12.37 2019/12/12 01:21:20 tom Exp $")
+MODULE_ID("$Id: cmv_dir.c,v 12.38 2020/04/29 00:05:03 tom Exp $")
 
 /******************************************************************************/
 
 #define	typealloc(type)	(type *)doalloc((char *)0, sizeof(type))
 
 #ifdef DEBUG
-#define Debug(p) fprintf p;
+#define Debug(p) fprintf p
 #else
 #define Debug(p)		/* nothing */
 #endif
@@ -523,8 +523,8 @@ UpInternalDir(char *first, char *last)
 {
     int state = 3;
 
-    Debug((stderr, "Up(%s) %s\n", first, last))
-	while (--last >= first) {
+    Debug((stderr, "Up(%s) %s\n", first, last));
+    while (--last >= first) {
 	if (isdigit(UCH(*last))) {
 	    if (state != 3)
 		break;
@@ -537,8 +537,8 @@ UpInternalDir(char *first, char *last)
 	} else if (isSlash(*last)) {
 	    if (state-- != 1)
 		break;
-	    Debug((stderr, "=> %s\n", last))
-		return last;
+	    Debug((stderr, "=> %s\n", last));
+	    return last;
 	} else {
 	    break;
 	}
@@ -584,11 +584,11 @@ LookupVault(const char *working_directory,
     WORKING *q;
     int max_n = 0;
 
-    Debug((stderr, "LookupVault\n"))
-	Debug((stderr, "...dir:%s\n", working_directory))
-	Debug((stderr, "..file:%s\n", filename))
+    Debug((stderr, "LookupVault\n"));
+    Debug((stderr, "...dir:%s\n", working_directory));
+    Debug((stderr, "..file:%s\n", filename));
 
-	if (!initialized)
+    if (!initialized)
 	Initialize();
     if (CmvVault == 0 || filename == 0)
 	return 0;
@@ -601,7 +601,7 @@ LookupVault(const char *working_directory,
     if (stat_dir(result, &sb) < 0)
 	(void) strcpy(result, pathhead(result, &sb));
 
-    Debug((stderr, "..test:%s\n", result))
+    Debug((stderr, "..test:%s\n", result));
 
     /*
      * Now, search the CMV_VAULT variable for a working directory that
@@ -610,14 +610,14 @@ LookupVault(const char *working_directory,
      * directory path.  If we find an archive without a working directory
      * in CMV_VAULT, use this iff no prior match is found.
      */
-	for (p = VaultList; p != 0; p = p->next) {
+    for (p = VaultList; p != 0; p = p->next) {
 	for (q = p->working; q != 0; q = q->next) {
 	    int n;
 	    if ((n = samehead(result, q->working)) > 0
 		&& n >= (int) strlen(q->working)) {
 		if (n > max_n) {
-		    Debug((stderr, "..same:%s\n", q->working))
-			max_p = p;
+		    Debug((stderr, "..same:%s\n", q->working));
+		    max_p = p;
 		    max_n = n;
 		}
 	    }
@@ -633,7 +633,7 @@ LookupVault(const char *working_directory,
 	for (j = 0; (result[j] = result[j + max_n]) != EOS; j++)
 	    if (isSlash(result[j]))
 		level++;;
-	Debug((stderr, "=>%s\n", result))
+	Debug((stderr, "=>%s\n", result));
     }
     return (max_n > 0) ? max_p : 0;
 }

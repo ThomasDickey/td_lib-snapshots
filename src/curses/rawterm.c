@@ -35,7 +35,7 @@
 #define TRM_PTYPES		/* <termios.h> */
 #include	"td_curse.h"
 
-MODULE_ID("$Id: rawterm.c,v 12.28 2019/12/26 23:50:02 tom Exp $")
+MODULE_ID("$Id: rawterm.c,v 12.29 2020/04/28 23:59:55 tom Exp $")
 
 TermioT original_tty;
 TermioT modified_tty;
@@ -67,7 +67,7 @@ xterm_mouse(void)
 	char *name;
 	initialized = TRUE;
 	if ((name = getenv("TERM")) != 0) {
-	    int len = strlen(name);
+	    int len = (int) strlen(name);
 	    if (!strncmp(name, "xterm", 5)
 		|| (len > 5 && !strcmp(name + len - 5, "xterm")))
 		use_mouse = TRUE;

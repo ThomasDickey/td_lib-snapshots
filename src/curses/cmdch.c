@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	01 Dec 1987 (broke out of 'ded.c')
  * Modified:
+ *		28 Apr 2020, filter ERRs after a KEY_RESIZE.
  *		26 Dec 2019, convert wheel-mouse to up/down arrow
  *		17 Dec 2019, simplify ifdefs vs BSD-curses.
  *		29 Nov 2019, gcc warnings
@@ -53,7 +54,7 @@
 #include	"td_curse.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: cmdch.c,v 12.41 2019/12/27 01:55:09 tom Exp $")
+MODULE_ID("$Id: cmdch.c,v 12.42 2020/04/28 20:28:33 tom Exp $")
 
 #define	ESC(c)	((c) == '\033')
 #define	END(s)	s[strlen(s)-1]
@@ -252,6 +253,23 @@ cmdch(int *cnt_)
 #endif
 #ifdef KEY_RESIZE
 	case KEY_RESIZE:
+	    timeout(50);
+	    {
+		int retry;
+		int skips;
+		for (retry = skips = 0; (retry - skips) < 10; ++retry) {
+		    c = getch();
+		    if (c == KEY_RESIZE) {
+			skips = retry;
+		    } else if (c != ERR) {
+			break;
+		    }
+		}
+		if (c != ERR)
+		    ungetch(c);
+		c = KEY_RESIZE;
+	    }
+	    timeout(-1);
 	    break;		/* eat this for sigwinch */
 #endif
 	case KEY_HOME:		/* FALLTHRU */

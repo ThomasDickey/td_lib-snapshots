@@ -79,7 +79,7 @@
 #include	<wctype.h>
 #endif
 
-MODULE_ID("$Id: rawgets.c,v 12.35 2019/12/26 21:02:58 tom Exp $")
+MODULE_ID("$Id: rawgets.c,v 12.36 2020/04/28 22:22:23 tom Exp $")
 
 #define	SHIFT	5
 
@@ -219,11 +219,11 @@ class_of(const char *source)
     int ch = char_of(source);
 #ifdef LOCALE
     if (ch >= 128) {
-	if (iswalnum(ch))
+	if (iswalnum((wint_t) ch))
 	    result = cALPHA;
-	else if (iswpunct(ch))
+	else if (iswpunct((wint_t) ch))
 	    result = cPUNCT;
-	else if (iswspace(ch))
+	else if (iswspace((wint_t) ch))
 	    result = cSPACE;
     } else
 #endif

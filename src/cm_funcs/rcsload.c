@@ -49,10 +49,10 @@
 #include	<ctype.h>
 #include	<time.h>
 
-MODULE_ID("$Id: rcsload.c,v 12.16 2014/12/27 20:48:55 tom Exp $")
+MODULE_ID("$Id: rcsload.c,v 12.17 2020/04/29 00:05:46 tom Exp $")
 
 #ifdef	TEST
-#define	DEBUG(s) PRINTF s;
+#define	DEBUG(s) PRINTF s
 #else
 #define	DEBUG(s)
 #endif
@@ -210,7 +210,7 @@ eat_text(char *s, int code)
 	    t += strlen(t) + 1;
 	}
 	load_logged = base;
-	DEBUG(("NOTES:%s\n%s", last_rev, load_logged))
+	DEBUG(("NOTES:%s\n%s", last_rev, load_logged));
     }
 
     return s;
@@ -326,8 +326,8 @@ rcsload(char *archive,		/* name of file to open             */
 	for (t = load_buffer; *t; t++)
 	    if (*t == '\n')
 		length++;
-	DEBUG(("%d newlines, filesize=%d\n", length, t - load_buffer))
-	    length += (unsigned) (t - load_buffer) + 2;
+	DEBUG(("%d newlines, filesize=%d\n", length, t - load_buffer));
+	length += (unsigned) (t - load_buffer) + 2;
 	load_buffer = doalloc(load_buffer, (size_t) length);
     } else
 	load_buffer = 0;

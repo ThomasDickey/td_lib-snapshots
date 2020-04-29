@@ -23,11 +23,11 @@
 #define STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: vercmp.c,v 12.11 2019/11/30 01:46:23 tom Exp $")
+MODULE_ID("$Id: vercmp.c,v 12.12 2020/04/29 00:02:38 tom Exp $")
 
 #define	DOT	'.'
 
-#define	FIRST(s)	while (*s == '0' && s[1] != DOT && s[1] != EOS) s++
+#define	FIRST(s)	while (*s == '0' && s[1] != DOT && s[1] != EOS) { s++; }
 #define	LAST(s,l)	for (l = 0; (s[l] != DOT) && (s[l] != EOS); l++)
 
 #ifdef	TEST
