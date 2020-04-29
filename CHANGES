@@ -1,3 +1,26 @@
+2020-04-28  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* src/cm_funcs/rcsload.c, src/cm_funcs/cmv_dir.c, src/cm_funcs/vercmp.c:
+	clang warnings
+
+	* src/curses/rawterm.c: gcc warning
+
+	* src/curses/rawgets.c: gcc-warnings
+
+	* package/debian/copyright, COPYING: bump
+
+	* configure: regen
+
+	* configure.in: --without-x
+
+	* aclocal.m4: resync with my-autoconf
+
+	* package/debian/changelog, package/td_lib.spec: bump
+
+	* src/curses/cmdch.c: filter ERRs after a KEY_RESIZE
+
+	* src/curses/on_winch.c: suppress if using ncurses
+
 2019-12-31  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* package/debian/changelog, package/td_lib.spec: bump
