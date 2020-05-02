@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	02 Aug 1994, from 'sccs_dir.c'
  * Modified:
+ *		01 May 2020, coverity warnings.
  *		11 Dec 2019, clang warnings.
  *		27 Dec 2014, coverity warnings.
  *		07 Mar 2004, remove K&R support, indent'd.
@@ -40,7 +41,7 @@
 #include "cmv_defs.h"
 #include "dyn_str.h"
 
-MODULE_ID("$Id: cmv_dir.c,v 12.38 2020/04/29 00:05:03 tom Exp $")
+MODULE_ID("$Id: cmv_dir.c,v 12.40 2020/05/02 00:39:52 tom Exp $")
 
 /******************************************************************************/
 
@@ -114,21 +115,31 @@ NewCmTree(const char *pathname)
     return p;
 }
 
+static char *
+PathCat(const char *head, const char *tail)
+{
+    char temp[MAXPATHLEN];
+    size_t have = strlen(head);
+    size_t want = strlen(tail);
+
+    if (have + want + 2 < MAXPATHLEN) {
+
+	strcpy(temp, head);
+	temp[have++] = PATH_SLASH;
+	strcpy(temp + have, tail);
+	tail = temp;
+    }
+    return txtalloc(tail);
+}
+
 /*
  * Returns a relative path for the given internal leaf name
  */
 static char *
 NewInternal(CMTREE * parent, const char *internal)
 {
-    char temp[MAXPATHLEN];
     if (parent != 0 && parent->internal[0] != EOS) {
-	int have = (int) strlen(strcpy(temp, parent->internal));
-	int want = (int) strlen(internal);
-	if (have + want + 2 < MAXPATHLEN) {
-	    temp[have++] = PATH_SLASH;
-	    strcpy(temp + have, internal);
-	    internal = temp;
-	}
+	internal = PathCat(parent->internal, internal);
     }
     return txtalloc(internal);
 }
@@ -139,15 +150,8 @@ NewInternal(CMTREE * parent, const char *internal)
 static char *
 NewExternal(CMTREE * parent, const char *external)
 {
-    char temp[MAXPATHLEN];
     if (parent != 0 && parent->external[0] != EOS) {
-	int have = (int) strlen(strcpy(temp, parent->external));
-	int want = (int) strlen(external);
-	if (have + want + 2 < MAXPATHLEN) {
-	    temp[have++] = PATH_SLASH;
-	    strcpy(temp + have, external);
-	    external = temp;
-	}
+	external = PathCat(parent->external, external);
     }
     return txtalloc(external);
 }
