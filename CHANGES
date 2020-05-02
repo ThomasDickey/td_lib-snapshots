@@ -1,3 +1,19 @@
+2020-05-01  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* package/debian/changelog, package/td_lib.spec: bump
+
+	* src/curses/win2file.c: build-fix
+
+	* src/cm_funcs/cmv_dir.c: fix scope of temp[]
+
+	* configure: regen
+
+	* src/curses/win2file.c: revise CursesBold() to work with cchar_t
+
+	* configure.in: add checks for functions needed in win2file
+
+	* src/cm_funcs/cmv_dir.c: coverity CID 300341 (STRING_OVERFLOW)
+
 2020-04-28  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* src/cm_funcs/rcsload.c, src/cm_funcs/cmv_dir.c, src/cm_funcs/vercmp.c:

@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	07 Jun 1988
  * Modified:
+ *		01 May 2020, coverity warnings
  *              21 Nov 2017, increase buffer-size for trailing nul.
  *		07 Mar 2004, remove K&R support, indent'd.
  *		15 Feb 1998, workaround for non-scalar chtype.
@@ -38,7 +39,7 @@
 #include	<ctype.h>
 #include	<time.h>
 
-MODULE_ID("$Id: win2file.c,v 12.23 2017/11/21 21:56:11 tom Exp $")
+MODULE_ID("$Id: win2file.c,v 12.25 2020/05/02 00:43:30 tom Exp $")
 
 #ifndef A_ALTCHARSET
 #define A_ALTCHARSET 0
@@ -63,7 +64,9 @@ MODULE_ID("$Id: win2file.c,v 12.23 2017/11/21 21:56:11 tom Exp $")
 #    define CursesBold(win,y,x) CursesData(win,y,x) & A_STANDOUT
 #  endif
 #else
-#  define CursesBold(win,y,x) FALSE
+#  if !defined(HAVE_TYPE_CCHAR_T)
+#    define CursesBold(win,y,x) FALSE
+#  endif
 #  undef CursesData
 #  undef CursesLine
 #endif
@@ -90,6 +93,37 @@ CursesLine(WINDOW *win, int row)
 
 #undef CursesData
 #define CursesData(win,y,x)  (unsigned char)CursesLine(win,y)[x]
+#endif
+
+#ifndef CursesBold
+static int
+CursesBold(WINDOW *win, int y, int x)
+{
+    int save_y, save_x;
+    int result = FALSE;
+    getyx(win, save_y, save_x);
+#if defined(HAVE_WIN_WCH)
+    {
+	cchar_t data;
+	if (mvwin_wch(win, y, x, &data) == OK) {
+	    wchar_t wch[10];
+	    attr_t attrs;
+	    short pair;
+	    getcchar(&data, wch, &attrs, &pair, NULL);
+	    if ((attrs & A_BOLD) != 0)
+		result = TRUE;
+	}
+    }
+#elif defined(HAVE_WINCH)
+    {
+	chtype data = mvwinch(win, y, x);
+	if ((data & A_BOLD) != 0)
+	    result = TRUE;
+    }
+#endif
+    wmove(win, save_y, save_x);
+    return result;
+}
 #endif
 
 static void
