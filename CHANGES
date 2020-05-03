@@ -1,3 +1,11 @@
+2020-05-03  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* package/debian/changelog, package/td_lib.spec: bump
+
+2020-05-02  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* src/unix/uid2s.c: fix formatting
+
 2020-05-01  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* package/debian/changelog, package/td_lib.spec: bump
