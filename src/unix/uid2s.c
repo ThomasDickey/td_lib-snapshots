@@ -28,7 +28,7 @@
 #define	STR_PTYPES
 #include <td_btree.h>
 
-MODULE_ID("$Id: uid2s.c,v 12.17 2019/12/18 23:20:37 tom Exp $")
+MODULE_ID("$Id: uid2s.c,v 12.18 2020/05/02 14:47:03 tom Exp $")
 
 #if defined(HAVE_GETPWUID)
 
@@ -63,9 +63,9 @@ find_uid(char *bfr)
 	}
     }
 }
-#define	unknown_uid	find_uid(bfr);
+#define	unknown_uid()	find_uid(bfr);
 #else
-#define	unknown_uid
+#define	unknown_uid()
 #endif
 
 static char *
@@ -84,8 +84,8 @@ lookup_uid(uid_t uid)
     else {
 	char bfr[80];
 	(void) l2str(bfr, (long) uid, 0);
-	unknown_uid		/* try to recover! */
-	    return txtalloc(bfr);
+	unknown_uid();		/* try to recover! */
+	return txtalloc(bfr);
     }
 }
 
