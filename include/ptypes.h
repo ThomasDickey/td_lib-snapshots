@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 12.57 2019/12/20 01:03:01 tom Exp $ */
+/* $Id: ptypes.h,v 12.58 2020/12/06 15:26:55 tom Exp $ */
 
 #ifndef	PTYPES_H
 #define	PTYPES_H
@@ -496,7 +496,7 @@ extern int sys_nerr;
 #define	DAY	(24*HOUR)
 #define	YEAR	(365*DAY)
 
-#if defined(HAVE_TIMEZONE) && !defined(TIMEZONE_DECLARED) && !defined(LINTLIBRARY)
+#if !defined(HAVE_TM_GMTOFF) && defined(HAVE_TIMEZONE) && !defined(TIMEZONE_DECLARED)
 extern	long	timezone;
 #endif
 

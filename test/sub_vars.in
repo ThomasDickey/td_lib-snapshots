@@ -1,7 +1,15 @@
-# $Id: sub_vars.in,v 12.1 1997/09/11 13:29:51 tom Exp $
+# $Id: sub_vars.in,v 12.3 2020/12/07 09:13:18 tom Exp $
 # MAKE-file for miscellaneous library routines
+
+####### (Environment) ##########################################################
+SHELL		= /bin/sh
+top_srcdir	= @top_srcdir@
+srcdir		= @srcdir@
+VPATH		= @srcdir@
+BUILD_DIR	= @BUILD_DIR@
+@SET_MAKE@
 
 @make_include_left@../../support/td_lib.mk@make_include_right@
 
 # Put this second, so we can override the CFLAGS, defining TEST.
-@make_include_left@../td_defns.mk@make_include_right@
+@make_include_left@$(top_srcdir)/test/td_defns.mk@make_include_right@

@@ -1,7 +1,10 @@
-# $Id: makefile.in,v 12.25 2015/07/04 15:13:37 tom Exp $
+# $Id: makefile.in,v 12.29 2020/12/08 01:30:22 tom Exp $
 # Top-level makefile for TD_LIB common library
 
 SHELL		= /bin/sh
+top_srcdir	= @top_srcdir@
+srcdir		= @srcdir@
+VPATH		= @srcdir@
 @SET_MAKE@
 
 ####### (Development) ##########################################################
@@ -18,7 +21,6 @@ bindir		= @bindir@
 datarootdir	= @datarootdir@
 datadir		= @datadir@
 libdir		= @libdir@
-srcdir		= @srcdir@
 
 my_cfgdir	= $(DESTDIR)$(datadir)/td
 my_incdir	= $(DESTDIR)$(includedir)/td
@@ -51,10 +53,6 @@ SOURCES	=\
 	COPYING\
 	$(CONFIG_H)
 
-MFILES	=\
-	include/Makefile\
-	support/Makefile
-
 ####### (Standard Productions) #################################################
 all\
 lintlib\
@@ -70,13 +68,13 @@ clean\
 clobber\
 check\
 sources\
-lint.out ::	$(MFILES)
+lint.out ::
 	cd support &&	$(MAKE) $(MAKE_OPTS) $@
 	cd include &&	$(MAKE) $(MAKE_OPTS) $@
 	cd src &&	$(MAKE) $(MAKE_OPTS) $@
 	cd test &&	$(MAKE) $(MAKE_OPTS) $@
 
-lintlib ::	$(MFILES)
+lintlib ::
 	cd include &&	$(MAKE) $(MAKE_OPTS) $@
 
 all\
@@ -90,11 +88,12 @@ distclean:	clobber
 	-cd src &&	$(MAKE) $(MAKE_OPTS) $@
 	-cd test &&	$(MAKE) $(MAKE_OPTS) $@
 	-$(RM) $(PURE)
-	-$(RM) makefile src/makefile test/makefile
+	-$(RM) makefile
+	-@$(SHELL) -c "for s in *;do if test -f \$$s/makefile; then echo .. clean \$$s; rm -f \$$s/makefile; rmdir \$$s 2>/dev/null ; fi; done"
 	-$(RM) $(SELFLINK)
 
 install::	all $(bindir) $(my_cfgdir) $(my_incdir) $(my_libdir)
-	$(srcdir)/support/ins_hdr "$(INSTALL_DATA)" "$(DESTDIR)" $(my_incdir) $(I_LIST)
+	$(srcdir)/support/ins_hdr "$(INSTALL_DATA)" $(my_incdir) $(srcdir) $(I_LIST)
 	$(srcdir)/support/ins_mak "$(INSTALL_DATA)" "$(DESTDIR)" $(my_cfgdir) $(my_libdir) $(my_incdir) support/$(THIS).mk
 	$(INSTALL_DATA) -m 755 support/man2html.sh $(my_cfgdir)
 	$(INSTALL_DATA) lib/$(THAT).a $(my_libdir)

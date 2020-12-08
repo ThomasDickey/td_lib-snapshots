@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t20200503
+MANIFEST for td_lib, version t20201208
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         restrictions on copying/using this software
@@ -14,13 +14,13 @@ makefile.in                     template for generated top-level makefile
 td_make.in                      autoconf template for support/td_lib.mk
 include                         subdirectory
 include/.vilerc                 macro to use in ifdef'ing td_ext.h for autoconf
-include/Makefile                make-file for CM_TOOLS common interface directory
 include/cmv_defs.h              definitions for CmVision wrappers
 include/config.hin              template for include/td_config.h
 include/deltree.h               delta-tree function interface
 include/dyn_str.h               dynamic-strings interface
 include/headers                 list of headers, for install/deinstall
 include/llib-ltd                template for lint-library
+include/makefile.in             makefile for td_lib/include
 include/port2vms.h              interface for vms-porting functions
 include/ptypes.h                principal include-file for TD_LIB
 include/rcsdefs.h               interface for rcs functions
@@ -260,11 +260,11 @@ src/unix/s2uid.c                convert string to user-id
 src/unix/setmtime.c             set mtime/atime of a file
 src/unix/uid2s.c                convert user-id to string
 support                         subdirectory
-support/Makefile                makefile for td_lib/support
 support/ins_hdr                 script to install header files
 support/ins_mak                 script to install td_lib.mk
 support/lib_top.mms             same as STANDARD_RULES, save that we generate lib-directory, rather than bin
 support/linkopts.opt            default link-options file for PORTUNIX
+support/makefile.in             makefile for td_lib/support
 support/prog_top.mms            VMS MMS include-file defining standard (module-level) rules.
 support/rem_hdr                 script to deinstall headers
 support/selflink.sh             script needed to simplify versioning of this directory-tree

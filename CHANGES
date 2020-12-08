@@ -1,3 +1,107 @@
+2020-12-08  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* package/debian/changelog, package/td_lib.spec: bump
+
+	* support/ins_mak: fix shellcheck warnings
+
+2020-12-07  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* makefile.in: amend call for ins_mak
+
+	* support/ins_mak: tidy up the sed-script
+
+	* support/ins_hdr: modify to work with out-of-tree builds
+
+	* support/ins_mak: updated trap command
+
+	* makefile.in: ins_hdr did not use $(DESTDIR)
+
+	* td_make.in:
+	both BUILD_DIR and TOP_SRCDIR are set in other places, not this
+
+	* test/sub_vars.in, src/sub_vars.in: set BUILD_DIR
+
+	* configure: regen
+
+	* aclocal.m4: update a comment
+
+2020-12-06  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* test/makefile.end, src/makefile.end: hide an unwanted error-warning
+
+	* src/curses/win2file.c: gcc-warnings
+
+	* configure: regen
+
+	* aclocal.m4: resync with my-autoconf
+
+	* test/makefile.end, src/makefile.end:
+	reuse distclean rule from top-level, for out-of-tree builds
+
+	* test/td_defns.mk: use TOP_SRCDIR rather than ..
+
+	* td_make.in: define TOP_SRCDIR
+
+	* aclocal.m4: add REF_FILES and SCRIPTS for VPATH
+
+	* td_make.in: add BUILD_LIB, BUILD_INC symbols
+
+	* aclocal.m4:
+	VPATH will not help with suffix-rules: use explicit $(srcdir) when compiling
+
+	* aclocal.m4: ident
+
+	* aclocal.m4: add CF_BUILD_DIR
+
+	* td_make.in: use $(BUILD_DIR)
+
+	* configure.in: use CF_BUILD_DIR
+
+	* makefile.in: make the distclean rule less verbose
+
+	* configure: regen
+
+	* test/sub_vars.in, src/sub_vars.in:
+	use top_srcdir in preference to ".."
+
+	* aclocal.m4: use top_srcdir in CF_SRC_MAKEFILE and CF_TEST_MAKEFILE
+
+	* test/makefile.in, src/makefile.in:
+	use top_srcdir in preference to ".."
+
+	* test/makefile.in, src/makefile.in:
+	drop dependency on sources, to simplify out-of-tree build
+
+	* makefile.in, configure.in:
+	generate include/makefile and support/makefile, needed for out-of-tree build
+
+	* include/makefile.in, support/makefile.in: RCS_BASE
+
+	* src/curses/win2file.c: gcc-warnings
+
+	* include/ptypes.h:
+	build-fix, avoiding FreeBSD 12's non-standard timezone
+
+	* include/td_ext.h: remove redundant extern
+
+	* configure: regen
+
+	* configure.in:
+	when generating output-files, ensure that "support" directory exists,
+	which is not the case when building out-of-tree
+
+	* package/debian/changelog, package/td_lib.spec: bump
+
+2020-11-26  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* configure: regen
+
+	* aclocal.m4: resync with my-autoconf
+
+2020-08-16  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* config.guess, config.sub: 2020-08-17
+
 2020-05-03  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* package/debian/changelog, package/td_lib.spec: bump

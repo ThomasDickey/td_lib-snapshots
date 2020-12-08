@@ -1,8 +1,14 @@
-# $Id: makefile.in,v 12.5 2010/07/05 10:02:43 tom Exp $
+# $Id: makefile.in,v 12.7 2020/12/06 18:26:11 tom Exp $
 # MAKE-file for miscellaneous library routines
 
 ####### (Environment) ##########################################################
-TOP	= ..
+SHELL		= /bin/sh
+top_srcdir	= @top_srcdir@
+srcdir		= @srcdir@
+VPATH		= @srcdir@
+@SET_MAKE@
+
+TOP		= $(top_srcdir)
 @make_include_left@../support/td_lib.mk@make_include_right@
 
 ####### (Standard Lists) #######################################################
@@ -12,7 +18,9 @@ SOURCES	= \
 	td_rules.mk	td_rules.mms
 
 ####### (Standard Productions) #################################################
-all ::		$(SOURCES)
+all ::
+
+sources ::	$(SOURCES)
 
 all \
 clean \
@@ -20,4 +28,5 @@ clobber \
 distclean \
 lint.out \
 check \
-install ::	$(SOURCES)
+install \
+sources ::

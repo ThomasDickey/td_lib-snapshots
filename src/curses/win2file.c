@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	07 Jun 1988
  * Modified:
+ *		06 Dec 2020, gcc warnings
  *		01 May 2020, coverity warnings
  *              21 Nov 2017, increase buffer-size for trailing nul.
  *		07 Mar 2004, remove K&R support, indent'd.
@@ -39,7 +40,7 @@
 #include	<ctype.h>
 #include	<time.h>
 
-MODULE_ID("$Id: win2file.c,v 12.25 2020/05/02 00:43:30 tom Exp $")
+MODULE_ID("$Id: win2file.c,v 12.27 2020/12/06 21:39:16 tom Exp $")
 
 #ifndef A_ALTCHARSET
 #define A_ALTCHARSET 0
@@ -164,9 +165,9 @@ win2fp(WINDOW *win,
 	    /* find the last nonblank column */
 	    for (k = 0; k < cols; k++) {
 		khr = CursesData(win, j, k);
-		if ((khr = toascii(khr)) == EOS)
+		if ((khr = toascii((unsigned char) khr)) == EOS)
 		    break;
-		if (!isspace(khr))
+		if (!isspace((unsigned char) khr))
 		    last = k;
 	    }
 
@@ -194,11 +195,11 @@ win2fp(WINDOW *win,
 			 || khr == ACS_PLUS)
 		    khr = '+';
 		else
-		    khr = toascii(khr);
+		    khr = toascii((unsigned char) khr);
 #else
-		khr = toascii(khr);
+		khr = toascii((unsigned char) khr);
 #endif
-		if (isprint(khr)) {
+		if (isprint((unsigned char) khr)) {
 		    if (bold)
 			FPRINTF(fp, "%c\b", (int) khr);
 		    FPRINTF(fp, "%c", (int) khr);

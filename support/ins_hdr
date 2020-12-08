@@ -1,58 +1,53 @@
 #! /bin/sh
-# $Id: ins_hdr,v 12.2 2010/07/02 10:50:12 tom Exp $
+# $Id: ins_hdr,v 12.3 2020/12/08 01:01:32 tom Exp $
 #
 # This script is used to adjust includes for header files that reside in a
 # subdirectory of /usr/include, etc.
 
-if test $# = 0 ; then
-	echo '? No INSTALL program given'
+failed() {
+	echo "? $*" >&2
 	exit 1
-fi
+}
+
+test $# = 0 && failed 'No INSTALL program given'
 PRG="$1"
 shift
 
-if test $# = 0 ; then
-	echo '? No DESTDIR given'
-	exit 1
-fi
-DESTDIR=$1
-shift
-
-if test $# = 0 ; then
-	echo '? No DESTINATION given'
-	exit 1
-fi
+test $# = 0 && failed 'No DESTINATION given'
 DST=$1
 shift
 
-if test $# = 0 ; then
-	echo '? No SOURCE given'
-	exit 1
-fi
+test $# = 0 && failed 'No SOURCEDIR given'
+SOURCEDIR=$1
+shift
+
+test $# = 0 && failed 'No SOURCES given'
 
 SED=${TMPDIR-/tmp}/sed$$
-rm -f $SED
-trap "rm -f $SED" 0 1 2 5 15
+rm -f "$SED"
+trap 'rm -f "$SED"' EXIT INT QUIT TERM HUP
 
-END=`basename $DST`
-for SRC in $*
+END=`basename "$DST"`
+for SRC in "$@"
 do
-	echo "s/<$SRC>/<$END\/$SRC>/" >> $SED
+	echo "s/<$SRC>/<$END\/$SRC>/" >> "$SED"
 done
 
-for SRC in $*
+for SRC in "$@"
 do
-	echo installing $SRC in $DST
+	echo "installing $SRC in $DST"
 	case $DST in
 	/*/include/*)
-		src=`basename $SRC`
+		src=`basename "$SRC"`
 		TMP=${TMPDIR-/tmp}/$src
-		sed -f $SED include/$src > $TMP
-		eval $PRG $TMP $DST
-		rm -f $TMP
+		src="include/$src"
+		test -f "$src" || src="$SOURCEDIR/$src"
+		sed -f "$SED" "$src" > "$TMP"
+		eval "$PRG" "$TMP" "$DST"
+		rm -f "$TMP"
 		;;
 	*)
-		eval $PRG $SRC $DST
+		eval "$PRG" "$SRC" "$DST"
 		;;
 	esac
 done
