@@ -1,4 +1,5 @@
-dnl Extended Macros that test for specific features.  dnl $Id: aclocal.m4,v 12.206 2020/04/28 22:03:02 tom Exp $
+dnl Extended Macros that test for specific features.
+dnl $Id: aclocal.m4,v 12.214 2020/12/07 09:10:09 tom Exp $
 dnl vi:set ts=4:
 dnl
 dnl see
@@ -481,6 +482,16 @@ fi
 AC_SUBST(ARFLAGS)
 ])
 dnl ---------------------------------------------------------------------------
+dnl CF_BUILD_DIR version: 1 updated: 2020/12/06 15:33:41
+dnl ------------
+dnl Make an absolute symbol for the top of the build-tree.
+AC_DEFUN([CF_BUILD_DIR],
+[
+CDPATH=; export CDPATH
+BUILD_DIR=`pwd`
+AC_SUBST(BUILD_DIR)
+])dnl
+dnl ---------------------------------------------------------------------------
 dnl CF_CC_ENV_FLAGS version: 9 updated: 2018/07/29 18:03:26
 dnl ---------------
 dnl Check for user's environment-breakage by stuffing CFLAGS/CPPFLAGS content
@@ -713,7 +724,7 @@ if	test $cf_cv_REGEX_H = no && \
 fi
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_CLANG_COMPILER version: 2 updated: 2013/11/19 19:23:35
+dnl CF_CLANG_COMPILER version: 6 updated: 2020/11/26 17:37:55
 dnl -----------------
 dnl Check if the given compiler is really clang.  clang's C driver defines
 dnl __GNUC__ (fooling the configure script into setting $GCC to yes) but does
@@ -732,17 +743,52 @@ ifelse([$2],,CLANG_COMPILER,[$2])=no
 if test "$ifelse([$1],,[$1],GCC)" = yes ; then
 	AC_MSG_CHECKING(if this is really Clang ifelse([$1],GXX,C++,C) compiler)
 	cf_save_CFLAGS="$ifelse([$3],,CFLAGS,[$3])"
-	ifelse([$3],,CFLAGS,[$3])="$ifelse([$3],,CFLAGS,[$3]) -Qunused-arguments"
 	AC_TRY_COMPILE([],[
 #ifdef __clang__
 #else
 make an error
 #endif
 ],[ifelse([$2],,CLANG_COMPILER,[$2])=yes
-cf_save_CFLAGS="$cf_save_CFLAGS -Qunused-arguments"
 ],[])
 	ifelse([$3],,CFLAGS,[$3])="$cf_save_CFLAGS"
 	AC_MSG_RESULT($ifelse([$2],,CLANG_COMPILER,[$2]))
+fi
+
+CLANG_VERSION=none
+
+if test "x$ifelse([$2],,CLANG_COMPILER,[$2])" = "xyes" ; then
+	case "$CC" in
+	(c[[1-9]][[0-9]]|*/c[[1-9]][[0-9]])
+		AC_MSG_WARN(replacing broken compiler alias $CC)
+		CFLAGS="$CFLAGS -std=`echo "$CC" | sed -e 's%.*/%%'`"
+		CC=clang
+		;;
+	esac
+
+	AC_MSG_CHECKING(version of $CC)
+	CLANG_VERSION="`$CC --version 2>/dev/null | sed -e '2,$d' -e 's/^.*(CLANG[[^)]]*) //' -e 's/^.*(Debian[[^)]]*) //' -e 's/^[[^0-9.]]*//' -e 's/[[^0-9.]].*//'`"
+	test -z "$CLANG_VERSION" && CLANG_VERSION=unknown
+	AC_MSG_RESULT($CLANG_VERSION)
+
+	for cf_clang_opt in \
+		-Qunused-arguments \
+		-Wno-error=implicit-function-declaration
+	do
+		AC_MSG_CHECKING(if option $cf_clang_opt works)
+		cf_save_CFLAGS="$CFLAGS"
+		CFLAGS="$CFLAGS $cf_clang_opt"
+		AC_TRY_LINK([
+			#include <stdio.h>],[
+			printf("hello!\n");],[
+			cf_clang_optok=yes],[
+			cf_clang_optok=no])
+		AC_MSG_RESULT($cf_clang_optok)
+		CFLAGS="$cf_save_CFLAGS"
+		if test $cf_clang_optok = yes; then
+			CF_VERBOSE(adding option $cf_clang_opt)
+			CF_APPEND_TEXT(CFLAGS,$cf_clang_opt)
+		fi
+	done
 fi
 ])
 dnl ---------------------------------------------------------------------------
@@ -1445,12 +1491,21 @@ if test "$with_no_leaks" = yes ; then
 fi
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_ENABLE_WARNINGS version: 5 updated: 2017/09/29 20:01:16
+dnl CF_ENABLE_WARNINGS version: 7 updated: 2020/08/29 09:05:21
 dnl ------------------
 dnl Configure-option to enable gcc warnings
+dnl
+dnl $1 = extra options to add, if supported
+dnl $2 = option for checking attributes.  By default, this is done when
+dnl      warnings are enabled.  For other values:
+dnl      yes: always do this, e.g., to use in generated library-headers
+dnl      no: never do this
 AC_DEFUN([CF_ENABLE_WARNINGS],[
 if ( test "$GCC" = yes || test "$GXX" = yes )
 then
+CF_FIX_WARNINGS(CFLAGS)
+CF_FIX_WARNINGS(CPPFLAGS)
+CF_FIX_WARNINGS(LDFLAGS)
 AC_MSG_CHECKING(if you want to turn on gcc warnings)
 CF_ARG_ENABLE(warnings,
 	[  --enable-warnings       test: turn on gcc compiler warnings],
@@ -1459,9 +1514,10 @@ CF_ARG_ENABLE(warnings,
 AC_MSG_RESULT($with_warnings)
 if test "$with_warnings" = "yes"
 then
-	CF_GCC_ATTRIBUTES
+	ifelse($2,,[CF_GCC_ATTRIBUTES])
 	CF_GCC_WARNINGS($1)
 fi
+ifelse($2,yes,[CF_GCC_ATTRIBUTES])
 fi
 ])dnl
 dnl ---------------------------------------------------------------------------
@@ -1646,6 +1702,40 @@ ifelse([$5],,AC_MSG_WARN(Cannot find $3 library),[$5])
 fi
 ])dnl
 dnl ---------------------------------------------------------------------------
+dnl CF_FIX_WARNINGS version: 2 updated: 2020/08/28 15:08:28
+dnl ---------------
+dnl Warning flags do not belong in CFLAGS, CPPFLAGS, etc.  Any of gcc's
+dnl "-Werror" flags can interfere with configure-checks.  Those go into
+dnl EXTRA_CFLAGS.
+dnl
+dnl $1 = variable name to repair
+define([CF_FIX_WARNINGS],[
+if ( test "$GCC" = yes || test "$GXX" = yes )
+then
+	case [$]$1 in
+	(*-Werror=*)
+		CF_VERBOSE(repairing $1: [$]$1)
+		cf_temp_flags=
+		for cf_temp_scan in [$]$1
+		do
+			case "x$cf_temp_scan" in
+			(x-Werror=*)
+				CF_APPEND_TEXT(EXTRA_CFLAGS,"$cf_temp_scan")
+				;;
+			(*)
+				CF_APPEND_TEXT(cf_temp_flags,"$cf_temp_scan")
+				;;
+			esac
+		done
+		$1="$cf_temp_flags"
+		CF_VERBOSE(... fixed [$]$1)
+		CF_VERBOSE(... extra $EXTRA_CFLAGS)
+		;;
+	esac
+fi
+AC_SUBST(EXTRA_CFLAGS)
+])dnl
+dnl ---------------------------------------------------------------------------
 dnl CF_FUNC_LSTAT version: 3 updated: 2012/11/08 20:57:52
 dnl -------------
 dnl A conventional existence-check for 'lstat' won't work with the Linux
@@ -1670,14 +1760,14 @@ if test $ac_cv_func_lstat = yes; then
 fi
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_GCC_ATTRIBUTES version: 18 updated: 2020/03/10 18:53:47
+dnl CF_GCC_ATTRIBUTES version: 19 updated: 2020/08/29 09:05:21
 dnl -----------------
 dnl Test for availability of useful gcc __attribute__ directives to quiet
 dnl compiler warnings.  Though useful, not all are supported -- and contrary
 dnl to documentation, unrecognized directives cause older compilers to barf.
 AC_DEFUN([CF_GCC_ATTRIBUTES],
 [
-if test "$GCC" = yes
+if ( test "$GCC" = yes || test "$GXX" = yes )
 then
 cat > conftest.i <<EOF
 #ifndef GCC_PRINTF
@@ -1797,7 +1887,7 @@ CF_INTEL_COMPILER(GCC,INTEL_COMPILER,CFLAGS)
 CF_CLANG_COMPILER(GCC,CLANG_COMPILER,CFLAGS)
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_GCC_WARNINGS version: 37 updated: 2020/01/05 20:04:12
+dnl CF_GCC_WARNINGS version: 38 updated: 2020/08/28 15:08:28
 dnl ---------------
 dnl Check if the compiler supports useful warning options.  There's a few that
 dnl we don't use, simply because they're too noisy:
@@ -1840,7 +1930,7 @@ then
 
 	AC_CHECKING([for $CC warning options])
 	cf_save_CFLAGS="$CFLAGS"
-	EXTRA_CFLAGS="-Wall"
+	EXTRA_CFLAGS="$EXTRA_CFLAGS -Wall"
 	for cf_opt in \
 		wd1419 \
 		wd1683 \
@@ -1863,7 +1953,6 @@ elif test "$GCC" = yes && test "$GCC_VERSION" != "unknown"
 then
 	AC_CHECKING([for $CC warning options])
 	cf_save_CFLAGS="$CFLAGS"
-	EXTRA_CFLAGS=
 	cf_warn_CONST=""
 	test "$with_ext_const" = yes && cf_warn_CONST="Wwrite-strings"
 	cf_gcc_warnings="Wignored-qualifiers Wlogical-op Wvarargs"
@@ -2712,7 +2801,7 @@ AC_SUBST(MAKE_UPPER_TAGS)
 AC_SUBST(MAKE_LOWER_TAGS)
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_MIXEDCASE_FILENAMES version: 7 updated: 2015/04/12 15:39:00
+dnl CF_MIXEDCASE_FILENAMES version: 8 updated: 2020/11/14 10:12:15
 dnl ----------------------
 dnl Check if the file-system supports mixed-case filenames.  If we're able to
 dnl create a lowercase name and see it as uppercase, it doesn't support that.
@@ -2721,7 +2810,7 @@ AC_DEFUN([CF_MIXEDCASE_FILENAMES],
 AC_CACHE_CHECK(if filesystem supports mixed-case filenames,cf_cv_mixedcase,[
 if test "$cross_compiling" = yes ; then
 	case $target_alias in
-	(*-os2-emx*|*-msdosdjgpp*|*-cygwin*|*-msys*|*-mingw*|*-uwin*)
+	(*-os2-emx*|*-msdosdjgpp*|*-cygwin*|*-msys*|*-mingw*|*-uwin*|darwin*)
 		cf_cv_mixedcase=no
 		;;
 	(*)
@@ -3847,7 +3936,7 @@ AC_MSG_RESULT($cf_cv_type_size_t)
 test $cf_cv_type_size_t = no && AC_DEFINE(size_t, unsigned, [Define to type if size_t not declared])
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_SRC_MAKEFILE version: 5 updated: 2019/12/18 19:06:19
+dnl CF_SRC_MAKEFILE version: 6 updated: 2020/12/06 16:26:55
 dnl ---------------
 dnl Append predefined lists to $2/makefile, given a path to a directory that
 dnl has a 'modules' file in $1.
@@ -3868,7 +3957,7 @@ BEGIN	{
 			printf "\nCSRC="
 			found = 1;
 		}
-		printf " \\\n\t%s.c", [$]1
+		printf " \\\n\t$(srcdir)/%s.c", [$]1
 	}
 END	{
 		print ""
@@ -4122,7 +4211,7 @@ then
 fi
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_TD_SRC_MAKEFILES version: 4 updated: 1997/09/13 12:04:36
+dnl CF_TD_SRC_MAKEFILES version: 5 updated: 2020/12/06 15:33:41
 dnl -------------------
 dnl Append predefined lists to src/*/makefile.
 dnl
@@ -4133,7 +4222,7 @@ AC_DEFUN([CF_TD_SRC_MAKEFILES],
 [
 for cf_src in $cf_cv_src_modules
 do
-	CF_SRC_MAKEFILE($srcdir,src/$cf_src,../td_rules.mk)
+	CF_SRC_MAKEFILE($srcdir,src/$cf_src,\$(top_srcdir)/src/td_rules.mk)
 	echo "	cd $cf_src &&	\$(MAKE) \$(MAKE_OPTS) \[$]@" >>src/makefile
 done
 test -f $srcdir/src/makefile.end && \
@@ -4163,7 +4252,7 @@ done
 AC_MSG_RESULT($cf_cv_src_modules)
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_TD_TEST_MAKEFILES version: 3 updated: 2010/10/23 15:52:32
+dnl CF_TD_TEST_MAKEFILES version: 5 updated: 2020/12/06 16:26:55
 dnl --------------------
 dnl Append predefined lists to test/*/makefile.
 dnl
@@ -4223,10 +4312,13 @@ BEGIN	{
 	cat >>$cf_out <<CF_EOF
 
 
-${make_include_left}../td_rules.mk${make_include_right}
+${make_include_left}\$(top_srcdir)/test/td_rules.mk${make_include_right}
 
-# Fix for SunOS VPATH
+# Remind some make-programs that they found these using VPATH:
+\$(REF_FILES) :
+\$(SCRIPTS) :
 
+# Workaround for mixing suffix-rules and VPATH:
 CF_EOF
 ${AWK:-awk} <$q >>$cf_out '
 	{
@@ -4554,11 +4646,14 @@ if test $cf_cv_decl_union_wait = yes; then
 fi
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_WITHOUT_X version: 1 updated: 2020/03/03 18:27:24
+dnl CF_WITHOUT_X version: 2 updated: 2020/10/04 10:05:20
 dnl ------------
 dnl Use this to cancel the check for X headers/libraries which would be pulled
 dnl in via CF_GCC_WARNINGS.
 define([CF_WITHOUT_X],
+AC_DEFUN([AC_PATH_XTRA],[])
+AC_DEFUN([CF_SAVE_XTRA_FLAGS],[])
+AC_DEFUN([CF_RESTORE_XTRA_FLAGS],[])
 AC_DEFUN([CF_CONST_X_STRING],[echo "skipping X-const check";])dnl
 [])dnl
 dnl ---------------------------------------------------------------------------

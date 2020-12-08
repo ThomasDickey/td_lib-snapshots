@@ -1,5 +1,10 @@
-# $Id: Makefile,v 12.7 2010/07/05 10:04:22 tom Exp $
+# $Id: makefile.in,v 12.1 2020/12/06 16:53:23 tom Exp $
 # make-file for TD_LIB support directory
+
+SHELL		= /bin/sh
+top_srcdir	= @top_srcdir@
+srcdir		= @srcdir@
+VPATH		= @srcdir@
 
 ####### (Development) ##########################################################
 RM	= -rm -f
@@ -20,7 +25,7 @@ ALL =
 
 ####### (Standard Productions) #################################################
 all\
-check:		$(SOURCES) $(ALL)
+check:		$(ALL)
 	@echo '** made $@'
 clean:			; $(RM) *.out *.log
 clobber:	clean	; $(RM) $(ALL)

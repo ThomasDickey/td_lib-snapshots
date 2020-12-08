@@ -1,8 +1,14 @@
-# $Id: Makefile,v 12.13 2010/07/05 10:04:22 tom Exp $
+# $Id: makefile.in,v 12.1 2020/12/06 16:56:44 tom Exp $
 # make-file for CM_TOOLS common interface directory
 
 THIS	= td
 TOP	= ..
+
+SHELL		= /bin/sh
+top_srcdir	= @top_srcdir@
+srcdir		= @srcdir@
+VPATH		= @srcdir@
+
 include $(TOP)/support/td_lib.mk
 
 ####### (Command-line Options) #################################################
@@ -33,7 +39,7 @@ H_SRC	=\
 L_SRC	=\
 	llib-l$(THIS)
 
-SOURCES	= Makefile $(H_SRC) $(L_SRC)
+SOURCES	= $(H_SRC) $(L_SRC)
 
 IT	= $L/$(LLIB).ln
 ALL	=

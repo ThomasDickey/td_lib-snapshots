@@ -1,7 +1,7 @@
 
-# $Id: makefile.end,v 12.1 1997/09/10 00:16:10 tom Exp $
+# $Id: makefile.end,v 12.3 2020/12/06 21:40:09 tom Exp $
 # end MAKE-file for miscellaneous library routines
 
 clean ::			; -$(RM) $(CLEAN)
 distclean ::	clean
-	-$(RM) -f */makefile
+	-@$(SHELL) -c "for s in *;do if test -f \$$s/makefile; then echo .. clean \$$s; rm -f \$$s/makefile; rmdir \$$s 2>/dev/null ; fi; done; exit 0"

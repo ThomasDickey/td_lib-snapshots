@@ -1,4 +1,4 @@
-/* $Id: td_ext.h,v 12.21 2019/12/20 02:05:34 tom Exp $ */
+/* $Id: td_ext.h,v 12.22 2020/12/06 15:23:51 tom Exp $ */
 
 #ifndef	TD_EXT_H
 #define	TD_EXT_H
@@ -73,14 +73,6 @@ extern "C" {
 #define	V_OR_P		void *
 #else
 #define	V_OR_P		char *
-#endif
-
-/******************************************************************************
- * Useful external-definitions                                                *
- ******************************************************************************/
-
-#if	!defined(TIMEZONE_DECLARED)
-extern	long	timezone;
 #endif
 
 /******************************************************************************

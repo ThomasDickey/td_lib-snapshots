@@ -1,11 +1,11 @@
-# $Id: td_defns.mk,v 12.9 2010/07/05 15:30:22 tom Exp $
+# $Id: td_defns.mk,v 12.10 2020/12/06 21:18:54 tom Exp $
 # common make-definitions for TD_LIB common/test library
 
 ####### (Development) ##########################################################
 TOP	= ../..
 
 CPP_OPTS = $(CPP_CONFIG) -DTEST
-S	= ../../src/$(THIS)
+S	= $(TOP_SRCDIR)/src/$(THIS)
 VPATH	= $S
 SOURCES	= $(SCRIPTS) $(REF_FILES)
 
