@@ -1,4 +1,4 @@
-/* $Id: td_curse.h,v 12.67 2019/12/18 01:43:53 tom Exp $ */
+/* $Id: td_curse.h,v 12.68 2021/03/28 19:12:57 tom Exp $ */
 
 /*
  * TD_LIB CURSES-related definitions
@@ -336,7 +336,7 @@ extern	int	wstandout	(WINDOW *w);
 #define ExitProgram(code) exit_curses(code)
 #elif defined(HAVE__NC_FREE_AND_EXIT)
 /* nc_alloc.h normally not installed */
-extern void _nc_free_and_exit(int) GCC_NORETURN;
+extern GCC_NORETURN void _nc_free_and_exit(int);
 #define ExitProgram(code) _nc_free_and_exit(code)
 #endif
 #endif /* NCURSES_VERSION */

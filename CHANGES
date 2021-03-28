@@ -1,3 +1,14 @@
+2021-03-28  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* include/ptypes.h, include/td_lib.h, include/td_curse.h:
+	use _Noreturn, if configured
+
+	* package/debian/changelog, package/td_lib.spec: bump
+
+	* configure: regen
+
+	* aclocal.m4: resync with my-autoconf
+
 2021-01-10  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* configure: regen

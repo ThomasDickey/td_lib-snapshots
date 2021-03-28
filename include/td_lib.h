@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 12.37 2019/12/05 09:58:14 tom Exp $ */
+/* $Id: td_lib.h,v 12.38 2021/03/28 19:13:25 tom Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for TD_LIB common
@@ -12,10 +12,10 @@
 #endif		/* PTYPES_H */
 
 	/* MAIN-PROGRAM *********************************************** */
-	void	failed(
+	GCC_NORETURN void failed(
 			const char * s
 			)
-			GCC_NORETURN ;
+			;
 
 	/* GENERIC-LIBRARY ******************************************** */
 

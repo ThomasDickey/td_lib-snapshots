@@ -1,4 +1,4 @@
-/* $Id: ptypes.h,v 12.58 2020/12/06 15:26:55 tom Exp $ */
+/* $Id: ptypes.h,v 12.59 2021/03/28 19:14:52 tom Exp $ */
 
 #ifndef	PTYPES_H
 #define	PTYPES_H
@@ -586,6 +586,12 @@ extern	long	timezone;
 #undef GCC_SCANF
 #undef GCC_SCANFLIKE
 #undef GCC_UNUSED
+#endif
+
+#ifdef HAVE_STDNORETURN_H
+#include <stdnoreturn.h>
+#undef GCC_NORETURN
+#define GCC_NORETURN _Noreturn
 #endif
 
 #ifndef GCC_NORETURN
