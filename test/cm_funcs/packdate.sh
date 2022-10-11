@@ -1,7 +1,7 @@
 #!/bin/sh
-# $Id: packdate.sh,v 12.0 1992/11/18 12:39:32 ste_cm Rel $
+# $Id: packdate.sh,v 12.1 2022/10/11 08:15:03 tom Exp $
 OUT=packdate.tmp
-./packdate |fgrep : |sed -e s'@^.*: @@' |uniq >$OUT
+./packdate |grep : |sed -e s'@^.*: @@' |uniq >$OUT
 NUM=`wc -l <$OUT`
 if test $NUM = 1
 then	echo '** conversion ok' >$OUT

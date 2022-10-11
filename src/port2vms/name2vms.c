@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	29 Sep 1988
  * Modified:
+ *		11 Oct 2022, gcc warnings
  *		26 Dec 2014, coverity warnings
  *		07 Mar 2004, remove K&R support, indent'd.
  *		25 Aug 1994, allow ".type" names as-is, and always uppercase.
@@ -30,7 +31,7 @@
 #define	STR_PTYPES
 #include	"port2vms.h"
 
-MODULE_ID("$Id: name2vms.c,v 12.11 2015/07/04 15:31:48 tom Exp $")
+MODULE_ID("$Id: name2vms.c,v 12.12 2022/10/11 20:44:17 tom Exp $")
 
 static int leaf_dot;		/* counts dots found in a particular leaf */
 static int leaf_ver;		/* set if we found a DECshell version */
@@ -98,7 +99,7 @@ leading_uc(char dst[MAXPATHLEN], const char *src)
 }
 
 char *
-name2vms(char dst[MAXPATHLEN], const char *src)
+name2vms(char *dst, const char *src)
 {
     char tmp[MAXPATHLEN];
     char token[MAXPATHLEN];

@@ -1,3 +1,28 @@
+2022-10-11  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* src/cm_funcs/rcsperm.c, src/pathname/abspath.c,
+	  src/port2vms/name2vms.c:
+	gcc-warnings
+
+	* test/unix/gid2s.sh, test/unix/s2uid.sh, test/unix/uid2s.sh: eliminate
+
+	* test/cm_funcs/packdate.sh, test/pathname/abspath.sh,
+	  test/pathname/relpath.sh, test/pathname/trnstree.sh,
+	  test/process/walkback.sh:
+	fgrep/grep
+
+	* package/debian/copyright, COPYING: bump
+
+	* configure: regen
+
+	* aclocal.m4: resync with my-autoconf
+
+	* package/debian/changelog, package/td_lib.spec: bump
+
+2022-08-01  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* config.guess, config.sub: 2022-08-01
+
 2021-03-28  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* include/ptypes.h, include/td_lib.h, include/td_curse.h:
@@ -19,7 +44,8 @@
 
 	* aclocal.m4: resync with my-autoconf
 
-	* COPYING, package/debian/changelog, package/debian/copyright, package/td_lib.spec:
+	* COPYING, package/debian/changelog, package/debian/copyright,
+	  package/td_lib.spec:
 	bump
 
 2020-12-08  Thomas E. Dickey  <dickey@invisible-island.net>
@@ -249,7 +275,9 @@
 
 	* src/curses/cmdch.c: simplify ifdefs vs BSD-curses
 
-	* src/curses/resizwin.c, src/curses/viewfile.c, src/curses/logch.c, src/curses/dumpwin.c, src/curses/rawgets.c:
+	* src/curses/resizwin.c, src/curses/viewfile.c, src/curses/logch.c,
+	  src/curses/dumpwin.c,
+	  src/curses/rawgets.c:
 	cppcheck
 
 	* td_make.in: add $(LINT_OPTS), from configure-script
@@ -385,7 +413,10 @@
 
 2019-11-29  Thomas E. Dickey  <dickey@invisible-island.net>
 
-	* src/cm_funcs/rcslast.c, src/cm_funcs/vercmp.c, src/compare/btree.c, src/curses/cmdch.c, src/unix/gid2s.c, src/unix/uid2s.c, src/memory/txtalloc.c, include/td_btree.h:
+	* src/cm_funcs/rcslast.c, src/cm_funcs/vercmp.c, src/compare/btree.c,
+	  src/curses/cmdch.c, src/unix/gid2s.c, src/unix/uid2s.c,
+	  src/memory/txtalloc.c,
+	  include/td_btree.h:
 	gcc-warnings
 
 	* package/debian/compat, package/debian/copyright, COPYING: bump
@@ -428,7 +459,9 @@
 	very old bug from revision 3.1 used the wrong buffer-pointer (path rather
 	than the dyn_string copy of it) to compute length for trimming name[].
 
-	* package/debian/copyright, package/debian/changelog, package/td_lib.spec, COPYING:
+	* package/debian/copyright, package/debian/changelog,
+	  package/td_lib.spec,
+	  COPYING:
 	bump
 
 	* configure: regen
@@ -505,10 +538,13 @@
 	* td_make.in:
 	use a single ".SUFFIXES" line, with $(SUFFIX_MAN) derived from configure script
 
-	* src/port2vms/vms_pthc.c, src/port2vms/name2vms.c, src/pathname/trimpath.c, src/pathname/pathcat.c:
+	* src/port2vms/vms_pthc.c, src/port2vms/name2vms.c,
+	  src/pathname/trimpath.c,
+	  src/pathname/pathcat.c:
 	gcc-warnings
 
-	* package/debian/copyright, package/debian/changelog, package/td_lib.spec:
+	* package/debian/copyright, package/debian/changelog,
+	  package/td_lib.spec:
 	bump
 
 	* configure: regen
@@ -543,20 +579,164 @@
 
 	* src/pathname/walktree.c: fix regression
 
-	* test/cm_funcs/run_test.sh, test/compare/run_test.sh, test/curses/run_test.sh, test/memory/run_test.sh, test/pathname/run_test.sh, test/port2vms/run_test.sh, test/process/run_test.sh, test/sheet/run_test.sh, test/string/run_test.sh, test/unix/run_test.sh:
+	* test/cm_funcs/run_test.sh, test/compare/run_test.sh,
+	  test/curses/run_test.sh, test/memory/run_test.sh,
+	  test/pathname/run_test.sh, test/port2vms/run_test.sh,
+	  test/process/run_test.sh, test/sheet/run_test.sh,
+	  test/string/run_test.sh,
+	  test/unix/run_test.sh:
 	remove purify from test-scripts
 
 	* test/port2vms/modules: remove vms-only modules
 
 	* test/cm_funcs/modules: remove unimplemented prcslast
 
-	* src/unix/s2gid.c, src/unix/setmtime.c, src/string/dftenv.c, src/string/dyn_app.c, src/string/dyn_appc.c, src/string/dyn_cata.c, src/string/dyn_copy.c, src/string/dyn_str.c, src/string/strclean.c, src/string/strcount.c, src/string/strtrim.c, src/string/strucpy.c, src/sheet/count_ss.c, src/sheet/ss_field.c, src/process/bldarg.c, src/process/catarg.c, src/process/catchall.c, src/process/egress.c, src/process/for_admn.c, src/process/for_user.c, src/process/getopt.c, src/process/getuser.c, src/process/in_group.c, src/process/interact.c, src/process/revert.c, src/process/savesuid.c, src/process/shoarg.c, src/process/showuids.c, src/process/userprot.c, src/pathname/acc_mode.c, src/pathname/add2fnam.c, src/pathname/arg2file.c, src/pathname/copyback.c, src/pathname/denode.c, src/pathname/dotname.c, src/pathname/filesize.c, src/pathname/fleaf.c, src/pathname/fleaf14.c, src/pathname/ftype.c, src/pathname/ftype2.c, src/pathname/is_spath.c, src/pathname/istextfl.c, src/pathname/mem2file.c, src/pathname/modechar.c, src/pathname/pathcat.c, src/pathname/samehead.c, src/pathname/stat_dir.c, src/pathname/stat_fil.c, src/pathname/track_wd.c, src/memory/memmove.c, src/memory/stralloc.c, src/memory/vecalloc.c, src/memory/veclen.c, src/curses/addchnst.c, src/curses/beep.c, src/curses/blip.c, src/curses/cmdch.c, src/curses/dumpchr.c, src/curses/dumptty.c, src/curses/dumpwin.c, src/curses/erasechr.c, src/curses/getmaxx.c, src/curses/is_xterm.c, src/curses/killchar.c, src/curses/lnextchr.c, src/curses/logch.c, src/curses/on_winch.c, src/curses/rawterm.c, src/curses/resizwin.c, src/curses/savewin.c, src/curses/viewfile.c, src/curses/win2file.c, src/curses/wrepaint.c, src/curses/wresize.c, src/compare/btree.c, src/compare/cmpqsort.c, src/cm_funcs/cvslast.c, src/cm_funcs/lastrev.c, src/cm_funcs/next_ver.c, src/cm_funcs/rcs_dir.c, src/cm_funcs/rcsdebug.c, src/cm_funcs/rcsedit.c, src/cm_funcs/rcskeys.c, src/cm_funcs/rcslast.c, src/cm_funcs/rcslocks.c, src/cm_funcs/rcspath.c, src/cm_funcs/rcsperm.c, src/cm_funcs/rcssymbs.c, src/cm_funcs/rcstemp.c, src/cm_funcs/rcstime.c, src/cm_funcs/sccs_dir.c, src/cm_funcs/sccsdbug.c, src/cm_funcs/sccslast.c, src/cm_funcs/sccspath.c, src/cm_funcs/svn_last.c:
+	* src/unix/s2gid.c, src/unix/setmtime.c, src/string/dftenv.c,
+	  src/string/dyn_app.c, src/string/dyn_appc.c, src/string/dyn_cata.c,
+	  src/string/dyn_copy.c, src/string/dyn_str.c, src/string/strclean.c,
+	  src/string/strcount.c, src/string/strtrim.c, src/string/strucpy.c,
+	  src/sheet/count_ss.c, src/sheet/ss_field.c, src/process/bldarg.c,
+	  src/process/catarg.c, src/process/catchall.c, src/process/egress.c,
+	  src/process/for_admn.c, src/process/for_user.c, src/process/getopt.c,
+	  src/process/getuser.c, src/process/in_group.c, src/process/interact.c,
+	  src/process/revert.c, src/process/savesuid.c, src/process/shoarg.c,
+	  src/process/showuids.c, src/process/userprot.c,
+	  src/pathname/acc_mode.c, src/pathname/add2fnam.c,
+	  src/pathname/arg2file.c, src/pathname/copyback.c,
+	  src/pathname/denode.c, src/pathname/dotname.c,
+	  src/pathname/filesize.c, src/pathname/fleaf.c, src/pathname/fleaf14.c,
+	  src/pathname/ftype.c, src/pathname/ftype2.c, src/pathname/is_spath.c,
+	  src/pathname/istextfl.c, src/pathname/mem2file.c,
+	  src/pathname/modechar.c, src/pathname/pathcat.c,
+	  src/pathname/samehead.c, src/pathname/stat_dir.c,
+	  src/pathname/stat_fil.c, src/pathname/track_wd.c,
+	  src/memory/memmove.c, src/memory/stralloc.c, src/memory/vecalloc.c,
+	  src/memory/veclen.c, src/curses/addchnst.c, src/curses/beep.c,
+	  src/curses/blip.c, src/curses/cmdch.c, src/curses/dumpchr.c,
+	  src/curses/dumptty.c, src/curses/dumpwin.c, src/curses/erasechr.c,
+	  src/curses/getmaxx.c, src/curses/is_xterm.c, src/curses/killchar.c,
+	  src/curses/lnextchr.c, src/curses/logch.c, src/curses/on_winch.c,
+	  src/curses/rawterm.c, src/curses/resizwin.c, src/curses/savewin.c,
+	  src/curses/viewfile.c, src/curses/win2file.c, src/curses/wrepaint.c,
+	  src/curses/wresize.c, src/compare/btree.c, src/compare/cmpqsort.c,
+	  src/cm_funcs/cvslast.c, src/cm_funcs/lastrev.c,
+	  src/cm_funcs/next_ver.c, src/cm_funcs/rcs_dir.c,
+	  src/cm_funcs/rcsdebug.c, src/cm_funcs/rcsedit.c,
+	  src/cm_funcs/rcskeys.c, src/cm_funcs/rcslast.c,
+	  src/cm_funcs/rcslocks.c, src/cm_funcs/rcspath.c,
+	  src/cm_funcs/rcsperm.c, src/cm_funcs/rcssymbs.c,
+	  src/cm_funcs/rcstemp.c, src/cm_funcs/rcstime.c,
+	  src/cm_funcs/sccs_dir.c, src/cm_funcs/sccsdbug.c,
+	  src/cm_funcs/sccslast.c, src/cm_funcs/sccspath.c,
+	  src/cm_funcs/svn_last.c:
 	add test-driver stub
 
-	* test/unix/s2gid.ref, test/unix/setmtime.ref, test/string/dftenv.ref, test/string/dyn_app.ref, test/string/dyn_appc.ref, test/string/dyn_cata.ref, test/string/dyn_copy.ref, test/string/dyn_str.ref, test/string/strclean.ref, test/string/strcount.ref, test/string/strerror.ref, test/string/strtrim.ref, test/string/strucpy.ref, test/sheet/count_ss.ref, test/sheet/field_of.ref, test/sheet/ss_field.ref, test/process/bldarg.ref, test/process/catarg.ref, test/process/catchall.ref, test/process/egress.ref, test/process/for_admn.ref, test/process/for_user.ref, test/process/getopt.ref, test/process/getuser.ref, test/process/in_group.ref, test/process/interact.ref, test/process/revert.ref, test/process/savesuid.ref, test/process/shoarg.ref, test/process/showuids.ref, test/process/userprot.ref, test/port2vms/rmsio.ref, test/port2vms/time2vms.ref, test/port2vms/uid2s.ref, test/port2vms/utimes.ref, test/port2vms/vms_dirs.ref, test/pathname/acc_mode.ref, test/pathname/add2fnam.ref, test/pathname/arg2file.ref, test/pathname/copyback.ref, test/pathname/denode.ref, test/pathname/dotname.ref, test/pathname/filesize.ref, test/pathname/fleaf.ref, test/pathname/fleaf14.ref, test/pathname/ftype.ref, test/pathname/ftype2.ref, test/pathname/is_spath.ref, test/pathname/istextfl.ref, test/pathname/mem2file.ref, test/pathname/modechar.ref, test/pathname/pathcat.ref, test/pathname/samehead.ref, test/pathname/stat_dir.ref, test/pathname/stat_fil.ref, test/pathname/track_wd.ref, test/memory/memmove.ref, test/memory/stralloc.ref, test/memory/vecalloc.ref, test/memory/veclen.ref, test/curses/addchnst.ref, test/curses/beep.ref, test/curses/blip.ref, test/curses/cmdch.ref, test/curses/dumpchr.ref, test/curses/dumptty.ref, test/curses/dumpwin.ref, test/curses/erasechr.ref, test/curses/getmaxx.ref, test/curses/is_xterm.ref, test/curses/killchar.ref, test/curses/lnextchr.ref, test/curses/logch.ref, test/curses/on_winch.ref, test/curses/rawterm.ref, test/curses/resizwin.ref, test/curses/savewin.ref, test/curses/viewfile.ref, test/curses/win2file.ref, test/curses/wrepaint.ref, test/curses/wresize.ref, test/compare/btree.ref, test/compare/cmpqsort.ref, test/cm_funcs/cvslast.ref, test/cm_funcs/lastrev.ref, test/cm_funcs/next_ver.ref, test/cm_funcs/prcslast.ref, test/cm_funcs/rcs_dir.ref, test/cm_funcs/rcsdebug.ref, test/cm_funcs/rcsedit.ref, test/cm_funcs/rcskeys.ref, test/cm_funcs/rcslast.ref, test/cm_funcs/rcslocks.ref, test/cm_funcs/rcspath.ref, test/cm_funcs/rcsperm.ref, test/cm_funcs/rcssymbs.ref, test/cm_funcs/rcstemp.ref, test/cm_funcs/rcstime.ref, test/cm_funcs/sccs_dir.ref, test/cm_funcs/sccsdbug.ref, test/cm_funcs/sccslast.ref, test/cm_funcs/sccspath.ref, test/cm_funcs/svn_last.ref:
+	* test/unix/s2gid.ref, test/unix/setmtime.ref, test/string/dftenv.ref,
+	  test/string/dyn_app.ref, test/string/dyn_appc.ref,
+	  test/string/dyn_cata.ref, test/string/dyn_copy.ref,
+	  test/string/dyn_str.ref, test/string/strclean.ref,
+	  test/string/strcount.ref, test/string/strerror.ref,
+	  test/string/strtrim.ref, test/string/strucpy.ref,
+	  test/sheet/count_ss.ref, test/sheet/field_of.ref,
+	  test/sheet/ss_field.ref, test/process/bldarg.ref,
+	  test/process/catarg.ref, test/process/catchall.ref,
+	  test/process/egress.ref, test/process/for_admn.ref,
+	  test/process/for_user.ref, test/process/getopt.ref,
+	  test/process/getuser.ref, test/process/in_group.ref,
+	  test/process/interact.ref, test/process/revert.ref,
+	  test/process/savesuid.ref, test/process/shoarg.ref,
+	  test/process/showuids.ref, test/process/userprot.ref,
+	  test/port2vms/rmsio.ref, test/port2vms/time2vms.ref,
+	  test/port2vms/uid2s.ref, test/port2vms/utimes.ref,
+	  test/port2vms/vms_dirs.ref, test/pathname/acc_mode.ref,
+	  test/pathname/add2fnam.ref, test/pathname/arg2file.ref,
+	  test/pathname/copyback.ref, test/pathname/denode.ref,
+	  test/pathname/dotname.ref, test/pathname/filesize.ref,
+	  test/pathname/fleaf.ref, test/pathname/fleaf14.ref,
+	  test/pathname/ftype.ref, test/pathname/ftype2.ref,
+	  test/pathname/is_spath.ref, test/pathname/istextfl.ref,
+	  test/pathname/mem2file.ref, test/pathname/modechar.ref,
+	  test/pathname/pathcat.ref, test/pathname/samehead.ref,
+	  test/pathname/stat_dir.ref, test/pathname/stat_fil.ref,
+	  test/pathname/track_wd.ref, test/memory/memmove.ref,
+	  test/memory/stralloc.ref, test/memory/vecalloc.ref,
+	  test/memory/veclen.ref, test/curses/addchnst.ref,
+	  test/curses/beep.ref, test/curses/blip.ref, test/curses/cmdch.ref,
+	  test/curses/dumpchr.ref, test/curses/dumptty.ref,
+	  test/curses/dumpwin.ref, test/curses/erasechr.ref,
+	  test/curses/getmaxx.ref, test/curses/is_xterm.ref,
+	  test/curses/killchar.ref, test/curses/lnextchr.ref,
+	  test/curses/logch.ref, test/curses/on_winch.ref,
+	  test/curses/rawterm.ref, test/curses/resizwin.ref,
+	  test/curses/savewin.ref, test/curses/viewfile.ref,
+	  test/curses/win2file.ref, test/curses/wrepaint.ref,
+	  test/curses/wresize.ref, test/compare/btree.ref,
+	  test/compare/cmpqsort.ref, test/cm_funcs/cvslast.ref,
+	  test/cm_funcs/lastrev.ref, test/cm_funcs/next_ver.ref,
+	  test/cm_funcs/prcslast.ref, test/cm_funcs/rcs_dir.ref,
+	  test/cm_funcs/rcsdebug.ref, test/cm_funcs/rcsedit.ref,
+	  test/cm_funcs/rcskeys.ref, test/cm_funcs/rcslast.ref,
+	  test/cm_funcs/rcslocks.ref, test/cm_funcs/rcspath.ref,
+	  test/cm_funcs/rcsperm.ref, test/cm_funcs/rcssymbs.ref,
+	  test/cm_funcs/rcstemp.ref, test/cm_funcs/rcstime.ref,
+	  test/cm_funcs/sccs_dir.ref, test/cm_funcs/sccsdbug.ref,
+	  test/cm_funcs/sccslast.ref, test/cm_funcs/sccspath.ref,
+	  test/cm_funcs/svn_last.ref:
 	test-reference file
 
-	* test/compare/modules, test/memory/modules, test/unix/modules, test/string/modules, test/sheet/modules, test/process/modules, test/port2vms/modules, test/pathname/modules, test/curses/modules, test/cm_funcs/cvslast.sh, test/cm_funcs/lastrev.sh, test/cm_funcs/next_ver.sh, test/cm_funcs/prcslast.sh, test/cm_funcs/rcs_dir.sh, test/cm_funcs/rcsdebug.sh, test/cm_funcs/rcsedit.sh, test/cm_funcs/rcskeys.sh, test/cm_funcs/rcslast.sh, test/cm_funcs/rcslocks.sh, test/cm_funcs/rcspath.sh, test/cm_funcs/rcsperm.sh, test/cm_funcs/rcssymbs.sh, test/cm_funcs/rcstemp.sh, test/cm_funcs/rcstime.sh, test/cm_funcs/sccs_dir.sh, test/cm_funcs/sccsdbug.sh, test/cm_funcs/sccslast.sh, test/cm_funcs/sccspath.sh, test/cm_funcs/svn_last.sh, test/compare/btree.sh, test/compare/cmpqsort.sh, test/curses/addchnst.sh, test/curses/beep.sh, test/curses/blip.sh, test/curses/cmdch.sh, test/curses/dumpchr.sh, test/curses/dumptty.sh, test/curses/dumpwin.sh, test/curses/erasechr.sh, test/curses/getmaxx.sh, test/curses/is_xterm.sh, test/curses/killchar.sh, test/curses/lnextchr.sh, test/curses/logch.sh, test/curses/on_winch.sh, test/curses/rawterm.sh, test/curses/resizwin.sh, test/curses/savewin.sh, test/curses/viewfile.sh, test/curses/win2file.sh, test/curses/wrepaint.sh, test/curses/wresize.sh, test/memory/memmove.sh, test/memory/stralloc.sh, test/memory/vecalloc.sh, test/memory/veclen.sh, test/pathname/acc_mode.sh, test/pathname/add2fnam.sh, test/pathname/arg2file.sh, test/pathname/copyback.sh, test/pathname/denode.sh, test/pathname/dotname.sh, test/pathname/filesize.sh, test/pathname/fleaf.sh, test/pathname/fleaf14.sh, test/pathname/ftype.sh, test/pathname/ftype2.sh, test/pathname/is_spath.sh, test/pathname/istextfl.sh, test/pathname/mem2file.sh, test/pathname/modechar.sh, test/pathname/pathcat.sh, test/pathname/samehead.sh, test/pathname/stat_dir.sh, test/pathname/stat_fil.sh, test/pathname/track_wd.sh, test/port2vms/rmsio.sh, test/port2vms/time2vms.sh, test/port2vms/uid2s.sh, test/port2vms/utimes.sh, test/port2vms/vms_dirs.sh, test/process/bldarg.sh, test/process/catarg.sh, test/process/catchall.sh, test/process/egress.sh, test/process/for_admn.sh, test/process/for_user.sh, test/process/getopt.sh, test/process/getuser.sh, test/process/in_group.sh, test/process/interact.sh, test/process/revert.sh, test/process/savesuid.sh, test/process/shoarg.sh, test/process/showuids.sh, test/process/userprot.sh, test/sheet/count_ss.sh, test/sheet/field_of.sh, test/sheet/ss_field.sh, test/string/dftenv.sh, test/string/dyn_app.sh, test/string/dyn_appc.sh, test/string/dyn_cata.sh, test/string/dyn_copy.sh, test/string/dyn_str.sh, test/string/strclean.sh, test/string/strcount.sh, test/string/strerror.sh, test/string/strtrim.sh, test/string/strucpy.sh, test/unix/s2gid.sh, test/unix/setmtime.sh, test/cm_funcs/modules:
+	* test/compare/modules, test/memory/modules, test/unix/modules,
+	  test/string/modules, test/sheet/modules, test/process/modules,
+	  test/port2vms/modules, test/pathname/modules, test/curses/modules,
+	  test/cm_funcs/cvslast.sh, test/cm_funcs/lastrev.sh,
+	  test/cm_funcs/next_ver.sh, test/cm_funcs/prcslast.sh,
+	  test/cm_funcs/rcs_dir.sh, test/cm_funcs/rcsdebug.sh,
+	  test/cm_funcs/rcsedit.sh, test/cm_funcs/rcskeys.sh,
+	  test/cm_funcs/rcslast.sh, test/cm_funcs/rcslocks.sh,
+	  test/cm_funcs/rcspath.sh, test/cm_funcs/rcsperm.sh,
+	  test/cm_funcs/rcssymbs.sh, test/cm_funcs/rcstemp.sh,
+	  test/cm_funcs/rcstime.sh, test/cm_funcs/sccs_dir.sh,
+	  test/cm_funcs/sccsdbug.sh, test/cm_funcs/sccslast.sh,
+	  test/cm_funcs/sccspath.sh, test/cm_funcs/svn_last.sh,
+	  test/compare/btree.sh, test/compare/cmpqsort.sh,
+	  test/curses/addchnst.sh, test/curses/beep.sh, test/curses/blip.sh,
+	  test/curses/cmdch.sh, test/curses/dumpchr.sh, test/curses/dumptty.sh,
+	  test/curses/dumpwin.sh, test/curses/erasechr.sh,
+	  test/curses/getmaxx.sh, test/curses/is_xterm.sh,
+	  test/curses/killchar.sh, test/curses/lnextchr.sh,
+	  test/curses/logch.sh, test/curses/on_winch.sh, test/curses/rawterm.sh,
+	  test/curses/resizwin.sh, test/curses/savewin.sh,
+	  test/curses/viewfile.sh, test/curses/win2file.sh,
+	  test/curses/wrepaint.sh, test/curses/wresize.sh,
+	  test/memory/memmove.sh, test/memory/stralloc.sh,
+	  test/memory/vecalloc.sh, test/memory/veclen.sh,
+	  test/pathname/acc_mode.sh, test/pathname/add2fnam.sh,
+	  test/pathname/arg2file.sh, test/pathname/copyback.sh,
+	  test/pathname/denode.sh, test/pathname/dotname.sh,
+	  test/pathname/filesize.sh, test/pathname/fleaf.sh,
+	  test/pathname/fleaf14.sh, test/pathname/ftype.sh,
+	  test/pathname/ftype2.sh, test/pathname/is_spath.sh,
+	  test/pathname/istextfl.sh, test/pathname/mem2file.sh,
+	  test/pathname/modechar.sh, test/pathname/pathcat.sh,
+	  test/pathname/samehead.sh, test/pathname/stat_dir.sh,
+	  test/pathname/stat_fil.sh, test/pathname/track_wd.sh,
+	  test/port2vms/rmsio.sh, test/port2vms/time2vms.sh,
+	  test/port2vms/uid2s.sh, test/port2vms/utimes.sh,
+	  test/port2vms/vms_dirs.sh, test/process/bldarg.sh,
+	  test/process/catarg.sh, test/process/catchall.sh,
+	  test/process/egress.sh, test/process/for_admn.sh,
+	  test/process/for_user.sh, test/process/getopt.sh,
+	  test/process/getuser.sh, test/process/in_group.sh,
+	  test/process/interact.sh, test/process/revert.sh,
+	  test/process/savesuid.sh, test/process/shoarg.sh,
+	  test/process/showuids.sh, test/process/userprot.sh,
+	  test/sheet/count_ss.sh, test/sheet/field_of.sh,
+	  test/sheet/ss_field.sh, test/string/dftenv.sh, test/string/dyn_app.sh,
+	  test/string/dyn_appc.sh, test/string/dyn_cata.sh,
+	  test/string/dyn_copy.sh, test/string/dyn_str.sh,
+	  test/string/strclean.sh, test/string/strcount.sh,
+	  test/string/strerror.sh, test/string/strtrim.sh,
+	  test/string/strucpy.sh, test/unix/s2gid.sh, test/unix/setmtime.sh,
+	  test/cm_funcs/modules:
 	add stubs for modules which had no test-driver
 
 	* src/pathname/walktree.c:
@@ -619,7 +799,11 @@
 
 	* src/cm_funcs/rcsperm.c: coverity #78346 - copy into fixed buffer
 
-	* src/pathname/which.c, src/pathname/walktree.c, src/pathname/trimpath.c, src/pathname/track_wd.c, src/pathname/sameleaf.c, src/pathname/relpath.c, src/pathname/pathleaf.c, src/pathname/pathhead.c:
+	* src/pathname/which.c, src/pathname/walktree.c,
+	  src/pathname/trimpath.c, src/pathname/track_wd.c,
+	  src/pathname/sameleaf.c, src/pathname/relpath.c,
+	  src/pathname/pathleaf.c,
+	  src/pathname/pathhead.c:
 	BUFSIZE != MAXPATHLEN
 
 	* src/cm_funcs/cmv_dir.c: coverity #78381 - copy into fixed size buffer
@@ -724,7 +908,9 @@
 
 	* configure: regen
 
-	* src/cm_funcs/cvslast.c, src/cm_funcs/svn_last.c, src/port2vms/vms2name.c, src/pathname/which.c:
+	* src/cm_funcs/cvslast.c, src/cm_funcs/svn_last.c,
+	  src/port2vms/vms2name.c,
+	  src/pathname/which.c:
 	cygwin-compiler-warnings
 
 	* include/td_ext.h:
@@ -735,16 +921,25 @@
 
 	* configure.in: use CF_GETOPT_HEADER
 
-	* src/cm_funcs/rcsedit.c, src/curses/erasechr.c, src/curses/scr_size.c, src/curses/cmdch.c, src/curses/rawterm.c:
+	* src/cm_funcs/rcsedit.c, src/curses/erasechr.c, src/curses/scr_size.c,
+	  src/curses/cmdch.c,
+	  src/curses/rawterm.c:
 	minix3.2-build-fixes
 
 	* include/ptypes.h:
 	turn off ident's with clang (noisy) and gcc (not supported)
 
-	* src/curses/addchnst.c, src/curses/beep.c, src/curses/getmaxx.c, src/curses/killchar.c, src/curses/padedit.c, src/curses/savewin.c, src/curses/wresize.c, src/memory/memmove.c, src/pathname/fileblox.c, src/compare/scomp.c, src/compare/m2comp.c, src/string/lsbycols.c, src/curses/win2file.c, src/cm_funcs/sccslast.c:
+	* src/curses/addchnst.c, src/curses/beep.c, src/curses/getmaxx.c,
+	  src/curses/killchar.c, src/curses/padedit.c, src/curses/savewin.c,
+	  src/curses/wresize.c, src/memory/memmove.c, src/pathname/fileblox.c,
+	  src/compare/scomp.c, src/compare/m2comp.c, src/string/lsbycols.c,
+	  src/curses/win2file.c,
+	  src/cm_funcs/sccslast.c:
 	clang-warnings
 
-	* package/debian/copyright, package/debian/changelog, package/td_lib.spec, COPYING:
+	* package/debian/copyright, package/debian/changelog,
+	  package/td_lib.spec,
+	  COPYING:
 	bump
 
 	* td_make.in: use variables from CF_INSTALL_OPTS
@@ -766,7 +961,9 @@
 
 	* configure.in: bump prereq
 
-	* package/debian/changelog, package/td_lib.spec, package/debian/copyright, COPYING:
+	* package/debian/changelog, package/td_lib.spec,
+	  package/debian/copyright,
+	  COPYING:
 	bump
 
 	* configure: regen
@@ -797,7 +994,8 @@
 
 	* configure: regen using newer autoconf patch, supporting --datarootdir
 
-	* package/debian/copyright, package/debian/changelog, package/td_lib.spec:
+	* package/debian/copyright, package/debian/changelog,
+	  package/td_lib.spec:
 	bump
 
 	* makefile.in: support --datarootdir
@@ -820,7 +1018,11 @@
 
 	* COPYING: bump
 
-	* src/cm_funcs/cvslast.c, src/cm_funcs/rcsedit.c, src/compare/btree.c, src/curses/rawgets.c, src/pathname/filecopy.c, src/pathname/mem2file.c, src/pathname/walktree.c, src/port2vms/vms2name.c, src/process/bldarg.c, src/process/shoarg.c:
+	* src/cm_funcs/cvslast.c, src/cm_funcs/rcsedit.c, src/compare/btree.c,
+	  src/curses/rawgets.c, src/pathname/filecopy.c,
+	  src/pathname/mem2file.c, src/pathname/walktree.c,
+	  src/port2vms/vms2name.c, src/process/bldarg.c,
+	  src/process/shoarg.c:
 	gcc-warnings
 
 	* configure: regen
@@ -877,7 +1079,22 @@
 
 2010-07-09  Thomas E. Dickey  <dickey@invisible-island.net>
 
-	* src/curses/rawgets.c, src/sheet/field_of.c, src/string/dyn_str.c, src/pathname/fp2argv.c, src/pathname/sameleaf.c, src/pathname/trnstree.c, src/pathname/walktree.c, src/port2vms/dir2path.c, src/port2vms/name2vms.c, src/port2vms/vms2name.c, src/port2vms/vms_wild.c, src/process/walkback.c, src/pathname/file2mem.c, src/memory/vecedit.c, src/pathname/copyback.c, src/pathname/dlettree.c, src/pathname/edittree.c, src/pathname/file2arg.c, src/curses/is_xterm.c, src/curses/padedit.c, src/memory/stralloc.c, src/cm_funcs/sccspath.c, src/compare/diffload.c, src/curses/dumptty.c, src/cm_funcs/rcsedit.c, src/cm_funcs/rcsload.c, src/cm_funcs/rcspath.c, src/cm_funcs/rcsperm.c, src/cm_funcs/sccslast.c, src/cm_funcs/cmv_dir.c, src/cm_funcs/cmv_last.c, src/cm_funcs/cutoff.c, src/cm_funcs/rcsargpr.c, include/td_ext.h:
+	* src/curses/rawgets.c, src/sheet/field_of.c, src/string/dyn_str.c,
+	  src/pathname/fp2argv.c, src/pathname/sameleaf.c,
+	  src/pathname/trnstree.c, src/pathname/walktree.c,
+	  src/port2vms/dir2path.c, src/port2vms/name2vms.c,
+	  src/port2vms/vms2name.c, src/port2vms/vms_wild.c,
+	  src/process/walkback.c, src/pathname/file2mem.c, src/memory/vecedit.c,
+	  src/pathname/copyback.c, src/pathname/dlettree.c,
+	  src/pathname/edittree.c, src/pathname/file2arg.c,
+	  src/curses/is_xterm.c, src/curses/padedit.c, src/memory/stralloc.c,
+	  src/cm_funcs/sccspath.c, src/compare/diffload.c, src/curses/dumptty.c,
+	  src/cm_funcs/rcsedit.c, src/cm_funcs/rcsload.c,
+	  src/cm_funcs/rcspath.c, src/cm_funcs/rcsperm.c,
+	  src/cm_funcs/sccslast.c, src/cm_funcs/cmv_dir.c,
+	  src/cm_funcs/cmv_last.c, src/cm_funcs/cutoff.c,
+	  src/cm_funcs/rcsargpr.c,
+	  include/td_ext.h:
 	stricter gcc warnings
 
 	* include/ptypes.h: avoid redefinition of bcopy and related functions
@@ -902,7 +1119,17 @@
 
 	* src/process/modules: don't build getopt for unix...
 
-	* src/process/getopt.c, src/cm_funcs/rcstemp.c, src/process/gethome.c, src/process/walkback.c, src/port2vms/vms2name.c, src/port2vms/vms_rpth.c, src/unix/gid2s.c, src/unix/uid2s.c, src/string/strbcmp.c, src/string/strwcmp.c, src/string/strucmp.c, include/td_lib.h, src/string/lsbycols.c, src/string/dotcmp.c, src/process/makeargv.c, include/ptypes.h, include/port2vms.h, src/port2vms/vms_wild.c, src/port2vms/path2vms.c, src/port2vms/path2dir.c, src/port2vms/name2vms.c, src/port2vms/zone2vms.c, src/port2vms/dir2path.c, src/curses/scr_size.c, src/curses/rawgets.c:
+	* src/process/getopt.c, src/cm_funcs/rcstemp.c, src/process/gethome.c,
+	  src/process/walkback.c, src/port2vms/vms2name.c,
+	  src/port2vms/vms_rpth.c, src/unix/gid2s.c, src/unix/uid2s.c,
+	  src/string/strbcmp.c, src/string/strwcmp.c, src/string/strucmp.c,
+	  include/td_lib.h, src/string/lsbycols.c, src/string/dotcmp.c,
+	  src/process/makeargv.c, include/ptypes.h, include/port2vms.h,
+	  src/port2vms/vms_wild.c, src/port2vms/path2vms.c,
+	  src/port2vms/path2dir.c, src/port2vms/name2vms.c,
+	  src/port2vms/zone2vms.c, src/port2vms/dir2path.c,
+	  src/curses/scr_size.c,
+	  src/curses/rawgets.c:
 	stricter gcc warnings
 
 	* test/td_defns.mk:
@@ -918,7 +1145,13 @@
 
 	* test/pathname/trnstree.ref: update files in this tree
 
-	* src/pathname/which.c, include/td_lib.h, src/pathname/trnstree.c, src/pathname/relpath.c, src/pathname/fileblox.c, src/pathname/fp2argv.c, src/pathname/edittree.c, src/pathname/dlettree.c, src/pathname/editfile.c, src/pathname/name2s.c, src/pathname/abspath.c, src/pathname/file2arg.c, src/memory/vecedit.c, src/compare/diffload.c:
+	* src/pathname/which.c, include/td_lib.h, src/pathname/trnstree.c,
+	  src/pathname/relpath.c, src/pathname/fileblox.c,
+	  src/pathname/fp2argv.c, src/pathname/edittree.c,
+	  src/pathname/dlettree.c, src/pathname/editfile.c,
+	  src/pathname/name2s.c, src/pathname/abspath.c,
+	  src/pathname/file2arg.c, src/memory/vecedit.c,
+	  src/compare/diffload.c:
 	stricter gcc warnings
 
 	* test/cm_funcs/rcsload.ref: filter out actual value of $TMPDIR
@@ -929,10 +1162,18 @@
 	use caller's $TMPDIR, if set.  Ensure that $TMPDIR is exported, for use
 	in the test-driver.  Make reference portable by filtering TMPDIR.
 
-	* src/unix/s2gid.c, src/cm_funcs/sccsname.c, src/cm_funcs/samebr.c, src/cm_funcs/rcsname.c, include/rcsdefs.h, src/cm_funcs/vercmp.c, src/cm_funcs/rcsload.c, src/cm_funcs/packdate.c, src/cm_funcs/vcs_file.c, src/cm_funcs/newzone.c, src/cm_funcs/cmv_last.c, include/cmv_defs.h, src/cm_funcs/cmv_dir.c, src/unix/s2uid.c, src/pathname/edittree.c:
+	* src/unix/s2gid.c, src/cm_funcs/sccsname.c, src/cm_funcs/samebr.c,
+	  src/cm_funcs/rcsname.c, include/rcsdefs.h, src/cm_funcs/vercmp.c,
+	  src/cm_funcs/rcsload.c, src/cm_funcs/packdate.c,
+	  src/cm_funcs/vcs_file.c, src/cm_funcs/newzone.c,
+	  src/cm_funcs/cmv_last.c, include/cmv_defs.h, src/cm_funcs/cmv_dir.c,
+	  src/unix/s2uid.c,
+	  src/pathname/edittree.c:
 	stricter gcc warnings
 
-	* include/Makefile, src/td_rules.mk, support/Makefile, test/td_rules.mk, makefile.in, src/makefile.in, test/makefile.in:
+	* include/Makefile, src/td_rules.mk, support/Makefile, test/td_rules.mk,
+	  makefile.in, src/makefile.in,
+	  test/makefile.in:
 	s/run_test/check/
 
 	* package/debian/changelog, package/td_lib.spec: bump
@@ -950,24 +1191,82 @@
 
 	* src/compare/btree.c: indent
 
-	* src/sheet/field_of.c, src/pathname/trnstree.c, src/curses/scr_size.c, src/pathname/dlettree.c, src/curses/padedit.c, src/compare/m2comp.c, src/cm_funcs/sccsname.c, src/cm_funcs/sccslast.c, include/cmv_defs.h, src/cm_funcs/cmv_dir.c, src/curses/rawgets.c, src/pathname/pathcmp.c, include/td_lib.h, src/process/egress.c, src/process/in_group.c, src/pathname/name2s.c, src/memory/vecalloc.c, src/pathname/walktree.c, src/pathname/file2arg.c, src/curses/cmdch.c, include/td_curse.h, src/pathname/filecopy.c, src/curses/wrepaint.c, src/pathname/file2mem.c, src/pathname/copyback.c, src/string/strucmp.c, src/pathname/edittree.c, src/process/usercopy.c, src/unix/gid2s.c, src/unix/uid2s.c, src/curses/on_winch.c, src/process/makeargv.c, src/curses/viewfile.c, src/port2vms/vms2name.c, src/pathname/mem2file.c, src/cm_funcs/rcsload.c, src/cm_funcs/samebr.c, include/rcsdefs.h, src/cm_funcs/rcssymbs.c, src/cm_funcs/rcsperm.c, src/cm_funcs/rcspath.c, src/pathname/which.c, src/cm_funcs/vcs_file.c, src/cm_funcs/sccs_dir.c, src/cm_funcs/cvslast.c, src/cm_funcs/svn_last.c, src/cm_funcs/rcslast.c, src/cm_funcs/cmv_last.c, include/sccsdefs.h, src/cm_funcs/lastrev.c, src/cm_funcs/sccsdbug.c, src/cm_funcs/rcsedit.c, src/cm_funcs/rcs_dir.c, src/pathname/relpath.c, src/pathname/dotname.c, src/cm_funcs/rcsdebug.c, src/cm_funcs/rcstemp.c, src/port2vms/path2vms.c, src/compare/diffload.c, src/pathname/is_spath.c, src/port2vms/dir2path.c, src/process/showuids.c, src/memory/doalloc.c, src/pathname/editfile.c, src/string/strwcmp.c, src/string/strucpy.c:
+	* src/sheet/field_of.c, src/pathname/trnstree.c, src/curses/scr_size.c,
+	  src/pathname/dlettree.c, src/curses/padedit.c, src/compare/m2comp.c,
+	  src/cm_funcs/sccsname.c, src/cm_funcs/sccslast.c, include/cmv_defs.h,
+	  src/cm_funcs/cmv_dir.c, src/curses/rawgets.c, src/pathname/pathcmp.c,
+	  include/td_lib.h, src/process/egress.c, src/process/in_group.c,
+	  src/pathname/name2s.c, src/memory/vecalloc.c, src/pathname/walktree.c,
+	  src/pathname/file2arg.c, src/curses/cmdch.c, include/td_curse.h,
+	  src/pathname/filecopy.c, src/curses/wrepaint.c,
+	  src/pathname/file2mem.c, src/pathname/copyback.c,
+	  src/string/strucmp.c, src/pathname/edittree.c, src/process/usercopy.c,
+	  src/unix/gid2s.c, src/unix/uid2s.c, src/curses/on_winch.c,
+	  src/process/makeargv.c, src/curses/viewfile.c,
+	  src/port2vms/vms2name.c, src/pathname/mem2file.c,
+	  src/cm_funcs/rcsload.c, src/cm_funcs/samebr.c, include/rcsdefs.h,
+	  src/cm_funcs/rcssymbs.c, src/cm_funcs/rcsperm.c,
+	  src/cm_funcs/rcspath.c, src/pathname/which.c, src/cm_funcs/vcs_file.c,
+	  src/cm_funcs/sccs_dir.c, src/cm_funcs/cvslast.c,
+	  src/cm_funcs/svn_last.c, src/cm_funcs/rcslast.c,
+	  src/cm_funcs/cmv_last.c, include/sccsdefs.h, src/cm_funcs/lastrev.c,
+	  src/cm_funcs/sccsdbug.c, src/cm_funcs/rcsedit.c,
+	  src/cm_funcs/rcs_dir.c, src/pathname/relpath.c,
+	  src/pathname/dotname.c, src/cm_funcs/rcsdebug.c,
+	  src/cm_funcs/rcstemp.c, src/port2vms/path2vms.c,
+	  src/compare/diffload.c, src/pathname/is_spath.c,
+	  src/port2vms/dir2path.c, src/process/showuids.c, src/memory/doalloc.c,
+	  src/pathname/editfile.c, src/string/strwcmp.c,
+	  src/string/strucpy.c:
 	stricter gcc warnings
 
 	* package/td_lib.spec: move td_lib.mk to data directory
 
-	* src/unix/gid2s.c, src/process/walkback.c, src/process/userprot.c, src/process/makeargv.c, src/process/in_group.c, src/process/for_user.c, src/process/for_admn.c, src/process/execute.c:
+	* src/unix/gid2s.c, src/process/walkback.c, src/process/userprot.c,
+	  src/process/makeargv.c, src/process/in_group.c,
+	  src/process/for_user.c, src/process/for_admn.c,
+	  src/process/execute.c:
 	stricter gcc warnings
 
 	* makefile.in: move td_lib.mk to data-directory
 
 	* support/ins_mak: move td_lib.mk to data directory
 
-	* src/unix/setmtime.c, src/process/revert.c, include/td_lib.h, src/pathname/istextfl.c, include/sccsdefs.h, src/cm_funcs/sccslast.c, src/cm_funcs/sccsname.c, src/string/dftenv.c, src/pathname/filesize.c, src/pathname/filecopy.c, src/pathname/pathleaf.c, include/td_curse.h, src/curses/win2file.c, src/pathname/track_wd.c, src/pathname/walktree.c, src/unix/s2uid.c, src/unix/s2gid.c, src/pathname/sameleaf.c, src/pathname/samehead.c, src/cm_funcs/sccspath.c, src/process/shoarg.c, src/process/getuser.c, src/process/gethome.c, src/process/egress.c:
+	* src/unix/setmtime.c, src/process/revert.c, include/td_lib.h,
+	  src/pathname/istextfl.c, include/sccsdefs.h, src/cm_funcs/sccslast.c,
+	  src/cm_funcs/sccsname.c, src/string/dftenv.c, src/pathname/filesize.c,
+	  src/pathname/filecopy.c, src/pathname/pathleaf.c, include/td_curse.h,
+	  src/curses/win2file.c, src/pathname/track_wd.c,
+	  src/pathname/walktree.c, src/unix/s2uid.c, src/unix/s2gid.c,
+	  src/pathname/sameleaf.c, src/pathname/samehead.c,
+	  src/cm_funcs/sccspath.c, src/process/shoarg.c, src/process/getuser.c,
+	  src/process/gethome.c,
+	  src/process/egress.c:
 	stricter gcc warnings
 
 2010-07-03  Thomas E. Dickey  <dickey@invisible-island.net>
 
-	* src/pathname/track_wd.c, src/curses/win2file.c, src/curses/rawgets.c, src/curses/dumptty.c, src/cm_funcs/rcslast.c, src/unix/uid2s.c, src/curses/dumpwin.c, src/port2vms/name2vms.c, src/port2vms/vms2name.c, src/unix/gid2s.c, src/memory/txtalloc.c, include/td_btree.h, src/compare/btree.c, src/curses/cmdch.c, src/process/catarg.c, src/string/lsbycols.c, src/string/strucpy.c, src/string/strclean.c, include/td_lib.h, src/string/dyn_copy.c, src/string/dyn_cata.c, src/string/dyn_appc.c, src/string/dyn_app.c, src/process/shoarg.c, src/process/walkback.c, src/process/failed.c, src/process/egress.c, src/compare/m2comp.c, src/compare/diffload.c, src/memory/vecedit.c, src/memory/stralloc.c, src/pathname/trnstree.c, src/pathname/stat_fil.c, src/pathname/stat_dir.c, src/pathname/which.c, src/pathname/fp2argv.c, src/pathname/sameleaf.c, src/pathname/fleaf.c, src/pathname/pathcat.c, src/pathname/name2s.c, src/pathname/arg2file.c, src/memory/doalloc.c, include/dyn_str.h, src/cm_funcs/rcsname.c, src/cm_funcs/rcsload.c, src/cm_funcs/svn_last.c, src/cm_funcs/sccs_dir.c, include/sccsdefs.h, src/cm_funcs/rcstemp.c, src/cm_funcs/rcssymbs.c, src/cm_funcs/rcsedit.c, src/cm_funcs/rcs_dir.c, src/cm_funcs/cvslast.c, src/cm_funcs/newzone.c, src/cm_funcs/cmv_dir.c, src/cm_funcs/rcskeys.c:
+	* src/pathname/track_wd.c, src/curses/win2file.c, src/curses/rawgets.c,
+	  src/curses/dumptty.c, src/cm_funcs/rcslast.c, src/unix/uid2s.c,
+	  src/curses/dumpwin.c, src/port2vms/name2vms.c,
+	  src/port2vms/vms2name.c, src/unix/gid2s.c, src/memory/txtalloc.c,
+	  include/td_btree.h, src/compare/btree.c, src/curses/cmdch.c,
+	  src/process/catarg.c, src/string/lsbycols.c, src/string/strucpy.c,
+	  src/string/strclean.c, include/td_lib.h, src/string/dyn_copy.c,
+	  src/string/dyn_cata.c, src/string/dyn_appc.c, src/string/dyn_app.c,
+	  src/process/shoarg.c, src/process/walkback.c, src/process/failed.c,
+	  src/process/egress.c, src/compare/m2comp.c, src/compare/diffload.c,
+	  src/memory/vecedit.c, src/memory/stralloc.c, src/pathname/trnstree.c,
+	  src/pathname/stat_fil.c, src/pathname/stat_dir.c,
+	  src/pathname/which.c, src/pathname/fp2argv.c, src/pathname/sameleaf.c,
+	  src/pathname/fleaf.c, src/pathname/pathcat.c, src/pathname/name2s.c,
+	  src/pathname/arg2file.c, src/memory/doalloc.c, include/dyn_str.h,
+	  src/cm_funcs/rcsname.c, src/cm_funcs/rcsload.c,
+	  src/cm_funcs/svn_last.c, src/cm_funcs/sccs_dir.c, include/sccsdefs.h,
+	  src/cm_funcs/rcstemp.c, src/cm_funcs/rcssymbs.c,
+	  src/cm_funcs/rcsedit.c, src/cm_funcs/rcs_dir.c,
+	  src/cm_funcs/cvslast.c, src/cm_funcs/newzone.c,
+	  src/cm_funcs/cmv_dir.c, src/cm_funcs/rcskeys.c:
 	stricter gcc warnings
 
 	* package/td_lib.spec: RCS_BASE
@@ -1015,7 +1314,8 @@
 
 	* package/debian/source/format: use native format
 
-	* package/debian/control, package/debian/changelog, package/debian/copyright:
+	* package/debian/control, package/debian/changelog,
+	  package/debian/copyright:
 	RCS_BASE
 
 	* COPYING: fill in date-range
@@ -1076,7 +1376,10 @@
 
 	* makefile.in: drop mkdirs.sh, use "mkdir -p"
 
-	* src/cm_funcs/rcs_dir.c, src/cm_funcs/rcsargpr.c, src/cm_funcs/rcslast.c, src/cm_funcs/rcssymbs.c, src/cm_funcs/sccs_dir.c, src/port2vms/vms2name.c, src/sheet/field_of.c:
+	* src/cm_funcs/rcs_dir.c, src/cm_funcs/rcsargpr.c,
+	  src/cm_funcs/rcslast.c, src/cm_funcs/rcssymbs.c,
+	  src/cm_funcs/sccs_dir.c, src/port2vms/vms2name.c,
+	  src/sheet/field_of.c:
 	fix warnings from clang --analyze
 
 	* configure: regen
@@ -1277,7 +1580,78 @@
 
 2004-03-07  Thomas E. Dickey  <dickey@invisible-island.net>
 
-	* include/ptypes.h, src/memory/txtalloc.c, src/memory/doalloc.c, src/curses/rawgets.c, src/curses/on_winch.c, src/compare/diffload.c, src/compare/btree.c, src/compare/cmpqsort.c, src/compare/m2comp.c, src/compare/scomp.c, src/curses/addchnst.c, src/curses/beep.c, src/curses/blip.c, src/curses/cmdch.c, src/curses/dumpchr.c, src/curses/dumptty.c, src/curses/dumpwin.c, src/curses/erasechr.c, src/curses/is_xterm.c, src/curses/killchar.c, src/curses/lnextchr.c, src/curses/logch.c, src/curses/padedit.c, src/curses/rawterm.c, src/curses/resizwin.c, src/curses/savewin.c, src/curses/scr_size.c, src/curses/viewfile.c, src/curses/win2file.c, src/curses/wrepaint.c, src/curses/wresize.c, src/memory/memmove.c, src/memory/stralloc.c, src/memory/vecalloc.c, src/memory/vecedit.c, src/memory/veclen.c, src/pathname/abspath.c, src/pathname/acc_mode.c, src/pathname/add2fnam.c, src/pathname/arg2file.c, src/pathname/copyback.c, src/pathname/denode.c, src/pathname/dlettree.c, src/pathname/dotname.c, src/pathname/editfile.c, src/pathname/edittree.c, src/pathname/file2arg.c, src/pathname/file2mem.c, src/pathname/fileblox.c, src/pathname/filecopy.c, src/pathname/filesize.c, src/pathname/fleaf.c, src/pathname/fleaf14.c, src/pathname/fp2argv.c, src/pathname/ftype.c, src/pathname/ftype2.c, src/pathname/is_spath.c, src/pathname/istextfl.c, src/pathname/mem2file.c, src/pathname/modechar.c, src/pathname/name2s.c, src/pathname/pathcat.c, src/pathname/pathcmp.c, src/pathname/pathhead.c, src/pathname/pathleaf.c, src/pathname/relpath.c, src/pathname/samehead.c, src/pathname/sameleaf.c, src/pathname/stat_dir.c, src/pathname/stat_fil.c, src/pathname/track_wd.c, src/pathname/trimpath.c, src/pathname/trnstree.c, src/pathname/walktree.c, src/pathname/which.c, src/port2vms/dir2path.c, src/port2vms/name2vms.c, src/port2vms/path2dir.c, src/port2vms/path2vms.c, src/port2vms/rmsio.c, src/port2vms/time2vms.c, src/port2vms/uid2s.c, src/port2vms/utimes.c, src/port2vms/vms2name.c, src/port2vms/vms_dirs.c, src/port2vms/vms_pthc.c, src/port2vms/vms_rpth.c, src/port2vms/vms_wild.c, src/port2vms/zone2vms.c, src/process/bldarg.c, src/process/catarg.c, src/process/catchall.c, src/process/egress.c, src/process/execute.c, src/process/failed.c, src/process/for_admn.c, src/process/for_user.c, src/process/gethome.c, src/process/getopt.c, src/process/getuser.c, src/process/in_group.c, src/process/interact.c, src/process/makeargv.c, src/process/revert.c, src/process/savesuid.c, src/process/shoarg.c, src/process/showuids.c, src/process/usercopy.c, src/process/userprot.c, src/process/walkback.c, src/sheet/count_ss.c, src/sheet/field_of.c, src/sheet/ss_field.c, src/string/dftenv.c, src/string/dotcmp.c, src/string/dyn_app.c, src/string/dyn_appc.c, src/string/dyn_cata.c, src/string/dyn_copy.c, src/string/dyn_str.c, src/string/lsbycols.c, src/string/ltostr.c, src/string/strbcmp.c, src/string/strclean.c, src/string/strcount.c, src/string/strerror.c, src/string/strtrim.c, src/string/strucmp.c, src/string/strucpy.c, src/string/strwcmp.c, src/unix/gid2s.c, src/unix/s2gid.c, src/unix/s2uid.c, src/unix/setmtime.c, src/unix/uid2s.c, test/compare/test_cmp.c, include/td_ext.h, include/td_curse.h, include/td_regex.h, include/td_scomp.h, include/td_lib.h, include/dyn_str.h, include/deltree.h, include/td_btree.h, include/td_qsort.h, include/vms_dirs.h, include/td_sheet.h, include/sccsdefs.h, include/rcsdefs.h, include/port2vms.h, include/cmv_defs.h, src/cm_funcs/cmv_dir.c, src/cm_funcs/cmv_last.c, src/cm_funcs/cutoff.c, src/cm_funcs/cvslast.c, src/cm_funcs/lastrev.c, src/cm_funcs/newzone.c, src/cm_funcs/next_ver.c, src/cm_funcs/packdate.c, src/cm_funcs/rcs_dir.c, src/cm_funcs/rcsargpr.c, src/cm_funcs/rcsdebug.c, src/cm_funcs/rcsedit.c, src/cm_funcs/rcskeys.c, src/cm_funcs/rcslast.c, src/cm_funcs/rcsload.c, src/cm_funcs/rcslocks.c, src/cm_funcs/rcsname.c, src/cm_funcs/rcspath.c, src/cm_funcs/rcsperm.c, src/cm_funcs/rcssymbs.c, src/cm_funcs/rcstemp.c, src/cm_funcs/rcstime.c, src/cm_funcs/samebr.c, src/cm_funcs/sccs_dir.c, src/cm_funcs/sccsdbug.c, src/cm_funcs/sccslast.c, src/cm_funcs/sccsname.c, src/cm_funcs/sccspath.c, src/cm_funcs/vcs_file.c, src/cm_funcs/vercmp.c:
+	* include/ptypes.h, src/memory/txtalloc.c, src/memory/doalloc.c,
+	  src/curses/rawgets.c, src/curses/on_winch.c, src/compare/diffload.c,
+	  src/compare/btree.c, src/compare/cmpqsort.c, src/compare/m2comp.c,
+	  src/compare/scomp.c, src/curses/addchnst.c, src/curses/beep.c,
+	  src/curses/blip.c, src/curses/cmdch.c, src/curses/dumpchr.c,
+	  src/curses/dumptty.c, src/curses/dumpwin.c, src/curses/erasechr.c,
+	  src/curses/is_xterm.c, src/curses/killchar.c, src/curses/lnextchr.c,
+	  src/curses/logch.c, src/curses/padedit.c, src/curses/rawterm.c,
+	  src/curses/resizwin.c, src/curses/savewin.c, src/curses/scr_size.c,
+	  src/curses/viewfile.c, src/curses/win2file.c, src/curses/wrepaint.c,
+	  src/curses/wresize.c, src/memory/memmove.c, src/memory/stralloc.c,
+	  src/memory/vecalloc.c, src/memory/vecedit.c, src/memory/veclen.c,
+	  src/pathname/abspath.c, src/pathname/acc_mode.c,
+	  src/pathname/add2fnam.c, src/pathname/arg2file.c,
+	  src/pathname/copyback.c, src/pathname/denode.c,
+	  src/pathname/dlettree.c, src/pathname/dotname.c,
+	  src/pathname/editfile.c, src/pathname/edittree.c,
+	  src/pathname/file2arg.c, src/pathname/file2mem.c,
+	  src/pathname/fileblox.c, src/pathname/filecopy.c,
+	  src/pathname/filesize.c, src/pathname/fleaf.c, src/pathname/fleaf14.c,
+	  src/pathname/fp2argv.c, src/pathname/ftype.c, src/pathname/ftype2.c,
+	  src/pathname/is_spath.c, src/pathname/istextfl.c,
+	  src/pathname/mem2file.c, src/pathname/modechar.c,
+	  src/pathname/name2s.c, src/pathname/pathcat.c, src/pathname/pathcmp.c,
+	  src/pathname/pathhead.c, src/pathname/pathleaf.c,
+	  src/pathname/relpath.c, src/pathname/samehead.c,
+	  src/pathname/sameleaf.c, src/pathname/stat_dir.c,
+	  src/pathname/stat_fil.c, src/pathname/track_wd.c,
+	  src/pathname/trimpath.c, src/pathname/trnstree.c,
+	  src/pathname/walktree.c, src/pathname/which.c,
+	  src/port2vms/dir2path.c, src/port2vms/name2vms.c,
+	  src/port2vms/path2dir.c, src/port2vms/path2vms.c,
+	  src/port2vms/rmsio.c, src/port2vms/time2vms.c, src/port2vms/uid2s.c,
+	  src/port2vms/utimes.c, src/port2vms/vms2name.c,
+	  src/port2vms/vms_dirs.c, src/port2vms/vms_pthc.c,
+	  src/port2vms/vms_rpth.c, src/port2vms/vms_wild.c,
+	  src/port2vms/zone2vms.c, src/process/bldarg.c, src/process/catarg.c,
+	  src/process/catchall.c, src/process/egress.c, src/process/execute.c,
+	  src/process/failed.c, src/process/for_admn.c, src/process/for_user.c,
+	  src/process/gethome.c, src/process/getopt.c, src/process/getuser.c,
+	  src/process/in_group.c, src/process/interact.c,
+	  src/process/makeargv.c, src/process/revert.c, src/process/savesuid.c,
+	  src/process/shoarg.c, src/process/showuids.c, src/process/usercopy.c,
+	  src/process/userprot.c, src/process/walkback.c, src/sheet/count_ss.c,
+	  src/sheet/field_of.c, src/sheet/ss_field.c, src/string/dftenv.c,
+	  src/string/dotcmp.c, src/string/dyn_app.c, src/string/dyn_appc.c,
+	  src/string/dyn_cata.c, src/string/dyn_copy.c, src/string/dyn_str.c,
+	  src/string/lsbycols.c, src/string/ltostr.c, src/string/strbcmp.c,
+	  src/string/strclean.c, src/string/strcount.c, src/string/strerror.c,
+	  src/string/strtrim.c, src/string/strucmp.c, src/string/strucpy.c,
+	  src/string/strwcmp.c, src/unix/gid2s.c, src/unix/s2gid.c,
+	  src/unix/s2uid.c, src/unix/setmtime.c, src/unix/uid2s.c,
+	  test/compare/test_cmp.c, include/td_ext.h, include/td_curse.h,
+	  include/td_regex.h, include/td_scomp.h, include/td_lib.h,
+	  include/dyn_str.h, include/deltree.h, include/td_btree.h,
+	  include/td_qsort.h, include/vms_dirs.h, include/td_sheet.h,
+	  include/sccsdefs.h, include/rcsdefs.h, include/port2vms.h,
+	  include/cmv_defs.h, src/cm_funcs/cmv_dir.c, src/cm_funcs/cmv_last.c,
+	  src/cm_funcs/cutoff.c, src/cm_funcs/cvslast.c, src/cm_funcs/lastrev.c,
+	  src/cm_funcs/newzone.c, src/cm_funcs/next_ver.c,
+	  src/cm_funcs/packdate.c, src/cm_funcs/rcs_dir.c,
+	  src/cm_funcs/rcsargpr.c, src/cm_funcs/rcsdebug.c,
+	  src/cm_funcs/rcsedit.c, src/cm_funcs/rcskeys.c,
+	  src/cm_funcs/rcslast.c, src/cm_funcs/rcsload.c,
+	  src/cm_funcs/rcslocks.c, src/cm_funcs/rcsname.c,
+	  src/cm_funcs/rcspath.c, src/cm_funcs/rcsperm.c,
+	  src/cm_funcs/rcssymbs.c, src/cm_funcs/rcstemp.c,
+	  src/cm_funcs/rcstime.c, src/cm_funcs/samebr.c,
+	  src/cm_funcs/sccs_dir.c, src/cm_funcs/sccsdbug.c,
+	  src/cm_funcs/sccslast.c, src/cm_funcs/sccsname.c,
+	  src/cm_funcs/sccspath.c, src/cm_funcs/vcs_file.c,
+	  src/cm_funcs/vercmp.c:
 	remove K&R support, indent'd
 
 	* aclocal.m4: add CF_ANSI_CC_REQD
@@ -1425,7 +1799,8 @@
 
 	* include/rcsdefs.h: add cvslast()
 
-	* src/cm_funcs/cmv_dir.c, src/cm_funcs/rcs_dir.c, src/cm_funcs/sccs_dir.c:
+	* src/cm_funcs/cmv_dir.c, src/cm_funcs/rcs_dir.c,
+	  src/cm_funcs/sccs_dir.c:
 	add a check for the return-value of samehead(), which only
 	tells how many characters matched, not really whether the
 	entire reference parameter (the second one) was completely
@@ -1437,7 +1812,8 @@
 
 	* include/td_lib.h: add prototype for samehead()
 
-	* src/cm_funcs/cmv_dir.c, src/cm_funcs/rcs_dir.c, src/cm_funcs/sccs_dir.c:
+	* src/cm_funcs/cmv_dir.c, src/cm_funcs/rcs_dir.c,
+	  src/cm_funcs/sccs_dir.c:
 	split-out samehead.c
 
 	* src/pathname/modules: split-out samehead.c from sccs_dir.c, etc.
@@ -1489,7 +1865,19 @@
 	* include/td_curse.h, include/ptypes.h, src/curses/cmdch.c:
 	change ifdef convention to work with "gcc -Wundef"
 
-	* src/curses/resizwin.c, src/curses/savewin.c, include/ptypes.h, include/td_qsort.h, src/process/execute.c, src/process/in_group.c, include/td_curse.h, include/td_regex.h, src/curses/cmdch.c, src/curses/erasechr.c, src/curses/lnextchr.c, include/sccsdefs.h, src/curses/rawterm.c, src/curses/win2file.c, src/curses/wrepaint.c, src/curses/wresize.c, src/memory/memmove.c, src/pathname/fileblox.c, src/process/getopt.c, src/string/strerror.c, src/unix/gid2s.c, src/unix/setmtime.c, src/unix/uid2s.c, src/curses/beep.c, src/curses/dumptty.c, src/curses/dumpwin.c, src/curses/killchar.c, include/td_ext.h, include/td_lib.h, src/cm_funcs/packdate.c, src/cm_funcs/sccslast.c, src/cm_funcs/vercmp.c, src/curses/addchnst.c, include/rcsdefs.h, src/curses/scr_size.c, src/curses/is_xterm.c, src/cm_funcs/newzone.c:
+	* src/curses/resizwin.c, src/curses/savewin.c, include/ptypes.h,
+	  include/td_qsort.h, src/process/execute.c, src/process/in_group.c,
+	  include/td_curse.h, include/td_regex.h, src/curses/cmdch.c,
+	  src/curses/erasechr.c, src/curses/lnextchr.c, include/sccsdefs.h,
+	  src/curses/rawterm.c, src/curses/win2file.c, src/curses/wrepaint.c,
+	  src/curses/wresize.c, src/memory/memmove.c, src/pathname/fileblox.c,
+	  src/process/getopt.c, src/string/strerror.c, src/unix/gid2s.c,
+	  src/unix/setmtime.c, src/unix/uid2s.c, src/curses/beep.c,
+	  src/curses/dumptty.c, src/curses/dumpwin.c, src/curses/killchar.c,
+	  include/td_ext.h, include/td_lib.h, src/cm_funcs/packdate.c,
+	  src/cm_funcs/sccslast.c, src/cm_funcs/vercmp.c, src/curses/addchnst.c,
+	  include/rcsdefs.h, src/curses/scr_size.c, src/curses/is_xterm.c,
+	  src/cm_funcs/newzone.c:
 	change ifdef'ing convention to work with "gcc -Wundef"
 
 	* include/.vilerc:
@@ -1518,7 +1906,12 @@
 	* src/cm_funcs/packdate.c:
 	rename some variables to make this easier to edit
 
-	* src/string/strbcmp.c, src/string/strclean.c, src/string/strtrim.c, src/process/execute.c, src/process/makeargv.c, src/cm_funcs/cmv_dir.c, src/cm_funcs/cutoff.c, src/cm_funcs/rcsedit.c, src/cm_funcs/rcskeys.c, src/cm_funcs/rcssymbs.c, src/curses/logch.c, src/curses/rawgets.c, src/port2vms/name2vms.c, src/port2vms/vms2name.c, src/process/bldarg.c, src/process/catarg.c:
+	* src/string/strbcmp.c, src/string/strclean.c, src/string/strtrim.c,
+	  src/process/execute.c, src/process/makeargv.c, src/cm_funcs/cmv_dir.c,
+	  src/cm_funcs/cutoff.c, src/cm_funcs/rcsedit.c, src/cm_funcs/rcskeys.c,
+	  src/cm_funcs/rcssymbs.c, src/curses/logch.c, src/curses/rawgets.c,
+	  src/port2vms/name2vms.c, src/port2vms/vms2name.c,
+	  src/process/bldarg.c, src/process/catarg.c:
 	use UCH() to fix char-subscript warnings in gcc.
 
 	* src/memory/doalloc.c:
@@ -1636,7 +2029,9 @@
 
 	* src/cm_funcs/rcslast.c: nit to make rcs_dir() provide $RCS_VAULT info
 
-	* src/cm_funcs/vcs_file.c, src/cm_funcs/rcsname.c, src/cm_funcs/rcslast.c, src/cm_funcs/rcsargpr.c:
+	* src/cm_funcs/vcs_file.c, src/cm_funcs/rcsname.c,
+	  src/cm_funcs/rcslast.c,
+	  src/cm_funcs/rcsargpr.c:
 	quick change to rcs_dir() interface
 
 	* src/cm_funcs/rcs_dir.c:
@@ -1701,7 +2096,20 @@
 	* include/td_curse.h:
 	rename 'newline' to 'new_line', to work with U/Win curses
 
-	* src/curses/blip.c, src/curses/padedit.c, src/curses/scr_size.c, src/curses/viewfile.c, src/memory/doalloc.c, src/pathname/abspath.c, src/pathname/add2fnam.c, src/pathname/dlettree.c, src/pathname/editfile.c, src/pathname/edittree.c, src/pathname/file2mem.c, src/pathname/fileblox.c, src/pathname/fleaf.c, src/pathname/ftype2.c, src/pathname/which.c, src/port2vms/vms_rpth.c, src/process/catchall.c, src/process/execute.c, src/process/for_admn.c, src/process/for_user.c, src/process/gethome.c, src/process/getopt.c, src/process/getuser.c, src/process/revert.c, src/process/showuids.c, src/process/usercopy.c, src/process/userprot.c, src/process/walkback.c, src/unix/s2gid.c, src/unix/s2uid.c, include/port2vms.h, include/ptypes.h, include/td_ext.h, include/vms_dirs.h:
+	* src/curses/blip.c, src/curses/padedit.c, src/curses/scr_size.c,
+	  src/curses/viewfile.c, src/memory/doalloc.c, src/pathname/abspath.c,
+	  src/pathname/add2fnam.c, src/pathname/dlettree.c,
+	  src/pathname/editfile.c, src/pathname/edittree.c,
+	  src/pathname/file2mem.c, src/pathname/fileblox.c,
+	  src/pathname/fleaf.c, src/pathname/ftype2.c, src/pathname/which.c,
+	  src/port2vms/vms_rpth.c, src/process/catchall.c,
+	  src/process/execute.c, src/process/for_admn.c, src/process/for_user.c,
+	  src/process/gethome.c, src/process/getopt.c, src/process/getuser.c,
+	  src/process/revert.c, src/process/showuids.c, src/process/usercopy.c,
+	  src/process/userprot.c, src/process/walkback.c, src/unix/s2gid.c,
+	  src/unix/s2uid.c, include/port2vms.h, include/ptypes.h,
+	  include/td_ext.h,
+	  include/vms_dirs.h:
 	rename 'unix' to 'SYS_UNIX' since U/Win complains
 
 2001-04-15  Thomas E. Dickey  <dickey@clark.net>
@@ -1825,7 +2233,9 @@
 	* src/unix/gid2s.c, src/unix/uid2s.c:
 	gcc warnings (missing initializer)
 
-	* src/cm_funcs/rcsedit.c, src/cm_funcs/rcstemp.c, src/process/egress.c, src/process/in_group.c, src/process/for_admn.c:
+	* src/cm_funcs/rcsedit.c, src/cm_funcs/rcstemp.c, src/process/egress.c,
+	  src/process/in_group.c,
+	  src/process/for_admn.c:
 	gcc warnings (int/unsigned)
 
 	* aclocal.m4: misc updates
@@ -2010,7 +2420,10 @@
 
 	* src/process/catchall.c: signed/unsigned warnings
 
-	* src/cm_funcs/rcsedit.c, src/cm_funcs/rcsload.c, src/cm_funcs/rcssymbs.c, src/compare/m2comp.c, src/sheet/field_of.c, src/string/dyn_app.c, src/string/dyn_cata.c, src/string/dyn_copy.c, src/string/lsbycols.c:
+	* src/cm_funcs/rcsedit.c, src/cm_funcs/rcsload.c,
+	  src/cm_funcs/rcssymbs.c, src/compare/m2comp.c, src/sheet/field_of.c,
+	  src/string/dyn_app.c, src/string/dyn_cata.c, src/string/dyn_copy.c,
+	  src/string/lsbycols.c:
 	compile:g++
 
 1998-05-29  Thomas E. Dickey  <dickey@clark.net>
@@ -2239,7 +2652,9 @@
 	* include/ptypes.h:
 	prop up PROTOTYPES definition with autoconf'd variable
 
-	* test/pathname/fileblox.ref, test/pathname/fileblox.sh, test/cm_funcs/cmv_last.ref, test/cm_funcs/cmv_dir.ref:
+	* test/pathname/fileblox.ref, test/pathname/fileblox.sh,
+	  test/cm_funcs/cmv_last.ref,
+	  test/cm_funcs/cmv_dir.ref:
 	RCS_BASE
 
 	* test/td_defns.mk: add definition of SOURCES
@@ -2284,7 +2699,9 @@
 
 1997-09-09  Thomas E. Dickey  <dickey@clark.net>
 
-	* test/unix/modules, test/string/modules, test/process/modules, test/port2vms/modules, test/pathname/modules, test/memory/modules, test/curses/modules:
+	* test/unix/modules, test/string/modules, test/process/modules,
+	  test/port2vms/modules, test/pathname/modules, test/memory/modules,
+	  test/curses/modules:
 	RCS_BASE
 
 	* aclocal.m4: generate makefiles under test directory
@@ -2304,7 +2721,10 @@
 
 	* makefile.in: better distclean rule
 
-	* src/port2vms/modules, src/unix/modules, src/string/modules, src/sheet/modules, src/process/modules, src/pathname/modules, src/memory/modules, src/curses/modules, src/compare/modules:
+	* src/port2vms/modules, src/unix/modules, src/string/modules,
+	  src/sheet/modules, src/process/modules, src/pathname/modules,
+	  src/memory/modules, src/curses/modules,
+	  src/compare/modules:
 	RCS_BASE
 
 	* aclocal.m4: oops
@@ -2355,7 +2775,10 @@
 
 	* support/ins_hdr: RCS_BASE
 
-	* include/td_sheet.h, include/td_scomp.h, include/td_qsort.h, include/td_lib.h, include/td_curse.h, include/td_btree.h, include/ptypes.h, include/port2vms.h, include/dyn_str.h, include/deltree.h:
+	* include/td_sheet.h, include/td_scomp.h, include/td_qsort.h,
+	  include/td_lib.h, include/td_curse.h, include/td_btree.h,
+	  include/ptypes.h, include/port2vms.h, include/dyn_str.h,
+	  include/deltree.h:
 	quoted-includes
 
 	* makefile.in: made a workable install rule
@@ -2822,7 +3245,8 @@
 	* include/port2vms.h:
 	don't test if $DESCRIPTOR is defined, since that breaks some ANSI compiles
 
-	* src/curses/wresize.c, src/curses/rawgets.c, src/curses/logch.c, src/curses/cmdch.c:
+	* src/curses/wresize.c, src/curses/rawgets.c, src/curses/logch.c,
+	  src/curses/cmdch.c:
 	ARO/KEY-definitions
 
 	* include/td_curse.h:
@@ -3117,7 +3541,11 @@
 
 	* include/ptypes.h: some symbols change with autoconf 2.1
 
-	* test/cm_funcs/Makefile, test/compare/Makefile, test/curses/Makefile, test/memory/Makefile, test/pathname/Makefile, test/port2dos/Makefile, test/port2vms/Makefile, test/process/Makefile, test/sheet/Makefile, test/string/Makefile, test/unix/Makefile:
+	* test/cm_funcs/Makefile, test/compare/Makefile, test/curses/Makefile,
+	  test/memory/Makefile, test/pathname/Makefile, test/port2dos/Makefile,
+	  test/port2vms/Makefile, test/process/Makefile, test/sheet/Makefile,
+	  test/string/Makefile,
+	  test/unix/Makefile:
 	include-ordering
 
 	* src/cm_funcs/cmv_dir.c: lock-owner must not be null-pointer!
@@ -3130,7 +3558,11 @@
 
 1995-01-28  Thomas E. Dickey  <dickey@clark.net>
 
-	* test/cm_funcs/Makefile, test/compare/Makefile, test/curses/Makefile, test/memory/Makefile, test/pathname/Makefile, test/port2dos/Makefile, test/port2vms/Makefile, test/process/Makefile, test/sheet/Makefile, test/string/Makefile, test/unix/Makefile, test/td_defns.mk:
+	* test/cm_funcs/Makefile, test/compare/Makefile, test/curses/Makefile,
+	  test/memory/Makefile, test/pathname/Makefile, test/port2dos/Makefile,
+	  test/port2vms/Makefile, test/process/Makefile, test/sheet/Makefile,
+	  test/string/Makefile, test/unix/Makefile,
+	  test/td_defns.mk:
 	osf1-port
 
 	* td_make.in: use SHELL variable within makefile
@@ -3140,7 +3572,11 @@
 	split up .c.a rule into .c.o, .o.a to try to make osf1 work properly
 	some minor cleanup.
 
-	* src/cm_funcs/Makefile, src/compare/Makefile, src/curses/Makefile, src/memory/Makefile, src/pathname/Makefile, src/port2dos/Makefile, src/port2vms/Makefile, src/process/Makefile, src/sheet/Makefile, src/string/Makefile, src/unix/Makefile, src/td_defns.mk:
+	* src/cm_funcs/Makefile, src/compare/Makefile, src/curses/Makefile,
+	  src/memory/Makefile, src/pathname/Makefile, src/port2dos/Makefile,
+	  src/port2vms/Makefile, src/process/Makefile, src/sheet/Makefile,
+	  src/string/Makefile, src/unix/Makefile,
+	  src/td_defns.mk:
 	osf1-port
 
 	* configure.in: added resizeterm (for ncurses extension)
@@ -3278,7 +3714,8 @@
 
 	* src/port2vms/zone2vms.c: use MODULE_ID
 
-	* src/pathname/acc_mode.c, src/curses/on_winch.c, src/curses/wresize.c, src/curses/win2file.c:
+	* src/pathname/acc_mode.c, src/curses/on_winch.c, src/curses/wresize.c,
+	  src/curses/win2file.c:
 	lint
 
 1994-10-05  Thomas E. Dickey  <dickey@clark.net>
@@ -3452,10 +3889,21 @@
 
 	* src/port2vms/time2vms.c: correct position of module-id
 
-	* src/port2vms/dir2path.c, src/port2vms/name2vms.c, src/port2vms/path2dir.c, src/port2vms/path2vms.c, src/port2vms/rmsio.c, src/port2vms/time2vms.c, src/port2vms/uid2s.c, src/port2vms/utimes.c, src/port2vms/vms2name.c, src/port2vms/vms_dirs.c, src/port2vms/vms_pthc.c, src/port2vms/vms_rpth.c, src/port2vms/zone2vms.c:
+	* src/port2vms/dir2path.c, src/port2vms/name2vms.c,
+	  src/port2vms/path2dir.c, src/port2vms/path2vms.c,
+	  src/port2vms/rmsio.c, src/port2vms/time2vms.c, src/port2vms/uid2s.c,
+	  src/port2vms/utimes.c, src/port2vms/vms2name.c,
+	  src/port2vms/vms_dirs.c, src/port2vms/vms_pthc.c,
+	  src/port2vms/vms_rpth.c,
+	  src/port2vms/zone2vms.c:
 	merge:portunix
 
-	* src/port2vms/dir2path.c, src/port2vms/path2dir.c, src/port2vms/path2vms.c, src/port2vms/rmsio.c, src/port2vms/time2vms.c, src/port2vms/uid2s.c, src/port2vms/utimes.c, src/port2vms/vms2name.c, src/port2vms/vms_dirs.c, src/port2vms/vms_pthc.c, src/port2vms/vms_rpth.c:
+	* src/port2vms/dir2path.c, src/port2vms/path2dir.c,
+	  src/port2vms/path2vms.c, src/port2vms/rmsio.c,
+	  src/port2vms/time2vms.c, src/port2vms/uid2s.c, src/port2vms/utimes.c,
+	  src/port2vms/vms2name.c, src/port2vms/vms_dirs.c,
+	  src/port2vms/vms_pthc.c,
+	  src/port2vms/vms_rpth.c:
 	use MODULE_ID
 
 	* src/port2vms/Makefile:
@@ -3507,7 +3955,8 @@
 
 	* include/Makefile: added cmv_defs.h
 
-	* include/cmv_defs.h, test/cm_funcs/cmv_dir.sh, test/cm_funcs/cmv_last.sh:
+	* include/cmv_defs.h, test/cm_funcs/cmv_dir.sh,
+	  test/cm_funcs/cmv_last.sh:
 	RCS_BASE
 
 	* test/cm_funcs/Makefile: added test programs for cmv_dir, cmv_last
@@ -3808,7 +4257,9 @@
 
 	* td_make.in: split LIBS into LIB_DEPS and LIB_ARGS
 
-	* test/td_rules.mk, test/Makefile, src/Makefile, src/td_rules.mk, Makefile, support/Makefile:
+	* test/td_rules.mk, test/Makefile, src/Makefile, src/td_rules.mk,
+	  Makefile,
+	  support/Makefile:
 	port:ClarkNet
 
 	* aclocal.m4: forgot struct-screen
@@ -3901,10 +4352,17 @@
 
 	* test/process/usercopy.sh: relative pathnames
 
-	* test/process/Makefile, test/port2dos/Makefile, test/port2vms/Makefile, test/sheet/Makefile:
+	* test/process/Makefile, test/port2dos/Makefile, test/port2vms/Makefile,
+	  test/sheet/Makefile:
 	RCS_BASE
 
-	* test/pathname/walktree.ref, test/pathname/walktree.sh, test/pathname/fp2argv.sh, test/pathname/relpath.ref, test/pathname/pathhead.ref, test/pathname/file2mem.ref, test/pathname/file2arg.ref, test/pathname/pathhead.sh, test/pathname/filecopy.sh, test/pathname/file2mem.sh, test/pathname/file2arg.sh, test/pathname/abspath.ref:
+	* test/pathname/walktree.ref, test/pathname/walktree.sh,
+	  test/pathname/fp2argv.sh, test/pathname/relpath.ref,
+	  test/pathname/pathhead.ref, test/pathname/file2mem.ref,
+	  test/pathname/file2arg.ref, test/pathname/pathhead.sh,
+	  test/pathname/filecopy.sh, test/pathname/file2mem.sh,
+	  test/pathname/file2arg.sh,
+	  test/pathname/abspath.ref:
 	relative-pathnames
 
 	* test/pathname/Makefile, test/memory/Makefile: RCS_BASE
@@ -3924,7 +4382,8 @@
 
 	* src/compare/diffload.c: use MODULE_ID
 
-	* test/compare/scomp.sh, test/compare/diffload.sh, test/compare/m2comp.sh:
+	* test/compare/scomp.sh, test/compare/diffload.sh,
+	  test/compare/m2comp.sh:
 	relative-pathnames
 
 	* test/cm_funcs/Makefile: use variable 'THIS'
@@ -3957,18 +4416,25 @@
 
 	* src/memory/descrip.mms: typos
 
-	* src/unix/descrip.mms, src/unix/Makefile, src/string/descrip.mms, src/string/Makefile:
+	* src/unix/descrip.mms, src/unix/Makefile, src/string/descrip.mms,
+	  src/string/Makefile:
 	RCS_BASE
 
-	* src/compare/descrip.mms, src/curses/descrip.mms, src/pathname/descrip.mms, src/process/descrip.mms:
+	* src/compare/descrip.mms, src/curses/descrip.mms,
+	  src/pathname/descrip.mms,
+	  src/process/descrip.mms:
 	typos
 
-	* src/sheet/descrip.mms, src/sheet/Makefile, src/process/descrip.mms, src/process/Makefile, src/port2vms/descrip.mms:
+	* src/sheet/descrip.mms, src/sheet/Makefile, src/process/descrip.mms,
+	  src/process/Makefile,
+	  src/port2vms/descrip.mms:
 	RCS_BASE
 
 	* src/td_rules.mms: forgot to define libraries (do I need it?)
 
-	* src/port2vms/Makefile, src/port2dos/Makefile, src/pathname/descrip.mms, src/pathname/Makefile, src/memory/descrip.mms:
+	* src/port2vms/Makefile, src/port2dos/Makefile,
+	  src/pathname/descrip.mms, src/pathname/Makefile,
+	  src/memory/descrip.mms:
 	RCS_BASE
 
 	* src/memory/Makefile: mem2file doesn't belong here
@@ -3995,7 +4461,8 @@
 	* src/Makefile:
 	split this into a number of subdirectories, which should be easier to manage
 
-	* src/cm_funcs/descrip.mms, src/td_defns.mk, src/cm_funcs/Makefile, src/td_rules.mk:
+	* src/cm_funcs/descrip.mms, src/td_defns.mk, src/cm_funcs/Makefile,
+	  src/td_rules.mk:
 	RCS_BASE
 
 	* certify/release.txt: started notes for 13.0
@@ -4127,7 +4594,10 @@
 
 	* include/ptypes.h: use GNU-style HAVE_CONFIG_H
 
-	* include/deltree.h, include/dyn_str.h, include/rcsdefs.h, include/sccsdefs.h, include/td_curse.h, include/td_lib.h, include/td_qsort.h, include/td_regex.h, include/td_scomp.h, include/acl.h:
+	* include/deltree.h, include/dyn_str.h, include/rcsdefs.h,
+	  include/sccsdefs.h, include/td_curse.h, include/td_lib.h,
+	  include/td_qsort.h, include/td_regex.h, include/td_scomp.h,
+	  include/acl.h:
 	name-convention
 
 	* include/ptypes.h: first cut of splitting out "td_ext.h"
@@ -4345,7 +4815,11 @@
 
 	* patchlevel.h: RCS_BASE
 
-	* src/cm_funcs/rcslast.c, src/cm_funcs/rcsperm.c, src/cm_funcs/rcstemp.c, src/cm_funcs/sccslast.c, src/pathname/stat_dir.c, src/pathname/stat_fil.c, src/pathname/walktree.c, src/pathname/which.c:
+	* src/cm_funcs/rcslast.c, src/cm_funcs/rcsperm.c,
+	  src/cm_funcs/rcstemp.c, src/cm_funcs/sccslast.c,
+	  src/pathname/stat_dir.c, src/pathname/stat_fil.c,
+	  src/pathname/walktree.c,
+	  src/pathname/which.c:
 	renamed-STAT
 
 	* src/cm_funcs/rcslast.c, src/cm_funcs/rcsperm.c, src/pathname/which.c:
@@ -4359,7 +4833,8 @@
 
 	* src/pathname/filesize.c: use MODULE_ID
 
-	* src/pathname/filecopy.c, src/compare/diffload.c, src/cm_funcs/rcsargpr.c:
+	* src/pathname/filecopy.c, src/compare/diffload.c,
+	  src/cm_funcs/rcsargpr.c:
 	renamed-STAT
 
 	* src/cm_funcs/rcsargpr.c: use MODULE_ID
@@ -4432,7 +4907,8 @@
 
 1993-12-02  dickey@software.org
 
-	* src/cm_funcs/sccsname.c, src/cm_funcs/rcsname.c, src/pathname/trimpath.c:
+	* src/cm_funcs/sccsname.c, src/cm_funcs/rcsname.c,
+	  src/pathname/trimpath.c:
 	PATH_SLASH-hacks
 
 1993-12-02  dickey@software.org
@@ -4454,7 +4930,9 @@
 	* src/port2vms/vms_pthc.c, src/port2vms/vms2name.c:
 	ifdefs/TurboC-warnings
 
-	* src/port2vms/utimes.c, src/port2vms/vms_dirs.c, src/port2vms/uid2s.c, src/pathname/trnstree.c, src/port2vms/time2vms.c, src/port2vms/rmsio.c:
+	* src/port2vms/utimes.c, src/port2vms/vms_dirs.c, src/port2vms/uid2s.c,
+	  src/pathname/trnstree.c, src/port2vms/time2vms.c,
+	  src/port2vms/rmsio.c:
 	ifdefs
 
 	* src/pathname/editfile.c: ifdefs/TurboC-warnings
@@ -4463,7 +4941,8 @@
 
 	* src/port2vms/name2vms.c: ifdefs/TurboC-warnings
 
-	* src/pathname/edittree.c, src/pathname/dlettree.c, src/port2vms/dir2path.c:
+	* src/pathname/edittree.c, src/pathname/dlettree.c,
+	  src/port2vms/dir2path.c:
 	ifdefs
 
 1993-12-01  dickey@software.org
@@ -4476,7 +4955,8 @@
 
 1993-12-01  dickey@software.org
 
-	* src/cm_funcs/packdate.c, src/pathname/file2mem.c, src/pathname/file2arg.c:
+	* src/cm_funcs/packdate.c, src/pathname/file2mem.c,
+	  src/pathname/file2arg.c:
 	CLCC-warnings
 
 1993-12-01  dickey@software.org
@@ -4806,7 +5286,9 @@
 
 1993-11-05  dickey@software.org
 
-	* include/td_curse.h, include/Makefile, src/Makefile, src/descrip.mms, src/curses/cmdch.c, src/curses/logch.c, src/curses/rawgets.c:
+	* include/td_curse.h, include/Makefile, src/Makefile, src/descrip.mms,
+	  src/curses/cmdch.c, src/curses/logch.c,
+	  src/curses/rawgets.c:
 	absorbed:cmdch.h
 
 1993-11-01  dickey@software.org
@@ -4844,7 +5326,14 @@
 
 	* support/old-td_lib.mk: added NO_IDENT ifdef for linting ident's
 
-	* src/cm_funcs/cutoff.c, src/compare/cmpqsort.c, src/curses/beep.c, src/curses/blip.c, src/curses/dumpchr.c, src/memory/doalloc.c, src/pathname/abspath.c, src/pathname/acc_mode.c, src/pathname/add2fnam.c, src/pathname/arg2file.c, src/pathname/copyback.c, src/pathname/denode.c, src/pathname/dotname.c, src/process/bldarg.c, src/process/catarg.c, src/process/catchall.c, src/string/dftenv.c, src/string/dotcmp.c:
+	* src/cm_funcs/cutoff.c, src/compare/cmpqsort.c, src/curses/beep.c,
+	  src/curses/blip.c, src/curses/dumpchr.c, src/memory/doalloc.c,
+	  src/pathname/abspath.c, src/pathname/acc_mode.c,
+	  src/pathname/add2fnam.c, src/pathname/arg2file.c,
+	  src/pathname/copyback.c, src/pathname/denode.c,
+	  src/pathname/dotname.c, src/process/bldarg.c, src/process/catarg.c,
+	  src/process/catchall.c, src/string/dftenv.c,
+	  src/string/dotcmp.c:
 	ifdef-ident
 
 	* src/compare/diffload.c: ifdef-ident
@@ -4852,12 +5341,20 @@
 
 1993-10-29  dickey@software.org
 
-	* src/cm_funcs/cutoff.c, src/curses/dumpchr.c, src/pathname/arg2file.c, src/pathname/dotname.c, src/process/bldarg.c, src/process/catarg.c, src/string/dftenv.c, src/string/dotcmp.c:
+	* src/cm_funcs/cutoff.c, src/curses/dumpchr.c, src/pathname/arg2file.c,
+	  src/pathname/dotname.c, src/process/bldarg.c, src/process/catarg.c,
+	  src/string/dftenv.c,
+	  src/string/dotcmp.c:
 	use MODULE_ID
 
 1993-10-29  dickey@software.org
 
-	* src/pathname/file2arg.c, src/pathname/file2mem.c, src/pathname/filesize.c, src/pathname/fp2argv.c, src/pathname/ftype.c, src/pathname/ftype2.c, src/process/execute.c, src/process/failed.c, src/process/for_admn.c, src/process/for_user.c, src/process/gethome.c, src/process/getuser.c, src/sheet/field_of.c:
+	* src/pathname/file2arg.c, src/pathname/file2mem.c,
+	  src/pathname/filesize.c, src/pathname/fp2argv.c, src/pathname/ftype.c,
+	  src/pathname/ftype2.c, src/process/execute.c, src/process/failed.c,
+	  src/process/for_admn.c, src/process/for_user.c, src/process/gethome.c,
+	  src/process/getuser.c,
+	  src/sheet/field_of.c:
 	ifdef-ident
 
 	* src/pathname/filecopy.c, src/unix/gid2s.c: ifdef-ident
@@ -4871,7 +5368,16 @@
 
 	* src/curses/rawgets.c: gcc warnings for HP/UX
 
-	* src/cm_funcs/next_ver.c, src/cm_funcs/packdate.c, src/cm_funcs/rcs_dir.c, src/cm_funcs/rcsdebug.c, src/compare/m2comp.c, src/curses/killchar.c, src/curses/logch.c, src/curses/padedit.c, src/curses/rawterm.c, src/pathname/is_spath.c, src/pathname/istextfl.c, src/pathname/mem2file.c, src/pathname/modechar.c, src/pathname/name2s.c, src/pathname/pathcat.c, src/pathname/pathcmp.c, src/pathname/pathhead.c, src/pathname/pathleaf.c, src/process/makeargv.c, src/string/lsbycols.c, src/string/ltostr.c:
+	* src/cm_funcs/next_ver.c, src/cm_funcs/packdate.c,
+	  src/cm_funcs/rcs_dir.c, src/cm_funcs/rcsdebug.c, src/compare/m2comp.c,
+	  src/curses/killchar.c, src/curses/logch.c, src/curses/padedit.c,
+	  src/curses/rawterm.c, src/pathname/is_spath.c,
+	  src/pathname/istextfl.c, src/pathname/mem2file.c,
+	  src/pathname/modechar.c, src/pathname/name2s.c,
+	  src/pathname/pathcat.c, src/pathname/pathcmp.c,
+	  src/pathname/pathhead.c, src/pathname/pathleaf.c,
+	  src/process/makeargv.c, src/string/lsbycols.c,
+	  src/string/ltostr.c:
 	ifdef-ident
 
 	* src/process/interact.c: ifdef-ident
@@ -4881,12 +5387,25 @@
 
 1993-10-29  dickey@software.org
 
-	* src/cm_funcs/rcs_dir.c, src/cm_funcs/rcsdebug.c, src/compare/m2comp.c, src/pathname/istextfl.c, src/pathname/modechar.c, src/process/makeargv.c, src/string/lsbycols.c:
+	* src/cm_funcs/rcs_dir.c, src/cm_funcs/rcsdebug.c, src/compare/m2comp.c,
+	  src/pathname/istextfl.c, src/pathname/modechar.c,
+	  src/process/makeargv.c,
+	  src/string/lsbycols.c:
 	use MODULE_ID
 
 1993-10-29  dickey@software.org
 
-	* src/cm_funcs/rcskeys.c, src/cm_funcs/rcslast.c, src/cm_funcs/rcsload.c, src/cm_funcs/rcslocks.c, src/cm_funcs/rcsname.c, src/cm_funcs/rcspath.c, src/cm_funcs/rcsperm.c, src/cm_funcs/rcssymbs.c, src/cm_funcs/rcstemp.c, src/cm_funcs/rcstime.c, src/cm_funcs/samebr.c, src/cm_funcs/sccs_dir.c, src/cm_funcs/sccslast.c, src/cm_funcs/sccsname.c, src/compare/scomp.c, src/curses/resizwin.c, src/curses/savewin.c, src/memory/stralloc.c, src/pathname/relpath.c, src/pathname/sameleaf.c, src/process/revert.c, src/process/shoarg.c, src/sheet/ss_field.c, src/string/strbcmp.c, src/unix/s2uid.c:
+	* src/cm_funcs/rcskeys.c, src/cm_funcs/rcslast.c,
+	  src/cm_funcs/rcsload.c, src/cm_funcs/rcslocks.c,
+	  src/cm_funcs/rcsname.c, src/cm_funcs/rcspath.c,
+	  src/cm_funcs/rcsperm.c, src/cm_funcs/rcssymbs.c,
+	  src/cm_funcs/rcstemp.c, src/cm_funcs/rcstime.c, src/cm_funcs/samebr.c,
+	  src/cm_funcs/sccs_dir.c, src/cm_funcs/sccslast.c,
+	  src/cm_funcs/sccsname.c, src/compare/scomp.c, src/curses/resizwin.c,
+	  src/curses/savewin.c, src/memory/stralloc.c, src/pathname/relpath.c,
+	  src/pathname/sameleaf.c, src/process/revert.c, src/process/shoarg.c,
+	  src/sheet/ss_field.c, src/string/strbcmp.c,
+	  src/unix/s2uid.c:
 	ifdef-ident
 
 	* src/cm_funcs/rcsedit.c: ifdef-ident
@@ -4896,27 +5415,47 @@
 
 1993-10-29  dickey@software.org
 
-	* src/cm_funcs/rcskeys.c, src/cm_funcs/rcslocks.c, src/cm_funcs/rcssymbs.c, src/compare/scomp.c, src/memory/stralloc.c, src/sheet/ss_field.c, src/string/strbcmp.c:
+	* src/cm_funcs/rcskeys.c, src/cm_funcs/rcslocks.c,
+	  src/cm_funcs/rcssymbs.c, src/compare/scomp.c, src/memory/stralloc.c,
+	  src/sheet/ss_field.c,
+	  src/string/strbcmp.c:
 	use MODULE_ID
 
 1993-10-29  dickey@software.org
 
-	* src/cm_funcs/rcsargpr.c, src/cm_funcs/vcs_file.c, src/cm_funcs/vercmp.c, src/curses/viewfile.c, src/memory/txtalloc.c, src/memory/vecalloc.c, src/memory/vecedit.c, src/memory/veclen.c, src/pathname/stat_dir.c, src/pathname/stat_fil.c, src/pathname/track_wd.c, src/pathname/trimpath.c, src/pathname/walktree.c, src/pathname/which.c, src/process/savesuid.c, src/process/showuids.c, src/process/usercopy.c, src/process/userprot.c, src/process/walkback.c, src/string/dyn_copy.c, src/string/dyn_str.c, src/string/strclean.c, src/string/strcount.c, src/string/strtrim.c, src/string/strucmp.c, src/string/strucpy.c, src/string/strwcmp.c, src/unix/uid2s.c:
+	* src/cm_funcs/rcsargpr.c, src/cm_funcs/vcs_file.c,
+	  src/cm_funcs/vercmp.c, src/curses/viewfile.c, src/memory/txtalloc.c,
+	  src/memory/vecalloc.c, src/memory/vecedit.c, src/memory/veclen.c,
+	  src/pathname/stat_dir.c, src/pathname/stat_fil.c,
+	  src/pathname/track_wd.c, src/pathname/trimpath.c,
+	  src/pathname/walktree.c, src/pathname/which.c, src/process/savesuid.c,
+	  src/process/showuids.c, src/process/usercopy.c,
+	  src/process/userprot.c, src/process/walkback.c, src/string/dyn_copy.c,
+	  src/string/dyn_str.c, src/string/strclean.c, src/string/strcount.c,
+	  src/string/strtrim.c, src/string/strucmp.c, src/string/strucpy.c,
+	  src/string/strwcmp.c,
+	  src/unix/uid2s.c:
 	ifdef-ident
 
 1993-10-29  dickey@software.org
 
-	* src/memory/vecedit.c, src/memory/veclen.c, src/pathname/track_wd.c, src/process/savesuid.c, src/string/dyn_copy.c, src/string/dyn_str.c, src/string/strclean.c, src/string/strcount.c, src/string/strtrim.c, src/string/strucmp.c, src/string/strucpy.c, src/string/strwcmp.c:
+	* src/memory/vecedit.c, src/memory/veclen.c, src/pathname/track_wd.c,
+	  src/process/savesuid.c, src/string/dyn_copy.c, src/string/dyn_str.c,
+	  src/string/strclean.c, src/string/strcount.c, src/string/strtrim.c,
+	  src/string/strucmp.c, src/string/strucpy.c,
+	  src/string/strwcmp.c:
 	use MODULE_ID
 
 1993-10-29  dickey@software.org
 
-	* src/sheet/count_ss.c, src/string/dyn_app.c, src/string/dyn_appc.c, src/string/dyn_cata.c:
+	* src/sheet/count_ss.c, src/string/dyn_app.c, src/string/dyn_appc.c,
+	  src/string/dyn_cata.c:
 	ifdef-ident
 
 1993-10-29  dickey@software.org
 
-	* src/sheet/count_ss.c, src/string/dyn_app.c, src/string/dyn_appc.c, src/string/dyn_cata.c:
+	* src/sheet/count_ss.c, src/string/dyn_app.c, src/string/dyn_appc.c,
+	  src/string/dyn_cata.c:
 	use MODULE_ID
 
 1993-10-29  dickey@software.org
@@ -4945,7 +5484,8 @@
 
 	* include/ptypes.h: turned off default leak-testing
 
-	* src/curses/padedit.c, src/cm_funcs/packdate.c, src/process/walkback.c, include/ptypes.h:
+	* src/curses/padedit.c, src/cm_funcs/packdate.c, src/process/walkback.c,
+	  include/ptypes.h:
 	SR10.3-lint
 
 1993-09-24  dickey@software.org
@@ -4964,7 +5504,12 @@
 
 1993-09-23  dickey@software.org
 
-	* test/cm_funcs/run_test.sh, test/compare/run_test.sh, test/curses/run_test.sh, test/memory/run_test.sh, test/pathname/run_test.sh, test/port2dos/run_test.sh, test/process/run_test.sh, test/sheet/run_test.sh, test/string/run_test.sh, test/unix/run_test.sh:
+	* test/cm_funcs/run_test.sh, test/compare/run_test.sh,
+	  test/curses/run_test.sh, test/memory/run_test.sh,
+	  test/pathname/run_test.sh, test/port2dos/run_test.sh,
+	  test/process/run_test.sh, test/sheet/run_test.sh,
+	  test/string/run_test.sh,
+	  test/unix/run_test.sh:
 	RCS_BASE
 
 1993-09-23  dickey@software.org
@@ -4982,7 +5527,12 @@
 
 	* include/td_scomp.h: clean-compile with SunOs & gcc
 
-	* src/port2vms/name2vms.c, src/pathname/edittree.c, src/pathname/dlettree.c, src/port2vms/path2dir.c, src/port2vms/vms2name.c, src/pathname/trnstree.c, src/port2vms/vms_pthc.c, src/port2vms/vms_rpth.c, src/port2vms/vms_wild.c, src/pathname/editfile.c, src/port2vms/dir2path.c:
+	* src/port2vms/name2vms.c, src/pathname/edittree.c,
+	  src/pathname/dlettree.c, src/port2vms/path2dir.c,
+	  src/port2vms/vms2name.c, src/pathname/trnstree.c,
+	  src/port2vms/vms_pthc.c, src/port2vms/vms_rpth.c,
+	  src/port2vms/vms_wild.c, src/pathname/editfile.c,
+	  src/port2vms/dir2path.c:
 	gcc warnings
 
 	* support/old-td_lib.mk:
@@ -4996,7 +5546,48 @@
 	* test/run_test.sh:
 	made a quick hack to redirect the logfiles from Purify, one-per-test
 
-	* src/cm_funcs/cutoff.c, src/compare/diffload.c, src/curses/beep.c, src/curses/blip.c, src/curses/cmdch.c, src/curses/dumpchr.c, src/curses/dumpwin.c, src/memory/doalloc.c, src/pathname/copyback.c, src/process/bldarg.c, src/process/catarg.c, src/process/catchall.c, src/string/dotcmp.c, src/cm_funcs/newzone.c, src/cm_funcs/next_ver.c, src/compare/m2comp.c, src/curses/erasechr.c, src/curses/killchar.c, src/curses/logch.c, src/curses/padedit.c, src/curses/rawgets.c, src/pathname/file2arg.c, src/pathname/file2mem.c, src/pathname/filecopy.c, src/pathname/fp2argv.c, src/pathname/istextfl.c, src/pathname/mem2file.c, src/pathname/modechar.c, src/pathname/name2s.c, src/pathname/pathcmp.c, src/pathname/pathhead.c, src/pathname/pathleaf.c, src/process/execute.c, src/process/failed.c, src/process/for_admn.c, src/process/for_user.c, src/process/gethome.c, src/process/getuser.c, src/process/makeargv.c, src/sheet/field_of.c, src/string/lsbycols.c, src/string/ltostr.c, src/unix/gid2s.c, src/cm_funcs/rcs_dir.c, src/cm_funcs/rcsdebug.c, src/cm_funcs/rcsedit.c, src/cm_funcs/rcskeys.c, src/cm_funcs/rcslast.c, src/cm_funcs/rcsload.c, src/cm_funcs/rcsname.c, src/cm_funcs/rcspath.c, src/cm_funcs/rcsperm.c, src/cm_funcs/rcssymbs.c, src/cm_funcs/rcstemp.c, src/cm_funcs/rcstime.c, src/cm_funcs/sccs_dir.c, src/cm_funcs/sccslast.c, src/cm_funcs/sccsname.c, src/compare/scomp.c, src/curses/rawterm.c, src/curses/resizwin.c, src/curses/savewin.c, src/curses/scr_size.c, src/memory/stralloc.c, src/memory/txtalloc.c, src/pathname/relpath.c, src/pathname/sameleaf.c, src/pathname/track_wd.c, src/pathname/trimpath.c, src/process/shoarg.c, src/string/strbcmp.c, src/string/strclean.c, src/string/strucmp.c, src/string/strucpy.c, src/string/strwcmp.c, src/unix/s2gid.c, src/unix/s2uid.c, src/unix/setmtime.c, src/cm_funcs/samebr.c, src/cm_funcs/vercmp.c, src/curses/viewfile.c, src/curses/win2file.c, src/curses/wrepaint.c, src/memory/vecalloc.c, src/memory/vecedit.c, src/pathname/abspath.c, src/pathname/walktree.c, src/pathname/which.c, src/process/interact.c, src/process/usercopy.c, src/process/userprot.c, src/process/walkback.c, src/unix/uid2s.c, test/compare/test_cmp.c, include/td_scomp.h, test/Makefile, include/ptypes.h, include/rcsdefs.h, include/td_curse.h, include/td_lib.h, include/sccsdefs.h, src/Makefile, src/pathname/arg2file.c, src/pathname/add2fnam.c, src/pathname/denode.c, src/pathname/dotname.c, src/pathname/pathcat.c, src/string/strtrim.c:
+	* src/cm_funcs/cutoff.c, src/compare/diffload.c, src/curses/beep.c,
+	  src/curses/blip.c, src/curses/cmdch.c, src/curses/dumpchr.c,
+	  src/curses/dumpwin.c, src/memory/doalloc.c, src/pathname/copyback.c,
+	  src/process/bldarg.c, src/process/catarg.c, src/process/catchall.c,
+	  src/string/dotcmp.c, src/cm_funcs/newzone.c, src/cm_funcs/next_ver.c,
+	  src/compare/m2comp.c, src/curses/erasechr.c, src/curses/killchar.c,
+	  src/curses/logch.c, src/curses/padedit.c, src/curses/rawgets.c,
+	  src/pathname/file2arg.c, src/pathname/file2mem.c,
+	  src/pathname/filecopy.c, src/pathname/fp2argv.c,
+	  src/pathname/istextfl.c, src/pathname/mem2file.c,
+	  src/pathname/modechar.c, src/pathname/name2s.c,
+	  src/pathname/pathcmp.c, src/pathname/pathhead.c,
+	  src/pathname/pathleaf.c, src/process/execute.c, src/process/failed.c,
+	  src/process/for_admn.c, src/process/for_user.c, src/process/gethome.c,
+	  src/process/getuser.c, src/process/makeargv.c, src/sheet/field_of.c,
+	  src/string/lsbycols.c, src/string/ltostr.c, src/unix/gid2s.c,
+	  src/cm_funcs/rcs_dir.c, src/cm_funcs/rcsdebug.c,
+	  src/cm_funcs/rcsedit.c, src/cm_funcs/rcskeys.c,
+	  src/cm_funcs/rcslast.c, src/cm_funcs/rcsload.c,
+	  src/cm_funcs/rcsname.c, src/cm_funcs/rcspath.c,
+	  src/cm_funcs/rcsperm.c, src/cm_funcs/rcssymbs.c,
+	  src/cm_funcs/rcstemp.c, src/cm_funcs/rcstime.c,
+	  src/cm_funcs/sccs_dir.c, src/cm_funcs/sccslast.c,
+	  src/cm_funcs/sccsname.c, src/compare/scomp.c, src/curses/rawterm.c,
+	  src/curses/resizwin.c, src/curses/savewin.c, src/curses/scr_size.c,
+	  src/memory/stralloc.c, src/memory/txtalloc.c, src/pathname/relpath.c,
+	  src/pathname/sameleaf.c, src/pathname/track_wd.c,
+	  src/pathname/trimpath.c, src/process/shoarg.c, src/string/strbcmp.c,
+	  src/string/strclean.c, src/string/strucmp.c, src/string/strucpy.c,
+	  src/string/strwcmp.c, src/unix/s2gid.c, src/unix/s2uid.c,
+	  src/unix/setmtime.c, src/cm_funcs/samebr.c, src/cm_funcs/vercmp.c,
+	  src/curses/viewfile.c, src/curses/win2file.c, src/curses/wrepaint.c,
+	  src/memory/vecalloc.c, src/memory/vecedit.c, src/pathname/abspath.c,
+	  src/pathname/walktree.c, src/pathname/which.c, src/process/interact.c,
+	  src/process/usercopy.c, src/process/userprot.c,
+	  src/process/walkback.c, src/unix/uid2s.c, test/compare/test_cmp.c,
+	  include/td_scomp.h, test/Makefile, include/ptypes.h,
+	  include/rcsdefs.h, include/td_curse.h, include/td_lib.h,
+	  include/sccsdefs.h, src/Makefile, src/pathname/arg2file.c,
+	  src/pathname/add2fnam.c, src/pathname/denode.c,
+	  src/pathname/dotname.c, src/pathname/pathcat.c,
+	  src/string/strtrim.c:
 	gcc-warnings
 
 1993-06-24  dickey@software.org
@@ -5472,7 +6063,8 @@
 
 1993-04-26  dickey@software.org
 
-	* src/compare/scomp.c, src/descrip.mms, src/compare/m2comp.c, src/string/dyn_str.c:
+	* src/compare/scomp.c, src/descrip.mms, src/compare/m2comp.c,
+	  src/string/dyn_str.c:
 	shorten-filenames
 
 1993-04-26  ste_cm@software.org
@@ -5482,12 +6074,14 @@
 
 1993-04-26  dickey@software.org
 
-	* src/pathname/fp2argv.c, src/string/dyn_appc.c, src/string/dyn_cata.c, src/string/dyn_copy.c:
+	* src/pathname/fp2argv.c, src/string/dyn_appc.c, src/string/dyn_cata.c,
+	  src/string/dyn_copy.c:
 	shorten-filenames
 
 1993-04-26  ste_cm@software.org
 
-	* src/pathname/fp2argv.c, src/string/dyn_appc.c, src/string/dyn_cata.c, src/string/dyn_copy.c:
+	* src/pathname/fp2argv.c, src/string/dyn_appc.c, src/string/dyn_cata.c,
+	  src/string/dyn_copy.c:
 	BASELINE Fri Apr 30 07:21:26 1993 -- split off from CM_TOOLS
 
 1993-04-26  dickey@software.org
@@ -6184,7 +6778,8 @@
 
 1992-11-20  dickey@software.org
 
-	* test/port2vms/vms_rpth.sh, test/port2vms/vms_pthc.sh, test/port2vms/dir2path.ref:
+	* test/port2vms/vms_rpth.sh, test/port2vms/vms_pthc.sh,
+	  test/port2vms/dir2path.ref:
 	RCS_BASE
 
 1992-11-20  ste_cm@software.org
@@ -6240,7 +6835,8 @@
 
 1992-11-20  dickey@software.org
 
-	* test/port2vms/name2vms.ref, test/port2vms/name2vms.sh, test/port2vms/run_test.sh:
+	* test/port2vms/name2vms.ref, test/port2vms/name2vms.sh,
+	  test/port2vms/run_test.sh:
 	RCS_BASE
 
 1992-11-20  ste_cm@software.org
@@ -6306,7 +6902,8 @@
 
 	* src/port2vms/vms_rpth.c: use prototypes
 
-	* src/pathname/trnstree.c, src/pathname/edittree.c, include/port2vms.h, src/pathname/editfile.c:
+	* src/pathname/trnstree.c, src/pathname/edittree.c, include/port2vms.h,
+	  src/pathname/editfile.c:
 	_FNX-macro
 
 1992-11-19  dickey@software.org
@@ -7211,7 +7808,29 @@
 
 1992-11-18  dickey@software.org
 
-	* test/pathname/which.sh, test/cm_funcs/vercmp.sh, test/pathname/walktree.sh, test/cm_funcs/vcs_file.sh, test/memory/vecedit.sh, test/memory/txtalloc.sh, test/process/usercopy.sh, test/unix/uid2s.sh, test/pathname/trimpath.sh, test/string/strwcmp.sh, test/string/strucmp.sh, test/curses/scr_size.sh, test/string/strbcmp.sh, test/cm_funcs/sccsname.sh, test/pathname/sameleaf.sh, test/cm_funcs/samebr.sh, test/unix/s2uid.sh, test/cm_funcs/rcsname.sh, test/pathname/relpath.sh, test/cm_funcs/rcsargpr.sh, test/cm_funcs/rcsload.sh, test/curses/rawgets.sh, test/pathname/pathhead.sh, test/pathname/pathleaf.sh, test/curses/padedit.sh, test/pathname/pathcmp.sh, test/cm_funcs/newzone.sh, test/cm_funcs/packdate.sh, test/pathname/name2s.sh, test/process/makeargv.sh, test/string/lsbycols.sh, test/string/ltostr.sh, test/unix/gid2s.sh, test/pathname/fp2argv.sh, test/process/gethome.sh, test/pathname/file2mem.sh, test/pathname/filecopy.sh, test/pathname/file2arg.sh, test/process/failed.sh, test/process/execute.sh, test/string/dotcmp.sh, test/compare/diffload.sh, test/memory/doalloc.sh, test/cm_funcs/cutoff.sh, test/pathname/abspath.sh:
+	* test/pathname/which.sh, test/cm_funcs/vercmp.sh,
+	  test/pathname/walktree.sh, test/cm_funcs/vcs_file.sh,
+	  test/memory/vecedit.sh, test/memory/txtalloc.sh,
+	  test/process/usercopy.sh, test/unix/uid2s.sh,
+	  test/pathname/trimpath.sh, test/string/strwcmp.sh,
+	  test/string/strucmp.sh, test/curses/scr_size.sh,
+	  test/string/strbcmp.sh, test/cm_funcs/sccsname.sh,
+	  test/pathname/sameleaf.sh, test/cm_funcs/samebr.sh,
+	  test/unix/s2uid.sh, test/cm_funcs/rcsname.sh,
+	  test/pathname/relpath.sh, test/cm_funcs/rcsargpr.sh,
+	  test/cm_funcs/rcsload.sh, test/curses/rawgets.sh,
+	  test/pathname/pathhead.sh, test/pathname/pathleaf.sh,
+	  test/curses/padedit.sh, test/pathname/pathcmp.sh,
+	  test/cm_funcs/newzone.sh, test/cm_funcs/packdate.sh,
+	  test/pathname/name2s.sh, test/process/makeargv.sh,
+	  test/string/lsbycols.sh, test/string/ltostr.sh, test/unix/gid2s.sh,
+	  test/pathname/fp2argv.sh, test/process/gethome.sh,
+	  test/pathname/file2mem.sh, test/pathname/filecopy.sh,
+	  test/pathname/file2arg.sh, test/process/failed.sh,
+	  test/process/execute.sh, test/string/dotcmp.sh,
+	  test/compare/diffload.sh, test/memory/doalloc.sh,
+	  test/cm_funcs/cutoff.sh,
+	  test/pathname/abspath.sh:
 	RCS_BASE
 
 	* test/run_test.sh: *** empty log message ***
@@ -8746,7 +9365,8 @@
 
 1991-10-18  dickey@software.org
 
-	* src/pathname/edittree.c, src/pathname/editfile.c, src/port2vms/dir2path.c:
+	* src/pathname/edittree.c, src/pathname/editfile.c,
+	  src/port2vms/dir2path.c:
 	use macro _MAIN
 
 1991-10-18  ste_cm@software.org
@@ -10204,7 +10824,8 @@
 
 	* src/Makefile: corrected include-path for 'rcspath.c'
 
-	* include/td_lib.h, src/cm_funcs/next_ver.c, src/descrip.mms, src/Makefile:
+	* include/td_lib.h, src/cm_funcs/next_ver.c, src/descrip.mms,
+	  src/Makefile:
 	RCS_BASE
 
 1991-09-17  dickey@software.org
@@ -10315,7 +10936,9 @@
 	* src/curses/padedit.c, src/process/userprot.c:
 	removed redundant 'errno' def (for VMS C 3.2)
 
-	* src/process/execute.c, src/pathname/file2mem.c, src/process/for_user.c, src/cm_funcs/rcstemp.c, src/pathname/filecopy.c:
+	* src/process/execute.c, src/pathname/file2mem.c,
+	  src/process/for_user.c, src/cm_funcs/rcstemp.c,
+	  src/pathname/filecopy.c:
 	removed redundant errno-def
 
 1991-09-09  dickey@software.org
@@ -13032,7 +13655,8 @@
 
 	* src/pathname/edittree.c: corrected TEST-code for apollo SR10.1
 
-	* src/pathname/trnstree.c, src/pathname/edittree.c, src/pathname/dlettree.c:
+	* src/pathname/trnstree.c, src/pathname/edittree.c,
+	  src/pathname/dlettree.c:
 	apollo SR10.1 function prototypes
 
 1989-09-28  dickey@software.org
@@ -15789,7 +16413,9 @@
 	* src/cm_funcs/packdate.c:
 	apollo sys5 cpp doesn't like 'defined()' expressions.
 
-	* src/pathname/abspath.c, src/unix/uid2s.c, src/unix/gid2s.c, src/cm_funcs/newzone.c, src/pathname/fp2argv.c:
+	* src/pathname/abspath.c, src/unix/uid2s.c, src/unix/gid2s.c,
+	  src/cm_funcs/newzone.c,
+	  src/pathname/fp2argv.c:
 	lint/compile with apollo sys5
 
 	* src/pathname/fp2argv.c: sccs2rcs keywords
@@ -16412,7 +17038,8 @@
 
 1988-05-06  dickey@software.org
 
-	* src/Makefile, src/cm_funcs/packdate.c, src/curses/resizwin.c, src/curses/padedit.c:
+	* src/Makefile, src/cm_funcs/packdate.c, src/curses/resizwin.c,
+	  src/curses/padedit.c:
 	port to gould
 
 	* src/pathname/abspath.c:

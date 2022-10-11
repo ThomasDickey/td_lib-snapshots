@@ -1,3 +1,3 @@
 #!/bin/sh
-# $Id: walkback.sh,v 12.0 1992/11/24 14:28:42 ste_cm Rel $
-./walkback | fgrep main |wc -l | sed -e 's@ @@g' >walkback.tmp
+# $Id: walkback.sh,v 12.1 2022/10/11 08:15:03 tom Exp $
+./walkback | grep main |wc -l | sed -e 's@ @@g' >walkback.tmp

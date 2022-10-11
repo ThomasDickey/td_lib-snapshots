@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id: abspath.sh,v 12.0 1992/11/18 11:36:27 ste_cm Rel $
+# $Id: abspath.sh,v 12.1 2022/10/11 08:15:03 tom Exp $
 WD=`pwd`
 cd ../..
 TOP=`pwd`
@@ -9,4 +9,4 @@ cd $WD
 ./abspath |\
 	sed	-e s@$TOP@TOP@ \
 		-e s@$ROOT/@/@ \
-		-e s@$ROOT@/@ | fgrep -v node_data >`basename $0 .sh`.tmp
+		-e s@$ROOT@/@ | grep -v node_data >`basename $0 .sh`.tmp

@@ -2,6 +2,7 @@
  * Author:	T.E.Dickey
  * Created:	17 Sep 1987
  * Modified:
+ *		11 Oct 2022, gcc warnings
  *		27 Dec 2014, coverity warnings.
  *		07 Mar 2004, remove K&R support, indent'd.
  *		01 Nov 2000, modified to work with OS/2 EMX.
@@ -41,7 +42,7 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: abspath.c,v 12.15 2014/12/27 22:23:49 tom Exp $")
+MODULE_ID("$Id: abspath.c,v 12.16 2022/10/11 20:44:27 tom Exp $")
 
 #ifdef	apollo
 #ifdef	apollo_sr10
@@ -197,7 +198,7 @@ abshome(char *path)
 #endif
 
 void
-abspath(char path[MAXPATHLEN])
+abspath(char *path)
 {
     char *base = path;
     char *s, *d = base;

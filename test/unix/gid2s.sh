@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id: gid2s.sh,v 12.0 1992/11/24 13:29:01 ste_cm Rel $
+# $Id: gid2s.sh,v 12.1 2022/10/11 08:15:23 tom Exp $
 #
 OUT=gid2s.tmp
 SED=/tmp/sed$$
@@ -10,7 +10,7 @@ trap "rm -f $ARG $REF $SED" 0 1 2 5 15
 rm -f $OUT
 #
 head -20 /etc/group |\
-	fgrep -v + |\
+	grep -v '[+]' |\
 	sed -e 's@:[^:]*:@ @' -e 's@:.*$@@' >$SED
 #
 if test ! -s $SED	# SunOs puts this in YP

@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	08 Mar 1989
  * Modified:
+ *		11 Oct 2022, gcc warnings
  *		27 Dec 2014, coverity warnings.
  *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
@@ -34,11 +35,11 @@
 #include	"dyn_str.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: rcsperm.c,v 12.11 2014/12/28 01:10:33 tom Exp $")
+MODULE_ID("$Id: rcsperm.c,v 12.12 2022/10/11 20:44:27 tom Exp $")
 
 int
 rcspermit(const char *path,
-	  char base[MAXPATHLEN],
+	  char *base,
 	  const char **accflag)
 {
     static DYN *access_list;
