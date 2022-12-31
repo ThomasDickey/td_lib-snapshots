@@ -1,4 +1,4 @@
-# $Id: td_make.in,v 12.42 2020/12/07 20:42:54 tom Exp $
+# $Id: td_make.in,v 12.43 2022/12/31 12:24:46 tom Exp $
 # common definitions for makefiles built over TD_LIB library.
 # vile:makemode
 
@@ -11,6 +11,7 @@ exec_prefix	= @exec_prefix@
 
 bindir		= @bindir@
 libdir		= @libdir@
+includedir	= @includedir@
 datarootdir	= @datarootdir@
 mandir		= @mandir@
 datadir		= @datadir@
@@ -51,7 +52,7 @@ INSTALL_MAN	= $(DESTDIR)$(mandir)
 
 ####### (Command-line Options) #################################################
 EXTRA_CPPFLAGS	= @EXTRA_CPPFLAGS@
-CPPFLAGS	= @CPPFLAGS@
+CPPFLAGS	= @CPPFLAGS@ -I$(includedir)
 CPP_CONFIG	= -I. -I$(TD_INC) -DHAVE_CONFIG_H -I$(BUILD_INC) $(CPPFLAGS) $(EXTRA_CPPFLAGS)
 CPP_OPTS	= $(CPP_CONFIG) $(EXTRA_CPP_OPTS)
 

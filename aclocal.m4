@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Id: aclocal.m4,v 12.218 2022/10/11 07:37:12 tom Exp $
+dnl $Id: aclocal.m4,v 12.219 2022/12/31 10:34:58 tom Exp $
 dnl vi:set ts=4:
 dnl ---------------------------------------------------------------------------
 dnl
@@ -1087,7 +1087,7 @@ if (foo + 1234L > 5678L)
 done
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_CURSES_HEADER version: 5 updated: 2015/04/23 20:35:30
+dnl CF_CURSES_HEADER version: 6 updated: 2022/12/02 20:06:52
 dnl ----------------
 dnl Find a "curses" header file, e.g,. "curses.h", or one of the more common
 dnl variations of ncurses' installs.
@@ -1101,7 +1101,7 @@ for cf_header in \
 	curses.h ifelse($1,,,[$1/curses.h]) ifelse($1,,[ncurses/ncurses.h ncurses/curses.h])
 do
 AC_TRY_COMPILE([#include <${cf_header}>],
-	[initscr(); tgoto("?", 0,0)],
+	[initscr(); endwin()],
 	[cf_cv_ncurses_header=$cf_header; break],[])
 done
 ])
@@ -1114,7 +1114,7 @@ fi
 AC_CHECK_HEADERS($cf_cv_ncurses_header)
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_CURSES_LIBS version: 44 updated: 2021/01/02 09:31:20
+dnl CF_CURSES_LIBS version: 45 updated: 2022/12/02 20:06:52
 dnl --------------
 dnl Look for the curses libraries.  Older curses implementations may require
 dnl termcap/termlib to be linked as well.  Call CF_CURSES_CPPFLAGS first.
@@ -1123,7 +1123,7 @@ AC_DEFUN([CF_CURSES_LIBS],[
 AC_REQUIRE([CF_CURSES_CPPFLAGS])dnl
 AC_MSG_CHECKING(if we have identified curses libraries)
 AC_TRY_LINK([#include <${cf_cv_ncurses_header:-curses.h}>],
-	[initscr(); tgoto("?", 0,0)],
+	[initscr(); endwin()],
 	cf_result=yes,
 	cf_result=no)
 AC_MSG_RESULT($cf_result)
@@ -1224,7 +1224,7 @@ if test ".$ac_cv_func_initscr" != .yes ; then
 			elif test "$cf_term_lib" != predefined ; then
 				AC_MSG_CHECKING(if we need both $cf_curs_lib and $cf_term_lib libraries)
 				AC_TRY_LINK([#include <${cf_cv_ncurses_header:-curses.h}>],
-					[initscr(); tgoto((char *)0, 0, 0);],
+					[initscr(); endwin();],
 					[cf_result=no],
 					[
 					LIBS="-l$cf_curs_lib -l$cf_term_lib $cf_save_LIBS"
@@ -1306,7 +1306,7 @@ CF_UPPER(cf_tr_type,$cf_cv_curses_style)
 AC_DEFINE_UNQUOTED(CURSES_LIKE_${cf_tr_type})
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_CURSES_TERMCAP version: 12 updated: 2015/05/15 19:42:24
+dnl CF_CURSES_TERMCAP version: 13 updated: 2022/12/21 19:46:38
 dnl -----------------
 dnl Check if we should include <curses.h> to pick up prototypes for termcap
 dnl functions.  On terminfo systems, these are normally declared in <curses.h>,
@@ -1334,7 +1334,7 @@ do
 
     AC_TRY_LINK([/* $cf_c_opts $cf_t_opts */
 $CHECK_DECL_HDRS],
-	[char *x = (char *)tgoto("")],
+	[char *x = (char *)tgoto(""); (void)x],
 	[test "$cf_cv_need_curses_h" = no && {
 	     cf_cv_need_curses_h=maybe
 	     cf_ok_c_opts=$cf_c_opts
@@ -1343,7 +1343,7 @@ $CHECK_DECL_HDRS],
 	[echo "Recompiling with corrected call (C:$cf_c_opts, T:$cf_t_opts)" >&AC_FD_CC
 	AC_TRY_LINK([
 $CHECK_DECL_HDRS],
-	[char *x = (char *)tgoto("",0,0)],
+	[char *x = (char *)tgoto("",0,0); (void)x],
 	[cf_cv_need_curses_h=yes
 	 cf_ok_c_opts=$cf_c_opts
 	 cf_ok_t_opts=$cf_t_opts])])
@@ -1887,6 +1887,7 @@ then
 	AC_CHECKING([for $CC __attribute__ directives])
 cat > "conftest.$ac_ext" <<EOF
 #line __oline__ "${as_me:-configure}"
+#include <stdio.h>
 #include "confdefs.h"
 #include "conftest.h"
 #include "conftest.i"
@@ -5146,7 +5147,7 @@ esac
 
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_XOPEN_SOURCE version: 62 updated: 2022/10/02 19:55:56
+dnl CF_XOPEN_SOURCE version: 63 updated: 2022/12/29 10:10:26
 dnl ---------------
 dnl Try to get _XOPEN_SOURCE defined properly that we can use POSIX functions,
 dnl or adapt to the vendor's definitions to get equivalent functionality,
@@ -5249,10 +5250,12 @@ case "$host_os" in
 	cf_save_xopen_cppflags="$CPPFLAGS"
 	CF_POSIX_C_SOURCE($cf_POSIX_C_SOURCE)
 	# Some of these niche implementations use copy/paste, double-check...
-	CF_VERBOSE(checking if _POSIX_C_SOURCE inteferes)
-	AC_TRY_COMPILE(CF__XOPEN_SOURCE_HEAD,CF__XOPEN_SOURCE_BODY,,[
-		AC_MSG_WARN(_POSIX_C_SOURCE definition is not usable)
-		CPPFLAGS="$cf_save_xopen_cppflags"])
+	if test "$cf_cv_xopen_source" != no ; then
+		CF_VERBOSE(checking if _POSIX_C_SOURCE inteferes)
+		AC_TRY_COMPILE(CF__XOPEN_SOURCE_HEAD,CF__XOPEN_SOURCE_BODY,,[
+			AC_MSG_WARN(_POSIX_C_SOURCE definition is not usable)
+			CPPFLAGS="$cf_save_xopen_cppflags"])
+	fi
 	;;
 esac
 
