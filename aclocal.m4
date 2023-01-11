@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Id: aclocal.m4,v 12.223 2023/01/17 00:50:40 tom Exp $
+dnl $Id: aclocal.m4,v 12.220 2023/01/11 09:15:10 tom Exp $
 dnl vi:set ts=4:
 dnl ---------------------------------------------------------------------------
 dnl
@@ -1587,45 +1587,6 @@ if test "$enable_leaks" = no ; then
 fi
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_ENABLE_PC_FILES version: 16 updated: 2021/11/20 12:48:37
-dnl ------------------
-dnl This is the "--enable-pc-files" option, which is available if there is a
-dnl pkg-config configuration on the local machine.
-AC_DEFUN([CF_ENABLE_PC_FILES],[
-AC_REQUIRE([CF_PKG_CONFIG])
-AC_REQUIRE([CF_WITH_PKG_CONFIG_LIBDIR])
-
-if test "x$PKG_CONFIG" != xnone
-then
-	AC_MSG_CHECKING(if we should install .pc files for $PKG_CONFIG)
-else
-	AC_MSG_CHECKING(if we should install .pc files)
-fi
-
-AC_ARG_ENABLE(pc-files,
-	[  --enable-pc-files       generate and install .pc files for pkg-config],
-	[enable_pc_files=$enableval],
-	[enable_pc_files=no])
-AC_MSG_RESULT($enable_pc_files)
-
-if test "x$enable_pc_files" != xno
-then
-	MAKE_PC_FILES=
-	case "x$PKG_CONFIG_LIBDIR" in
-	(xno|xnone|xyes|x)
-		AC_MSG_WARN(no PKG_CONFIG_LIBDIR was found)
-		;;
-	(*)
-		cf_pkg_config_libdir="$PKG_CONFIG_LIBDIR"
-		CF_PATH_SYNTAX(cf_pkg_config_libdir)
-		;;
-	esac
-else
-	MAKE_PC_FILES="#"
-fi
-AC_SUBST(MAKE_PC_FILES)
-])dnl
-dnl ---------------------------------------------------------------------------
 dnl CF_ENABLE_WARNINGS version: 9 updated: 2021/01/05 19:40:50
 dnl ------------------
 dnl Configure-option to enable gcc warnings
@@ -2355,7 +2316,7 @@ if test x$cf_cv_gnu_library = xyes; then
 fi
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_HAVE_FUNCS version: 7 updated: 2023/01/16 16:45:15
+dnl CF_HAVE_FUNCS version: 6 updated: 2023/01/11 04:05:23
 dnl -------------
 dnl	Combines AC_HAVE_FUNCS logic with additional test from Kevin Buettner
 dnl	that checks to see if we need a prototype for the given function.
@@ -2380,7 +2341,7 @@ if test ".$cf_result" != ".no"; then
 	# warnings into errors.  Of course, _this_ assumes that the config is
 	# otherwise ok.
 AC_TRY_LINK([#undef ${cf_func}
-extern void ${cf_func}(void);],[${cf_func}();],[
+extern void ${cf_func}(void)],[${cf_func}();],[
 if test "$WithPrototypes" != yes; then
 	cf_result=yes
 elif test "$cf_opt_with_warnings" = yes; then
@@ -2645,100 +2606,6 @@ ifdef([AC_FUNC_FSEEKO],[
 	fi
 ])
 ])
-dnl ---------------------------------------------------------------------------
-dnl CF_LD_SEARCHPATH version: 4 updated: 2022/08/27 15:43:08
-dnl ----------------
-dnl Try to obtain the linker's search-path, for use in scripts.
-dnl
-dnl Ignore LD_LIBRARY_PATH, etc.
-AC_DEFUN([CF_LD_SEARCHPATH],[
-AC_CACHE_CHECK(for linker search path,cf_cv_ld_searchpath,[
-
-if test "$cross_compiling" != yes ; then
-
-# GNU binutils' ld does not involve permissions which may stop ldconfig.
-cf_pathlist=`${LD:-ld} --verbose 2>/dev/null | grep SEARCH_DIR | sed -e 's,SEARCH_DIR[[("=]][[("=]]*,,g' -e 's/"[[)]];//gp' | sort -u`
-
-# The -NX options tell newer versions of Linux ldconfig to not attempt to
-# update the cache, which makes it run faster.
-test -z "$cf_pathlist" && \
-	cf_pathlist=`(ldconfig -NX -v) 2>/dev/null | sed -e '/^[[ 	]]/d' -e 's/:$//' | sort -u`
-
-test -z "$cf_pathlist" &&
-	cf_pathlist=`(ldconfig -v) 2>/dev/null | sed -n -e '/^[[ 	]]/d' -e 's/:$//p' | sort -u`
-
-# This works with OpenBSD 6.5, which lists only filenames
-test -z "$cf_pathlist" &&
-	cf_pathlist=`(ldconfig -v) 2>/dev/null | sed -n -e 's,^Adding \(.*\)/.*[$],\1,p' | sort -u`
-
-if test -z "$cf_pathlist"
-then
-	# dyld default path with MacOS
-	if test -f /usr/bin/otool && test "x`uname -s`" = xDarwin
-	then
-		# do this to bypass check
-		cf_cv_ld_searchpath='$HOME/lib'
-		cf_pathlist="/usr/local/lib /lib /usr/lib"
-	fi
-fi
-
-if test -z "$cf_pathlist"
-then
-	# Solaris is "SunOS"
-	if test -f /usr/bin/isainfo && test "x`uname -s`" = xSunOS
-	then
-		case x`(isainfo -b)` in
-		(x64)
-			cf_pathlist="$cf_pathlist /lib/64 /usr/lib/64"
-			;;
-		(x32)
-			test -d /usr/ccs/lib && cf_pathlist="$cf_pathlist /usr/ccs/lib"
-			cf_pathlist="$cf_pathlist /lib /usr/lib"
-			;;
-		(*)
-			AC_MSG_WARN(problem with Solaris architecture)
-			;;
-		esac
-	fi
-fi
-
-if test -z "$cf_pathlist"
-then
-	# HP-UX
-	if test x"`uname -s`" = xHP-UX
-	then
-		case x`getconf LONG_BIT` in
-		(x64)
-			cf_pathlist="/usr/lib/hpux64"
-			;;
-		(x*)
-			cf_pathlist="/usr/lib/hpux32"
-			;;
-		esac
-	fi
-fi
-
-fi
-
-# If nothing else, assume it is conventional
-test -z "$cf_pathlist" && cf_pathlist="/usr/lib /lib"
-
-# Finally, check that this is only directories
-for cf_path in [$]0 $cf_pathlist
-do
-	if test -d "$cf_path"; then
-		test -n "$cf_cv_ld_searchpath" && cf_cv_ld_searchpath="${cf_cv_ld_searchpath} "
-		cf_cv_ld_searchpath="${cf_cv_ld_searchpath}${cf_path}"
-	fi
-done
-
-# Ensure that it is nonempty
-test -z "$cf_cv_ld_searchpath" && cf_cv_ld_searchpath=/usr/lib
-])
-
-LD_SEARCHPATH=`echo "$cf_cv_ld_searchpath"|sed -e 's/ /|/g'`
-AC_SUBST(LD_SEARCHPATH)
-])dnl
 dnl ---------------------------------------------------------------------------
 dnl CF_LIBRARY_PATH version: 11 updated: 2021/01/01 13:31:04
 dnl ---------------
@@ -4871,94 +4738,6 @@ AC_DEFUN([CF_VERBOSE],
 CF_MSG_LOG([$1])
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_VERSION_INFO version: 8 updated: 2021/01/01 13:31:04
-dnl ---------------
-dnl Define several useful symbols derived from the VERSION file.  A separate
-dnl file is preferred to embedding the version numbers in various scripts.
-dnl (automake is a textbook-example of why the latter is a bad idea, but there
-dnl are others).
-dnl
-dnl The file contents are:
-dnl	libtool-version	release-version	patch-version
-dnl or
-dnl	release-version
-dnl where
-dnl	libtool-version (see ?) consists of 3 integers separated by '.'
-dnl	release-version consists of a major version and minor version
-dnl		separated by '.', optionally followed by a patch-version
-dnl		separated by '-'.  The minor version need not be an
-dnl		integer (but it is preferred).
-dnl	patch-version is an integer in the form yyyymmdd, so ifdef's and
-dnl		scripts can easily compare versions.
-dnl
-dnl If libtool is used, the first form is required, since CF_WITH_LIBTOOL
-dnl simply extracts the first field using 'cut -f1'.
-dnl
-dnl Optional parameters:
-dnl $1 = internal name for package
-dnl $2 = external name for package
-AC_DEFUN([CF_VERSION_INFO],
-[
-if test -f "$srcdir/VERSION" ; then
-	AC_MSG_CHECKING(for package version)
-
-	# if there are not enough fields, cut returns the last one...
-	cf_field1=`sed -e '2,$d' "$srcdir/VERSION" |cut -f1`
-	cf_field2=`sed -e '2,$d' "$srcdir/VERSION" |cut -f2`
-	cf_field3=`sed -e '2,$d' "$srcdir/VERSION" |cut -f3`
-
-	# this is how CF_BUNDLED_INTL uses $VERSION:
-	VERSION="$cf_field1"
-
-	VERSION_MAJOR=`echo "$cf_field2" | sed -e 's/\..*//'`
-	test -z "$VERSION_MAJOR" && AC_MSG_ERROR(missing major-version)
-
-	VERSION_MINOR=`echo "$cf_field2" | sed -e 's/^[[^.]]*\.//' -e 's/-.*//'`
-	test -z "$VERSION_MINOR" && AC_MSG_ERROR(missing minor-version)
-
-	AC_MSG_RESULT(${VERSION_MAJOR}.${VERSION_MINOR})
-
-	AC_MSG_CHECKING(for package patch date)
-	VERSION_PATCH=`echo "$cf_field3" | sed -e 's/^[[^-]]*-//'`
-	case .$VERSION_PATCH in
-	(.)
-		AC_MSG_ERROR(missing patch-date $VERSION_PATCH)
-		;;
-	(.[[0-9]][[0-9]][[0-9]][[0-9]][[0-9]][[0-9]][[0-9]][[0-9]])
-		;;
-	(*)
-		AC_MSG_ERROR(illegal patch-date $VERSION_PATCH)
-		;;
-	esac
-	AC_MSG_RESULT($VERSION_PATCH)
-else
-	AC_MSG_ERROR(did not find $srcdir/VERSION)
-fi
-
-# show the actual data that we have for versions:
-CF_VERBOSE(ABI VERSION $VERSION)
-CF_VERBOSE(VERSION_MAJOR $VERSION_MAJOR)
-CF_VERBOSE(VERSION_MINOR $VERSION_MINOR)
-CF_VERBOSE(VERSION_PATCH $VERSION_PATCH)
-
-AC_SUBST(VERSION)
-AC_SUBST(VERSION_MAJOR)
-AC_SUBST(VERSION_MINOR)
-AC_SUBST(VERSION_PATCH)
-
-dnl if a package name is given, define its corresponding version info.  We
-dnl need the package name to ensure that the defined symbols are unique.
-ifelse($1,,,[
-	cf_PACKAGE=$1
-	PACKAGE=ifelse($2,,$1,$2)
-	AC_DEFINE_UNQUOTED(PACKAGE, "$PACKAGE",[Define to the package-name])
-	AC_SUBST(PACKAGE)
-	CF_UPPER(cf_PACKAGE,$cf_PACKAGE)
-	AC_DEFINE_UNQUOTED(${cf_PACKAGE}_VERSION,"${VERSION_MAJOR}.${VERSION_MINOR}")
-	AC_DEFINE_UNQUOTED(${cf_PACKAGE}_PATCHDATE,${VERSION_PATCH})
-])
-])dnl
-dnl ---------------------------------------------------------------------------
 dnl CF_WAIT version: 4 updated: 2021/01/10 18:23:00
 dnl -------
 dnl Test for the presence of <sys/wait.h>, 'union wait', arg-type of 'wait()'.
@@ -5255,7 +5034,7 @@ AC_SUBST(MAN2HTML_PATH)
 AC_SUBST(MAN2HTML_TEMP)
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_WITH_NCURSES_ETC version: 6 updated: 2023/01/16 10:10:06
+dnl CF_WITH_NCURSES_ETC version: 5 updated: 2016/02/20 19:23:20
 dnl -------------------
 dnl Use this macro for programs which use any variant of "curses", e.g.,
 dnl "ncurses", and "PDCurses".  Programs that can use curses and some unrelated
@@ -5315,143 +5094,7 @@ case $cf_cv_screen in
 esac
 
 CF_NCURSES_PTHREADS($cf_cv_screen)
-AC_SUBST(cf_cv_screen)
 
-])dnl
-dnl ---------------------------------------------------------------------------
-dnl CF_WITH_PKG_CONFIG_LIBDIR version: 20 updated: 2022/01/29 17:03:42
-dnl -------------------------
-dnl Allow the choice of the pkg-config library directory to be overridden.
-dnl
-dnl pkg-config uses a search-list built from these colon-separated lists of
-dnl directories:
-dnl a) $PKG_CONFIG_PATH (tested first, added if set)
-dnl b) $PKG_CONFIG_LIBDIR (tested second, added if set)
-dnl c) builtin-list (added if $PKG_CONFIG_LIBDIR is not set)
-dnl
-dnl pkgconf (used with some systems such as FreeBSD in place of pkg-config)
-dnl optionally ignores $PKG_CONFIG_LIBDIR.
-AC_DEFUN([CF_WITH_PKG_CONFIG_LIBDIR],[
-
-case "$PKG_CONFIG" in
-(no|none|yes)
-	AC_MSG_CHECKING(for pkg-config library directory)
-	;;
-(*)
-	AC_MSG_CHECKING(for $PKG_CONFIG library directory)
-	;;
-esac
-
-# if $PKG_CONFIG_LIBDIR is set, try to use that
-cf_search_path=`echo "$PKG_CONFIG_LIBDIR" | sed -e 's/:/ /g' -e 's,^[[ 	]]*,,'`
-
-# if the option is used, let that override.  otherwise default to "libdir"
-AC_ARG_WITH(pkg-config-libdir,
-	[  --with-pkg-config-libdir=XXX use given directory for installing pc-files],
-	[cf_search_path=$withval],
-	[test "x$PKG_CONFIG" != xnone && test -z "$cf_search_path" && cf_search_path=libdir])
-
-case "x$cf_search_path" in
-(xlibdir)
-	PKG_CONFIG_LIBDIR='${libdir}/pkgconfig'
-	AC_MSG_RESULT($PKG_CONFIG_LIBDIR)
-	cf_search_path=
-	;;
-(x)
-	;;
-(x/*\ *)
-	PKG_CONFIG_LIBDIR=
-	;;
-(x/*)
-	PKG_CONFIG_LIBDIR="$cf_search_path"
-	AC_MSG_RESULT($PKG_CONFIG_LIBDIR)
-	cf_search_path=
-	;;
-(xyes|xauto)
-	AC_MSG_RESULT(auto)
-	cf_search_path=
-	# Look for the library directory using the same prefix as the executable
-	AC_MSG_CHECKING(for search-list)
-	if test "x$PKG_CONFIG" != xnone
-	then
-		# works for pkg-config since version 0.24 (2009)
-		# works for pkgconf since version 0.8.3 (2012)
-		for cf_pkg_program in \
-			`echo "$PKG_CONFIG" | sed -e 's,^.*/,,'` \
-			pkg-config \
-			pkgconf
-		do
-			cf_search_path=`"$PKG_CONFIG" --variable=pc_path "$cf_pkg_program" 2>/dev/null | tr : ' '`
-			test -n "$cf_search_path" && break
-		done
-
-		# works for pkg-config since import in 2005 of original 2001 HP code.
-		test -z "$cf_search_path" && \
-		cf_search_path=`
-		"$PKG_CONFIG" --debug --exists no-such-package 2>&1 | $AWK "\
-/^Scanning directory (#[1-9][0-9]* )?'.*'$/{ \
-	sub(\"^[[^']]*'\",\"\"); \
-	sub(\"'.*\",\"\"); \
-	printf \" %s\", \\[$]0; } \
-{ next; } \
-"`
-	fi
-
-	AC_MSG_RESULT($cf_search_path)
-	;;
-(*)
-	AC_MSG_ERROR(Unexpected option value: $cf_search_path)
-	;;
-esac
-
-if test -n "$cf_search_path"
-then
-	AC_MSG_CHECKING(for first directory)
-	cf_pkg_config_path=none
-	for cf_config in $cf_search_path
-	do
-		if test -d "$cf_config"
-		then
-			cf_pkg_config_path=$cf_config
-			break
-		fi
-	done
-	AC_MSG_RESULT($cf_pkg_config_path)
-
-	if test "x$cf_pkg_config_path" != xnone ; then
-		# limit this to the first directory found
-		PKG_CONFIG_LIBDIR="$cf_pkg_config_path"
-	fi
-
-	if test -z "$PKG_CONFIG_LIBDIR" && test -n "$cf_search_path"
-	then
-		AC_MSG_CHECKING(for workaround)
-		if test "$prefix" = "NONE" ; then
-			cf_prefix="$ac_default_prefix"
-		else
-			cf_prefix="$prefix"
-		fi
-		eval cf_libdir=$libdir
-		cf_libdir=`echo "$cf_libdir" | sed -e "s,^NONE,$cf_prefix,"`
-		cf_backup=
-		for cf_config in $cf_search_path
-		do
-			case $cf_config in
-			$cf_libdir/pkgconfig)
-				PKG_CONFIG_LIBDIR=$cf_libdir/pkgconfig
-				break
-				;;
-			*)
-				test -z "$cf_backup" && cf_backup=$cf_config
-				;;
-			esac
-		done
-		test -z "$PKG_CONFIG_LIBDIR" && PKG_CONFIG_LIBDIR=$cf_backup
-		AC_MSG_RESULT($PKG_CONFIG_LIBDIR)
-	fi
-fi
-
-AC_SUBST(PKG_CONFIG_LIBDIR)
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl CF_WITH_VALGRIND version: 1 updated: 2006/12/14 18:00:21

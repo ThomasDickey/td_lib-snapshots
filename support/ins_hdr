@@ -1,5 +1,5 @@
 #! /bin/sh
-# $Id: ins_hdr,v 12.4 2023/01/16 19:52:09 tom Exp $
+# $Id: ins_hdr,v 12.3 2020/12/08 01:01:32 tom Exp $
 #
 # This script is used to adjust includes for header files that reside in a
 # subdirectory of /usr/include, etc.
@@ -25,13 +25,12 @@ test $# = 0 && failed 'No SOURCES given'
 
 SED=${TMPDIR-/tmp}/sed$$
 rm -f "$SED"
-trap 'rm -f "$SED"; exit 1' HUP INT QUIT TERM
-trap 'rm -f "$SED"; exit 0' EXIT
+trap 'rm -f "$SED"' EXIT INT QUIT TERM HUP
 
 END=`basename "$DST"`
 for SRC in "$@"
 do
-	echo "s,<$SRC>,<$END/$SRC>," >> "$SED"
+	echo "s/<$SRC>/<$END\/$SRC>/" >> "$SED"
 done
 
 for SRC in "$@"
@@ -40,12 +39,12 @@ do
 	case $DST in
 	/*/include/*)
 		src=`basename "$SRC"`
-		MAP=${TMPDIR-/tmp}/$src
-		map="include/$src"
-		test -f "$map" || map="$SOURCEDIR/$map"
-		sed -f "$SED" "$map" > "$MAP"
-		eval "$PRG" "$MAP" "$DST"
-		rm -f "$MAP"
+		TMP=${TMPDIR-/tmp}/$src
+		src="include/$src"
+		test -f "$src" || src="$SOURCEDIR/$src"
+		sed -f "$SED" "$src" > "$TMP"
+		eval "$PRG" "$TMP" "$DST"
+		rm -f "$TMP"
 		;;
 	*)
 		eval "$PRG" "$SRC" "$DST"

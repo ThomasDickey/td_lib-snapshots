@@ -1,14 +1,12 @@
 dnl Process this file with 'autoconf' to produce a 'configure' script
-dnl $Id: configure.in,v 12.153 2023/01/17 21:35:14 tom Exp $
-AC_REVISION($Revision: 12.153 $)
+dnl $Id: configure.in,v 12.150 2023/01/11 08:53:13 tom Exp $
+AC_REVISION($Revision: 12.150 $)
 AC_PREREQ(2.52.20200802)
 AC_INIT(include/td_lib.h)
 AC_CONFIG_HEADER(include/td_config.h:include/config.hin)
 CF_CHECK_CACHE
 
 cf_CFLAGS="$CFLAGS"
-
-AC_CANONICAL_TARGET
 
 ###	program paths
 CF_PROG_CC
@@ -77,9 +75,6 @@ CF_MAKEFLAGS
 CF_MAKE_AR_RULES
 CF_MAKE_INCLUDE
 
-CF_VERSION_INFO
-CF_ENABLE_PC_FILES
-
 dnl These are standard among *NIX systems, but not when cross-compiling
 AC_CHECK_TOOL(RANLIB, ranlib, ':')
 AC_CHECK_TOOL(LD, ld, ld)
@@ -104,6 +99,7 @@ file.h \
 grp.h \
 ioctl.h \
 limits.h \
+memory.h \
 pwd.h \
 sgtty.h \
 stdarg.h \
@@ -313,7 +309,6 @@ if test -n "$CURSES_LIBS" ; then
 	LIBS=`echo ".$LIBS" | sed -e "s%.%%" -e "s%$CURSES_LIBS%%"`
 fi
 
-CF_LD_SEARCHPATH
 CF_TRIM_LDFLAGS
 
 AC_OUTPUT( \
@@ -322,7 +317,6 @@ AC_OUTPUT( \
 	include/makefile \
 	src/makefile \
 	support/makefile \
-	support/gen-pkgconfig \
 	$cf_cv_src_makefiles \
 	$cf_cv_test_makefiles \
 	test/makefile,[

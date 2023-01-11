@@ -1,5 +1,5 @@
 #! /bin/sh
-# $Id: ins_mak,v 12.10 2023/01/16 19:48:48 tom Exp $
+# $Id: ins_mak,v 12.9 2020/12/08 09:05:57 tom Exp $
 #
 # Install the td_lib make include-file.  We adjust the symbols that refer
 # to the location of the include- and lib-directory.
@@ -38,8 +38,7 @@ shift
 test $# = 0 && failed 'No SOURCE given'
 
 SED=${TMPDIR-/tmp}/sed$$
-trap 'rm -f "$SED"; exit 1' HUP INT QUIT TERM
-trap 'rm -f "$SED"; exit 0' EXIT
+trap 'rm -f "$SED"' EXIT INT QUIT TERM HUP
 
 cat >"$SED" <<EOF
 /^TD_LIB[ 	]*=/s%=.*%= $my_LIB%

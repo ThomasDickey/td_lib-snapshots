@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t20230117
+MANIFEST for td_lib, version t20230111
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         restrictions on copying/using this software
@@ -261,7 +261,6 @@ src/unix/s2uid.c                convert string to user-id
 src/unix/setmtime.c             set mtime/atime of a file
 src/unix/uid2s.c                convert user-id to string
 support                         subdirectory
-support/gen-pkgconfig.in        script for generating td_lib.pc
 support/ins_hdr                 script to install header files
 support/ins_mak                 script to install td_lib.mk
 support/lib_top.mms             same as STANDARD_RULES, save that we generate lib-directory, rather than bin
@@ -271,7 +270,6 @@ support/prog_top.mms            VMS MMS include-file defining standard (module-l
 support/rem_hdr                 script to deinstall headers
 support/selflink.sh             script needed to simplify versioning of this directory-tree
 support/td_lib.mms              VMS MMS include-file defining PORTUNIX library-rules
-support/td_lib.pc.in            template for pkg-config template
 support/td_progs.mms            VMS MMS include-file defining program-generation rules above PORTUNIX
 test                            subdirectory
 test/README                     description of td_lib/test
