@@ -37,6 +37,7 @@ configure-stamp:
 		--sysconfdir=/etc \
 		--disable-echo \
 		--disable-selflink \
+		--enable-pc-files \
 		--with-man2html \
 		--with-screen=ncursesw6
 

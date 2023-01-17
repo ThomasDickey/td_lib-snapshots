@@ -1,3 +1,32 @@
+2023-01-16  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* aclocal.m4: generate td_lib.pc, to fix compiler/linker options
+
+	* support/td_lib.pc.in:
+	trim the "Requires", since this does not mesh with various package systems
+	which might "provide" curses.
+
+	* package/debian/rules: enable pc-files
+
+	* package/debian/compat: bump
+
+	* support/td_lib.pc.in: RCS_BASE
+
+	* package/debian/copyright, COPYING: bump
+
+	* makefile.in:
+	improve naming convention, provide for installing ".pc" file
+
+	* aclocal.m4: add semicolon, fix build in CF_HAVE_FUNCS
+
+	* support/ins_hdr, support/ins_mak: improve trap-command
+
+	* configure.in: trim redundant check for memory.h
+
+	* aclocal.m4, configure.in:
+	add option for generating pc-file, along with macro for obtaining version
+	information from ./VERSION
+
 2023-01-11  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* VERSION: RCS_BASE

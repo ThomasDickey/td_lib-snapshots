@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t20230111
+MANIFEST for td_lib, version t20230116
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         restrictions on copying/using this software
@@ -270,6 +270,7 @@ support/prog_top.mms            VMS MMS include-file defining standard (module-l
 support/rem_hdr                 script to deinstall headers
 support/selflink.sh             script needed to simplify versioning of this directory-tree
 support/td_lib.mms              VMS MMS include-file defining PORTUNIX library-rules
+support/td_lib.pc.in            template for pkg-config template
 support/td_progs.mms            VMS MMS include-file defining program-generation rules above PORTUNIX
 test                            subdirectory
 test/README                     description of td_lib/test
