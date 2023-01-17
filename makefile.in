@@ -1,4 +1,4 @@
-# $Id: makefile.in,v 12.29 2020/12/08 01:30:22 tom Exp $
+# $Id: makefile.in,v 12.32 2023/01/17 23:47:50 tom Exp $
 # Top-level makefile for TD_LIB common library
 
 SHELL		= /bin/sh
@@ -17,14 +17,17 @@ THAT		= libtd
 prefix		= @prefix@
 exec_prefix	= @exec_prefix@
 includedir	= @includedir@
-bindir		= @bindir@
 datarootdir	= @datarootdir@
 datadir		= @datadir@
 libdir		= @libdir@
 
-my_cfgdir	= $(DESTDIR)$(datadir)/td
-my_incdir	= $(DESTDIR)$(includedir)/td
-my_libdir	= $(DESTDIR)$(libdir)
+pkgconfig_dir	= @PKG_CONFIG_LIBDIR@
+
+# scripts and headers are always in a subdirectory.
+DATADIR		= $(DESTDIR)$(datadir)/td
+INCLUDEDIR	= $(DESTDIR)$(includedir)/td
+LIBDIR		= $(DESTDIR)$(libdir)
+PKGCONFIG_DIR	= $(DESTDIR)$(pkgconfig_dir)
 
 INSTALL		= @INSTALL@
 INSTALL_PROGRAM	= @INSTALL_PROGRAM@
@@ -39,7 +42,14 @@ MAKE_OPTS	= @cf_cv_makeflags@
 CC		= @CC@
 RM		= -rm -f
 CLEAN		= *.bak *.log *.out *.tst .nfs* core
-PURE		= config_h *.cache *.status $(I_CFG) $(MDEFN) support/man2html.sh
+PC_FILE		= support/td_lib.pc
+PURE		= config_h \
+		  *.cache \
+		  *.status \
+		  $(I_CFG) \
+		  $(MDEFN) \
+		  support/man2html.sh \
+		  $(PC_FILE)
 
 ####### (Standard Lists) #######################################################
 CONFIG_H=\
@@ -92,32 +102,39 @@ distclean:	clobber
 	-@$(SHELL) -c "for s in *;do if test -f \$$s/makefile; then echo .. clean \$$s; rm -f \$$s/makefile; rmdir \$$s 2>/dev/null ; fi; done"
 	-$(RM) $(SELFLINK)
 
-install::	all $(bindir) $(my_cfgdir) $(my_incdir) $(my_libdir)
-	$(srcdir)/support/ins_hdr "$(INSTALL_DATA)" $(my_incdir) $(srcdir) $(I_LIST)
-	$(srcdir)/support/ins_mak "$(INSTALL_DATA)" "$(DESTDIR)" $(my_cfgdir) $(my_libdir) $(my_incdir) support/$(THIS).mk
-	$(INSTALL_DATA) -m 755 support/man2html.sh $(my_cfgdir)
-	$(INSTALL_DATA) lib/$(THAT).a $(my_libdir)
-	$(RANLIB) $(my_libdir)/$(THAT).a
+install::	all $(DATADIR) $(INCLUDEDIR) $(LIBDIR)
+	$(srcdir)/support/ins_hdr "$(INSTALL_DATA)" $(INCLUDEDIR) $(srcdir) $(I_LIST)
+	$(srcdir)/support/ins_mak "$(INSTALL_DATA)" "$(DESTDIR)" $(DATADIR) $(LIBDIR) $(INCLUDEDIR) support/$(THIS).mk
+	$(INSTALL_DATA) -m 755 support/man2html.sh $(DATADIR)
+	$(INSTALL_DATA) lib/$(THAT).a $(LIBDIR)
+	$(RANLIB) $(LIBDIR)/$(THAT).a
+
+@MAKE_PC_FILES@$(PC_FILE):	support/gen-pkgconfig
+	$(SHELL) support/gen-pkgconfig $(PC_FILE)
+
+@MAKE_PC_FILES@install::	$(PC_FILE) $(PKGCONFIG_DIR)
+@MAKE_PC_FILES@	$(INSTALL_DATA) $(PC_FILE) $(PKGCONFIG_DIR)
 
 uninstall::
-	-rmdir $(bindir)
-	$(srcdir)/support/rem_hdr $(my_incdir) $(I_LIST)
-	-rmdir $(my_incdir)
+	$(srcdir)/support/rem_hdr $(INCLUDEDIR) $(I_LIST)
+	-rmdir $(INCLUDEDIR)
 	-rmdir $(includedir)
-	$(RM) $(my_cfgdir)/man2html.sh
-	$(RM) $(my_cfgdir)/$(THIS).mk
-	-rmdir $(my_cfgdir)
+	$(RM) $(DATADIR)/man2html.sh
+	$(RM) $(DATADIR)/$(THIS).mk
+	-rmdir $(DATADIR)
 	-rmdir $(datarootdir)
-	$(RM) $(my_libdir)/$(THAT).a
-	-rmdir $(my_libdir)
+	$(RM) $(LIBDIR)/$(THAT).a
+	-rmdir $(LIBDIR)
+@MAKE_PC_FILES@	$(RM) $(PKGCONFIG_DIR)/$(PC_FILE) 
 	-@echo "** uninstalled"
 
 ####### (Details of Productions) ###############################################
-$(bindir) \
-$(my_cfgdir) \
-$(my_incdir) \
-$(my_libdir) \
+$(DATADIR) \
+$(INCLUDEDIR) \
+$(LIBDIR) \
+$(PKGCONFIG_DIR) \
 lib:					; mkdir -p $@
 $(SOURCES):
+
 
 @MAKE_SELFLINK@$(SELFLINK):				; $(SHELL) $(srcdir)/support/selflink.sh
