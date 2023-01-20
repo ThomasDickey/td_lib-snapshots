@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t20230116
+MANIFEST for td_lib, version t20230119
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         restrictions on copying/using this software
@@ -261,6 +261,7 @@ src/unix/s2uid.c                convert string to user-id
 src/unix/setmtime.c             set mtime/atime of a file
 src/unix/uid2s.c                convert user-id to string
 support                         subdirectory
+support/gen-pkgconfig.in        script for generating td_lib.pc
 support/ins_hdr                 script to install header files
 support/ins_mak                 script to install td_lib.mk
 support/lib_top.mms             same as STANDARD_RULES, save that we generate lib-directory, rather than bin

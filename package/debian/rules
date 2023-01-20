@@ -38,6 +38,7 @@ configure-stamp:
 		--disable-echo \
 		--disable-selflink \
 		--enable-pc-files \
+		--with-pkg-config-libdir=/usr/lib/${DEB_HOST_MULTIARCH}/pkgconfig \
 		--with-man2html \
 		--with-screen=ncursesw6
 

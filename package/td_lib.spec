@@ -1,15 +1,15 @@
 Summary: Thomas Dickeys library
 %define AppProgram td_lib
 %define AppVersion 12.x
-%define AppRelease 20221231
-# $Id: td_lib.spec,v 1.38 2022/12/31 12:28:09 tom Exp $
+%define AppRelease 20230117
+# $Id: td_lib.spec,v 1.40 2023/01/20 00:59:14 tom Exp $
 Name: %{AppProgram}
 Version: %{AppVersion}
 Release: %{AppRelease}
 License: MIT-X11
 Group: Development/Libraries
-URL: ftp://ftp.invisible-island.net/ded
-Source0: %{AppProgram}-%{AppRelease}.tgz
+URL: https://invisible-island.net/ded
+Source0: https://invisible-island.net/archives/ded/%{AppProgram}-%{AppRelease}.tgz
 Vendor: Thomas Dickey <dickey@invisible-island.net>
 
 %description
@@ -38,6 +38,7 @@ INSTALL_PROGRAM='${INSTALL}' \
 		--datadir=%{_datadir} \
 		--disable-echo \
 		--disable-selflink \
+		--enable-pc-files \
 		--with-man2html \
 		--with-screen=ncursesw6
 
@@ -47,19 +48,12 @@ make
 
 [ "$RPM_BUILD_ROOT" != "/" ] && rm -rf $RPM_BUILD_ROOT
 
-make install                    DESTDIR=$RPM_BUILD_ROOT
-
-%clean
-if rm -rf $RPM_BUILD_ROOT; then
-  echo OK
-else
-  find $RPM_BUILD_ROOT -type f | grep -F -v /.nfs && exit 1
-fi
-exit 0
+make install DESTDIR=$RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root)
 %{_libdir}/libtd.a
+%{_libdir}/pkgconfig/td_lib.pc
 %{_datadir}/td/td_lib.mk
 %{_datadir}/td/man2html.sh
 %{_includedir}/td/cmv_defs.h
@@ -83,6 +77,9 @@ exit 0
 
 %changelog
 # each patch should add its ChangeLog entries here
+
+* Thu Jan 19 2023 Thomas Dickey
+- add td_lib.pc to build
 
 * Tue Nov 21 2017 Thomas Dickey
 - add man2html.sh to build
