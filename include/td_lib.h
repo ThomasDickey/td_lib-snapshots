@@ -1,4 +1,4 @@
-/* $Id: td_lib.h,v 12.38 2021/03/28 19:13:25 tom Exp $ */
+/* $Id: td_lib.h,v 12.39 2023/01/21 00:38:43 tom Exp $ */
 
 /*
  * Combined lint-library/function prototype definitions for TD_LIB common
@@ -655,10 +655,11 @@ extern	int	localzone;
 
 	/* strerror.c ------------------------------------------------- */
 #if !defined(HAVE_STRERROR)
-	char *	strerror(
-			int	err
-			)
-			;
+#if defined(HAVE_SYS_ERRLIST)
+#define strerror(n) (((n) > 0 && (n) < sys_nerr) ? sys_errlist[n] : "no error")
+#else
+#define strerror(n) (((n) > 0) ? "error?" : "no error")
+#endif
 #endif
 
 	/* strtrim.c -------------------------------------------------- */

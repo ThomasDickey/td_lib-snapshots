@@ -10,7 +10,6 @@ ltostr
 strbcmp
 strclean
 strcount
-strerror
 strtrim
 strucmp
 strucpy

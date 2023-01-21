@@ -1,4 +1,4 @@
-MANIFEST for td_lib, version t20230119
+MANIFEST for td_lib, version t20230121
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         restrictions on copying/using this software
@@ -241,7 +241,6 @@ src/string/modules              src/string modules
 src/string/strbcmp.c            compare two strings ignoring blanks a la "diff -b"
 src/string/strclean.c           "clean" string, removes unnecessary blanks
 src/string/strcount.c           counts instances of a char in a string
-src/string/strerror.c           replacement for 'strerror()'
 src/string/strtrim.c            trim trailing whitespace from a string
 src/string/strucmp.c            compare two strings ignoring case
 src/string/strucpy.c            copy string, uppercasing it
@@ -630,7 +629,6 @@ test/string/strclean.sh         add stubs for modules which had no test-driver
 test/string/strcount.ref        test-reference file
 test/string/strcount.sh         add stubs for modules which had no test-driver
 test/string/strerror.ref        test-reference file
-test/string/strerror.sh         add stubs for modules which had no test-driver
 test/string/strtrim.ref         test-reference file
 test/string/strtrim.sh          add stubs for modules which had no test-driver
 test/string/strucmp.ref         reference for 'strucmp'

@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Id: aclocal.m4,v 12.223 2023/01/17 00:50:40 tom Exp $
+dnl $Id: aclocal.m4,v 12.224 2023/01/21 00:42:28 tom Exp $
 dnl vi:set ts=4:
 dnl ---------------------------------------------------------------------------
 dnl
@@ -3071,6 +3071,58 @@ fi
 test "$cf_cv_mixedcase" = yes && AC_DEFINE(MIXEDCASE_FILENAMES,1,[Define to 1 if filesystem supports mixed-case filenames.])
 ])dnl
 dnl ---------------------------------------------------------------------------
+dnl CF_MKSTEMP version: 12 updated: 2023/01/05 17:53:11
+dnl ----------
+dnl Check for a working mkstemp.  This creates two files, checks that they are
+dnl successfully created and distinct (AmigaOS apparently fails on the last).
+AC_DEFUN([CF_MKSTEMP],[
+AC_CHECK_HEADERS( \
+unistd.h \
+)
+AC_CACHE_CHECK(for working mkstemp, cf_cv_func_mkstemp,[
+rm -rf ./conftest*
+AC_TRY_RUN([
+$ac_includes_default
+
+int main(void)
+{
+	char *tmpl = "conftestXXXXXX";
+	char name[2][80];
+	int n;
+	int result = 0;
+	int fd;
+	struct stat sb;
+
+	umask(077);
+	for (n = 0; n < 2; ++n) {
+		strcpy(name[n], tmpl);
+		if ((fd = mkstemp(name[n])) >= 0) {
+			if (!strcmp(name[n], tmpl)
+			 || stat(name[n], &sb) != 0
+			 || (sb.st_mode & S_IFMT) != S_IFREG
+			 || (sb.st_mode & 077) != 0) {
+				result = 1;
+			}
+			close(fd);
+		}
+	}
+	if (result == 0
+	 && !strcmp(name[0], name[1]))
+		result = 1;
+	${cf_cv_main_return:-return}(result);
+}
+],[cf_cv_func_mkstemp=yes
+],[cf_cv_func_mkstemp=no
+],[cf_cv_func_mkstemp=maybe])
+])
+if test "x$cf_cv_func_mkstemp" = xmaybe ; then
+	AC_CHECK_FUNC(mkstemp)
+fi
+if test "x$cf_cv_func_mkstemp" = xyes || test "x$ac_cv_func_mkstemp" = xyes ; then
+	AC_DEFINE(HAVE_MKSTEMP,1,[Define to 1 if mkstemp() is available and working.])
+fi
+])dnl
+dnl ---------------------------------------------------------------------------
 dnl CF_MSG_LOG version: 5 updated: 2010/10/23 15:52:32
 dnl ----------
 dnl Write a debug message to config.log, along with the line number in the
@@ -4332,6 +4384,14 @@ AC_CACHE_VAL(cf_cv_st_blocks,[
 		[cf_cv_st_blocks=no])])
 AC_MSG_RESULT($cf_cv_st_blocks)
 test "$cf_cv_st_blocks" = yes && AC_DEFINE(STAT_HAS_ST_BLOCKS,1,[Define to 1 if stat.st_blocks is declared])
+])dnl
+dnl ---------------------------------------------------------------------------
+dnl CF_STRERROR version: 2 updated: 2001/07/11 09:34:49
+dnl -----------
+dnl Check for strerror(), or it is not found, for the related data.  POSIX
+dnl requires strerror(), so only old systems such as SunOS lack it.
+AC_DEFUN([CF_STRERROR],[
+AC_CHECK_FUNCS(strerror, AC_DEFINE(HAVE_STRERROR),[CF_SYS_ERRLIST])
 ])dnl
 dnl ---------------------------------------------------------------------------
 dnl CF_STRIP_G_OPT version: 4 updated: 2021/01/02 09:31:20

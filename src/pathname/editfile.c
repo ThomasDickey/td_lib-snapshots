@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	03 Oct 1988
  * Modified:
+ *		20 Jan 2023, use mkstemp if available.
  *		12 Dec 2014, fix memory leak (coverity).
  *		07 Mar 2004, remove K&R support, indent'd.
  *		21 Aug 1994, argument of mktemp is volatile on Linux.
@@ -24,12 +25,14 @@
 #define		STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: editfile.c,v 12.8 2014/12/12 23:19:22 tom Exp $")
+MODULE_ID("$Id: editfile.c,v 12.9 2023/01/21 00:57:06 tom Exp $")
 
 #ifdef	vms
-#define	NEWVER(name)	(name)
+#define	MyTemp(name,mode)	fopen(name, mode)
+#elif defined(HAVE_MKSTEMP)
+#define	MyTemp(name,mode)	fdopen(mkstemp(name), mode)
 #else /* SYS_UNIX */
-#define	NEWVER(name)	mktemp(name)
+#define	MyTemp(name,mode)	fopen(mktemp(name), mode)
 #endif /* vms/SYS_UNIX */
 
 int
@@ -54,7 +57,7 @@ editfile(const char *oldname,
 #endif /* vms/SYS_UNIX */
 
     if (ifp != 0) {
-	if ((ofp = fopen(NEWVER(newname), "w")) != 0) {
+	if ((ofp = MyTemp(newname, "w")) != 0) {
 	    FPRINTF(stderr, "** edit \"%s\" => \"%s\"\n", oldname, newname);
 	    changes += (*func) (ofp, ifp, sb);
 	    (void) fclose(ofp);

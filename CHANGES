@@ -1,3 +1,21 @@
+2023-01-20  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* configure: regen
+
+	* src/pathname/editfile.c:
+	use mkstemp() if available, fixing deprecation warning from Xcode
+
+	* aclocal.m4: add CF_MKSTEMP and CF_STRERROR
+
+	* configure.in: use CF_STRERROR and CF_MKSTEMP
+
+	* src/string/modules, test/string/modules, include/td_lib.h:
+	drop strerror module to fix empty-file warning from Xcode
+
+	* package/debian/control: update standards
+
+	* package/debian/changelog, package/td_lib.spec: bump
+
 2023-01-19  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* package/td_lib.spec: add td_lib.pc to build

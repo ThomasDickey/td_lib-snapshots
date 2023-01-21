@@ -1,9 +1,10 @@
 Source: tdlib
 Maintainer: Thomas E. Dickey <dickey@invisible-island.net>
 Priority: optional
-Standards-Version: 3.8.4
-Build-Depends: debhelper (>= 5), libncursesw5-dev, rcs
-Homepage: http://invisible-island.net/ded/
+Standards-Version: 4.6.1
+Rules-Requires-Root: no
+Build-Depends: debhelper (>= 5), libncurses-dev, rcs
+Homepage: https://invisible-island.net/ded/
 
 Package: tdlib-dev
 Architecture: any
