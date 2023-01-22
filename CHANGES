@@ -1,3 +1,14 @@
+2023-01-22  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* aclocal.m4: resync with my-autoconf
+
+	* configure: regen
+
+	* aclocal.m4:
+	work around old pkg-config (Solaris 10) using $PKG_CONFIG_PATH, if set.
+
+	* package/debian/changelog, package/td_lib.spec: bump
+
 2023-01-20  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* configure: regen
