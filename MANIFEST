@@ -1,6 +1,7 @@
-MANIFEST for td_lib, version t20230122
+MANIFEST for td_lib, version t20240419
 --------------------------------------------------------------------------------
 MANIFEST                        this file
+CHANGES                         generated changelog
 COPYING                         restrictions on copying/using this software
 README                          read-me file for this directory
 VERSION                         version information for td_lib
@@ -36,6 +37,8 @@ include/td_regex.h              interface for regular expression functions
 include/td_scomp.h              interface for source-compare functions
 include/td_sheet.h              interface for spreadsheet (CSV) functions
 include/vms_dirs.h              VMS unix-style directory-interface definitions
+package                         subdirectory
+package/td_lib.spec             rpm build script for td_lib
 package/debian                  subdirectory
 package/debian/changelog        debian build script
 package/debian/compat           debian build script
@@ -43,12 +46,18 @@ package/debian/control          debian build script
 package/debian/copyright        debian build script
 package/debian/docs             debian build script
 package/debian/rules            debian build script
+package/debian/watch            debian build script
 package/debian/source           subdirectory
 package/debian/source/format    debian build script
-package/debian                  subdirectory
-package/debian/watch            debian build script
-package                         subdirectory
-package/td_lib.spec             rpm build script for td_lib
+src                             subdirectory
+src/descrip.mms                 VMS build script for td_lib/src
+src/makefile.end                trailer for src/makefile
+src/makefile.in                 src/makefile template
+src/sub_vars.in                 preamble for subdirectory makefiles
+src/td_defns.mk                 definitions for makefiles in subdirectories of td_lib/src
+src/td_defns.mms                common mms definitions for subdirectories
+src/td_rules.mk                 rules for makefiles in subdirectories of td_lib/src
+src/td_rules.mms                common rules for td_lib/src subdirectories
 src/cm_funcs                    subdirectory
 src/cm_funcs/cmv_dir.c          lookup CmVision directory & file paths
 src/cm_funcs/cmv_last.c         lookup file's current version in CmVision
@@ -121,10 +130,6 @@ src/curses/viewfile.c           portable (curses) wrapper for padedit
 src/curses/win2file.c           dump curses window to file
 src/curses/wrepaint.c           repaint window w/o clearing it, if possible
 src/curses/wresize.c            basic algorithm for resizing a curses-window.
-src                             subdirectory
-src/descrip.mms                 VMS build script for td_lib/src
-src/makefile.end                trailer for src/makefile
-src/makefile.in                 src/makefile template
 src/memory                      subdirectory
 src/memory/descrip.mms          mms file for td_lib/src/memory
 src/memory/doalloc.c            wrapper for malloc/realloc/free (checks pointers)
@@ -245,12 +250,6 @@ src/string/strtrim.c            trim trailing whitespace from a string
 src/string/strucmp.c            compare two strings ignoring case
 src/string/strucpy.c            copy string, uppercasing it
 src/string/strwcmp.c            wildcard string-comparator
-src                             subdirectory
-src/sub_vars.in                 preamble for subdirectory makefiles
-src/td_defns.mk                 definitions for makefiles in subdirectories of td_lib/src
-src/td_defns.mms                common mms definitions for subdirectories
-src/td_rules.mk                 rules for makefiles in subdirectories of td_lib/src
-src/td_rules.mms                common rules for td_lib/src subdirectories
 src/unix                        subdirectory
 src/unix/descrip.mms            mms file for td_lib/src/unix
 src/unix/gid2s.c                convert group-id to string
@@ -274,6 +273,18 @@ support/td_lib.pc.in            template for pkg-config template
 support/td_progs.mms            VMS MMS include-file defining program-generation rules above PORTUNIX
 test                            subdirectory
 test/README                     description of td_lib/test
+test/descrip.mms                mms file for test directory
+test/dummy.txt                  test-file #1
+test/dummy2.txt                 test-file
+test/dummy3.txt                 short test-case for 'rcsload'
+test/dummy4.txt                 long test-case for 'rcsload'
+test/makefile.end               test/makefile trailer
+test/makefile.in                test/makefile template
+test/sub_vars.in                prefix for test/*/makefile
+test/td_defns.mk                common definitions for test subdirectories
+test/td_defns.mms               test/descrip.mms definitions
+test/td_rules.mk                common rules for test subdirectories
+test/td_rules.mms               test/descrip.mms rules
 test/cm_funcs                   subdirectory
 test/cm_funcs/cmv_dir.ref       reference for 'cmv_dir'
 test/cm_funcs/cmv_dir.sh        test-script for cmv_dir
@@ -348,7 +359,7 @@ test/compare/btree.sh           add stubs for modules which had no test-driver
 test/compare/cmpqsort.ref       test-reference file
 test/compare/cmpqsort.sh        add stubs for modules which had no test-driver
 test/compare/diffload.ref       test result
-test/compare/diffload.sh        =============================================================================
+test/compare/diffload.sh        test-script for diff-loading
 test/compare/m2comp.ref         reference for 'm2comp.sh'
 test/compare/m2comp.sh          test-script for 'm2comp'
 test/compare/modules            add stubs for modules which had no test-driver
@@ -407,14 +418,6 @@ test/curses/wrepaint.ref        test-reference file
 test/curses/wrepaint.sh         add stubs for modules which had no test-driver
 test/curses/wresize.ref         test-reference file
 test/curses/wresize.sh          add stubs for modules which had no test-driver
-test                            subdirectory
-test/descrip.mms                =============================================================================
-test/dummy.txt                  test-file #1
-test/dummy2.txt                 test-file
-test/dummy3.txt                 short test-case for 'rcsload'
-test/dummy4.txt                 long test-case for 'rcsload'
-test/makefile.end               test/makefile trailer
-test/makefile.in                test/makefile template
 test/memory                     subdirectory
 test/memory/doalloc.ref         reference for 'doalloc'
 test/memory/doalloc.sh          test-script for 'doalloc'
@@ -637,12 +640,6 @@ test/string/strucpy.ref         test-reference file
 test/string/strucpy.sh          add stubs for modules which had no test-driver
 test/string/strwcmp.ref         reference for 'strwcmp'
 test/string/strwcmp.sh          test-script for 'strwcmp'
-test                            subdirectory
-test/sub_vars.in                prefix for test/*/makefile
-test/td_defns.mk                common definitions for test subdirectories
-test/td_defns.mms               test/descrip.mms definitions
-test/td_rules.mk                common rules for test subdirectories
-test/td_rules.mms               test/descrip.mms rules
 test/unix                       subdirectory
 test/unix/gid2s.ref             reference for 'gid2s'
 test/unix/gid2s.sh              test-script for 'gid2s'
