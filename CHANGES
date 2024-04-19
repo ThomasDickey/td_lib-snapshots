@@ -1,6 +1,8 @@
 2024-04-19  Thomas E. Dickey  <dickey@invisible-island.net>
 
-	* package/debian/changelog, package/td_lib.spec: bump
+	* package/debian/copyright, COPYING, package/debian/changelog,
+	  package/td_lib.spec:
+	bump
 
 2024-01-07  Thomas E. Dickey  <dickey@invisible-island.net>
 
