@@ -1,9 +1,10 @@
 #!/bin/sh
-# $Id: edittree.sh,v 8.0 1992/11/20 11:15:24 ste_cm Rel $
+# $Id: edittree.sh,v 8.1 2024/04/21 20:24:18 tom Exp $
 ME=edittree
 #
 rm -rf junk
-trap "rm -rf junk" 0 1 2 5 15
+trap "rm -rf junk; exit 1" HUP INT QUIT TERM
+trap "rm -rf junk" EXIT
 mkdir junk
 mkdir junk/foo
 mkdir junk/bar

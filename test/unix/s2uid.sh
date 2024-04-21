@@ -1,12 +1,13 @@
 #!/bin/sh
-# $Id: s2uid.sh,v 12.1 2022/10/11 08:15:23 tom Exp $
+# $Id: s2uid.sh,v 12.2 2024/04/21 20:24:18 tom Exp $
 #
 OUT=s2uid.tmp
 SED=/tmp/sed$$
 REF=/tmp/ref$$
 ARG=/tmp/arg$$
 #
-trap "rm -f $ARG $REF $SED" 0 1 2 5 15
+trap "rm -f $ARG $REF $SED; exit 1" HUP INT QUIT TERM
+trap "rm -f $ARG $REF $SED" EXIT
 head -40 /etc/passwd | sed -e 's@:[^:]*:@ @' -e 's@:.*$@@' |grep -v '[.]' >$SED
 #
 rm -f $OUT

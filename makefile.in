@@ -1,4 +1,4 @@
-# $Id: makefile.in,v 12.32 2023/01/17 23:47:50 tom Exp $
+# $Id: makefile.in,v 12.33 2024/04/21 23:36:22 tom Exp $
 # Top-level makefile for TD_LIB common library
 
 SHELL		= /bin/sh
@@ -99,7 +99,7 @@ distclean:	clobber
 	-cd test &&	$(MAKE) $(MAKE_OPTS) $@
 	-$(RM) $(PURE)
 	-$(RM) makefile
-	-@$(SHELL) -c "for s in *;do if test -f \$$s/makefile; then echo .. clean \$$s; rm -f \$$s/makefile; rmdir \$$s 2>/dev/null ; fi; done"
+	-@$(SHELL) -c "for s in *;do if test -f \$$s/makefile; then echo .. clean \$$s; rm -f \$$s/makefile; rmdir \$$s 2>/dev/null ; fi; done; exit 0"
 	-$(RM) $(SELFLINK)
 
 install::	all $(DATADIR) $(INCLUDEDIR) $(LIBDIR)

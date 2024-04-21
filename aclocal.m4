@@ -1,5 +1,5 @@
 dnl Extended Macros that test for specific features.
-dnl $Id: aclocal.m4,v 12.227 2024/01/07 11:54:12 tom Exp $
+dnl $Id: aclocal.m4,v 12.229 2024/04/21 20:12:25 tom Exp $
 dnl vi:set ts=4:
 dnl ---------------------------------------------------------------------------
 dnl
@@ -4562,7 +4562,7 @@ AC_MSG_RESULT($cf_cv_termcap_cursor)
 test "$cf_cv_termcap_cursor" = yes && AC_DEFINE(HAVE_TCAP_CURSOR,1,[Define to 1 if termcap cursor-variables are declared])
 ])dnl
 dnl ---------------------------------------------------------------------------
-dnl CF_TD_SIG_ARGS version: 8 updated: 2023/01/05 18:57:38
+dnl CF_TD_SIG_ARGS version: 9 updated: 2024/04/21 16:11:29
 dnl --------------
 dnl Test for non-Posix prototype for 'signal()'
 dnl
@@ -4582,15 +4582,17 @@ AC_REQUIRE([AC_TYPE_SIGNAL])
 AC_MSG_CHECKING(for non-standard signal handler prototype)
 AC_CACHE_VAL(cf_cv_sig_args,[
 	AC_TRY_RUN([
+$ac_includes_default
 #include <signal.h>
 		RETSIGTYPE (*signal(int sig, RETSIGTYPE(*func)(int sig)))(int sig2);
-		RETSIGTYPE catch(int sig) { ${cf_cv_main_return:-return}(1); }
+		RETSIGTYPE catch(int sig) { exit(0); }
 		int main(void) { signal(SIGINT, catch); ${cf_cv_main_return:-return}(0); } ],
 		[cf_cv_sig_args=STANDARD],
 		[AC_TRY_RUN([
+$ac_includes_default
 #include <signal.h>
 			RETSIGTYPE (*signal(int sig, RETSIGTYPE(*func)(int sig,...)))(int sig2,...);
-			RETSIGTYPE catch(int sig, ...) { ${cf_cv_main_return:-return}(1); }
+			RETSIGTYPE catch(int sig, ...) { exit(0); }
 			int main(void) { signal(SIGINT, catch); ${cf_cv_main_return:-return}(0); } ],
 			[cf_cv_sig_args=VARYING],
 			[cf_cv_sig_args=UNKNOWN],

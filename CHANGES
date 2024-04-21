@@ -1,3 +1,25 @@
+2024-04-21  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* makefile.in: fix an unwanted error-message in the clean rule
+
+	* test/cm_funcs/rcsload.sh, test/pathname/dlettree.sh,
+	  test/pathname/editfile.sh, test/pathname/edittree.sh,
+	  test/pathname/filecopy.sh, test/process/usercopy.sh,
+	  test/unix/gid2s.sh, test/unix/s2uid.sh, test/unix/uid2s.sh:
+	improve trap-commands, use symbols
+
+	* package/debian/changelog, package/td_lib.spec: bump
+
+	* configure: regen
+
+	* configure.in: fix typo
+
+	* aclocal.m4: resync with my-autoconf
+
+	* aclocal.m4:
+	correct test-program for CF_TD_SIG_ARGS by exiting rather than returning
+	(with value) from signal handler.
+
 2024-04-19  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* package/debian/copyright, COPYING, package/debian/changelog,

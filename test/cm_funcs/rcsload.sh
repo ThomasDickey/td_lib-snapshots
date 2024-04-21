@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id: rcsload.sh,v 12.2 2010/07/05 13:59:44 tom Exp $
+# $Id: rcsload.sh,v 12.3 2024/04/21 20:24:18 tom Exp $
 ME=rcsload
 : ${TMPDIR:-/tmp}
 export TMPDIR
@@ -7,7 +7,8 @@ RCS_DEBUG=2;export RCS_DEBUG
 RCS_DIR=${TMPDIR:-/tmp};export RCS_DIR
 #
 rm -f $ME.tmp
-trap "rm -f /tmp/$N,v $ME.tst" 0 1 2 5 15
+trap "rm -f /tmp/$N,v $ME.tst; exit 1" HUP INT QUIT TERM
+trap "rm -f /tmp/$N,v $ME.tst" EXIT
 #
 for n in ../dummy3.txt ../dummy4.txt
 do

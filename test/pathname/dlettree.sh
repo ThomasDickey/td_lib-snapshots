@@ -1,10 +1,11 @@
 #!/bin/sh
-# $Id: dlettree.sh,v 8.0 1993/04/30 11:20:07 ste_cm Rel $
+# $Id: dlettree.sh,v 8.1 2024/04/21 20:24:18 tom Exp $
 #
 ME=dlettree
 #
 rm -rf junk
-trap "rm -rf junk" 0 1 2 5 15
+trap "rm -rf junk; exit 1" HUP INT QUIT TERM
+trap "rm -rf junk" EXIT
 mkdir junk
 mkdir junk/foo
 mkdir junk/bar

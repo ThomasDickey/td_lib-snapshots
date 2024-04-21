@@ -1,9 +1,10 @@
 #!/bin/sh
-# $Id: editfile.sh,v 12.1 1994/08/21 22:36:13 tom Exp $
+# $Id: editfile.sh,v 12.2 2024/04/21 20:24:18 tom Exp $
 #
 ME=editfile
 rm -f *.tst *.bak
-trap "rm -f *.tst *.bak" 0 1 2 5 15
+trap "rm -f *.tst *.bak; exit 1" HUP INT QUIT TERM
+trap "rm -f *.tst *.bak" EXIT
 for i in ../../support/*.mms
 do	j=`basename $i .mms`
 	cp $i ./$j.tst

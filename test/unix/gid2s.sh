@@ -1,12 +1,13 @@
 #!/bin/sh
-# $Id: gid2s.sh,v 12.1 2022/10/11 08:15:23 tom Exp $
+# $Id: gid2s.sh,v 12.2 2024/04/21 20:24:18 tom Exp $
 #
 OUT=gid2s.tmp
 SED=/tmp/sed$$
 REF=/tmp/ref$$
 ARG=/tmp/arg$$
 #
-trap "rm -f $ARG $REF $SED" 0 1 2 5 15
+trap "rm -f $ARG $REF $SED; exit 1" HUP INT QUIT TERM
+trap "rm -f $ARG $REF $SED" EXIT
 rm -f $OUT
 #
 head -20 /etc/group |\
