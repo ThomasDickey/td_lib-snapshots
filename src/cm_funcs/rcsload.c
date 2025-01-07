@@ -49,7 +49,7 @@
 #include	<ctype.h>
 #include	<time.h>
 
-MODULE_ID("$Id: rcsload.c,v 12.17 2020/04/29 00:05:46 tom Exp $")
+MODULE_ID("$Id: rcsload.c,v 12.18 2025/01/07 00:01:26 tom Exp $")
 
 #ifdef	TEST
 #define	DEBUG(s) PRINTF s
@@ -101,7 +101,7 @@ show_vector(const char *tag,
 static void
 append(char *s)
 {
-    if (load_last != 0 && s != 0) {
+    if (load_last != NULL && s != NULL) {
 	while ((*load_last = *s++) != EOS)
 	    load_last++;
 	load_last++;		/* skip the EOS I just copied */
@@ -114,7 +114,7 @@ loadtext(int c)
     static char edit_type;	/* editing type */
     static int edit_at, skip;
 
-    if (my_buffer == 0) {
+    if (my_buffer == NULL) {
 	my_buffer = doalloc(my_buffer, my_limit = BUFSIZ);
 	*my_buffer = EOS;
     }
@@ -166,7 +166,7 @@ loadtext(int c)
 	} else if (log_or_edit == 0) {
 	    cur_added++;
 	    append(my_buffer);
-	} else if (load_last != 0) {
+	} else if (load_last != NULL) {
 	    append(my_buffer);
 	}
     }
@@ -189,7 +189,7 @@ eat_text(char *s, int code)
     my_length = 0;
     s = rcsparse_str(s, loadtext);
 
-    if (base == 0) ;
+    if (base == NULL) ;
     else if (log_or_edit >= 0) {	/* compute vector of line-pointers */
 	unsigned j;
 	char *p;
@@ -198,7 +198,7 @@ eat_text(char *s, int code)
 	load_vector = vecalloc((size_t) (++j));
 	for (j = 0, p = base; p != load_last; p += strlen(p) + 1, j++)
 	    load_vector[j] = p;
-	load_vector[j] = 0;
+	load_vector[j] = NULL;
 	SHOW_VECTOR(log_or_edit ? "DELTA" : "FILE", last_rev, load_vector)
     } else {
 	char *t, *d;
@@ -224,13 +224,13 @@ static char *
 branch_of(char *rev)
 {
     char bfr[BUFSIZ];
-    char *result = 0;
+    char *result = NULL;
 
     if (strlen(rev) < sizeof(bfr)) {
 	char *s = strcpy(bfr, rev);
 	char *t = bfr;
 
-	while (t != 0) {
+	while (t != NULL) {
 	    if ((t = strchr(s, '.')) != NULL)
 		if ((t = strchr(t + 1, '.')) != NULL)
 		    s = t + 1;
@@ -254,7 +254,7 @@ ripple(DELTREE * dst,
 	- dst->num_deleted
 	+ dst->num_added;
 
-    if (dst->vector != 0) {
+    if (dst->vector != NULL) {
 	char **script = dst->vector;
 	dst->vector = vecedit(src->vector, script);
 	vecfree(script);
@@ -306,9 +306,9 @@ rcsload(char *archive,		/* name of file to open             */
 {
     static DELTREE nil;		/* empty struct, for terminator */
     DELTREE newtree;		/* current struct, for loading  */
-    DELTREE *vec = 0;		/* vector of structs to return  */
+    DELTREE *vec = NULL;	/* vector of structs to return  */
     size_t total = 0;		/* number of items in vector    */
-    char key[BUFSIZ], tmp[BUFSIZ], *name, *s = 0;
+    char key[BUFSIZ], tmp[BUFSIZ], *name, *s = NULL;
     size_t j;
     int k;
     int delta = 0, code = S_FAIL;
@@ -321,7 +321,7 @@ rcsload(char *archive,		/* name of file to open             */
 	char *t;
 
 	load_buffer = file2mem(name);
-	if (load_buffer == 0)
+	if (load_buffer == NULL)
 	    return vec;
 	for (t = load_buffer; *t; t++)
 	    if (*t == '\n')
@@ -330,10 +330,10 @@ rcsload(char *archive,		/* name of file to open             */
 	length += (unsigned) (t - load_buffer) + 2;
 	load_buffer = doalloc(load_buffer, (size_t) length);
     } else
-	load_buffer = 0;
+	load_buffer = NULL;
     load_last = load_buffer;
-    load_vector = 0;
-    load_logged = 0;
+    load_vector = NULL;
+    load_logged = NULL;
 
     k = -1;
     memset(&newtree, 0, sizeof(newtree));
@@ -363,7 +363,7 @@ rcsload(char *archive,		/* name of file to open             */
 	    s = rcsparse_num(tmp, s);
 	    newtree.parent = txtalloc(tmp);
 	    newtree.buffer = load_buffer;
-	    load_buffer = 0;
+	    load_buffer = NULL;
 	    vec = DOALLOC(vec, DELTREE, ((total + 1) | CHUNK) + 1);
 	    vec[total++] = newtree;
 	    vec[total] = nil;
@@ -384,7 +384,7 @@ rcsload(char *archive,		/* name of file to open             */
 	    s = eat_text(s, -1);
 	    if (k >= 0) {
 		vec[k].logged = load_logged;
-		load_logged = 0;
+		load_logged = NULL;
 	    }
 	    break;
 	case S_TEXT:
@@ -394,7 +394,7 @@ rcsload(char *archive,		/* name of file to open             */
 		vec[k].num_added = cur_added;
 		vec[k].num_deleted = cur_deleted;
 		vec[k].vector = load_vector;
-		load_vector = 0;
+		load_vector = NULL;
 	    }
 	    break;
 	}
@@ -434,7 +434,7 @@ rcsload(char *archive,		/* name of file to open             */
 	 */
 	for (j = 0; j < total; j++) {
 	    if (!strcmp(vec[j].parent, "")
-		&& (s = branch_of(vec[j].revision)) != 0)
+		&& (s = branch_of(vec[j].revision)) != NULL)
 		fill_branch(vec, (int) j, s);
 	}
     }
@@ -448,12 +448,12 @@ rcsload(char *archive,		/* name of file to open             */
 void
 rcsunload(DELTREE * p)		/* vector to release */
 {
-    if (p != 0) {
+    if (p != NULL) {
 	int j;
 	for (j = 0; p[j].vector; j++) {
-	    if (p[j].buffer != 0)
+	    if (p[j].buffer != NULL)
 		dofree(p[j].buffer);
-	    if (p[j].vector != 0)
+	    if (p[j].vector != NULL)
 		vecfree(p[j].vector);
 	}
 	dofree((char *) p);

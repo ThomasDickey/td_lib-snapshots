@@ -8,10 +8,10 @@
  *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, converted to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
- *		27 Jun 1990, added procedure 'strlcpy()' to this module. 
+ *		27 Jun 1990, added procedure 'strlcpy()' to this module.
  *			     Altered 'strucpy()' to return its destination-arg
  *			     a la 'strcpy()'
- *		
+ *
  * Function:	Copy a string, converting its case (upper/lower). The source
  *		and destination arguments may be the same.
  */
@@ -19,7 +19,7 @@
 #define CHR_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: strucpy.c,v 12.8 2014/12/28 01:11:07 tom Exp $")
+MODULE_ID("$Id: strucpy.c,v 12.9 2025/01/06 23:50:52 tom Exp $")
 
 /*
  * Copy string, converting to uppercase

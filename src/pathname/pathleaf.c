@@ -10,7 +10,7 @@
  *		03 Oct 1991, conversion to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
  *		04 Oct 1989, lint (apollo SR10.1)
- *		
+ *
  * Function:	Returns the lowest leaf-name on the given path by looking for
  *		the last path-delimiter.
  *
@@ -26,7 +26,7 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: pathleaf.c,v 12.8 2014/12/27 22:16:18 tom Exp $")
+MODULE_ID("$Id: pathleaf.c,v 12.10 2025/01/07 00:30:52 tom Exp $")
 
 char *
 pathleaf(const char *path)
@@ -52,7 +52,7 @@ pathleaf(const char *path)
 		return (++s);
 	}
     } else {
-	result = 0;
+	result = NULL;
     }
     return result;
 }

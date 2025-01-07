@@ -27,7 +27,7 @@
 
 #include	"ptypes.h"
 
-MODULE_ID("$Id: doalloc.c,v 12.12 2019/12/04 09:23:03 tom Exp $")
+MODULE_ID("$Id: doalloc.c,v 12.13 2025/01/06 23:59:56 tom Exp $")
 
 static long count_alloc, count_freed;
 
@@ -132,8 +132,8 @@ record_alloc(void *newp, void *oldp, size_t len)
 #define	OK_ALLOC(p,q,n)	((p != 0) && (record_alloc(p,q,n) >= 0))
 #define	OK_FREE(p)	((p != 0) && (record_freed(p) >= 0))
 #else
-#define	OK_ALLOC(p,q,n)	(p != 0)
-#define	OK_FREE(p)	(p != 0)
+#define	OK_ALLOC(p,q,n)	(p != NULL)
+#define	OK_FREE(p)	(p != NULL)
 #endif /* DEBUG */
 
 #ifdef	DEBUG_LOG
@@ -164,11 +164,11 @@ doalloc(void *oldp, size_t amount)
 {
     void *newp;
 
-    count_alloc += (oldp == 0);
+    count_alloc += (oldp == NULL);
     LOGIT("allocate", amount);
     LOGIT("  old = ", oldp);
 
-    newp = (oldp != 0) ? realloc(oldp, amount) : malloc(amount);
+    newp = (oldp != NULL) ? realloc(oldp, amount) : malloc(amount);
     if (!OK_ALLOC(newp, oldp, amount))
 	failed("doalloc");
 

@@ -23,7 +23,7 @@
 #define SIG_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: on_winch.c,v 12.11 2020/04/28 20:26:40 tom Exp $")
+MODULE_ID("$Id: on_winch.c,v 12.12 2025/01/07 00:01:26 tom Exp $")
 
 #ifdef SIGWINCH
 #define	ON_WINCH struct OnWinch
@@ -72,14 +72,14 @@ set_handler(RETSIGTYPE (*new_handler) (SIGNAL_ARGS))
 static void
 handle_resize(void)
 {
-    if (saved_winch != 0) {
+    if (saved_winch != NULL) {
 	(saved_winch) (SIGWINCH);
     }
 
     set_handler(SIG_IGN);
-    if (list != 0 && resizewin()) {
+    if (list != NULL && resizewin()) {
 	ON_WINCH *p;
-	for (p = list; p != 0; p = p->next) {
+	for (p = list; p != NULL; p = p->next) {
 	    caught_this = FALSE;
 	    (*p->func) ();
 	}
@@ -118,27 +118,27 @@ on_winch(void (*func) (void))
 	return;
 #endif
     disable_this = TRUE;
-    if (func != 0) {		/* add function to end of our list */
+    if (func != NULL) {		/* add function to end of our list */
 	p = ALLOC(ON_WINCH, 1);
 	q = list;
 
-	p->next = 0;
+	p->next = NULL;
 	p->func = func;
 
-	if (q != 0) {
-	    while (q->next != 0)
+	if (q != NULL) {
+	    while (q->next != NULL)
 		q = q->next;
 	    q->next = p;
 	} else {
 	    list = p;
 	}
     } else {			/* remove function on the end of list */
-	if ((p = list) != 0) {
-	    for (q = 0; p->next != 0; q = p, p = p->next) ;
-	    if (q != 0)
-		q->next = 0;
+	if ((p = list) != NULL) {
+	    for (q = NULL; p->next != NULL; q = p, p = p->next) ;
+	    if (q != NULL)
+		q->next = NULL;
 	    else
-		list = 0;
+		list = NULL;
 	    dofree((char *) p);
 	}
     }

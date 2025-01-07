@@ -12,7 +12,7 @@
  *		03 Oct 1991, converted to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
  *		06 Sep 1989, use 'getwd()' definition from "ptypes.h"
- *		
+ *
  * Function:	Given a pathname, this successively invokes a user-supplied
  *		function, with the following arguments:
  *
@@ -51,7 +51,7 @@
 #include	"ptypes.h"
 #include	"td_qsort.h"
 
-MODULE_ID("$Id: walktree.c,v 12.17 2014/12/28 02:06:12 tom Exp $")
+MODULE_ID("$Id: walktree.c,v 12.19 2025/01/07 00:31:55 tom Exp $")
 
 /************************************************************************
  *	local definitions						*
@@ -111,7 +111,7 @@ walktree(const char *patharg,
 		total++;
 	    }
 	} else {
-	    sb_ = 0;
+	    sb_ = NULL;
 	}
 
 	if (level == 0) {	/* do this once, to initialize */
@@ -124,10 +124,10 @@ walktree(const char *patharg,
 	    && (ok_acc >= 0)
 	    && (mode == S_IFDIR)) {
 	    if ((chdir(namearg) >= 0)
-		&& (dp = opendir(".")) != 0) {
+		&& (dp = opendir(".")) != NULL) {
 		abspath(strcpy(new_wd, "."));
 		num = 0;
-		vec = 0;
+		vec = NULL;
 		while ((de = readdir(dp)) != NULL) {
 		    if (dotname(de->d_name))
 			continue;

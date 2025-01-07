@@ -15,7 +15,7 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: ftype2.c,v 12.6 2014/12/28 01:10:51 tom Exp $")
+MODULE_ID("$Id: ftype2.c,v 12.7 2025/01/07 00:30:52 tom Exp $")
 
 #ifdef	SYS_UNIX
 char *
@@ -23,9 +23,9 @@ ftype2(char *path)
 {
     char *s, *t;
 
-    if ((s = fleaf(path)) == 0)	/* find leaf */
+    if ((s = fleaf(path)) == NULL)	/* find leaf */
 	s = path;
-    if ((t = strrchr(s, '.')) == 0)	/* ...and suffix in leaf */
+    if ((t = strrchr(s, '.')) == NULL)	/* ...and suffix in leaf */
 	t = s + strlen(s);
     return (t);
 }

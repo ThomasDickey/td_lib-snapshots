@@ -79,7 +79,7 @@
 #include	<wctype.h>
 #endif
 
-MODULE_ID("$Id: rawgets.c,v 12.36 2020/04/28 22:22:23 tom Exp $")
+MODULE_ID("$Id: rawgets.c,v 12.37 2025/01/06 23:59:56 tom Exp $")
 
 #define	SHIFT	5
 
@@ -380,7 +380,7 @@ MoveFrom(int row, int col)
 	ShowAt(s);
 	return s;
     }
-    return 0;
+    return NULL;
 }
 #endif
 /*
@@ -714,7 +714,7 @@ static void
 Redisplay(void)
 {
     WINDOW *win = Z;
-    if (win == 0)
+    if (win == NULL)
 	win = stdscr;
     (void) wmove(win, y_rawgets, x_rawgets);
     if (wrap) {
@@ -775,7 +775,7 @@ wrawgets(WINDOW *win,
     bbase = CurIns = bfr;
     shift = 0;
 
-    if ((Z = win) != 0) {
+    if ((Z = win) != NULL) {
 	getyx(Z, y_rawgets, x_rawgets);		/* get my initial position */
 	ShowPrefix();
 	(void) wmove(Z, y_rawgets, x_rawgets);

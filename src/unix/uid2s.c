@@ -18,7 +18,7 @@
  *		04 Oct 1989, speedup (?) by reading ids only as needed
  *		25 Jul 1989, recompiled with apollo SR10 -- mods for function
  *			     prototypes
- *		
+ *
  * Function:	Maintain a lookup table of uid names for fast access.
  *		For any given argument, return a pointer to string
  *		defining the name.
@@ -28,7 +28,7 @@
 #define	STR_PTYPES
 #include <td_btree.h>
 
-MODULE_ID("$Id: uid2s.c,v 12.18 2020/05/02 14:47:03 tom Exp $")
+MODULE_ID("$Id: uid2s.c,v 12.20 2025/01/07 00:14:42 tom Exp $")
 
 #if defined(HAVE_GETPWUID)
 
@@ -79,7 +79,7 @@ lookup_uid(uid_t uid)
 	return txtalloc("<none>");
     } else
 #endif
-    if ((p = getpwuid(uid)) != 0)
+    if ((p = getpwuid(uid)) != NULL)
 	return txtalloc(p->pw_name);
     else {
 	char bfr[80];

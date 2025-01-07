@@ -19,7 +19,7 @@
 #include	"ptypes.h"
 #include	"rcsdefs.h"
 
-MODULE_ID("$Id: vcs_file.c,v 12.7 2010/07/05 11:01:03 tom Exp $")
+MODULE_ID("$Id: vcs_file.c,v 12.8 2025/01/06 23:59:56 tom Exp $")
 
 char *
 vcs_file(const char *path,	/* pathname to prepend, if nonnull */
@@ -34,7 +34,7 @@ vcs_file(const char *path,	/* pathname to prepend, if nonnull */
     (void) strcpy(name, s);
     if (!temp)
 	(void) strcat(name, RCS_SUFFIX);
-    return ((path == 0) ? name : pathcat(name, path, name));
+    return ((path == NULL) ? name : pathcat(name, path, name));
 }
 
 #ifdef	TEST

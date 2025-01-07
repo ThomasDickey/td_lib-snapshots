@@ -19,7 +19,7 @@
 #include	<ctype.h>
 #include	<time.h>
 
-MODULE_ID("$Id: diffload.c,v 12.10 2010/07/10 00:10:13 tom Exp $")
+MODULE_ID("$Id: diffload.c,v 12.11 2025/01/06 23:59:56 tom Exp $")
 
 #ifdef	TEST
 #define	DEBUG(s) PRINTF s;
@@ -50,7 +50,7 @@ load_diff(DELTREE * p, char *name1, char *name2)
     FILE *pp;
     char tmp1[MAXPATHLEN * 2 + 1];
     char tmp2[MAXPATHLEN * 2 + 1];
-    void (*trace) (char *s) = 0;
+    void (*trace) (char *s) = NULL;
 
     (void) name2s(tmp1, (int) sizeof(tmp1), name1, 1);
     (void) name2s(tmp2, (int) sizeof(tmp2), name2, 1);
@@ -61,7 +61,7 @@ load_diff(DELTREE * p, char *name1, char *name2)
     APPEND(cmd, " ");
     APPEND(cmd, tmp1);
 
-    if ((pp = popen(dyn_string(cmd), "r")) != 0) {
+    if ((pp = popen(dyn_string(cmd), "r")) != NULL) {
 	char **script;
 	int length = fp2argv(pp, &script, trace), n;
 
@@ -135,12 +135,12 @@ diffload(char **names,		/* names of file(s) to open */
 void
 diffunload(DELTREE * p)		/* vector to release */
 {
-    if (p != 0) {
+    if (p != NULL) {
 	int j;
 	for (j = 0; p[j].vector; j++) {
-	    if (p[j].buffer != 0)
+	    if (p[j].buffer != NULL)
 		free(p[j].buffer);
-	    if (p[j].vector != 0)
+	    if (p[j].vector != NULL)
 		vecfree(p[j].vector);
 	}
 	dofree((char *) p);

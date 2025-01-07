@@ -42,7 +42,7 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: abspath.c,v 12.16 2022/10/11 20:44:27 tom Exp $")
+MODULE_ID("$Id: abspath.c,v 12.17 2025/01/07 00:29:46 tom Exp $")
 
 #ifdef	apollo
 #ifdef	apollo_sr10
@@ -178,7 +178,7 @@ abshome(char *path)
 			break;
 		    }
 		}
-		if ((p = getpwnam(user)) != 0) {
+		if ((p = getpwnam(user)) != NULL) {
 		    while ((*d++ = *s++) != EOS) {
 			;
 		    }
@@ -268,7 +268,7 @@ abspath(char *path)
     } else if (*path) {
 	char cwdpath[MAXPATHLEN];
 
-	if ((d = getwd(cwdpath)) != 0) {
+	if ((d = getwd(cwdpath)) != NULL) {
 	    s = path;
 	    if (*s == '.')
 		if (s[1] == EOS || isSlash(s[1]))

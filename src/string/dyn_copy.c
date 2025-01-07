@@ -15,12 +15,12 @@
 #include "ptypes.h"
 #include "dyn_str.h"
 
-MODULE_ID("$Id: dyn_copy.c,v 12.7 2019/12/06 10:58:41 tom Exp $")
+MODULE_ID("$Id: dyn_copy.c,v 12.8 2025/01/07 00:14:07 tom Exp $")
 
 DYN *
 dyn_copy(DYN * p, const char *s)
 {
-    size_t len = (s != 0) ? strlen(s) : 0;
+    size_t len = (s != NULL) ? strlen(s) : 0;
 
     if (len != 0) {
 	p = dyn_alloc(p, len + 1);

@@ -10,7 +10,7 @@
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
  *		05 Mar 1990, lint
  *		12 Dec 1989, lint (SunOs 4.0.3)
- *		
+ *
  *
  * Function:	Reads a file and converts it to an argv-style array of pointers
  *		to strings.
@@ -30,7 +30,7 @@
 
 #include "ptypes.h"
 
-MODULE_ID("$Id: file2arg.c,v 12.9 2010/07/10 00:11:18 tom Exp $")
+MODULE_ID("$Id: file2arg.c,v 12.11 2025/01/07 00:29:46 tom Exp $")
 
 #define	AVG_LINE	25	/* nominal line-length */
 #define	AMOUNT(n)	(size_t)(n)
@@ -45,8 +45,8 @@ file2argv(const char *name, char ***vec)
     char **p, *blob;
     char *s, *d;
 
-    *vec = 0;			/* in case we find an error */
-    if ((blob = file2mem(name)) == 0)
+    *vec = NULL;		/* in case we find an error */
+    if ((blob = file2mem(name)) == NULL)
 	return (-1);
 
     for (s = blob, lines = 0; *s; ++s)
@@ -61,7 +61,7 @@ file2argv(const char *name, char ***vec)
      * Reallocate space for the file counting the nulls inserted
      * after each newline.
      */
-    if ((blob = doalloc(blob, AMOUNT(length + lines + 1))) == 0)
+    if ((blob = doalloc(blob, AMOUNT(length + lines + 1))) == NULL)
 	return (-1);
 
     /*
@@ -79,7 +79,7 @@ file2argv(const char *name, char ***vec)
 	}
 	*d-- = *s--;
     }
-    p[lines] = 0;		/* always supply a null-pointer */
+    p[lines] = NULL;		/* always supply a null-pointer */
     p[0] = blob;
 
     return (lines);

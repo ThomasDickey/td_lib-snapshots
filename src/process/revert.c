@@ -10,7 +10,7 @@
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
  *		07 Dec 1989, lint (SunOs 3.4)
  *		04 Oct 1989, lint (apollo SR10.1)
- *		
+ *
  * Function:	Resets uid and/or gid to disable setuid-action.  This is done
  *		to prevent specific security violations from occurring in
  *		an application program.
@@ -18,7 +18,7 @@
 
 #include	"ptypes.h"
 
-MODULE_ID("$Id: revert.c,v 12.7 2014/12/28 01:11:01 tom Exp $")
+MODULE_ID("$Id: revert.c,v 12.8 2025/01/06 23:50:51 tom Exp $")
 
 #ifdef	SYS_UNIX
 

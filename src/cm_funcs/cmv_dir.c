@@ -18,7 +18,7 @@
  *		05 Jan 1995, fix an infinite loop when parsing multiple archives
  *		29 Sep 1994, automatically purge the cached r-curr only when
  *			     the actual file changes.
- *		
+ *
  * Function:	Encapsulates the name of the CMV directory.
  *
  *		The environment-variable CMV_VAULT must be defined.  It is not
@@ -28,7 +28,7 @@
  *
  *		The CMV_VAULT variable consists of one or more pathname
  *		assignments separated by colons, e.g.,
- *		
+ *
  *			/arc/src1=/work/src1:/arc2=/work2=/work3:/arc/misc
  *
  *		We assume that the caller doesn't modify our return value;
@@ -41,7 +41,7 @@
 #include "cmv_defs.h"
 #include "dyn_str.h"
 
-MODULE_ID("$Id: cmv_dir.c,v 12.40 2020/05/02 00:39:52 tom Exp $")
+MODULE_ID("$Id: cmv_dir.c,v 12.41 2025/01/07 00:03:17 tom Exp $")
 
 /******************************************************************************/
 
@@ -105,9 +105,9 @@ NewCmTree(const char *pathname)
 {
     CMTREE *p = typealloc(CMTREE);
 
-    p->filelist = 0;
+    p->filelist = NULL;
     p->children =
-	p->siblings = 0;
+	p->siblings = NULL;
     p->fullpath = txtalloc(pathname);
     p->internal =
 	p->external = txtalloc("");
@@ -138,7 +138,7 @@ PathCat(const char *head, const char *tail)
 static char *
 NewInternal(CMTREE * parent, const char *internal)
 {
-    if (parent != 0 && parent->internal[0] != EOS) {
+    if (parent != NULL && parent->internal[0] != EOS) {
 	internal = PathCat(parent->internal, internal);
     }
     return txtalloc(internal);
@@ -150,7 +150,7 @@ NewInternal(CMTREE * parent, const char *internal)
 static char *
 NewExternal(CMTREE * parent, const char *external)
 {
-    if (parent != 0 && parent->external[0] != EOS) {
+    if (parent != NULL && parent->external[0] != EOS) {
 	external = PathCat(parent->external, external);
     }
     return txtalloc(external);
@@ -180,7 +180,7 @@ parts_list(char *result, const char *archive, int level)
     if ((strlen(archive) + strlen(leaf) + 3) < MAXPATHLEN)
 	pathcat(result, archive, leaf);
     else
-	result = 0;
+	result = NULL;
 
     return result;
 }
@@ -199,23 +199,23 @@ read_s_curr(CMTREE * parent)	/* parent node to populate */
     CMTREE *p, *q;
     char *fname = parts_list(temp, parent->fullpath, parent->level);
 
-    if ((fname != 0) && (fp = fopen(fname, "r")) != 0) {
-	while (fgets(temp, (int) sizeof(temp), fp) != 0) {
+    if ((fname != NULL) && (fp = fopen(fname, "r")) != NULL) {
+	while (fgets(temp, (int) sizeof(temp), fp) != NULL) {
 	    char *s = strchr(strtrim(temp), ';');
-	    if (s == 0)
+	    if (s == NULL)
 		continue;
 	    *s++ = EOS;
 	    (void) strcpy(internal, temp);
-	    if ((s = strchr(s, ';')) == 0)
+	    if ((s = strchr(s, ';')) == NULL)
 		continue;
 	    (void) strcpy(external, s + 1);
-	    if ((s = strchr(external, ';')) != 0)
+	    if ((s = strchr(external, ';')) != NULL)
 		*s = EOS;
 	    p = NewCmTree(pathcat(temp, parent->fullpath, internal));
 	    p->level = parent->level + 1;
 	    p->internal = NewInternal(parent, internal);
 	    p->external = NewExternal(parent, external);
-	    if ((q = parent->children) != 0)
+	    if ((q = parent->children) != NULL)
 		p->siblings = q;
 	    parent->children = p;
 	}
@@ -237,12 +237,12 @@ FindInternalDir(CMTREE * parent, const char *external)
     if (len1 == 0)
 	return parent;		/* ambiguous, but better than nothing */
     p = parent->children;
-    if (p == 0) {
+    if (p == NULL) {
 	read_s_curr(parent);
 	p = parent->children;
     }
     /* if not at the current level, recur */
-    while (p != 0) {
+    while (p != NULL) {
 	if (!strcmp(p->external, external))
 	    return p;
 	len2 = strlen(p->external);
@@ -254,7 +254,7 @@ FindInternalDir(CMTREE * parent, const char *external)
 	p = p->siblings;
     }
 
-    return 0;
+    return NULL;
 }
 
 /*
@@ -265,8 +265,8 @@ cmv_date(const char *src)
 {
     time_t result = 0;
 
-    if (src != 0
-	&& (src = strchr(src, '\001')) != 0) {
+    if (src != NULL
+	&& (src = strchr(src, '\001')) != NULL) {
 	int owner, group, prot;
 	long modtime;
 	if (sscanf(++src, "O%d:G%d:P%d:M%ld:",
@@ -303,15 +303,15 @@ read_r_curr(CMTREE * parent)
     parent->marktime = sb.st_mtime;
 
     /* discard the previous contents of the cache */
-    while (parent->filelist != 0) {
+    while (parent->filelist != NULL) {
 	p = parent->filelist;
 	parent->filelist = p->next;
 	/* the members are all 'txtalloc()' heap: don't free */
 	dofree((char *) p);
     }
 
-    if ((fp = fopen(temp, "r")) != 0) {
-	while (fgets(temp, (int) sizeof(temp), fp) != 0) {
+    if ((fp = fopen(temp, "r")) != NULL) {
+	while (fgets(temp, (int) sizeof(temp), fp) != NULL) {
 	    char *external;
 	    char *internal;
 	    char *description;
@@ -319,22 +319,22 @@ read_r_curr(CMTREE * parent)
 	    char *d;
 
 	    internal = strtrim(temp);
-	    if ((s = strchr(temp, ';')) == 0)
+	    if ((s = strchr(temp, ';')) == NULL)
 		continue;
 	    *s++ = EOS;
 
 	    description = s;
-	    if ((s = strchr(s, ';')) == 0)
+	    if ((s = strchr(s, ';')) == NULL)
 		continue;
 	    *s++ = EOS;
 
 	    external = s;
-	    if ((d = strchr(s, ';')) == 0)
+	    if ((d = strchr(s, ';')) == NULL)
 		continue;
 	    *d++ = EOS;		/* version follows */
 
 	    /* chop off the first word to get the lock-owner */
-	    if ((s = strchr(description, ' ')) != 0) {
+	    if ((s = strchr(description, ' ')) != NULL) {
 		*s = EOS;
 	    } else {
 		description = txtalloc("");
@@ -347,7 +347,7 @@ read_r_curr(CMTREE * parent)
 	    /* some revision-fields, for binary files, contain
 	     * other info.
 	     */
-	    if ((s = strpbrk(d, " ;")) != 0)
+	    if ((s = strpbrk(d, " ;")) != NULL)
 		*s++ = EOS;
 	    p->revision = txtalloc(d);
 	    p->internal = txtalloc(internal);
@@ -364,13 +364,13 @@ static CMFILE *
 FindInternalFile(CMTREE * parent, const char *external)
 {
     CMFILE *p;
-    if (parent->filelist == 0)
+    if (parent->filelist == NULL)
 	read_r_curr(parent);
-    for (p = parent->filelist; p != 0; p = p->next) {
+    for (p = parent->filelist; p != NULL; p = p->next) {
 	if (!strcmp(p->external, external))
 	    return p;
     }
-    return 0;
+    return NULL;
 }
 
 /******************************************************************************/
@@ -386,7 +386,7 @@ part_exists(const char *pathname, int level)
     int rc;
     char *fname = parts_list(full, pathname, level);
 
-    rc = ((fname != 0) && (stat_file(fname, &sb) == 0));
+    rc = ((fname != NULL) && (stat_file(fname, &sb) == 0));
     return rc;
 }
 
@@ -436,21 +436,21 @@ add_archive(const char *pathname)
 {
     if (*pathname != EOS) {
 	VAULTS *p, *q, *r;
-	for (p = VaultList, q = 0; p != 0; q = p, p = p->next) ;
+	for (p = VaultList, q = NULL; p != NULL; q = p, p = p->next) ;
 	r = typealloc(VAULTS);
-	r->next = 0;
+	r->next = NULL;
 	r->archive = txtalloc(pathname);
-	r->working = 0;
+	r->working = NULL;
 	r->cmtree = NewCmTree(pathname);
 	r->cmtree->level =
 	    r->level = level_of(pathname);
-	if (q == 0)
+	if (q == NULL)
 	    VaultList = r;
 	else
 	    q->next = r;
 	return r;
     }
-    return 0;
+    return NULL;
 }
 
 static void
@@ -458,11 +458,11 @@ add_working(VAULTS * list, char *pathname)
 {
     if (*pathname != EOS) {
 	WORKING *p, *q, *r;
-	for (p = list->working, q = 0; p != 0; q = p, p = p->next) ;
+	for (p = list->working, q = NULL; p != NULL; q = p, p = p->next) ;
 	r = typealloc(WORKING);
-	r->next = 0;
+	r->next = NULL;
 	r->working = txtalloc(pathname);
-	if (q == 0)
+	if (q == NULL)
 	    list->working = r;
 	else
 	    q->next = r;
@@ -475,7 +475,7 @@ Initialize(void)
 {
     initialized = TRUE;
     CmvVault = getenv("CMV_VAULT");
-    if (CmvVault != 0) {
+    if (CmvVault != NULL) {
 	char *s;
 	char *next, *eqls;
 	int at_next, at_eqls;
@@ -483,24 +483,24 @@ Initialize(void)
 
 	for (s = CmvVault; *s != EOS; s = next) {
 	    next = strchr(s, PATHLIST_SEP);
-	    if (next == 0)
+	    if (next == NULL)
 		next = s + strlen(s);
 	    at_next = *next;
 	    *next = EOS;
 
 	    eqls = strchr(s, '=');
-	    if (eqls == 0)
+	    if (eqls == NULL)
 		eqls = next;
 	    at_eqls = *eqls;
 	    *eqls = EOS;
 
-	    if ((p = add_archive(s)) != 0) {
+	    if ((p = add_archive(s)) != NULL) {
 		while (eqls != next) {
 		    *eqls = (char) at_eqls;
 		    s = eqls + 1;
 
 		    eqls = strchr(s, '=');
-		    if (eqls == 0)
+		    if (eqls == NULL)
 			eqls = next;
 		    at_eqls = *eqls;
 		    *eqls = EOS;
@@ -547,7 +547,7 @@ UpInternalDir(char *first, char *last)
 	    break;
 	}
     }
-    return 0;
+    return NULL;
 }
 
 /*
@@ -565,9 +565,9 @@ StripToTop(char *dst, char *src)
     char *ptr1;
     char *ptr2;
 
-    if ((ptr1 = UpInternalDir(base, last)) != 0) {
+    if ((ptr1 = UpInternalDir(base, last)) != NULL) {
 	while (last > base) {
-	    if ((ptr2 = UpInternalDir(base, ptr1)) == 0) {
+	    if ((ptr2 = UpInternalDir(base, ptr1)) == NULL) {
 		*last = EOS;
 		return;
 	    }
@@ -584,7 +584,7 @@ LookupVault(const char *working_directory,
 	    char *result)
 {
     Stat_t sb;
-    VAULTS *p, *max_p = 0;
+    VAULTS *p, *max_p = NULL;
     WORKING *q;
     int max_n = 0;
 
@@ -594,8 +594,8 @@ LookupVault(const char *working_directory,
 
     if (!initialized)
 	Initialize();
-    if (CmvVault == 0 || filename == 0)
-	return 0;
+    if (CmvVault == NULL || filename == NULL)
+	return NULL;
 
     /*
      * If we're given the name of a file, compute its directory.  If we're
@@ -614,8 +614,8 @@ LookupVault(const char *working_directory,
      * directory path.  If we find an archive without a working directory
      * in CMV_VAULT, use this iff no prior match is found.
      */
-    for (p = VaultList; p != 0; p = p->next) {
-	for (q = p->working; q != 0; q = q->next) {
+    for (p = VaultList; p != NULL; p = p->next) {
+	for (q = p->working; q != NULL; q = q->next) {
 	    int n;
 	    if ((n = samehead(result, q->working)) > 0
 		&& n >= (int) strlen(q->working)) {
@@ -639,22 +639,22 @@ LookupVault(const char *working_directory,
 		level++;;
 	Debug((stderr, "=>%s\n", result));
     }
-    return (max_n > 0) ? max_p : 0;
+    return (max_n > 0) ? max_p : NULL;
 }
 
 /******************************************************************************/
 char *
 cmv_dir(const char *working_directory, const char *filename)
 {
-    char *name = 0;
+    char *name = NULL;
     char temp[MAXPATHLEN];
     VAULTS *max_p = LookupVault(working_directory, filename, temp);
 
-    if (max_p != 0) {		/* we found a match */
+    if (max_p != NULL) {	/* we found a match */
 	char archive[MAXPATHLEN];
 	CMTREE *it = FindInternalDir(max_p->cmtree, temp);
 
-	if (it != 0
+	if (it != NULL
 	    && (strlen(max_p->archive) + strlen(it->internal) + 3) < sizeof(archive)) {
 	    (void) pathcat(
 			      archive,
@@ -672,22 +672,22 @@ char *
 cmv_file(const char *working_directory,
 	 const char *filename)
 {
-    char *name = 0;
+    char *name = NULL;
     char temp[MAXPATHLEN];
     VAULTS *max_p = LookupVault(working_directory, filename, temp);
 
-    if (max_p != 0) {		/* we found a match */
+    if (max_p != NULL) {	/* we found a match */
 	char archive[MAXPATHLEN];
 	CMTREE *p;
 	CMFILE *q;
 
-	if ((p = FindInternalDir(max_p->cmtree, temp)) != 0) {
+	if ((p = FindInternalDir(max_p->cmtree, temp)) != NULL) {
 	    char *my_leaf = pathleaf(filename);
 	    if (strlen(temp) + strlen(my_leaf) + 3 >= sizeof(temp)) {
 		;		/* give up */
 	    } else if ((q = FindInternalFile(p,
 					     pathcat(temp, temp, my_leaf)))
-		       != 0) {
+		       != NULL) {
 		*archive = EOS;
 		if (q->internal[0] == PATH_SLASH) {
 		    StripToTop(archive, max_p->archive);
@@ -724,7 +724,7 @@ get_cmv_lock(const char *working_directory,
 	     const char *filename,
 	     const char **lockedby,
 	     const char **revision,
-	     time_t * modtime)
+	     time_t *modtime)
 {
     char temp[MAXPATHLEN];
     VAULTS *max_p = LookupVault(working_directory, filename, temp);
@@ -732,13 +732,13 @@ get_cmv_lock(const char *working_directory,
     *lockedby =
 	*revision = "?";
     *modtime = 0;
-    if (max_p != 0) {		/* we found a match */
+    if (max_p != NULL) {	/* we found a match */
 	CMTREE *p;
 	CMFILE *q;
 
-	if ((p = FindInternalDir(max_p->cmtree, temp)) != 0
+	if ((p = FindInternalDir(max_p->cmtree, temp)) != NULL
 	    && (q = FindInternalFile(p, pathcat(temp, temp,
-						pathleaf(filename)))) != 0) {
+						pathleaf(filename)))) != NULL) {
 	    *lockedby = q->lockedby;
 	    *revision = q->revision;
 	    *modtime = q->modtime;
@@ -753,10 +753,10 @@ purge_cmv_dir(const char *working_directory, const char *filename)
     char temp[MAXPATHLEN];
     VAULTS *max_p = LookupVault(working_directory, filename, temp);
 
-    if (max_p != 0) {		/* we found a match */
+    if (max_p != NULL) {	/* we found a match */
 	CMTREE *it = FindInternalDir(max_p->cmtree, temp);
 
-	if (it != 0) {
+	if (it != NULL) {
 	    read_r_curr(it);
 	}
     }

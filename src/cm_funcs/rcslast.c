@@ -41,7 +41,7 @@
 #include <rcsdefs.h>
 #include <dyn_str.h>
 
-MODULE_ID("$Id: rcslast.c,v 12.18 2019/11/30 01:46:23 tom Exp $")
+MODULE_ID("$Id: rcslast.c,v 12.19 2025/01/07 00:03:33 tom Exp $")
 
 /*
  * Returns the modification date of the given file, or 0 if not found
@@ -73,11 +73,11 @@ ShowDate(const char *tag, time_t t)
 static void
 tryRCS(const char *path,
        const char **vers_,
-       time_t * date_,
+       time_t *date_,
        const char **lock_)
 {
     int finish = FALSE, skip = FALSE, code = S_FAIL;
-    char *s = 0;
+    char *s = NULL;
     char *p;
     char user[BUFSIZ];
     char key[BUFSIZ];
@@ -93,7 +93,7 @@ tryRCS(const char *path,
 			     : "?"));
 	(void) strcpy(lstring, strcpy(vstring, "?"));
 
-	while (!finish && (s = rcsread(s, code)) != 0) {
+	while (!finish && (s = rcsread(s, code)) != NULL) {
 	    s = rcsparse_id(key, s);
 
 	    switch (code = rcskeys(key)) {
@@ -110,7 +110,7 @@ tryRCS(const char *path,
 		 * Look for any lock by current user, or any
 		 * lock if the current user has none.
 		 */
-		while ((s != 0) && (*s != ';')) {
+		while ((s != NULL) && (*s != ';')) {
 		    s = rcsparse_id(key, s);
 		    if (*s != ':')
 			break;
@@ -159,7 +159,7 @@ void
 rcslast(const char *working,	/* working directory (absolute) */
 	const char *path,	/* pathname to check (may be relative) */
 	const char **vers_,
-	time_t * date_,
+	time_t *date_,
 	const char **lock_)
 {
     static char dotdot[] =

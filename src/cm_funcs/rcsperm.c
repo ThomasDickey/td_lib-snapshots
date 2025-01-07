@@ -17,7 +17,7 @@
  *			     that we are using it solely for the baseline-
  *			     version.  In this case, return the baseline
  *			     version just as we would for permission checking.
- *		
+ *
  *		10 Mar 1989, rewrote using 'rcsedit' module rather than special-
  *			     purpose file.
  *
@@ -35,7 +35,7 @@
 #include	"dyn_str.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: rcsperm.c,v 12.12 2022/10/11 20:44:27 tom Exp $")
+MODULE_ID("$Id: rcsperm.c,v 12.13 2025/01/06 23:57:00 tom Exp $")
 
 int
 rcspermit(const char *path,
@@ -45,7 +45,7 @@ rcspermit(const char *path,
     static DYN *access_list;
     Stat_t sb;
     int header = TRUE;
-    char *s = 0;
+    char *s = NULL;
     char tip[80];
     char user[BUFSIZ];
     char key[BUFSIZ];
@@ -63,7 +63,7 @@ rcspermit(const char *path,
      * Reset caller's copy of $RCS_BASE in case we are processing more than
      * one RCS directory.
      */
-    if (base != 0) {
+    if (base != NULL) {
 	if ((t = getenv("RCS_BASE")) != NULL
 	    && strlen(t) < (MAXPATHLEN - 1)) {
 	    (void) strcpy(base, t);
@@ -89,7 +89,7 @@ rcspermit(const char *path,
     my_file = ((stat(path, &sb) >= 0)	/* ok always! */
 	       &&(sb.st_uid == getuid()));
 
-    while (header && (s = rcsread(s, code)) != 0) {
+    while (header && (s = rcsread(s, code)) != NULL) {
 	s = rcsparse_id(key, s);
 
 	switch (code = rcskeys(key)) {
@@ -112,7 +112,7 @@ rcspermit(const char *path,
 		ok = my_file;
 	    }
 	    if ((header = ok) != 0
-		&& (base != 0))
+		&& (base != NULL))
 		(void) strcpy(base, tip);
 	    break;
 	case S_LOCKS:
@@ -124,7 +124,7 @@ rcspermit(const char *path,
 	}
     }
     rcsclose();
-    if (accflag != 0)
+    if (accflag != NULL)
 	*accflag = txtalloc(dyn_string(access_list));
     return (ok);
 }

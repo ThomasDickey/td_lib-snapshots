@@ -1,4 +1,4 @@
-/* $Id: td_btree.h,v 12.9 2019/11/30 01:44:04 tom Exp $ */
+/* $Id: td_btree.h,v 12.10 2025/01/07 00:16:36 tom Exp $ */
 /* *INDENT-OFF* */
 
 /*
@@ -22,7 +22,7 @@
 		int	num;
 	}	value;		/* we'll return pointer to this data */
 	};
-#define BI_NODE_NULL {{0,0}, 0, {{0}}}
+#define BI_NODE_NULL {{NULL,NULL}, 0, {{0}}}
 
 	/* cf: offsetof */
 #define BI_NODE_SIZE ((size_t) ((BI_NODE *)0)->value.text)

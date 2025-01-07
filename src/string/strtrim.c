@@ -8,7 +8,7 @@
  *		03 Oct 1991, converted to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
  *		04 Oct 1989, lint (apollo SR10.1)
- *		
+ *
  *
  * Function:	Trims trailing whitespace from a string.  Returns a pointer to
  *		the resulting string.
@@ -18,7 +18,7 @@
 #include	"ptypes.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: strtrim.c,v 12.6 2014/12/28 01:11:07 tom Exp $")
+MODULE_ID("$Id: strtrim.c,v 12.7 2025/01/06 23:50:52 tom Exp $")
 
 char *
 strtrim(char *s)

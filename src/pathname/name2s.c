@@ -32,9 +32,9 @@
 #define	STR_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: name2s.c,v 12.12 2019/12/12 00:29:17 tom Exp $")
+MODULE_ID("$Id: name2s.c,v 12.13 2025/01/07 00:30:52 tom Exp $")
 
-#define	isshell(c)	(strchr("*%?$()[]{}|<>^&;#\\\"`'~", c) != 0)
+#define	isshell(c)	(strchr("*%?$()[]{}|<>^&;#\\\"`'~", c) != NULL)
 
 int
 name2s(char *bfr, int len, const char *name, int opt)

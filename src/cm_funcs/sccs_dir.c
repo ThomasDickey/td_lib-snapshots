@@ -17,7 +17,7 @@
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
  *		22 Jun 1990, changed default value from "sccs" to "SCCS" since
  *			     this seems to be the currently more-common usage.
- *		
+ *
  * Function:	Encapsulates the name of the SCCS directory, permitting the
  *		user to override our default by assigning an environment
  *		variable "SCCS_DIR".
@@ -30,7 +30,7 @@
  *
  *		The SCCS_VAULT variable consists of one or more pathname
  *		assignments separated by colons, e.g.,
- *		
+ *
  *			/arc/src1=/work/src1:/arc2=/work2=/work3:/arc/misc
  *
  *		We assume that the caller doesn't modify our return value;
@@ -42,7 +42,7 @@
 #include "ptypes.h"
 #include "sccsdefs.h"
 
-MODULE_ID("$Id: sccs_dir.c,v 12.18 2014/12/28 01:10:33 tom Exp $")
+MODULE_ID("$Id: sccs_dir.c,v 12.19 2025/01/07 00:01:26 tom Exp $")
 
 #define	WORKING	struct	Working
 WORKING {
@@ -97,18 +97,18 @@ add_archive(char *pathname)
 	    pathname = strlwrcpy(temp, pathname);
 	}
 #endif
-	for (p = VaultList, q = 0; p != 0; q = p, p = p->next) ;
+	for (p = VaultList, q = NULL; p != NULL; q = p, p = p->next) ;
 	r = (VAULTS *) doalloc((char *) 0, sizeof(VAULTS));
-	r->next = 0;
+	r->next = NULL;
 	r->archive = path_alloc(pathname);
-	r->working = 0;
-	if (q == 0)
+	r->working = NULL;
+	if (q == NULL)
 	    VaultList = r;
 	else
 	    q->next = r;
 	return r;
     }
-    return 0;
+    return NULL;
 }
 
 static void
@@ -116,11 +116,11 @@ add_working(VAULTS * list, char *pathname)
 {
     if (*pathname != EOS) {
 	WORKING *p, *q, *r;
-	for (p = list->working, q = 0; p != 0; q = p, p = p->next) ;
+	for (p = list->working, q = NULL; p != NULL; q = p, p = p->next) ;
 	r = (WORKING *) doalloc((char *) 0, sizeof(WORKING));
-	r->next = 0;
+	r->next = NULL;
 	r->working = path_alloc(pathname);
-	if (q == 0)
+	if (q == NULL)
 	    list->working = r;
 	else
 	    q->next = r;
@@ -133,12 +133,12 @@ Initialize(void)
 {
     initialized = TRUE;
     SccsDir = getenv("SCCS_DIR");
-    if (SccsDir == 0)
+    if (SccsDir == NULL)
 	SccsDir = txtalloc("SCCS");
     SccsDir = path_alloc(SccsDir);
 
     SccsVault = getenv("SCCS_VAULT");
-    if (SccsVault != 0) {
+    if (SccsVault != NULL) {
 	char *s;
 	char *next, *eqls;
 	int at_next, at_eqls;
@@ -146,24 +146,24 @@ Initialize(void)
 
 	for (s = SccsVault; *s != EOS; s = next) {
 	    next = strchr(s, PATHLIST_SEP);
-	    if (next == 0)
+	    if (next == NULL)
 		next = s + strlen(s);
 	    at_next = *next;
 	    *next = EOS;
 
 	    eqls = strchr(s, '=');
-	    if (eqls == 0)
+	    if (eqls == NULL)
 		eqls = next;
 	    at_eqls = *eqls;
 	    *eqls = EOS;
 
-	    if ((p = add_archive(s)) != 0) {
+	    if ((p = add_archive(s)) != NULL) {
 		while (eqls != next) {
 		    *eqls = (char) at_eqls;
 		    s = eqls + 1;
 
 		    eqls = strchr(s, '=');
-		    if (eqls == 0)
+		    if (eqls == NULL)
 			eqls = next;
 		    at_eqls = *eqls;
 		    *eqls = EOS;
@@ -191,11 +191,11 @@ sccs_dir(const char *working_directory, const char *filename)
 	Initialize();
 
     name = SccsDir;
-    if (filename != 0
-	&& SccsVault != 0
+    if (filename != NULL
+	&& SccsVault != NULL
 	&& (strlen(filename) + strlen(working_directory) + 10) < sizeof(temp)) {
 	Stat_t sb;
-	VAULTS *p, *max_p = 0;
+	VAULTS *p, *max_p = NULL;
 	WORKING *q;
 	int max_n = 0;
 
@@ -215,7 +215,7 @@ sccs_dir(const char *working_directory, const char *filename)
 	 * without a working directory in SCCS_VAULT, use this iff no
 	 * prior match is found.
 	 */
-	for (p = VaultList; p != 0; p = p->next) {
+	for (p = VaultList; p != NULL; p = p->next) {
 	    if ((n = samehead(temp, p->archive)) > 0
 		&& n >= (int) strlen(p->archive)) {
 		if (n > max_n) {
@@ -224,7 +224,7 @@ sccs_dir(const char *working_directory, const char *filename)
 		    vault = TRUE;
 		}
 	    }
-	    for (q = p->working; q != 0; q = q->next) {
+	    for (q = p->working; q != NULL; q = q->next) {
 		if ((n = samehead(temp, q->working)) > 0
 		    && n >= (int) strlen(q->working)) {
 		    if (n > max_n) {

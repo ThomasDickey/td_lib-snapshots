@@ -11,7 +11,7 @@
  *		03 Oct 1991, convert to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
  *		08 May 1990, use 'sccsdefs.h'
- *		
+ *
  * Function:	Performs translation between SCCS archive and working filenames,
  *		according to the following rules:
  *
@@ -37,7 +37,7 @@
 
 #include	<ctype.h>
 
-MODULE_ID("$Id: sccsname.c,v 12.13 2014/12/27 21:18:35 tom Exp $")
+MODULE_ID("$Id: sccsname.c,v 12.14 2025/01/06 23:59:56 tom Exp $")
 
 #define	LEN_PREFIX	(sizeof(prefix)-1)
 
@@ -51,14 +51,14 @@ static char *
 leaf(char *name)
 {
     char *s = fleaf(name);
-    return ((s != 0) ? s : name);
+    return ((s != NULL) ? s : name);
 }
 
 static const char *
 cleaf(const char *name)
 {
     const char *s = fleaf(name);
-    return ((s != 0) ? s : name);
+    return ((s != NULL) ? s : name);
 }
 
 /*
@@ -75,7 +75,7 @@ static void
 trim_leaf(char *name)
 {
     char *s = fleaf_delim(name);
-    if (s != 0)
+    if (s != NULL)
 	name = s;
     *name = EOS;
 }
@@ -115,7 +115,7 @@ sccs2name(const char *name, int full)
 	    (void) strcpy(fname, name);
 	}
     } else {
-	result = 0;
+	result = NULL;
     }
     return result;
 }
@@ -128,7 +128,7 @@ char *
 name2sccs(const char *name, int full)
 {
     static char fname[MAXPATHLEN];
-    char *result = 0;
+    char *result = NULL;
 
     if (strlen(name) < sizeof(fname)) {
 	if (sccs_prefix(name)) {

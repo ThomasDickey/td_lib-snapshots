@@ -21,7 +21,7 @@
 #define	SCOMP	m2comp		/* name of this module */
 #include "td_scomp.h"
 
-MODULE_ID("$Id: m2comp.c,v 12.9 2014/07/22 13:49:07 tom Exp $")
+MODULE_ID("$Id: m2comp.c,v 12.10 2025/01/06 23:59:56 tom Exp $")
 
 #define	INSERT	1
 #define	DELETE	2
@@ -64,7 +64,7 @@ m2comp(SCOMP_TYPE v1,		/* "old" vector to compare  */
     int done = FALSE;
     EDIT *ep, *behind, *ahead, *a, *b, *x, *w;
     int change;
-    EDIT *start = 0;
+    EDIT *start = NULL;
     unsigned max_d;		/* bound on size of edit script */
     Line ORIGIN;
     Line lower;			/* left-most diagonal under test */
@@ -84,7 +84,7 @@ m2comp(SCOMP_TYPE v1,		/* "old" vector to compare  */
     int save_size;		/* # we get per allocation */
     size_t save_SIZE;		/* actual allocation-size */
 
-    save_list = 0;
+    save_list = NULL;
     save_size = (n1 + n2 + 1) / 2;
     save_SIZE = sizeof(SAVE) + (unsigned) (save_size - 1) * sizeof(EDIT);
 
@@ -120,7 +120,7 @@ m2comp(SCOMP_TYPE v1,		/* "old" vector to compare  */
 	for (k = lower; k <= upper; k = (Line) (k + 2)) {
 
 	    /* get space for the next edit instruction */
-	    if ((ptr = save_list) == 0
+	    if ((ptr = save_list) == NULL
 		|| (ptr->used >= save_size)) {
 		ptr = (SAVE *) doalloc((char *) 0, save_SIZE);
 		ptr->link = save_list;

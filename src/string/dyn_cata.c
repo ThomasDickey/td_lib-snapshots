@@ -14,9 +14,9 @@
 #include "ptypes.h"
 #include "dyn_str.h"
 
-MODULE_ID("$Id: dyn_cata.c,v 12.6 2014/12/28 01:11:07 tom Exp $")
+MODULE_ID("$Id: dyn_cata.c,v 12.7 2025/01/07 00:14:07 tom Exp $")
 
-#define	EMPTY(s)	((s == 0) || (*s == EOS))
+#define	EMPTY(s)	((s == NULL) || (*s == EOS))
 
 DYN *
 dyn_catarg(DYN * p, const char *arg)

@@ -11,13 +11,13 @@
 
 #include "ptypes.h"
 
-MODULE_ID("$Id: strcount.c,v 12.4 2014/12/28 01:11:07 tom Exp $")
+MODULE_ID("$Id: strcount.c,v 12.5 2025/01/07 00:14:07 tom Exp $")
 
 int
 strcount(char *s, int c)
 {
     int count = 0;
-    if (s != 0)
+    if (s != NULL)
 	while (*s != EOS)
 	    if (*s++ == c)
 		count++;

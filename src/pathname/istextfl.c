@@ -18,7 +18,7 @@
 #define CHR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: istextfl.c,v 12.7 2014/12/28 01:10:51 tom Exp $")
+MODULE_ID("$Id: istextfl.c,v 12.8 2025/01/07 00:30:52 tom Exp $")
 
 int
 istextfile(const char *name)
@@ -28,7 +28,7 @@ istextfile(const char *name)
     size_t n;
     int c;
 
-    if ((fp = fopen(name, "r")) != 0) {
+    if ((fp = fopen(name, "r")) != NULL) {
 	while ((n = fread(bfr, sizeof(char), sizeof(bfr), fp)) > 0) {
 	    while (n-- != 0) {
 		c = bfr[n];

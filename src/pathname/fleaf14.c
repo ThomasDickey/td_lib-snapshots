@@ -13,13 +13,13 @@
 #define STR_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: fleaf14.c,v 12.4 2014/12/28 01:10:51 tom Exp $")
+MODULE_ID("$Id: fleaf14.c,v 12.5 2025/01/07 00:29:46 tom Exp $")
 
 char *
 fleaf14(char *path)
 {
     char *leaf = fleaf(path);
-    if (leaf == 0)
+    if (leaf == NULL)
 	leaf = path;
     if (strlen(leaf) > 14)
 	leaf[14] = EOS;

@@ -35,7 +35,7 @@
 #define TRM_PTYPES		/* <termios.h> */
 #include	"td_curse.h"
 
-MODULE_ID("$Id: rawterm.c,v 12.29 2020/04/28 23:59:55 tom Exp $")
+MODULE_ID("$Id: rawterm.c,v 12.30 2025/01/06 23:50:50 tom Exp $")
 
 TermioT original_tty;
 TermioT modified_tty;
@@ -143,7 +143,7 @@ set_cursor_mode(void)
  * Call this to save the original terminal state, _before_ calling 'initscr()'.
  * I found this necessary on Solaris (explorer@clarknet.com) because the
  * terminal characteristics were not being saved/restored properly.  Because
- * this wasn't the first problem I'd had with SysV, I encapsulated it... 
+ * this wasn't the first problem I'd had with SysV, I encapsulated it...
  */
 void
 save_terminal(void)

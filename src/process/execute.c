@@ -42,7 +42,7 @@
 #include	"dyn_str.h"
 #include	<errno.h>
 
-MODULE_ID("$Id: execute.c,v 12.15 2019/12/01 22:06:02 tom Exp $")
+MODULE_ID("$Id: execute.c,v 12.16 2025/01/07 00:16:50 tom Exp $")
 
 #ifdef	vms
 #  include	<descrip.h>
@@ -99,7 +99,7 @@ execute(const char *verb, const char *args)
 {
     int result;
     size_t need = strlen(verb) + strlen(args) + 2;
-    DYN *dyn = 0;
+    DYN *dyn = NULL;
     char *s = strcat(
 			strcat(
 				  strcpy((dyn = dyn_alloc((DYN *) 0,

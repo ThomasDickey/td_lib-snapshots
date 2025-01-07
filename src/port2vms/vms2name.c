@@ -41,7 +41,7 @@
 #define	STR_PTYPES
 #include	"port2vms.h"
 
-MODULE_ID("$Id: vms2name.c,v 12.13 2014/12/26 14:07:03 tom Exp $")
+MODULE_ID("$Id: vms2name.c,v 12.14 2025/01/07 00:31:55 tom Exp $")
 
 #define	LOWER(p)	((isalpha(UCH(*p)) && isupper(UCH(*p))) ? LowerMacro(UCH(*p)) : *p)
 
@@ -87,14 +87,14 @@ vms2name(char *dst, const char *src)
     char *d;
 
     if (strlen(src) >= sizeof(tmp))
-	return 0;
+	return NULL;
     (void) strcpy(tmp, src);	/* in case src==dst */
 
     if ((s = strchr(s, ';')) != NULL)	/* trim off version */
 	*s = EOS;
 
     /* look for node specification */
-    if ((s = strchr(base, ':')) != 0
+    if ((s = strchr(base, ':')) != NULL
 	&& (s[1] == ':')) {
 	while (base < s) {
 	    *dst++ = (char) LOWER(base);
@@ -126,16 +126,16 @@ vms2name(char *dst, const char *src)
 	const char *a = getwd(current);
 	char *b;
 
-	if (a == 0)
+	if (a == NULL)
 	    a = ":";
 
 	b = strchr(a, '?');
-	if ((b != 0)
+	if ((b != NULL)
 	    && (b[1] == ':')) {	/* skip over node specification */
 	    a = b + 2;
 	    b = strchr(a, ':');
 	}
-	if (b != 0) {
+	if (b != NULL) {
 	    *dst++ = '/';	/* begin the device */
 	    while (a < b) {
 		*dst++ = (char) LOWER(a);

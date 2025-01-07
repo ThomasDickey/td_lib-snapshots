@@ -15,13 +15,13 @@
 #define	STR_PTYPES
 #include	"port2vms.h"
 
-MODULE_ID("$Id: vms_wild.c,v 12.5 2010/07/10 00:12:09 tom Exp $")
+MODULE_ID("$Id: vms_wild.c,v 12.6 2025/01/07 00:31:55 tom Exp $")
 
 int
 vms_iswild(const char *name)
 {
-    if (strchr(name, '*') != 0
-	|| strchr(name, '?') != 0)
+    if (strchr(name, '*') != NULL
+	|| strchr(name, '?') != NULL)
 	return (TRUE);
     if ((name = strchr(name, '[')) != NULL) {
 	while (*name != EOS && *name != ']')

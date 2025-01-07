@@ -9,14 +9,14 @@
  *		03 Oct 1991, conversion to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
  *		04 Oct 1989, lint (apollo SR10.1)
- *		
+ *
  * Function:	Returns the path of the home directory of the current process.
  */
 
 #define PWD_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: gethome.c,v 12.9 2010/07/05 16:17:46 tom Exp $")
+MODULE_ID("$Id: gethome.c,v 12.11 2025/01/07 00:14:07 tom Exp $")
 
 char *
 gethome(void)
@@ -26,10 +26,10 @@ gethome(void)
     const char *r;
     static char *home;
 
-    if (home == 0) {
-	if (((q = getpwuid((uid_t) getuid())) == 0)
-	    || ((r = q->pw_dir) == 0)) {	/* prefer passwd-file */
-	    if ((r = getenv("HOME")) == 0)	/* fall-back (sys-err) */
+    if (home == NULL) {
+	if (((q = getpwuid((uid_t) getuid())) == NULL)
+	    || ((r = q->pw_dir) == NULL)) {	/* prefer passwd-file */
+	    if ((r = getenv("HOME")) == NULL)	/* fall-back (sys-err) */
 		r = ".";	/* give up */
 	}
 	home = stralloc(r);

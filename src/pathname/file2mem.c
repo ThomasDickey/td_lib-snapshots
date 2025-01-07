@@ -24,7 +24,7 @@
 #define	STR_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: file2mem.c,v 12.12 2014/12/12 23:21:59 tom Exp $")
+MODULE_ID("$Id: file2mem.c,v 12.13 2025/01/07 00:29:46 tom Exp $")
 
 char *
 file2mem(const char *name)
@@ -37,15 +37,15 @@ file2mem(const char *name)
     char *blob;
 
     if (!strcmp(name, "-")) {
-	if ((fp = tmpfile()) == 0)
-	    return (0);
+	if ((fp = tmpfile()) == NULL)
+	    return (NULL);
 	length = 0;
 	while ((j = getchar()) != EOF) {
 	    length++;
 	    (void) fputc(j, fp);
 	    if (ferror(fp)) {
 		(void) fclose(fp);
-		return (0);
+		return (NULL);
 	    }
 	}
 	expected = length;
@@ -57,7 +57,7 @@ file2mem(const char *name)
 	 * so that we will cut the average time on realloc.
 	 */
 	if ((offset = filesize(name)) < 0)
-	    return (0);
+	    return (NULL);
 	length = (size_t) offset;
 #ifdef	vms
 	/* on vms, 'stat()' returns size in terms of blocks */
@@ -66,8 +66,8 @@ file2mem(const char *name)
 	expected = length;
 #endif /* vms/SYS_UNIX */
 
-	if ((fp = fopen(name, "r")) == 0)
-	    return (0);
+	if ((fp = fopen(name, "r")) == NULL)
+	    return (NULL);
     }
 
     /*
@@ -85,9 +85,9 @@ file2mem(const char *name)
      * we can read into memory using a single 'malloc()'
      */
     blob = doalloc((char *) 0, (length + 2));
-    if (blob == 0) {
+    if (blob == NULL) {
 	(void) fclose(fp);
-	return (0);
+	return (NULL);
     }
     errno = 0;			/* in case system does not flag actual err */
     length = fread(blob, sizeof(char), (size_t) length, fp);
@@ -101,7 +101,7 @@ file2mem(const char *name)
 	free(blob);
 	if (!save)
 	    errno = EFBIG;
-	return (0);
+	return (NULL);
     }
     blob[length] =		/* allow length+2 for 'file2argv()' call */
 	blob[length + 1] = EOS;

@@ -20,9 +20,9 @@
 #define		STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: pathcmp.c,v 12.8 2014/12/26 14:03:18 tom Exp $")
+MODULE_ID("$Id: pathcmp.c,v 12.9 2025/01/07 00:16:58 tom Exp $")
 
-#define	CUT(p,s)	if ((s = strchr(p, PATH_SLASH)) != 0) *s = EOS
+#define	CUT(p,s)	if ((s = strchr(p, PATH_SLASH)) != NULL) *s = EOS
 
 			/* TRACE makes the code more verbose */
 #ifdef	DEBUG
@@ -56,10 +56,10 @@ pathcmp(const char *p1, const char *p2)
 	    TRACE((" [%s %s]", p1, p2))
 		if ((code = strcmp(p1, p2)) != 0)
 		return (code);
-	    if ((s1 != 0) || (s2 != 0)) {
-		if (s2 == 0)
+	    if ((s1 != NULL) || (s2 != NULL)) {
+		if (s2 == NULL)
 		    return (GT);
-		if (s1 == 0)
+		if (s1 == NULL)
 		    return (LT);
 		p1 = s1 + 1;
 		p2 = s2 + 1;

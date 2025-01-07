@@ -45,7 +45,7 @@
 
 #include	<ctype.h>
 
-MODULE_ID("$Id: rcsname.c,v 12.13 2014/12/26 13:51:26 tom Exp $")
+MODULE_ID("$Id: rcsname.c,v 12.14 2025/01/06 23:57:00 tom Exp $")
 
 #define	LEN_SUFFIX	(sizeof(suffix)-1)
 
@@ -72,7 +72,7 @@ static void
 trim_leaf(char *name)
 {
     char *s = fleaf_delim(name);
-    if (s != 0)
+    if (s != NULL)
 	name = s;
     *name = EOS;
 }
@@ -81,14 +81,14 @@ static char *
 leaf(char *name)
 {
     char *s = fleaf(name);
-    return ((s != 0) ? s : name);
+    return ((s != NULL) ? s : name);
 }
 
 static const char *
 cleaf(const char *name)
 {
     const char *s = fleaf(name);
-    return ((s != 0) ? s : name);
+    return ((s != NULL) ? s : name);
 }
 
 /************************************************************************

@@ -44,7 +44,7 @@
 #include	<sccsdefs.h>
 #include	<ctype.h>
 
-MODULE_ID("$Id: sccslast.c,v 12.27 2014/12/28 01:10:33 tom Exp $")
+MODULE_ID("$Id: sccslast.c,v 12.28 2025/01/07 00:03:17 tom Exp $")
 
 /*
  * Post-Y2K years require special decoding
@@ -52,14 +52,14 @@ MODULE_ID("$Id: sccslast.c,v 12.27 2014/12/28 01:10:33 tom Exp $")
 int
 sccsyear(char *src)
 {
-    char *p = 0;
+    char *p = NULL;
     long value;
 
     if (*src == ':') {
 	*src = '0';
     }
     if ((value = strtol(src, &p, 10)) <= 0
-	|| p == 0
+	|| p == NULL
 	|| *p == EOS) {
 	value = 0;
 	if (strlen(src) == 2) {
@@ -81,7 +81,7 @@ sccsyear(char *src)
 static void
 trySCCS(const char *path,
 	const char **vers_,
-	time_t * date_,
+	time_t *date_,
 	const char **lock_)
 {
     FILE *fp;
@@ -106,7 +106,7 @@ trySCCS(const char *path,
     if (strlen(path) >= MAXPATHLEN)
 	return;
 
-    if ((fp = fopen(path, "r")) != 0) {
+    if ((fp = fopen(path, "r")) != NULL) {
 	newzone(5, 0, FALSE);	/* interpret in EST5EDT */
 	while (fgets(bfr, (int) sizeof(bfr), fp)) {
 	    if (*bfr != '\001')
@@ -132,7 +132,7 @@ trySCCS(const char *path,
 #ifdef CMV_PATH			/* for CmVision */
 	    if (have_rev && !strncmp(bfr, "\001c ", (size_t) 3)) {
 		long when;
-		if ((s = strstr(bfr, "\\\001O")) != 0) {
+		if ((s = strstr(bfr, "\\\001O")) != NULL) {
 		    while (strncmp(s, ":M", (size_t) 2) && *s)
 			s++;
 		    if (sscanf(s, ":M%ld:", &when))
@@ -150,7 +150,7 @@ trySCCS(const char *path,
 	if ((s = fleaf(strcpy(tmp1, path))) == NULL)
 	    s = tmp1;
 	*s = 'p';
-	if ((fp = fopen(tmp1, "r")) != 0) {
+	if ((fp = fopen(tmp1, "r")) != NULL) {
 	    if (fgets(bfr, (int) sizeof(bfr), fp)) {
 		if (sscanf(bfr, "%d.%d %d.%d %s",
 			   &yy, &mm, &dd, &hr, ver) == 5)
@@ -167,7 +167,7 @@ void
 sccslast(const char *working,	/* working directory (absolute) */
 	 const char *path,	/* pathname to check (may be relative) */
 	 const char **vers_,
-	 time_t * date_,
+	 time_t *date_,
 	 const char **lock_)
 {
     Stat_t sbfr;

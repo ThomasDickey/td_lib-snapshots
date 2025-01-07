@@ -16,7 +16,7 @@
 #define		STR_PTYPES
 #include	"port2vms.h"
 
-MODULE_ID("$Id: path2vms.c,v 12.6 2014/12/27 22:01:41 tom Exp $")
+MODULE_ID("$Id: path2vms.c,v 12.7 2025/01/07 00:31:55 tom Exp $")
 
 char *
 path2vms(char *dst, const char *src)
@@ -31,7 +31,7 @@ path2vms(char *dst, const char *src)
 	    (void) strcat(tmp, "/");
 	result = name2vms(dst, tmp);
     } else {
-	result = 0;
+	result = NULL;
     }
     return result;
 }

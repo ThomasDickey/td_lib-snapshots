@@ -7,7 +7,7 @@
  *		29 Oct 1993, ifdef-ident
  *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, converted to ANSI
- *		
+ *
  *		Revision 8.1  91/05/15  10:01:57  dickey
  *		apollo sr10.3 cpp complains about tag in #endif
  *
@@ -18,7 +18,7 @@
 #define CHR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: dumpchr.c,v 12.6 2014/12/28 01:10:44 tom Exp $")
+MODULE_ID("$Id: dumpchr.c,v 12.7 2025/01/06 23:50:50 tom Exp $")
 
 #define	OUT	FPRINTF(fp,
 

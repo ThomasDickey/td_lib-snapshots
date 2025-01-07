@@ -17,7 +17,7 @@
  *		06 Sep 1989, use 'getwd()' definition from "ptypes.h"
  *		25 Aut 1989, force $PATH to be nonnull, in case this is invoked
  *			     from a non-unix environment!
- *		
+ *
  * Function:	Perform scanning along the PATH environment variable to
  *		find the first instance of a file 'find' which is
  *		executable.
@@ -32,7 +32,7 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: which.c,v 12.17 2017/06/02 00:56:10 tom Exp $")
+MODULE_ID("$Id: which.c,v 12.19 2025/01/07 00:31:55 tom Exp $")
 
 #ifdef MSDOS
 #define PROG_EXTS "pif", "bat", "exe", "com"
@@ -92,12 +92,12 @@ which(char *bfr,
     if (strlen(find) < MAXPATHLEN
 	&& strlen(dot) < MAXPATHLEN) {
 
-	if (path == 0)
+	if (path == NULL)
 	    path = just_dot;
 	s = path;
 	*test = *bfr = EOS;
 
-	if (fleaf_delim(find) != 0) {
+	if (fleaf_delim(find) != NULL) {
 	    if (executable(find)) {
 		(void) pathcat(test, dot, find);
 	    }

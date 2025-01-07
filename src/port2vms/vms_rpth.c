@@ -12,7 +12,7 @@
  *		20 May 1991, apollo sr10.3 cpp complains about endif-tags
  *		27 Jun 1990, use 'strlcpy()' to ensure that all pathnames are
  *			     lowercased
- *		
+ *
  * Function:	Converts a pathname from (presumably absolute form) to relative
  *		form.
  */
@@ -20,7 +20,7 @@
 #define	STR_PTYPES
 #include	"port2vms.h"
 
-MODULE_ID("$Id: vms_rpth.c,v 12.7 2014/12/26 02:46:53 tom Exp $")
+MODULE_ID("$Id: vms_rpth.c,v 12.9 2025/01/07 00:31:55 tom Exp $")
 
 static char *
 after_leaf(char *path)
@@ -43,13 +43,13 @@ vms_relpath(char *dst, char *cwd, char *src)
     int matched;
 
     src = strlwrcpy(source, src);	/* dst may be the same as src */
-    if (cwd == 0) {		/* if cwd not given, get the actual path */
+    if (cwd == NULL) {		/* if cwd not given, get the actual path */
 	cwd = getwd(current);
 #ifdef	SYS_UNIX
-	if (cwd != 0) {
+	if (cwd != NULL) {
 	    cwd = name2vms(current, strcat(cwd, "/"));
 	} else {
-	    return 0;
+	    return NULL;
 	}
 #endif
     } else {
@@ -65,9 +65,9 @@ vms_relpath(char *dst, char *cwd, char *src)
      * same node and device as the cwd-path, we cannot compute a relative
      * pathname, and simply copy the src-path to the dst-argument.
      */
-    if (cwd == 0
-	|| (s = strrchr(src, ':')) == 0
-	|| (d = strrchr(cwd, ':')) == 0
+    if (cwd == NULL
+	|| (s = strrchr(src, ':')) == NULL
+	|| (d = strrchr(cwd, ':')) == NULL
 	|| (s + 1 != strchr(src, '['))
 	|| (d + 1 != strchr(cwd, '['))
 	|| (s - src != d - cwd)

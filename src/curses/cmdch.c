@@ -23,7 +23,7 @@
  *		03 Oct 1991, conversion to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
  *		12 Mar 1990, lint (apollo sr10.1)
- *		30 Jan 1990, permit explicit zero-count to be returned. 
+ *		30 Jan 1990, permit explicit zero-count to be returned.
  *			     Default is still 1.
  *		04 Oct 1989, apollo SR10.1 curses (like sun) has KD, KU, KR and
  *			     KL data.  Don't ask for it twice!
@@ -54,7 +54,7 @@
 #include	"td_curse.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: cmdch.c,v 12.42 2020/04/28 20:28:33 tom Exp $")
+MODULE_ID("$Id: cmdch.c,v 12.43 2025/01/06 23:59:56 tom Exp $")
 
 #define	ESC(c)	((c) == '\033')
 #define	END(s)	s[strlen(s)-1]
@@ -354,7 +354,7 @@ cmdch(int *cnt_)
 	    }
 #endif /* !defined(NO_XTERM_MOUSE) */
 #endif /* !HAVE_KEYPAD */
-	} else if ((cnt_ != 0) && isdigit(c)) {
+	} else if ((cnt_ != NULL) && isdigit(c)) {
 	    had_c++;
 	    count = ((count * 10) + (c - '0'));
 	} else

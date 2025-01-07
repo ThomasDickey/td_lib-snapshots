@@ -26,7 +26,7 @@
 #define	STR_PTYPES
 #include <td_btree.h>
 
-MODULE_ID("$Id: gid2s.c,v 12.18 2019/11/30 01:46:23 tom Exp $")
+MODULE_ID("$Id: gid2s.c,v 12.19 2025/01/07 00:14:07 tom Exp $")
 
 #if defined(HAVE_GETGRGID)
 
@@ -46,7 +46,7 @@ lookup_gid(gid_t gid)
 	return txtalloc("<none>");
     } else
 #endif
-    if ((p = getgrgid(gid)) != 0)
+    if ((p = getgrgid(gid)) != NULL)
 	return txtalloc(p->gr_name);
     else {
 	char bfr[80];

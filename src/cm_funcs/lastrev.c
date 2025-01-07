@@ -19,7 +19,7 @@
 #include	"rcsdefs.h"
 #include	"sccsdefs.h"
 
-MODULE_ID("$Id: lastrev.c,v 12.15 2019/12/06 12:08:05 tom Exp $")
+MODULE_ID("$Id: lastrev.c,v 12.16 2025/01/07 00:03:39 tom Exp $")
 
 #if defined(CMV_PATH) && !(defined(RCS_PATH) || defined(ADMIN_PATH))
 #undef CMV_PATH
@@ -47,7 +47,7 @@ try_order(int tried)
 
     if (num_order == 0) {
 	char *env = getenv("DED_CM_LOOKUP");
-	if (env != 0) {
+	if (env != NULL) {
 	    env = strlwrcpy(temp, env);
 	} else {
 	    env = strcpy(temp, "rcs");
@@ -61,7 +61,7 @@ try_order(int tried)
 	    (void) strcat(temp, ",svn");
 #endif
 	}
-	while ((s = strtok(env, ",")) != 0) {
+	while ((s = strtok(env, ",")) != NULL) {
 	    if (!strcmp(s, "rcs")) {
 		vec_order[num_order++] = TryRcs;
 	    } else if (!strcmp(s, "sccs")) {
@@ -73,7 +73,7 @@ try_order(int tried)
 	    } else if (!strcmp(s, "svn")) {
 		vec_order[num_order++] = TrySvn;
 	    }
-	    env = 0;
+	    env = NULL;
 	    if (num_order + 1 >= MAX_ORDER)
 		break;
 	}
@@ -91,7 +91,7 @@ void
 lastrev(const char *working_dir,
 	const char *filename,
 	const char **vers_ptr,
-	time_t * time_ptr,
+	time_t *time_ptr,
 	const char **lock_ptr)
 {
     int n;
@@ -124,8 +124,8 @@ lastrev(const char *working_dir,
 	}
 #endif
 	if (*time_ptr != 0
-	    || (*vers_ptr != 0 && *vers_ptr[0] != '?')
-	    || (*lock_ptr != 0 && *lock_ptr[0] != '?'))
+	    || (*vers_ptr != NULL && *vers_ptr[0] != '?')
+	    || (*lock_ptr != NULL && *lock_ptr[0] != '?'))
 	    break;
     }
 }

@@ -25,7 +25,7 @@
 #include "ptypes.h"
 #include "rcsdefs.h"
 
-MODULE_ID("$Id: rcs_dir.c,v 12.13 2014/12/28 01:10:33 tom Exp $")
+MODULE_ID("$Id: rcs_dir.c,v 12.14 2025/01/07 00:01:26 tom Exp $")
 
 #define	WORKING	struct	Working
 WORKING {
@@ -56,18 +56,18 @@ add_archive(char *pathname)
 {
     if (*pathname != EOS) {
 	VAULTS *p, *q, *r;
-	for (p = VaultList, q = 0; p != 0; q = p, p = p->next) ;
+	for (p = VaultList, q = NULL; p != NULL; q = p, p = p->next) ;
 	r = (VAULTS *) doalloc((char *) 0, sizeof(VAULTS));
-	r->next = 0;
+	r->next = NULL;
 	r->archive = txtalloc(pathname);
-	r->working = 0;
-	if (q == 0)
+	r->working = NULL;
+	if (q == NULL)
 	    VaultList = r;
 	else
 	    q->next = r;
 	return r;
     }
-    return 0;
+    return NULL;
 }
 
 static void
@@ -76,11 +76,11 @@ add_working(VAULTS * list,
 {
     if (*pathname != EOS) {
 	WORKING *p, *q, *r;
-	for (p = list->working, q = 0; p != 0; q = p, p = p->next) ;
+	for (p = list->working, q = NULL; p != NULL; q = p, p = p->next) ;
 	r = (WORKING *) doalloc((char *) 0, sizeof(WORKING));
-	r->next = 0;
+	r->next = NULL;
 	r->working = txtalloc(pathname);
-	if (q == 0)
+	if (q == NULL)
 	    list->working = r;
 	else
 	    q->next = r;
@@ -93,12 +93,12 @@ Initialize(void)
 {
     initialized = TRUE;
     RcsDir = getenv("RCS_DIR");
-    if (RcsDir == 0)
+    if (RcsDir == NULL)
 	RcsDir = txtalloc("RCS");
     RcsDir = txtalloc(RcsDir);
 
     RcsVault = getenv("RCS_VAULT");
-    if (RcsVault != 0) {
+    if (RcsVault != NULL) {
 	char *s;
 	char *next, *eqls;
 	int at_next, at_eqls;
@@ -106,24 +106,24 @@ Initialize(void)
 
 	for (s = RcsVault; *s != EOS; s = next) {
 	    next = strchr(s, PATHLIST_SEP);
-	    if (next == 0)
+	    if (next == NULL)
 		next = s + strlen(s);
 	    at_next = *next;
 	    *next = EOS;
 
 	    eqls = strchr(s, '=');
-	    if (eqls == 0)
+	    if (eqls == NULL)
 		eqls = next;
 	    at_eqls = *eqls;
 	    *eqls = EOS;
 
-	    if ((p = add_archive(s)) != 0) {
+	    if ((p = add_archive(s)) != NULL) {
 		while (eqls != next) {
 		    *eqls = (char) at_eqls;
 		    s = eqls + 1;
 
 		    eqls = strchr(s, '=');
-		    if (eqls == 0)
+		    if (eqls == NULL)
 			eqls = next;
 		    at_eqls = *eqls;
 		    *eqls = EOS;
@@ -151,11 +151,11 @@ rcs_dir(const char *working_directory, const char *filename)
 	Initialize();
 
     result = RcsDir;
-    if (filename != 0
+    if (filename != NULL
 	&& (strlen(working_directory) + strlen(filename) + 3) < sizeof(temp)
-	&& RcsVault != 0) {
+	&& RcsVault != NULL) {
 	Stat_t sb;
-	VAULTS *p, *max_p = 0;
+	VAULTS *p, *max_p = NULL;
 	WORKING *q;
 	int max_n = 0;
 
@@ -175,7 +175,7 @@ rcs_dir(const char *working_directory, const char *filename)
 	 * without a working directory in RCS_VAULT, use this iff no
 	 * prior match is found.
 	 */
-	for (p = VaultList; p != 0; p = p->next) {
+	for (p = VaultList; p != NULL; p = p->next) {
 	    if ((n = samehead(temp, p->archive)) > 0
 		&& n >= (int) strlen(p->archive)) {
 		if (n > max_n) {
@@ -184,7 +184,7 @@ rcs_dir(const char *working_directory, const char *filename)
 		    vault = TRUE;
 		}
 	    }
-	    for (q = p->working; q != 0; q = q->next) {
+	    for (q = p->working; q != NULL; q = q->next) {
 		if ((n = samehead(temp, q->working)) > 0
 		    && n >= (int) strlen(q->working)) {
 		    if (n > max_n) {

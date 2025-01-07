@@ -37,7 +37,7 @@
 #define CHR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: bldarg.c,v 12.9 2019/12/01 23:21:44 tom Exp $")
+MODULE_ID("$Id: bldarg.c,v 12.10 2025/01/07 00:31:55 tom Exp $")
 
 #define	blank(c)	(isascii(c) && isspace(c))
 
@@ -50,13 +50,13 @@ bldarg(int argc, char **argv, char *string)
     while (*s && (j < argc - 1)) {
 	while (blank(UCH(*s)))
 	    *s++ = EOS;
-	argv[j++] = *s ? s : 0;
+	argv[j++] = *s ? s : NULL;
 	while (*s && !blank(UCH(*s))) {
 	    *s = (char) toascii(*s);
 	    s++;
 	}
     }
-    argv[j] = 0;
+    argv[j] = NULL;
     return j;
 }
 

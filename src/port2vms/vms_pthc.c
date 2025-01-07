@@ -12,7 +12,7 @@
  *		12 Dec 1991, corrected entrypoint-name
  *		18 Oct 1991, use macro _MAIN
  *		20 May 1991, apollo sr10.3 cpp complains about endif-tags
- *		
+ *
  * Function:	Forms a combined path a la 'pathcat()', but for VMS-style
  *		pathnames.
  *
@@ -23,7 +23,7 @@
 #define	STR_PTYPES
 #include	"port2vms.h"
 
-MODULE_ID("$Id: vms_pthc.c,v 12.7 2015/07/04 15:31:52 tom Exp $")
+MODULE_ID("$Id: vms_pthc.c,v 12.9 2025/01/07 00:31:55 tom Exp $")
 
 #define	A_NODE	8
 #define	A_DEV	4
@@ -35,7 +35,7 @@ vms_pathcat(char *dst, char *dname, char *fname)
 {
     char tmp[MAXPATHLEN], *s;
     int f_code;
-    char *result = 0;
+    char *result = NULL;
 
     if (strlen(dname) < sizeof(tmp)) {
 	/* find the highest-level of object in 'fname' */
@@ -77,8 +77,8 @@ vms_pathcat(char *dst, char *dname, char *fname)
 	    }
 	    break;
 	case A_NAME:		/* append after NODE, DEV or DIR */
-	    if ((s = strchr(tmp, ']')) != 0
-		|| (s = strrchr(tmp, ':')) != 0) {
+	    if ((s = strchr(tmp, ']')) != NULL
+		|| (s = strrchr(tmp, ':')) != NULL) {
 		s++;
 	    } else {
 		s = tmp;

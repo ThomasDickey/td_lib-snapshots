@@ -15,7 +15,7 @@
  *			     can expand it ok; simply copy as in '/'-paths.
  *		06 Dec 1989, 'fname' argument may be empty (cf: link2rcs).
  *		04 Oct 1989, lint (apollo SR10.1)
- *		
+ *
  * Function:	Forms a "path/filename" string, given the two parts, and
  *		ensures that we treat existing "/" marks intelligently.
  *
@@ -26,7 +26,7 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: pathcat.c,v 12.11 2015/07/04 15:31:39 tom Exp $")
+MODULE_ID("$Id: pathcat.c,v 12.13 2025/01/07 00:30:52 tom Exp $")
 
 char *
 pathcat2(char *dst, const char *dname, const char *fname)
@@ -38,19 +38,19 @@ pathcat2(char *dst, const char *dname, const char *fname)
 	if (strlen(fname) < MAXPATHLEN) {
 	    (void) strcpy(dst, fname);
 	} else {
-	    result = 0;
+	    result = NULL;
 	}
     } else if (*fname == EOS) {
 	if (dst != dname) {
 	    if (strlen(dname) < MAXPATHLEN) {
 		(void) strcpy(dst, dname);
 	    } else {
-		result = 0;
+		result = NULL;
 	    }
 	}
     } else if (strlen(dname) < sizeof(tmp)) {
 	(void) strcpy(tmp, dname);
-	if ((s = fleaf_delim(tmp)) != 0 && (s[1] == EOS)) {
+	if ((s = fleaf_delim(tmp)) != NULL && (s[1] == EOS)) {
 	    *s = EOS;		/* trim excess path-delimiter */
 	}
 	s = tmp + strlen(tmp);
@@ -59,10 +59,10 @@ pathcat2(char *dst, const char *dname, const char *fname)
 	    (void) strcpy(s, fname);
 	    (void) strcpy(dst, tmp);
 	} else {
-	    result = 0;
+	    result = NULL;
 	}
     } else {
-	result = 0;
+	result = NULL;
     }
     return result;
 }

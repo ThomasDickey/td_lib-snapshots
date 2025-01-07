@@ -14,20 +14,20 @@
 
 #include	"ptypes.h"
 
-MODULE_ID("$Id: blip.c,v 12.7 2014/12/28 01:10:44 tom Exp $")
+MODULE_ID("$Id: blip.c,v 12.8 2025/01/06 23:59:56 tom Exp $")
 
 void
 blip(int c)
 {
     static FILE *fp;
-    if (fp == 0) {
-	if (stderr != 0 && isatty(fileno(stderr)))
+    if (fp == NULL) {
+	if (stderr != NULL && isatty(fileno(stderr)))
 	    fp = stderr;
 #ifdef	SYS_UNIX
 	else
 	    fp = fopen("/dev/tty", "w");
 #endif
-	if (fp == 0)
+	if (fp == NULL)
 	    return;		/* it's not that important */
     }
 #ifdef	putc

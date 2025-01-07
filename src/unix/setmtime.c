@@ -11,7 +11,7 @@
  *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, convert to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
- *		
+ *
  * Function:	Set a file's mtime from a given reference value.  This is used
  *		in applications such as archival-extraction where the underlying
  *		tool/system defaults to the current date.
@@ -20,7 +20,7 @@
 #include	"ptypes.h"
 #include	<time.h>
 
-MODULE_ID("$Id: setmtime.c,v 12.12 2014/12/28 01:11:09 tom Exp $")
+MODULE_ID("$Id: setmtime.c,v 12.13 2025/01/06 23:50:52 tom Exp $")
 
 #if defined(HAVE_UTIME_H)
 #include	<utime.h>

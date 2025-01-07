@@ -40,7 +40,7 @@
 #include	<ctype.h>
 #include	<time.h>
 
-MODULE_ID("$Id: win2file.c,v 12.27 2020/12/06 21:39:16 tom Exp $")
+MODULE_ID("$Id: win2file.c,v 12.28 2025/01/06 23:59:56 tom Exp $")
 
 #ifndef A_ALTCHARSET
 #define A_ALTCHARSET 0
@@ -78,10 +78,10 @@ CursesLine(WINDOW *win, int row)
 {
     static char *result;
 
-    if (result != 0)
+    if (result != NULL)
 	free(result);
 
-    if ((result = malloc((size_t) (COLS + 1))) != 0) {
+    if ((result = malloc((size_t) (COLS + 1))) != NULL) {
 	int y, x;
 
 	getyx(win, y, x);

@@ -14,14 +14,14 @@
 
 #include <ptypes.h>
 
-MODULE_ID("$Id: veclen.c,v 12.4 2014/12/28 01:10:47 tom Exp $")
+MODULE_ID("$Id: veclen.c,v 12.5 2025/01/07 00:29:46 tom Exp $")
 
 int
 veclen(char **vector)
 {
-    if (vector != 0) {
+    if (vector != NULL) {
 	register int len;
-	for (len = 0; vector[len] != 0; len++) ;
+	for (len = 0; vector[len] != NULL; len++) ;
 	return len;
     }
     return 0;

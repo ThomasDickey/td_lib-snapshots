@@ -25,7 +25,7 @@
 #define		STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: editfile.c,v 12.9 2023/01/21 00:57:06 tom Exp $")
+MODULE_ID("$Id: editfile.c,v 12.10 2025/01/07 00:29:46 tom Exp $")
 
 #ifdef	vms
 #define	MyTemp(name,mode)	fopen(name, mode)
@@ -56,8 +56,8 @@ editfile(const char *oldname,
     (void) strcpy(newname, "fileXXXXXX");
 #endif /* vms/SYS_UNIX */
 
-    if (ifp != 0) {
-	if ((ofp = MyTemp(newname, "w")) != 0) {
+    if (ifp != NULL) {
+	if ((ofp = MyTemp(newname, "w")) != NULL) {
 	    FPRINTF(stderr, "** edit \"%s\" => \"%s\"\n", oldname, newname);
 	    changes += (*func) (ofp, ifp, sb);
 	    (void) fclose(ofp);

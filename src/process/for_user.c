@@ -15,7 +15,7 @@
  *			     we did not need to fork.
  *		31 Mar 1989, if we are not running in set-uid mode, don't do
  *			     the fork.
- *		
+ *
  * Function:	For a set-uid program, invokes a function (presumably a system
  *		call), which sets 'errno' iff it finds an error.
  *
@@ -29,7 +29,7 @@
 #include	"ptypes.h"
 #include	<errno.h>
 
-MODULE_ID("$Id: for_user.c,v 12.9 2014/12/28 01:11:01 tom Exp $")
+MODULE_ID("$Id: for_user.c,v 12.10 2025/01/06 23:50:51 tom Exp $")
 
 #ifdef	SYS_UNIX
 int

@@ -11,7 +11,7 @@
  *		15 May 1990, added a hack which reads the apollo passwd-file
  *			     directly to bypass a bug in their handling of
  *			     obsolete accounts.
- *		
+ *
  * Function:	Returns a positive number if the given argument corresponds to a
  *		valid user-id.  (If an integer is given, no checking is done).
  */
@@ -20,7 +20,7 @@
 #define	STR_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: s2uid.c,v 12.8 2010/07/05 10:56:40 tom Exp $")
+MODULE_ID("$Id: s2uid.c,v 12.10 2025/01/07 00:14:42 tom Exp $")
 
 #ifdef	SYS_UNIX
 
@@ -63,7 +63,7 @@ s2uid(const char *s)
 
     if (*d) {
 	struct passwd *p;
-	if ((p = getpwnam(s)) != 0)
+	if ((p = getpwnam(s)) != NULL)
 	    val = p->pw_uid;
 	else
 	    val = unknown_uid(s);

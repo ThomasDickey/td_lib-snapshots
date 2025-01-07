@@ -28,7 +28,7 @@
 #include	"port2vms.h"
 #include	"td_qsort.h"
 
-MODULE_ID("$Id: edittree.c,v 12.10 2010/07/10 00:11:18 tom Exp $")
+MODULE_ID("$Id: edittree.c,v 12.11 2025/01/07 00:29:46 tom Exp $")
 
 typedef char *PTR;
 #define	CHUNK	127		/* 1 less than a power of 2 */
@@ -95,7 +95,7 @@ edittree(const char *oldname,
     if (_OPENDIR(oldname, sb.st_mode)) {
 	TELL_DIR(oldname);
 
-	if (getwd(oldpath) == 0) {
+	if (getwd(oldpath) == NULL) {
 	    perror("(getwd)");
 	    return (0);
 	}
@@ -112,7 +112,7 @@ edittree(const char *oldname,
 
 	if ((dirp = opendir(newpath)) != NULL) {
 	    num = 0;
-	    vec = 0;
+	    vec = NULL;
 	    while ((dp = readdir(dirp)) != NULL) {
 		(void) strcpy(newname, dp->d_name);
 #ifndef	vms

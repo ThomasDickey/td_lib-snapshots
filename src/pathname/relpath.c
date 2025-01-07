@@ -15,7 +15,7 @@
  *		03 Oct 1991, conversion to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
  *		12 Mar 1990, lint (apollo sr10.1)
- *		
+ *
  *
  * Function:	Converts a pathname from (presumably absolute form) to relative
  *		form.
@@ -24,7 +24,7 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: relpath.c,v 12.10 2014/12/27 22:46:31 tom Exp $")
+MODULE_ID("$Id: relpath.c,v 12.12 2025/01/07 00:30:52 tom Exp $")
 
 char *
 relpath(char *dst, const char *cwd_param, const char *src)
@@ -32,13 +32,13 @@ relpath(char *dst, const char *cwd_param, const char *src)
     char current[MAXPATHLEN];
     char tmp[MAXPATHLEN];
     char pre[MAXPATHLEN];
-    char *cwd = 0;
+    char *cwd = NULL;
     size_t j;
 
     if (strlen(src) < sizeof(tmp)) {
 	/* dst may be the same as src; copy it */
 	src = strcpy(tmp, src);
-	if (cwd_param == 0 || !*cwd_param) {
+	if (cwd_param == NULL || !*cwd_param) {
 	    /* if cwd not given, get the actual path */
 	    cwd = getwd(current);
 	} else if (strlen(cwd_param) < sizeof(current)) {
@@ -46,7 +46,7 @@ relpath(char *dst, const char *cwd_param, const char *src)
 	}
     }
 
-    if (cwd != 0) {
+    if (cwd != NULL) {
 #ifdef	apollo
 	char *p;
 
@@ -113,7 +113,7 @@ relpath(char *dst, const char *cwd_param, const char *src)
 		break;
 	    }
 
-	    if (fleaf_delim(src) == 0) {
+	    if (fleaf_delim(src) == NULL) {
 		if (dotname(src))
 		    (void) strcpy(dst, src);
 		else

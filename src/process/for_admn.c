@@ -8,7 +8,7 @@
  *		21 Sep 1993, gcc-warnings
  *		23 Nov 1992, flush stderr/stdout if we fork
  *		17 Nov 1992, modified _FNX macro.
- *		
+ *
  * Function:	For a set-uid program, invokes a function (presumably a system
  *		call), which sets 'errno' iff it finds an error.
  *
@@ -23,7 +23,7 @@
 #include	"ptypes.h"
 #include	<errno.h>
 
-MODULE_ID("$Id: for_admn.c,v 12.9 2014/12/28 01:11:01 tom Exp $")
+MODULE_ID("$Id: for_admn.c,v 12.10 2025/01/06 23:50:51 tom Exp $")
 
 #ifdef	SYS_UNIX
 int

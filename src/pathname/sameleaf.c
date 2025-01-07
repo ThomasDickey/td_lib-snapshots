@@ -10,7 +10,7 @@
  *		03 Oct 1991, conversion to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
  *		04 Oct 1989, lint (apollo SR10.1)
- *		
+ *
  * Function:	Given a test-pathname and a (possibly relative pathname) for
  *		a comparison-leafname, determine if they could be the same.
  *		This is used to compare RCS/SCCS directory-names to a pathname
@@ -34,7 +34,7 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: sameleaf.c,v 12.11 2014/12/27 22:19:04 tom Exp $")
+MODULE_ID("$Id: sameleaf.c,v 12.13 2025/01/07 00:30:52 tom Exp $")
 
 int
 sameleaf(const char *path, const char *leaf)
@@ -56,7 +56,7 @@ sameleaf(const char *path, const char *leaf)
 		break;
 	    *(--s) = EOS;	/* ...trimming off trailing delimiter */
 	}
-	if (s == 0)
+	if (s == NULL)
 	    s = tmp;
 
 	/*

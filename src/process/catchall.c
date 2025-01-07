@@ -10,7 +10,7 @@
  *		15 May 1991, lint (SunOs), mods to compile under apollo sr10.3
  *		31 Oct 1989, recompiled on sun3 (release 4.0.x)
  *		10 May 1989, compiled on sun/sparc
- *		
+ *
  * Function:	catches all (catchable, anyway) signals which would otherwise
  *		terminate the current process.  We expect that the signal-
  *		catching function is a cleanup handler (i.e., removes temporary
@@ -24,7 +24,7 @@
 #define	SIG_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: catchall.c,v 12.8 2014/12/28 01:11:01 tom Exp $")
+MODULE_ID("$Id: catchall.c,v 12.10 2025/01/07 00:31:55 tom Exp $")
 
 void
 catchall(SIG_T(*catchsig) (SIGNAL_ARGS))
@@ -46,7 +46,7 @@ catchall(SIG_T(*catchsig) (SIGNAL_ARGS))
     size_t j;
 
     for (j = 0; j < sizeof(sigs); j++) {
-	if (catchsig == 0) {
+	if (catchsig == NULL) {
 	    (void) signal(sigs[j], SAVE(j));
 	} else {
 	    SAVE(j) = signal(sigs[j], catchsig);

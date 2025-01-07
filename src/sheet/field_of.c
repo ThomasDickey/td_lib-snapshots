@@ -23,7 +23,7 @@
 #include "td_sheet.h"
 #include <ctype.h>
 
-MODULE_ID("$Id: field_of.c,v 12.10 2010/07/10 00:12:28 tom Exp $")
+MODULE_ID("$Id: field_of.c,v 12.11 2025/01/07 00:14:07 tom Exp $")
 
 static int opt_Blanks;
 
@@ -118,7 +118,7 @@ skip_to_field(char *list,
 	      char **first,
 	      char **last)
 {
-    if ((*first = list) != 0) {
+    if ((*first = list) != NULL) {
 	*last = skip_to_comma(*first);
 	while (N > 0) {
 	    if (**last != EOS) {
@@ -131,7 +131,7 @@ skip_to_field(char *list,
 	    }
 	}
     } else {
-	*first = 0;
+	*first = NULL;
 	*last = txtalloc("");
 	N = -1;
     }
@@ -215,12 +215,12 @@ get_field_of(char *list,
 	&& (*item != EOS))
 	return UnquotedField(result, item);
 
-    if (dftval != 0) {
+    if (dftval != NULL) {
 	*result = dyn_copy(*result, dftval);
 	return dyn_string(*result);	/* did not find field */
     }
 
-    return 0;
+    return NULL;
 }
 
 /*
@@ -240,7 +240,7 @@ set_field_of(char *list,
 	N = 0;			/* list was null */
 
     /* ensure that the argument is nonnull */
-    if (buffer == 0)
+    if (buffer == NULL)
 	buffer = txtalloc("");
 
     /* check to see if we must quote the string */
@@ -255,7 +255,7 @@ set_field_of(char *list,
      * If we had prior contents, must reformat
      */
     need = strlen(buffer);
-    if (last != 0) {
+    if (last != NULL) {
 	item = (item - last) + list;
 	next = (next - last) + list;
 	(void) memmove(item + N + need, next, strlen(next) + 1);

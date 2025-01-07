@@ -81,7 +81,7 @@
 #include "rcsdefs.h"
 #include <errno.h>
 
-MODULE_ID("$Id: rcsargpr.c,v 12.11 2014/12/27 20:09:44 tom Exp $")
+MODULE_ID("$Id: rcsargpr.c,v 12.12 2025/01/07 00:01:26 tom Exp $")
 
 /************************************************************************
  *	local data							*
@@ -138,7 +138,7 @@ static char *
 leaf_of(char *name)
 {
     char *s = fleaf(name);
-    return ((s != 0) ? s : name);
+    return ((s != NULL) ? s : name);
 }
 
 /*
@@ -238,13 +238,13 @@ rcs_working(char *Name,
 	    Stat_t * Stat)
 {
     initialize();
-    if (Stat != 0 || have_working == NOT_YET) {
+    if (Stat != NULL || have_working == NOT_YET) {
 	have_working = stat_file(name_working, &stat_working);
 	errs_working = have_working ? errno : 0;
     }
-    if (Stat != 0)
+    if (Stat != NULL)
 	*Stat = stat_working;
-    if (Name != 0)
+    if (Name != NULL)
 	(void) strcpy(Name, name_working);
     DEBUG(("++ rcs_working(%s) errs %d\n", name_working, errs_working))
 	return (errno = errs_working) ? -1 : 0;
@@ -255,13 +255,13 @@ rcs_archive(char *Name,
 	    Stat_t * Stat)
 {
     initialize();
-    if (Stat != 0 || have_archive == NOT_YET) {
+    if (Stat != NULL || have_archive == NOT_YET) {
 	have_archive = stat_file(name_archive, &stat_archive);
 	errs_archive = have_archive ? errno : 0;
     }
-    if (Stat != 0)
+    if (Stat != NULL)
 	*Stat = stat_archive;
-    if (Name != 0)
+    if (Name != NULL)
 	(void) strcpy(Name, name_archive);
     DEBUG(("++ rcs_archive(%s) errs %d\n", name_archive, errs_archive))
 	return (errno = errs_archive) ? -1 : 0;
@@ -272,13 +272,13 @@ rcs_located(char *Name,
 	    Stat_t * Stat)
 {
     initialize();
-    if (Stat != 0 || have_located == NOT_YET) {
+    if (Stat != NULL || have_located == NOT_YET) {
 	have_located = stat_dir(name_located, &stat_located);
 	errs_located = have_located ? errno : 0;
     }
-    if (Stat != 0)
+    if (Stat != NULL)
 	*Stat = stat_located;
-    if (Name != 0)
+    if (Name != NULL)
 	(void) strcpy(Name, name_located);
     DEBUG(("++ rcs_located(%s) errs %d\n", name_located, errs_located))
 	return (errno = errs_located) ? -1 : 0;
@@ -295,8 +295,8 @@ rcsargpair(int This,
     int test_1, test_2;
     char *name_1;
     char *name_2;
-    char *working = 0;
-    char *archive = 0;
+    char *working = NULL;
+    char *archive = NULL;
     char temp_archive[MAXPATHLEN];
 
     reinitialize();
@@ -331,10 +331,10 @@ rcsargpair(int This,
     }
 
     /* supply missing directory on archive, for consistency */
-    if (archive != 0 && !fleaf_delim(archive))
+    if (archive != NULL && !fleaf_delim(archive))
 	archive = pathcat(temp_archive, rcs_dir(NULL, NULL), archive);
 
-    if (archive == 0 && working != 0) {
+    if (archive == NULL && working != NULL) {
 
 	TRACE(("...case 3\n"));
 	(void) strcpy(name_working, working);
@@ -343,7 +343,7 @@ rcsargpair(int This,
 	FORMAT(leaf_of(name_archive), "%s/%s%s",
 	       rcs_dir(NULL, NULL), leaf_of(working), RCS_SUFFIX);
 
-    } else if (archive != 0 && working == 0) {
+    } else if (archive != NULL && working == NULL) {
 
 	TRACE(("...case 2\n"));
 	(void) strcpy(name_archive, archive);
@@ -352,7 +352,7 @@ rcsargpair(int This,
 	FORMAT(name_working, "./%s", working);
 	(void) strip_suffix(name_working);
 
-    } else if (archive != 0 && working != 0) {
+    } else if (archive != NULL && working != NULL) {
 
 	TRACE(("...case 1\n"));
 	(void) strcpy(name_working, working);

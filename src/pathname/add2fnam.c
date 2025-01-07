@@ -17,7 +17,7 @@
 #define	STR_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: add2fnam.c,v 12.7 2014/12/28 01:10:51 tom Exp $")
+MODULE_ID("$Id: add2fnam.c,v 12.8 2025/01/07 00:29:46 tom Exp $")
 
 int
 add2fname(char *name,
@@ -40,7 +40,7 @@ add2fname(char *name,
 	}
     }
 #else /* SYS_UNIX or MSDOS */
-    if ((s = fleaf(name)) != 0)
+    if ((s = fleaf(name)) != NULL)
 	name = s;
 #endif /* SYS_UNIX/unix */
     if (strlen(name) > strlen(suffix)

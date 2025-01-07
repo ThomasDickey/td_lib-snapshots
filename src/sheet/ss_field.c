@@ -12,7 +12,7 @@
 
 #include "td_sheet.h"
 
-MODULE_ID("$Id: ss_field.c,v 12.4 2014/12/28 01:11:04 tom Exp $")
+MODULE_ID("$Id: ss_field.c,v 12.5 2025/01/07 00:14:07 tom Exp $")
 
 char *
 get_ss_field(char **vec,
@@ -21,7 +21,7 @@ get_ss_field(char **vec,
 	     char *dftval,
 	     DYN ** result)
 {
-    return ((vec != 0)
+    return ((vec != NULL)
 	    ? get_field_of(vec[row], col, dftval, result)
 	    : dftval);
 }

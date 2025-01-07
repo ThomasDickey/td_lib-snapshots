@@ -5,7 +5,7 @@
  * Modified:
  *		07 Mar 2004, remove K&R support, indent'd.
  *		29 Oct 1993, ifdef-ident
- *		
+ *
  * Function:	Given a pathname, this successively invokes a user-supplied
  *
  * Arguments:	path	- the current working directory (ignored if level=0)
@@ -17,7 +17,7 @@
 #define STR_PTYPES
 #include	"td_qsort.h"
 
-MODULE_ID("$Id: cmpqsort.c,v 12.5 2014/12/28 01:10:39 tom Exp $")
+MODULE_ID("$Id: cmpqsort.c,v 12.6 2025/01/06 23:50:50 tom Exp $")
 
 QSORT_FUNC(cmp_qsort)
 {

@@ -19,7 +19,7 @@
 #define STR_PTYPES
 #include <ptypes.h>
 
-MODULE_ID("$Id: vecedit.c,v 12.8 2010/07/10 00:11:18 tom Exp $")
+MODULE_ID("$Id: vecedit.c,v 12.9 2025/01/07 00:29:46 tom Exp $")
 
 char **
 vecedit(char **text, char **script)
@@ -81,7 +81,7 @@ vecedit(char **text, char **script)
     while (use_in <= len_in)
 	result[use_out++] = text[use_in++];
 
-    result[len_out] = 0;
+    result[len_out] = NULL;
     return (result);
 }
 

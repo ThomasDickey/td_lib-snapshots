@@ -8,7 +8,7 @@
  *		21 Sep 1993, gcc-warnings
  *		03 Oct 1991, converted to ANSI
  *		15 May 1991, apollo sr10.3 cpp complains about tag in #endif
- *		
+ *
  * Function:	This is the functional inverse of 'strtol()'.  It
  *		converts a long-value to string without using sprintf
  *		so that it is relatively self-contained.  The code will
@@ -25,7 +25,7 @@
 
 #include "ptypes.h"
 
-MODULE_ID("$Id: ltostr.c,v 12.6 2004/03/07 22:03:45 tom Exp $")
+MODULE_ID("$Id: ltostr.c,v 12.7 2025/01/06 23:50:52 tom Exp $")
 
 char *
 l2str(char *src, long value, int base)

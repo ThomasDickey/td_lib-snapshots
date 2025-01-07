@@ -16,7 +16,7 @@
 #define STR_PTYPES
 #include "ptypes.h"
 
-MODULE_ID("$Id: fleaf.c,v 12.8 2014/12/28 01:10:51 tom Exp $")
+MODULE_ID("$Id: fleaf.c,v 12.9 2025/01/07 00:29:46 tom Exp $")
 
 char *
 fleaf_delim(const char *path)
@@ -38,7 +38,7 @@ char *
 fleaf(const char *path)
 {
     char *s = fleaf_delim(path);
-    if (s != 0)
+    if (s != NULL)
 	s++;
     return s;
 }

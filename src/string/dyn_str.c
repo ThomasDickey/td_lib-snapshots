@@ -14,7 +14,7 @@
 #include "ptypes.h"
 #include "dyn_str.h"
 
-MODULE_ID("$Id: dyn_str.c,v 12.5 2014/12/28 01:11:07 tom Exp $")
+MODULE_ID("$Id: dyn_str.c,v 12.6 2025/01/07 00:16:43 tom Exp $")
 
 /************************************************************************
  *	public entrypoints						*
@@ -27,7 +27,7 @@ MODULE_ID("$Id: dyn_str.c,v 12.5 2014/12/28 01:11:07 tom Exp $")
 DYN *
 dyn_alloc(DYN * p, size_t len)
 {
-    if (p == 0) {
+    if (p == NULL) {
 	static DYN empty;
 	*(p = ALLOC(DYN, 1)) = empty;
     }
@@ -46,12 +46,12 @@ dyn_alloc(DYN * p, size_t len)
 DYN *
 dyn_free(DYN * p)
 {
-    if (p != 0) {
-	if (p->text != 0)
+    if (p != NULL) {
+	if (p->text != NULL)
 	    dofree(p->text);
 	dofree((char *) p);
     }
-    return 0;
+    return NULL;
 }
 
 /*
@@ -71,7 +71,7 @@ dyn_init(DYN ** p, size_t len)
 char *
 dyn_string(DYN * p)
 {
-    return (p != 0) ? p->text : 0;
+    return (p != NULL) ? p->text : NULL;
 }
 
 /*
@@ -80,7 +80,7 @@ dyn_string(DYN * p)
 size_t
 dyn_length(DYN * p)
 {
-    return (p != 0) ? p->cur_length : 0;
+    return (p != NULL) ? p->cur_length : 0;
 }
 
 /******************************************************************************/

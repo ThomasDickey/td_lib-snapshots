@@ -13,7 +13,7 @@
  *		01 Dec 1989, corrected handling of paths such as "name1/name2"
  *			     which should evaluate to "name1".
  *		04 Oct 1989, lint (apollo SR10.1)
- *		
+ *
  * Function:	Returns the directory (relative is ok) from the given path.
  *
  *		This always returns a pointer to a static buffer which is
@@ -31,7 +31,7 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: pathhead.c,v 12.9 2014/12/27 21:41:52 tom Exp $")
+MODULE_ID("$Id: pathhead.c,v 12.11 2025/01/07 00:30:52 tom Exp $")
 
 char *
 pathhead(const char *path, Stat_t * sb_)
@@ -43,7 +43,7 @@ pathhead(const char *path, Stat_t * sb_)
     char *result = buffer;
 
     if (strlen(path) < sizeof(buffer)) {
-	if (sb_ == 0)
+	if (sb_ == NULL)
 	    sb_ = &sb;
 	(void) strcpy(buffer, path);
 	while ((s = fleaf_delim(buffer)) != NULL) {
@@ -67,11 +67,11 @@ pathhead(const char *path, Stat_t * sb_)
 	}
 	if (stat_dir(buffer, sb_) < 0
 	    || (*buffer == EOS)
-	    || (s == 0 && !trimmed)) {
+	    || (s == NULL && !trimmed)) {
 	    (void) stat(strcpy(buffer, "."), sb_);
 	}
     } else {
-	result = 0;
+	result = NULL;
     }
     return result;
 }

@@ -27,7 +27,7 @@
 #include	<sccsdefs.h>
 #include	<cmv_defs.h>
 
-MODULE_ID("$Id: cmv_last.c,v 12.17 2014/12/26 02:53:15 tom Exp $")
+MODULE_ID("$Id: cmv_last.c,v 12.18 2025/01/07 00:03:33 tom Exp $")
 
 /*
  * Set the release.version and date values iff we find a legal sccs-file at
@@ -40,7 +40,7 @@ MODULE_ID("$Id: cmv_last.c,v 12.17 2014/12/26 02:53:15 tom Exp $")
 static void
 ScanSCCS(const char *path,
 	 const char **vers_,
-	 time_t * date_)
+	 time_t *date_)
 {
     FILE *fp = fopen(path, "r");
     int gotten = 0;
@@ -74,7 +74,7 @@ ScanSCCS(const char *path,
 	    if (match
 		&& !strncmp(bfr + 1, "c ", (size_t) 2)) {
 		long when;
-		if ((s = strstr(bfr + 1, "\\\001O")) != 0) {
+		if ((s = strstr(bfr + 1, "\\\001O")) != NULL) {
 		    while (strncmp(s, ":M", (size_t) 2) && *s)
 			s++;
 		    if (sscanf(s, ":M%ld", &when))
@@ -94,7 +94,7 @@ void
 cmv_last(const char *working,	/* working directory (absolute) */
 	 const char *path,	/* pathname to check (may be relative) */
 	 const char **vers_,
-	 time_t * date_,
+	 time_t *date_,
 	 const char **lock_)
 {
     char *archive = cmv_file(working, path);
@@ -103,9 +103,9 @@ cmv_last(const char *working,	/* working directory (absolute) */
 	*vers_ = "?";
     *date_ = 0;
 
-    if (archive != 0) {
+    if (archive != NULL) {
 	char *arcleaf = fleaf(archive);
-	if (arcleaf != 0) {
+	if (arcleaf != NULL) {
 	    get_cmv_lock(working, path, lock_, vers_, date_);
 	    if (strncmp(arcleaf, "b-", (size_t) 2) || isdigit((int) (*vers_)[0]))
 		ScanSCCS(archive, vers_, date_);

@@ -16,7 +16,7 @@
 #include "ptypes.h"
 #include "sccsdefs.h"
 
-MODULE_ID("$Id: sccsdbug.c,v 12.5 2014/12/28 01:10:33 tom Exp $")
+MODULE_ID("$Id: sccsdbug.c,v 12.6 2025/01/06 23:57:46 tom Exp $")
 
 int
 sccs_debug(void)
@@ -26,7 +26,7 @@ sccs_debug(void)
 
     if (flag < 0) {
 	flag = 0;
-	if ((s = getenv("SCCS_DEBUG")) != 0) {
+	if ((s = getenv("SCCS_DEBUG")) != NULL) {
 	    if (*s) {
 		char *d;
 		flag = (int) strtol(s, &d, 0);

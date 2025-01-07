@@ -13,7 +13,7 @@
 #define	STR_PTYPES
 #include	"ptypes.h"
 
-MODULE_ID("$Id: arg2file.c,v 12.6 2014/12/28 01:10:51 tom Exp $")
+MODULE_ID("$Id: arg2file.c,v 12.7 2025/01/07 00:29:46 tom Exp $")
 
 int
 argv2file(char **vec,
@@ -23,7 +23,7 @@ argv2file(char **vec,
     FILE *fp;
     int count;
 
-    if ((fp = fopen(name, mode)) != 0) {
+    if ((fp = fopen(name, mode)) != NULL) {
 	count = 0;
 	while (*vec) {
 	    count += (int) strlen(*vec);

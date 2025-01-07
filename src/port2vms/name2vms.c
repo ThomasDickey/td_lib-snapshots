@@ -31,7 +31,7 @@
 #define	STR_PTYPES
 #include	"port2vms.h"
 
-MODULE_ID("$Id: name2vms.c,v 12.12 2022/10/11 20:44:17 tom Exp $")
+MODULE_ID("$Id: name2vms.c,v 12.13 2025/01/07 00:31:55 tom Exp $")
 
 static int leaf_dot;		/* counts dots found in a particular leaf */
 static int leaf_ver;		/* set if we found a DECshell version */
@@ -87,7 +87,7 @@ leading_uc(char dst[MAXPATHLEN], const char *src)
     }
     *dst = EOS;
     if ((*base != EOS)
-	&& (dst = getenv(base)) != 0
+	&& (dst = getenv(base)) != NULL
 	&& (strlen(dst) < MAXPATHLEN)) {
 	c = (int) strlen(base);
 	while (isspace(UCH(*dst)))
@@ -114,7 +114,7 @@ name2vms(char *dst, const char *src)
     int len;
 
     if (strlen(src) >= MAXPATHLEN)
-	return 0;
+	return NULL;
     (void) strcpy(tmp, src);
 
     /*
@@ -126,7 +126,7 @@ name2vms(char *dst, const char *src)
 	s += len;
 	len = (int) strlen(token);
 	if (len >= MAXPATHLEN)
-	    return 0;
+	    return NULL;
 	(void) strcpy(d, token);
 	while (len > 1 && d[len - 1] == ' ') {
 	    len--;
@@ -165,7 +165,7 @@ name2vms(char *dst, const char *src)
 
     /* look for node-name in VMS-format */
     if (!node
-	&& (t = strchr(s, '!')) != 0
+	&& (t = strchr(s, '!')) != NULL
 	&& (t[1] == '/' || t[1] == EOS)) {
 	leaf_dot = prefix(s);
 	while (s < t) {
@@ -180,7 +180,7 @@ name2vms(char *dst, const char *src)
     if (!device
 	&& (*s == '/')) {
 	leaf_dot = prefix(++s);
-	if ((t = strchr(s, '/')) == 0) {
+	if ((t = strchr(s, '/')) == NULL) {
 	    t = s + strlen(s);
 	}
 	while (s < t) {

@@ -41,7 +41,7 @@
 #include	"rcsdefs.h"
 #include	<ctype.h>
 
-MODULE_ID("$Id: rcsedit.c,v 12.18 2014/12/28 01:10:33 tom Exp $")
+MODULE_ID("$Id: rcsedit.c,v 12.19 2025/01/07 00:03:33 tom Exp $")
 
 /* local definitions */
 #define	VERBOSE	if (verbose) PRINTF
@@ -66,7 +66,7 @@ static int in_string;		/* true only while parsing string */
 static void
 Show(const char *tag, const char *text)
 {
-    if ((RCS_DEBUG > 1) && text != 0 && verbose) {
+    if ((RCS_DEBUG > 1) && text != NULL && verbose) {
 	FFLUSH(stdout);
 	FFLUSH(stderr);
 	PRINTF("%s %d%s%s",
@@ -114,7 +114,7 @@ delim(int c)
 {
     if (isspace(c))
 	return (TRUE);
-    return (strchr(";:,@", c) != 0);
+    return (strchr(";:,@", c) != NULL);
 }
 
 static char *
@@ -122,27 +122,27 @@ readit(void)
 {
     char *p = fgets(buffer, (int) sizeof(buffer), fpS);
     Show("<", p);
-    edit_at = 0;
+    edit_at = NULL;
     return p;
 }
 
 static void
 writeit(void)
 {
-    if (*buffer != EOS && fpT != 0) {
+    if (*buffer != EOS && fpT != NULL) {
 	Show(">", buffer);
 	(void) fputs(buffer, fpT);
     }
     *buffer = EOS;
-    edit_at = 0;
+    edit_at = NULL;
 }
 
 static void
 closeit(void)
 {
-    if (fpT != 0) {
+    if (fpT != NULL) {
 	FCLOSE(fpT);
-	fpT = 0;
+	fpT = NULL;
     }
 }
 
@@ -163,7 +163,7 @@ static char *
 SkipBlanks(char *s)
 {
     int c;
-    while (s != 0) {
+    while (s != NULL) {
 	while ((c = *s) != EOS) {
 	    if (!isspace(c))
 		return (edit_at = s);
@@ -171,7 +171,7 @@ SkipBlanks(char *s)
 	}
 	s = ReadNewBuffer();
     }
-    return 0;
+    return NULL;
 }
 
 /*
@@ -180,8 +180,8 @@ SkipBlanks(char *s)
 static char *
 SkipPastSemicolon(char *s)
 {
-    while (s != 0) {
-	while ((s != 0) && (*s != EOS)) {
+    while (s != NULL) {
+	while ((s != NULL) && (*s != EOS)) {
 	    if (*s == AT_SYMBOL)
 		s = rcsparse_str(s, (RcsparseStr) 0);
 	    else if (*s++ == SEMICOLON)
@@ -189,7 +189,7 @@ SkipPastSemicolon(char *s)
 	}
 	s = ReadNewBuffer();
     }
-    return 0;			/* got an end-of-file */
+    return NULL;		/* got an end-of-file */
 }
 
 /************************************************************************
@@ -208,13 +208,13 @@ rcsopen(const char *name, int show, int readonly)
 
     if (strlen(name) < sizeof(fname)) {
 	(void) strcpy(fname, name);
-	fpT = 0;
+	fpT = NULL;
 	changes = 0;
 	verbose = show;
-	edit_at = 0;
+	edit_at = NULL;
 	VERBOSE("++ rcs-%s(%s)\n", readonly ? "scan" : "edit", fname);
 	if ((stat_file(fname, &sb) >= 0)
-	    && (fpS = fopen(fname, "r")) != 0) {
+	    && (fpS = fopen(fname, "r")) != NULL) {
 	    int fmode;
 
 	    if (readonly) {
@@ -227,7 +227,7 @@ rcsopen(const char *name, int show, int readonly)
 
 		fmode = (int) (sb.st_mode & 0555);
 		if ((fd = open(tmp_name, O_CREAT | O_EXCL | O_WRONLY,
-		    fmode)) < 0
+			       fmode)) < 0
 		    || !(fpT = fdopen(fd, "w"))) {
 		    perror(tmp_name);
 		} else {
@@ -258,7 +258,7 @@ rcsopen(const char *name, int show, int readonly)
 char *
 rcsread(char *s, int code)
 {
-    if (s == 0)
+    if (s == NULL)
 	s = ReadNewBuffer();
     if ((s = SkipBlanks(s)) != NULL) {
 	switch (code) {
@@ -310,7 +310,7 @@ rcsedit(char *oldname, char *newname)
 void
 rcsclose(void)
 {
-    if (fpT != 0) {
+    if (fpT != NULL) {
 	if (changes) {
 	    do
 		writeit();
@@ -327,7 +327,7 @@ rcsclose(void)
 	FPRINTF(stderr, "?? %d change(s) lost (readonly)\n", changes);
 
     FCLOSE(fpS);
-    fpS = 0;
+    fpS = NULL;
     *buffer = EOS;
 }
 
@@ -369,7 +369,7 @@ rcsparse_id(char *d, char *s)
  *	Skip over a string, which may cover more than one record.  The string
  *	is delimited by '@' marks, which are doubled to include them.
  */
-#define	STR_FUNC(c)	if (str_func != 0)	str_func(c)
+#define	STR_FUNC(c)	if (str_func != NULL)	str_func(c)
 
 char *
 rcsparse_str(char *s,
@@ -382,7 +382,7 @@ rcsparse_str(char *s,
 	in_string = TRUE;
 	s++;			/* skip past leading quote */
 	do {
-	    while ((s != 0) && (*s != EOS)) {
+	    while ((s != NULL) && (*s != EOS)) {
 		if ((c = *s++) == AT_SYMBOL) {
 		    if (*s != AT_SYMBOL) {
 			STR_FUNC(EOS);

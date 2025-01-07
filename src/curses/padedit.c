@@ -41,7 +41,7 @@
 #include	"ptypes.h"
 #include	<errno.h>
 
-MODULE_ID("$Id: padedit.c,v 12.13 2019/12/01 23:55:59 tom Exp $")
+MODULE_ID("$Id: padedit.c,v 12.14 2025/01/06 23:59:56 tom Exp $")
 
 #ifdef	SYS_UNIX
 
@@ -188,7 +188,7 @@ padedit(const char *name, int readonly, const char *editor)
 
 	char wd[MAXPATHLEN], xt[MAXPATHLEN], tmp[BUFSIZ], the_title[BUFSIZ];
 
-	if (getwd(wd) == 0)
+	if (getwd(wd) == NULL)
 	    return (-1);
 	if ((display = getenv("DISPLAY")) == NULL)
 	    return -1;
@@ -206,7 +206,7 @@ padedit(const char *name, int readonly, const char *editor)
 	argv[argc++] = txtalloc("-e");
 	argc += makeargv(&argv[argc], ((int) SIZEOF(argv) - argc - 2), tmp, editor);
 	argv[argc++] = txtalloc(name);
-	argv[argc] = 0;
+	argv[argc] = NULL;
 
 	if (readonly) {		/* spawn and run away */
 	    return (spawn(xt, argv));

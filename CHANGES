@@ -1,3 +1,47 @@
+2025-01-06  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* src/pathname/trnstree.c, src/pathname/walktree.c,
+	  src/pathname/which.c, src/port2vms/dir2path.c,
+	  src/port2vms/name2vms.c, src/port2vms/path2vms.c,
+	  src/port2vms/vms2name.c, src/port2vms/vms_pthc.c,
+	  src/port2vms/vms_rpth.c, src/port2vms/vms_wild.c,
+	  src/process/bldarg.c, src/process/catchall.c, src/pathname/fp2argv.c,
+	  src/pathname/ftype.c, src/pathname/ftype2.c, src/pathname/istextfl.c,
+	  src/pathname/mem2file.c, src/pathname/name2s.c,
+	  src/pathname/pathcat.c, src/pathname/pathhead.c,
+	  src/pathname/pathleaf.c, src/pathname/relpath.c,
+	  src/pathname/sameleaf.c, src/pathname/track_wd.c,
+	  src/memory/vecedit.c, src/memory/veclen.c, src/pathname/abspath.c,
+	  src/pathname/add2fnam.c, src/pathname/arg2file.c,
+	  src/pathname/copyback.c, src/pathname/dlettree.c,
+	  src/pathname/editfile.c, src/pathname/edittree.c,
+	  src/pathname/file2arg.c, src/pathname/file2mem.c,
+	  src/pathname/fleaf.c, src/pathname/fleaf14.c, src/pathname/pathcmp.c,
+	  src/process/execute.c, src/string/dyn_str.c, include/td_btree.h,
+	  src/unix/s2gid.c, src/unix/s2uid.c, src/unix/uid2s.c,
+	  src/process/gethome.c, src/process/walkback.c, src/sheet/field_of.c,
+	  src/sheet/ss_field.c, src/string/dftenv.c, src/string/dyn_app.c,
+	  src/string/dyn_cata.c, src/string/dyn_copy.c, src/string/strcount.c,
+	  src/unix/gid2s.c, include/port2vms.h, include/td_ext.h,
+	  src/cm_funcs/lastrev.c, src/cm_funcs/cmv_last.c,
+	  src/cm_funcs/rcsedit.c, src/cm_funcs/rcslast.c,
+	  src/cm_funcs/cmv_dir.c, src/cm_funcs/sccslast.c,
+	  src/cm_funcs/rcs_dir.c, src/cm_funcs/rcsargpr.c,
+	  src/cm_funcs/rcsload.c, src/cm_funcs/sccs_dir.c,
+	  src/curses/on_winch.c, src/cm_funcs/sccsname.c,
+	  src/cm_funcs/vcs_file.c, src/compare/btree.c, src/compare/diffload.c,
+	  src/compare/m2comp.c, src/curses/blip.c, src/curses/cmdch.c,
+	  src/curses/dumpwin.c, src/curses/is_xterm.c, src/curses/padedit.c,
+	  src/curses/rawgets.c, src/curses/win2file.c, src/memory/doalloc.c,
+	  src/cm_funcs/sccsdbug.c, src/cm_funcs/rcsname.c,
+	  src/cm_funcs/rcsperm.c, src/cm_funcs/rcssymbs.c,
+	  src/cm_funcs/rcsdebug.c, src/string/ltostr.c, src/string/strclean.c,
+	  src/string/strtrim.c, src/string/strucpy.c, src/unix/setmtime.c,
+	  src/pathname/modechar.c, src/pathname/samehead.c,
+	  src/process/for_admn.c, src/process/for_user.c, src/process/revert.c,
+	  src/compare/cmpqsort.c, src/curses/dumpchr.c, src/curses/rawterm.c:
+	gcc15-warnings
+
 2024-04-21  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* makefile.in: fix an unwanted error-message in the clean rule

@@ -30,7 +30,7 @@
 #include	"td_curse.h"
 #include	<time.h>
 
-MODULE_ID("$Id: dumpwin.c,v 12.25 2019/12/17 23:37:40 tom Exp $")
+MODULE_ID("$Id: dumpwin.c,v 12.26 2025/01/06 23:59:56 tom Exp $")
 
 #define	OUT	FPRINTF
 
@@ -40,13 +40,13 @@ line_data(WINDOW *win, int row)
     static char *result;
     int len = wMaxX(win);
 
-    if (result != 0) {
+    if (result != NULL) {
 	free(result);
-	result = 0;
+	result = NULL;
     }
 
     if (len > 0) {
-	if ((result = malloc((size_t) len)) != 0) {
+	if ((result = malloc((size_t) len)) != NULL) {
 #if defined(HAVE_WINNSTR)
 	    int y, x;
 
@@ -115,7 +115,7 @@ dumpwin(WINDOW *w, char *tag)
 		CursesFirstCh(w, j),
 		CursesLastCh(w, j), CursesLine(w, j));
 #endif
-	    if ((data = line_data(w, j)) != 0) {
+	    if ((data = line_data(w, j)) != NULL) {
 		int k;
 		for (k = 0; k < wMaxX(w); k++)
 		    dumpchr(fp, data[k]);

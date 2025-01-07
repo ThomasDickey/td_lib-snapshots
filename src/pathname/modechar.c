@@ -14,14 +14,14 @@
  *		11 May 1989, show fifo's as "p"; added hack for apollo to
  *			     ensure this works.
  *		20 Apr 1989, port to VMS
- *		
+ *
  * Function:	Translate file-mode to obtain the basic type-character
  *		(e.g., the first character shown by "ls -l").
  */
 
 #include	"ptypes.h"
 
-MODULE_ID("$Id: modechar.c,v 12.7 2014/12/28 01:10:51 tom Exp $")
+MODULE_ID("$Id: modechar.c,v 12.8 2025/01/06 23:50:51 tom Exp $")
 
 #ifdef	apollo
 #define	S_IFFIFO	010000

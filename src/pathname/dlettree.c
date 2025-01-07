@@ -25,7 +25,7 @@
 #include	"port2vms.h"
 #include	"td_qsort.h"
 
-MODULE_ID("$Id: dlettree.c,v 12.11 2010/07/10 00:11:18 tom Exp $")
+MODULE_ID("$Id: dlettree.c,v 12.12 2025/01/07 00:29:46 tom Exp $")
 
 typedef char *PTR;
 #define	CHUNK	127		/* 1 less than a power of 2 */
@@ -86,7 +86,7 @@ deletetree(const char *oldname, int recur)
 
     if (_OPENDIR(oldname, sb.st_mode)) {
 	TELL_SCAN(oldname);
-	if (getwd(oldpath) == 0) {
+	if (getwd(oldpath) == NULL) {
 	    fail("(getwd)");
 	    return (0);
 	}
@@ -104,7 +104,7 @@ deletetree(const char *oldname, int recur)
 
 	if ((dirp = opendir(newpath)) != NULL) {
 	    num = 0;
-	    vec = 0;
+	    vec = NULL;
 	    while ((dp = readdir(dirp)) != NULL) {
 		(void) strcpy(newname, dp->d_name);
 #ifndef	vms

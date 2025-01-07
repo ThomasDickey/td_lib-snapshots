@@ -23,7 +23,7 @@
 #include	"port2vms.h"
 #include	"td_qsort.h"
 
-MODULE_ID("$Id: trnstree.c,v 12.8 2010/07/10 00:12:09 tom Exp $")
+MODULE_ID("$Id: trnstree.c,v 12.9 2025/01/07 00:31:55 tom Exp $")
 
 typedef char *PTR;
 #define	CHUNK	127		/* 1 less than a power of 2 */
@@ -79,7 +79,7 @@ transtree(char *oldname,
 
     if (_OPENDIR(oldname, sb.st_mode)) {
 	TELL_SCAN(oldname);
-	if (getwd(oldpath) == 0) {
+	if (getwd(oldpath) == NULL) {
 	    perror("(getwd)");
 	    return;
 	}
@@ -97,7 +97,7 @@ transtree(char *oldname,
 
 	if ((dirp = opendir(newpath)) != NULL) {
 	    num = 0;
-	    vec = 0;
+	    vec = NULL;
 	    while ((dp = readdir(dirp)) != NULL) {
 		(void) strcpy(newname, dp->d_name);
 #ifndef	vms
