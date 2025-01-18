@@ -1,8 +1,8 @@
 Summary: Thomas Dickeys library
 %define AppProgram td_lib
 %define AppVersion 12.x
-%define AppRelease 20240421
-# $Id: td_lib.spec,v 1.44 2024/04/21 20:16:01 tom Exp $
+%define AppRelease 20250117
+# $Id: td_lib.spec,v 1.45 2025/01/18 00:16:32 tom Exp $
 Name: %{AppProgram}
 Version: %{AppVersion}
 Release: %{AppRelease}

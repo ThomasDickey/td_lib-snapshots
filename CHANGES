@@ -1,3 +1,15 @@
+2025-01-17  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* package/debian/copyright, COPYING, package/debian/changelog,
+	  package/td_lib.spec:
+	bump
+
+	* configure: regen
+
+	* aclocal.m4: resync with my-autoconf
+
+	* configure.in: use CF_WITH_SYSTYPE early
+
 2025-01-06  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* src/pathname/trnstree.c, src/pathname/walktree.c,
@@ -41,6 +53,14 @@
 	  src/process/for_admn.c, src/process/for_user.c, src/process/revert.c,
 	  src/compare/cmpqsort.c, src/curses/dumpchr.c, src/curses/rawterm.c:
 	gcc15-warnings
+
+2024-07-28  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* config.guess: 2024/07/27
+
+2024-06-03  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* config.sub: 2024/05/27
 
 2024-04-21  Thomas E. Dickey  <dickey@invisible-island.net>
 
